@@ -1527,12 +1527,13 @@ type InlineCertificateIssuanceConfig struct {
 	//   "ECDSA_P384" - Specifies ECDSA with curve P384.
 	KeyAlgorithm string `json:"keyAlgorithm,omitempty"`
 	// Lifetime: Optional. Lifetime of the workload certificates issued by the CA
-	// pool. Must be between 10 hours and 30 days. If not specified, this will be
+	// pool. Must be between 24 hours and 30 days. If not specified, this will be
 	// defaulted to 24 hours.
 	Lifetime string `json:"lifetime,omitempty"`
-	// RotationWindowPercentage: Optional. Rotation window percentage indicating
-	// when certificate rotation should be initiated based on remaining lifetime.
-	// Must be between 10 and 80. If not specified, this will be defaulted to 50.
+	// RotationWindowPercentage: Optional. Rotation window percentage, the
+	// percentage of remaining lifetime after which certificate rotation is
+	// initiated. Must be between 50 and 80. If no value is specified, rotation
+	// window percentage is defaulted to 50.
 	RotationWindowPercentage int64 `json:"rotationWindowPercentage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CaPools") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3476,8 +3477,8 @@ func (s TrustAnchor) MarshalJSON() ([]byte, error) {
 }
 
 // TrustStore: Trust store that contains trust anchors and optional
-// intermediate CAs used in PKI to build trust chain and verify a client's
-// identity.
+// intermediate CAs used in PKI to build a trust chain(trust hierarchy) and
+// verify a client's identity.
 type TrustStore struct {
 	// IntermediateCas: Optional. Set of intermediate CA certificates used for
 	// building the trust chain to the trust anchor. Important: Intermediate CAs
@@ -3901,19 +3902,18 @@ type WorkloadIdentityPool struct {
 	// Possible values:
 	//   "MODE_UNSPECIFIED" - State unspecified. New pools should not use this
 	// mode. Pools with an unspecified mode will operate as if they are in
-	// FEDERATION_ONLY mode.
-	//   "FEDERATION_ONLY" - FEDERATION_ONLY mode pools can only be used for
-	// federating external workload identities into Google Cloud. Unless otherwise
-	// noted, no structure or format constraints are applied to workload identities
-	// in a FEDERATION_ONLY mode pool, and you may not create any resources within
-	// the pool besides providers.
-	//   "TRUST_DOMAIN" - TRUST_DOMAIN mode pools can be used to assign identities
-	// to either external workloads or those hosted on Google Cloud. All identities
-	// within a TRUST_DOMAIN mode pool must consist of a single namespace and
-	// individual workload identifier. The subject identifier for all identities
-	// must conform to the following format: `ns//sa/`
-	// WorkloadIdentityPoolProviders cannot be created within TRUST_DOMAIN mode
-	// pools.
+	// federation-only mode.
+	//   "FEDERATION_ONLY" - Federation-only mode. Federation-only pools can only
+	// be used for federating external workload identities into Google Cloud.
+	// Unless otherwise noted, no structure or format constraints are applied to
+	// workload identities in a federation-only pool, and you cannot create any
+	// resources within the pool besides providers.
+	//   "TRUST_DOMAIN" - Trust-domain mode. Trust-domain pools can be used to
+	// assign identities to Google Cloud workloads. All identities within a
+	// trust-domain pool must consist of a single namespace and individual workload
+	// identifier. The subject identifier for all identities must conform to the
+	// following format: `ns//sa/` WorkloadIdentityPoolProviders cannot be created
+	// within trust-domain pools.
 	Mode string `json:"mode,omitempty"`
 	// Name: Output only. The resource name of the pool.
 	Name string `json:"name,omitempty"`

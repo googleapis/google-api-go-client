@@ -470,6 +470,9 @@ type Backup struct {
 	// SelectedApplications: Output only. If set, the list of ProtectedApplications
 	// whose resources were included in the Backup.
 	SelectedApplications *NamespacedNames `json:"selectedApplications,omitempty"`
+	// SelectedNamespaceLabels: Output only. If set, the list of labels whose
+	// constituent namespaces were included in the Backup.
+	SelectedNamespaceLabels *ResourceLabels `json:"selectedNamespaceLabels,omitempty"`
 	// SelectedNamespaces: Output only. If set, the list of namespaces that were
 	// included in the Backup.
 	SelectedNamespaces *Namespaces `json:"selectedNamespaces,omitempty"`
@@ -537,9 +540,8 @@ type BackupChannel struct {
 	// BackupChannel.
 	Description string `json:"description,omitempty"`
 	// DestinationProject: Required. Immutable. The project where Backups are
-	// allowed to be stored. The format is `projects/{project}`. Currently,
-	// {project} can only be the project number. Support for project IDs will be
-	// added in the future.
+	// allowed to be stored. The format is `projects/{projectId}` or
+	// `projects/{projectNumber}`.
 	DestinationProject string `json:"destinationProject,omitempty"`
 	// DestinationProjectId: Output only. The project_id where Backups are allowed
 	// to be stored. Example Project ID: "my-project-id". This will be an
@@ -610,6 +612,9 @@ type BackupConfig struct {
 	// SelectedApplications: If set, include just the resources referenced by the
 	// listed ProtectedApplications.
 	SelectedApplications *NamespacedNames `json:"selectedApplications,omitempty"`
+	// SelectedNamespaceLabels: If set, the list of labels whose constituent
+	// namespaces were included in the Backup.
+	SelectedNamespaceLabels *ResourceLabels `json:"selectedNamespaceLabels,omitempty"`
 	// SelectedNamespaces: If set, include just the resources in the listed
 	// namespaces.
 	SelectedNamespaces *Namespaces `json:"selectedNamespaces,omitempty"`
@@ -631,9 +636,56 @@ func (s BackupConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BackupConfigDetails: BackupConfigDetails defines the configuration of
+// Backups created via this BackupPlan.
+type BackupConfigDetails struct {
+	// AllNamespaces: Output only. If True, include all namespaced resources
+	AllNamespaces bool `json:"allNamespaces,omitempty"`
+	// EncryptionKey: Output only. This defines a customer managed encryption key
+	// that will be used to encrypt the "config" portion (the Kubernetes resources)
+	// of Backups created via this plan. Default (empty): Config backup artifacts
+	// will not be encrypted.
+	EncryptionKey *EncryptionKey `json:"encryptionKey,omitempty"`
+	// IncludeSecrets: Output only. This flag specifies whether Kubernetes Secret
+	// resources should be included when they fall into the scope of Backups.
+	// Default: False
+	IncludeSecrets bool `json:"includeSecrets,omitempty"`
+	// IncludeVolumeData: Output only. This flag specifies whether volume data
+	// should be backed up when PVCs are included in the scope of a Backup.
+	// Default: False
+	IncludeVolumeData bool `json:"includeVolumeData,omitempty"`
+	// SelectedApplications: Output only. If set, include just the resources
+	// referenced by the listed ProtectedApplications.
+	SelectedApplications *NamespacedNames `json:"selectedApplications,omitempty"`
+	// SelectedNamespaces: Output only. If set, include just the resources in the
+	// listed namespaces.
+	SelectedNamespaces *Namespaces `json:"selectedNamespaces,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllNamespaces") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllNamespaces") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupConfigDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupConfigDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BackupPlan: Defines the configuration and scheduling for a "line" of
 // Backups.
 type BackupPlan struct {
+	// BackupChannel: Output only. The fully qualified name of the BackupChannel to
+	// be used to create a backup. This field is set only if the cluster being
+	// backed up is in a different project.
+	// `projects/*/locations/*/backupChannels/*`
+	BackupChannel string `json:"backupChannel,omitempty"`
 	// BackupConfig: Optional. Defines the configuration of Backups created via
 	// this BackupPlan.
 	BackupConfig *BackupConfig `json:"backupConfig,omitempty"`
@@ -716,13 +768,13 @@ type BackupPlan struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "BackupConfig") to
+	// ForceSendFields is a list of field names (e.g. "BackupChannel") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackupConfig") to include in API
+	// NullFields is a list of field names (e.g. "BackupChannel") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -793,6 +845,9 @@ func (s BackupPlanBinding) MarshalJSON() ([]byte, error) {
 
 // BackupPlanDetails: Contains metadata about the backup plan/backup.
 type BackupPlanDetails struct {
+	// BackupConfigDetails: Output only. Contains details about the BackupConfig of
+	// Backups created via this BackupPlan.
+	BackupConfigDetails *BackupConfigDetails `json:"backupConfigDetails,omitempty"`
 	// LastSuccessfulBackup: Output only. The fully qualified name of the last
 	// successful Backup created under this BackupPlan.
 	// `projects/*/locations/*/backupPlans/*/backups/*`
@@ -808,6 +863,9 @@ type BackupPlanDetails struct {
 	// ProtectedPodCount: Output only. The number of Kubernetes Pods backed up in
 	// the last successful Backup created via this BackupPlan.
 	ProtectedPodCount int64 `json:"protectedPodCount,omitempty"`
+	// RetentionPolicyDetails: Output only. Contains details about the
+	// RetentionPolicy of Backups created via this BackupPlan.
+	RetentionPolicyDetails *RetentionPolicyDetails `json:"retentionPolicyDetails,omitempty"`
 	// RpoRiskLevel: Output only. A number that represents the current risk level
 	// of this BackupPlan from RPO perspective with 1 being no risk and 5 being
 	// highest risk.
@@ -824,13 +882,13 @@ type BackupPlanDetails struct {
 	//   "DEACTIVATED" - The BackupPlan has been deactivated.
 	//   "DELETING" - The BackupPlan is in the process of being deleted.
 	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LastSuccessfulBackup") to
+	// ForceSendFields is a list of field names (e.g. "BackupConfigDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LastSuccessfulBackup") to include
+	// NullFields is a list of field names (e.g. "BackupConfigDetails") to include
 	// in API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1441,6 +1499,30 @@ type GroupKindDependency struct {
 
 func (s GroupKindDependency) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupKindDependency
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Label: A single Kubernetes label-value pair.
+type Label struct {
+	// Key: Optional. The key/name of the label.
+	Key string `json:"key,omitempty"`
+	// Value: Optional. The value of the label.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Label) MarshalJSON() ([]byte, error) {
+	type NoMethod Label
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2057,6 +2139,28 @@ func (s ResourceFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ResourceLabels: A list of Kubernetes labels.
+type ResourceLabels struct {
+	// ResourceLabels: Optional. A list of Kubernetes label-value pairs.
+	ResourceLabels []*Label `json:"resourceLabels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceLabels") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceLabels") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceLabels) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceLabels
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ResourceSelector: Defines a selector to identify a single or a group of
 // resources. Conditions in the selector are optional, but at least one field
 // should be set to a non-empty value. If a condition is not specified, no
@@ -2222,9 +2326,8 @@ type RestoreChannel struct {
 	// RestoreChannel.
 	Description string `json:"description,omitempty"`
 	// DestinationProject: Required. Immutable. The project into which the backups
-	// will be restored. The format is `projects/{project}`. Currently, {project}
-	// can only be the project number. Support for project IDs will be added in the
-	// future.
+	// will be restored. The format is `projects/{projectId}` or
+	// `projects/{projectNumber}`.
 	DestinationProject string `json:"destinationProject,omitempty"`
 	// DestinationProjectId: Output only. The project_id where backups will be
 	// restored. Example Project ID: "my-project-id". This will be an OUTPUT_ONLY
@@ -2468,6 +2571,11 @@ type RestorePlan struct {
 	// Name: Output only. The full name of the RestorePlan resource. Format:
 	// `projects/*/locations/*/restorePlans/*`.
 	Name string `json:"name,omitempty"`
+	// RestoreChannel: Output only. The fully qualified name of the RestoreChannel
+	// to be used to create a RestorePlan. This field is set only if the
+	// `backup_plan` is in a different project than the RestorePlan. Format:
+	// `projects/*/locations/*/restoreChannels/*`
+	RestoreChannel string `json:"restoreChannel,omitempty"`
 	// RestoreConfig: Required. Configuration of Restores created via this
 	// RestorePlan.
 	RestoreConfig *RestoreConfig `json:"restoreConfig,omitempty"`
@@ -2610,6 +2718,42 @@ type RetentionPolicy struct {
 
 func (s RetentionPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod RetentionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RetentionPolicyDetails: RetentionPolicyDetails defines a Backup retention
+// policy for a BackupPlan.
+type RetentionPolicyDetails struct {
+	// BackupDeleteLockDays: Optional. Minimum age for Backups created via this
+	// BackupPlan (in days). This field MUST be an integer value between 0-90
+	// (inclusive). A Backup created under this BackupPlan will NOT be deletable
+	// until it reaches Backup's (create_time + backup_delete_lock_days). Updating
+	// this field of a BackupPlan does NOT affect existing Backups under it.
+	// Backups created AFTER a successful update will inherit the new value.
+	// Default: 0 (no delete blocking)
+	BackupDeleteLockDays int64 `json:"backupDeleteLockDays,omitempty"`
+	// BackupRetainDays: Optional. The default maximum age of a Backup created via
+	// this BackupPlan. This field MUST be an integer value >= 0 and <= 365. If
+	// specified, a Backup created under this BackupPlan will be automatically
+	// deleted after its age reaches (create_time + backup_retain_days). If not
+	// specified, Backups created under this BackupPlan will NOT be subject to
+	// automatic deletion. Default: 0 (no automatic deletion)
+	BackupRetainDays int64 `json:"backupRetainDays,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupDeleteLockDays") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupDeleteLockDays") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RetentionPolicyDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod RetentionPolicyDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

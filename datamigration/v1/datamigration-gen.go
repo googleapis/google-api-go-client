@@ -309,7 +309,8 @@ type AlloyDbSettings struct {
 	InitialUser *UserPassword `json:"initialUser,omitempty"`
 	// Labels: Labels for the AlloyDB cluster created by DMS. An object containing
 	// a list of 'key', 'value' pairs.
-	Labels                  map[string]string        `json:"labels,omitempty"`
+	Labels map[string]string `json:"labels,omitempty"`
+	// PrimaryInstanceSettings: Settings for the cluster's primary instance
 	PrimaryInstanceSettings *PrimaryInstanceSettings `json:"primaryInstanceSettings,omitempty"`
 	// VpcNetwork: Required. The resource link for the VPC network in which cluster
 	// resources are created and from which they are accessible via Private IP. The
@@ -1192,6 +1193,17 @@ type ConversionWorkspace struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Destination: Required. The destination engine details.
 	Destination *DatabaseEngineInfo `json:"destination,omitempty"`
+	// DestinationProvider: Optional. The provider for the destination database.
+	//
+	// Possible values:
+	//   "DATABASE_PROVIDER_UNSPECIFIED" - Use this value for on-premise source
+	// database instances and ORACLE.
+	//   "CLOUDSQL" - Cloud SQL is the source instance provider.
+	//   "RDS" - Amazon RDS is the source instance provider.
+	//   "AURORA" - Amazon Aurora is the source instance provider.
+	//   "ALLOYDB" - AlloyDB for PostgreSQL is the source instance provider.
+	//   "AZURE_DATABASE" - Microsoft Azure Database for MySQL/PostgreSQL.
+	DestinationProvider string `json:"destinationProvider,omitempty"`
 	// DisplayName: Optional. The display name for the workspace.
 	DisplayName string `json:"displayName,omitempty"`
 	// GlobalSettings: Optional. A generic list of settings for the workspace. The
@@ -1214,6 +1226,17 @@ type ConversionWorkspace struct {
 	Name string `json:"name,omitempty"`
 	// Source: Required. The source engine details.
 	Source *DatabaseEngineInfo `json:"source,omitempty"`
+	// SourceProvider: Optional. The provider for the source database.
+	//
+	// Possible values:
+	//   "DATABASE_PROVIDER_UNSPECIFIED" - Use this value for on-premise source
+	// database instances and ORACLE.
+	//   "CLOUDSQL" - Cloud SQL is the source instance provider.
+	//   "RDS" - Amazon RDS is the source instance provider.
+	//   "AURORA" - Amazon Aurora is the source instance provider.
+	//   "ALLOYDB" - AlloyDB for PostgreSQL is the source instance provider.
+	//   "AZURE_DATABASE" - Microsoft Azure Database for MySQL/PostgreSQL.
+	SourceProvider string `json:"sourceProvider,omitempty"`
 	// UpdateTime: Output only. The timestamp when the workspace resource was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -2239,6 +2262,9 @@ type GoogleCloudClouddmsV1OperationMetadata struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// EndTime: Output only. The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
+	// Metadata: Output only. Additional metadata that is returned by the backend
+	// for the operation.
+	Metadata map[string]string `json:"metadata,omitempty"`
 	// RequestedCancellation: Output only. Identifies whether the user has
 	// requested cancellation of the operation. Operations that have successfully
 	// been cancelled have google.longrunning.Operation.error value with a
@@ -5060,6 +5086,11 @@ type SslConfig struct {
 	// key associated with the Client Certificate. If this field is used then the
 	// 'client_certificate' field is mandatory.
 	ClientKey string `json:"clientKey,omitempty"`
+	// SslFlags: Optional. SSL flags used for establishing SSL connection to the
+	// source database. Only source specific flags are supported. An object
+	// containing a list of "key": "value" pairs. Example: {
+	// "server_certificate_hostname": "server.com"}.
+	SslFlags map[string]string `json:"sslFlags,omitempty"`
 	// Type: Optional. The ssl config type according to 'client_key',
 	// 'client_certificate' and 'ca_certificate'.
 	//

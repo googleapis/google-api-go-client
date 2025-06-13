@@ -2957,7 +2957,7 @@ type FhirStore struct {
 	// will not be parsed. New stores will have this value set to ENABLED after a
 	// notification period. Warning: turning on this flag causes processing
 	// existing resources to fail if they contain references to non-existent
-	// resources.
+	// resources. Cannot be disabled in R5.
 	//
 	// Possible values:
 	//   "COMPLEX_DATA_TYPE_REFERENCE_PARSING_UNSPECIFIED" - No parsing behavior
@@ -2967,7 +2967,7 @@ type FhirStore struct {
 	ComplexDataTypeReferenceParsing string `json:"complexDataTypeReferenceParsing,omitempty"`
 	// ConsentConfig: Optional. Specifies whether this store has consent
 	// enforcement. Not available for DSTU2 FHIR version due to absence of Consent
-	// resources.
+	// resources. Not supported for R5 FHIR version.
 	ConsentConfig *ConsentConfig `json:"consentConfig,omitempty"`
 	// DefaultSearchHandlingStrict: Optional. If true, overrides the default search
 	// behavior for this FHIR store to `handling=strict` which returns an error for
@@ -3023,7 +3023,8 @@ type FhirStore struct {
 	// non-empty, publish all resource modifications of this FHIR store to this
 	// destination. The Pub/Sub message attributes contain a map with a string
 	// describing the action that has triggered the notification. For example,
-	// "action":"CreateResource".
+	// "action":"CreateResource". Not supported in R5. Use `notification_configs`
+	// instead.
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
 	// NotificationConfigs: Optional. Specifies where and whether to send
 	// notifications upon changes to a FHIR store.
@@ -3057,6 +3058,7 @@ type FhirStore struct {
 	//   "STU3" - Standard for Trial Use, [Release
 	// 3](https://www.hl7.org/fhir/STU3)
 	//   "R4" - [Release 4](https://www.hl7.org/fhir/R4)
+	//   "R5" - [Release 5](https://www.hl7.org/fhir/R5)
 	Version string `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5704,9 +5706,10 @@ func (s SchematizedData) MarshalJSON() ([]byte, error) {
 type SearchResourcesRequest struct {
 	// ResourceType: Optional. The FHIR resource type to search, such as Patient or
 	// Observation. For a complete list, see the FHIR Resource Index (DSTU2
-	// (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), STU3
-	// (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html), R4
-	// (http://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+	// (https://hl7.org/fhir/DSTU2/resourcelist.html), STU3
+	// (https://hl7.org/fhir/STU3/resourcelist.html), R4
+	// (https://hl7.org/fhir/R4/resourcelist.html)), R5
+	// (https://hl7.org/fhir/R5/resourcelist.html)).
 	ResourceType string `json:"resourceType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResourceType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6009,7 +6012,8 @@ type StreamConfig struct {
 	// store must have disable_referential_integrity set to true. If a resource
 	// cannot be de-identified, errors will be logged to Cloud Logging (see Viewing
 	// error logs in Cloud Logging
-	// (https://cloud.google.com/healthcare/docs/how-tos/logging)).
+	// (https://cloud.google.com/healthcare/docs/how-tos/logging)). Not supported
+	// for R5 stores.
 	DeidentifiedStoreDestination *DeidentifiedStoreDestination `json:"deidentifiedStoreDestination,omitempty"`
 	// ResourceTypes: Optional. Supply a FHIR resource type (such as "Patient" or
 	// "Observation"). See https://www.hl7.org/fhir/valueset-resource-types.html
@@ -6859,7 +6863,8 @@ type ProjectsLocationsDatasetsDeidentifyCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/logging).
 //
 //   - sourceDataset: Source dataset resource name. For example,
-//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`. R5
+//     FHIR stores are not supported and will be skipped.
 func (r *ProjectsLocationsDatasetsService) Deidentify(sourceDataset string, deidentifydatasetrequest *DeidentifyDatasetRequest) *ProjectsLocationsDatasetsDeidentifyCall {
 	c := &ProjectsLocationsDatasetsDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceDataset = sourceDataset
@@ -16319,7 +16324,7 @@ type ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall struct {
 // an Operation. No resources will be reindexed and the
 // `consent_config.enforced_admin_consents` field will be unchanged. To enforce
 // a consent check for data access, `consent_config.access_enforced` must be
-// set to true for the FhirStore.
+// set to true for the FhirStore. FHIR Consent is not supported in DSTU2 or R5.
 //
 //   - name: The name of the FHIR store to enforce, in the format
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirSt
@@ -16436,7 +16441,8 @@ type ProjectsLocationsDatasetsFhirStoresApplyConsentsCall struct {
 // reindexed. Errors are logged to Cloud Logging (see Viewing error logs in
 // Cloud Logging (https://cloud.google.com/healthcare/docs/how-tos/logging)).
 // To enforce consent check for data access, `consent_config.access_enforced`
-// must be set to true for the FhirStore.
+// must be set to true for the FhirStore. FHIR Consent is not supported in
+// DSTU2 or R5.
 //
 //   - name: The name of the FHIR store to enforce, in the format
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirSt
@@ -16814,7 +16820,7 @@ type ProjectsLocationsDatasetsFhirStoresDeidentifyCall struct {
 //
 //   - sourceStore: Source FHIR store resource name. For example,
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirSt
-//     ores/{fhir_store_id}`.
+//     ores/{fhir_store_id}`. R5 stores are not supported.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Deidentify(sourceStore string, deidentifyfhirstorerequest *DeidentifyFhirStoreRequest) *ProjectsLocationsDatasetsFhirStoresDeidentifyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceStore = sourceStore
@@ -17014,7 +17020,8 @@ type ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall struct {
 }
 
 // ExplainDataAccess: Explains all the permitted/denied actor, purpose and
-// environment for a given resource.
+// environment for a given resource. FHIR Consent is not supported in DSTU2 or
+// R5.
 //
 //   - name: The name of the FHIR store to enforce, in the format
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirSt
@@ -18381,8 +18388,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall struct {
 // the same way as non-FHIR data (e.g., images, zip archives, pdf files,
 // documents). When a non-FHIR content type is used in the request, a Binary
 // resource will be generated, and the uploaded data will be stored in the
-// `content` field (`DSTU2` and `STU3`), or the `data` field (`R4`). The Binary
-// resource's `contentType` will be filled in using the value of the
+// `content` field (`DSTU2` and `STU3`), or the `data` field (`R4` and `R5`).
+// The Binary resource's `contentType` will be filled in using the value of the
 // `Content-Type` header, and the `securityContext` field (not present in
 // `DSTU2`) will be populated from the `X-Security-Context` header if it
 // exists. At this time `securityContext` has no special behavior in the Cloud
@@ -18569,14 +18576,15 @@ type ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall struct {
 // as non-FHIR data. When a non-FHIR content type is used in the request, a
 // Binary resource will be generated using the ID from the resource path, and
 // the uploaded data will be stored in the `content` field (`DSTU2` and
-// `STU3`), or the `data` field (`R4`). The Binary resource's `contentType`
-// will be filled in using the value of the `Content-Type` header, and the
-// `securityContext` field (not present in `DSTU2`) will be populated from the
-// `X-Security-Context` header if it exists. At this time `securityContext` has
-// no special behavior in the Cloud Healthcare API. Note: the limit on data
-// ingested through this method is 2 GB. For best performance, use a non-FHIR
-// data type instead of wrapping the data in a Binary resource. Some of the
-// Healthcare API features, such as exporting to BigQuery
+// `STU3`), or the `data` field (`R4` and `R5`). The Binary resource's
+// `contentType` will be filled in using the value of the `Content-Type`
+// header, and the `securityContext` field (not present in `DSTU2`) will be
+// populated from the `X-Security-Context` header if it exists. At this time
+// `securityContext` has no special behavior in the Cloud Healthcare API. Note:
+// the limit on data ingested through this method is 2 GB. For best
+// performance, use a non-FHIR data type instead of wrapping the data in a
+// Binary resource. Some of the Healthcare API features, such as exporting to
+// BigQuery
 // (https://cloud.google.com/healthcare-api/docs/how-tos/fhir-export-bigquery)
 // or Pub/Sub notifications
 // (https://cloud.google.com/healthcare-api/docs/fhir-pubsub#behavior_when_a_fhir_resource_is_too_large_or_traffic_is_high)
@@ -18926,25 +18934,24 @@ type ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall struct {
 
 // PatientEverything: Retrieves a Patient resource and resources related to
 // that patient. Implements the FHIR extended operation Patient-everything
-// (DSTU2
-// (http://hl7.org/implement/standards/fhir/DSTU2/patient-operations.html#everything),
-// STU3
-// (http://hl7.org/implement/standards/fhir/STU3/patient-operations.html#everything),
-// R4
-// (http://hl7.org/implement/standards/fhir/R4/patient-operations.html#everything)).
-// On success, the response body contains a JSON-encoded representation of a
-// `Bundle` resource of type `searchset`, containing the results of the
-// operation. Errors generated by the FHIR store contain a JSON-encoded
-// `OperationOutcome` resource describing the reason for the error. If the
-// request cannot be mapped to a valid API method on a FHIR store, a generic
-// GCP error might be returned instead. The resources in scope for the response
-// are: * The patient resource itself. * All the resources directly referenced
-// by the patient resource. * Resources directly referencing the patient
-// resource that meet the inclusion criteria. The inclusion criteria are based
-// on the membership rules in the patient compartment definition (DSTU2
+// (DSTU2 (https://hl7.org/fhir/DSTU2/patient-operations.html#everything), STU3
+// (https://hl7.org/fhir/STU3/patient-operations.html#everything), R4
+// (https://hl7.org/fhir/R4/patient-operation-everything.html), R5
+// (https://hl7.org/fhir/R5/patient-operation-everything.html)). On success,
+// the response body contains a JSON-encoded representation of a `Bundle`
+// resource of type `searchset`, containing the results of the operation.
+// Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome`
+// resource describing the reason for the error. If the request cannot be
+// mapped to a valid API method on a FHIR store, a generic GCP error might be
+// returned instead. The resources in scope for the response are: * The patient
+// resource itself. * All the resources directly referenced by the patient
+// resource. * Resources directly referencing the patient resource that meet
+// the inclusion criteria. The inclusion criteria are based on the membership
+// rules in the patient compartment definition (DSTU2
 // (http://hl7.org/fhir/DSTU2/compartment-patient.html), STU3
 // (http://www.hl7.org/fhir/stu3/compartmentdefinition-patient.html), R4
-// (http://hl7.org/fhir/R4/compartmentdefinition-patient.html)), which details
+// (http://hl7.org/fhir/R4/compartmentdefinition-patient.html), R5
+// (http://hl7.org/fhir/R5/compartmentdefinition-patient.html)), which details
 // the eligible resource types and referencing search parameters. For samples
 // that show how to call `Patient-everything`, see Getting all patient
 // compartment resources
@@ -19185,29 +19192,29 @@ type ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall struct {
 // ResourceValidate: Validates an input FHIR resource's conformance to its
 // profiles and the profiles configured on the FHIR store. Implements the FHIR
 // extended operation $validate (DSTU2
-// (http://hl7.org/implement/standards/fhir/DSTU2/resource-operations.html#validate),
-// STU3
-// (http://hl7.org/implement/standards/fhir/STU3/resource-operations.html#validate),
-// or R4
-// (http://hl7.org/implement/standards/fhir/R4/resource-operation-validate.html)).
-// The request body must contain a JSON-encoded FHIR resource, and the request
-// headers must contain `Content-Type: application/fhir+json`. The `Parameters`
-// input syntax is not supported. The `profile` query parameter can be used to
-// request that the resource only be validated against a specific profile. If a
-// profile with the given URL cannot be found in the FHIR store then an error
-// is returned. Errors generated by validation contain a JSON-encoded
-// `OperationOutcome` resource describing the reason for the error. If the
-// request cannot be mapped to a valid API method on a FHIR store, a generic
-// GCP error might be returned instead.
+// (https://hl7.org/fhir/DSTU2/resource-operations.html#validate), STU3
+// (https://hl7.org/fhir/STU3/resource-operations.html#validate), R4
+// (https://hl7.org/fhir/R4/resource-operation-validate.html). or R5
+// (https://hl7.org/fhir/R5/resource-operation-validate.html)). The request
+// body must contain a JSON-encoded FHIR resource, and the request headers must
+// contain `Content-Type: application/fhir+json`. The `Parameters` input syntax
+// is not supported. The `profile` query parameter can be used to request that
+// the resource only be validated against a specific profile. If a profile with
+// the given URL cannot be found in the FHIR store then an error is returned.
+// Errors generated by validation contain a JSON-encoded `OperationOutcome`
+// resource describing the reason for the error. If the request cannot be
+// mapped to a valid API method on a FHIR store, a generic GCP error might be
+// returned instead.
 //
 //   - parent: The name of the FHIR store that holds the profiles being used for
 //     validation.
 //   - type: The FHIR resource type of the resource being validated. For a
 //     complete list, see the FHIR Resource Index (DSTU2
-//     (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), STU3
-//     (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html), or R4
-//     (http://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must
-//     match the resource type in the provided content.
+//     (https://hl7.org/fhir/DSTU2/resourcelist.html), STU3
+//     (https://hl7.org/fhir/STU3/resourcelist.html), R4
+//     (https://hl7.org/fhir/R4/resourcelist.html), or R5
+//     (https://hl7.org/fhir/R5/resourcelist.html)). Must match the resource type
+//     in the provided content.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ResourceValidate(parent string, type_ string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19418,19 +19425,18 @@ type ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall struct {
 }
 
 // Capabilities: Gets the FHIR capability statement (STU3
-// (http://hl7.org/implement/standards/fhir/STU3/capabilitystatement.html), R4
-// (http://hl7.org/implement/standards/fhir/R4/capabilitystatement.html)), or
-// the conformance statement
-// (http://hl7.org/implement/standards/fhir/DSTU2/conformance.html) in the
-// DSTU2 case for the store, which contains a description of functionality
-// supported by the server. Implements the FHIR standard capabilities
-// interaction (STU3
-// (http://hl7.org/implement/standards/fhir/STU3/http.html#capabilities), R4
-// (http://hl7.org/implement/standards/fhir/R4/http.html#capabilities)), or the
-// conformance interaction
-// (http://hl7.org/implement/standards/fhir/DSTU2/http.html#conformance) in the
-// DSTU2 case. On success, the response body contains a JSON-encoded
-// representation of a `CapabilityStatement` resource.
+// (https://hl7.org/fhir/STU3/capabilitystatement.html), R4
+// (https://hl7.org/fhir/R4/capabilitystatement.html), R5
+// (https://hl7.org/fhir/R5/capabilitystatement.html)), or the conformance
+// statement (https://hl7.org/fhir/DSTU2/conformance.html) in the DSTU2 case
+// for the store, which contains a description of functionality supported by
+// the server. Implements the FHIR standard capabilities interaction (STU3
+// (https://hl7.org/fhir/STU3/http.html#capabilities), R4
+// (https://hl7.org/fhir/R4/http.html#capabilities), R5
+// (https://hl7.org/fhir/R5/http.html#capabilities)), or the conformance
+// interaction (https://hl7.org/fhir/DSTU2/http.html#conformance) in the DSTU2
+// case. On success, the response body contains a JSON-encoded representation
+// of a `CapabilityStatement` resource.
 //
 // - name: Name of the FHIR store to retrieve the capabilities for.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Capabilities(name string) *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall {
@@ -19523,9 +19529,10 @@ type ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall struct {
 //   - parent: The name of the FHIR store this resource belongs to.
 //   - type: The FHIR resource type to delete, such as Patient or Observation.
 //     For a complete list, see the FHIR Resource Index (DSTU2
-//     (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), STU3
-//     (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), R4
-//     (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+//     (https://hl7.org/fhir/DSTU2/resourcelist.html), STU3
+//     (https://hl7.org/fhir/STU3/resourcelist.html), R4
+//     (https://hl7.org/fhir/R4/resourcelist.html), R5
+//     (https://hl7.org/fhir/R5/resourcelist.html)).
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ConditionalDelete(parent string, type_ string) *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19647,9 +19654,10 @@ type ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall struct {
 //   - parent: The name of the FHIR store this resource belongs to.
 //   - type: The FHIR resource type to update, such as Patient or Observation.
 //     For a complete list, see the FHIR Resource Index (DSTU2
-//     (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), STU3
-//     (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), R4
-//     (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+//     (https://hl7.org/fhir/DSTU2/resourcelist.html), STU3
+//     (https://hl7.org/fhir/STU3/resourcelist.html), R4
+//     (https://hl7.org/fhir/R4/resourcelist.html), R5
+//     (https://hl7.org/fhir/R5/resourcelist.html)).
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ConditionalPatch(parent string, type_ string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19749,10 +19757,11 @@ type ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall struct {
 //   - parent: The name of the FHIR store this resource belongs to.
 //   - type: The FHIR resource type to update, such as Patient or Observation.
 //     For a complete list, see the FHIR Resource Index (DSTU2
-//     (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), STU3
-//     (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), R4
-//     (https://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must
-//     match the resource type in the provided content.
+//     (https://hl7.org/fhir/DSTU2/resourcelist.html), STU3
+//     (https://hl7.org/fhir/STU3/resourcelist.html), R4
+//     (https://hl7.org/fhir/R4/resourcelist.html), R5
+//     (https://hl7.org/fhir/R5/resourcelist.html)). Must match the resource type
+//     in the provided content.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ConditionalUpdate(parent string, type_ string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19823,23 +19832,24 @@ type ProjectsLocationsDatasetsFhirStoresFhirCreateCall struct {
 }
 
 // Create: Creates a FHIR resource. Implements the FHIR standard create
-// interaction (DSTU2
-// (http://hl7.org/implement/standards/fhir/DSTU2/http.html#create), STU3
-// (http://hl7.org/implement/standards/fhir/STU3/http.html#create), R4
-// (http://hl7.org/implement/standards/fhir/R4/http.html#create)), which
-// creates a new resource with a server-assigned resource ID. Also supports the
-// FHIR standard conditional create interaction (DSTU2
-// (https://hl7.org/implement/standards/fhir/DSTU2/http.html#ccreate), STU3
-// (https://hl7.org/implement/standards/fhir/STU3/http.html#ccreate), R4
-// (https://hl7.org/implement/standards/fhir/R4/http.html#ccreate)), specified
-// by supplying an `If-None-Exist` header containing a FHIR search query,
-// limited to searching by resource identifier. If no resources match this
-// search query, the server processes the create operation as normal. When
-// using conditional create, the search term for identifier should be in the
-// pattern `identifier=system|value` or `identifier=value` - similar to the
-// `search` method on resources with a specific identifier. The request body
-// must contain a JSON-encoded FHIR resource, and the request headers must
-// contain `Content-Type: application/fhir+json`. On success, the response body
+// interaction (DSTU2 (https://hl7.org/fhir/DSTU2/http.html#create), STU3
+// (https://hl7.org/fhir/STU3/http.html#create), R4
+// (https://hl7.org/fhir/R4/http.html#create), R5
+// (https://hl7.org/fhir/R5/http.html#create)), which creates a new resource
+// with a server-assigned resource ID. Also supports the FHIR standard
+// conditional create interaction (DSTU2
+// (https://hl7.org/fhir/DSTU2/http.html#ccreate), STU3
+// (https://hl7.org/fhir/STU3/http.html#ccreate), R4
+// (https://hl7.org/fhir/R4/http.html#ccreate), R5
+// (https://hl7.org/fhir/R5/http.html#ccreate)), specified by supplying an
+// `If-None-Exist` header containing a FHIR search query, limited to searching
+// by resource identifier. If no resources match this search query, the server
+// processes the create operation as normal. When using conditional create, the
+// search term for identifier should be in the pattern
+// `identifier=system|value` or `identifier=value` - similar to the `search`
+// method on resources with a specific identifier. The request body must
+// contain a JSON-encoded FHIR resource, and the request headers must contain
+// `Content-Type: application/fhir+json`. On success, the response body
 // contains a JSON-encoded representation of the resource as it was created on
 // the server, including the server-assigned resource ID and version ID. Errors
 // generated by the FHIR store contain a JSON-encoded `OperationOutcome`
@@ -19852,10 +19862,11 @@ type ProjectsLocationsDatasetsFhirStoresFhirCreateCall struct {
 //   - parent: The name of the FHIR store this resource belongs to.
 //   - type: The FHIR resource type to create, such as Patient or Observation.
 //     For a complete list, see the FHIR Resource Index (DSTU2
-//     (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), STU3
-//     (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html), R4
-//     (http://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must
-//     match the resource type in the provided content.
+//     (https://hl7.org/fhir/DSTU2/resourcelist.html), STU3
+//     (https://hl7.org/fhir/STU3/resourcelist.html), R4
+//     (https://hl7.org/fhir/R4/resourcelist.html), R5
+//     (https://hl7.org/fhir/R5/resourcelist.html)). Must match the resource type
+//     in the provided content.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Create(parent string, type_ string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirCreateCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19924,15 +19935,15 @@ type ProjectsLocationsDatasetsFhirStoresFhirDeleteCall struct {
 }
 
 // Delete: Deletes a FHIR resource. Implements the FHIR standard delete
-// interaction (DSTU2
-// (http://hl7.org/implement/standards/fhir/DSTU2/http.html#delete), STU3
-// (http://hl7.org/implement/standards/fhir/STU3/http.html#delete), R4
-// (http://hl7.org/implement/standards/fhir/R4/http.html#delete)). Note: Unless
-// resource versioning is disabled by setting the disable_resource_versioning
-// flag on the FHIR store, the deleted resources will be moved to a history
-// repository that can still be retrieved through vread and related methods,
-// unless they are removed by the purge method. For samples that show how to
-// call `delete`, see Deleting a FHIR resource
+// interaction (DSTU2 (https://hl7.org/fhir/DSTU2/http.html#delete), STU3
+// (https://hl7.org/fhir/STU3/http.html#delete), R4
+// (https://hl7.org/fhir/R4/http.html#delete), R5
+// (https://hl7.org/fhir/R5/http.html#delete)). Note: Unless resource
+// versioning is disabled by setting the disable_resource_versioning flag on
+// the FHIR store, the deleted resources will be moved to a history repository
+// that can still be retrieved through vread and related methods, unless they
+// are removed by the purge method. For samples that show how to call `delete`,
+// see Deleting a FHIR resource
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#deleting_a_fhir_resource).
 //
 // - name: The name of the resource to delete.
@@ -20000,36 +20011,37 @@ type ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall struct {
 
 // ExecuteBundle: Executes all the requests in the given Bundle. Implements the
 // FHIR standard batch/transaction interaction (DSTU2
-// (https://hl7.org/implement/standards/fhir/DSTU2/http.html#transaction), STU3
-// (https://hl7.org/implement/standards/fhir/STU3/http.html#transaction), R4
-// (https://hl7.org/implement/standards/fhir/R4/http.html#transaction)).
-// Supports all interactions within a bundle, except search. This method
-// accepts Bundles of type `batch` and `transaction`, processing them according
-// to the batch processing rules (DSTU2
-// (https://hl7.org/implement/standards/fhir/DSTU2/http.html#2.1.0.16.1), STU3
-// (https://hl7.org/implement/standards/fhir/STU3/http.html#2.21.0.17.1), R4
-// (https://hl7.org/implement/standards/fhir/R4/http.html#brules)) and
-// transaction processing rules (DSTU2
-// (https://hl7.org/implement/standards/fhir/DSTU2/http.html#2.1.0.16.2), STU3
-// (https://hl7.org/implement/standards/fhir/STU3/http.html#2.21.0.17.2), R4
-// (https://hl7.org/implement/standards/fhir/R4/http.html#trules)). The request
-// body must contain a JSON-encoded FHIR `Bundle` resource, and the request
-// headers must contain `Content-Type: application/fhir+json`. For a batch
-// bundle or a successful transaction, the response body contains a
-// JSON-encoded representation of a `Bundle` resource of type `batch-response`
-// or `transaction-response` containing one entry for each entry in the
-// request, with the outcome of processing the entry. In the case of an error
-// for a transaction bundle, the response body contains a JSON-encoded
-// `OperationOutcome` resource describing the reason for the error. If the
-// request cannot be mapped to a valid API method on a FHIR store, a generic
-// GCP error might be returned instead. This method checks permissions for each
-// request in the bundle. The `executeBundle` permission is required to call
-// this method, but you must also grant sufficient permissions to execute the
-// individual requests in the bundle. For example, if the bundle contains a
-// request to create a FHIR resource, the caller must also have been granted
-// the `healthcare.fhirResources.create` permission. You can use audit logs to
-// view the permissions for `executeBundle` and each request in the bundle. For
-// more information, see Viewing Cloud Audit logs
+// (https://hl7.org/fhir/DSTU2/http.html#transaction), STU3
+// (https://hl7.org/fhir/STU3/http.html#transaction), R4
+// (https://hl7.org/fhir/R4/http.html#transaction), R5
+// (https://hl7.org/fhir/R5/http.html#transaction)). Supports all interactions
+// within a bundle, except search. This method accepts Bundles of type `batch`
+// and `transaction`, processing them according to the batch processing rules
+// (DSTU2 (https://hl7.org/fhir/DSTU2/http.html#2.1.0.16.1), STU3
+// (https://hl7.org/fhir/STU3/http.html#2.21.0.17.1), R4
+// (https://hl7.org/fhir/R4/http.html#brules), R5
+// (https://hl7.org/fhir/R5/http.html#brules)) and transaction processing rules
+// (DSTU2 (https://hl7.org/fhir/DSTU2/http.html#2.1.0.16.2), STU3
+// (https://hl7.org/fhir/STU3/http.html#2.21.0.17.2), R4
+// (https://hl7.org/fhir/R4/http.html#trules), R5
+// (https://hl7.org/fhir/R5/http.html#trules)). The request body must contain a
+// JSON-encoded FHIR `Bundle` resource, and the request headers must contain
+// `Content-Type: application/fhir+json`. For a batch bundle or a successful
+// transaction, the response body contains a JSON-encoded representation of a
+// `Bundle` resource of type `batch-response` or `transaction-response`
+// containing one entry for each entry in the request, with the outcome of
+// processing the entry. In the case of an error for a transaction bundle, the
+// response body contains a JSON-encoded `OperationOutcome` resource describing
+// the reason for the error. If the request cannot be mapped to a valid API
+// method on a FHIR store, a generic GCP error might be returned instead. This
+// method checks permissions for each request in the bundle. The
+// `executeBundle` permission is required to call this method, but you must
+// also grant sufficient permissions to execute the individual requests in the
+// bundle. For example, if the bundle contains a request to create a FHIR
+// resource, the caller must also have been granted the
+// `healthcare.fhirResources.create` permission. You can use audit logs to view
+// the permissions for `executeBundle` and each request in the bundle. For more
+// information, see Viewing Cloud Audit logs
 // (https://cloud.google.com/healthcare-api/docs/how-tos/audit-logging). For
 // samples that show how to call `executeBundle`, see Managing FHIR resources
 // using FHIR bundles
@@ -20105,16 +20117,17 @@ type ProjectsLocationsDatasetsFhirStoresFhirHistoryCall struct {
 // History: Lists all the versions of a resource (including the current version
 // and deleted versions) from the FHIR store. Implements the per-resource form
 // of the FHIR standard history interaction (DSTU2
-// (http://hl7.org/implement/standards/fhir/DSTU2/http.html#history), STU3
-// (http://hl7.org/implement/standards/fhir/STU3/http.html#history), R4
-// (http://hl7.org/implement/standards/fhir/R4/http.html#history)). On success,
-// the response body contains a JSON-encoded representation of a `Bundle`
-// resource of type `history`, containing the version history sorted from most
-// recent to oldest versions. Errors generated by the FHIR store contain a
-// JSON-encoded `OperationOutcome` resource describing the reason for the
-// error. If the request cannot be mapped to a valid API method on a FHIR
-// store, a generic GCP error might be returned instead. For samples that show
-// how to call `history`, see Listing FHIR resource versions
+// (https://hl7.org/fhir/DSTU2/http.html#history), STU3
+// (https://hl7.org/fhir/STU3/http.html#history), R4
+// (https://hl7.org/fhir/R4/http.html#history), R5
+// (https://hl7.org/fhir/R5/http.html#history)). On success, the response body
+// contains a JSON-encoded representation of a `Bundle` resource of type
+// `history`, containing the version history sorted from most recent to oldest
+// versions. Errors generated by the FHIR store contain a JSON-encoded
+// `OperationOutcome` resource describing the reason for the error. If the
+// request cannot be mapped to a valid API method on a FHIR store, a generic
+// GCP error might be returned instead. For samples that show how to call
+// `history`, see Listing FHIR resource versions
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#listing_fhir_resource_versions).
 //
 // - name: The name of the resource to retrieve.
@@ -20234,18 +20247,18 @@ type ProjectsLocationsDatasetsFhirStoresFhirPatchCall struct {
 // Patch: Updates part of an existing resource by applying the operations
 // specified in a JSON Patch (http://jsonpatch.com/) document. Implements the
 // FHIR standard patch interaction (STU3
-// (http://hl7.org/implement/standards/fhir/STU3/http.html#patch), R4
-// (http://hl7.org/implement/standards/fhir/R4/http.html#patch)). DSTU2 doesn't
-// define a patch method, but the server supports it in the same way it
-// supports STU3. The request body must contain a JSON Patch document, and the
-// request headers must contain `Content-Type: application/json-patch+json`. On
-// success, the response body contains a JSON-encoded representation of the
-// updated resource, including the server-assigned version ID. Errors generated
-// by the FHIR store contain a JSON-encoded `OperationOutcome` resource
-// describing the reason for the error. If the request cannot be mapped to a
-// valid API method on a FHIR store, a generic GCP error might be returned
-// instead. For samples that show how to call `patch`, see Patching a FHIR
-// resource
+// (https://hl7.org/fhir/STU3/http.html#patch), R4
+// (https://hl7.org/fhir/R4/http.html#patch), R5
+// (https://hl7.org/fhir/R5/http.html#patch)). DSTU2 doesn't define a patch
+// method, but the server supports it in the same way it supports STU3. The
+// request body must contain a JSON Patch document, and the request headers
+// must contain `Content-Type: application/json-patch+json`. On success, the
+// response body contains a JSON-encoded representation of the updated
+// resource, including the server-assigned version ID. Errors generated by the
+// FHIR store contain a JSON-encoded `OperationOutcome` resource describing the
+// reason for the error. If the request cannot be mapped to a valid API method
+// on a FHIR store, a generic GCP error might be returned instead. For samples
+// that show how to call `patch`, see Patching a FHIR resource
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#patching_a_fhir_resource).
 //
 // - name: The name of the resource to update.
@@ -20316,21 +20329,22 @@ type ProjectsLocationsDatasetsFhirStoresFhirReadCall struct {
 }
 
 // Read: Gets the contents of a FHIR resource. Implements the FHIR standard
-// read interaction (DSTU2
-// (http://hl7.org/implement/standards/fhir/DSTU2/http.html#read), STU3
-// (http://hl7.org/implement/standards/fhir/STU3/http.html#read), R4
-// (http://hl7.org/implement/standards/fhir/R4/http.html#read)). Also supports
-// the FHIR standard conditional read interaction (DSTU2
-// (http://hl7.org/implement/standards/fhir/DSTU2/http.html#cread), STU3
-// (http://hl7.org/implement/standards/fhir/STU3/http.html#cread), R4
-// (http://hl7.org/implement/standards/fhir/R4/http.html#cread)) specified by
-// supplying an `If-Modified-Since` header with a date/time value or an
-// `If-None-Match` header with an ETag value. On success, the response body
-// contains a JSON-encoded representation of the resource. Errors generated by
-// the FHIR store contain a JSON-encoded `OperationOutcome` resource describing
-// the reason for the error. If the request cannot be mapped to a valid API
-// method on a FHIR store, a generic GCP error might be returned instead. For
-// samples that show how to call `read`, see Getting a FHIR resource
+// read interaction (DSTU2 (https://hl7.org/fhir/DSTU2/http.html#read), STU3
+// (https://hl7.org/fhir/STU3/http.html#read), R4
+// (https://hl7.org/fhir/R4/http.html#read), R5
+// (https://hl7.org/fhir/R5/http.html#read)). Also supports the FHIR standard
+// conditional read interaction (DSTU2
+// (https://hl7.org/fhir/DSTU2/http.html#cread), STU3
+// (https://hl7.org/fhir/STU3/http.html#cread), R4
+// (https://hl7.org/fhir/R4/http.html#cread), R5
+// (https://hl7.org/fhir/R5/http.html#cread)) specified by supplying an
+// `If-Modified-Since` header with a date/time value or an `If-None-Match`
+// header with an ETag value. On success, the response body contains a
+// JSON-encoded representation of the resource. Errors generated by the FHIR
+// store contain a JSON-encoded `OperationOutcome` resource describing the
+// reason for the error. If the request cannot be mapped to a valid API method
+// on a FHIR store, a generic GCP error might be returned instead. For samples
+// that show how to call `read`, see Getting a FHIR resource
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#getting_a_fhir_resource).
 //
 // - name: The name of the resource to retrieve.
@@ -20409,39 +20423,39 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
 
 // Search: Searches for resources in the given FHIR store according to criteria
 // specified as query parameters. Implements the FHIR standard search
-// interaction (DSTU2
-// (http://hl7.org/implement/standards/fhir/DSTU2/http.html#search), STU3
-// (http://hl7.org/implement/standards/fhir/STU3/http.html#search), R4
-// (http://hl7.org/implement/standards/fhir/R4/http.html#search)) using the
-// search semantics described in the FHIR Search specification (DSTU2
-// (http://hl7.org/implement/standards/fhir/DSTU2/search.html), STU3
-// (http://hl7.org/implement/standards/fhir/STU3/search.html), R4
-// (http://hl7.org/implement/standards/fhir/R4/search.html)). Supports four
-// methods of search defined by the specification: * `GET [base]?[parameters]`
-// to search across all resources. * `GET [base]/[type]?[parameters]` to search
-// resources of a specified type. * `POST [base]/_search?[parameters]` as an
-// alternate form having the same semantics as the `GET` method across all
-// resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form
-// having the same semantics as the `GET` method for the specified type. The
-// `GET` and `POST` methods do not support compartment searches. The `POST`
-// method does not support `application/x-www-form-urlencoded` search
-// parameters. On success, the response body contains a JSON-encoded
-// representation of a `Bundle` resource of type `searchset`, containing the
-// results of the search. Errors generated by the FHIR store contain a
-// JSON-encoded `OperationOutcome` resource describing the reason for the
-// error. If the request cannot be mapped to a valid API method on a FHIR
-// store, a generic GCP error might be returned instead. The server's
-// capability statement, retrieved through capabilities, indicates what search
-// parameters are supported on each FHIR resource. A list of all search
-// parameters defined by the specification can be found in the FHIR Search
-// Parameter Registry (STU3
-// (http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html),
-// R4
-// (http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)).
-// FHIR search parameters for DSTU2 can be found on each resource's definition
-// page. Supported search modifiers: `:missing`, `:exact`, `:contains`,
-// `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and
-// `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result
+// interaction (DSTU2 (https://hl7.org/fhir/DSTU2/http.html#search), STU3
+// (https://hl7.org/fhir/STU3/http.html#search), R4
+// (https://hl7.org/fhir/R4/http.html#search), R5
+// (https://hl7.org/fhir/R5/http.html#search)) using the search semantics
+// described in the FHIR Search specification (DSTU2
+// (https://hl7.org/fhir/DSTU2/search.html), STU3
+// (https://hl7.org/fhir/STU3/search.html), R4
+// (https://hl7.org/fhir/R4/search.html), R5
+// (https://hl7.org/fhir/R5/search.html)). Supports four methods of search
+// defined by the specification: * `GET [base]?[parameters]` to search across
+// all resources. * `GET [base]/[type]?[parameters]` to search resources of a
+// specified type. * `POST [base]/_search?[parameters]` as an alternate form
+// having the same semantics as the `GET` method across all resources. * `POST
+// [base]/[type]/_search?[parameters]` as an alternate form having the same
+// semantics as the `GET` method for the specified type. The `GET` and `POST`
+// methods do not support compartment searches. The `POST` method does not
+// support `application/x-www-form-urlencoded` search parameters. On success,
+// the response body contains a JSON-encoded representation of a `Bundle`
+// resource of type `searchset`, containing the results of the search. Errors
+// generated by the FHIR store contain a JSON-encoded `OperationOutcome`
+// resource describing the reason for the error. If the request cannot be
+// mapped to a valid API method on a FHIR store, a generic GCP error might be
+// returned instead. The server's capability statement, retrieved through
+// capabilities, indicates what search parameters are supported on each FHIR
+// resource. A list of all search parameters defined by the specification can
+// be found in the FHIR Search Parameter Registry (STU3
+// (https://hl7.org/fhir/STU3/searchparameter-registry.html), R4
+// (https://hl7.org/fhir/R4/searchparameter-registry.html), R5
+// (https://hl7.org/fhir/R5/searchparameter-registry.html)). FHIR search
+// parameters for DSTU2 can be found on each resource's definition page.
+// Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`,
+// `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse`
+// (DSTU2 and STU3) or `:iterate` (R4 and R5). Supported search result
 // parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`,
 // `_summary=data`, and `_elements`. The maximum number of search results
 // returned defaults to 100, which can be overridden by the `_count` parameter
@@ -20547,39 +20561,39 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
 
 // SearchType: Searches for resources in the given FHIR store according to
 // criteria specified as query parameters. Implements the FHIR standard search
-// interaction (DSTU2
-// (http://hl7.org/implement/standards/fhir/DSTU2/http.html#search), STU3
-// (http://hl7.org/implement/standards/fhir/STU3/http.html#search), R4
-// (http://hl7.org/implement/standards/fhir/R4/http.html#search)) using the
-// search semantics described in the FHIR Search specification (DSTU2
-// (http://hl7.org/implement/standards/fhir/DSTU2/search.html), STU3
-// (http://hl7.org/implement/standards/fhir/STU3/search.html), R4
-// (http://hl7.org/implement/standards/fhir/R4/search.html)). Supports four
-// methods of search defined by the specification: * `GET [base]?[parameters]`
-// to search across all resources. * `GET [base]/[type]?[parameters]` to search
-// resources of a specified type. * `POST [base]/_search?[parameters]` as an
-// alternate form having the same semantics as the `GET` method across all
-// resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form
-// having the same semantics as the `GET` method for the specified type. The
-// `GET` and `POST` methods do not support compartment searches. The `POST`
-// method does not support `application/x-www-form-urlencoded` search
-// parameters. On success, the response body contains a JSON-encoded
-// representation of a `Bundle` resource of type `searchset`, containing the
-// results of the search. Errors generated by the FHIR store contain a
-// JSON-encoded `OperationOutcome` resource describing the reason for the
-// error. If the request cannot be mapped to a valid API method on a FHIR
-// store, a generic GCP error might be returned instead. The server's
-// capability statement, retrieved through capabilities, indicates what search
-// parameters are supported on each FHIR resource. A list of all search
-// parameters defined by the specification can be found in the FHIR Search
-// Parameter Registry (STU3
-// (http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html),
-// R4
-// (http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)).
-// FHIR search parameters for DSTU2 can be found on each resource's definition
-// page. Supported search modifiers: `:missing`, `:exact`, `:contains`,
-// `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and
-// `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result
+// interaction (DSTU2 (https://hl7.org/fhir/DSTU2/http.html#search), STU3
+// (https://hl7.org/fhir/STU3/http.html#search), R4
+// (https://hl7.org/fhir/R4/http.html#search), R5
+// (https://hl7.org/fhir/R5/http.html#search)) using the search semantics
+// described in the FHIR Search specification (DSTU2
+// (https://hl7.org/fhir/DSTU2/search.html), STU3
+// (https://hl7.org/fhir/STU3/search.html), R4
+// (https://hl7.org/fhir/R4/search.html), R5
+// (https://hl7.org/fhir/R5/search.html)). Supports four methods of search
+// defined by the specification: * `GET [base]?[parameters]` to search across
+// all resources. * `GET [base]/[type]?[parameters]` to search resources of a
+// specified type. * `POST [base]/_search?[parameters]` as an alternate form
+// having the same semantics as the `GET` method across all resources. * `POST
+// [base]/[type]/_search?[parameters]` as an alternate form having the same
+// semantics as the `GET` method for the specified type. The `GET` and `POST`
+// methods do not support compartment searches. The `POST` method does not
+// support `application/x-www-form-urlencoded` search parameters. On success,
+// the response body contains a JSON-encoded representation of a `Bundle`
+// resource of type `searchset`, containing the results of the search. Errors
+// generated by the FHIR store contain a JSON-encoded `OperationOutcome`
+// resource describing the reason for the error. If the request cannot be
+// mapped to a valid API method on a FHIR store, a generic GCP error might be
+// returned instead. The server's capability statement, retrieved through
+// capabilities, indicates what search parameters are supported on each FHIR
+// resource. A list of all search parameters defined by the specification can
+// be found in the FHIR Search Parameter Registry (STU3
+// (https://hl7.org/fhir/STU3/searchparameter-registry.html), R4
+// (https://hl7.org/fhir/R4/searchparameter-registry.html), R5
+// (https://hl7.org/fhir/R5/searchparameter-registry.html)). FHIR search
+// parameters for DSTU2 can be found on each resource's definition page.
+// Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`,
+// `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse`
+// (DSTU2 and STU3) or `:iterate` (R4 and R5). Supported search result
 // parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`,
 // `_summary=data`, and `_elements`. The maximum number of search results
 // returned defaults to 100, which can be overridden by the `_count` parameter
@@ -20617,9 +20631,10 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
 //   - parent: Name of the FHIR store to retrieve resources from.
 //   - resourceType: Optional. The FHIR resource type to search, such as Patient
 //     or Observation. For a complete list, see the FHIR Resource Index (DSTU2
-//     (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), STU3
-//     (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html), R4
-//     (http://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+//     (https://hl7.org/fhir/DSTU2/resourcelist.html), STU3
+//     (https://hl7.org/fhir/STU3/resourcelist.html), R4
+//     (https://hl7.org/fhir/R4/resourcelist.html)), R5
+//     (https://hl7.org/fhir/R5/resourcelist.html)).
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) SearchType(parent string, resourceType string, searchresourcesrequest *SearchResourcesRequest) *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20691,25 +20706,27 @@ type ProjectsLocationsDatasetsFhirStoresFhirUpdateCall struct {
 
 // Update: Updates the entire contents of a resource. Implements the FHIR
 // standard update interaction (DSTU2
-// (http://hl7.org/implement/standards/fhir/DSTU2/http.html#update), STU3
-// (http://hl7.org/implement/standards/fhir/STU3/http.html#update), R4
-// (http://hl7.org/implement/standards/fhir/R4/http.html#update)). If the
-// specified resource does not exist and the FHIR store has
-// enable_update_create set, creates the resource with the client-specified ID.
-// It is strongly advised not to include or encode any sensitive data such as
-// patient identifiers in client-specified resource IDs. Those IDs are part of
-// the FHIR resource path recorded in Cloud Audit Logs and Pub/Sub
-// notifications. Those IDs can also be contained in reference fields within
-// other resources. The request body must contain a JSON-encoded FHIR resource,
-// and the request headers must contain `Content-Type: application/fhir+json`.
-// The resource must contain an `id` element having an identical value to the
-// ID in the REST path of the request. On success, the response body contains a
-// JSON-encoded representation of the updated resource, including the
-// server-assigned version ID. Errors generated by the FHIR store contain a
-// JSON-encoded `OperationOutcome` resource describing the reason for the
-// error. If the request cannot be mapped to a valid API method on a FHIR
-// store, a generic GCP error might be returned instead. For samples that show
-// how to call `update`, see Updating a FHIR resource
+// (https://hl7.org/fhir/DSTU2/http.html#update), STU3
+// (https://hl7.org/fhir/STU3/http.html#update), R4
+// (https://hl7.org/fhir/R4/http.html#update), R5
+// (https://hl7.org/fhir/R5/http.html#update)). If the specified resource does
+// not exist and the FHIR store has enable_update_create set, creates the
+// resource with the client-specified ID. It is strongly advised not to include
+// or encode any sensitive data such as patient identifiers in client-specified
+// resource IDs. Those IDs are part of the FHIR resource path recorded in Cloud
+// Audit Logs and Pub/Sub notifications. Those IDs can also be contained in
+// reference fields within other resources. The request body must contain a
+// JSON-encoded FHIR resource, and the request headers must contain
+// `Content-Type: application/fhir+json`. The resource must contain an `id`
+// element having an identical value to the ID in the REST path of the request.
+// On success, the response body contains a JSON-encoded representation of the
+// updated resource, including the server-assigned version ID. Errors generated
+// by the FHIR store contain a JSON-encoded `OperationOutcome` resource
+// describing the reason for the error. If the request cannot be mapped to a
+// valid API method on a FHIR store, a generic GCP error might be returned
+// instead. In R5, the conditional update interaction If-None-Match is
+// supported, including the wildcard behaviour. For samples that show how to
+// call `update`, see Updating a FHIR resource
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#updating_a_fhir_resource).
 //
 // - name: The name of the resource to update.
@@ -20781,15 +20798,16 @@ type ProjectsLocationsDatasetsFhirStoresFhirVreadCall struct {
 
 // Vread: Gets the contents of a version (current or historical) of a FHIR
 // resource by version ID. Implements the FHIR standard vread interaction
-// (DSTU2 (http://hl7.org/implement/standards/fhir/DSTU2/http.html#vread), STU3
-// (http://hl7.org/implement/standards/fhir/STU3/http.html#vread), R4
-// (http://hl7.org/implement/standards/fhir/R4/http.html#vread)). On success,
-// the response body contains a JSON-encoded representation of the resource.
-// Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome`
-// resource describing the reason for the error. If the request cannot be
-// mapped to a valid API method on a FHIR store, a generic GCP error might be
-// returned instead. For samples that show how to call `vread`, see Retrieving
-// a FHIR resource version
+// (DSTU2 (https://hl7.org/fhir/DSTU2/http.html#vread), STU3
+// (https://hl7.org/fhir/STU3/http.html#vread), R4
+// (https://hl7.org/fhir/R4/http.html#vread), R5
+// (https://hl7.org/fhir/R5/http.html#vread)). On success, the response body
+// contains a JSON-encoded representation of the resource. Errors generated by
+// the FHIR store contain a JSON-encoded `OperationOutcome` resource describing
+// the reason for the error. If the request cannot be mapped to a valid API
+// method on a FHIR store, a generic GCP error might be returned instead. For
+// samples that show how to call `vread`, see Retrieving a FHIR resource
+// version
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#retrieving_a_fhir_resource_version).
 //
 // - name: The name of the resource version to retrieve.

@@ -557,6 +557,9 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	// Signature Algorithm, at security level 3. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
 	// digital signature algorithm, at security level 1. Randomized version.
+	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
+	// hash-based digital signature algorithm, at security level 1. Randomized
+	// pre-hash version supporting SHA256 digests.
 	Algorithm string `json:"algorithm,omitempty"`
 	// Attestation: Output only. Statement that was generated and signed by the HSM
 	// at key creation time. Use this statement to verify attributes of the key as
@@ -625,7 +628,7 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	//   "ENABLED" - This version may be used for cryptographic operations.
 	//   "DISABLED" - This version may not be used, but the key material is still
 	// available, and the version can be placed back into the ENABLED state.
-	//   "DESTROYED" - This key material of this version is destroyed and no longer
+	//   "DESTROYED" - The key material of this version is destroyed and no longer
 	// stored. This version may only become ENABLED again if this version is
 	// reimport_eligible and the original key material is reimported with a call to
 	// KeyManagementService.ImportCryptoKeyVersion.
@@ -740,6 +743,9 @@ type GoogleCloudKmsV1CryptoKeyVersionTemplate struct {
 	// Signature Algorithm, at security level 3. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
 	// digital signature algorithm, at security level 1. Randomized version.
+	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
+	// hash-based digital signature algorithm, at security level 1. Randomized
+	// pre-hash version supporting SHA256 digests.
 	Algorithm string `json:"algorithm,omitempty"`
 	// ProtectionLevel: ProtectionLevel to use when creating a CryptoKeyVersion
 	// based on this template. Immutable. Defaults to SOFTWARE.

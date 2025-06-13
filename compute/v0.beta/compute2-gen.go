@@ -63953,8 +63953,11 @@ type OrganizationSecurityPoliciesAddAssociationCall struct {
 }
 
 // AddAssociation: Inserts an association for the specified security policy.
-// Use of this API to modify firewall policies is deprecated. Use
-// firewallPolicies.addAssociation instead if possible.
+// This has billing implications. Projects in the hierarchy with effective
+// hierarchical security policies will be automatically enrolled into Cloud
+// Armor Enterprise if not already enrolled. Use of this API to modify firewall
+// policies is deprecated. Use firewallPolicies.addAssociation instead if
+// possible.
 //
 // - securityPolicy: Name of the security policy to update.
 func (r *OrganizationSecurityPoliciesService) AddAssociation(securityPolicy string, securitypolicyassociation *SecurityPolicyAssociation) *OrganizationSecurityPoliciesAddAssociationCall {

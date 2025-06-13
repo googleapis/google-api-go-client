@@ -485,10 +485,20 @@ func (s GoogleCloudApihubV1AllowedValue) MarshalJSON() ([]byte, error) {
 // GoogleCloudApihubV1Api: An API resource in the API Hub.
 type GoogleCloudApihubV1Api struct {
 	// ApiFunctionalRequirements: Optional. The api functional requirements
-	// associated with the API resource. Carinality is 1 for this attribute.
+	// associated with the API resource. Carinality is 1 for this attribute. This
+	// maps to the following system defined attribute:
+	// `projects/{project}/locations/{location}/attributes/system-api-functional-req
+	// uirements` attribute. The value of the attribute should be a proper URI, and
+	// in case of Cloud Storage URI, it should point to a Cloud Storage object, not
+	// a directory.
 	ApiFunctionalRequirements *GoogleCloudApihubV1AttributeValues `json:"apiFunctionalRequirements,omitempty"`
 	// ApiRequirements: Optional. The api requirement doc associated with the API
-	// resource. Carinality is 1 for this attribute.
+	// resource. Carinality is 1 for this attribute. This maps to the following
+	// system defined attribute:
+	// `projects/{project}/locations/{location}/attributes/system-api-requirements`
+	// attribute. The value of the attribute should be a proper URI, and in case of
+	// Cloud Storage URI, it should point to a Cloud Storage object, not a
+	// directory.
 	ApiRequirements *GoogleCloudApihubV1AttributeValues `json:"apiRequirements,omitempty"`
 	// ApiStyle: Optional. The style of the API. This maps to the following system
 	// defined attribute:
@@ -499,7 +509,12 @@ type GoogleCloudApihubV1Api struct {
 	// attribute.
 	ApiStyle *GoogleCloudApihubV1AttributeValues `json:"apiStyle,omitempty"`
 	// ApiTechnicalRequirements: Optional. The api technical requirements
-	// associated with the API resource. Carinality is 1 for this attribute.
+	// associated with the API resource. Carinality is 1 for this attribute. This
+	// maps to the following system defined attribute:
+	// `projects/{project}/locations/{location}/attributes/system-api-technical-requ
+	// irements` attribute. The value of the attribute should be a proper URI, and
+	// in case of Cloud Storage URI, it should point to a Cloud Storage object, not
+	// a directory.
 	ApiTechnicalRequirements *GoogleCloudApihubV1AttributeValues `json:"apiTechnicalRequirements,omitempty"`
 	// Attributes: Optional. The list of user defined attributes associated with
 	// the API resource. The key is the attribute name. It will be of the format:
@@ -1646,10 +1661,10 @@ type GoogleCloudApihubV1Deployment struct {
 	// Name: Identifier. The name of the deployment. Format:
 	// `projects/{project}/locations/{location}/deployments/{deployment}`
 	Name string `json:"name,omitempty"`
-	// ResourceUri: Required. A URI to the runtime resource. This URI can be used
-	// to manage the resource. For example, if the runtime resource is of type
-	// APIGEE_PROXY, then this field will contain the URI to the management UI of
-	// the proxy.
+	// ResourceUri: Required. A uri that uniquely identfies the deployment within a
+	// particular gateway. For example, if the runtime resource is of type
+	// APIGEE_PROXY, then this field will be a combination of org, proxy name and
+	// environment.
 	ResourceUri string `json:"resourceUri,omitempty"`
 	// Slo: Optional. The SLO for this deployment. This maps to the following
 	// system defined attribute:
@@ -12317,7 +12332,7 @@ func (r *ProjectsLocationsPluginsService) Create(parent string, googlecloudapihu
 // resource name. This field is optional. * If provided, the same will be used.
 // The service will throw an error if the specified id is already used by
 // another Plugin resource in the API hub instance. * If not provided, a system
-// generated id will be used. This value should be 4-500 characters, overall
+// generated id will be used. This value should be 4-63 characters, overall
 // resource name which will be of format
 // `projects/{project}/locations/{location}/plugins/{plugin}`, its length is
 // limited to 1000 characters and valid characters are /a-z[0-9]-_/.
@@ -13252,7 +13267,7 @@ func (r *ProjectsLocationsPluginsInstancesService) Create(parent string, googlec
 // plugin instance's resource name. This field is optional. * If provided, the
 // same will be used. The service will throw an error if the specified id is
 // already used by another plugin instance in the plugin resource. * If not
-// provided, a system generated id will be used. This value should be 4-500
+// provided, a system generated id will be used. This value should be 4-63
 // characters, and valid characters are /a-z[0-9]-_/.
 func (c *ProjectsLocationsPluginsInstancesCreateCall) PluginInstanceId(pluginInstanceId string) *ProjectsLocationsPluginsInstancesCreateCall {
 	c.urlParams_.Set("pluginInstanceId", pluginInstanceId)

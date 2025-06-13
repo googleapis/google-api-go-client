@@ -172,6 +172,7 @@ type OrganizationsService struct {
 func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
 	rs := &OrganizationsLocationsService{s: s}
 	rs.Global = NewOrganizationsLocationsGlobalService(s)
+	rs.VpcFlowLogsConfigs = NewOrganizationsLocationsVpcFlowLogsConfigsService(s)
 	return rs
 }
 
@@ -179,6 +180,8 @@ type OrganizationsLocationsService struct {
 	s *Service
 
 	Global *OrganizationsLocationsGlobalService
+
+	VpcFlowLogsConfigs *OrganizationsLocationsVpcFlowLogsConfigsService
 }
 
 func NewOrganizationsLocationsGlobalService(s *Service) *OrganizationsLocationsGlobalService {
@@ -199,6 +202,15 @@ func NewOrganizationsLocationsGlobalOperationsService(s *Service) *Organizations
 }
 
 type OrganizationsLocationsGlobalOperationsService struct {
+	s *Service
+}
+
+func NewOrganizationsLocationsVpcFlowLogsConfigsService(s *Service) *OrganizationsLocationsVpcFlowLogsConfigsService {
+	rs := &OrganizationsLocationsVpcFlowLogsConfigsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsVpcFlowLogsConfigsService struct {
 	s *Service
 }
 
@@ -673,20 +685,24 @@ func (s CloudFunctionInfo) MarshalJSON() ([]byte, error) {
 
 // CloudRunRevisionEndpoint: Wrapper for Cloud Run revision attributes.
 type CloudRunRevisionEndpoint struct {
+	// ServiceUri: Output only. The URI of the Cloud Run service that the revision
+	// belongs to. The format is:
+	// projects/{project}/locations/{location}/services/{service}
+	ServiceUri string `json:"serviceUri,omitempty"`
 	// Uri: A Cloud Run (https://cloud.google.com/run)
 	// [revision](https://cloud.google.com/run/docs/reference/rest/v1/namespaces.rev
 	// isions/get) URI. The format is:
 	// projects/{project}/locations/{location}/revisions/{revision}
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ServiceUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Uri") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "ServiceUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -837,6 +853,25 @@ func (s ConnectivityTest) MarshalJSON() ([]byte, error) {
 
 // DeliverInfo: Details of the final state "deliver" and associated resource.
 type DeliverInfo struct {
+	// GoogleServiceType: Recognized type of a Google Service the packet is
+	// delivered to (if applicable).
+	//
+	// Possible values:
+	//   "GOOGLE_SERVICE_TYPE_UNSPECIFIED" - Unspecified Google Service.
+	//   "IAP" - Identity aware proxy.
+	// https://cloud.google.com/iap/docs/using-tcp-forwarding
+	//   "GFE_PROXY_OR_HEALTH_CHECK_PROBER" - One of two services sharing IP
+	// ranges: * Load Balancer proxy * Centralized Health Check prober
+	// https://cloud.google.com/load-balancing/docs/firewall-rules
+	//   "CLOUD_DNS" - Connectivity from Cloud DNS to forwarding targets or
+	// alternate name servers that use private routing.
+	// https://cloud.google.com/dns/docs/zones/forwarding-zones#firewall-rules
+	// https://cloud.google.com/dns/docs/policies#firewall-rules
+	//   "PRIVATE_GOOGLE_ACCESS" - private.googleapis.com and
+	// restricted.googleapis.com
+	//   "SERVERLESS_VPC_ACCESS" - Google API via Serverless VPC Access.
+	// https://cloud.google.com/vpc/docs/serverless-vpc-access
+	GoogleServiceType string `json:"googleServiceType,omitempty"`
 	// IpAddress: IP address of the target (if applicable).
 	IpAddress string `json:"ipAddress,omitempty"`
 	// PscGoogleApiTarget: PSC Google API target the packet is delivered to (if
@@ -881,15 +916,15 @@ type DeliverInfo struct {
 	//   "REDIS_INSTANCE" - Target is a Redis Instance.
 	//   "REDIS_CLUSTER" - Target is a Redis Cluster.
 	Target string `json:"target,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IpAddress") to
+	// ForceSendFields is a list of field names (e.g. "GoogleServiceType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IpAddress") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "GoogleServiceType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -966,7 +1001,10 @@ type DropInfo struct {
 	// forwarding rule type is invalid (it's not a forwarding rule of the internal
 	// passthrough load balancer).
 	//   "NO_ROUTE_FROM_INTERNET_TO_PRIVATE_IPV6_ADDRESS" - Packet is sent from the
-	// Internet to the private IPv6 address.
+	// Internet or Google service to the private IPv6 address.
+	//   "NO_ROUTE_FROM_EXTERNAL_IPV6_SOURCE_TO_PRIVATE_IPV6_ADDRESS" - Packet is
+	// sent from the external IPv6 source address of an instance to the private
+	// IPv6 address of an instance.
 	//   "VPN_TUNNEL_LOCAL_SELECTOR_MISMATCH" - The packet does not match a
 	// policy-based VPN tunnel local selector.
 	//   "VPN_TUNNEL_REMOTE_SELECTOR_MISMATCH" - The packet does not match a
@@ -1169,6 +1207,9 @@ type DropInfo struct {
 	//   "LOAD_BALANCER_BACKEND_IP_VERSION_MISMATCH" - Packet is dropped due to
 	// being sent to a backend of a passthrough load balancer that doesn't use the
 	// same IP version as the frontend.
+	//   "NO_KNOWN_ROUTE_FROM_NCC_NETWORK_TO_DESTINATION" - Packet from the unknown
+	// NCC network is dropped due to no known route from the source network to the
+	// destination IP address.
 	Cause string `json:"cause,omitempty"`
 	// DestinationIp: Destination IP address of the dropped packet (if relevant).
 	DestinationIp string `json:"destinationIp,omitempty"`
@@ -1494,6 +1535,10 @@ type FirewallInfo struct {
 	// This field is not applicable to VPC firewall rules and implied VPC firewall
 	// rules.
 	Policy string `json:"policy,omitempty"`
+	// PolicyPriority: The priority of the firewall policy that this rule is
+	// associated with. This field is not applicable to VPC firewall rules and
+	// implied VPC firewall rules.
+	PolicyPriority int64 `json:"policyPriority,omitempty"`
 	// PolicyUri: The URI of the firewall policy that this rule is associated with.
 	// This field is not applicable to VPC firewall rules and implied VPC firewall
 	// rules.
@@ -1714,9 +1759,17 @@ type InstanceInfo struct {
 	// attached to (if relevant).
 	PscNetworkAttachmentUri string `json:"pscNetworkAttachmentUri,omitempty"`
 	// Running: Indicates whether the Compute Engine instance is running.
+	// Deprecated: use the `status` field instead.
 	Running bool `json:"running,omitempty"`
 	// ServiceAccount: Service account authorized for the instance.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// Status: The status of the instance.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Default unspecified value.
+	//   "RUNNING" - The instance is running.
+	//   "NOT_RUNNING" - The instance has any status other than "RUNNING".
+	Status string `json:"status,omitempty"`
 	// Uri: URI of a Compute Engine instance.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -2166,7 +2219,7 @@ func (s NatInfo) MarshalJSON() ([]byte, error) {
 }
 
 // NetworkInfo: For display only. Metadata associated with a Compute Engine
-// network. Next ID: 7
+// network.
 type NetworkInfo struct {
 	// DisplayName: Name of a Compute Engine network.
 	DisplayName string `json:"displayName,omitempty"`
@@ -2483,6 +2536,37 @@ type ProxyConnectionInfo struct {
 
 func (s ProxyConnectionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ProxyConnectionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// QueryOrgVpcFlowLogsConfigsResponse: Response for the
+// `QueryVpcFlowLogsConfigs` method.
+type QueryOrgVpcFlowLogsConfigsResponse struct {
+	// NextPageToken: Page token to fetch the next set of configurations.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached (when querying all
+	// locations with `-`).
+	Unreachable []string `json:"unreachable,omitempty"`
+	// VpcFlowLogsConfigs: List of VPC Flow Log configurations.
+	VpcFlowLogsConfigs []*VpcFlowLogsConfig `json:"vpcFlowLogsConfigs,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QueryOrgVpcFlowLogsConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryOrgVpcFlowLogsConfigsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3250,6 +3334,19 @@ type VpcFlowLogsConfig struct {
 	AggregationInterval string `json:"aggregationInterval,omitempty"`
 	// CreateTime: Output only. The time the config was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// CrossProjectMetadata: Optional. Determines whether to include cross project
+	// annotations in the logs. This field is available only for organization
+	// configurations. If not specified in org configs will be set to
+	// CROSS_PROJECT_METADATA_ENABLED.
+	//
+	// Possible values:
+	//   "CROSS_PROJECT_METADATA_UNSPECIFIED" - If not specified, the default is
+	// CROSS_PROJECT_METADATA_ENABLED.
+	//   "CROSS_PROJECT_METADATA_ENABLED" - When CROSS_PROJECT_METADATA_ENABLED,
+	// metadata from other projects will be included in the logs.
+	//   "CROSS_PROJECT_METADATA_DISABLED" - When CROSS_PROJECT_METADATA_DISABLED,
+	// metadata from other projects will not be included in the logs.
+	CrossProjectMetadata string `json:"crossProjectMetadata,omitempty"`
 	// Description: Optional. The user-supplied description of the VPC Flow Logs
 	// configuration. Maximum of 512 characters.
 	Description string `json:"description,omitempty"`
@@ -3289,6 +3386,10 @@ type VpcFlowLogsConfig struct {
 	// `organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_flo
 	// w_logs_config_id}`
 	Name string `json:"name,omitempty"`
+	// Network: Traffic will be logged from VMs, VPN tunnels and Interconnect
+	// Attachments within the network. Format:
+	// projects/{project_id}/global/networks/{name}
+	Network string `json:"network,omitempty"`
 	// State: Optional. The state of the VPC Flow Log configuration. Default value
 	// is ENABLED. When creating a new configuration, it must be enabled. Setting
 	// state=DISABLED will pause the log generation for this config.
@@ -3298,6 +3399,9 @@ type VpcFlowLogsConfig struct {
 	//   "ENABLED" - When ENABLED, this configuration will generate logs.
 	//   "DISABLED" - When DISABLED, this configuration will not generate logs.
 	State string `json:"state,omitempty"`
+	// Subnet: Traffic will be logged from VMs within the subnetwork. Format:
+	// projects/{project_id}/regions/{region}/subnetworks/{name}
+	Subnet string `json:"subnet,omitempty"`
 	// TargetResourceState: Output only. A diagnostic bit - describes the state of
 	// the configured target resource for diagnostic purposes.
 	//
@@ -4173,6 +4277,623 @@ func (c *OrganizationsLocationsGlobalOperationsListCall) Pages(ctx context.Conte
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type OrganizationsLocationsVpcFlowLogsConfigsCreateCall struct {
+	s                 *Service
+	parent            string
+	vpcflowlogsconfig *VpcFlowLogsConfig
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Create: Creates a new `VpcFlowLogsConfig`. If a configuration with the exact
+// same settings already exists (even if the ID is different), the creation
+// fails. Notes: 1. Creating a configuration with state=DISABLED will fail 2.
+// The following fields are not considered as `settings` for the purpose of the
+// check mentioned above, therefore - creating another configuration with the
+// same fields but different values for the following fields will fail as well:
+// * name * create_time * update_time * labels * description
+//
+//   - parent: The parent resource of the VPC Flow Logs configuration to create:
+//     `projects/{project_id}/locations/global`
+//     `organizations/{organization_id}/locations/global`.
+func (r *OrganizationsLocationsVpcFlowLogsConfigsService) Create(parent string, vpcflowlogsconfig *VpcFlowLogsConfig) *OrganizationsLocationsVpcFlowLogsConfigsCreateCall {
+	c := &OrganizationsLocationsVpcFlowLogsConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.vpcflowlogsconfig = vpcflowlogsconfig
+	return c
+}
+
+// VpcFlowLogsConfigId sets the optional parameter "vpcFlowLogsConfigId":
+// Required. ID of the `VpcFlowLogsConfig`.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsCreateCall) VpcFlowLogsConfigId(vpcFlowLogsConfigId string) *OrganizationsLocationsVpcFlowLogsConfigsCreateCall {
+	c.urlParams_.Set("vpcFlowLogsConfigId", vpcFlowLogsConfigId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsVpcFlowLogsConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsCreateCall) Context(ctx context.Context) *OrganizationsLocationsVpcFlowLogsConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsVpcFlowLogsConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.vpcflowlogsconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/vpcFlowLogsConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.vpcFlowLogsConfigs.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.organizations.locations.vpcFlowLogsConfigs.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.vpcFlowLogsConfigs.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsVpcFlowLogsConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a specific `VpcFlowLogsConfig`.
+//
+//   - name: `VpcFlowLogsConfig` resource name using one of the form:
+//     `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_c
+//     onfig}`
+//     `organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_f
+//     low_logs_config}`.
+func (r *OrganizationsLocationsVpcFlowLogsConfigsService) Delete(name string) *OrganizationsLocationsVpcFlowLogsConfigsDeleteCall {
+	c := &OrganizationsLocationsVpcFlowLogsConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsVpcFlowLogsConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsDeleteCall) Context(ctx context.Context) *OrganizationsLocationsVpcFlowLogsConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsVpcFlowLogsConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.vpcFlowLogsConfigs.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.organizations.locations.vpcFlowLogsConfigs.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.vpcFlowLogsConfigs.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsVpcFlowLogsConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the details of a specific `VpcFlowLogsConfig`.
+//
+//   - name: `VpcFlowLogsConfig` resource name using the form:
+//     `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_c
+//     onfig}`
+//     `organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_f
+//     low_logs_config}`.
+func (r *OrganizationsLocationsVpcFlowLogsConfigsService) Get(name string) *OrganizationsLocationsVpcFlowLogsConfigsGetCall {
+	c := &OrganizationsLocationsVpcFlowLogsConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsVpcFlowLogsConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsVpcFlowLogsConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsGetCall) Context(ctx context.Context) *OrganizationsLocationsVpcFlowLogsConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsVpcFlowLogsConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.vpcFlowLogsConfigs.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.organizations.locations.vpcFlowLogsConfigs.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *VpcFlowLogsConfig.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsGetCall) Do(opts ...googleapi.CallOption) (*VpcFlowLogsConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &VpcFlowLogsConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.vpcFlowLogsConfigs.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsVpcFlowLogsConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all `VpcFlowLogsConfigs` in a given organization.
+//
+//   - parent: The parent resource of the VpcFlowLogsConfig:
+//     `projects/{project_id}/locations/global`
+//     `organizations/{organization_id}/locations/global`.
+func (r *OrganizationsLocationsVpcFlowLogsConfigsService) List(parent string) *OrganizationsLocationsVpcFlowLogsConfigsListCall {
+	c := &OrganizationsLocationsVpcFlowLogsConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Lists the `VpcFlowLogsConfigs`
+// that match the filter expression. A filter expression must use the supported
+// [CEL logic operators]
+// (https://cloud.google.com/vpc/docs/about-flow-logs-records#supported_cel_logic_operators).
+func (c *OrganizationsLocationsVpcFlowLogsConfigsListCall) Filter(filter string) *OrganizationsLocationsVpcFlowLogsConfigsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to use to sort the
+// list.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsListCall) OrderBy(orderBy string) *OrganizationsLocationsVpcFlowLogsConfigsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of
+// `VpcFlowLogsConfigs` to return.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsListCall) PageSize(pageSize int64) *OrganizationsLocationsVpcFlowLogsConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token from an
+// earlier query, as returned in `next_page_token`.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsListCall) PageToken(pageToken string) *OrganizationsLocationsVpcFlowLogsConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsVpcFlowLogsConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsVpcFlowLogsConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsListCall) Context(ctx context.Context) *OrganizationsLocationsVpcFlowLogsConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsVpcFlowLogsConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/vpcFlowLogsConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.vpcFlowLogsConfigs.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.organizations.locations.vpcFlowLogsConfigs.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListVpcFlowLogsConfigsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsListCall) Do(opts ...googleapi.CallOption) (*ListVpcFlowLogsConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListVpcFlowLogsConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.vpcFlowLogsConfigs.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsListCall) Pages(ctx context.Context, f func(*ListVpcFlowLogsConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsLocationsVpcFlowLogsConfigsPatchCall struct {
+	s                 *Service
+	name              string
+	vpcflowlogsconfig *VpcFlowLogsConfig
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Patch: Updates an existing `VpcFlowLogsConfig`. If a configuration with the
+// exact same settings already exists (even if the ID is different), the
+// creation fails. Notes: 1. Updating a configuration with state=DISABLED will
+// fail 2. The following fields are not considered as `settings` for the
+// purpose of the check mentioned above, therefore - updating another
+// configuration with the same fields but different values for the following
+// fields will fail as well: * name * create_time * update_time * labels *
+// description
+//
+//   - name: Identifier. Unique name of the configuration using one of the forms:
+//     `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_c
+//     onfig_id}`
+//     `organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_f
+//     low_logs_config_id}`.
+func (r *OrganizationsLocationsVpcFlowLogsConfigsService) Patch(name string, vpcflowlogsconfig *VpcFlowLogsConfig) *OrganizationsLocationsVpcFlowLogsConfigsPatchCall {
+	c := &OrganizationsLocationsVpcFlowLogsConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.vpcflowlogsconfig = vpcflowlogsconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Mask of
+// fields to update. At least one path must be supplied in this field.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsVpcFlowLogsConfigsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsVpcFlowLogsConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsPatchCall) Context(ctx context.Context) *OrganizationsLocationsVpcFlowLogsConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsVpcFlowLogsConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.vpcflowlogsconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.vpcFlowLogsConfigs.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.organizations.locations.vpcFlowLogsConfigs.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsVpcFlowLogsConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.vpcFlowLogsConfigs.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsGetCall struct {
@@ -6615,4 +7336,160 @@ func (c *ProjectsLocationsVpcFlowLogsConfigsPatchCall) Do(opts ...googleapi.Call
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.vpcFlowLogsConfigs.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// QueryOrgVpcFlowLogsConfigs: QueryOrgVpcFlowLogsConfigs lists Organization
+// resources for a given project.
+//
+//   - parent: The parent resource of the VpcFlowLogsConfig:
+//     `projects/{project_id}/locations/global`.
+func (r *ProjectsLocationsVpcFlowLogsConfigsService) QueryOrgVpcFlowLogsConfigs(parent string) *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall {
+	c := &ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Lists the `VpcFlowLogsConfigs`
+// that match the filter expression. A filter expression must use the supported
+// [CEL logic operators]
+// (https://cloud.google.com/vpc/docs/about-flow-logs-records#supported_cel_logic_operators).
+func (c *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall) Filter(filter string) *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of
+// `VpcFlowLogsConfigs` to return.
+func (c *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall) PageSize(pageSize int64) *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token from an
+// earlier query, as returned in `next_page_token`.
+func (c *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall) PageToken(pageToken string) *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall) Fields(s ...googleapi.Field) *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall) IfNoneMatch(entityTag string) *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall) Context(ctx context.Context) *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/vpcFlowLogsConfigs:queryOrgVpcFlowLogsConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.vpcFlowLogsConfigs.queryOrgVpcFlowLogsConfigs", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.vpcFlowLogsConfigs.queryOrgVpcFlowLogsConfigs" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *QueryOrgVpcFlowLogsConfigsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall) Do(opts ...googleapi.CallOption) (*QueryOrgVpcFlowLogsConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueryOrgVpcFlowLogsConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.vpcFlowLogsConfigs.queryOrgVpcFlowLogsConfigs", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall) Pages(ctx context.Context, f func(*QueryOrgVpcFlowLogsConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

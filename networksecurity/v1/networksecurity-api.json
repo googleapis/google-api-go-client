@@ -4908,7 +4908,7 @@
       }
     }
   },
-  "revision": "20250428",
+  "revision": "20250527",
   "rootUrl": "https://networksecurity.googleapis.com/",
   "schemas": {
     "AddAddressGroupItemsRequest": {
@@ -5224,10 +5224,10 @@
       "description": "Describes the properties of a single source.",
       "id": "AuthzPolicyAuthzRuleFromRequestSource",
       "properties": {
-        "principals": {
-          "description": "Optional. A list of identities derived from the client's certificate. This field is under development and we don't recommend using it at this time. Limited to 5 principals.",
+        "ipBlocks": {
+          "description": "Optional. A list of IPs or CIDRs to match against the source IP of a request. Limited to 5 ip_blocks.",
           "items": {
-            "$ref": "AuthzPolicyAuthzRuleStringMatch"
+            "$ref": "AuthzPolicyAuthzRuleIpBlock"
           },
           "type": "array"
         },
@@ -5252,6 +5252,22 @@
         "value": {
           "$ref": "AuthzPolicyAuthzRuleStringMatch",
           "description": "Optional. Specifies how the header match will be performed."
+        }
+      },
+      "type": "object"
+    },
+    "AuthzPolicyAuthzRuleIpBlock": {
+      "description": "Represents a range of IP Addresses.",
+      "id": "AuthzPolicyAuthzRuleIpBlock",
+      "properties": {
+        "length": {
+          "description": "Required. The length of the address range.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "prefix": {
+          "description": "Required. The address prefix.",
+          "type": "string"
         }
       },
       "type": "object"

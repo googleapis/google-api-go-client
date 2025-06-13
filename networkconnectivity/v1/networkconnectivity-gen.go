@@ -443,8 +443,8 @@ type AllocationOptions struct {
 	// used.
 	//
 	// Possible values:
-	//   "ALLOCATION_STRATEGY_UNSPECIFIED" - Unspecified strategy must be used when
-	// the range is specified explicitly using ip_cidr_range field. Othherwise
+	//   "ALLOCATION_STRATEGY_UNSPECIFIED" - Unspecified is the only valid option
+	// when the range is specified explicitly by ip_cidr_range field. Otherwise
 	// unspefified means using the default strategy.
 	//   "RANDOM" - Random strategy, the legacy algorithm, used for backwards
 	// compatibility. This allocation strategy remains efficient in the case of
@@ -912,22 +912,22 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 type Filter struct {
 	// DestRange: Optional. The destination IP range of outgoing packets that this
 	// policy-based route applies to. Default is "0.0.0.0/0" if protocol version is
-	// IPv4.
+	// IPv4 and "::/0" if protocol version is IPv6.
 	DestRange string `json:"destRange,omitempty"`
 	// IpProtocol: Optional. The IP protocol that this policy-based route applies
 	// to. Valid values are 'TCP', 'UDP', and 'ALL'. Default is 'ALL'.
 	IpProtocol string `json:"ipProtocol,omitempty"`
 	// ProtocolVersion: Required. Internet protocol versions this policy-based
-	// route applies to. For this version, only IPV4 is supported. IPV6 is
-	// supported in preview.
+	// route applies to. IPV4 and IPV6 is supported.
 	//
 	// Possible values:
 	//   "PROTOCOL_VERSION_UNSPECIFIED" - Default value.
 	//   "IPV4" - The PBR is for IPv4 internet protocol traffic.
+	//   "IPV6" - The PBR is for IPv6 internet protocol traffic.
 	ProtocolVersion string `json:"protocolVersion,omitempty"`
 	// SrcRange: Optional. The source IP range of outgoing packets that this
 	// policy-based route applies to. Default is "0.0.0.0/0" if protocol version is
-	// IPv4.
+	// IPv4 and "::/0" if protocol version is IPv6.
 	SrcRange string `json:"srcRange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DestRange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1229,9 +1229,9 @@ type Hub struct {
 	// table_id}` This field is read-only. Network Connectivity Center
 	// automatically populates it based on the route tables nested under the hub.
 	RouteTables []string `json:"routeTables,omitempty"`
-	// RoutingVpcs: The VPC networks associated with this hub's spokes. This field
-	// is read-only. Network Connectivity Center automatically populates it based
-	// on the set of spokes attached to the hub.
+	// RoutingVpcs: Output only. The VPC networks associated with this hub's
+	// spokes. This field is read-only. Network Connectivity Center automatically
+	// populates it based on the set of spokes attached to the hub.
 	RoutingVpcs []*RoutingVPC `json:"routingVpcs,omitempty"`
 	// SpokeSummary: Output only. A summary of the spokes associated with a hub.
 	// The summary includes a count of spokes according to type and according to
@@ -1347,7 +1347,7 @@ type InternalRange struct {
 	AllocationOptions *AllocationOptions `json:"allocationOptions,omitempty"`
 	// CreateTime: Time when the internal range was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: A description of this resource.
+	// Description: Optional. A description of this resource.
 	Description string `json:"description,omitempty"`
 	// ExcludeCidrRanges: Optional. ExcludeCidrRanges flag. Specifies a set of CIDR
 	// blocks that allows exclusion of particular CIDR ranges from the
@@ -1356,23 +1356,23 @@ type InternalRange struct {
 	// Immutable: Optional. Immutable ranges cannot have their fields modified,
 	// except for labels and description.
 	Immutable bool `json:"immutable,omitempty"`
-	// IpCidrRange: The IP range that this internal range defines. NOTE: IPv6
-	// ranges are limited to usage=EXTERNAL_TO_VPC and peering=FOR_SELF. NOTE: For
-	// IPv6 Ranges this field is compulsory, i.e. the address range must be
+	// IpCidrRange: Optional. The IP range that this internal range defines. NOTE:
+	// IPv6 ranges are limited to usage=EXTERNAL_TO_VPC and peering=FOR_SELF. NOTE:
+	// For IPv6 Ranges this field is compulsory, i.e. the address range must be
 	// specified explicitly.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 	// Labels: User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Migration: Optional. Must be present if usage is set to FOR_MIGRATION.
 	Migration *Migration `json:"migration,omitempty"`
-	// Name: Immutable. The name of an internal range. Format:
+	// Name: Identifier. The name of an internal range. Format:
 	// projects/{project}/locations/{location}/internalRanges/{internal_range} See:
 	// https://google.aip.dev/122#fields-representing-resource-names
 	Name string `json:"name,omitempty"`
-	// Network: The URL or resource ID of the network in which to reserve the
-	// internal range. The network cannot be deleted if there are any reserved
-	// internal ranges referring to it. Legacy networks are not supported. For
-	// example:
+	// Network: Immutable. The URL or resource ID of the network in which to
+	// reserve the internal range. The network cannot be deleted if there are any
+	// reserved internal ranges referring to it. Legacy networks are not supported.
+	// For example:
 	// https://www.googleapis.com/compute/v1/projects/{project}/locations/global/networks/{network}
 	// projects/{project}/locations/global/networks/{network} {network}
 	Network string `json:"network,omitempty"`
@@ -1386,7 +1386,7 @@ type InternalRange struct {
 	//   "OVERLAP_EXISTING_SUBNET_RANGE" - Allow creation of internal ranges that
 	// overlap with existing subnets.
 	Overlaps []string `json:"overlaps,omitempty"`
-	// Peering: The type of peering set for this internal range.
+	// Peering: Optional. The type of peering set for this internal range.
 	//
 	// Possible values:
 	//   "PEERING_UNSPECIFIED" - If Peering is left unspecified in
@@ -1408,10 +1408,10 @@ type InternalRange struct {
 	// peers cannot use this range in a way that is visible to this VPC, but can
 	// re-use this range as long as it is NOT_SHARED from the peer VPC, too.
 	Peering string `json:"peering,omitempty"`
-	// PrefixLength: An alternate to ip_cidr_range. Can be set when trying to
-	// create an IPv4 reservation that automatically finds a free range of the
-	// given size. If both ip_cidr_range and prefix_length are set, there is an
-	// error if the range sizes do not match. Can also be used during updates to
+	// PrefixLength: Optional. An alternate to ip_cidr_range. Can be set when
+	// trying to create an IPv4 reservation that automatically finds a free range
+	// of the given size. If both ip_cidr_range and prefix_length are set, there is
+	// an error if the range sizes do not match. Can also be used during updates to
 	// change the range size. NOTE: For IPv6 this field only works if ip_cidr_range
 	// is set as well, and both fields must match. In other words, with IPv6 this
 	// field only works as a redundant parameter.
@@ -1424,7 +1424,7 @@ type InternalRange struct {
 	TargetCidrRange []string `json:"targetCidrRange,omitempty"`
 	// UpdateTime: Time when the internal range was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// Usage: The type of usage set for this InternalRange.
+	// Usage: Optional. The type of usage set for this InternalRange.
 	//
 	// Possible values:
 	//   "USAGE_UNSPECIFIED" - Unspecified usage is allowed in calls which identify
@@ -1526,8 +1526,8 @@ type LinkedProducerVpcNetwork struct {
 	// ProposedExcludeExportRanges: Output only. The proposed exclude export IP
 	// ranges waiting for hub administration's approval.
 	ProposedExcludeExportRanges []string `json:"proposedExcludeExportRanges,omitempty"`
-	// ProposedIncludeExportRanges: Optional. The proposed include export IP ranges
-	// waiting for hub administration's approval.
+	// ProposedIncludeExportRanges: Output only. The proposed include export IP
+	// ranges waiting for hub administration's approval.
 	ProposedIncludeExportRanges []string `json:"proposedIncludeExportRanges,omitempty"`
 	// ServiceConsumerVpcSpoke: Output only. The Service Consumer Network spoke.
 	ServiceConsumerVpcSpoke string `json:"serviceConsumerVpcSpoke,omitempty"`
@@ -1605,8 +1605,8 @@ type LinkedVpcNetwork struct {
 	// ProposedExcludeExportRanges: Output only. The proposed exclude export IP
 	// ranges waiting for hub administration's approval.
 	ProposedExcludeExportRanges []string `json:"proposedExcludeExportRanges,omitempty"`
-	// ProposedIncludeExportRanges: Optional. The proposed include export IP ranges
-	// waiting for hub administration's approval.
+	// ProposedIncludeExportRanges: Output only. The proposed include export IP
+	// ranges waiting for hub administration's approval.
 	ProposedIncludeExportRanges []string `json:"proposedIncludeExportRanges,omitempty"`
 	// Uri: Required. The URI of the VPC network resource.
 	Uri string `json:"uri,omitempty"`
@@ -2148,6 +2148,7 @@ type LocationMetadata struct {
 	//   "SITE_TO_CLOUD_SPOKES" - Site-to-cloud spokes are supported in this
 	// location
 	//   "SITE_TO_SITE_SPOKES" - Site-to-site spokes are supported in this location
+	//   "GATEWAY_SPOKES" - Gateway spokes are supported in this location.
 	LocationFeatures []string `json:"locationFeatures,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LocationFeatures") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8395,6 +8396,135 @@ func (c *ProjectsLocationsInternalRangesGetCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 }
 
+type ProjectsLocationsInternalRangesGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. Returns an
+// empty policy if the resource exists and does not have a policy set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsInternalRangesService) GetIamPolicy(resource string) *ProjectsLocationsInternalRangesGetIamPolicyCall {
+	c := &ProjectsLocationsInternalRangesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected. Requests for policies with any
+// conditional role bindings must specify version 3. Policies with no
+// conditional role bindings may specify any valid value or leave the field
+// unset. The policy in the response might use the policy version that you
+// specified, or it might use a lower policy version. For example, if you
+// specify version 3, but the policy has no conditional role bindings, the
+// response uses version 1. To learn which resources support conditions in
+// their IAM policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsInternalRangesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsInternalRangesGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInternalRangesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsInternalRangesGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsInternalRangesGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsInternalRangesGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInternalRangesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsInternalRangesGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInternalRangesGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInternalRangesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.internalRanges.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.internalRanges.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInternalRangesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.internalRanges.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsInternalRangesListCall struct {
 	s            *Service
 	parent       string
@@ -8564,7 +8694,7 @@ type ProjectsLocationsInternalRangesPatchCall struct {
 
 // Patch: Updates the parameters of a single internal range.
 //
-//   - name: Immutable. The name of an internal range. Format:
+//   - name: Identifier. The name of an internal range. Format:
 //     projects/{project}/locations/{location}/internalRanges/{internal_range}
 //     See: https://google.aip.dev/122#fields-representing-resource-names.
 func (r *ProjectsLocationsInternalRangesService) Patch(name string, internalrange *InternalRange) *ProjectsLocationsInternalRangesPatchCall {
@@ -8683,6 +8813,224 @@ func (c *ProjectsLocationsInternalRangesPatchCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.internalRanges.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInternalRangesSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified resource.
+// Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`,
+// and `PERMISSION_DENIED` errors.
+//
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsInternalRangesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsInternalRangesSetIamPolicyCall {
+	c := &ProjectsLocationsInternalRangesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInternalRangesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsInternalRangesSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInternalRangesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsInternalRangesSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInternalRangesSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInternalRangesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.internalRanges.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.internalRanges.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInternalRangesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.internalRanges.setIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInternalRangesTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource. If the resource does not exist, this will return an empty set of
+// permissions, not a `NOT_FOUND` error. Note: This operation is designed to be
+// used for building permission-aware UIs and command-line tools, not for
+// authorization checking. This operation may "fail open" without warning.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
+func (r *ProjectsLocationsInternalRangesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsInternalRangesTestIamPermissionsCall {
+	c := &ProjectsLocationsInternalRangesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInternalRangesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsInternalRangesTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInternalRangesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsInternalRangesTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInternalRangesTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInternalRangesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.internalRanges.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.internalRanges.testIamPermissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInternalRangesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.internalRanges.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

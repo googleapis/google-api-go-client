@@ -171,6 +171,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Clusters = NewProjectsLocationsClustersService(s)
 	rs.ConnectClusters = NewProjectsLocationsConnectClustersService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.SchemaRegistries = NewProjectsLocationsSchemaRegistriesService(s)
 	return rs
 }
 
@@ -182,6 +183,8 @@ type ProjectsLocationsService struct {
 	ConnectClusters *ProjectsLocationsConnectClustersService
 
 	Operations *ProjectsLocationsOperationsService
+
+	SchemaRegistries *ProjectsLocationsSchemaRegistriesService
 }
 
 func NewProjectsLocationsClustersService(s *Service) *ProjectsLocationsClustersService {
@@ -256,6 +259,267 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSchemaRegistriesService(s *Service) *ProjectsLocationsSchemaRegistriesService {
+	rs := &ProjectsLocationsSchemaRegistriesService{s: s}
+	rs.Compatibility = NewProjectsLocationsSchemaRegistriesCompatibilityService(s)
+	rs.Config = NewProjectsLocationsSchemaRegistriesConfigService(s)
+	rs.Contexts = NewProjectsLocationsSchemaRegistriesContextsService(s)
+	rs.Mode = NewProjectsLocationsSchemaRegistriesModeService(s)
+	rs.Schemas = NewProjectsLocationsSchemaRegistriesSchemasService(s)
+	rs.Subjects = NewProjectsLocationsSchemaRegistriesSubjectsService(s)
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesService struct {
+	s *Service
+
+	Compatibility *ProjectsLocationsSchemaRegistriesCompatibilityService
+
+	Config *ProjectsLocationsSchemaRegistriesConfigService
+
+	Contexts *ProjectsLocationsSchemaRegistriesContextsService
+
+	Mode *ProjectsLocationsSchemaRegistriesModeService
+
+	Schemas *ProjectsLocationsSchemaRegistriesSchemasService
+
+	Subjects *ProjectsLocationsSchemaRegistriesSubjectsService
+}
+
+func NewProjectsLocationsSchemaRegistriesCompatibilityService(s *Service) *ProjectsLocationsSchemaRegistriesCompatibilityService {
+	rs := &ProjectsLocationsSchemaRegistriesCompatibilityService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesCompatibilityService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSchemaRegistriesConfigService(s *Service) *ProjectsLocationsSchemaRegistriesConfigService {
+	rs := &ProjectsLocationsSchemaRegistriesConfigService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesConfigService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSchemaRegistriesContextsService(s *Service) *ProjectsLocationsSchemaRegistriesContextsService {
+	rs := &ProjectsLocationsSchemaRegistriesContextsService{s: s}
+	rs.Compatibility = NewProjectsLocationsSchemaRegistriesContextsCompatibilityService(s)
+	rs.Config = NewProjectsLocationsSchemaRegistriesContextsConfigService(s)
+	rs.Mode = NewProjectsLocationsSchemaRegistriesContextsModeService(s)
+	rs.Schemas = NewProjectsLocationsSchemaRegistriesContextsSchemasService(s)
+	rs.Subjects = NewProjectsLocationsSchemaRegistriesContextsSubjectsService(s)
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesContextsService struct {
+	s *Service
+
+	Compatibility *ProjectsLocationsSchemaRegistriesContextsCompatibilityService
+
+	Config *ProjectsLocationsSchemaRegistriesContextsConfigService
+
+	Mode *ProjectsLocationsSchemaRegistriesContextsModeService
+
+	Schemas *ProjectsLocationsSchemaRegistriesContextsSchemasService
+
+	Subjects *ProjectsLocationsSchemaRegistriesContextsSubjectsService
+}
+
+func NewProjectsLocationsSchemaRegistriesContextsCompatibilityService(s *Service) *ProjectsLocationsSchemaRegistriesContextsCompatibilityService {
+	rs := &ProjectsLocationsSchemaRegistriesContextsCompatibilityService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesContextsCompatibilityService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSchemaRegistriesContextsConfigService(s *Service) *ProjectsLocationsSchemaRegistriesContextsConfigService {
+	rs := &ProjectsLocationsSchemaRegistriesContextsConfigService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesContextsConfigService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSchemaRegistriesContextsModeService(s *Service) *ProjectsLocationsSchemaRegistriesContextsModeService {
+	rs := &ProjectsLocationsSchemaRegistriesContextsModeService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesContextsModeService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSchemaRegistriesContextsSchemasService(s *Service) *ProjectsLocationsSchemaRegistriesContextsSchemasService {
+	rs := &ProjectsLocationsSchemaRegistriesContextsSchemasService{s: s}
+	rs.Subjects = NewProjectsLocationsSchemaRegistriesContextsSchemasSubjectsService(s)
+	rs.Types = NewProjectsLocationsSchemaRegistriesContextsSchemasTypesService(s)
+	rs.Versions = NewProjectsLocationsSchemaRegistriesContextsSchemasVersionsService(s)
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSchemasService struct {
+	s *Service
+
+	Subjects *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsService
+
+	Types *ProjectsLocationsSchemaRegistriesContextsSchemasTypesService
+
+	Versions *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsService
+}
+
+func NewProjectsLocationsSchemaRegistriesContextsSchemasSubjectsService(s *Service) *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsService {
+	rs := &ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSchemaRegistriesContextsSchemasTypesService(s *Service) *ProjectsLocationsSchemaRegistriesContextsSchemasTypesService {
+	rs := &ProjectsLocationsSchemaRegistriesContextsSchemasTypesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSchemasTypesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSchemaRegistriesContextsSchemasVersionsService(s *Service) *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsService {
+	rs := &ProjectsLocationsSchemaRegistriesContextsSchemasVersionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSchemasVersionsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSchemaRegistriesContextsSubjectsService(s *Service) *ProjectsLocationsSchemaRegistriesContextsSubjectsService {
+	rs := &ProjectsLocationsSchemaRegistriesContextsSubjectsService{s: s}
+	rs.Versions = NewProjectsLocationsSchemaRegistriesContextsSubjectsVersionsService(s)
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSubjectsService struct {
+	s *Service
+
+	Versions *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsService
+}
+
+func NewProjectsLocationsSchemaRegistriesContextsSubjectsVersionsService(s *Service) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsService {
+	rs := &ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsService{s: s}
+	rs.Referencedby = NewProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyService(s)
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsService struct {
+	s *Service
+
+	Referencedby *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyService
+}
+
+func NewProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyService(s *Service) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyService {
+	rs := &ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSchemaRegistriesModeService(s *Service) *ProjectsLocationsSchemaRegistriesModeService {
+	rs := &ProjectsLocationsSchemaRegistriesModeService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesModeService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSchemaRegistriesSchemasService(s *Service) *ProjectsLocationsSchemaRegistriesSchemasService {
+	rs := &ProjectsLocationsSchemaRegistriesSchemasService{s: s}
+	rs.Subjects = NewProjectsLocationsSchemaRegistriesSchemasSubjectsService(s)
+	rs.Types = NewProjectsLocationsSchemaRegistriesSchemasTypesService(s)
+	rs.Versions = NewProjectsLocationsSchemaRegistriesSchemasVersionsService(s)
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesSchemasService struct {
+	s *Service
+
+	Subjects *ProjectsLocationsSchemaRegistriesSchemasSubjectsService
+
+	Types *ProjectsLocationsSchemaRegistriesSchemasTypesService
+
+	Versions *ProjectsLocationsSchemaRegistriesSchemasVersionsService
+}
+
+func NewProjectsLocationsSchemaRegistriesSchemasSubjectsService(s *Service) *ProjectsLocationsSchemaRegistriesSchemasSubjectsService {
+	rs := &ProjectsLocationsSchemaRegistriesSchemasSubjectsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesSchemasSubjectsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSchemaRegistriesSchemasTypesService(s *Service) *ProjectsLocationsSchemaRegistriesSchemasTypesService {
+	rs := &ProjectsLocationsSchemaRegistriesSchemasTypesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesSchemasTypesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSchemaRegistriesSchemasVersionsService(s *Service) *ProjectsLocationsSchemaRegistriesSchemasVersionsService {
+	rs := &ProjectsLocationsSchemaRegistriesSchemasVersionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesSchemasVersionsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSchemaRegistriesSubjectsService(s *Service) *ProjectsLocationsSchemaRegistriesSubjectsService {
+	rs := &ProjectsLocationsSchemaRegistriesSubjectsService{s: s}
+	rs.Versions = NewProjectsLocationsSchemaRegistriesSubjectsVersionsService(s)
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesSubjectsService struct {
+	s *Service
+
+	Versions *ProjectsLocationsSchemaRegistriesSubjectsVersionsService
+}
+
+func NewProjectsLocationsSchemaRegistriesSubjectsVersionsService(s *Service) *ProjectsLocationsSchemaRegistriesSubjectsVersionsService {
+	rs := &ProjectsLocationsSchemaRegistriesSubjectsVersionsService{s: s}
+	rs.Referencedby = NewProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyService(s)
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesSubjectsVersionsService struct {
+	s *Service
+
+	Referencedby *ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyService
+}
+
+func NewProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyService(s *Service) *ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyService {
+	rs := &ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyService struct {
 	s *Service
 }
 
@@ -437,6 +701,69 @@ type CapacityConfig struct {
 
 func (s CapacityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CapacityConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CheckCompatibilityRequest: Request for CheckCompatibility.
+type CheckCompatibilityRequest struct {
+	// References: Optional. The schema references used by the schema.
+	References []*SchemaReference `json:"references,omitempty"`
+	// Schema: Required. The schema payload
+	Schema string `json:"schema,omitempty"`
+	// SchemaType: Optional. The schema type of the schema.
+	//
+	// Possible values:
+	//   "SCHEMA_TYPE_UNSPECIFIED" - No schema type. The default will be AVRO.
+	//   "AVRO" - Avro schema type.
+	//   "JSON" - JSON schema type.
+	//   "PROTOBUF" - Protobuf schema type.
+	SchemaType string `json:"schemaType,omitempty"`
+	// Verbose: Optional. If true, the response will contain the compatibility
+	// check result with reasons for failed checks. The default is false.
+	Verbose bool `json:"verbose,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "References") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "References") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CheckCompatibilityRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckCompatibilityRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CheckCompatibilityResponse: Response for CheckCompatibility.
+type CheckCompatibilityResponse struct {
+	// IsCompatible: The compatibility check result. If true, the schema is
+	// compatible with the resource.
+	IsCompatible bool `json:"is_compatible,omitempty"`
+	// Messages: Failure reasons if verbose = true.
+	Messages []string `json:"messages,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "IsCompatible") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsCompatible") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CheckCompatibilityResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckCompatibilityResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -767,6 +1094,138 @@ func (s ConsumerTopicMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Context: Context represents an independent schema grouping in a schema
+// registry instance.
+type Context struct {
+	// Name: Identifier. The name of the context. Structured like:
+	// `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/c
+	// ontexts/{context}` The context name {context} can contain the following: *
+	// Up to 255 characters. * Allowed characters: letters (uppercase or
+	// lowercase), numbers, and the following special characters: `.`, `-`, `_`,
+	// `+`, `%`, and `~`.
+	Name string `json:"name,omitempty"`
+	// Subjects: Optional. The subjects of the context.
+	Subjects []string `json:"subjects,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Context) MarshalJSON() ([]byte, error) {
+	type NoMethod Context
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateSchemaRegistryRequest: Request to create a schema registry instance.
+type CreateSchemaRegistryRequest struct {
+	// SchemaRegistry: Required. The schema registry instance to create. The name
+	// field is ignored.
+	SchemaRegistry *SchemaRegistry `json:"schemaRegistry,omitempty"`
+	// SchemaRegistryId: Required. The schema registry instance ID to use for this
+	// schema registry. The ID must contain only letters (a-z, A-Z), numbers (0-9),
+	// and underscores (-). The maximum length is 63 characters. The ID must not
+	// start with a number.
+	SchemaRegistryId string `json:"schemaRegistryId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SchemaRegistry") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SchemaRegistry") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateSchemaRegistryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateSchemaRegistryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateVersionRequest: Request for CreateVersion.
+type CreateVersionRequest struct {
+	// Id: Optional. The schema ID of the schema. If not specified, the schema ID
+	// will be generated by the server. If the schema ID is specified, it must not
+	// be used by an existing schema that is different from the schema to be
+	// created.
+	Id int64 `json:"id,omitempty"`
+	// Normalize: Optional. If true, the schema will be normalized before being
+	// stored. The default is false.
+	Normalize bool `json:"normalize,omitempty"`
+	// References: Optional. The schema references used by the schema.
+	References []*SchemaReference `json:"references,omitempty"`
+	// Schema: Required. The schema payload
+	Schema string `json:"schema,omitempty"`
+	// SchemaType: Optional. The type of the schema. It is optional. If not
+	// specified, the schema type will be AVRO.
+	//
+	// Possible values:
+	//   "SCHEMA_TYPE_UNSPECIFIED" - No schema type. The default will be AVRO.
+	//   "AVRO" - Avro schema type.
+	//   "JSON" - JSON schema type.
+	//   "PROTOBUF" - Protobuf schema type.
+	SchemaType string `json:"schemaType,omitempty"`
+	// Version: Optional. The version to create. It is optional. If not specified,
+	// the version will be created with the max version ID of the subject increased
+	// by 1. If the version ID is specified, it will be used as the new version ID
+	// and must not be used by an existing version of the subject.
+	Version int64 `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateVersionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateVersionResponse: Response for CreateVersion.
+type CreateVersionResponse struct {
+	// Id: The unique identifier of the schema created.
+	Id int64 `json:"id,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateVersionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateVersionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -802,6 +1261,53 @@ type GcpConfig struct {
 
 func (s GcpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GcpConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HttpBody: Message that represents an arbitrary HTTP body. It should only be
+// used for payload formats that can't be represented as JSON, such as raw
+// binary or an HTML page. This message can be used both in streaming and
+// non-streaming API methods in the request as well as the response. It can be
+// used as a top-level request field, which is convenient if one wants to
+// extract parameters from either the URL or HTTP template into the request
+// fields and also want access to the raw HTTP body. Example: message
+// GetResourceRequest { // A unique request id. string request_id = 1; // The
+// raw HTTP body is bound to this field. google.api.HttpBody http_body = 2; }
+// service ResourceService { rpc GetResource(GetResourceRequest) returns
+// (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody) returns
+// (google.protobuf.Empty); } Example with streaming methods: service
+// CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns (stream
+// google.api.HttpBody); rpc UpdateCalendar(stream google.api.HttpBody) returns
+// (stream google.api.HttpBody); } Use of this type only changes how the
+// request and response bodies are handled, all other features will continue to
+// work unchanged.
+type HttpBody struct {
+	// ContentType: The HTTP Content-Type header value specifying the content type
+	// of the body.
+	ContentType string `json:"contentType,omitempty"`
+	// Data: The HTTP request/response body as raw binary.
+	Data string `json:"data,omitempty"`
+	// Extensions: Application specific response metadata. Must be set in the first
+	// response for streaming APIs.
+	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ContentType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HttpBody) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpBody
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1007,6 +1513,31 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListSchemaRegistriesResponse: Request for ListSchemaRegistries.
+type ListSchemaRegistriesResponse struct {
+	// SchemaRegistries: The schema registry instances.
+	SchemaRegistries []*SchemaRegistry `json:"schemaRegistries,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "SchemaRegistries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SchemaRegistries") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListSchemaRegistriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSchemaRegistriesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListTopicsResponse: Response for ListTopics.
 type ListTopicsResponse struct {
 	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
@@ -1071,6 +1602,45 @@ type Location struct {
 
 func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LookupVersionRequest: Request for LookupVersion.
+type LookupVersionRequest struct {
+	// Deleted: Optional. If true, soft-deleted versions will be included in
+	// lookup, no matter if the subject is active or soft-deleted. If false,
+	// soft-deleted versions will be excluded. The default is false.
+	Deleted bool `json:"deleted,omitempty"`
+	// Normalize: Optional. If true, the schema will be normalized before being
+	// looked up. The default is false.
+	Normalize bool `json:"normalize,omitempty"`
+	// References: Optional. The schema references used by the schema.
+	References []*SchemaReference `json:"references,omitempty"`
+	// Schema: Required. The schema payload
+	Schema string `json:"schema,omitempty"`
+	// SchemaType: Optional. The schema type of the schema.
+	//
+	// Possible values:
+	//   "SCHEMA_TYPE_UNSPECIFIED" - No schema type. The default will be AVRO.
+	//   "AVRO" - Avro schema type.
+	//   "JSON" - JSON schema type.
+	//   "PROTOBUF" - Protobuf schema type.
+	SchemaType string `json:"schemaType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Deleted") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Deleted") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LookupVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod LookupVersionRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1275,6 +1845,225 @@ type ResumeConnectorResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// Schema: Schema for a Kafka message.
+type Schema struct {
+	// References: Optional. The schema references used by the schema.
+	References []*SchemaReference `json:"references,omitempty"`
+	// Schema: The schema payload.
+	Schema string `json:"schema,omitempty"`
+	// SchemaType: Optional. The schema type of the schema.
+	//
+	// Possible values:
+	//   "SCHEMA_TYPE_UNSPECIFIED" - No schema type. The default will be AVRO.
+	//   "AVRO" - Avro schema type.
+	//   "JSON" - JSON schema type.
+	//   "PROTOBUF" - Protobuf schema type.
+	SchemaType string `json:"schemaType,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "References") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "References") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Schema) MarshalJSON() ([]byte, error) {
+	type NoMethod Schema
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SchemaConfig: SchemaConfig represents configuration for a schema registry or
+// a specific subject.
+type SchemaConfig struct {
+	// Alias: Optional. The subject to which this subject is an alias of. Only
+	// applicable for subject config.
+	Alias string `json:"alias,omitempty"`
+	// Compatibility: Required. The compatibility type of the schema. The default
+	// value is BACKWARD. If unset in a SchemaSubject-level SchemaConfig, defaults
+	// to the global value. If unset in a SchemaRegistry-level SchemaConfig,
+	// reverts to the default value.
+	//
+	// Possible values:
+	//   "NONE" - No compatibility check.
+	//   "BACKWARD" - Backwards compatible with the most recent version.
+	//   "BACKWARD_TRANSITIVE" - Backwards compatible with all previous versions.
+	//   "FORWARD" - Forwards compatible with the most recent version.
+	//   "FORWARD_TRANSITIVE" - Forwards compatible with all previous versions.
+	//   "FULL" - Backwards and forwards compatible with the most recent version.
+	//   "FULL_TRANSITIVE" - Backwards and forwards compatible with all previous
+	// versions.
+	Compatibility string `json:"compatibility,omitempty"`
+	// Normalize: Optional. If true, the schema will be normalized before being
+	// stored or looked up. The default is false. If unset in a SchemaSubject-level
+	// SchemaConfig, the global value will be used. If unset in a
+	// SchemaRegistry-level SchemaConfig, reverts to the default value.
+	Normalize bool `json:"normalize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Alias") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Alias") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SchemaConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SchemaConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SchemaMode: SchemaMode represents the mode of a schema registry or a
+// specific subject. Four modes are supported: * NONE: This is the default mode
+// for a subject and essentially means that the subject does not have any mode
+// set. This means the subject will follow the schema registry's mode. *
+// READONLY: The schema registry is in read-only mode. * READWRITE: The schema
+// registry is in read-write mode, which allows limited write operations on the
+// schema. * IMPORT: The schema registry is in import mode, which allows more
+// editing operations on the schema for data importing purposes.
+type SchemaMode struct {
+	// Mode: Required. The mode type of a schema registry (READWRITE by default) or
+	// of a subject (NONE by default, which means use the global schema registry
+	// setting).
+	//
+	// Possible values:
+	//   "NONE" - No mode.
+	//   "READONLY" - READONLY mode.
+	//   "READWRITE" - READWRITE mode.
+	//   "IMPORT" - IMPORT mode.
+	Mode string `json:"mode,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Mode") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SchemaMode) MarshalJSON() ([]byte, error) {
+	type NoMethod SchemaMode
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SchemaReference: SchemaReference is a reference to a schema.
+type SchemaReference struct {
+	// Name: Required. The name of the reference.
+	Name string `json:"name,omitempty"`
+	// Subject: Required. The subject of the reference.
+	Subject string `json:"subject,omitempty"`
+	// Version: Required. The version of the reference.
+	Version int64 `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SchemaReference) MarshalJSON() ([]byte, error) {
+	type NoMethod SchemaReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SchemaRegistry: SchemaRegistry is a schema registry instance.
+type SchemaRegistry struct {
+	// Contexts: Output only. The contexts of the schema registry instance.
+	Contexts []string `json:"contexts,omitempty"`
+	// Name: Identifier. The name of the schema registry instance. Structured like:
+	// `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}`
+	// The instance name {schema_registry} can contain the following: * Up to 255
+	// characters. * Letters (uppercase or lowercase), numbers, and underscores.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Contexts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Contexts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SchemaRegistry) MarshalJSON() ([]byte, error) {
+	type NoMethod SchemaRegistry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SchemaVersion: Version of a schema.
+type SchemaVersion struct {
+	// Id: Required. The schema ID.
+	Id int64 `json:"id,omitempty"`
+	// References: Optional. The schema references used by the schema.
+	References []*SchemaReference `json:"references,omitempty"`
+	// Schema: Required. The schema payload.
+	Schema string `json:"schema,omitempty"`
+	// SchemaType: Optional. The schema type of the schema.
+	//
+	// Possible values:
+	//   "SCHEMA_TYPE_UNSPECIFIED" - No schema type. The default will be AVRO.
+	//   "AVRO" - Avro schema type.
+	//   "JSON" - JSON schema type.
+	//   "PROTOBUF" - Protobuf schema type.
+	SchemaType string `json:"schemaType,omitempty"`
+	// Subject: Required. The subject of the version.
+	Subject string `json:"subject,omitempty"`
+	// Version: Required. The version ID
+	Version int64 `json:"version,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SchemaVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod SchemaVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is suitable for
 // different programming environments, including REST APIs and RPC APIs. It is
 // used by gRPC (https://github.com/grpc). Each `Status` message contains three
@@ -1388,6 +2177,77 @@ type Topic struct {
 
 func (s Topic) MarshalJSON() ([]byte, error) {
 	type NoMethod Topic
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateSchemaConfigRequest: Request for updating schema config. On a
+// SchemaSubject-level SchemaConfig, an unset field will be removed from the
+// SchemaConfig.
+type UpdateSchemaConfigRequest struct {
+	// Compatibility: Required. The compatibility type of the schemas. Cannot be
+	// unset for a SchemaRegistry-level SchemaConfig. If unset on a
+	// SchemaSubject-level SchemaConfig, removes the compatibility field for the
+	// SchemaConfig.
+	//
+	// Possible values:
+	//   "NONE" - No compatibility check.
+	//   "BACKWARD" - Backwards compatible with the most recent version.
+	//   "BACKWARD_TRANSITIVE" - Backwards compatible with all previous versions.
+	//   "FORWARD" - Forwards compatible with the most recent version.
+	//   "FORWARD_TRANSITIVE" - Forwards compatible with all previous versions.
+	//   "FULL" - Backwards and forwards compatible with the most recent version.
+	//   "FULL_TRANSITIVE" - Backwards and forwards compatible with all previous
+	// versions.
+	Compatibility string `json:"compatibility,omitempty"`
+	// Normalize: Optional. If true, the schema will be normalized before being
+	// stored or looked up. The default is false. Cannot be unset for a
+	// SchemaRegistry-level SchemaConfig. If unset on a SchemaSubject-level
+	// SchemaConfig, removes the normalize field for the SchemaConfig.
+	Normalize bool `json:"normalize,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Compatibility") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Compatibility") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateSchemaConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateSchemaConfigRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateSchemaModeRequest: Request for updating schema registry or subject
+// mode.
+type UpdateSchemaModeRequest struct {
+	// Mode: Required. The mode type.
+	//
+	// Possible values:
+	//   "NONE" - No mode.
+	//   "READONLY" - READONLY mode.
+	//   "READWRITE" - READWRITE mode.
+	//   "IMPORT" - IMPORT mode.
+	Mode string `json:"mode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Mode") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateSchemaModeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateSchemaModeRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6335,4 +7195,5515 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsSchemaRegistriesCreateCall struct {
+	s                           *Service
+	parent                      string
+	createschemaregistryrequest *CreateSchemaRegistryRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Create: Create a schema registry instance.
+//
+//   - parent: The parent whose schema registry instance is to be created.
+//     Structured like: `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsSchemaRegistriesService) Create(parent string, createschemaregistryrequest *CreateSchemaRegistryRequest) *ProjectsLocationsSchemaRegistriesCreateCall {
+	c := &ProjectsLocationsSchemaRegistriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.createschemaregistryrequest = createschemaregistryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesCreateCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.createschemaregistryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/schemaRegistries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaRegistry.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesCreateCall) Do(opts ...googleapi.CallOption) (*SchemaRegistry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaRegistry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a schema registry instance.
+//
+//   - name: The name of the schema registry instance to delete. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     `.
+func (r *ProjectsLocationsSchemaRegistriesService) Delete(name string) *ProjectsLocationsSchemaRegistriesDeleteCall {
+	c := &ProjectsLocationsSchemaRegistriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesDeleteCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the schema registry instance.
+//
+//   - name: The name of the schema registry instance to return. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     `.
+func (r *ProjectsLocationsSchemaRegistriesService) Get(name string) *ProjectsLocationsSchemaRegistriesGetCall {
+	c := &ProjectsLocationsSchemaRegistriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesGetCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaRegistry.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesGetCall) Do(opts ...googleapi.CallOption) (*SchemaRegistry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaRegistry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List schema registries.
+//
+//   - parent: The parent whose schema registry instances are to be listed.
+//     Structured like: `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsSchemaRegistriesService) List(parent string) *ProjectsLocationsSchemaRegistriesListCall {
+	c := &ProjectsLocationsSchemaRegistriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesListCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/schemaRegistries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListSchemaRegistriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesListCall) Do(opts ...googleapi.CallOption) (*ListSchemaRegistriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSchemaRegistriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesCompatibilityCheckCompatibilityCall struct {
+	s                         *Service
+	name                      string
+	checkcompatibilityrequest *CheckCompatibilityRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// CheckCompatibility: Check compatibility of a schema with all versions or a
+// specific version of a subject.
+//
+//   - name: The name of the resource to check compatibility for. The format is
+//     either of following: *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     compatibility/subjects/*/versions: Check compatibility with one or more
+//     versions of the specified subject. *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     compatibility/subjects/{subject}/versions/{version}: Check compatibility
+//     with a specific version of the subject.
+func (r *ProjectsLocationsSchemaRegistriesCompatibilityService) CheckCompatibility(name string, checkcompatibilityrequest *CheckCompatibilityRequest) *ProjectsLocationsSchemaRegistriesCompatibilityCheckCompatibilityCall {
+	c := &ProjectsLocationsSchemaRegistriesCompatibilityCheckCompatibilityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.checkcompatibilityrequest = checkcompatibilityrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesCompatibilityCheckCompatibilityCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesCompatibilityCheckCompatibilityCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesCompatibilityCheckCompatibilityCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesCompatibilityCheckCompatibilityCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesCompatibilityCheckCompatibilityCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesCompatibilityCheckCompatibilityCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.checkcompatibilityrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.compatibility.checkCompatibility", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.compatibility.checkCompatibility" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CheckCompatibilityResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesCompatibilityCheckCompatibilityCall) Do(opts ...googleapi.CallOption) (*CheckCompatibilityResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CheckCompatibilityResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.compatibility.checkCompatibility", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesConfigDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete schema config for a subject.
+//
+//   - name: The resource name of subject to delete the config for. The format is
+//     *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     config/{subject}.
+func (r *ProjectsLocationsSchemaRegistriesConfigService) Delete(name string) *ProjectsLocationsSchemaRegistriesConfigDeleteCall {
+	c := &ProjectsLocationsSchemaRegistriesConfigDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesConfigDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesConfigDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesConfigDeleteCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesConfigDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesConfigDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesConfigDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.config.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.config.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesConfigDeleteCall) Do(opts ...googleapi.CallOption) (*SchemaConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.config.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesConfigGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get schema config at global level or for a subject.
+//
+//   - name: The resource name to get the config for. It can be either of
+//     following: *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     config: Get config at global level. *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     config/{subject}: Get config for a specific subject.
+func (r *ProjectsLocationsSchemaRegistriesConfigService) Get(name string) *ProjectsLocationsSchemaRegistriesConfigGetCall {
+	c := &ProjectsLocationsSchemaRegistriesConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// DefaultToGlobal sets the optional parameter "defaultToGlobal": If true, the
+// config will fall back to the config at the global level if no subject level
+// config is found.
+func (c *ProjectsLocationsSchemaRegistriesConfigGetCall) DefaultToGlobal(defaultToGlobal bool) *ProjectsLocationsSchemaRegistriesConfigGetCall {
+	c.urlParams_.Set("defaultToGlobal", fmt.Sprint(defaultToGlobal))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesConfigGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesConfigGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesConfigGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesConfigGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesConfigGetCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesConfigGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesConfigGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesConfigGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.config.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.config.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesConfigGetCall) Do(opts ...googleapi.CallOption) (*SchemaConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.config.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesConfigUpdateCall struct {
+	s                         *Service
+	name                      string
+	updateschemaconfigrequest *UpdateSchemaConfigRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Update: Update config at global level or for a subject. Creates a
+// SchemaSubject-level SchemaConfig if it does not exist.
+//
+//   - name: The resource name to update the config for. It can be either of
+//     following: *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     config: Update config at global level. *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     config/{subject}: Update config for a specific subject.
+func (r *ProjectsLocationsSchemaRegistriesConfigService) Update(name string, updateschemaconfigrequest *UpdateSchemaConfigRequest) *ProjectsLocationsSchemaRegistriesConfigUpdateCall {
+	c := &ProjectsLocationsSchemaRegistriesConfigUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.updateschemaconfigrequest = updateschemaconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesConfigUpdateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesConfigUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesConfigUpdateCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesConfigUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesConfigUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesConfigUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.updateschemaconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.config.update", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.config.update" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesConfigUpdateCall) Do(opts ...googleapi.CallOption) (*SchemaConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.config.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the context.
+//
+//   - name: The name of the context to return. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}`.
+func (r *ProjectsLocationsSchemaRegistriesContextsService) Get(name string) *ProjectsLocationsSchemaRegistriesContextsGetCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesContextsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesContextsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsGetCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Context.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsGetCall) Do(opts ...googleapi.CallOption) (*Context, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Context{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List contexts for a schema registry.
+//
+//   - parent: The parent of the contexts. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     `.
+func (r *ProjectsLocationsSchemaRegistriesContextsService) List(parent string) *ProjectsLocationsSchemaRegistriesContextsListCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesContextsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesContextsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsListCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/contexts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsCompatibilityCheckCompatibilityCall struct {
+	s                         *Service
+	name                      string
+	checkcompatibilityrequest *CheckCompatibilityRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// CheckCompatibility: Check compatibility of a schema with all versions or a
+// specific version of a subject.
+//
+//   - name: The name of the resource to check compatibility for. The format is
+//     either of following: *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     compatibility/subjects/*/versions: Check compatibility with one or more
+//     versions of the specified subject. *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     compatibility/subjects/{subject}/versions/{version}: Check compatibility
+//     with a specific version of the subject.
+func (r *ProjectsLocationsSchemaRegistriesContextsCompatibilityService) CheckCompatibility(name string, checkcompatibilityrequest *CheckCompatibilityRequest) *ProjectsLocationsSchemaRegistriesContextsCompatibilityCheckCompatibilityCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsCompatibilityCheckCompatibilityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.checkcompatibilityrequest = checkcompatibilityrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsCompatibilityCheckCompatibilityCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsCompatibilityCheckCompatibilityCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsCompatibilityCheckCompatibilityCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsCompatibilityCheckCompatibilityCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsCompatibilityCheckCompatibilityCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsCompatibilityCheckCompatibilityCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.checkcompatibilityrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.compatibility.checkCompatibility", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.compatibility.checkCompatibility" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CheckCompatibilityResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsCompatibilityCheckCompatibilityCall) Do(opts ...googleapi.CallOption) (*CheckCompatibilityResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CheckCompatibilityResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.compatibility.checkCompatibility", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsConfigDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete schema config for a subject.
+//
+//   - name: The resource name of subject to delete the config for. The format is
+//     *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     config/{subject}.
+func (r *ProjectsLocationsSchemaRegistriesContextsConfigService) Delete(name string) *ProjectsLocationsSchemaRegistriesContextsConfigDeleteCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsConfigDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsConfigDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigDeleteCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsConfigDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.config.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.config.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigDeleteCall) Do(opts ...googleapi.CallOption) (*SchemaConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.config.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsConfigGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get schema config at global level or for a subject.
+//
+//   - name: The resource name to get the config for. It can be either of
+//     following: *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     config: Get config at global level. *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     config/{subject}: Get config for a specific subject.
+func (r *ProjectsLocationsSchemaRegistriesContextsConfigService) Get(name string) *ProjectsLocationsSchemaRegistriesContextsConfigGetCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// DefaultToGlobal sets the optional parameter "defaultToGlobal": If true, the
+// config will fall back to the config at the global level if no subject level
+// config is found.
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigGetCall) DefaultToGlobal(defaultToGlobal bool) *ProjectsLocationsSchemaRegistriesContextsConfigGetCall {
+	c.urlParams_.Set("defaultToGlobal", fmt.Sprint(defaultToGlobal))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsConfigGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesContextsConfigGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigGetCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsConfigGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.config.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.config.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigGetCall) Do(opts ...googleapi.CallOption) (*SchemaConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.config.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsConfigUpdateCall struct {
+	s                         *Service
+	name                      string
+	updateschemaconfigrequest *UpdateSchemaConfigRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Update: Update config at global level or for a subject. Creates a
+// SchemaSubject-level SchemaConfig if it does not exist.
+//
+//   - name: The resource name to update the config for. It can be either of
+//     following: *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     config: Update config at global level. *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     config/{subject}: Update config for a specific subject.
+func (r *ProjectsLocationsSchemaRegistriesContextsConfigService) Update(name string, updateschemaconfigrequest *UpdateSchemaConfigRequest) *ProjectsLocationsSchemaRegistriesContextsConfigUpdateCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsConfigUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.updateschemaconfigrequest = updateschemaconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigUpdateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsConfigUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigUpdateCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsConfigUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.updateschemaconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.config.update", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.config.update" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsConfigUpdateCall) Do(opts ...googleapi.CallOption) (*SchemaConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.config.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsModeDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete schema mode for a subject.
+//
+//   - name: The resource name of subject to delete the mode for. The format is *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     mode/{subject} *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     contexts/{context}/mode/{subject}.
+func (r *ProjectsLocationsSchemaRegistriesContextsModeService) Delete(name string) *ProjectsLocationsSchemaRegistriesContextsModeDeleteCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsModeDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsModeDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsModeDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsModeDeleteCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsModeDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsModeDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsModeDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.mode.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.mode.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaMode.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsModeDeleteCall) Do(opts ...googleapi.CallOption) (*SchemaMode, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaMode{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.mode.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsModeGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get mode at global level or for a subject.
+//
+//   - name: The resource name of the mode. The format is *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     mode/{subject}: mode for a schema registry, or *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     contexts/{context}/mode/{subject}: mode for a specific subject in a
+//     specific context.
+func (r *ProjectsLocationsSchemaRegistriesContextsModeService) Get(name string) *ProjectsLocationsSchemaRegistriesContextsModeGetCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsModeGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsModeGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsModeGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesContextsModeGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesContextsModeGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsModeGetCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsModeGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsModeGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsModeGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.mode.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.mode.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaMode.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsModeGetCall) Do(opts ...googleapi.CallOption) (*SchemaMode, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaMode{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.mode.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsModeUpdateCall struct {
+	s                       *Service
+	name                    string
+	updateschemamoderequest *UpdateSchemaModeRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Update: Update mode at global level or for a subject.
+//
+//   - name: The resource name of the mode. The format is *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     mode/{subject}: mode for a schema registry, or *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     contexts/{context}/mode/{subject}: mode for a specific subject in a
+//     specific context.
+func (r *ProjectsLocationsSchemaRegistriesContextsModeService) Update(name string, updateschemamoderequest *UpdateSchemaModeRequest) *ProjectsLocationsSchemaRegistriesContextsModeUpdateCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsModeUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.updateschemamoderequest = updateschemamoderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsModeUpdateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsModeUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsModeUpdateCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsModeUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsModeUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsModeUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.updateschemamoderequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.mode.update", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.mode.update" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaMode.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsModeUpdateCall) Do(opts ...googleapi.CallOption) (*SchemaMode, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaMode{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.mode.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSchemasGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the schema for the given schema id.
+//
+//   - name: The name of the schema to return. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /schemas/ids/{schema}`.
+func (r *ProjectsLocationsSchemaRegistriesContextsSchemasService) Get(name string) *ProjectsLocationsSchemaRegistriesContextsSchemasGetCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsSchemasGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Subject sets the optional parameter "subject": Used to limit the search for
+// the schema ID to a specific subject, otherwise the schema ID will be
+// searched for in all subjects in the given specified context.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasGetCall) Subject(subject string) *ProjectsLocationsSchemaRegistriesContextsSchemasGetCall {
+	c.urlParams_.Set("subject", subject)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsSchemasGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesContextsSchemasGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasGetCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsSchemasGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.schemas.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.schemas.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Schema.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasGetCall) Do(opts ...googleapi.CallOption) (*Schema, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Schema{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.schemas.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSchemasGetSchemaCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSchema: Get the schema string for the given schema id. The response will
+// be the schema string.
+//
+//   - name: The name of the schema to return. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /schemas/ids/{schema}`.
+func (r *ProjectsLocationsSchemaRegistriesContextsSchemasService) GetSchema(name string) *ProjectsLocationsSchemaRegistriesContextsSchemasGetSchemaCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsSchemasGetSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Subject sets the optional parameter "subject": Used to limit the search for
+// the schema ID to a specific subject, otherwise the schema ID will be
+// searched for in all subjects in the given specified context.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasGetSchemaCall) Subject(subject string) *ProjectsLocationsSchemaRegistriesContextsSchemasGetSchemaCall {
+	c.urlParams_.Set("subject", subject)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasGetSchemaCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsSchemasGetSchemaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasGetSchemaCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesContextsSchemasGetSchemaCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasGetSchemaCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsSchemasGetSchemaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasGetSchemaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasGetSchemaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/schema")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.schemas.getSchema", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.schemas.getSchema" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasGetSchemaCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.schemas.getSchema", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List subjects which reference a particular schema id. The response
+// will be an array of subject names.
+//
+//   - parent: The schema resource whose associated subjects are to be listed.
+//     Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /schemas/ids/{schema}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/schemas/ids/{schema}`.
+func (r *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsService) List(parent string) *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Deleted sets the optional parameter "deleted": If true, the response will
+// include soft-deleted subjects. The default is false.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall) Deleted(deleted bool) *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall {
+	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
+	return c
+}
+
+// Subject sets the optional parameter "subject": The subject to filter the
+// subjects by.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall) Subject(subject string) *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall {
+	c.urlParams_.Set("subject", subject)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/subjects")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.schemas.subjects.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.schemas.subjects.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasSubjectsListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.schemas.subjects.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSchemasTypesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List the supported schema types. The response will be an array of
+// schema types.
+//
+//   - parent: The parent schema registry whose schema types are to be listed.
+//     Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     `.
+func (r *ProjectsLocationsSchemaRegistriesContextsSchemasTypesService) List(parent string) *ProjectsLocationsSchemaRegistriesContextsSchemasTypesListCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsSchemasTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasTypesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsSchemasTypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasTypesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesContextsSchemasTypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasTypesListCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsSchemasTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasTypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasTypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/schemas/types")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.schemas.types.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.schemas.types.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasTypesListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.schemas.types.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List the schema versions for the given schema id. The response will be
+// an array of subject-version pairs as: [{"subject":"subject1", "version":1},
+// {"subject":"subject2", "version":2}].
+//
+//   - parent: The schema whose schema versions are to be listed. Structured
+//     like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /schemas/ids/{schema}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/schemas/ids/{schema}`.
+func (r *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsService) List(parent string) *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Deleted sets the optional parameter "deleted": If true, the response will
+// include soft-deleted versions of the schema, even if the subject is
+// soft-deleted. The default is false.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall) Deleted(deleted bool) *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall {
+	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
+	return c
+}
+
+// Subject sets the optional parameter "subject": The subject to filter the
+// subjects by.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall) Subject(subject string) *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall {
+	c.urlParams_.Set("subject", subject)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/versions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.schemas.versions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.schemas.versions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsSchemasVersionsListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.schemas.versions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSubjectsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a subject. The response will be an array of versions of the
+// deleted subject.
+//
+//   - name: The name of the subject to delete. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}`.
+func (r *ProjectsLocationsSchemaRegistriesContextsSubjectsService) Delete(name string) *ProjectsLocationsSchemaRegistriesContextsSubjectsDeleteCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsSubjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Permanent sets the optional parameter "permanent": If true, the subject and
+// all associated metadata including the schema ID will be deleted permanently.
+// Otherwise, only the subject is soft-deleted. The default is false.
+// Soft-deleted subjects can still be searched in ListSubjects API call with
+// deleted=true query parameter. A soft-delete of a subject must be performed
+// before a hard-delete.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsDeleteCall) Permanent(permanent bool) *ProjectsLocationsSchemaRegistriesContextsSubjectsDeleteCall {
+	c.urlParams_.Set("permanent", fmt.Sprint(permanent))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsSubjectsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsDeleteCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsSubjectsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.subjects.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsDeleteCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSubjectsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List subjects in the schema registry. The response will be an array of
+// subject names.
+//
+//   - parent: The parent schema registry/context whose subjects are to be
+//     listed. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     ` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}`.
+func (r *ProjectsLocationsSchemaRegistriesContextsSubjectsService) List(parent string) *ProjectsLocationsSchemaRegistriesContextsSubjectsListCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsSubjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Deleted sets the optional parameter "deleted": If true, the response will
+// include soft-deleted subjects. The default is false.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsListCall) Deleted(deleted bool) *ProjectsLocationsSchemaRegistriesContextsSubjectsListCall {
+	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
+	return c
+}
+
+// SubjectPrefix sets the optional parameter "subjectPrefix": The context to
+// filter the subjects by, in the format of `:.{context}:`. If unset, all
+// subjects in the registry are returned. Set to empty string or add as
+// '?subjectPrefix=' at the end of this request to list subjects in the default
+// context.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsListCall) SubjectPrefix(subjectPrefix string) *ProjectsLocationsSchemaRegistriesContextsSubjectsListCall {
+	c.urlParams_.Set("subjectPrefix", subjectPrefix)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsSubjectsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesContextsSubjectsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsListCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsSubjectsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/subjects")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.subjects.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSubjectsLookupVersionCall struct {
+	s                    *Service
+	parent               string
+	lookupversionrequest *LookupVersionRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// LookupVersion: Lookup a schema under the specified subject.
+//
+//   - parent: The subject to lookup the schema in. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}`.
+func (r *ProjectsLocationsSchemaRegistriesContextsSubjectsService) LookupVersion(parent string, lookupversionrequest *LookupVersionRequest) *ProjectsLocationsSchemaRegistriesContextsSubjectsLookupVersionCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsSubjectsLookupVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.lookupversionrequest = lookupversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsLookupVersionCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsSubjectsLookupVersionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsLookupVersionCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsSubjectsLookupVersionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsLookupVersionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsLookupVersionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.lookupversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.lookupVersion", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.subjects.lookupVersion" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaVersion.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsLookupVersionCall) Do(opts ...googleapi.CallOption) (*SchemaVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.lookupVersion", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsCreateCall struct {
+	s                    *Service
+	parent               string
+	createversionrequest *CreateVersionRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Create: Register a new version under a given subject with the given schema.
+//
+//   - parent: The subject to create the version for. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}`.
+func (r *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsService) Create(parent string, createversionrequest *CreateVersionRequest) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsCreateCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.createversionrequest = createversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsCreateCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.createversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/versions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CreateVersionResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsCreateCall) Do(opts ...googleapi.CallOption) (*CreateVersionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CreateVersionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a version of a subject. The response will be the deleted
+// version id.
+//
+//   - name: The name of the subject version to delete. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}/versions/{version}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}/versions/{version}`.
+func (r *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsService) Delete(name string) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsDeleteCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Permanent sets the optional parameter "permanent": If true, both the version
+// and the referenced schema ID will be permanently deleted. The default is
+// false. If false, the version will be deleted but the schema ID will be
+// retained. Soft-deleted versions can still be searched in ListVersions API
+// call with deleted=true query parameter. A soft-delete of a version must be
+// performed before a hard-delete.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsDeleteCall) Permanent(permanent bool) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsDeleteCall {
+	c.urlParams_.Set("permanent", fmt.Sprint(permanent))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a versioned schema (schema with subject/version) of a subject.
+//
+//   - name: The name of the subject to return versions. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}/versions/{version}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}/versions/{version}`.
+func (r *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsService) Get(name string) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Deleted sets the optional parameter "deleted": If true, no matter if the
+// subject/version is soft-deleted or not, it returns the version details. If
+// false, it returns NOT_FOUND error if the subject/version is soft-deleted.
+// The default is false.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetCall) Deleted(deleted bool) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetCall {
+	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaVersion.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetCall) Do(opts ...googleapi.CallOption) (*SchemaVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetSchemaCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSchema: Get the schema string only for a version of a subject. The
+// response will be the schema string.
+//
+//   - name: The name of the subject to return versions. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}/versions/{version}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}/versions/{version}`.
+func (r *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsService) GetSchema(name string) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetSchemaCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Deleted sets the optional parameter "deleted": If true, no matter if the
+// subject/version is soft-deleted or not, it returns the version details. If
+// false, it returns NOT_FOUND error if the subject/version is soft-deleted.
+// The default is false.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetSchemaCall) Deleted(deleted bool) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetSchemaCall {
+	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetSchemaCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetSchemaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetSchemaCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetSchemaCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetSchemaCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetSchemaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetSchemaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetSchemaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/schema")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.getSchema", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.getSchema" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsGetSchemaCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.getSchema", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Get all versions of a subject. The response will be an array of
+// versions of the subject.
+//
+//   - parent: The subject whose versions are to be listed. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}`.
+func (r *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsService) List(parent string) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsListCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Deleted sets the optional parameter "deleted": If true, the response will
+// include soft-deleted versions of an active or soft-deleted subject. The
+// default is false.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsListCall) Deleted(deleted bool) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsListCall {
+	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsListCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/versions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Get a list of IDs of schemas that reference the schema with the given
+// subject and version.
+//
+//   - parent: The version to list referenced by. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}/versions/{version}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}/versions/{version}`.
+func (r *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyService) List(parent string) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyListCall {
+	c := &ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyListCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/referencedby")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.referencedby.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.referencedby.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesContextsSubjectsVersionsReferencedbyListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.contexts.subjects.versions.referencedby.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesModeDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete schema mode for a subject.
+//
+//   - name: The resource name of subject to delete the mode for. The format is *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     mode/{subject} *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     contexts/{context}/mode/{subject}.
+func (r *ProjectsLocationsSchemaRegistriesModeService) Delete(name string) *ProjectsLocationsSchemaRegistriesModeDeleteCall {
+	c := &ProjectsLocationsSchemaRegistriesModeDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesModeDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesModeDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesModeDeleteCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesModeDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesModeDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesModeDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.mode.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.mode.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaMode.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesModeDeleteCall) Do(opts ...googleapi.CallOption) (*SchemaMode, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaMode{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.mode.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesModeGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get mode at global level or for a subject.
+//
+//   - name: The resource name of the mode. The format is *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     mode/{subject}: mode for a schema registry, or *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     contexts/{context}/mode/{subject}: mode for a specific subject in a
+//     specific context.
+func (r *ProjectsLocationsSchemaRegistriesModeService) Get(name string) *ProjectsLocationsSchemaRegistriesModeGetCall {
+	c := &ProjectsLocationsSchemaRegistriesModeGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesModeGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesModeGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesModeGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesModeGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesModeGetCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesModeGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesModeGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesModeGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.mode.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.mode.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaMode.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesModeGetCall) Do(opts ...googleapi.CallOption) (*SchemaMode, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaMode{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.mode.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesModeUpdateCall struct {
+	s                       *Service
+	name                    string
+	updateschemamoderequest *UpdateSchemaModeRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Update: Update mode at global level or for a subject.
+//
+//   - name: The resource name of the mode. The format is *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     mode/{subject}: mode for a schema registry, or *
+//     projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/
+//     contexts/{context}/mode/{subject}: mode for a specific subject in a
+//     specific context.
+func (r *ProjectsLocationsSchemaRegistriesModeService) Update(name string, updateschemamoderequest *UpdateSchemaModeRequest) *ProjectsLocationsSchemaRegistriesModeUpdateCall {
+	c := &ProjectsLocationsSchemaRegistriesModeUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.updateschemamoderequest = updateschemamoderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesModeUpdateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesModeUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesModeUpdateCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesModeUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesModeUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesModeUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.updateschemamoderequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.mode.update", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.mode.update" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaMode.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesModeUpdateCall) Do(opts ...googleapi.CallOption) (*SchemaMode, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaMode{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.mode.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesSchemasGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the schema for the given schema id.
+//
+//   - name: The name of the schema to return. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /schemas/ids/{schema}`.
+func (r *ProjectsLocationsSchemaRegistriesSchemasService) Get(name string) *ProjectsLocationsSchemaRegistriesSchemasGetCall {
+	c := &ProjectsLocationsSchemaRegistriesSchemasGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Subject sets the optional parameter "subject": Used to limit the search for
+// the schema ID to a specific subject, otherwise the schema ID will be
+// searched for in all subjects in the given specified context.
+func (c *ProjectsLocationsSchemaRegistriesSchemasGetCall) Subject(subject string) *ProjectsLocationsSchemaRegistriesSchemasGetCall {
+	c.urlParams_.Set("subject", subject)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesSchemasGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesSchemasGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesSchemasGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesSchemasGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesSchemasGetCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesSchemasGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesSchemasGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesSchemasGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.schemas.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.schemas.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Schema.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesSchemasGetCall) Do(opts ...googleapi.CallOption) (*Schema, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Schema{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.schemas.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesSchemasGetSchemaCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSchema: Get the schema string for the given schema id. The response will
+// be the schema string.
+//
+//   - name: The name of the schema to return. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /schemas/ids/{schema}`.
+func (r *ProjectsLocationsSchemaRegistriesSchemasService) GetSchema(name string) *ProjectsLocationsSchemaRegistriesSchemasGetSchemaCall {
+	c := &ProjectsLocationsSchemaRegistriesSchemasGetSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Subject sets the optional parameter "subject": Used to limit the search for
+// the schema ID to a specific subject, otherwise the schema ID will be
+// searched for in all subjects in the given specified context.
+func (c *ProjectsLocationsSchemaRegistriesSchemasGetSchemaCall) Subject(subject string) *ProjectsLocationsSchemaRegistriesSchemasGetSchemaCall {
+	c.urlParams_.Set("subject", subject)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesSchemasGetSchemaCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesSchemasGetSchemaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesSchemasGetSchemaCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesSchemasGetSchemaCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesSchemasGetSchemaCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesSchemasGetSchemaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesSchemasGetSchemaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesSchemasGetSchemaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/schema")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.schemas.getSchema", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.schemas.getSchema" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesSchemasGetSchemaCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.schemas.getSchema", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List subjects which reference a particular schema id. The response
+// will be an array of subject names.
+//
+//   - parent: The schema resource whose associated subjects are to be listed.
+//     Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /schemas/ids/{schema}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/schemas/ids/{schema}`.
+func (r *ProjectsLocationsSchemaRegistriesSchemasSubjectsService) List(parent string) *ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall {
+	c := &ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Deleted sets the optional parameter "deleted": If true, the response will
+// include soft-deleted subjects. The default is false.
+func (c *ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall) Deleted(deleted bool) *ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall {
+	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
+	return c
+}
+
+// Subject sets the optional parameter "subject": The subject to filter the
+// subjects by.
+func (c *ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall) Subject(subject string) *ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall {
+	c.urlParams_.Set("subject", subject)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/subjects")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.schemas.subjects.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.schemas.subjects.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesSchemasSubjectsListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.schemas.subjects.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesSchemasTypesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List the supported schema types. The response will be an array of
+// schema types.
+//
+//   - parent: The parent schema registry whose schema types are to be listed.
+//     Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     `.
+func (r *ProjectsLocationsSchemaRegistriesSchemasTypesService) List(parent string) *ProjectsLocationsSchemaRegistriesSchemasTypesListCall {
+	c := &ProjectsLocationsSchemaRegistriesSchemasTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesSchemasTypesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesSchemasTypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesSchemasTypesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesSchemasTypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesSchemasTypesListCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesSchemasTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesSchemasTypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesSchemasTypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/schemas/types")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.schemas.types.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.schemas.types.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesSchemasTypesListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.schemas.types.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesSchemasVersionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List the schema versions for the given schema id. The response will be
+// an array of subject-version pairs as: [{"subject":"subject1", "version":1},
+// {"subject":"subject2", "version":2}].
+//
+//   - parent: The schema whose schema versions are to be listed. Structured
+//     like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /schemas/ids/{schema}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/schemas/ids/{schema}`.
+func (r *ProjectsLocationsSchemaRegistriesSchemasVersionsService) List(parent string) *ProjectsLocationsSchemaRegistriesSchemasVersionsListCall {
+	c := &ProjectsLocationsSchemaRegistriesSchemasVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Deleted sets the optional parameter "deleted": If true, the response will
+// include soft-deleted versions of the schema, even if the subject is
+// soft-deleted. The default is false.
+func (c *ProjectsLocationsSchemaRegistriesSchemasVersionsListCall) Deleted(deleted bool) *ProjectsLocationsSchemaRegistriesSchemasVersionsListCall {
+	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
+	return c
+}
+
+// Subject sets the optional parameter "subject": The subject to filter the
+// subjects by.
+func (c *ProjectsLocationsSchemaRegistriesSchemasVersionsListCall) Subject(subject string) *ProjectsLocationsSchemaRegistriesSchemasVersionsListCall {
+	c.urlParams_.Set("subject", subject)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesSchemasVersionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesSchemasVersionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesSchemasVersionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesSchemasVersionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesSchemasVersionsListCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesSchemasVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesSchemasVersionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesSchemasVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/versions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.schemas.versions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.schemas.versions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesSchemasVersionsListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.schemas.versions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesSubjectsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a subject. The response will be an array of versions of the
+// deleted subject.
+//
+//   - name: The name of the subject to delete. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}`.
+func (r *ProjectsLocationsSchemaRegistriesSubjectsService) Delete(name string) *ProjectsLocationsSchemaRegistriesSubjectsDeleteCall {
+	c := &ProjectsLocationsSchemaRegistriesSubjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Permanent sets the optional parameter "permanent": If true, the subject and
+// all associated metadata including the schema ID will be deleted permanently.
+// Otherwise, only the subject is soft-deleted. The default is false.
+// Soft-deleted subjects can still be searched in ListSubjects API call with
+// deleted=true query parameter. A soft-delete of a subject must be performed
+// before a hard-delete.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsDeleteCall) Permanent(permanent bool) *ProjectsLocationsSchemaRegistriesSubjectsDeleteCall {
+	c.urlParams_.Set("permanent", fmt.Sprint(permanent))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesSubjectsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsDeleteCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesSubjectsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesSubjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.subjects.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsDeleteCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesSubjectsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List subjects in the schema registry. The response will be an array of
+// subject names.
+//
+//   - parent: The parent schema registry/context whose subjects are to be
+//     listed. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     ` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}`.
+func (r *ProjectsLocationsSchemaRegistriesSubjectsService) List(parent string) *ProjectsLocationsSchemaRegistriesSubjectsListCall {
+	c := &ProjectsLocationsSchemaRegistriesSubjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Deleted sets the optional parameter "deleted": If true, the response will
+// include soft-deleted subjects. The default is false.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsListCall) Deleted(deleted bool) *ProjectsLocationsSchemaRegistriesSubjectsListCall {
+	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
+	return c
+}
+
+// SubjectPrefix sets the optional parameter "subjectPrefix": The context to
+// filter the subjects by, in the format of `:.{context}:`. If unset, all
+// subjects in the registry are returned. Set to empty string or add as
+// '?subjectPrefix=' at the end of this request to list subjects in the default
+// context.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsListCall) SubjectPrefix(subjectPrefix string) *ProjectsLocationsSchemaRegistriesSubjectsListCall {
+	c.urlParams_.Set("subjectPrefix", subjectPrefix)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesSubjectsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesSubjectsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsListCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesSubjectsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesSubjectsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/subjects")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.subjects.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesSubjectsLookupVersionCall struct {
+	s                    *Service
+	parent               string
+	lookupversionrequest *LookupVersionRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// LookupVersion: Lookup a schema under the specified subject.
+//
+//   - parent: The subject to lookup the schema in. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}`.
+func (r *ProjectsLocationsSchemaRegistriesSubjectsService) LookupVersion(parent string, lookupversionrequest *LookupVersionRequest) *ProjectsLocationsSchemaRegistriesSubjectsLookupVersionCall {
+	c := &ProjectsLocationsSchemaRegistriesSubjectsLookupVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.lookupversionrequest = lookupversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsLookupVersionCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesSubjectsLookupVersionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsLookupVersionCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesSubjectsLookupVersionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsLookupVersionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesSubjectsLookupVersionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.lookupversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.lookupVersion", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.subjects.lookupVersion" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaVersion.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsLookupVersionCall) Do(opts ...googleapi.CallOption) (*SchemaVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.lookupVersion", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesSubjectsVersionsCreateCall struct {
+	s                    *Service
+	parent               string
+	createversionrequest *CreateVersionRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Create: Register a new version under a given subject with the given schema.
+//
+//   - parent: The subject to create the version for. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}`.
+func (r *ProjectsLocationsSchemaRegistriesSubjectsVersionsService) Create(parent string, createversionrequest *CreateVersionRequest) *ProjectsLocationsSchemaRegistriesSubjectsVersionsCreateCall {
+	c := &ProjectsLocationsSchemaRegistriesSubjectsVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.createversionrequest = createversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesSubjectsVersionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsCreateCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesSubjectsVersionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.createversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/versions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.versions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.subjects.versions.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CreateVersionResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsCreateCall) Do(opts ...googleapi.CallOption) (*CreateVersionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CreateVersionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.versions.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesSubjectsVersionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a version of a subject. The response will be the deleted
+// version id.
+//
+//   - name: The name of the subject version to delete. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}/versions/{version}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}/versions/{version}`.
+func (r *ProjectsLocationsSchemaRegistriesSubjectsVersionsService) Delete(name string) *ProjectsLocationsSchemaRegistriesSubjectsVersionsDeleteCall {
+	c := &ProjectsLocationsSchemaRegistriesSubjectsVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Permanent sets the optional parameter "permanent": If true, both the version
+// and the referenced schema ID will be permanently deleted. The default is
+// false. If false, the version will be deleted but the schema ID will be
+// retained. Soft-deleted versions can still be searched in ListVersions API
+// call with deleted=true query parameter. A soft-delete of a version must be
+// performed before a hard-delete.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsDeleteCall) Permanent(permanent bool) *ProjectsLocationsSchemaRegistriesSubjectsVersionsDeleteCall {
+	c.urlParams_.Set("permanent", fmt.Sprint(permanent))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesSubjectsVersionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesSubjectsVersionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.versions.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.subjects.versions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.versions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesSubjectsVersionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a versioned schema (schema with subject/version) of a subject.
+//
+//   - name: The name of the subject to return versions. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}/versions/{version}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}/versions/{version}`.
+func (r *ProjectsLocationsSchemaRegistriesSubjectsVersionsService) Get(name string) *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetCall {
+	c := &ProjectsLocationsSchemaRegistriesSubjectsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Deleted sets the optional parameter "deleted": If true, no matter if the
+// subject/version is soft-deleted or not, it returns the version details. If
+// false, it returns NOT_FOUND error if the subject/version is soft-deleted.
+// The default is false.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetCall) Deleted(deleted bool) *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetCall {
+	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.versions.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.subjects.versions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchemaVersion.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetCall) Do(opts ...googleapi.CallOption) (*SchemaVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchemaVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.versions.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesSubjectsVersionsGetSchemaCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSchema: Get the schema string only for a version of a subject. The
+// response will be the schema string.
+//
+//   - name: The name of the subject to return versions. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}/versions/{version}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}/versions/{version}`.
+func (r *ProjectsLocationsSchemaRegistriesSubjectsVersionsService) GetSchema(name string) *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetSchemaCall {
+	c := &ProjectsLocationsSchemaRegistriesSubjectsVersionsGetSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Deleted sets the optional parameter "deleted": If true, no matter if the
+// subject/version is soft-deleted or not, it returns the version details. If
+// false, it returns NOT_FOUND error if the subject/version is soft-deleted.
+// The default is false.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetSchemaCall) Deleted(deleted bool) *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetSchemaCall {
+	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetSchemaCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetSchemaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetSchemaCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetSchemaCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetSchemaCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetSchemaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetSchemaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetSchemaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/schema")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.versions.getSchema", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.subjects.versions.getSchema" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsGetSchemaCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.versions.getSchema", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesSubjectsVersionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Get all versions of a subject. The response will be an array of
+// versions of the subject.
+//
+//   - parent: The subject whose versions are to be listed. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}`.
+func (r *ProjectsLocationsSchemaRegistriesSubjectsVersionsService) List(parent string) *ProjectsLocationsSchemaRegistriesSubjectsVersionsListCall {
+	c := &ProjectsLocationsSchemaRegistriesSubjectsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Deleted sets the optional parameter "deleted": If true, the response will
+// include soft-deleted versions of an active or soft-deleted subject. The
+// default is false.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsListCall) Deleted(deleted bool) *ProjectsLocationsSchemaRegistriesSubjectsVersionsListCall {
+	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesSubjectsVersionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesSubjectsVersionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsListCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesSubjectsVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/versions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.versions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.subjects.versions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.versions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Get a list of IDs of schemas that reference the schema with the given
+// subject and version.
+//
+//   - parent: The version to list referenced by. Structured like:
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /subjects/{subject}/versions/{version}` or
+//     `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}
+//     /contexts/{context}/subjects/{subject}/versions/{version}`.
+func (r *ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyService) List(parent string) *ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyListCall {
+	c := &ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyListCall) Context(ctx context.Context) *ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/referencedby")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.versions.referencedby.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedkafka.projects.locations.schemaRegistries.subjects.versions.referencedby.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemaRegistriesSubjectsVersionsReferencedbyListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "managedkafka.projects.locations.schemaRegistries.subjects.versions.referencedby.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }

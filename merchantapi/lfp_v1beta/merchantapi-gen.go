@@ -405,7 +405,8 @@ type LfpMerchantState struct {
 	// has access to.
 	LinkedGbps int64 `json:"linkedGbps,omitempty,string"`
 	// Name: Identifier. The name of the `LfpMerchantState` resource. Format:
-	// `accounts/{account}/lfpMerchantStates/{target_merchant}`
+	// `accounts/{account}/lfpMerchantStates/{target_merchant}`. For example,
+	// `accounts/123456/lfpMerchantStates/567890`.
 	Name string `json:"name,omitempty"`
 	// StoreStates: Output only. The state per store from the specified merchant.
 	// The field will be absent if the merchant has no stores submitted through
@@ -906,7 +907,8 @@ type AccountsLfpMerchantStatesGetCall struct {
 // Get: Gets the LFP state of a merchant
 //
 //   - name: The name of the state to retrieve. Format:
-//     `accounts/{account}/lfpMerchantStates/{target_merchant}`.
+//     `accounts/{account}/lfpMerchantStates/{target_merchant}`. For example,
+//     `accounts/123456/lfpMerchantStates/567890`.
 func (r *AccountsLfpMerchantStatesService) Get(name string) *AccountsLfpMerchantStatesGetCall {
 	c := &AccountsLfpMerchantStatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

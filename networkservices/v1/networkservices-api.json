@@ -2184,6 +2184,40 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
+                },
+                "patch": {
+                  "description": "Updates the parameters of a single ServiceBinding.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/serviceBindings/{serviceBindingsId}",
+                  "httpMethod": "PATCH",
+                  "id": "networkservices.projects.locations.serviceBindings.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Identifier. Name of the ServiceBinding resource. It matches pattern `projects/*/locations/*/serviceBindings/`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/serviceBindings/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Optional. Field mask is used to specify the fields to be overwritten in the ServiceBinding resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "request": {
+                    "$ref": "ServiceBinding"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
                 }
               }
             },
@@ -2970,7 +3004,7 @@
       }
     }
   },
-  "revision": "20250423",
+  "revision": "20250521",
   "rootUrl": "https://networkservices.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -4233,7 +4267,7 @@
       "type": "object"
     },
     "HttpRouteRequestMirrorPolicy": {
-      "description": "Specifies the policy on how requests are shadowed to a separate mirrored destination service. The proxy does not wait for responses from the shadow service. Prior to sending traffic to the shadow service, the host/authority header is suffixed with -shadow.",
+      "description": "Specifies the policy on how requests are shadowed to a separate mirrored destination service. The proxy does not wait for responses from the shadow service. Prior to sending traffic to the shadow service, the host/authority header is suffixed with -shadow. Mirroring is currently not supported for Cloud Run destinations.",
       "id": "HttpRouteRequestMirrorPolicy",
       "properties": {
         "destination": {

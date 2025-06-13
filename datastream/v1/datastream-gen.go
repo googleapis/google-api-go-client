@@ -1353,6 +1353,8 @@ type MongodbProfile struct {
 	SecretManagerStoredPassword string `json:"secretManagerStoredPassword,omitempty"`
 	// SrvConnectionFormat: Srv connection format.
 	SrvConnectionFormat *SrvConnectionFormat `json:"srvConnectionFormat,omitempty"`
+	// SslConfig: Optional. SSL configuration for the MongoDB connection.
+	SslConfig *MongodbSslConfig `json:"sslConfig,omitempty"`
 	// StandardConnectionFormat: Standard connection format.
 	StandardConnectionFormat *StandardConnectionFormat `json:"standardConnectionFormat,omitempty"`
 	// Username: Required. Username for the MongoDB connection.
@@ -1381,6 +1383,10 @@ type MongodbSourceConfig struct {
 	ExcludeObjects *MongodbCluster `json:"excludeObjects,omitempty"`
 	// IncludeObjects: MongoDB collections to include in the stream.
 	IncludeObjects *MongodbCluster `json:"includeObjects,omitempty"`
+	// MaxConcurrentBackfillTasks: Optional. Maximum number of concurrent backfill
+	// tasks. The number should be non-negative and less than or equal to 50. If
+	// not set (or set to 0), the system's default value is used
+	MaxConcurrentBackfillTasks int64 `json:"maxConcurrentBackfillTasks,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1396,6 +1402,52 @@ type MongodbSourceConfig struct {
 
 func (s MongodbSourceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MongodbSourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MongodbSslConfig: MongoDB SSL configuration information.
+type MongodbSslConfig struct {
+	// CaCertificate: Optional. Input only. PEM-encoded certificate of the CA that
+	// signed the source database server's certificate.
+	CaCertificate string `json:"caCertificate,omitempty"`
+	// CaCertificateSet: Output only. Indicates whether the ca_certificate field is
+	// set.
+	CaCertificateSet bool `json:"caCertificateSet,omitempty"`
+	// ClientCertificate: Optional. Input only. PEM-encoded certificate that will
+	// be used by the replica to authenticate against the source database server.
+	// If this field is used then the 'client_key' and the 'ca_certificate' fields
+	// are mandatory.
+	ClientCertificate string `json:"clientCertificate,omitempty"`
+	// ClientCertificateSet: Output only. Indicates whether the client_certificate
+	// field is set.
+	ClientCertificateSet bool `json:"clientCertificateSet,omitempty"`
+	// ClientKey: Optional. Input only. PEM-encoded private key associated with the
+	// Client Certificate. If this field is used then the 'client_certificate' and
+	// the 'ca_certificate' fields are mandatory.
+	ClientKey string `json:"clientKey,omitempty"`
+	// ClientKeySet: Output only. Indicates whether the client_key field is set.
+	ClientKeySet bool `json:"clientKeySet,omitempty"`
+	// SecretManagerStoredClientKey: Optional. Input only. A reference to a Secret
+	// Manager resource name storing the PEM-encoded private key associated with
+	// the Client Certificate. If this field is used then the 'client_certificate'
+	// and the 'ca_certificate' fields are mandatory. Mutually exclusive with the
+	// `client_key` field.
+	SecretManagerStoredClientKey string `json:"secretManagerStoredClientKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CaCertificate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MongodbSslConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MongodbSslConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2444,7 +2496,7 @@ func (s PrivateConnectivity) MarshalJSON() ([]byte, error) {
 type PscInterfaceConfig struct {
 	// NetworkAttachment: Required. Fully qualified name of the Network Attachment
 	// that Datastream will connect to. Format:
-	// `projects/{{project}}/regions/{{region}}/networkAttachments/{{name}}`
+	// `projects/{project}/regions/{region}/networkAttachments/{name}`
 	NetworkAttachment string `json:"networkAttachment,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NetworkAttachment") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3118,6 +3170,25 @@ type SrvConnectionFormat struct {
 
 // StandardConnectionFormat: Standard connection format.
 type StandardConnectionFormat struct {
+	// DirectConnection: Optional. Specifies whether the client connects directly
+	// to the host[:port] in the connection URI.
+	DirectConnection bool `json:"directConnection,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DirectConnection") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DirectConnection") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StandardConnectionFormat) MarshalJSON() ([]byte, error) {
+	type NoMethod StandardConnectionFormat
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartBackfillJobRequest: Request for manually initiating a backfill job for

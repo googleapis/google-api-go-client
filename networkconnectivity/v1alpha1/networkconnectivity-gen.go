@@ -243,8 +243,8 @@ type AllocationOptions struct {
 	// used.
 	//
 	// Possible values:
-	//   "ALLOCATION_STRATEGY_UNSPECIFIED" - Unspecified strategy must be used when
-	// the range is specified explicitly using ip_cidr_range field. Othherwise
+	//   "ALLOCATION_STRATEGY_UNSPECIFIED" - Unspecified is the only valid option
+	// when the range is specified explicitly by ip_cidr_range field. Otherwise
 	// unspefified means using the default strategy.
 	//   "RANDOM" - Random strategy, the legacy algorithm, used for backwards
 	// compatibility. This allocation strategy remains efficient in the case of

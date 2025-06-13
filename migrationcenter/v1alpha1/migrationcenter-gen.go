@@ -2662,8 +2662,6 @@ type DiskEntry struct {
 	TotalCapacityBytes int64 `json:"totalCapacityBytes,omitempty,string"`
 	// TotalFreeBytes: Disk free space.
 	TotalFreeBytes int64 `json:"totalFreeBytes,omitempty,string"`
-	// VmwareConfig: VMware disk details.
-	VmwareConfig *VmwareDiskConfig `json:"vmwareConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiskLabel") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4447,8 +4445,8 @@ func (s MachineNetworkDetails) MarshalJSON() ([]byte, error) {
 }
 
 // MachinePreferences: The type of machines to consider when calculating
-// virtual machine migration insights and recommendations for GCE. Not all
-// machine types are available in all zones and regions.
+// virtual machine migration insights and recommendations for Compute Engine.
+// Not all machine types are available in all zones and regions.
 type MachinePreferences struct {
 	// AllowedMachineSeries: Compute Engine machine series to consider for insights
 	// and recommendations. If empty, no restriction is applied on the machine
@@ -7654,47 +7652,6 @@ func (s *VirtualMachinePreferencesSizingOptimizationCustomParameters) UnmarshalJ
 	return nil
 }
 
-// VmwareDiskConfig: VMware disk config details.
-type VmwareDiskConfig struct {
-	// BackingType: VMDK backing type.
-	//
-	// Possible values:
-	//   "BACKING_TYPE_UNSPECIFIED" - Default value.
-	//   "BACKING_TYPE_FLAT_V1" - Flat v1.
-	//   "BACKING_TYPE_FLAT_V2" - Flat v2.
-	//   "BACKING_TYPE_PMEM" - Persistent memory, also known as Non-Volatile Memory
-	// (NVM).
-	//   "BACKING_TYPE_RDM_V1" - Raw Disk Memory v1.
-	//   "BACKING_TYPE_RDM_V2" - Raw Disk Memory v2.
-	//   "BACKING_TYPE_SESPARSE" - SEsparse is a snapshot format introduced in
-	// vSphere 5.5 for large disks.
-	//   "BACKING_TYPE_SESPARSE_V1" - SEsparse v1.
-	//   "BACKING_TYPE_SESPARSE_V2" - SEsparse v1.
-	BackingType string `json:"backingType,omitempty"`
-	// RdmCompatibilityMode: RDM compatibility mode.
-	RdmCompatibilityMode string `json:"rdmCompatibilityMode,omitempty"`
-	// Shared: Is VMDK shared with other VMs.
-	Shared bool `json:"shared,omitempty"`
-	// VmdkDiskMode: VMDK disk mode.
-	VmdkDiskMode string `json:"vmdkDiskMode,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BackingType") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackingType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s VmwareDiskConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod VmwareDiskConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // VmwareEngineMigrationTarget: VMWare engine migration target.
 type VmwareEngineMigrationTarget struct {
 }
@@ -7727,7 +7684,7 @@ type VmwareEnginePreferences struct {
 	// and 8.0, with 0.1 increment.
 	CpuOvercommitRatio float64 `json:"cpuOvercommitRatio,omitempty"`
 	// LicenseDiscountPercentage: Optional. Discount percentage for the license
-	// type offered to you by Broadcom. Must be between 0 and 100. Only valid when
+	// offered to you by Broadcom. Must be between 0 and 100. Only valid when
 	// service_type is set to SERVICE_TYPE_PORTABLE_LICENSE.
 	LicenseDiscountPercentage float64 `json:"licenseDiscountPercentage,omitempty"`
 	// MachinePreferences: Optional. Preferences concerning the machine types to
@@ -7736,8 +7693,8 @@ type VmwareEnginePreferences struct {
 	// MemoryOvercommitRatio: Memory overcommit ratio. Acceptable values are 1.0,
 	// 1.25, 1.5, 1.75 and 2.0.
 	MemoryOvercommitRatio float64 `json:"memoryOvercommitRatio,omitempty"`
-	// ServiceType: Optional. VMWare Service Type (Fully Licensed or Portable
-	// License).
+	// ServiceType: Optional. GCVE service type (fully licensed or portable
+	// license).
 	//
 	// Possible values:
 	//   "SERVICE_TYPE_UNSPECIFIED" - Same as SERVICE_TYPE_FULLY_LICENSED.

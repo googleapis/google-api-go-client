@@ -377,8 +377,8 @@ func (r *UsersService) GetLoginProfile(name string) *UsersGetLoginProfileCall {
 	return c
 }
 
-// ProjectId sets the optional parameter "projectId": The project ID of the
-// Google Cloud Platform project.
+// ProjectId sets the optional parameter "projectId": Required. The project ID
+// of the Google Cloud Platform project.
 func (c *UsersGetLoginProfileCall) ProjectId(projectId string) *UsersGetLoginProfileCall {
 	c.urlParams_.Set("projectId", projectId)
 	return c

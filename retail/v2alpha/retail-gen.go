@@ -2995,6 +2995,20 @@ type GoogleCloudRetailV2alphaConversationalSearchRequest struct {
 	SearchParams *GoogleCloudRetailV2alphaConversationalSearchRequestSearchParams `json:"searchParams,omitempty"`
 	// UserInfo: Optional. User information.
 	UserInfo *GoogleCloudRetailV2alphaUserInfo `json:"userInfo,omitempty"`
+	// UserLabels: Optional. The user labels applied to a resource must meet the
+	// following requirements: * Each resource can have multiple labels, up to a
+	// maximum of 64. * Each label must be a key-value pair. * Keys have a minimum
+	// length of 1 character and a maximum length of 63 characters and cannot be
+	// empty. Values can be empty and have a maximum length of 63 characters. *
+	// Keys and values can contain only lowercase letters, numeric characters,
+	// underscores, and dashes. All characters must use UTF-8 encoding, and
+	// international characters are allowed. * The key portion of a label must be
+	// unique. However, you can use the same key with multiple resources. * Keys
+	// must start with a lowercase letter or international character. See Google
+	// Cloud Document
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements)
+	// for more details.
+	UserLabels map[string]string `json:"userLabels,omitempty"`
 	// VisitorId: Required. A unique identifier for tracking visitors. For example,
 	// this could be implemented with an HTTP cookie, which should be able to
 	// uniquely identify a visitor on a single device. This unique identifier
@@ -3265,7 +3279,9 @@ func (s GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestion) Ma
 }
 
 // GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestionSuggested
-// Answer: Suggested answers to the follow-up question.
+// Answer: Suggested answers to the follow-up question. If it's numerical
+// attribute, only ProductAttributeInterval will be set. If it's textual
+// attribute, only productAttributeValue will be set.
 type GoogleCloudRetailV2alphaConversationalSearchResponseFollowupQuestionSuggestedAnswer struct {
 	// ProductAttributeValue: Product attribute value, including an attribute key
 	// and an attribute value. Other types can be added here in the future.
@@ -3426,6 +3442,45 @@ func (s *GoogleCloudRetailV2alphaCustomAttribute) UnmarshalJSON(data []byte) err
 	s.Numbers = make([]float64, len(s1.Numbers))
 	for i := range s1.Numbers {
 		s.Numbers[i] = float64(s1.Numbers[i])
+	}
+	return nil
+}
+
+// GoogleCloudRetailV2alphaDoubleList: A message with a list of double values.
+type GoogleCloudRetailV2alphaDoubleList struct {
+	// Values: The list of double values.
+	Values []float64 `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaDoubleList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaDoubleList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRetailV2alphaDoubleList) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRetailV2alphaDoubleList
+	var s1 struct {
+		Values []gensupport.JSONFloat64 `json:"values"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Values = make([]float64, len(s1.Values))
+	for i := range s1.Values {
+		s.Values[i] = float64(s1.Values[i])
 	}
 	return nil
 }
@@ -7410,6 +7465,9 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// `google.com`, `youtube.com`, etc. If this is set, it should be exactly
 	// matched with UserEvent.entity to get search results boosted by entity.
 	Entity string `json:"entity,omitempty"`
+	// ExperimentId: Optional. An ID for the experiment group this search belongs
+	// to.
+	ExperimentId string `json:"experimentId,omitempty"`
 	// FacetSpecs: Facet specifications for faceted search. If empty, no facets are
 	// returned. A maximum of 200 values are allowed. Otherwise, an
 	// INVALID_ARGUMENT error is returned.
@@ -7535,6 +7593,13 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// TileNavigationSpec: Optional. This field specifies tile navigation related
 	// parameters.
 	TileNavigationSpec *GoogleCloudRetailV2alphaSearchRequestTileNavigationSpec `json:"tileNavigationSpec,omitempty"`
+	// UserAttributes: Optional. The user attributes that could be used for
+	// personalization of search results. * Populate at most 100 key-value pairs
+	// per query. * Only supports string keys and repeated string values. *
+	// Duplcate keys are not allowed within a single query. Example:
+	// user_attributes: [ { key: "pets" value { values: "dog" values: "cat" } }, {
+	// key: "state" value { values: "CA" } } ]
+	UserAttributes map[string]GoogleCloudRetailV2alphaStringList `json:"userAttributes,omitempty"`
 	// UserInfo: User information.
 	UserInfo *GoogleCloudRetailV2alphaUserInfo `json:"userInfo,omitempty"`
 	// VariantRollupKeys: The keys to fetch and rollup the matching variant
@@ -8377,6 +8442,8 @@ type GoogleCloudRetailV2alphaSearchResponseSearchResult struct {
 	// "sku1" with field mask "products.color_info" indicates there is a match
 	// between "sku1" ColorInfo and the query.
 	MatchingVariantFields map[string]string `json:"matchingVariantFields,omitempty"`
+	// ModelScores: Google provided available scores.
+	ModelScores map[string]GoogleCloudRetailV2alphaDoubleList `json:"modelScores,omitempty"`
 	// PersonalLabels: Specifies previous events related to this product for this
 	// user based on UserEvent with same SearchRequest.visitor_id or
 	// UserInfo.user_id. This is set only when
@@ -8709,6 +8776,28 @@ func (s GoogleCloudRetailV2alphaSetInventoryRequest) MarshalJSON() ([]byte, erro
 // SetInventoryRequest. Currently empty because there is no meaningful response
 // populated from the ProductService.SetInventory method.
 type GoogleCloudRetailV2alphaSetInventoryResponse struct {
+}
+
+// GoogleCloudRetailV2alphaStringList: A list of string values.
+type GoogleCloudRetailV2alphaStringList struct {
+	// Values: String values.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaStringList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaStringList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaTile: This field specifies the tile information

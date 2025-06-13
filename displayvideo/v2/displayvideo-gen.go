@@ -14503,7 +14503,10 @@ type YoutubeAndPartnersSettings struct {
 	// line item.
 	BiddingStrategy *YoutubeAndPartnersBiddingStrategy `json:"biddingStrategy,omitempty"`
 	// ContentCategory: The kind of content on which the YouTube and Partners ads
-	// will be shown.
+	// will be shown. *Warning*: Starting **June 12, 2025**, this setting will no
+	// longer be editable. This field will eventually be removed. Read more about
+	// this announced change
+	// (/display-video/api/deprecations#features.li_yt_content_category)
 	//
 	// Possible values:
 	//   "YOUTUBE_AND_PARTNERS_CONTENT_CATEGORY_UNSPECIFIED" - Content category is
@@ -14522,7 +14525,10 @@ type YoutubeAndPartnersSettings struct {
 	// EffectiveContentCategory: Output only. The content category which takes
 	// effect when serving the line item. When content category is set in both line
 	// item and advertiser, the stricter one will take effect when serving the line
-	// item.
+	// item. *Warning*: Starting **June 12, 2025**, this field will only reflect
+	// the advertiser level setting for new line items. Read more about this
+	// announced change
+	// (/display-video/api/deprecations#features.li_yt_content_category)
 	//
 	// Possible values:
 	//   "YOUTUBE_AND_PARTNERS_CONTENT_CATEGORY_UNSPECIFIED" - Content category is

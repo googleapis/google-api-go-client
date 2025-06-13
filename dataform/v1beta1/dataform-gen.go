@@ -2022,19 +2022,26 @@ func (s NotebookAction) MarshalJSON() ([]byte, error) {
 // NotebookRuntimeOptions: Configures various aspects of Dataform notebook
 // runtime.
 type NotebookRuntimeOptions struct {
+	// AiPlatformNotebookRuntimeTemplate: Optional. The resource name of the [Colab
+	// runtime template] (https://cloud.google.com/colab/docs/runtimes), from which
+	// a runtime is created for notebook executions. If not specified, a runtime is
+	// created with Colab's default specifications.
+	AiPlatformNotebookRuntimeTemplate string `json:"aiPlatformNotebookRuntimeTemplate,omitempty"`
 	// GcsOutputBucket: Optional. The Google Cloud Storage location to upload the
 	// result to. Format: `gs://bucket-name`.
 	GcsOutputBucket string `json:"gcsOutputBucket,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GcsOutputBucket") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AiPlatformNotebookRuntimeTemplate") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GcsOutputBucket") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AiPlatformNotebookRuntimeTemplate") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
@@ -4221,9 +4228,12 @@ func (r *ProjectsLocationsRepositoriesService) Delete(name string) *ProjectsLoca
 	return c
 }
 
-// Force sets the optional parameter "force": If set to true, any child
-// resources of this repository will also be deleted. (Otherwise, the request
-// will only succeed if the repository has no child resources.)
+// Force sets the optional parameter "force": If set to true, child resources
+// of this repository (compilation results and workflow invocations) will also
+// be deleted. Otherwise, the request will only succeed if the repository has
+// no child resources. **Note:** *This flag doesn't support deletion of
+// workspaces, release configs or workflow configs. If any of such resources
+// exists in the repository, the request will fail.*.
 func (c *ProjectsLocationsRepositoriesDeleteCall) Force(force bool) *ProjectsLocationsRepositoriesDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c

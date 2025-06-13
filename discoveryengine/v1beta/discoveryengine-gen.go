@@ -1934,6 +1934,63 @@ func (s GoogleCloudDiscoveryengineV1BatchCreateTargetSitesResponse) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesMetadata: Metadata
+// related to the progress of the UserLicenseService.BatchUpdateUserLicenses
+// operation. This will be returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// FailureCount: Count of user licenses that failed to be updated.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+	// SuccessCount: Count of user licenses successfully updated.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesResponse: Response
+// message for UserLicenseService.BatchUpdateUserLicenses method.
+type GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesResponse struct {
+	// ErrorSamples: A sample of errors encountered while processing the request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+	// UserLicenses: UserLicenses successfully updated.
+	UserLicenses []*GoogleCloudDiscoveryengineV1UserLicense `json:"userLicenses,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1CmekConfig: Configurations used to enable CMEK
 // data encryption with Cloud KMS keys.
 type GoogleCloudDiscoveryengineV1CmekConfig struct {
@@ -1951,7 +2008,7 @@ type GoogleCloudDiscoveryengineV1CmekConfig struct {
 	LastRotationTimestampMicros int64 `json:"lastRotationTimestampMicros,omitempty,string"`
 	// Name: Required. The name of the CmekConfig of the form
 	// `projects/{project}/locations/{location}/cmekConfig` or
-	// `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+	// `projects/{project}/locations/{location}/cmekConfigs/{cmek_config}`.
 	Name string `json:"name,omitempty"`
 	// NotebooklmState: Output only. Whether the NotebookLM Corpus is ready to be
 	// used.
@@ -1978,6 +2035,8 @@ type GoogleCloudDiscoveryengineV1CmekConfig struct {
 	//   "UNUSABLE" - The CmekConfig is not usable, most likely due to some
 	// internal issue.
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
+	//   "DELETED" - The KMS key is soft deleted. Some cleanup policy will
+	// eventually be applied.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IsDefault") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2621,7 +2680,8 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	// DataStore will be protected by the KMS key, as indicated in the cmek_config
 	// field.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
-	// Name: Immutable. The full resource name of the data store. Format:
+	// Name: Immutable. Identifier. The full resource name of the data store.
+	// Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
 	// limit of 1024 characters.
@@ -2711,8 +2771,8 @@ func (s GoogleCloudDiscoveryengineV1DataStoreBillingEstimation) MarshalJSON() ([
 // GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore: Stores
 // information regarding the serving configurations at DataStore level.
 type GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore struct {
-	// DisabledForServing: If set true, the DataStore will not be available for
-	// serving search requests.
+	// DisabledForServing: Optional. If set true, the DataStore will not be
+	// available for serving search requests.
 	DisabledForServing bool `json:"disabledForServing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3101,6 +3161,9 @@ type GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigLayoutPars
 	// ExcludeHtmlIds: Optional. List of HTML ids to exclude from the parsed
 	// content.
 	ExcludeHtmlIds []string `json:"excludeHtmlIds,omitempty"`
+	// StructuredContentTypes: Optional. Contains the required structure types to
+	// extract from the document. Supported values: * `shareholder-structure`
+	StructuredContentTypes []string `json:"structuredContentTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableImageAnnotation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3193,7 +3256,7 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	CommonConfig *GoogleCloudDiscoveryengineV1EngineCommonConfig `json:"commonConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the Recommendation Engine was created at.
 	CreateTime string `json:"createTime,omitempty"`
-	// DataStoreIds: The data stores associated with this engine. For
+	// DataStoreIds: Optional. The data stores associated with this engine. For
 	// SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they
 	// can only associate with at most one data store. If solution_type is
 	// SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be
@@ -3206,9 +3269,17 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// IndustryVertical: The industry vertical that the engine registers. The
-	// restriction of the Engine industry vertical is based on DataStore: Vertical
-	// on Engine has to match vertical of the DataStore linked to the engine.
+	// Features: Optional. Feature config for the engine to opt in or opt out of
+	// features. Supported keys: * `*`: all features, if it's present, all other
+	// feature state settings are ignored. * `agent-gallery` *
+	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
+	// `notebook-lm` * `people-search` * `people-search-org-chart` *
+	// `bi-directional-audio` * `feedback`
+	Features map[string]string `json:"features,omitempty"`
+	// IndustryVertical: Optional. The industry vertical that the engine registers.
+	// The restriction of the Engine industry vertical is based on DataStore:
+	// Vertical on Engine has to match vertical of the DataStore linked to the
+	// engine.
 	//
 	// Possible values:
 	//   "INDUSTRY_VERTICAL_UNSPECIFIED" - Value used when unset.
@@ -3221,9 +3292,9 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
 	MediaRecommendationEngineConfig *GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfig `json:"mediaRecommendationEngineConfig,omitempty"`
-	// Name: Immutable. The fully qualified resource name of the engine. This field
-	// must be a UTF-8 encoded string with a length limit of 1024 characters.
-	// Format:
+	// Name: Immutable. Identifier. The fully qualified resource name of the
+	// engine. This field must be a UTF-8 encoded string with a length limit of
+	// 1024 characters. Format:
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/.
 	// Otherwise, an INVALID_ARGUMENT error is returned.
@@ -5154,6 +5225,61 @@ func (s GoogleCloudDiscoveryengineV1UpdateTargetSiteMetadata) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1UserLicense: User License information assigned
+// by the admin.
+type GoogleCloudDiscoveryengineV1UserLicense struct {
+	// CreateTime: Output only. User created timestamp.
+	CreateTime string `json:"createTime,omitempty"`
+	// LastLoginTime: Output only. User last logged in time. If the user has not
+	// logged in yet, this field will be empty.
+	LastLoginTime string `json:"lastLoginTime,omitempty"`
+	// LicenseAssignmentState: Output only. License assignment state of the user.
+	// If the user is assigned with a license config, the user loggin will be
+	// assigned with the license; If the user's license assignment state is
+	// unassigned or unspecified, no license config will be associated to the user;
+	//
+	// Possible values:
+	//   "LICENSE_ASSIGNMENT_STATE_UNSPECIFIED" - Default value.
+	//   "ASSIGNED" - License assigned to the user.
+	//   "UNASSIGNED" - No license assigned to the user. Deprecated, translated to
+	// NO_LICENSE.
+	//   "NO_LICENSE" - No license assigned to the user.
+	//   "NO_LICENSE_ATTEMPTED_LOGIN" - User attempted to login but no license
+	// assigned to the user. This state is only used for no user first time login
+	// attempt but cannot get license assigned. Users already logged in but cannot
+	// get license assigned will be assigned NO_LICENSE state(License could be
+	// unassigned by admin).
+	LicenseAssignmentState string `json:"licenseAssignmentState,omitempty"`
+	// LicenseConfig: Optional. The full resource name of the
+	// Subscription(LicenseConfig) assigned to the user.
+	LicenseConfig string `json:"licenseConfig,omitempty"`
+	// UpdateTime: Output only. User update timestamp.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// UserPrincipal: Required. Immutable. The user principal of the User, could be
+	// email address or other prinical identifier. This field is immutable. Admin
+	// assign licenses based on the user principal.
+	UserPrincipal string `json:"userPrincipal,omitempty"`
+	// UserProfile: Optional. The user profile. We user user full name(First name +
+	// Last name) as user profile.
+	UserProfile string `json:"userProfile,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1UserLicense) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1UserLicense
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1WorkspaceConfig: Config to store data store type
 // configuration for workspace data
 type GoogleCloudDiscoveryengineV1WorkspaceConfig struct {
@@ -6251,7 +6377,7 @@ type GoogleCloudDiscoveryengineV1alphaCmekConfig struct {
 	LastRotationTimestampMicros int64 `json:"lastRotationTimestampMicros,omitempty,string"`
 	// Name: Required. The name of the CmekConfig of the form
 	// `projects/{project}/locations/{location}/cmekConfig` or
-	// `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+	// `projects/{project}/locations/{location}/cmekConfigs/{cmek_config}`.
 	Name string `json:"name,omitempty"`
 	// NotebooklmState: Output only. Whether the NotebookLM Corpus is ready to be
 	// used.
@@ -6278,6 +6404,8 @@ type GoogleCloudDiscoveryengineV1alphaCmekConfig struct {
 	//   "UNUSABLE" - The CmekConfig is not usable, most likely due to some
 	// internal issue.
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
+	//   "DELETED" - The KMS key is soft deleted. Some cleanup policy will
+	// eventually be applied.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IsDefault") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6505,12 +6633,16 @@ type GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun struct {
 	// error state. Contains error code and error message.
 	Errors []*GoogleRpcStatus `json:"errors,omitempty"`
 	// ExtractedRecordCount: The number of documents extracted from connector
-	// source, ready to be ingested to UCS.
+	// source, ready to be ingested to VAIS.
 	ExtractedRecordCount int64 `json:"extractedRecordCount,omitempty,string"`
 	// IndexedRecordCount: The number of documents indexed.
 	IndexedRecordCount int64 `json:"indexedRecordCount,omitempty,string"`
 	// Progress: Metadata to generate the progress bar.
 	Progress *GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRunProgress `json:"progress,omitempty"`
+	// ScheduledRecordCount: The number of documents scheduled to be
+	// crawled/extracted from connector source. This only applies to third party
+	// connectors.
+	ScheduledRecordCount int64 `json:"scheduledRecordCount,omitempty,string"`
 	// SourceApiRequestCount: The number of requests sent to 3p API.
 	SourceApiRequestCount int64 `json:"sourceApiRequestCount,omitempty,string"`
 	// State: The state of the entity's sync run.
@@ -7224,9 +7356,11 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// IncrementalRefreshInterval: Optional. The refresh interval specifically for
 	// incremental data syncs. If unset, incremental syncs will use the default
 	// from env, set to 3hrs. The minimum is 30 minutes and maximum is 7 days.
+	// Applicable to only 3P connectors.
 	IncrementalRefreshInterval string `json:"incrementalRefreshInterval,omitempty"`
 	// IncrementalSyncDisabled: Optional. Indicates whether incremental syncs are
 	// paused for this connector. This is independent of auto_run_disabled.
+	// Applicable to only 3P connectors.
 	IncrementalSyncDisabled bool `json:"incrementalSyncDisabled,omitempty"`
 	// KmsKeyName: Input only. The KMS key to be used to protect the DataStores
 	// managed by this connector. Must be set for requests that need to comply with
@@ -7541,7 +7675,8 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// LanguageInfo: Language info for DataStore.
 	LanguageInfo *GoogleCloudDiscoveryengineV1alphaLanguageInfo `json:"languageInfo,omitempty"`
-	// Name: Immutable. The full resource name of the data store. Format:
+	// Name: Immutable. Identifier. The full resource name of the data store.
+	// Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
 	// limit of 1024 characters.
@@ -7634,8 +7769,8 @@ func (s GoogleCloudDiscoveryengineV1alphaDataStoreBillingEstimation) MarshalJSON
 // GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore: Stores
 // information regarding the serving configurations at DataStore level.
 type GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore struct {
-	// DisabledForServing: If set true, the DataStore will not be available for
-	// serving search requests.
+	// DisabledForServing: Optional. If set true, the DataStore will not be
+	// available for serving search requests.
 	DisabledForServing bool `json:"disabledForServing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8168,6 +8303,9 @@ type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigLayou
 	// ExcludeHtmlIds: Optional. List of HTML ids to exclude from the parsed
 	// content.
 	ExcludeHtmlIds []string `json:"excludeHtmlIds,omitempty"`
+	// StructuredContentTypes: Optional. Contains the required structure types to
+	// extract from the document. Supported values: * `shareholder-structure`
+	StructuredContentTypes []string `json:"structuredContentTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableImageAnnotation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8260,7 +8398,7 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	CommonConfig *GoogleCloudDiscoveryengineV1alphaEngineCommonConfig `json:"commonConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the Recommendation Engine was created at.
 	CreateTime string `json:"createTime,omitempty"`
-	// DataStoreIds: The data stores associated with this engine. For
+	// DataStoreIds: Optional. The data stores associated with this engine. For
 	// SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they
 	// can only associate with at most one data store. If solution_type is
 	// SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be
@@ -8273,9 +8411,17 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// IndustryVertical: The industry vertical that the engine registers. The
-	// restriction of the Engine industry vertical is based on DataStore: Vertical
-	// on Engine has to match vertical of the DataStore linked to the engine.
+	// Features: Optional. Feature config for the engine to opt in or opt out of
+	// features. Supported keys: * `*`: all features, if it's present, all other
+	// feature state settings are ignored. * `agent-gallery` *
+	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
+	// `notebook-lm` * `people-search` * `people-search-org-chart` *
+	// `bi-directional-audio` * `feedback`
+	Features map[string]string `json:"features,omitempty"`
+	// IndustryVertical: Optional. The industry vertical that the engine registers.
+	// The restriction of the Engine industry vertical is based on DataStore:
+	// Vertical on Engine has to match vertical of the DataStore linked to the
+	// engine.
 	//
 	// Possible values:
 	//   "INDUSTRY_VERTICAL_UNSPECIFIED" - Value used when unset.
@@ -8288,9 +8434,9 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
 	MediaRecommendationEngineConfig *GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfig `json:"mediaRecommendationEngineConfig,omitempty"`
-	// Name: Immutable. The fully qualified resource name of the engine. This field
-	// must be a UTF-8 encoded string with a length limit of 1024 characters.
-	// Format:
+	// Name: Immutable. Identifier. The fully qualified resource name of the
+	// engine. This field must be a UTF-8 encoded string with a length limit of
+	// 1024 characters. Format:
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/.
 	// Otherwise, an INVALID_ARGUMENT error is returned.
@@ -8666,6 +8812,9 @@ type GoogleCloudDiscoveryengineV1alphaEngineRecommendationMetadata struct {
 	//   "DATA_ERROR" - The engine does not have sufficient training data. Error
 	// messages can be queried via Stackdriver.
 	DataState string `json:"dataState,omitempty"`
+	// LastTrainTime: Output only. The timestamp when the latest successful
+	// training finished. Only applicable on Media Recommendation engines.
+	LastTrainTime string `json:"lastTrainTime,omitempty"`
 	// LastTuneTime: Output only. The timestamp when the latest successful tune
 	// finished. Only applicable on Media Recommendation engines.
 	LastTuneTime string `json:"lastTuneTime,omitempty"`
@@ -8852,7 +9001,7 @@ func (s GoogleCloudDiscoveryengineV1alphaEvaluation) MarshalJSON() ([]byte, erro
 // GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpec: Describes the
 // specification of the evaluation.
 type GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpec struct {
-	// QuerySetSpec: Required. The specification of the query set.
+	// QuerySetSpec: Optional. The specification of the query set.
 	QuerySetSpec *GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpecQuerySetSpec `json:"querySetSpec,omitempty"`
 	// SearchRequest: Required. The search request that is used to perform the
 	// evaluation. Only the following fields within SearchRequest are supported; if
@@ -8883,7 +9032,7 @@ func (s GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpec) MarshalJSON()
 // GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpecQuerySetSpec:
 // Describes the specification of the query set.
 type GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpecQuerySetSpec struct {
-	// SampleQuerySet: Required. The full resource name of the SampleQuerySet used
+	// SampleQuerySet: Optional. The full resource name of the SampleQuerySet used
 	// for the evaluation, in the format of
 	// `projects/{project}/locations/{location}/sampleQuerySets/{sampleQuerySet}`.
 	SampleQuerySet string `json:"sampleQuerySet,omitempty"`
@@ -10292,7 +10441,7 @@ func (s *GoogleCloudDiscoveryengineV1alphaQualityMetricsTopkMetrics) UnmarshalJS
 
 // GoogleCloudDiscoveryengineV1alphaQuery: Defines a user inputed query.
 type GoogleCloudDiscoveryengineV1alphaQuery struct {
-	// QueryId: Unique Id for the query.
+	// QueryId: Output only. Unique Id for the query.
 	QueryId string `json:"queryId,omitempty"`
 	// Text: Plain text.
 	Text string `json:"text,omitempty"`
@@ -10779,35 +10928,56 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// QueryExpansionSpec: The query expansion specification that specifies the
 	// conditions under which query expansion occurs.
 	QueryExpansionSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestQueryExpansionSpec `json:"queryExpansionSpec,omitempty"`
-	// RankingExpression: The ranking expression controls the customized ranking on
-	// retrieval documents. This overrides ServingConfig.ranking_expression. The
-	// syntax and supported features depend on the ranking_expression_backend
-	// value. If ranking_expression_backend is not provided, it defaults to BYOE.
-	// === BYOE === If ranking_expression_backend is not provided or set to `BYOE`,
-	// it should be a single function or multiple functions that are joined by "+".
-	// * ranking_expression = function, { " + ", function }; Supported functions: *
+	// RankingExpression: Optional. The ranking expression controls the customized
+	// ranking on retrieval documents. This overrides
+	// ServingConfig.ranking_expression. The syntax and supported features depend
+	// on the `ranking_expression_backend` value. If `ranking_expression_backend`
+	// is not provided, it defaults to `RANK_BY_EMBEDDING`. If
+	// ranking_expression_backend is not provided or set to `RANK_BY_EMBEDDING`, it
+	// should be a single function or multiple functions that are joined by "+". *
+	// ranking_expression = function, { " + ", function }; Supported functions: *
 	// double * relevance_score * double * dotProduct(embedding_field_path)
 	// Function variables: * `relevance_score`: pre-defined keywords, used for
 	// measure relevance between query and document. * `embedding_field_path`: the
 	// document embedding field used with query embedding vector. * `dotProduct`:
-	// embedding function between embedding_field_path and query embedding vector.
-	// Example ranking expression: If document has an embedding field
+	// embedding function between `embedding_field_path` and query embedding
+	// vector. Example ranking expression: If document has an embedding field
 	// doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3
-	// * dotProduct(doc_embedding)`. === CLEARBOX === If ranking_expression_backend
-	// is set to `CLEARBOX`, the following expression types (and combinations of
-	// those chained using + or * operators) are supported: * double * signal *
-	// log(signal) * exp(signal) * rr(signal, double > 0) -- reciprocal rank
+	// * dotProduct(doc_embedding)`. If ranking_expression_backend is set to
+	// `RANK_BY_FORMULA`, the following expression types (and combinations of those
+	// chained using + or * operators) are supported: * `double` * `signal` *
+	// `log(signal)` * `exp(signal)` * `rr(signal, double > 0)` -- reciprocal rank
 	// transformation with second argument being a denominator constant. *
-	// is_nan(signal) -- returns 0 if signal is NaN, 1 otherwise. *
-	// fill_nan(signal1, signal2 | double) -- if signal1 is NaN, returns signal2 |
-	// double, else returns signal1. Examples: * 0.2 * gecko_score + 0.8 *
-	// log(bm25_score) * 0.2 * exp(fill_nan(gecko_score, 0)) + 0.3 *
-	// is_nan(bm25_score) * 0.2 * rr(gecko_score, 16) + 0.8 * rr(bm25_score, 32)
-	// The following signals are supported: * gecko_score -- semantic similarity
-	// adjustment * bm25_score -- keyword match adjustment * jetstream_score --
-	// semantic relevance adjustment * pctr_rank -- predicted conversion rate
-	// adjustment as a rank * freshness_rank -- freshness adjustment as a rank *
-	// base_rank -- the default rank of the result
+	// `is_nan(signal)` -- returns 0 if signal is NaN, 1 otherwise. *
+	// `fill_nan(signal1, signal2 | double)` -- if signal1 is NaN, returns signal2
+	// | double, else returns signal1. Here are a few examples of ranking formulas
+	// that use the supported ranking expression types: - `0.2 *
+	// semantic_similarity_score + 0.8 * log(keyword_similarity_score)` -- mostly
+	// rank by the logarithm of `keyword_similarity_score` with slight
+	// `semantic_smilarity_score` adjustment. - `0.2 *
+	// exp(fill_nan(semantic_similarity_score, 0)) + 0.3 *
+	// is_nan(keyword_similarity_score)` -- rank by the exponent of
+	// `semantic_similarity_score` filling the value with 0 if it's NaN, also add
+	// constant 0.3 adjustment to the final score if `semantic_similarity_score` is
+	// NaN. - `0.2 * rr(semantic_similarity_score, 16) + 0.8 *
+	// rr(keyword_similarity_score, 16)` -- mostly rank by the reciprocal rank of
+	// `keyword_similarity_score` with slight adjustment of reciprocal rank of
+	// `semantic_smilarity_score`. The following signals are supported: *
+	// `semantic_similarity_score`: semantic similarity adjustment that is
+	// calculated using the embeddings generated by a proprietary Google model.
+	// This score determines how semantically similar a search query is to a
+	// document. * `keyword_similarity_score`: keyword match adjustment uses the
+	// Best Match 25 (BM25) ranking function. This score is calculated using a
+	// probabilistic model to estimate the probability that a document is relevant
+	// to a given query. * `relevance_score`: semantic relevance adjustment that
+	// uses a proprietary Google model to determine the meaning and intent behind a
+	// user's query in context with the content in the documents. * `pctr_rank`:
+	// predicted conversion rate adjustment as a rank use predicted Click-through
+	// rate (pCTR) to gauge the relevance and attractiveness of a search result
+	// from a user's perspective. A higher pCTR suggests that the result is more
+	// likely to satisfy the user's query and intent, making it a valuable signal
+	// for ranking. * `freshness_rank`: freshness adjustment as a rank *
+	// `base_rank`: the default rank of the result
 	RankingExpression string `json:"rankingExpression,omitempty"`
 	// RankingExpressionBackend: Optional. The backend to use for the ranking
 	// expression evaluation.
@@ -10815,9 +10985,14 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// Possible values:
 	//   "RANKING_EXPRESSION_BACKEND_UNSPECIFIED" - Default option for
 	// unspecified/unknown values.
-	//   "BYOE" - Bring your own embedding (BYOE), the default way to evaluate the
-	// ranking expression.
-	//   "CLEARBOX" - The expression is compiled into a Clearbox formula.
+	//   "BYOE" - Deprecated: Use `RANK_BY_EMBEDDING` instead. Ranking by custom
+	// embedding model, the default way to evaluate the ranking expression. Legacy
+	// enum option, `RANK_BY_EMBEDDING` should be used instead.
+	//   "CLEARBOX" - Deprecated: Use `RANK_BY_FORMULA` instead. Ranking by custom
+	// formula. Legacy enum option, `RANK_BY_FORMULA` should be used instead.
+	//   "RANK_BY_EMBEDDING" - Ranking by custom embedding model, the default way
+	// to evaluate the ranking expression.
+	//   "RANK_BY_FORMULA" - Ranking by custom formula.
 	RankingExpressionBackend string `json:"rankingExpressionBackend,omitempty"`
 	// RegionCode: The Unicode country/region code (CLDR) of a location, such as
 	// "US" and "419". For more information, see Standard fields
@@ -10879,6 +11054,11 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// SpellCorrectionSpec: The spell correction specification that specifies the
 	// mode under which spell correction takes effect.
 	SpellCorrectionSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestSpellCorrectionSpec `json:"spellCorrectionSpec,omitempty"`
+	// UseLatestData: Uses the Engine, ServingConfig and Control freshly read from
+	// the database. Note: this skips config cache and introduces dependency on
+	// databases, which could significantly increase the API latency. It should
+	// only be used for testing, but not serving end users.
+	UseLatestData bool `json:"useLatestData,omitempty"`
 	// UserInfo: Information about the end user. Highly recommended for analytics
 	// and personalization. UserInfo.user_agent is used to deduce `device_type` for
 	// analytics.
@@ -12014,14 +12194,15 @@ func (s GoogleCloudDiscoveryengineV1alphaSession) MarshalJSON() ([]byte, error) 
 // GoogleCloudDiscoveryengineV1alphaSessionTurn: Represents a turn, including a
 // query from the user and a answer from service.
 type GoogleCloudDiscoveryengineV1alphaSessionTurn struct {
-	// Answer: The resource name of the answer to the user query. Only set if the
-	// answer generation (/answer API call) happened in this turn.
+	// Answer: Optional. The resource name of the answer to the user query. Only
+	// set if the answer generation (/answer API call) happened in this turn.
 	Answer string `json:"answer,omitempty"`
 	// DetailedAnswer: Output only. In ConversationalSearchService.GetSession API,
 	// if GetSessionRequest.include_answer_details is set to true, this field will
 	// be populated when getting answer query session.
 	DetailedAnswer *GoogleCloudDiscoveryengineV1alphaAnswer `json:"detailedAnswer,omitempty"`
-	// Query: The user query.
+	// Query: Optional. The user query. May not be set if this turn is merely
+	// regenerating an answer to a different turn
 	Query *GoogleCloudDiscoveryengineV1alphaQuery `json:"query,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -12644,12 +12825,6 @@ type GoogleCloudDiscoveryengineV1alphaUserLicense struct {
 	LicenseConfig string `json:"licenseConfig,omitempty"`
 	// UpdateTime: Output only. User update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// User: Optional. The full resource name of the User, in the format of
-	// `projects/{project}/locations/{location}/userStores/{user_store}/users/{user_
-	// id}`. This field must be a UTF-8 encoded string with a length limit of 2048
-	// characters. If the user field is empty, it's indicating the user has not
-	// logged in yet and no User entity is created.
-	User string `json:"user,omitempty"`
 	// UserPrincipal: Required. Immutable. The user principal of the User, could be
 	// email address or other prinical identifier. This field is immutable. Admin
 	// assign licenses based on the user principal.
@@ -15117,6 +15292,38 @@ func (s GoogleCloudDiscoveryengineV1betaBatchGetDocumentsMetadataResponseDocumen
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesMetadata: Metadata
+// related to the progress of the UserLicenseService.BatchUpdateUserLicenses
+// operation. This will be returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// FailureCount: Count of user licenses that failed to be updated.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+	// SuccessCount: Count of user licenses successfully updated.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequest: Request
 // message for UserLicenseService.BatchUpdateUserLicenses method.
 type GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequest struct {
@@ -15124,8 +15331,6 @@ type GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequest struct {
 	// associated license config, the user license will be deleted. By default
 	// which is false, the user license will be updated to unassigned state.
 	DeleteUnassignedUserLicenses bool `json:"deleteUnassignedUserLicenses,omitempty"`
-	// GcsSource: Cloud Storage location for the input content.
-	GcsSource *GoogleCloudDiscoveryengineV1betaGcsSource `json:"gcsSource,omitempty"`
 	// InlineSource: The inline source for the input content for document
 	// embeddings.
 	InlineSource *GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequestInlineSource `json:"inlineSource,omitempty"`
@@ -15170,6 +15375,31 @@ type GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequestInlineSource 
 
 func (s GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequestInlineSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequestInlineSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesResponse: Response
+// message for UserLicenseService.BatchUpdateUserLicenses method.
+type GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesResponse struct {
+	// ErrorSamples: A sample of errors encountered while processing the request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+	// UserLicenses: UserLicenses successfully updated.
+	UserLicenses []*GoogleCloudDiscoveryengineV1betaUserLicense `json:"userLicenses,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15632,6 +15862,9 @@ type GoogleCloudDiscoveryengineV1betaChunk struct {
 	// AnnotationContents: Output only. Annotation contents if the current chunk
 	// contains annotations.
 	AnnotationContents []string `json:"annotationContents,omitempty"`
+	// AnnotationMetadata: Output only. The annotation metadata includes structured
+	// content in the current chunk.
+	AnnotationMetadata []*GoogleCloudDiscoveryengineV1betaChunkAnnotationMetadata `json:"annotationMetadata,omitempty"`
 	// ChunkMetadata: Output only. Metadata of the current chunk.
 	ChunkMetadata *GoogleCloudDiscoveryengineV1betaChunkChunkMetadata `json:"chunkMetadata,omitempty"`
 	// Content: Content is a string from a document (parsed content).
@@ -15690,6 +15923,32 @@ func (s *GoogleCloudDiscoveryengineV1betaChunk) UnmarshalJSON(data []byte) error
 	}
 	s.RelevanceScore = float64(s1.RelevanceScore)
 	return nil
+}
+
+// GoogleCloudDiscoveryengineV1betaChunkAnnotationMetadata: The annotation
+// metadata includes structured content in the current chunk.
+type GoogleCloudDiscoveryengineV1betaChunkAnnotationMetadata struct {
+	// ImageId: Output only. Image id is provided if the structured content is
+	// based on an image.
+	ImageId string `json:"imageId,omitempty"`
+	// StructuredContent: Output only. The structured content information.
+	StructuredContent *GoogleCloudDiscoveryengineV1betaChunkStructuredContent `json:"structuredContent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaChunkAnnotationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaChunkAnnotationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1betaChunkChunkMetadata: Metadata of the current
@@ -15774,6 +16033,37 @@ func (s GoogleCloudDiscoveryengineV1betaChunkPageSpan) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaChunkStructuredContent: The structured
+// content information.
+type GoogleCloudDiscoveryengineV1betaChunkStructuredContent struct {
+	// Content: Output only. The content of the structured content.
+	Content string `json:"content,omitempty"`
+	// StructureType: Output only. The structure type of the structured content.
+	//
+	// Possible values:
+	//   "STRUCTURE_TYPE_UNSPECIFIED" - Default value.
+	//   "SHAREHOLDER_STRUCTURE" - Shareholder structure.
+	//   "SIGNATURE_STRUCTURE" - Signature structure.
+	//   "CHECKBOX_STRUCTURE" - Checkbox structure.
+	StructureType string `json:"structureType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaChunkStructuredContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaChunkStructuredContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaCloudSqlSource: Cloud SQL source import data
 // from.
 type GoogleCloudDiscoveryengineV1betaCloudSqlSource struct {
@@ -15835,7 +16125,7 @@ type GoogleCloudDiscoveryengineV1betaCmekConfig struct {
 	LastRotationTimestampMicros int64 `json:"lastRotationTimestampMicros,omitempty,string"`
 	// Name: Required. The name of the CmekConfig of the form
 	// `projects/{project}/locations/{location}/cmekConfig` or
-	// `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+	// `projects/{project}/locations/{location}/cmekConfigs/{cmek_config}`.
 	Name string `json:"name,omitempty"`
 	// NotebooklmState: Output only. Whether the NotebookLM Corpus is ready to be
 	// used.
@@ -15862,6 +16152,8 @@ type GoogleCloudDiscoveryengineV1betaCmekConfig struct {
 	//   "UNUSABLE" - The CmekConfig is not usable, most likely due to some
 	// internal issue.
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
+	//   "DELETED" - The KMS key is soft deleted. Some cleanup policy will
+	// eventually be applied.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -17011,7 +17303,8 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// LanguageInfo: Language info for DataStore.
 	LanguageInfo *GoogleCloudDiscoveryengineV1betaLanguageInfo `json:"languageInfo,omitempty"`
-	// Name: Immutable. The full resource name of the data store. Format:
+	// Name: Immutable. Identifier. The full resource name of the data store.
+	// Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
 	// limit of 1024 characters.
@@ -17107,8 +17400,8 @@ func (s GoogleCloudDiscoveryengineV1betaDataStoreBillingEstimation) MarshalJSON(
 // GoogleCloudDiscoveryengineV1betaDataStoreServingConfigDataStore: Stores
 // information regarding the serving configurations at DataStore level.
 type GoogleCloudDiscoveryengineV1betaDataStoreServingConfigDataStore struct {
-	// DisabledForServing: If set true, the DataStore will not be available for
-	// serving search requests.
+	// DisabledForServing: Optional. If set true, the DataStore will not be
+	// available for serving search requests.
 	DisabledForServing bool `json:"disabledForServing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -17771,6 +18064,9 @@ type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigLayout
 	// ExcludeHtmlIds: Optional. List of HTML ids to exclude from the parsed
 	// content.
 	ExcludeHtmlIds []string `json:"excludeHtmlIds,omitempty"`
+	// StructuredContentTypes: Optional. Contains the required structure types to
+	// extract from the document. Supported values: * `shareholder-structure`
+	StructuredContentTypes []string `json:"structuredContentTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableImageAnnotation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -17930,7 +18226,7 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	CommonConfig *GoogleCloudDiscoveryengineV1betaEngineCommonConfig `json:"commonConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the Recommendation Engine was created at.
 	CreateTime string `json:"createTime,omitempty"`
-	// DataStoreIds: The data stores associated with this engine. For
+	// DataStoreIds: Optional. The data stores associated with this engine. For
 	// SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they
 	// can only associate with at most one data store. If solution_type is
 	// SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be
@@ -17943,9 +18239,17 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// IndustryVertical: The industry vertical that the engine registers. The
-	// restriction of the Engine industry vertical is based on DataStore: Vertical
-	// on Engine has to match vertical of the DataStore linked to the engine.
+	// Features: Optional. Feature config for the engine to opt in or opt out of
+	// features. Supported keys: * `*`: all features, if it's present, all other
+	// feature state settings are ignored. * `agent-gallery` *
+	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
+	// `notebook-lm` * `people-search` * `people-search-org-chart` *
+	// `bi-directional-audio` * `feedback`
+	Features map[string]string `json:"features,omitempty"`
+	// IndustryVertical: Optional. The industry vertical that the engine registers.
+	// The restriction of the Engine industry vertical is based on DataStore:
+	// Vertical on Engine has to match vertical of the DataStore linked to the
+	// engine.
 	//
 	// Possible values:
 	//   "INDUSTRY_VERTICAL_UNSPECIFIED" - Value used when unset.
@@ -17958,9 +18262,9 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
 	MediaRecommendationEngineConfig *GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfig `json:"mediaRecommendationEngineConfig,omitempty"`
-	// Name: Immutable. The fully qualified resource name of the engine. This field
-	// must be a UTF-8 encoded string with a length limit of 1024 characters.
-	// Format:
+	// Name: Immutable. Identifier. The fully qualified resource name of the
+	// engine. This field must be a UTF-8 encoded string with a length limit of
+	// 1024 characters. Format:
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/.
 	// Otherwise, an INVALID_ARGUMENT error is returned.
@@ -18410,7 +18714,7 @@ func (s GoogleCloudDiscoveryengineV1betaEvaluation) MarshalJSON() ([]byte, error
 // GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpec: Describes the
 // specification of the evaluation.
 type GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpec struct {
-	// QuerySetSpec: Required. The specification of the query set.
+	// QuerySetSpec: Optional. The specification of the query set.
 	QuerySetSpec *GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpecQuerySetSpec `json:"querySetSpec,omitempty"`
 	// SearchRequest: Required. The search request that is used to perform the
 	// evaluation. Only the following fields within SearchRequest are supported; if
@@ -18441,7 +18745,7 @@ func (s GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpec) MarshalJSON() 
 // GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpecQuerySetSpec:
 // Describes the specification of the query set.
 type GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpecQuerySetSpec struct {
-	// SampleQuerySet: Required. The full resource name of the SampleQuerySet used
+	// SampleQuerySet: Optional. The full resource name of the SampleQuerySet used
 	// for the evaluation, in the format of
 	// `projects/{project}/locations/{location}/sampleQuerySets/{sampleQuerySet}`.
 	SampleQuerySet string `json:"sampleQuerySet,omitempty"`
@@ -19071,7 +19375,9 @@ type GoogleCloudDiscoveryengineV1betaImportDocumentsRequest struct {
 	//   "INCREMENTAL" - Inserts new documents or updates existing documents.
 	//   "FULL" - Calculates diff and replaces the entire document dataset.
 	// Existing documents may be deleted if they are not present in the source
-	// location.
+	// location. When using this mode, there won't be any downtime on the dataset
+	// targeted. Any document that should remain unchanged or that should be
+	// updated will continue serving while the operation is running.
 	ReconciliationMode string `json:"reconciliationMode,omitempty"`
 	// SpannerSource: Spanner input source.
 	SpannerSource *GoogleCloudDiscoveryengineV1betaSpannerSource `json:"spannerSource,omitempty"`
@@ -20478,6 +20784,9 @@ type GoogleCloudDiscoveryengineV1betaPauseEngineRequest struct {
 // GoogleCloudDiscoveryengineV1betaPrincipal: Principal identifier of a user or
 // a group.
 type GoogleCloudDiscoveryengineV1betaPrincipal struct {
+	// ExternalEntityId: For 3P application identities which are not present in the
+	// customer identity provider.
+	ExternalEntityId string `json:"externalEntityId,omitempty"`
 	// GroupId: Group identifier. For Google Workspace user account, group_id
 	// should be the google workspace group email. For non-google identity provider
 	// user account, group_id is the mapped group identifier configured during the
@@ -20488,15 +20797,15 @@ type GoogleCloudDiscoveryengineV1betaPrincipal struct {
 	// account, user_id is the mapped user identifier configured during the
 	// workforcepool config.
 	UserId string `json:"userId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GroupId") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ExternalEntityId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GroupId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ExternalEntityId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -21046,7 +21355,7 @@ func (s *GoogleCloudDiscoveryengineV1betaQualityMetricsTopkMetrics) UnmarshalJSO
 
 // GoogleCloudDiscoveryengineV1betaQuery: Defines a user inputed query.
 type GoogleCloudDiscoveryengineV1betaQuery struct {
-	// QueryId: Unique Id for the query.
+	// QueryId: Output only. Unique Id for the query.
 	QueryId string `json:"queryId,omitempty"`
 	// Text: Plain text.
 	Text string `json:"text,omitempty"`
@@ -22014,35 +22323,56 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// QueryExpansionSpec: The query expansion specification that specifies the
 	// conditions under which query expansion occurs.
 	QueryExpansionSpec *GoogleCloudDiscoveryengineV1betaSearchRequestQueryExpansionSpec `json:"queryExpansionSpec,omitempty"`
-	// RankingExpression: The ranking expression controls the customized ranking on
-	// retrieval documents. This overrides ServingConfig.ranking_expression. The
-	// syntax and supported features depend on the ranking_expression_backend
-	// value. If ranking_expression_backend is not provided, it defaults to BYOE.
-	// === BYOE === If ranking_expression_backend is not provided or set to `BYOE`,
-	// it should be a single function or multiple functions that are joined by "+".
-	// * ranking_expression = function, { " + ", function }; Supported functions: *
+	// RankingExpression: Optional. The ranking expression controls the customized
+	// ranking on retrieval documents. This overrides
+	// ServingConfig.ranking_expression. The syntax and supported features depend
+	// on the `ranking_expression_backend` value. If `ranking_expression_backend`
+	// is not provided, it defaults to `RANK_BY_EMBEDDING`. If
+	// ranking_expression_backend is not provided or set to `RANK_BY_EMBEDDING`, it
+	// should be a single function or multiple functions that are joined by "+". *
+	// ranking_expression = function, { " + ", function }; Supported functions: *
 	// double * relevance_score * double * dotProduct(embedding_field_path)
 	// Function variables: * `relevance_score`: pre-defined keywords, used for
 	// measure relevance between query and document. * `embedding_field_path`: the
 	// document embedding field used with query embedding vector. * `dotProduct`:
-	// embedding function between embedding_field_path and query embedding vector.
-	// Example ranking expression: If document has an embedding field
+	// embedding function between `embedding_field_path` and query embedding
+	// vector. Example ranking expression: If document has an embedding field
 	// doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3
-	// * dotProduct(doc_embedding)`. === CLEARBOX === If ranking_expression_backend
-	// is set to `CLEARBOX`, the following expression types (and combinations of
-	// those chained using + or * operators) are supported: * double * signal *
-	// log(signal) * exp(signal) * rr(signal, double > 0) -- reciprocal rank
+	// * dotProduct(doc_embedding)`. If ranking_expression_backend is set to
+	// `RANK_BY_FORMULA`, the following expression types (and combinations of those
+	// chained using + or * operators) are supported: * `double` * `signal` *
+	// `log(signal)` * `exp(signal)` * `rr(signal, double > 0)` -- reciprocal rank
 	// transformation with second argument being a denominator constant. *
-	// is_nan(signal) -- returns 0 if signal is NaN, 1 otherwise. *
-	// fill_nan(signal1, signal2 | double) -- if signal1 is NaN, returns signal2 |
-	// double, else returns signal1. Examples: * 0.2 * gecko_score + 0.8 *
-	// log(bm25_score) * 0.2 * exp(fill_nan(gecko_score, 0)) + 0.3 *
-	// is_nan(bm25_score) * 0.2 * rr(gecko_score, 16) + 0.8 * rr(bm25_score, 32)
-	// The following signals are supported: * gecko_score -- semantic similarity
-	// adjustment * bm25_score -- keyword match adjustment * jetstream_score --
-	// semantic relevance adjustment * pctr_rank -- predicted conversion rate
-	// adjustment as a rank * freshness_rank -- freshness adjustment as a rank *
-	// base_rank -- the default rank of the result
+	// `is_nan(signal)` -- returns 0 if signal is NaN, 1 otherwise. *
+	// `fill_nan(signal1, signal2 | double)` -- if signal1 is NaN, returns signal2
+	// | double, else returns signal1. Here are a few examples of ranking formulas
+	// that use the supported ranking expression types: - `0.2 *
+	// semantic_similarity_score + 0.8 * log(keyword_similarity_score)` -- mostly
+	// rank by the logarithm of `keyword_similarity_score` with slight
+	// `semantic_smilarity_score` adjustment. - `0.2 *
+	// exp(fill_nan(semantic_similarity_score, 0)) + 0.3 *
+	// is_nan(keyword_similarity_score)` -- rank by the exponent of
+	// `semantic_similarity_score` filling the value with 0 if it's NaN, also add
+	// constant 0.3 adjustment to the final score if `semantic_similarity_score` is
+	// NaN. - `0.2 * rr(semantic_similarity_score, 16) + 0.8 *
+	// rr(keyword_similarity_score, 16)` -- mostly rank by the reciprocal rank of
+	// `keyword_similarity_score` with slight adjustment of reciprocal rank of
+	// `semantic_smilarity_score`. The following signals are supported: *
+	// `semantic_similarity_score`: semantic similarity adjustment that is
+	// calculated using the embeddings generated by a proprietary Google model.
+	// This score determines how semantically similar a search query is to a
+	// document. * `keyword_similarity_score`: keyword match adjustment uses the
+	// Best Match 25 (BM25) ranking function. This score is calculated using a
+	// probabilistic model to estimate the probability that a document is relevant
+	// to a given query. * `relevance_score`: semantic relevance adjustment that
+	// uses a proprietary Google model to determine the meaning and intent behind a
+	// user's query in context with the content in the documents. * `pctr_rank`:
+	// predicted conversion rate adjustment as a rank use predicted Click-through
+	// rate (pCTR) to gauge the relevance and attractiveness of a search result
+	// from a user's perspective. A higher pCTR suggests that the result is more
+	// likely to satisfy the user's query and intent, making it a valuable signal
+	// for ranking. * `freshness_rank`: freshness adjustment as a rank *
+	// `base_rank`: the default rank of the result
 	RankingExpression string `json:"rankingExpression,omitempty"`
 	// RankingExpressionBackend: Optional. The backend to use for the ranking
 	// expression evaluation.
@@ -22050,9 +22380,14 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// Possible values:
 	//   "RANKING_EXPRESSION_BACKEND_UNSPECIFIED" - Default option for
 	// unspecified/unknown values.
-	//   "BYOE" - Bring your own embedding (BYOE), the default way to evaluate the
-	// ranking expression.
-	//   "CLEARBOX" - The expression is compiled into a Clearbox formula.
+	//   "BYOE" - Deprecated: Use `RANK_BY_EMBEDDING` instead. Ranking by custom
+	// embedding model, the default way to evaluate the ranking expression. Legacy
+	// enum option, `RANK_BY_EMBEDDING` should be used instead.
+	//   "CLEARBOX" - Deprecated: Use `RANK_BY_FORMULA` instead. Ranking by custom
+	// formula. Legacy enum option, `RANK_BY_FORMULA` should be used instead.
+	//   "RANK_BY_EMBEDDING" - Ranking by custom embedding model, the default way
+	// to evaluate the ranking expression.
+	//   "RANK_BY_FORMULA" - Ranking by custom formula.
 	RankingExpressionBackend string `json:"rankingExpressionBackend,omitempty"`
 	// RegionCode: The Unicode country/region code (CLDR) of a location, such as
 	// "US" and "419". For more information, see Standard fields
@@ -24419,14 +24754,15 @@ func (s GoogleCloudDiscoveryengineV1betaSession) MarshalJSON() ([]byte, error) {
 // GoogleCloudDiscoveryengineV1betaSessionTurn: Represents a turn, including a
 // query from the user and a answer from service.
 type GoogleCloudDiscoveryengineV1betaSessionTurn struct {
-	// Answer: The resource name of the answer to the user query. Only set if the
-	// answer generation (/answer API call) happened in this turn.
+	// Answer: Optional. The resource name of the answer to the user query. Only
+	// set if the answer generation (/answer API call) happened in this turn.
 	Answer string `json:"answer,omitempty"`
 	// DetailedAnswer: Output only. In ConversationalSearchService.GetSession API,
 	// if GetSessionRequest.include_answer_details is set to true, this field will
 	// be populated when getting answer query session.
 	DetailedAnswer *GoogleCloudDiscoveryengineV1betaAnswer `json:"detailedAnswer,omitempty"`
-	// Query: The user query.
+	// Query: Optional. The user query. May not be set if this turn is merely
+	// regenerating an answer to a different turn
 	Query *GoogleCloudDiscoveryengineV1betaQuery `json:"query,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -25423,12 +25759,6 @@ type GoogleCloudDiscoveryengineV1betaUserLicense struct {
 	LicenseConfig string `json:"licenseConfig,omitempty"`
 	// UpdateTime: Output only. User update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// User: Optional. The full resource name of the User, in the format of
-	// `projects/{project}/locations/{location}/userStores/{user_store}/users/{user_
-	// id}`. This field must be a UTF-8 encoded string with a length limit of 2048
-	// characters. If the user field is empty, it's indicating the user has not
-	// logged in yet and no User entity is created.
-	User string `json:"user,omitempty"`
 	// UserPrincipal: Required. Immutable. The user principal of the User, could be
 	// email address or other prinical identifier. This field is immutable. Admin
 	// assign licenses based on the user principal.
@@ -26508,7 +26838,7 @@ type ProjectsLocationsUpdateCmekConfigCall struct {
 //
 //   - name: The name of the CmekConfig of the form
 //     `projects/{project}/locations/{location}/cmekConfig` or
-//     `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+//     `projects/{project}/locations/{location}/cmekConfigs/{cmek_config}`.
 func (r *ProjectsLocationsService) UpdateCmekConfig(name string, googleclouddiscoveryenginev1betacmekconfig *GoogleCloudDiscoveryengineV1betaCmekConfig) *ProjectsLocationsUpdateCmekConfigCall {
 	c := &ProjectsLocationsUpdateCmekConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26950,7 +27280,7 @@ type ProjectsLocationsCmekConfigsPatchCall struct {
 //
 //   - name: The name of the CmekConfig of the form
 //     `projects/{project}/locations/{location}/cmekConfig` or
-//     `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+//     `projects/{project}/locations/{location}/cmekConfigs/{cmek_config}`.
 func (r *ProjectsLocationsCmekConfigsService) Patch(name string, googleclouddiscoveryenginev1betacmekconfig *GoogleCloudDiscoveryengineV1betaCmekConfig) *ProjectsLocationsCmekConfigsPatchCall {
 	c := &ProjectsLocationsCmekConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28137,7 +28467,8 @@ type ProjectsLocationsCollectionsDataStoresPatchCall struct {
 
 // Patch: Updates a DataStore
 //
-//   - name: Immutable. The full resource name of the data store. Format:
+//   - name: Immutable. Identifier. The full resource name of the data store.
+//     Format:
 //     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
 //     ores/{data_store_id}`. This field must be a UTF-8 encoded string with a
 //     length limit of 1024 characters.
@@ -37834,9 +38165,9 @@ type ProjectsLocationsCollectionsEnginesPatchCall struct {
 
 // Patch: Updates an Engine
 //
-//   - name: Immutable. The fully qualified resource name of the engine. This
-//     field must be a UTF-8 encoded string with a length limit of 1024
-//     characters. Format:
+//   - name: Immutable. Identifier. The fully qualified resource name of the
+//     engine. This field must be a UTF-8 encoded string with a length limit of
+//     1024 characters. Format:
 //     `projects/{project}/locations/{location}/collections/{collection}/engines/{
 //     engine}` engine should be 1-63 characters, and valid characters are
 //     /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.
@@ -42847,7 +43178,8 @@ type ProjectsLocationsDataStoresPatchCall struct {
 
 // Patch: Updates a DataStore
 //
-//   - name: Immutable. The full resource name of the data store. Format:
+//   - name: Immutable. Identifier. The full resource name of the data store.
+//     Format:
 //     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
 //     ores/{data_store_id}`. This field must be a UTF-8 encoded string with a
 //     length limit of 1024 characters.

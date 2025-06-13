@@ -1021,8 +1021,8 @@ type GoogleCloudDataplexV1AspectTypeMetadataTemplate struct {
 	// record. It defines the nested fields.
 	RecordFields []*GoogleCloudDataplexV1AspectTypeMetadataTemplate `json:"recordFields,omitempty"`
 	// Type: Required. The datatype of this field. The following values are
-	// supported:Primitive types: string integer boolean double datetime. Must be
-	// of the format RFC3339 UTC "Zulu" (Examples: "2014-10-02T15:01:23Z" and
+	// supported:Primitive types: string int bool double datetime. Must be of the
+	// format RFC3339 UTC "Zulu" (Examples: "2014-10-02T15:01:23Z" and
 	// "2014-10-02T15:01:23.045123456Z").Complex types: enum array map record
 	Type string `json:"type,omitempty"`
 	// TypeId: Optional. You can use type id if this definition of the field needs
@@ -2007,6 +2007,11 @@ type GoogleCloudDataplexV1DataDiscoverySpecBigQueryPublishingConfig struct {
 	// same single region as the datascan.For supported values, refer to
 	// https://cloud.google.com/bigquery/docs/locations#supported_locations.
 	Location string `json:"location,omitempty"`
+	// Project: Optional. The project of the BigQuery dataset to publish BigLake
+	// external or non-BigLake external tables to. If not specified, the project of
+	// the Cloud Storage bucket will be used. The format is
+	// "projects/{project_id_or_number}".
+	Project string `json:"project,omitempty"`
 	// TableType: Optional. Determines whether to publish discovered tables as
 	// BigLake external tables or non-BigLake external tables.
 	//
@@ -2690,6 +2695,10 @@ func (s GoogleCloudDataplexV1DataProfileSpecSelectedFields) MarshalJSON() ([]byt
 type GoogleCloudDataplexV1DataQualityColumnResult struct {
 	// Column: Output only. The column specified in the DataQualityRule.
 	Column string `json:"column,omitempty"`
+	// Dimensions: Output only. The dimension-level results for this column.
+	Dimensions []*GoogleCloudDataplexV1DataQualityDimensionResult `json:"dimensions,omitempty"`
+	// Passed: Output only. Whether the column passed or failed.
+	Passed bool `json:"passed,omitempty"`
 	// Score: Output only. The column-level data quality score for this data scan
 	// job if and only if the 'column' field is set.The score ranges between
 	// between 0, 100 (up to two decimal points).
@@ -2796,6 +2805,9 @@ func (s *GoogleCloudDataplexV1DataQualityDimensionResult) UnmarshalJSON(data []b
 
 // GoogleCloudDataplexV1DataQualityResult: The output of a DataQualityScan.
 type GoogleCloudDataplexV1DataQualityResult struct {
+	// CatalogPublishingStatus: Output only. The status of publishing the data scan
+	// to Catalog.
+	CatalogPublishingStatus *GoogleCloudDataplexV1DataScanCatalogPublishingStatus `json:"catalogPublishingStatus,omitempty"`
 	// Columns: Output only. A list of results at the column level.A column will
 	// have a corresponding DataQualityColumnResult if and only if there is at
 	// least one rule with the 'column' field set to it.
@@ -2818,15 +2830,15 @@ type GoogleCloudDataplexV1DataQualityResult struct {
 	// Score: Output only. The overall data quality score.The score ranges between
 	// 0, 100 (up to two decimal points).
 	Score float64 `json:"score,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Columns") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CatalogPublishingStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Columns") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CatalogPublishingStatus") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3369,6 +3381,9 @@ func (s *GoogleCloudDataplexV1DataQualityScanRuleResult) UnmarshalJSON(data []by
 
 // GoogleCloudDataplexV1DataQualitySpec: DataQualityScan related setting.
 type GoogleCloudDataplexV1DataQualitySpec struct {
+	// CatalogPublishingEnabled: Optional. If set, the latest DataScan job result
+	// will be published to Dataplex Catalog.
+	CatalogPublishingEnabled bool `json:"catalogPublishingEnabled,omitempty"`
 	// PostScanActions: Optional. Actions to take upon job completion.
 	PostScanActions *GoogleCloudDataplexV1DataQualitySpecPostScanActions `json:"postScanActions,omitempty"`
 	// RowFilter: Optional. A filter applied to all rows in a single DataScan job.
@@ -3385,15 +3400,15 @@ type GoogleCloudDataplexV1DataQualitySpec struct {
 	// significant decimal digits. Sampling is not applied if sampling_percent is
 	// not specified, 0 or 100.
 	SamplingPercent float64 `json:"samplingPercent,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PostScanActions") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "CatalogPublishingEnabled")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PostScanActions") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CatalogPublishingEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3667,9 +3682,39 @@ func (s GoogleCloudDataplexV1DataScan) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1DataScanCatalogPublishingStatus: The status of
+// publishing the data scan result to Catalog.
+type GoogleCloudDataplexV1DataScanCatalogPublishingStatus struct {
+	// State: Output only. Execution state for catalog publishing.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The publishing state is unspecified.
+	//   "SUCCEEDED" - Publish to catalog completed successfully.
+	//   "FAILED" - Publish to catalog failed.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataScanCatalogPublishingStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataScanCatalogPublishingStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1DataScanEvent: These messages contain information about
 // the execution of a datascan. The monitored resource is 'DataScan'
 type GoogleCloudDataplexV1DataScanEvent struct {
+	// CatalogPublishingStatus: The status of publishing the data scan to Catalog.
+	CatalogPublishingStatus *GoogleCloudDataplexV1DataScanCatalogPublishingStatus `json:"catalogPublishingStatus,omitempty"`
 	// CreateTime: The time when the data scan job was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DataProfile: Data profile result for data profile type data scan.
@@ -3727,15 +3772,15 @@ type GoogleCloudDataplexV1DataScanEvent struct {
 	//   "DATA_QUALITY" - Data scan for data quality.
 	//   "DATA_DISCOVERY" - Data scan for data discovery.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "CatalogPublishingStatus") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CatalogPublishingStatus") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4738,21 +4783,22 @@ func (s GoogleCloudDataplexV1EntryGroup) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDataplexV1EntryLink: EntryLink represents a link between two
-// entries.
+// Entries.
 type GoogleCloudDataplexV1EntryLink struct {
 	// CreateTime: Output only. The time when the Entry Link was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// EntryLinkType: Required. Immutable. Relative resource name of the Entry Link
 	// Type used to create this Entry Link, of the form:
-	// projects/{project}/locations/{location}/entryLinkTypes/{entry_link_type}.
+	// `projects/{project_id_or_number}/locations/{location_id}/entryLinkTypes/{entr
+	// y_link_type_id}.
 	EntryLinkType string `json:"entryLinkType,omitempty"`
-	// EntryReferences: Required. Specifies the entries referenced in the entry
-	// link. There should be exactly two entry references.
+	// EntryReferences: Required. Specifies the Entries referenced in the Entry
+	// Link. There should be exactly two entry references.
 	EntryReferences []*GoogleCloudDataplexV1EntryLinkEntryReference `json:"entryReferences,omitempty"`
 	// Name: Output only. Immutable. Identifier. The relative resource name of the
 	// Entry Link, of the form:
-	// projects/{project}/locations/{location}/entryGroups/{entry_group}/entryLinks/
-	// {entry_link}.
+	// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr
+	// oup_id}/entryLinks/{entry_link_id}
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. The time when the Entry Link was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -4778,25 +4824,25 @@ func (s GoogleCloudDataplexV1EntryLink) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDataplexV1EntryLinkEntryReference: Reference to the Entry that is
-// linked through the entry link.
+// linked through the Entry Link.
 type GoogleCloudDataplexV1EntryLinkEntryReference struct {
 	// Name: Required. Immutable. The relative resource name of the referenced
-	// entry, of the form:
-	// projects/{project}/locations/{location}/entryGroups/{entryGroup}/entries/{ent
-	// ry}.
+	// Entry, of the form:
+	// projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_gr
+	// oup_id}/entries/{entry_id}
 	Name string `json:"name,omitempty"`
-	// Path: Immutable. The path in the entry that is referenced in the entry link.
-	// Empty path denotes that the entry itself is referenced in the entry link.
+	// Path: Immutable. The path in the Entry that is referenced in the Entry Link.
+	// Empty path denotes that the Entry itself is referenced in the Entry Link.
 	Path string `json:"path,omitempty"`
-	// Type: Required. Immutable. The reference type of the entry.
+	// Type: Required. Immutable. The reference type of the Entry.
 	//
 	// Possible values:
-	//   "UNSPECIFIED" - Unspecified reference type. Implies that the entry is
-	// referenced in a non-directional entry link.
-	//   "SOURCE" - The entry is referenced as the source of the directional entry
-	// link.
-	//   "TARGET" - The entry is referenced as the target of the directional entry
-	// link.
+	//   "UNSPECIFIED" - Unspecified reference type. Implies that the Entry is
+	// referenced in a non-directional Entry Link.
+	//   "SOURCE" - The Entry is referenced as the source of the directional Entry
+	// Link.
+	//   "TARGET" - The Entry is referenced as the target of the directional Entry
+	// Link.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5295,17 +5341,19 @@ func (s GoogleCloudDataplexV1GenerateDataQualityRulesResponse) MarshalJSON() ([]
 }
 
 // GoogleCloudDataplexV1Glossary: A Glossary represents a collection of
-// categories and terms defined by the user. Glossary is a top level resource
-// and is the GCP parent resource of all the categories and terms within it.
+// GlossaryCategories and GlossaryTerms defined by the user. Glossary is a top
+// level resource and is the GCP parent resource of all the GlossaryCategories
+// and GlossaryTerms within it.
 type GoogleCloudDataplexV1Glossary struct {
-	// CategoryCount: Output only. The number of categories in the glossary.
+	// CategoryCount: Output only. The number of GlossaryCategories in the
+	// Glossary.
 	CategoryCount int64 `json:"categoryCount,omitempty"`
-	// CreateTime: Output only. The time at which the glossary was created.
+	// CreateTime: Output only. The time at which the Glossary was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: Optional. The user-mutable description of the glossary.
+	// Description: Optional. The user-mutable description of the Glossary.
 	Description string `json:"description,omitempty"`
-	// DisplayName: Optional. User friendly display name of the glossary. This is
-	// user-mutable. This will be same as the glossaryId, if not specified.
+	// DisplayName: Optional. User friendly display name of the Glossary. This is
+	// user-mutable. This will be same as the GlossaryId, if not specified.
 	DisplayName string `json:"displayName,omitempty"`
 	// Etag: Optional. Needed for resource freshness validation. This checksum is
 	// computed by the server based on the value of other fields, and may be sent
@@ -5315,14 +5363,15 @@ type GoogleCloudDataplexV1Glossary struct {
 	// Labels: Optional. User-defined labels for the Glossary.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Output only. Identifier. The resource name of the Glossary. Format:
-	// projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}
+	// projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_
+	// id}
 	Name string `json:"name,omitempty"`
-	// TermCount: Output only. The number of terms in the glossary.
+	// TermCount: Output only. The number of GlossaryTerms in the Glossary.
 	TermCount int64 `json:"termCount,omitempty"`
 	// Uid: Output only. System generated unique id for the Glossary. This ID will
 	// be different if the Glossary is deleted and re-created with the same name.
 	Uid string `json:"uid,omitempty"`
-	// UpdateTime: Output only. The time at which the glossary was last updated.
+	// UpdateTime: Output only. The time at which the Glossary was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5346,28 +5395,31 @@ func (s GoogleCloudDataplexV1Glossary) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDataplexV1GlossaryCategory: A GlossaryCategory represents a
-// collection of categories and terms within a Glossary that are related to
-// each other.
+// collection of GlossaryCategories and GlossaryTerms within a Glossary that
+// are related to each other.
 type GoogleCloudDataplexV1GlossaryCategory struct {
 	// CreateTime: Output only. The time at which the GlossaryCategory was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. The user-mutable description of the GlossaryCategory.
 	Description string `json:"description,omitempty"`
 	// DisplayName: Optional. User friendly display name of the GlossaryCategory.
-	// This is user-mutable. This will be same as the categoryId, if not specified.
+	// This is user-mutable. This will be same as the GlossaryCategoryId, if not
+	// specified.
 	DisplayName string `json:"displayName,omitempty"`
 	// Labels: Optional. User-defined labels for the GlossaryCategory.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Output only. Identifier. The resource name of the GlossaryCategory.
 	// Format:
-	// projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}/categorie
-	// s/{categoryId}
+	// projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_
+	// id}/categories/{category_id}
 	Name string `json:"name,omitempty"`
 	// Parent: Required. The immediate parent of the GlossaryCategory in the
-	// resource-hierarchy. It can either be a Glossary or a Category. Format:
-	// projects/{projectId}/locations/{locationId}/glossaries/{glossaryId} OR
-	// projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}/categorie
-	// s/{categoryId}
+	// resource-hierarchy. It can either be a Glossary or a GlossaryCategory.
+	// Format:
+	// projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_
+	// id} OR
+	// projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_
+	// id}/categories/{category_id}
 	Parent string `json:"parent,omitempty"`
 	// Uid: Output only. System generated unique id for the GlossaryCategory. This
 	// ID will be different if the GlossaryCategory is deleted and re-created with
@@ -5397,8 +5449,8 @@ func (s GoogleCloudDataplexV1GlossaryCategory) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1GlossaryTerm: GlossaryTerms are the core of glossary. A
-// GlossaryTerm holds a rich text description that can be attached to entries
+// GoogleCloudDataplexV1GlossaryTerm: GlossaryTerms are the core of Glossary. A
+// GlossaryTerm holds a rich text description that can be attached to Entries
 // or specific columns to enrich them.
 type GoogleCloudDataplexV1GlossaryTerm struct {
 	// CreateTime: Output only. The time at which the GlossaryTerm was created.
@@ -5406,20 +5458,22 @@ type GoogleCloudDataplexV1GlossaryTerm struct {
 	// Description: Optional. The user-mutable description of the GlossaryTerm.
 	Description string `json:"description,omitempty"`
 	// DisplayName: Optional. User friendly display name of the GlossaryTerm. This
-	// is user-mutable. This will be same as the termId, if not specified.
+	// is user-mutable. This will be same as the GlossaryTermId, if not specified.
 	DisplayName string `json:"displayName,omitempty"`
 	// Labels: Optional. User-defined labels for the GlossaryTerm.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Output only. Identifier. The resource name of the GlossaryTerm.
 	// Format:
-	// projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}/terms/{te
-	// rmId}
+	// projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_
+	// id}/terms/{term_id}
 	Name string `json:"name,omitempty"`
 	// Parent: Required. The immediate parent of the GlossaryTerm in the
-	// resource-hierarchy. It can either be a Glossary or a Category. Format:
-	// projects/{projectId}/locations/{locationId}/glossaries/{glossaryId} OR
-	// projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}/categorie
-	// s/{categoryId}
+	// resource-hierarchy. It can either be a Glossary or a GlossaryCategory.
+	// Format:
+	// projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_
+	// id} OR
+	// projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_
+	// id}/categories/{category_id}
 	Parent string `json:"parent,omitempty"`
 	// Uid: Output only. System generated unique id for the GlossaryTerm. This ID
 	// will be different if the GlossaryTerm is deleted and re-created with the
@@ -5553,6 +5607,10 @@ type GoogleCloudDataplexV1ImportItem struct {
 	AspectKeys []string `json:"aspectKeys,omitempty"`
 	// Entry: Information about an entry and its attached aspects.
 	Entry *GoogleCloudDataplexV1Entry `json:"entry,omitempty"`
+	// EntryLink: Information about the entry link. User should provide either one
+	// of the entry or entry_link. While providing entry_link, user should not
+	// provide update_mask and aspect_keys.
+	EntryLink *GoogleCloudDataplexV1EntryLink `json:"entryLink,omitempty"`
 	// UpdateMask: The fields to update, in paths that are relative to the Entry
 	// resource. Separate each field with a comma.In FULL entry sync mode, Dataplex
 	// includes the paths of all of the fields for an entry that can be modified,
@@ -6295,7 +6353,7 @@ func (s GoogleCloudDataplexV1ListEnvironmentsResponse) MarshalJSON() ([]byte, er
 
 // GoogleCloudDataplexV1ListGlossariesResponse: List Glossaries Response
 type GoogleCloudDataplexV1ListGlossariesResponse struct {
-	// Glossaries: Lists the glossaries in the specified parent.
+	// Glossaries: Lists the Glossaries in the specified parent.
 	Glossaries []*GoogleCloudDataplexV1Glossary `json:"glossaries,omitempty"`
 	// NextPageToken: A token, which can be sent as page_token to retrieve the next
 	// page. If this field is omitted, there are no subsequent pages.
@@ -6326,7 +6384,7 @@ func (s GoogleCloudDataplexV1ListGlossariesResponse) MarshalJSON() ([]byte, erro
 // GoogleCloudDataplexV1ListGlossaryCategoriesResponse: List GlossaryCategories
 // Response
 type GoogleCloudDataplexV1ListGlossaryCategoriesResponse struct {
-	// Categories: Lists the glossaryCategories in the specified parent.
+	// Categories: Lists the GlossaryCategories in the specified parent.
 	Categories []*GoogleCloudDataplexV1GlossaryCategory `json:"categories,omitempty"`
 	// NextPageToken: A token, which can be sent as page_token to retrieve the next
 	// page. If this field is omitted, there are no subsequent pages.
@@ -6359,7 +6417,7 @@ type GoogleCloudDataplexV1ListGlossaryTermsResponse struct {
 	// NextPageToken: A token, which can be sent as page_token to retrieve the next
 	// page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Terms: Lists the terms in the specified parent.
+	// Terms: Lists the GlossaryTerms in the specified parent.
 	Terms []*GoogleCloudDataplexV1GlossaryTerm `json:"terms,omitempty"`
 	// UnreachableLocations: Locations that the service couldn't reach.
 	UnreachableLocations []string `json:"unreachableLocations,omitempty"`
@@ -6763,14 +6821,23 @@ func (s GoogleCloudDataplexV1MetadataJobExportJobSpecExportJobScope) MarshalJSON
 type GoogleCloudDataplexV1MetadataJobImportJobResult struct {
 	// CreatedEntries: Output only. The total number of entries that were created.
 	CreatedEntries int64 `json:"createdEntries,omitempty,string"`
+	// CreatedEntryLinks: Output only. The total number of entry links that were
+	// successfully created.
+	CreatedEntryLinks int64 `json:"createdEntryLinks,omitempty,string"`
 	// DeletedEntries: Output only. The total number of entries that were deleted.
 	DeletedEntries int64 `json:"deletedEntries,omitempty,string"`
+	// DeletedEntryLinks: Output only. The total number of entry links that were
+	// successfully deleted.
+	DeletedEntryLinks int64 `json:"deletedEntryLinks,omitempty,string"`
 	// RecreatedEntries: Output only. The total number of entries that were
 	// recreated.
 	RecreatedEntries int64 `json:"recreatedEntries,omitempty,string"`
 	// UnchangedEntries: Output only. The total number of entries that were
 	// unchanged.
 	UnchangedEntries int64 `json:"unchangedEntries,omitempty,string"`
+	// UnchangedEntryLinks: Output only. The total number of entry links that were
+	// left unchanged.
+	UnchangedEntryLinks int64 `json:"unchangedEntryLinks,omitempty,string"`
 	// UpdateTime: Output only. The time when the status was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// UpdatedEntries: Output only. The total number of entries that were updated.
@@ -6913,6 +6980,14 @@ type GoogleCloudDataplexV1MetadataJobImportJobSpecImportJobScope struct {
 	// are affected by the job.Must contain exactly one element. The entry group
 	// and the job must be in the same location.
 	EntryGroups []string `json:"entryGroups,omitempty"`
+	// EntryLinkTypes: Optional. The entry link types that are in scope for the
+	// import job, specified as relative resource names in the format
+	// projects/{project_number_or_id}/locations/{location_id}/entryLinkTypes/{entry
+	// _link_type_id}. The job modifies only the entryLinks that belong to these
+	// entry link types.If the metadata import file attempts to create or delete an
+	// entry link whose entry link type isn't included in this list, the import job
+	// will skip those entry links.
+	EntryLinkTypes []string `json:"entryLinkTypes,omitempty"`
 	// EntryTypes: Required. The entry types that are in scope for the import job,
 	// specified as relative resource names in the format
 	// projects/{project_number_or_id}/locations/{location_id}/entryTypes/{entry_typ
@@ -6922,6 +6997,22 @@ type GoogleCloudDataplexV1MetadataJobImportJobSpecImportJobScope struct {
 	// any entries or aspects.The location of an entry type must either match the
 	// location of the job, or the entry type must be global.
 	EntryTypes []string `json:"entryTypes,omitempty"`
+	// Glossaries: Optional. The glossaries that are in scope for the import job,
+	// specified as relative resource names in the format
+	// projects/{project_number_or_id}/locations/{location_id}/glossaries/{glossary_
+	// id}.While importing Business Glossary entries, the user must provide
+	// glossaries. While importing entries, the user does not have to provide
+	// glossaries. If the metadata import file attempts to modify Business Glossary
+	// entries whose glossary isn't included in this list, the import job will skip
+	// those entries.The location of a glossary must either match the location of
+	// the job, or the glossary must be global.
+	Glossaries []string `json:"glossaries,omitempty"`
+	// ReferencedEntryScopes: Optional. Defines the scope of entries that can be
+	// referenced in the entry links.Currently, projects are supported as valid
+	// scopes. Format: projects/{project_number_or_id}If the metadata import file
+	// attempts to create an entry link which references an entry that is not in
+	// the scope, the import job will skip that entry link.
+	ReferencedEntryScopes []string `json:"referencedEntryScopes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AspectTypes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10867,7 +10958,7 @@ type ProjectsLocationsSearchEntriesCall struct {
 // SearchEntries: Searches for Entries matching the given query and scope.
 //
 //   - name: The project to which the request should be attributed in the
-//     following form: projects/{project}/locations/{location}.
+//     following form: projects/{project}/locations/global.
 func (r *ProjectsLocationsService) SearchEntries(name string) *ProjectsLocationsSearchEntriesCall {
 	c := &ProjectsLocationsSearchEntriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18215,7 +18306,8 @@ type ProjectsLocationsEntryGroupsEntryLinksCreateCall struct {
 // Create: Creates an Entry Link.
 //
 //   - parent: The resource name of the parent Entry Group:
-//     projects/{project}/locations/{location}/entryGroups/{entry_group}.
+//     projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_
+//     group_id}.
 func (r *ProjectsLocationsEntryGroupsEntryLinksService) Create(parent string, googleclouddataplexv1entrylink *GoogleCloudDataplexV1EntryLink) *ProjectsLocationsEntryGroupsEntryLinksCreateCall {
 	c := &ProjectsLocationsEntryGroupsEntryLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18328,8 +18420,8 @@ type ProjectsLocationsEntryGroupsEntryLinksDeleteCall struct {
 // Delete: Deletes an Entry Link.
 //
 //   - name: The resource name of the Entry Link:
-//     projects/{project}/locations/{location}/entryGroups/{entry_group}/entryLink
-//     s/{entry_link}.
+//     projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_
+//     group_id}/entryLinks/{entry_link_id}.
 func (r *ProjectsLocationsEntryGroupsEntryLinksService) Delete(name string) *ProjectsLocationsEntryGroupsEntryLinksDeleteCall {
 	c := &ProjectsLocationsEntryGroupsEntryLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18426,11 +18518,11 @@ type ProjectsLocationsEntryGroupsEntryLinksGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets an entry link.
+// Get: Gets an Entry Link.
 //
 //   - name: The resource name of the Entry Link:
-//     projects/{project}/locations/{location}/entryGroups/{entry_group}/entryLink
-//     s/{entry_link}.
+//     projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_
+//     group_id}/entryLinks/{entry_link_id}.
 func (r *ProjectsLocationsEntryGroupsEntryLinksService) Get(name string) *ProjectsLocationsEntryGroupsEntryLinksGetCall {
 	c := &ProjectsLocationsEntryGroupsEntryLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19869,8 +19961,8 @@ type ProjectsLocationsGlossariesCreateCall struct {
 // Create: Creates a new Glossary resource.
 //
 //   - parent: The parent resource where this Glossary will be created. Format:
-//     projects/{projectId}/locations/{locationId} where locationId refers to a
-//     GCP region.
+//     projects/{project_id_or_number}/locations/{location_id} where location_id
+//     refers to a GCP region.
 func (r *ProjectsLocationsGlossariesService) Create(parent string, googleclouddataplexv1glossary *GoogleCloudDataplexV1Glossary) *ProjectsLocationsGlossariesCreateCall {
 	c := &ProjectsLocationsGlossariesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19886,7 +19978,7 @@ func (c *ProjectsLocationsGlossariesCreateCall) GlossaryId(glossaryId string) *P
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": Validates the
-// request without actually creating the glossary. Default: false.
+// request without actually creating the Glossary. Default: false.
 func (c *ProjectsLocationsGlossariesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsGlossariesCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -19986,10 +20078,11 @@ type ProjectsLocationsGlossariesDeleteCall struct {
 }
 
 // Delete: Deletes a Glossary resource. All the categories and terms within the
-// glossary must be deleted before a glossary can be deleted.
+// Glossary must be deleted before the Glossary can be deleted.
 //
 //   - name: The name of the Glossary to delete. Format:
-//     projects/{project}/locations/{location}/glossary/{glossary}.
+//     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
+//     y_id}.
 func (r *ProjectsLocationsGlossariesService) Delete(name string) *ProjectsLocationsGlossariesDeleteCall {
 	c := &ProjectsLocationsGlossariesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20095,10 +20188,11 @@ type ProjectsLocationsGlossariesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a specified Glossary resource.
+// Get: Gets a Glossary resource.
 //
 //   - name: The name of the Glossary to retrieve. Format:
-//     projects/{project}/locations/{location}/glossaries/{glossary}.
+//     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
+//     y_id}.
 func (r *ProjectsLocationsGlossariesService) Get(name string) *ProjectsLocationsGlossariesGetCall {
 	c := &ProjectsLocationsGlossariesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20338,8 +20432,9 @@ type ProjectsLocationsGlossariesListCall struct {
 
 // List: Lists Glossary resources in a project and location.
 //
-//   - parent: The parent, which has this collection of glossaries. Format:
-//     projects/{project}/locations/{location} Location is the GCP region.
+//   - parent: The parent, which has this collection of Glossaries. Format:
+//     projects/{project_id_or_number}/locations/{location_id} where location_id
+//     refers to a GCP region.
 func (r *ProjectsLocationsGlossariesService) List(parent string) *ProjectsLocationsGlossariesListCall {
 	c := &ProjectsLocationsGlossariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20347,14 +20442,16 @@ func (r *ProjectsLocationsGlossariesService) List(parent string) *ProjectsLocati
 }
 
 // Filter sets the optional parameter "filter": Filter expression that filters
-// glossaries listed in the response. Initially, no filter is supported.
+// Glossaries listed in the response. Filters on proto fields of Glossary are
+// supported. Examples of using a filter are: - display_name="my-glossary" -
+// categoryCount=1 - termCount=0
 func (c *ProjectsLocationsGlossariesListCall) Filter(filter string) *ProjectsLocationsGlossariesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Order by expression that
-// orders glossaries listed in the response. Order by fields are: name or
+// orders Glossaries listed in the response. Order by fields are: name or
 // create_time for the result. If not specified, the ordering is undefined.
 func (c *ProjectsLocationsGlossariesListCall) OrderBy(orderBy string) *ProjectsLocationsGlossariesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -20362,8 +20459,8 @@ func (c *ProjectsLocationsGlossariesListCall) OrderBy(orderBy string) *ProjectsL
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// glossaries to return. The service may return fewer than this value. If
-// unspecified, at most 50 glossaries will be returned. The maximum value is
+// Glossaries to return. The service may return fewer than this value. If
+// unspecified, at most 50 Glossaries will be returned. The maximum value is
 // 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsGlossariesListCall) PageSize(pageSize int64) *ProjectsLocationsGlossariesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -20504,7 +20601,8 @@ type ProjectsLocationsGlossariesPatchCall struct {
 // Patch: Updates a Glossary resource.
 //
 //   - name: Output only. Identifier. The resource name of the Glossary. Format:
-//     projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}.
+//     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
+//     y_id}.
 func (r *ProjectsLocationsGlossariesService) Patch(name string, googleclouddataplexv1glossary *GoogleCloudDataplexV1Glossary) *ProjectsLocationsGlossariesPatchCall {
 	c := &ProjectsLocationsGlossariesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20520,7 +20618,7 @@ func (c *ProjectsLocationsGlossariesPatchCall) UpdateMask(updateMask string) *Pr
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": Validates the
-// request without actually updating the glossary. Default: false.
+// request without actually updating the Glossary. Default: false.
 func (c *ProjectsLocationsGlossariesPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsGlossariesPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -20839,13 +20937,12 @@ type ProjectsLocationsGlossariesCategoriesCreateCall struct {
 	header_                               http.Header
 }
 
-// Create: GlossaryCategory APIs are CCFE passthrough APIs. Creates a new
-// GlossaryCategory resource.
+// Create: Creates a new GlossaryCategory resource.
 //
 //   - parent: The parent resource where this GlossaryCategory will be created.
 //     Format:
-//     projects/{projectId}/locations/{locationId}/glossaries/{glossaryId} where
-//     locationId refers to a GCP region.
+//     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
+//     y_id} where locationId refers to a GCP region.
 func (r *ProjectsLocationsGlossariesCategoriesService) Create(parent string, googleclouddataplexv1glossarycategory *GoogleCloudDataplexV1GlossaryCategory) *ProjectsLocationsGlossariesCategoriesCreateCall {
 	c := &ProjectsLocationsGlossariesCategoriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20853,7 +20950,7 @@ func (r *ProjectsLocationsGlossariesCategoriesService) Create(parent string, goo
 	return c
 }
 
-// CategoryId sets the optional parameter "categoryId": Required. Category ID:
+// CategoryId sets the optional parameter "categoryId": Required.
 // GlossaryCategory identifier.
 func (c *ProjectsLocationsGlossariesCategoriesCreateCall) CategoryId(categoryId string) *ProjectsLocationsGlossariesCategoriesCreateCall {
 	c.urlParams_.Set("categoryId", categoryId)
@@ -20953,13 +21050,13 @@ type ProjectsLocationsGlossariesCategoriesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a GlossaryCategory resource. All the categories and terms
-// nested directly under the category will be moved one level up to the parent
-// in the hierarchy.
+// Delete: Deletes a GlossaryCategory resource. All the GlossaryCategories and
+// GlossaryTerms nested directly under the specified GlossaryCategory will be
+// moved one level up to the parent in the hierarchy.
 //
 //   - name: The name of the GlossaryCategory to delete. Format:
-//     projects/{project}/locations/{location}/glossary/{glossary}/categories/{glo
-//     ssary_category}.
+//     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
+//     y_id}/categories/{category_id}.
 func (r *ProjectsLocationsGlossariesCategoriesService) Delete(name string) *ProjectsLocationsGlossariesCategoriesDeleteCall {
 	c := &ProjectsLocationsGlossariesCategoriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21055,11 +21152,11 @@ type ProjectsLocationsGlossariesCategoriesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a specified GlossaryCategory resource.
+// Get: Gets a GlossaryCategory resource.
 //
 //   - name: The name of the GlossaryCategory to retrieve. Format:
-//     projects/{project}/locations/{location}/glossaries/{glossary}/categories/{g
-//     lossary_category}.
+//     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
+//     y_id}/categories/{category_id}.
 func (r *ProjectsLocationsGlossariesCategoriesService) Get(name string) *ProjectsLocationsGlossariesCategoriesGetCall {
 	c := &ProjectsLocationsGlossariesCategoriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21297,11 +21394,12 @@ type ProjectsLocationsGlossariesCategoriesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists GlossaryCategory resources in a glossary.
+// List: Lists GlossaryCategory resources in a Glossary.
 //
-//   - parent: The parent, which has this collection of categories. Format:
-//     projects/{project}/locations/{location}/glossaries/{glossary} Location is
-//     the GCP region.
+//   - parent: The parent, which has this collection of GlossaryCategories.
+//     Format:
+//     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
+//     y_id} Location is the GCP region.
 func (r *ProjectsLocationsGlossariesCategoriesService) List(parent string) *ProjectsLocationsGlossariesCategoriesListCall {
 	c := &ProjectsLocationsGlossariesCategoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21309,27 +21407,30 @@ func (r *ProjectsLocationsGlossariesCategoriesService) List(parent string) *Proj
 }
 
 // Filter sets the optional parameter "filter": Filter expression that filters
-// categories listed in the response. Filters supported: List
-// GlossaryCategories based on immediate parent in the resource hierarchy. This
-// will only return the GlossaryCategories nested directly under the parent and
-// no other subsequent nested categories will be returned.
+// GlossaryCategories listed in the response. Filters are supported on the
+// following fields: - immediate_parentExamples of using a filter are: -
+// immediate_parent="projects/{project_id_or_number}/locations/{location_id}/glo
+// ssaries/{glossary_id}" -
+// immediate_parent="projects/{project_id_or_number}/locations/{location_id}/glo
+// ssaries/{glossary_id}/categories/{category_id}"This will only return the
+// GlossaryCategories that are directly nested under the specified parent.
 func (c *ProjectsLocationsGlossariesCategoriesListCall) Filter(filter string) *ProjectsLocationsGlossariesCategoriesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Order by expression that
-// orders categories listed in the response. Order by fields are: name or
-// create_time for the result. If not specified, the ordering is undefined.
+// orders GlossaryCategories listed in the response. Order by fields are: name
+// or create_time for the result. If not specified, the ordering is undefined.
 func (c *ProjectsLocationsGlossariesCategoriesListCall) OrderBy(orderBy string) *ProjectsLocationsGlossariesCategoriesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// categories to return. The service may return fewer than this value. If
-// unspecified, at most 50 categories will be returned. The maximum value is
-// 1000; values above 1000 will be coerced to 1000.
+// GlossaryCategories to return. The service may return fewer than this value.
+// If unspecified, at most 50 GlossaryCategories will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsGlossariesCategoriesListCall) PageSize(pageSize int64) *ProjectsLocationsGlossariesCategoriesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -21470,8 +21571,8 @@ type ProjectsLocationsGlossariesCategoriesPatchCall struct {
 //
 //   - name: Output only. Identifier. The resource name of the GlossaryCategory.
 //     Format:
-//     projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}/categor
-//     ies/{categoryId}.
+//     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
+//     y_id}/categories/{category_id}.
 func (r *ProjectsLocationsGlossariesCategoriesService) Patch(name string, googleclouddataplexv1glossarycategory *GoogleCloudDataplexV1GlossaryCategory) *ProjectsLocationsGlossariesCategoriesPatchCall {
 	c := &ProjectsLocationsGlossariesCategoriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21799,13 +21900,12 @@ type ProjectsLocationsGlossariesTermsCreateCall struct {
 	header_                           http.Header
 }
 
-// Create: GlossaryTerm APIs are CCFE passthrough APIs. Creates a new
-// GlossaryTerm resource.
+// Create: Creates a new GlossaryTerm resource.
 //
-//   - parent: The parent resource where this GlossaryTerm will be created.
+//   - parent: The parent resource where the GlossaryTerm will be created.
 //     Format:
-//     projects/{projectId}/locations/{locationId}/glossaries/{glossaryId} where
-//     locationId refers to a GCP region.
+//     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
+//     y_id} where location_id refers to a GCP region.
 func (r *ProjectsLocationsGlossariesTermsService) Create(parent string, googleclouddataplexv1glossaryterm *GoogleCloudDataplexV1GlossaryTerm) *ProjectsLocationsGlossariesTermsCreateCall {
 	c := &ProjectsLocationsGlossariesTermsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21813,7 +21913,7 @@ func (r *ProjectsLocationsGlossariesTermsService) Create(parent string, googlecl
 	return c
 }
 
-// TermId sets the optional parameter "termId": Required. Term ID: GlossaryTerm
+// TermId sets the optional parameter "termId": Required. GlossaryTerm
 // identifier.
 func (c *ProjectsLocationsGlossariesTermsCreateCall) TermId(termId string) *ProjectsLocationsGlossariesTermsCreateCall {
 	c.urlParams_.Set("termId", termId)
@@ -21916,8 +22016,8 @@ type ProjectsLocationsGlossariesTermsDeleteCall struct {
 // Delete: Deletes a GlossaryTerm resource.
 //
 //   - name: The name of the GlossaryTerm to delete. Format:
-//     projects/{project}/locations/{location}/glossary/{glossary}/terms/{glossary
-//     _term}.
+//     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
+//     y_id}/terms/{term_id}.
 func (r *ProjectsLocationsGlossariesTermsService) Delete(name string) *ProjectsLocationsGlossariesTermsDeleteCall {
 	c := &ProjectsLocationsGlossariesTermsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22013,11 +22113,11 @@ type ProjectsLocationsGlossariesTermsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a specified GlossaryTerm resource.
+// Get: Gets a GlossaryTerm resource.
 //
 //   - name: The name of the GlossaryTerm to retrieve. Format:
-//     projects/{project}/locations/{location}/glossaries/{glossary}/terms/{glossa
-//     ry_term}.
+//     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
+//     y_id}/terms/{term_id}.
 func (r *ProjectsLocationsGlossariesTermsService) Get(name string) *ProjectsLocationsGlossariesTermsGetCall {
 	c := &ProjectsLocationsGlossariesTermsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22255,11 +22355,11 @@ type ProjectsLocationsGlossariesTermsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists GlossaryTerm resources in a glossary.
+// List: Lists GlossaryTerm resources in a Glossary.
 //
-//   - parent: The parent, which has this collection of terms. Format:
-//     projects/{project}/locations/{location}/glossaries/{glossary} Location is
-//     the GCP region.
+//   - parent: The parent, which has this collection of GlossaryTerms. Format:
+//     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
+//     y_id} where location_id refers to a GCP region.
 func (r *ProjectsLocationsGlossariesTermsService) List(parent string) *ProjectsLocationsGlossariesTermsListCall {
 	c := &ProjectsLocationsGlossariesTermsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22267,27 +22367,30 @@ func (r *ProjectsLocationsGlossariesTermsService) List(parent string) *ProjectsL
 }
 
 // Filter sets the optional parameter "filter": Filter expression that filters
-// terms listed in the response. Filters supported: List GlossaryTerms based on
-// immediate parent in the resource hierarchy. This will only return the terms
-// nested directly under the parent and no other subsequent nested terms will
-// be returned.
+// GlossaryTerms listed in the response. Filters are supported on the following
+// fields: - immediate_parentExamples of using a filter are: -
+// immediate_parent="projects/{project_id_or_number}/locations/{location_id}/glo
+// ssaries/{glossary_id}" -
+// immediate_parent="projects/{project_id_or_number}/locations/{location_id}/glo
+// ssaries/{glossary_id}/categories/{category_id}"This will only return the
+// GlossaryTerms that are directly nested under the specified parent.
 func (c *ProjectsLocationsGlossariesTermsListCall) Filter(filter string) *ProjectsLocationsGlossariesTermsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Order by expression that
-// orders terms listed in the response. Order by fields are: name or
+// orders GlossaryTerms listed in the response. Order by fields are: name or
 // create_time for the result. If not specified, the ordering is undefined.
 func (c *ProjectsLocationsGlossariesTermsListCall) OrderBy(orderBy string) *ProjectsLocationsGlossariesTermsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number of terms
-// to return. The service may return fewer than this value. If unspecified, at
-// most 50 terms will be returned. The maximum value is 1000; values above 1000
-// will be coerced to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// GlossaryTerms to return. The service may return fewer than this value. If
+// unspecified, at most 50 GlossaryTerms will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsGlossariesTermsListCall) PageSize(pageSize int64) *ProjectsLocationsGlossariesTermsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -22428,8 +22531,8 @@ type ProjectsLocationsGlossariesTermsPatchCall struct {
 //
 //   - name: Output only. Identifier. The resource name of the GlossaryTerm.
 //     Format:
-//     projects/{projectId}/locations/{locationId}/glossaries/{glossaryId}/terms/{
-//     termId}.
+//     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
+//     y_id}/terms/{term_id}.
 func (r *ProjectsLocationsGlossariesTermsService) Patch(name string, googleclouddataplexv1glossaryterm *GoogleCloudDataplexV1GlossaryTerm) *ProjectsLocationsGlossariesTermsPatchCall {
 	c := &ProjectsLocationsGlossariesTermsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

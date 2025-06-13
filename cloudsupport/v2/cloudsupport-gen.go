@@ -223,7 +223,7 @@ type Actor struct {
 	// Email: The email address of the actor. If not provided, it is inferred from
 	// the credentials supplied during case creation. When a name is provided, an
 	// email must also be provided. If the user is a Google Support agent, this is
-	// obfuscated. This field is deprecated. Use **username** field instead.
+	// obfuscated. This field is deprecated. Use `username` instead.
 	Email string `json:"email,omitempty"`
 	// GoogleSupport: Output only. Whether the actor is a Google support actor.
 	GoogleSupport bool `json:"googleSupport,omitempty"`
@@ -268,7 +268,7 @@ type Attachment struct {
 	Filename string `json:"filename,omitempty"`
 	// MimeType: Output only. The MIME type of the attachment (e.g. text/plain).
 	MimeType string `json:"mimeType,omitempty"`
-	// Name: Output only. The resource name of the attachment.
+	// Name: Output only. Identifier. The resource name of the attachment.
 	Name string `json:"name,omitempty"`
 	// SizeBytes: Output only. The size of the attachment in bytes.
 	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
@@ -361,7 +361,7 @@ type Case struct {
 	// and their support working hours, see:
 	// https://cloud.google.com/support/docs/language-working-hours
 	LanguageCode string `json:"languageCode,omitempty"`
-	// Name: The resource name for the case.
+	// Name: Identifier. The resource name for the case.
 	Name string `json:"name,omitempty"`
 	// Priority: The priority of this case.
 	//
@@ -1088,49 +1088,6 @@ type SearchCasesResponse struct {
 
 func (s SearchCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchCasesResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// WorkflowOperationMetadata: Metadata about the operation. Used to lookup the
-// current status.
-type WorkflowOperationMetadata struct {
-	// Namespace: The namespace that the job was scheduled in. Must be included in
-	// the workflow metadata so the workflow status can be retrieved.
-	Namespace string `json:"namespace,omitempty"`
-	// OperationAction: The type of action the operation is classified as.
-	//
-	// Possible values:
-	//   "OPERATION_ACTION_UNSPECIFIED" - Operation action is not specified.
-	//   "CREATE_SUPPORT_ACCOUNT" - Operation pertains to the creation of a new
-	// support account.
-	//   "UPDATE_SUPPORT_ACCOUNT" - Operation pertains to the updating of an
-	// existing support account.
-	//   "PURCHASE_SUPPORT_ACCOUNT" - Operation pertains to the purchasing of a
-	// support plan that may either create or update a support account.
-	OperationAction string `json:"operationAction,omitempty"`
-	// WorkflowOperationType: Which version of the workflow service this operation
-	// came from.
-	//
-	// Possible values:
-	//   "UNKNOWN_OPERATION_TYPE" - Unknown version.
-	//   "WORKFLOWS_V1" - Version 1.
-	//   "WORKFLOWS_V2" - Version 2.
-	WorkflowOperationType string `json:"workflowOperationType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Namespace") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Namespace") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s WorkflowOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod WorkflowOperationMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1967,7 +1924,7 @@ type CasesPatchCall struct {
 // name="projects/some-project/cases/43112854", body={ "displayName": "This is
 // Now a New Title", "priority": "P2", }, ) print(request.execute()) ```
 //
-// - name: The resource name for the case.
+// - name: Identifier. The resource name for the case.
 func (r *CasesService) Patch(name string, case_ *Case) *CasesPatchCall {
 	c := &CasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2689,8 +2646,10 @@ type MediaDownloadCall struct {
 	header_      http.Header
 }
 
-// Download: Download a file attached to a case. Note: HTTP requests must
-// append "?alt=media" to the URL. EXAMPLES: cURL: ```shell
+// Download: Download a file attached to a case. When this endpoint is called,
+// no "response body" will be returned. Instead, the attachment's blob will be
+// returned. Note: HTTP requests must append "?alt=media" to the URL. EXAMPLES:
+// cURL: ```shell
 // name="projects/some-project/cases/43594844/attachments/0674M00000WijAnZAJ"
 // curl \ --header "Authorization: Bearer $(gcloud auth print-access-token)" \
 // "https://cloudsupport.googleapis.com/v2/$name:download?alt=media" ```

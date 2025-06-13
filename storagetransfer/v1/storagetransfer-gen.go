@@ -401,6 +401,10 @@ type AzureBlobStorageData struct {
 	// for more information. If `credentials_secret` is specified, do not specify
 	// azure_credentials. Format: `projects/{project_number}/secrets/{secret_name}`
 	CredentialsSecret string `json:"credentialsSecret,omitempty"`
+	// FederatedIdentityConfig: Optional. Federated identity config of a user
+	// registered Azure application. If `federated_identity_config` is specified,
+	// do not specify azure_credentials or credentials_secret.
+	FederatedIdentityConfig *FederatedIdentityConfig `json:"federatedIdentityConfig,omitempty"`
 	// Path: Root path to transfer objects. Must be an empty string or full path
 	// name that ends with a '/'. This field is treated as an object prefix. As
 	// such, it should generally not begin with a '/'.
@@ -692,6 +696,38 @@ type EventStream struct {
 
 func (s EventStream) MarshalJSON() ([]byte, error) {
 	type NoMethod EventStream
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FederatedIdentityConfig: The identity of an Azure application through which
+// Storage Transfer Service can authenticate requests using Azure workload
+// identity federation. Storage Transfer Service can issue requests to Azure
+// Storage through registered Azure applications, eliminating the need to pass
+// credentials to Storage Transfer Service directly. To configure federated
+// identity, see Configure access to Microsoft Azure Storage
+// (https://cloud.google.com/storage-transfer/docs/source-microsoft-azure#option_3_authenticate_using_federated_identity).
+type FederatedIdentityConfig struct {
+	// ClientId: Required. The client (application) ID of the application with
+	// federated credentials.
+	ClientId string `json:"clientId,omitempty"`
+	// TenantId: Required. The tenant (directory) ID of the application with
+	// federated credentials.
+	TenantId string `json:"tenantId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FederatedIdentityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod FederatedIdentityConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1705,16 +1741,17 @@ type TransferJob struct {
 	// field. When the field is not set, the job never executes a transfer, unless
 	// you invoke RunTransferJob or update the job to have a non-empty schedule.
 	Schedule *Schedule `json:"schedule,omitempty"`
-	// ServiceAccount: Optional. The service account to be used to access resources
-	// in the consumer project in the transfer job. We accept `email` or `uniqueId`
-	// for the service account. Service account format is
-	// projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID} See
-	// https://cloud.google.com/iam/docs/reference/credentials/rest/v1/projects.serviceAccounts/generateAccessToken#path-parameters
-	// for details. Caller requires the following IAM permission on the specified
-	// service account: `iam.serviceAccounts.actAs`.
-	// project-PROJECT_NUMBER@storage-transfer-service.iam.gserviceaccount.com
-	// requires the following IAM permission on the specified service account:
-	// `iam.serviceAccounts.getAccessToken`
+	// ServiceAccount: Optional. The user-managed service account to which to
+	// delegate service agent permissions. You can grant Cloud Storage bucket
+	// permissions to this service account instead of to the Transfer Service
+	// service agent. Format is
+	// `projects/-/serviceAccounts/ACCOUNT_EMAIL_OR_UNIQUEID` Either the service
+	// account email (`SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com`) or
+	// the unique ID (`123456789012345678901`) are accepted in the string. The `-`
+	// wildcard character is required; replacing it with a project ID is invalid.
+	// See
+	// https://cloud.google.com//storage-transfer/docs/delegate-service-agent-permissions
+	// for required permissions.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// Status: Status of the job. This value MUST be specified for
 	// `CreateTransferJobRequests`. **Note:** The effect of the new job status

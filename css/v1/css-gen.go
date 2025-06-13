@@ -1919,7 +1919,8 @@ type AccountsCssProductsGetCall struct {
 // inserting, updating, or deleting a product input, it may take several
 // minutes before the updated final product can be retrieved.
 //
-// - name: The name of the CSS product to retrieve.
+//   - name: The name of the CSS product to retrieve. Format:
+//     `accounts/{account}/cssProducts/{css_product}`.
 func (r *AccountsCssProductsService) Get(name string) *AccountsCssProductsGetCall {
 	c := &AccountsCssProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

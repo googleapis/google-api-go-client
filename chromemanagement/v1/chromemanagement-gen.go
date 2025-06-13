@@ -773,7 +773,6 @@ type GoogleChromeManagementV1BrowserVersion struct {
 	//   "DEV" - Dev release channel.
 	//   "BETA" - Beta release channel.
 	//   "STABLE" - Stable release channel.
-	//   "LTS" - Long-term support release channel.
 	Channel string `json:"channel,omitempty"`
 	// Count: Output only. Count grouped by device_system and major version
 	Count int64 `json:"count,omitempty,string"`
@@ -3399,6 +3398,9 @@ type GoogleChromeManagementV1TelemetryEvent struct {
 	// NetworkStateChangeEvent: Output only. Payload for network connection state
 	// change event. Present only when `event_type` is `NETWORK_STATE_CHANGE`.
 	NetworkStateChangeEvent *GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent `json:"networkStateChangeEvent,omitempty"`
+	// OsCrashEvent: Output only. Payload for OS crash event. Present only when
+	// `event_type` is `OS_CRASH`.
+	OsCrashEvent *GoogleChromeManagementV1TelemetryOsCrashEvent `json:"osCrashEvent,omitempty"`
 	// ReportTime: Timestamp that represents when the event was reported.
 	ReportTime string `json:"reportTime,omitempty"`
 	// UsbPeripheralsEvent: Output only. Payload for usb peripherals event. Present
@@ -3642,6 +3644,44 @@ type GoogleChromeManagementV1TelemetryNotificationFilter struct {
 
 func (s GoogleChromeManagementV1TelemetryNotificationFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryNotificationFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1TelemetryOsCrashEvent: OS crash data.
+type GoogleChromeManagementV1TelemetryOsCrashEvent struct {
+	// CrashId: Crash id.
+	CrashId string `json:"crashId,omitempty"`
+	// CrashType: Crash type.
+	//
+	// Possible values:
+	//   "CRASH_TYPE_UNSPECIFIED" - Crash type unknown.
+	//   "CRASH_TYPE_KERNEL" - Kernel crash.
+	//   "CRASH_TYPE_EMBEDDED_CONTROLLER" - Embedded controller crash.
+	CrashType string `json:"crashType,omitempty"`
+	// SessionType: Session type.
+	//
+	// Possible values:
+	//   "SESSION_TYPE_UNSPECIFIED" - Session type unknown.
+	//   "SESSION_TYPE_SIGNED_IN_USER" - Signed in user.
+	//   "SESSION_TYPE_KIOSK" - Kiosk.
+	//   "SESSION_TYPE_MANAGED_GUEST" - Managed guest session.
+	//   "SESSION_TYPE_ACTIVE_DIRECTORY" - Active directory session.
+	SessionType string `json:"sessionType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CrashId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CrashId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1TelemetryOsCrashEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1TelemetryOsCrashEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

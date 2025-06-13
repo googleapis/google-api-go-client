@@ -2379,6 +2379,56 @@ func (s GetTemplateResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GetWorkerStacktracesRequest: Request to get worker stacktraces from debug
+// capture.
+type GetWorkerStacktracesRequest struct {
+	// WorkerId: The worker for which to get stacktraces. The returned stacktraces
+	// will be for the SDK harness running on this worker.
+	WorkerId string `json:"workerId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WorkerId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WorkerId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetWorkerStacktracesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GetWorkerStacktracesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GetWorkerStacktracesResponse: Response to get worker stacktraces from debug
+// capture.
+type GetWorkerStacktracesResponse struct {
+	// Sdks: Repeated as unified worker may have multiple SDK processes.
+	Sdks []*Sdk `json:"sdks,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Sdks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Sdks") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetWorkerStacktracesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GetWorkerStacktracesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Histogram: Histogram of value counts for a distribution. Buckets have an
 // inclusive lower bound and exclusive upper bound and use "1,2,5 bucketing":
 // The first bucket range is from [0,1) and all subsequent bucket boundaries
@@ -4839,6 +4889,30 @@ func (s SDKInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Sdk: A structured representation of an SDK.
+type Sdk struct {
+	// SdkId: The SDK harness id.
+	SdkId string `json:"sdkId,omitempty"`
+	// Stacks: The stacktraces for the processes running on the SDK harness.
+	Stacks []*Stack `json:"stacks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SdkId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SdkId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Sdk) MarshalJSON() ([]byte, error) {
+	type NoMethod Sdk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SdkBug: A bug found in the Dataflow SDK.
 type SdkBug struct {
 	// Severity: Output only. How severe the SDK bug is.
@@ -5697,6 +5771,38 @@ type SplitInt64 struct {
 
 func (s SplitInt64) MarshalJSON() ([]byte, error) {
 	type NoMethod SplitInt64
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Stack: A structuredstacktrace for a process running on the worker.
+type Stack struct {
+	// StackContent: The raw stack trace.
+	StackContent string `json:"stackContent,omitempty"`
+	// ThreadCount: With java thread dumps we may get collapsed stacks e.g., N
+	// threads in stack "". Instead of having to copy over the same stack trace N
+	// times, this int field captures this.
+	ThreadCount int64 `json:"threadCount,omitempty"`
+	// ThreadName: Thread name. For example, "CommitThread-0,10,main"
+	ThreadName string `json:"threadName,omitempty"`
+	// ThreadState: The state of the thread. For example, "WAITING".
+	ThreadState string `json:"threadState,omitempty"`
+	// Timestamp: Timestamp at which the stack was captured.
+	Timestamp string `json:"timestamp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StackContent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StackContent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Stack) MarshalJSON() ([]byte, error) {
+	type NoMethod Stack
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8913,6 +9019,114 @@ func (c *ProjectsJobsDebugGetConfigCall) Do(opts ...googleapi.CallOption) (*GetD
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.projects.jobs.debug.getConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsJobsDebugGetWorkerStacktracesCall struct {
+	s                           *Service
+	projectId                   string
+	jobId                       string
+	getworkerstacktracesrequest *GetWorkerStacktracesRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// GetWorkerStacktraces: Get worker stacktraces from debug capture.
+//
+// - jobId: The job for which to get stacktraces.
+// - projectId: The project id.
+func (r *ProjectsJobsDebugService) GetWorkerStacktraces(projectId string, jobId string, getworkerstacktracesrequest *GetWorkerStacktracesRequest) *ProjectsJobsDebugGetWorkerStacktracesCall {
+	c := &ProjectsJobsDebugGetWorkerStacktracesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.jobId = jobId
+	c.getworkerstacktracesrequest = getworkerstacktracesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsJobsDebugGetWorkerStacktracesCall) Fields(s ...googleapi.Field) *ProjectsJobsDebugGetWorkerStacktracesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsJobsDebugGetWorkerStacktracesCall) Context(ctx context.Context) *ProjectsJobsDebugGetWorkerStacktracesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsJobsDebugGetWorkerStacktracesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsJobsDebugGetWorkerStacktracesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.getworkerstacktracesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/jobs/{jobId}/debug/getWorkerStacktraces")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"jobId":     c.jobId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.projects.jobs.debug.getWorkerStacktraces", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.projects.jobs.debug.getWorkerStacktraces" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GetWorkerStacktracesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsJobsDebugGetWorkerStacktracesCall) Do(opts ...googleapi.CallOption) (*GetWorkerStacktracesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GetWorkerStacktracesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.projects.jobs.debug.getWorkerStacktraces", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -614,6 +614,49 @@ func (s AffectedResources) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AiModel: Contains information about the AI model associated with the
+// finding.
+type AiModel struct {
+	// DeploymentPlatform: The platform on which the model is deployed.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_PLATFORM_UNSPECIFIED" - Unspecified deployment platform.
+	//   "VERTEX_AI" - Vertex AI.
+	//   "GKE" - Google Kubernetes Engine.
+	DeploymentPlatform string `json:"deploymentPlatform,omitempty"`
+	// DisplayName: The user defined display name of model. Ex.
+	// baseline-classification-model
+	DisplayName string `json:"displayName,omitempty"`
+	// Domain: The domain of the model, for example, “image-classification”.
+	Domain string `json:"domain,omitempty"`
+	// Library: The name of the model library, for example, “transformers”.
+	Library string `json:"library,omitempty"`
+	// Location: The region in which the model is used, for example,
+	// “us-central1”.
+	Location string `json:"location,omitempty"`
+	// Name: The name of the AI model, for example, "gemini:1.0.0".
+	Name string `json:"name,omitempty"`
+	// Publisher: The publisher of the model, for example, “google” or
+	// “nvidia”.
+	Publisher string `json:"publisher,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeploymentPlatform") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeploymentPlatform") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AiModel) MarshalJSON() ([]byte, error) {
+	type NoMethod AiModel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Allowed: Allowed IP rule.
 type Allowed struct {
 	// IpRules: Optional. Optional list of allowed IP rules.
@@ -1875,6 +1918,34 @@ func (s Database) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Dataset: Vertex AI dataset associated with the finding.
+type Dataset struct {
+	// DisplayName: The user defined display name of dataset, e.g. plants-dataset
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Resource name of dataset, e.g.
+	// projects/{project}/locations/{location}/datasets/2094040236064505856
+	Name string `json:"name,omitempty"`
+	// Source: Data source, such as BigQuery source URI, e.g.
+	// bq://scc-nexus-test.AIPPtest.gsod
+	Source string `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Dataset) MarshalJSON() ([]byte, error) {
+	type NoMethod Dataset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Denied: Denied IP rule.
 type Denied struct {
 	// IpRules: Optional. Optional list of denied IP rules.
@@ -2240,6 +2311,8 @@ type File struct {
 	// HashedSize: The length in bytes of the file prefix that was hashed. If
 	// hashed_size == size, any hashes reported represent the entire file.
 	HashedSize int64 `json:"hashedSize,omitempty,string"`
+	// Operations: Operation(s) performed on a file.
+	Operations []*FileOperation `json:"operations,omitempty"`
 	// PartiallyHashed: True when the hash covers only a prefix of the file.
 	PartiallyHashed bool `json:"partiallyHashed,omitempty"`
 	// Path: Absolute path of the file as a JSON encoded string.
@@ -2268,6 +2341,36 @@ func (s File) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FileOperation: Operation(s) performed on a file.
+type FileOperation struct {
+	// Type: The type of the operation
+	//
+	// Possible values:
+	//   "OPERATION_TYPE_UNSPECIFIED" - The operation is unspecified.
+	//   "OPEN" - Represents an open operation.
+	//   "READ" - Represents a read operation.
+	//   "RENAME" - Represents a rename operation.
+	//   "WRITE" - Represents a write operation.
+	//   "EXECUTE" - Represents an execute operation.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FileOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod FileOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Finding: Security Command Center finding. A finding is a record of
 // assessment data like security, risk, health, or privacy, that is ingested
 // into Security Command Center for presentation, notification, analysis,
@@ -2279,6 +2382,8 @@ type Finding struct {
 	Access *Access `json:"access,omitempty"`
 	// AffectedResources: AffectedResources associated with the finding.
 	AffectedResources *AffectedResources `json:"affectedResources,omitempty"`
+	// AiModel: The AI model associated with the finding.
+	AiModel *AiModel `json:"aiModel,omitempty"`
 	// Application: Represents an application associated with the finding.
 	Application *Application `json:"application,omitempty"`
 	// AttackExposure: The results of an attack path simulation relevant to this
@@ -2536,6 +2641,8 @@ type Finding struct {
 	// combination. This field cannot be updated. Its value is ignored in all
 	// update requests.
 	ToxicCombination *ToxicCombination `json:"toxicCombination,omitempty"`
+	// VertexAi: VertexAi associated with the finding.
+	VertexAi *VertexAi `json:"vertexAi,omitempty"`
 	// Vulnerability: Represents vulnerability-specific fields like CVE and CVSS
 	// scores. CVE stands for Common Vulnerabilities and Exposures
 	// (https://cve.mitre.org/about/)
@@ -3851,6 +3958,49 @@ func (s GoogleCloudSecuritycenterV2AffectedResources) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2AiModel: Contains information about the AI model
+// associated with the finding.
+type GoogleCloudSecuritycenterV2AiModel struct {
+	// DeploymentPlatform: The platform on which the model is deployed.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_PLATFORM_UNSPECIFIED" - Unspecified deployment platform.
+	//   "VERTEX_AI" - Vertex AI.
+	//   "GKE" - Google Kubernetes Engine.
+	DeploymentPlatform string `json:"deploymentPlatform,omitempty"`
+	// DisplayName: The user defined display name of model. Ex.
+	// baseline-classification-model
+	DisplayName string `json:"displayName,omitempty"`
+	// Domain: The domain of the model, for example, “image-classification”.
+	Domain string `json:"domain,omitempty"`
+	// Library: The name of the model library, for example, “transformers”.
+	Library string `json:"library,omitempty"`
+	// Location: The region in which the model is used, for example,
+	// “us-central1”.
+	Location string `json:"location,omitempty"`
+	// Name: The name of the AI model, for example, "gemini:1.0.0".
+	Name string `json:"name,omitempty"`
+	// Publisher: The publisher of the model, for example, “google” or
+	// “nvidia”.
+	Publisher string `json:"publisher,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeploymentPlatform") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeploymentPlatform") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2AiModel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AiModel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2Allowed: Allowed IP rule.
 type GoogleCloudSecuritycenterV2Allowed struct {
 	// IpRules: Optional. Optional list of allowed IP rules.
@@ -5145,6 +5295,35 @@ func (s GoogleCloudSecuritycenterV2Database) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2Dataset: Vertex AI dataset associated with the
+// finding.
+type GoogleCloudSecuritycenterV2Dataset struct {
+	// DisplayName: The user defined display name of dataset, e.g. plants-dataset
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Resource name of dataset, e.g.
+	// projects/{project}/locations/{location}/datasets/2094040236064505856
+	Name string `json:"name,omitempty"`
+	// Source: Data source, such as BigQuery source URI, e.g.
+	// bq://scc-nexus-test.AIPPtest.gsod
+	Source string `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2Dataset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2Dataset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2Denied: Denied IP rule.
 type GoogleCloudSecuritycenterV2Denied struct {
 	// IpRules: Optional. Optional list of denied IP rules.
@@ -5447,6 +5626,8 @@ type GoogleCloudSecuritycenterV2File struct {
 	// HashedSize: The length in bytes of the file prefix that was hashed. If
 	// hashed_size == size, any hashes reported represent the entire file.
 	HashedSize int64 `json:"hashedSize,omitempty,string"`
+	// Operations: Operation(s) performed on a file.
+	Operations []*GoogleCloudSecuritycenterV2FileOperation `json:"operations,omitempty"`
 	// PartiallyHashed: True when the hash covers only a prefix of the file.
 	PartiallyHashed bool `json:"partiallyHashed,omitempty"`
 	// Path: Absolute path of the file as a JSON encoded string.
@@ -5475,6 +5656,36 @@ func (s GoogleCloudSecuritycenterV2File) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2FileOperation: Operation(s) performed on a file.
+type GoogleCloudSecuritycenterV2FileOperation struct {
+	// Type: The type of the operation
+	//
+	// Possible values:
+	//   "OPERATION_TYPE_UNSPECIFIED" - The operation is unspecified.
+	//   "OPEN" - Represents an open operation.
+	//   "READ" - Represents a read operation.
+	//   "RENAME" - Represents a rename operation.
+	//   "WRITE" - Represents a write operation.
+	//   "EXECUTE" - Represents an execute operation.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2FileOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2FileOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2Finding: Security Command Center finding. A
 // finding is a record of assessment data like security, risk, health, or
 // privacy, that is ingested into Security Command Center for presentation,
@@ -5487,6 +5698,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	Access *GoogleCloudSecuritycenterV2Access `json:"access,omitempty"`
 	// AffectedResources: AffectedResources associated with the finding.
 	AffectedResources *GoogleCloudSecuritycenterV2AffectedResources `json:"affectedResources,omitempty"`
+	// AiModel: The AI model associated with the finding.
+	AiModel *GoogleCloudSecuritycenterV2AiModel `json:"aiModel,omitempty"`
 	// Application: Represents an application associated with the finding.
 	Application *GoogleCloudSecuritycenterV2Application `json:"application,omitempty"`
 	// AttackExposure: The results of an attack path simulation relevant to this
@@ -5649,7 +5862,7 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// MuteUpdateTime: Output only. The most recent time this finding was muted or
 	// unmuted.
 	MuteUpdateTime string `json:"muteUpdateTime,omitempty"`
-	// Name: The relative resource name
+	// Name: Identifier. The relative resource name
 	// (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
 	// of the finding. The following list shows some examples: +
 	// `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
@@ -5761,6 +5974,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// combination. This field cannot be updated. Its value is ignored in all
 	// update requests.
 	ToxicCombination *GoogleCloudSecuritycenterV2ToxicCombination `json:"toxicCombination,omitempty"`
+	// VertexAi: VertexAi associated with the finding.
+	VertexAi *GoogleCloudSecuritycenterV2VertexAi `json:"vertexAi,omitempty"`
 	// Vulnerability: Represents vulnerability-specific fields like CVE and CVSS
 	// scores. CVE stands for Common Vulnerabilities and Exposures
 	// (https://cve.mitre.org/about/)
@@ -6101,6 +6316,7 @@ type GoogleCloudSecuritycenterV2IssueDomain struct {
 	//   "DATA" - Issues in the data domain.
 	//   "IDENTITY_AND_ACCESS" - Issues in the identity and access domain.
 	//   "VULNERABILITY" - Issues in the vulnerability domain.
+	//   "THREAT" - Issues in the threat domain.
 	DomainCategory string `json:"domainCategory,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DomainCategory") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6730,18 +6946,28 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
 	//   "DATA_OBFUSCATION" - T1001
 	//   "DATA_OBFUSCATION_STEGANOGRAPHY" - T1001.002
+	//   "OS_CREDENTIAL_DUMPING" - T1003
+	//   "OS_CREDENTIAL_DUMPING_PROC_FILESYSTEM" - T1003.007
+	//   "OS_CREDENTIAL_DUMPING_ETC_PASSWORD_AND_ETC_SHADOW" - T1003.008
+	//   "DATA_FROM_LOCAL_SYSTEM" - T1005
 	//   "AUTOMATED_EXFILTRATION" - T1020
 	//   "OBFUSCATED_FILES_OR_INFO" - T1027
 	//   "STEGANOGRAPHY" - T1027.003
 	//   "COMPILE_AFTER_DELIVERY" - T1027.004
 	//   "COMMAND_OBFUSCATION" - T1027.010
+	//   "SCHEDULED_TRANSFER" - T1029
+	//   "SYSTEM_OWNER_USER_DISCOVERY" - T1033
 	//   "MASQUERADING" - T1036
 	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
 	//   "STARTUP_ITEMS" - T1037.005
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
 	//   "SCHEDULED_TASK_JOB" - T1053
+	//   "SCHEDULED_TASK_JOB_CRON" - T1053.003
 	//   "CONTAINER_ORCHESTRATION_JOB" - T1053.007
+	//   "PROCESS_INJECTION" - T1055
+	//   "INPUT_CAPTURE" - T1056
+	//   "INPUT_CAPTURE_KEYLOGGING" - T1056.001
 	//   "PROCESS_DISCOVERY" - T1057
 	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
 	//   "UNIX_SHELL" - T1059.004
@@ -6749,7 +6975,12 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION" - T1068
 	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
 	//   "CLOUD_GROUPS" - T1069.003
+	//   "INDICATOR_REMOVAL" - T1070
+	//   "INDICATOR_REMOVAL_CLEAR_LINUX_OR_MAC_SYSTEM_LOGS" - T1070.002
+	//   "INDICATOR_REMOVAL_CLEAR_COMMAND_HISTORY" - T1070.003
 	//   "INDICATOR_REMOVAL_FILE_DELETION" - T1070.004
+	//   "INDICATOR_REMOVAL_TIMESTOMP" - T1070.006
+	//   "INDICATOR_REMOVAL_CLEAR_MAILBOX_DATA" - T1070.008
 	//   "APPLICATION_LAYER_PROTOCOL" - T1071
 	//   "DNS" - T1071.004
 	//   "SOFTWARE_DEPLOYMENT_TOOLS" - T1072
@@ -6757,6 +6988,8 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "DEFAULT_ACCOUNTS" - T1078.001
 	//   "LOCAL_ACCOUNTS" - T1078.003
 	//   "CLOUD_ACCOUNTS" - T1078.004
+	//   "FILE_AND_DIRECTORY_DISCOVERY" - T1083
+	//   "ACCOUNT_DISCOVERY_LOCAL_ACCOUNT" - T1087.001
 	//   "PROXY" - T1090
 	//   "EXTERNAL_PROXY" - T1090.002
 	//   "MULTI_HOP_PROXY" - T1090.003
@@ -6769,6 +7002,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "INGRESS_TOOL_TRANSFER" - T1105
 	//   "NATIVE_API" - T1106
 	//   "BRUTE_FORCE" - T1110
+	//   "AUTOMATED_COLLECTION" - T1119
 	//   "SHARED_MODULES" - T1129
 	//   "DATA_ENCODING" - T1132
 	//   "STANDARD_ENCODING" - T1132.001
@@ -6776,10 +7010,16 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
 	//   "CREATE_ACCOUNT" - T1136
 	//   "LOCAL_ACCOUNT" - T1136.001
+	//   "DEOBFUSCATE_DECODE_FILES_OR_INFO" - T1140
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "SUPPLY_CHAIN_COMPROMISE" - T1195
+	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
+	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
 	//   "USER_EXECUTION" - T1204
+	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
+	//   "DATA_ENCRYPTED_FOR_IMPACT" - T1486
 	//   "SERVICE_STOP" - T1489
 	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
 	//   "FIRMWARE_CORRUPTION" - T1495
@@ -6794,12 +7034,24 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "EVENT_TRIGGERED_EXECUTION" - T1546
 	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION" - T1547
 	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
+	//   "SHORTCUT_MODIFICATION" - T1547.009
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID" - T1548.001
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING" - T1548.003
 	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "CREDENTIALS_IN_FILES" - T1552.001
+	//   "BASH_HISTORY" - T1552.003
+	//   "PRIVATE_KEYS" - T1552.004
+	//   "SUBVERT_TRUST_CONTROL" - T1553
+	//   "INSTALL_ROOT_CERTIFICATE" - T1553.004
 	//   "COMPROMISE_HOST_SOFTWARE_BINARY" - T1554
+	//   "CREDENTIALS_FROM_PASSWORD_STORES" - T1555
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
+	//   "PLUGGABLE_AUTHENTICATION_MODULES" - T1556.003
 	//   "IMPAIR_DEFENSES" - T1562
 	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
+	//   "INDICATOR_BLOCKING" - T1562.006
+	//   "DISABLE_OR_MODIFY_LINUX_AUDIT_SYSTEM" - T1562.012
 	//   "HIDE_ARTIFACTS" - T1564
 	//   "HIDDEN_FILES_AND_DIRECTORIES" - T1564.001
 	//   "HIDDEN_USERS" - T1564.002
@@ -6807,18 +7059,27 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
 	//   "DYNAMIC_RESOLUTION" - T1568
 	//   "LATERAL_TOOL_TRANSFER" - T1570
+	//   "HIJACK_EXECUTION_FLOW" - T1574
+	//   "HIJACK_EXECUTION_FLOW_DYNAMIC_LINKER_HIJACKING" - T1574.006
 	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
 	//   "CREATE_SNAPSHOT" - T1578.001
 	//   "CLOUD_INFRASTRUCTURE_DISCOVERY" - T1580
+	//   "DEVELOP_CAPABILITIES" - T1587
+	//   "DEVELOP_CAPABILITIES_MALWARE" - T1587.001
 	//   "OBTAIN_CAPABILITIES" - T1588
+	//   "OBTAIN_CAPABILITIES_MALWARE" - T1588.001
+	//   "OBTAIN_CAPABILITIES_VULNERABILITIES" - T1588.006
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
 	//   "STAGE_CAPABILITIES" - T1608
+	//   "UPLOAD_MALWARE" - T1608.001
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
 	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
+	//   "REFLECTIVE_CODE_LOADING" - T1620
 	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
+	//   "FINANCIAL_THEFT" - T1657
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by this
 	// finding, if any.
@@ -6851,18 +7112,28 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
 	//   "DATA_OBFUSCATION" - T1001
 	//   "DATA_OBFUSCATION_STEGANOGRAPHY" - T1001.002
+	//   "OS_CREDENTIAL_DUMPING" - T1003
+	//   "OS_CREDENTIAL_DUMPING_PROC_FILESYSTEM" - T1003.007
+	//   "OS_CREDENTIAL_DUMPING_ETC_PASSWORD_AND_ETC_SHADOW" - T1003.008
+	//   "DATA_FROM_LOCAL_SYSTEM" - T1005
 	//   "AUTOMATED_EXFILTRATION" - T1020
 	//   "OBFUSCATED_FILES_OR_INFO" - T1027
 	//   "STEGANOGRAPHY" - T1027.003
 	//   "COMPILE_AFTER_DELIVERY" - T1027.004
 	//   "COMMAND_OBFUSCATION" - T1027.010
+	//   "SCHEDULED_TRANSFER" - T1029
+	//   "SYSTEM_OWNER_USER_DISCOVERY" - T1033
 	//   "MASQUERADING" - T1036
 	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
 	//   "STARTUP_ITEMS" - T1037.005
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
 	//   "SCHEDULED_TASK_JOB" - T1053
+	//   "SCHEDULED_TASK_JOB_CRON" - T1053.003
 	//   "CONTAINER_ORCHESTRATION_JOB" - T1053.007
+	//   "PROCESS_INJECTION" - T1055
+	//   "INPUT_CAPTURE" - T1056
+	//   "INPUT_CAPTURE_KEYLOGGING" - T1056.001
 	//   "PROCESS_DISCOVERY" - T1057
 	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
 	//   "UNIX_SHELL" - T1059.004
@@ -6870,7 +7141,12 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION" - T1068
 	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
 	//   "CLOUD_GROUPS" - T1069.003
+	//   "INDICATOR_REMOVAL" - T1070
+	//   "INDICATOR_REMOVAL_CLEAR_LINUX_OR_MAC_SYSTEM_LOGS" - T1070.002
+	//   "INDICATOR_REMOVAL_CLEAR_COMMAND_HISTORY" - T1070.003
 	//   "INDICATOR_REMOVAL_FILE_DELETION" - T1070.004
+	//   "INDICATOR_REMOVAL_TIMESTOMP" - T1070.006
+	//   "INDICATOR_REMOVAL_CLEAR_MAILBOX_DATA" - T1070.008
 	//   "APPLICATION_LAYER_PROTOCOL" - T1071
 	//   "DNS" - T1071.004
 	//   "SOFTWARE_DEPLOYMENT_TOOLS" - T1072
@@ -6878,6 +7154,8 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "DEFAULT_ACCOUNTS" - T1078.001
 	//   "LOCAL_ACCOUNTS" - T1078.003
 	//   "CLOUD_ACCOUNTS" - T1078.004
+	//   "FILE_AND_DIRECTORY_DISCOVERY" - T1083
+	//   "ACCOUNT_DISCOVERY_LOCAL_ACCOUNT" - T1087.001
 	//   "PROXY" - T1090
 	//   "EXTERNAL_PROXY" - T1090.002
 	//   "MULTI_HOP_PROXY" - T1090.003
@@ -6890,6 +7168,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "INGRESS_TOOL_TRANSFER" - T1105
 	//   "NATIVE_API" - T1106
 	//   "BRUTE_FORCE" - T1110
+	//   "AUTOMATED_COLLECTION" - T1119
 	//   "SHARED_MODULES" - T1129
 	//   "DATA_ENCODING" - T1132
 	//   "STANDARD_ENCODING" - T1132.001
@@ -6897,10 +7176,16 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
 	//   "CREATE_ACCOUNT" - T1136
 	//   "LOCAL_ACCOUNT" - T1136.001
+	//   "DEOBFUSCATE_DECODE_FILES_OR_INFO" - T1140
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "SUPPLY_CHAIN_COMPROMISE" - T1195
+	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
+	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
 	//   "USER_EXECUTION" - T1204
+	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
+	//   "DATA_ENCRYPTED_FOR_IMPACT" - T1486
 	//   "SERVICE_STOP" - T1489
 	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
 	//   "FIRMWARE_CORRUPTION" - T1495
@@ -6915,12 +7200,24 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "EVENT_TRIGGERED_EXECUTION" - T1546
 	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION" - T1547
 	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
+	//   "SHORTCUT_MODIFICATION" - T1547.009
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID" - T1548.001
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING" - T1548.003
 	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "CREDENTIALS_IN_FILES" - T1552.001
+	//   "BASH_HISTORY" - T1552.003
+	//   "PRIVATE_KEYS" - T1552.004
+	//   "SUBVERT_TRUST_CONTROL" - T1553
+	//   "INSTALL_ROOT_CERTIFICATE" - T1553.004
 	//   "COMPROMISE_HOST_SOFTWARE_BINARY" - T1554
+	//   "CREDENTIALS_FROM_PASSWORD_STORES" - T1555
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
+	//   "PLUGGABLE_AUTHENTICATION_MODULES" - T1556.003
 	//   "IMPAIR_DEFENSES" - T1562
 	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
+	//   "INDICATOR_BLOCKING" - T1562.006
+	//   "DISABLE_OR_MODIFY_LINUX_AUDIT_SYSTEM" - T1562.012
 	//   "HIDE_ARTIFACTS" - T1564
 	//   "HIDDEN_FILES_AND_DIRECTORIES" - T1564.001
 	//   "HIDDEN_USERS" - T1564.002
@@ -6928,18 +7225,27 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
 	//   "DYNAMIC_RESOLUTION" - T1568
 	//   "LATERAL_TOOL_TRANSFER" - T1570
+	//   "HIJACK_EXECUTION_FLOW" - T1574
+	//   "HIJACK_EXECUTION_FLOW_DYNAMIC_LINKER_HIJACKING" - T1574.006
 	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
 	//   "CREATE_SNAPSHOT" - T1578.001
 	//   "CLOUD_INFRASTRUCTURE_DISCOVERY" - T1580
+	//   "DEVELOP_CAPABILITIES" - T1587
+	//   "DEVELOP_CAPABILITIES_MALWARE" - T1587.001
 	//   "OBTAIN_CAPABILITIES" - T1588
+	//   "OBTAIN_CAPABILITIES_MALWARE" - T1588.001
+	//   "OBTAIN_CAPABILITIES_VULNERABILITIES" - T1588.006
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
 	//   "STAGE_CAPABILITIES" - T1608
+	//   "UPLOAD_MALWARE" - T1608.001
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
 	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
+	//   "REFLECTIVE_CODE_LOADING" - T1620
 	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
+	//   "FINANCIAL_THEFT" - T1657
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 	// Version: The MITRE ATT&CK version referenced by the above fields. E.g. "8".
 	Version string `json:"version,omitempty"`
@@ -7280,6 +7586,33 @@ type GoogleCloudSecuritycenterV2Package struct {
 
 func (s GoogleCloudSecuritycenterV2Package) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Package
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2Pipeline: Vertex AI training pipeline associated
+// with the finding.
+type GoogleCloudSecuritycenterV2Pipeline struct {
+	// DisplayName: The user defined display name of pipeline, e.g.
+	// plants-classification
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Resource name of pipeline, e.g.
+	// projects/{project}/locations/{location}/trainingPipelines/5253428229225578496
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2Pipeline) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2Pipeline
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8131,6 +8464,31 @@ func (s *GoogleCloudSecuritycenterV2ToxicCombination) UnmarshalJSON(data []byte)
 	return nil
 }
 
+// GoogleCloudSecuritycenterV2VertexAi: Vertex AI-related information
+// associated with the finding.
+type GoogleCloudSecuritycenterV2VertexAi struct {
+	// Datasets: Datasets associated with the finding.
+	Datasets []*GoogleCloudSecuritycenterV2Dataset `json:"datasets,omitempty"`
+	// Pipelines: Pipelines associated with the finding.
+	Pipelines []*GoogleCloudSecuritycenterV2Pipeline `json:"pipelines,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Datasets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Datasets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2VertexAi) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2VertexAi
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2Vulnerability: Refers to common vulnerability
 // fields e.g. cve, cvss, cwe etc.
 type GoogleCloudSecuritycenterV2Vulnerability struct {
@@ -8623,18 +8981,28 @@ type MitreAttack struct {
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
 	//   "DATA_OBFUSCATION" - T1001
 	//   "DATA_OBFUSCATION_STEGANOGRAPHY" - T1001.002
+	//   "OS_CREDENTIAL_DUMPING" - T1003
+	//   "OS_CREDENTIAL_DUMPING_PROC_FILESYSTEM" - T1003.007
+	//   "OS_CREDENTIAL_DUMPING_ETC_PASSWORD_AND_ETC_SHADOW" - T1003.008
+	//   "DATA_FROM_LOCAL_SYSTEM" - T1005
 	//   "AUTOMATED_EXFILTRATION" - T1020
 	//   "OBFUSCATED_FILES_OR_INFO" - T1027
 	//   "STEGANOGRAPHY" - T1027.003
 	//   "COMPILE_AFTER_DELIVERY" - T1027.004
 	//   "COMMAND_OBFUSCATION" - T1027.010
+	//   "SCHEDULED_TRANSFER" - T1029
+	//   "SYSTEM_OWNER_USER_DISCOVERY" - T1033
 	//   "MASQUERADING" - T1036
 	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
 	//   "STARTUP_ITEMS" - T1037.005
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
 	//   "SCHEDULED_TASK_JOB" - T1053
+	//   "SCHEDULED_TASK_JOB_CRON" - T1053.003
 	//   "CONTAINER_ORCHESTRATION_JOB" - T1053.007
+	//   "PROCESS_INJECTION" - T1055
+	//   "INPUT_CAPTURE" - T1056
+	//   "INPUT_CAPTURE_KEYLOGGING" - T1056.001
 	//   "PROCESS_DISCOVERY" - T1057
 	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
 	//   "UNIX_SHELL" - T1059.004
@@ -8642,7 +9010,12 @@ type MitreAttack struct {
 	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION" - T1068
 	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
 	//   "CLOUD_GROUPS" - T1069.003
+	//   "INDICATOR_REMOVAL" - T1070
+	//   "INDICATOR_REMOVAL_CLEAR_LINUX_OR_MAC_SYSTEM_LOGS" - T1070.002
+	//   "INDICATOR_REMOVAL_CLEAR_COMMAND_HISTORY" - T1070.003
 	//   "INDICATOR_REMOVAL_FILE_DELETION" - T1070.004
+	//   "INDICATOR_REMOVAL_TIMESTOMP" - T1070.006
+	//   "INDICATOR_REMOVAL_CLEAR_MAILBOX_DATA" - T1070.008
 	//   "APPLICATION_LAYER_PROTOCOL" - T1071
 	//   "DNS" - T1071.004
 	//   "SOFTWARE_DEPLOYMENT_TOOLS" - T1072
@@ -8650,6 +9023,8 @@ type MitreAttack struct {
 	//   "DEFAULT_ACCOUNTS" - T1078.001
 	//   "LOCAL_ACCOUNTS" - T1078.003
 	//   "CLOUD_ACCOUNTS" - T1078.004
+	//   "FILE_AND_DIRECTORY_DISCOVERY" - T1083
+	//   "ACCOUNT_DISCOVERY_LOCAL_ACCOUNT" - T1087.001
 	//   "PROXY" - T1090
 	//   "EXTERNAL_PROXY" - T1090.002
 	//   "MULTI_HOP_PROXY" - T1090.003
@@ -8662,6 +9037,7 @@ type MitreAttack struct {
 	//   "INGRESS_TOOL_TRANSFER" - T1105
 	//   "NATIVE_API" - T1106
 	//   "BRUTE_FORCE" - T1110
+	//   "AUTOMATED_COLLECTION" - T1119
 	//   "SHARED_MODULES" - T1129
 	//   "DATA_ENCODING" - T1132
 	//   "STANDARD_ENCODING" - T1132.001
@@ -8669,10 +9045,16 @@ type MitreAttack struct {
 	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
 	//   "CREATE_ACCOUNT" - T1136
 	//   "LOCAL_ACCOUNT" - T1136.001
+	//   "DEOBFUSCATE_DECODE_FILES_OR_INFO" - T1140
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "SUPPLY_CHAIN_COMPROMISE" - T1195
+	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
+	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
 	//   "USER_EXECUTION" - T1204
+	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
+	//   "DATA_ENCRYPTED_FOR_IMPACT" - T1486
 	//   "SERVICE_STOP" - T1489
 	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
 	//   "FIRMWARE_CORRUPTION" - T1495
@@ -8687,12 +9069,24 @@ type MitreAttack struct {
 	//   "EVENT_TRIGGERED_EXECUTION" - T1546
 	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION" - T1547
 	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
+	//   "SHORTCUT_MODIFICATION" - T1547.009
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID" - T1548.001
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING" - T1548.003
 	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "CREDENTIALS_IN_FILES" - T1552.001
+	//   "BASH_HISTORY" - T1552.003
+	//   "PRIVATE_KEYS" - T1552.004
+	//   "SUBVERT_TRUST_CONTROL" - T1553
+	//   "INSTALL_ROOT_CERTIFICATE" - T1553.004
 	//   "COMPROMISE_HOST_SOFTWARE_BINARY" - T1554
+	//   "CREDENTIALS_FROM_PASSWORD_STORES" - T1555
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
+	//   "PLUGGABLE_AUTHENTICATION_MODULES" - T1556.003
 	//   "IMPAIR_DEFENSES" - T1562
 	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
+	//   "INDICATOR_BLOCKING" - T1562.006
+	//   "DISABLE_OR_MODIFY_LINUX_AUDIT_SYSTEM" - T1562.012
 	//   "HIDE_ARTIFACTS" - T1564
 	//   "HIDDEN_FILES_AND_DIRECTORIES" - T1564.001
 	//   "HIDDEN_USERS" - T1564.002
@@ -8700,18 +9094,27 @@ type MitreAttack struct {
 	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
 	//   "DYNAMIC_RESOLUTION" - T1568
 	//   "LATERAL_TOOL_TRANSFER" - T1570
+	//   "HIJACK_EXECUTION_FLOW" - T1574
+	//   "HIJACK_EXECUTION_FLOW_DYNAMIC_LINKER_HIJACKING" - T1574.006
 	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
 	//   "CREATE_SNAPSHOT" - T1578.001
 	//   "CLOUD_INFRASTRUCTURE_DISCOVERY" - T1580
+	//   "DEVELOP_CAPABILITIES" - T1587
+	//   "DEVELOP_CAPABILITIES_MALWARE" - T1587.001
 	//   "OBTAIN_CAPABILITIES" - T1588
+	//   "OBTAIN_CAPABILITIES_MALWARE" - T1588.001
+	//   "OBTAIN_CAPABILITIES_VULNERABILITIES" - T1588.006
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
 	//   "STAGE_CAPABILITIES" - T1608
+	//   "UPLOAD_MALWARE" - T1608.001
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
 	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
+	//   "REFLECTIVE_CODE_LOADING" - T1620
 	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
+	//   "FINANCIAL_THEFT" - T1657
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by this
 	// finding, if any.
@@ -8744,18 +9147,28 @@ type MitreAttack struct {
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
 	//   "DATA_OBFUSCATION" - T1001
 	//   "DATA_OBFUSCATION_STEGANOGRAPHY" - T1001.002
+	//   "OS_CREDENTIAL_DUMPING" - T1003
+	//   "OS_CREDENTIAL_DUMPING_PROC_FILESYSTEM" - T1003.007
+	//   "OS_CREDENTIAL_DUMPING_ETC_PASSWORD_AND_ETC_SHADOW" - T1003.008
+	//   "DATA_FROM_LOCAL_SYSTEM" - T1005
 	//   "AUTOMATED_EXFILTRATION" - T1020
 	//   "OBFUSCATED_FILES_OR_INFO" - T1027
 	//   "STEGANOGRAPHY" - T1027.003
 	//   "COMPILE_AFTER_DELIVERY" - T1027.004
 	//   "COMMAND_OBFUSCATION" - T1027.010
+	//   "SCHEDULED_TRANSFER" - T1029
+	//   "SYSTEM_OWNER_USER_DISCOVERY" - T1033
 	//   "MASQUERADING" - T1036
 	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
 	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
 	//   "STARTUP_ITEMS" - T1037.005
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
 	//   "SCHEDULED_TASK_JOB" - T1053
+	//   "SCHEDULED_TASK_JOB_CRON" - T1053.003
 	//   "CONTAINER_ORCHESTRATION_JOB" - T1053.007
+	//   "PROCESS_INJECTION" - T1055
+	//   "INPUT_CAPTURE" - T1056
+	//   "INPUT_CAPTURE_KEYLOGGING" - T1056.001
 	//   "PROCESS_DISCOVERY" - T1057
 	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
 	//   "UNIX_SHELL" - T1059.004
@@ -8763,7 +9176,12 @@ type MitreAttack struct {
 	//   "EXPLOITATION_FOR_PRIVILEGE_ESCALATION" - T1068
 	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
 	//   "CLOUD_GROUPS" - T1069.003
+	//   "INDICATOR_REMOVAL" - T1070
+	//   "INDICATOR_REMOVAL_CLEAR_LINUX_OR_MAC_SYSTEM_LOGS" - T1070.002
+	//   "INDICATOR_REMOVAL_CLEAR_COMMAND_HISTORY" - T1070.003
 	//   "INDICATOR_REMOVAL_FILE_DELETION" - T1070.004
+	//   "INDICATOR_REMOVAL_TIMESTOMP" - T1070.006
+	//   "INDICATOR_REMOVAL_CLEAR_MAILBOX_DATA" - T1070.008
 	//   "APPLICATION_LAYER_PROTOCOL" - T1071
 	//   "DNS" - T1071.004
 	//   "SOFTWARE_DEPLOYMENT_TOOLS" - T1072
@@ -8771,6 +9189,8 @@ type MitreAttack struct {
 	//   "DEFAULT_ACCOUNTS" - T1078.001
 	//   "LOCAL_ACCOUNTS" - T1078.003
 	//   "CLOUD_ACCOUNTS" - T1078.004
+	//   "FILE_AND_DIRECTORY_DISCOVERY" - T1083
+	//   "ACCOUNT_DISCOVERY_LOCAL_ACCOUNT" - T1087.001
 	//   "PROXY" - T1090
 	//   "EXTERNAL_PROXY" - T1090.002
 	//   "MULTI_HOP_PROXY" - T1090.003
@@ -8783,6 +9203,7 @@ type MitreAttack struct {
 	//   "INGRESS_TOOL_TRANSFER" - T1105
 	//   "NATIVE_API" - T1106
 	//   "BRUTE_FORCE" - T1110
+	//   "AUTOMATED_COLLECTION" - T1119
 	//   "SHARED_MODULES" - T1129
 	//   "DATA_ENCODING" - T1132
 	//   "STANDARD_ENCODING" - T1132.001
@@ -8790,10 +9211,16 @@ type MitreAttack struct {
 	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
 	//   "CREATE_ACCOUNT" - T1136
 	//   "LOCAL_ACCOUNT" - T1136.001
+	//   "DEOBFUSCATE_DECODE_FILES_OR_INFO" - T1140
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "SUPPLY_CHAIN_COMPROMISE" - T1195
+	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
+	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
 	//   "USER_EXECUTION" - T1204
+	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
+	//   "DATA_ENCRYPTED_FOR_IMPACT" - T1486
 	//   "SERVICE_STOP" - T1489
 	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
 	//   "FIRMWARE_CORRUPTION" - T1495
@@ -8808,12 +9235,24 @@ type MitreAttack struct {
 	//   "EVENT_TRIGGERED_EXECUTION" - T1546
 	//   "BOOT_OR_LOGON_AUTOSTART_EXECUTION" - T1547
 	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
+	//   "SHORTCUT_MODIFICATION" - T1547.009
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID" - T1548.001
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING" - T1548.003
 	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "CREDENTIALS_IN_FILES" - T1552.001
+	//   "BASH_HISTORY" - T1552.003
+	//   "PRIVATE_KEYS" - T1552.004
+	//   "SUBVERT_TRUST_CONTROL" - T1553
+	//   "INSTALL_ROOT_CERTIFICATE" - T1553.004
 	//   "COMPROMISE_HOST_SOFTWARE_BINARY" - T1554
+	//   "CREDENTIALS_FROM_PASSWORD_STORES" - T1555
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
+	//   "PLUGGABLE_AUTHENTICATION_MODULES" - T1556.003
 	//   "IMPAIR_DEFENSES" - T1562
 	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
+	//   "INDICATOR_BLOCKING" - T1562.006
+	//   "DISABLE_OR_MODIFY_LINUX_AUDIT_SYSTEM" - T1562.012
 	//   "HIDE_ARTIFACTS" - T1564
 	//   "HIDDEN_FILES_AND_DIRECTORIES" - T1564.001
 	//   "HIDDEN_USERS" - T1564.002
@@ -8821,18 +9260,27 @@ type MitreAttack struct {
 	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
 	//   "DYNAMIC_RESOLUTION" - T1568
 	//   "LATERAL_TOOL_TRANSFER" - T1570
+	//   "HIJACK_EXECUTION_FLOW" - T1574
+	//   "HIJACK_EXECUTION_FLOW_DYNAMIC_LINKER_HIJACKING" - T1574.006
 	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
 	//   "CREATE_SNAPSHOT" - T1578.001
 	//   "CLOUD_INFRASTRUCTURE_DISCOVERY" - T1580
+	//   "DEVELOP_CAPABILITIES" - T1587
+	//   "DEVELOP_CAPABILITIES_MALWARE" - T1587.001
 	//   "OBTAIN_CAPABILITIES" - T1588
+	//   "OBTAIN_CAPABILITIES_MALWARE" - T1588.001
+	//   "OBTAIN_CAPABILITIES_VULNERABILITIES" - T1588.006
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
 	//   "STAGE_CAPABILITIES" - T1608
+	//   "UPLOAD_MALWARE" - T1608.001
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
 	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
+	//   "REFLECTIVE_CODE_LOADING" - T1620
 	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
+	//   "FINANCIAL_THEFT" - T1657
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 	// Version: The MITRE ATT&CK version referenced by the above fields. E.g. "8".
 	Version string `json:"version,omitempty"`
@@ -9066,6 +9514,32 @@ type Package struct {
 
 func (s Package) MarshalJSON() ([]byte, error) {
 	type NoMethod Package
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Pipeline: Vertex AI training pipeline associated with the finding.
+type Pipeline struct {
+	// DisplayName: The user defined display name of pipeline, e.g.
+	// plants-classification
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Resource name of pipeline, e.g.
+	// projects/{project}/locations/{location}/trainingPipelines/5253428229225578496
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Pipeline) MarshalJSON() ([]byte, error) {
+	type NoMethod Pipeline
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9894,6 +10368,30 @@ func (s *ToxicCombination) UnmarshalJSON(data []byte) error {
 	}
 	s.AttackExposureScore = float64(s1.AttackExposureScore)
 	return nil
+}
+
+// VertexAi: Vertex AI-related information associated with the finding.
+type VertexAi struct {
+	// Datasets: Datasets associated with the finding.
+	Datasets []*Dataset `json:"datasets,omitempty"`
+	// Pipelines: Pipelines associated with the finding.
+	Pipelines []*Pipeline `json:"pipelines,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Datasets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Datasets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VertexAi) MarshalJSON() ([]byte, error) {
+	type NoMethod VertexAi
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VirtualMachineThreatDetectionSettings: Resource capturing the settings for

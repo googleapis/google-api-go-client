@@ -118,6 +118,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		return nil, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
+	s.Accounts = NewAccountsService(s)
 	s.Issueresolution = NewIssueresolutionService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
@@ -143,6 +144,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Accounts *AccountsService
+
 	Issueresolution *IssueresolutionService
 }
 
@@ -151,6 +154,27 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewAccountsService(s *Service) *AccountsService {
+	rs := &AccountsService{s: s}
+	rs.AggregateProductStatuses = NewAccountsAggregateProductStatusesService(s)
+	return rs
+}
+
+type AccountsService struct {
+	s *Service
+
+	AggregateProductStatuses *AccountsAggregateProductStatusesService
+}
+
+func NewAccountsAggregateProductStatusesService(s *Service) *AccountsAggregateProductStatusesService {
+	rs := &AccountsAggregateProductStatusesService{s: s}
+	return rs
+}
+
+type AccountsAggregateProductStatusesService struct {
+	s *Service
 }
 
 func NewIssueresolutionService(s *Service) *IssueresolutionService {
@@ -300,6 +324,80 @@ type AdditionalContent struct {
 
 func (s AdditionalContent) MarshalJSON() ([]byte, error) {
 	type NoMethod AdditionalContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AggregateProductStatus: Aggregate product statuses for a given reporting
+// context and country.
+type AggregateProductStatus struct {
+	// Country: The country of the aggregate product statuses. Represented as a
+	// CLDR territory code
+	// (https://github.com/unicode-org/cldr/blob/latest/common/main/en.xml).
+	Country string `json:"country,omitempty"`
+	// ItemLevelIssues: The product issues that affect the given reporting context
+	// and country.
+	ItemLevelIssues []*ItemLevelIssue `json:"itemLevelIssues,omitempty"`
+	// Name: Identifier. The name of the `AggregateProductStatuses` resource.
+	// Format:
+	// `accounts/{account}/aggregateProductStatuses/{aggregateProductStatuses}`
+	Name string `json:"name,omitempty"`
+	// ReportingContext: The reporting context of the aggregate product statuses.
+	//
+	// Possible values:
+	//   "REPORTING_CONTEXT_ENUM_UNSPECIFIED" - Not specified.
+	//   "SHOPPING_ADS" - [Shopping
+	// ads](https://support.google.com/merchants/answer/6149970).
+	//   "DISCOVERY_ADS" - Deprecated: Use `DEMAND_GEN_ADS` instead. [Discovery and
+	// Demand Gen ads](https://support.google.com/merchants/answer/13389785).
+	//   "DEMAND_GEN_ADS" - [Demand Gen
+	// ads](https://support.google.com/merchants/answer/13389785).
+	//   "DEMAND_GEN_ADS_DISCOVER_SURFACE" - [Demand Gen ads on Discover
+	// surface](https://support.google.com/merchants/answer/13389785).
+	//   "VIDEO_ADS" - [Video
+	// ads](https://support.google.com/google-ads/answer/6340491).
+	//   "DISPLAY_ADS" - [Display
+	// ads](https://support.google.com/merchants/answer/6069387).
+	//   "LOCAL_INVENTORY_ADS" - [Local inventory
+	// ads](https://support.google.com/merchants/answer/3271956).
+	//   "VEHICLE_INVENTORY_ADS" - [Vehicle inventory
+	// ads](https://support.google.com/merchants/answer/11544533).
+	//   "FREE_LISTINGS" - [Free product
+	// listings](https://support.google.com/merchants/answer/9199328).
+	//   "FREE_LOCAL_LISTINGS" - [Free local product
+	// listings](https://support.google.com/merchants/answer/9825611).
+	//   "FREE_LOCAL_VEHICLE_LISTINGS" - [Free local vehicle
+	// listings](https://support.google.com/merchants/answer/11544533).
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
+	//   "YOUTUBE_SHOPPING" - [YouTube
+	// Shopping](https://support.google.com/merchants/answer/13478370).
+	//   "CLOUD_RETAIL" - [Cloud
+	// retail](https://cloud.google.com/solutions/retail).
+	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
+	// retail](https://cloud.google.com/solutions/retail).
+	//   "PRODUCT_REVIEWS" - [Product
+	// Reviews](https://support.google.com/merchants/answer/14620732).
+	//   "MERCHANT_REVIEWS" - [Merchant
+	// Reviews](https://developers.google.com/merchant-review-feeds).
+	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	ReportingContext string `json:"reportingContext,omitempty"`
+	// Stats: Products statistics for the given reporting context and country.
+	Stats *Stats `json:"stats,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Country") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Country") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AggregateProductStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod AggregateProductStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -736,6 +834,86 @@ func (s InputValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ItemLevelIssue: The ItemLevelIssue of the product status.
+type ItemLevelIssue struct {
+	// Attribute: The attribute's name, if the issue is caused by a single
+	// attribute.
+	Attribute string `json:"attribute,omitempty"`
+	// Code: The error code of the issue.
+	Code string `json:"code,omitempty"`
+	// Description: A short issue description in English.
+	Description string `json:"description,omitempty"`
+	// Detail: A detailed issue description in English.
+	Detail string `json:"detail,omitempty"`
+	// DocumentationUri: The URL of a web page to help with resolving this issue.
+	DocumentationUri string `json:"documentationUri,omitempty"`
+	// ProductCount: The number of products affected by this issue.
+	ProductCount int64 `json:"productCount,omitempty,string"`
+	// Resolution: Whether the issue can be resolved by the merchant.
+	//
+	// Possible values:
+	//   "RESOLUTION_UNSPECIFIED" - Not specified.
+	//   "MERCHANT_ACTION" - The issue can be resolved by the merchant.
+	//   "PENDING_PROCESSING" - The issue will be resolved auomatically.
+	Resolution string `json:"resolution,omitempty"`
+	// Severity: How this issue affects serving of the offer.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Not specified.
+	//   "NOT_IMPACTED" - This issue represents a warning and does not have a
+	// direct affect on the product.
+	//   "DEMOTED" - The product is demoted and most likely have limited
+	// performance in search results
+	//   "DISAPPROVED" - Issue disapproves the product.
+	Severity string `json:"severity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attribute") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attribute") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ItemLevelIssue) MarshalJSON() ([]byte, error) {
+	type NoMethod ItemLevelIssue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListAggregateProductStatusesResponse: Response message for the
+// `ListAggregateProductStatuses` method.
+type ListAggregateProductStatusesResponse struct {
+	// AggregateProductStatuses: The `AggregateProductStatuses` resources for the
+	// given account.
+	AggregateProductStatuses []*AggregateProductStatus `json:"aggregateProductStatuses,omitempty"`
+	// NextPageToken: A token, which can be sent as `pageToken` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AggregateProductStatuses")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AggregateProductStatuses") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAggregateProductStatusesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAggregateProductStatusesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ProductChange: The change that happened to the product including old value,
 // new value, country code as the region code and reporting context.
 type ProductChange struct {
@@ -1145,6 +1323,34 @@ func (s RenderedIssue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Stats: Products statistics.
+type Stats struct {
+	// ActiveCount: The number of products that are active.
+	ActiveCount int64 `json:"activeCount,omitempty,string"`
+	// DisapprovedCount: The number of products that are disapproved.
+	DisapprovedCount int64 `json:"disapprovedCount,omitempty,string"`
+	// ExpiringCount: The number of products that are expiring.
+	ExpiringCount int64 `json:"expiringCount,omitempty,string"`
+	// PendingCount: The number of products that are pending.
+	PendingCount int64 `json:"pendingCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ActiveCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActiveCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Stats) MarshalJSON() ([]byte, error) {
+	type NoMethod Stats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TextInput: Text input allows the business to provide a text value.
 type TextInput struct {
 	// AdditionalInfo: Additional info regarding the field to be displayed to the
@@ -1298,6 +1504,169 @@ type TriggerActionResponse struct {
 func (s TriggerActionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TriggerActionResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type AccountsAggregateProductStatusesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the `AggregateProductStatuses` resources for your merchant
+// account. The response might contain fewer items than specified by
+// `pageSize`. If `pageToken` was returned in previous request, it can be used
+// to obtain additional results.
+//
+//   - parent: The account to list aggregate product statuses for. Format:
+//     `accounts/{account}`.
+func (r *AccountsAggregateProductStatusesService) List(parent string) *AccountsAggregateProductStatusesListCall {
+	c := &AccountsAggregateProductStatusesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters the aggregate product statuses. Filtering is only supported by the
+// `reporting_context` and `country` field. For example: `reporting_context =
+// "SHOPPING_ADS" AND country = "US".
+func (c *AccountsAggregateProductStatusesListCall) Filter(filter string) *AccountsAggregateProductStatusesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// aggregate product statuses to return. The service may return fewer than this
+// value. If unspecified, at most 25 aggregate product statuses are returned.
+// The maximum value is 250; values above 250 are coerced to 250.
+func (c *AccountsAggregateProductStatusesListCall) PageSize(pageSize int64) *AccountsAggregateProductStatusesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAggregateProductStatuses` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to `ListAggregateProductStatuses` must match the call that provided the page
+// token.
+func (c *AccountsAggregateProductStatusesListCall) PageToken(pageToken string) *AccountsAggregateProductStatusesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsAggregateProductStatusesListCall) Fields(s ...googleapi.Field) *AccountsAggregateProductStatusesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsAggregateProductStatusesListCall) IfNoneMatch(entityTag string) *AccountsAggregateProductStatusesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsAggregateProductStatusesListCall) Context(ctx context.Context) *AccountsAggregateProductStatusesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsAggregateProductStatusesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAggregateProductStatusesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "issueresolution/v1beta/{+parent}/aggregateProductStatuses")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.aggregateProductStatuses.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.aggregateProductStatuses.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAggregateProductStatusesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsAggregateProductStatusesListCall) Do(opts ...googleapi.CallOption) (*ListAggregateProductStatusesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAggregateProductStatusesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.aggregateProductStatuses.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsAggregateProductStatusesListCall) Pages(ctx context.Context, f func(*ListAggregateProductStatusesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type IssueresolutionRenderaccountissuesCall struct {

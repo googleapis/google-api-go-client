@@ -419,6 +419,9 @@ type Backup struct {
 	// Description: A description of the backup with 2048 characters or less.
 	// Requests with longer descriptions will be rejected.
 	Description string `json:"description,omitempty"`
+	// EnforcedRetentionEndTime: Output only. The time until which the backup is
+	// not deletable.
+	EnforcedRetentionEndTime string `json:"enforcedRetentionEndTime,omitempty"`
 	// Labels: Resource labels to represent user provided metadata.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. The resource name of the backup. Format:
@@ -573,11 +576,55 @@ func (s BackupPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BackupRetentionPolicy: Retention policy for backups in the backup vault
+type BackupRetentionPolicy struct {
+	// BackupMinimumEnforcedRetentionDays: Required. Minimum retention duration in
+	// days for backups in the backup vault.
+	BackupMinimumEnforcedRetentionDays int64 `json:"backupMinimumEnforcedRetentionDays,omitempty"`
+	// DailyBackupImmutable: Optional. Indicates if the daily backups are
+	// immutable. At least one of daily_backup_immutable, weekly_backup_immutable,
+	// monthly_backup_immutable and manual_backup_immutable must be true.
+	DailyBackupImmutable bool `json:"dailyBackupImmutable,omitempty"`
+	// ManualBackupImmutable: Optional. Indicates if the manual backups are
+	// immutable. At least one of daily_backup_immutable, weekly_backup_immutable,
+	// monthly_backup_immutable and manual_backup_immutable must be true.
+	ManualBackupImmutable bool `json:"manualBackupImmutable,omitempty"`
+	// MonthlyBackupImmutable: Optional. Indicates if the monthly backups are
+	// immutable. At least one of daily_backup_immutable, weekly_backup_immutable,
+	// monthly_backup_immutable and manual_backup_immutable must be true.
+	MonthlyBackupImmutable bool `json:"monthlyBackupImmutable,omitempty"`
+	// WeeklyBackupImmutable: Optional. Indicates if the weekly backups are
+	// immutable. At least one of daily_backup_immutable, weekly_backup_immutable,
+	// monthly_backup_immutable and manual_backup_immutable must be true.
+	WeeklyBackupImmutable bool `json:"weeklyBackupImmutable,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "BackupMinimumEnforcedRetentionDays") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "BackupMinimumEnforcedRetentionDays") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupRetentionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupRetentionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BackupVault: A NetApp BackupVault.
 type BackupVault struct {
 	// BackupRegion: Optional. Region where the backups are stored. Format:
 	// `projects/{project_id}/locations/{location}`
 	BackupRegion string `json:"backupRegion,omitempty"`
+	// BackupRetentionPolicy: Optional. Backup retention policy defining the
+	// retenton of backups.
+	BackupRetentionPolicy *BackupRetentionPolicy `json:"backupRetentionPolicy,omitempty"`
 	// BackupVaultType: Optional. Type of backup vault to be created. Default is
 	// IN_REGION.
 	//
@@ -836,25 +883,25 @@ func (s *HourlySchedule) UnmarshalJSON(data []byte) error {
 // HybridPeeringDetails: HybridPeeringDetails contains details about the hybrid
 // peering.
 type HybridPeeringDetails struct {
-	// Command: Optional. Copy-paste-able commands to be used on user's ONTAP to
+	// Command: Output only. Copy-paste-able commands to be used on user's ONTAP to
 	// accept peering requests.
 	Command string `json:"command,omitempty"`
-	// CommandExpiryTime: Optional. Expiration time for the peering command to be
-	// executed on user's ONTAP.
+	// CommandExpiryTime: Output only. Expiration time for the peering command to
+	// be executed on user's ONTAP.
 	CommandExpiryTime string `json:"commandExpiryTime,omitempty"`
-	// Passphrase: Optional. Temporary passphrase generated to accept cluster
+	// Passphrase: Output only. Temporary passphrase generated to accept cluster
 	// peering command.
 	Passphrase string `json:"passphrase,omitempty"`
-	// PeerClusterName: Optional. Name of the user's local source cluster to be
+	// PeerClusterName: Output only. Name of the user's local source cluster to be
 	// peered with the destination cluster.
 	PeerClusterName string `json:"peerClusterName,omitempty"`
-	// PeerSvmName: Optional. Name of the user's local source vserver svm to be
+	// PeerSvmName: Output only. Name of the user's local source vserver svm to be
 	// peered with the destination vserver svm.
 	PeerSvmName string `json:"peerSvmName,omitempty"`
-	// PeerVolumeName: Optional. Name of the user's local source volume to be
+	// PeerVolumeName: Output only. Name of the user's local source volume to be
 	// peered with the destination volume.
 	PeerVolumeName string `json:"peerVolumeName,omitempty"`
-	// SubnetIp: Optional. IP address of the subnet.
+	// SubnetIp: Output only. IP address of the subnet.
 	SubnetIp string `json:"subnetIp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Command") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1387,6 +1434,8 @@ func (s Location) MarshalJSON() ([]byte, error) {
 
 // LocationMetadata: Metadata for a given google.cloud.location.Location.
 type LocationMetadata struct {
+	// HasVcp: Output only. Indicates if the location has VCP support.
+	HasVcp bool `json:"hasVcp,omitempty"`
 	// SupportedFlexPerformance: Output only. Supported flex performance in a
 	// location.
 	//
@@ -1404,15 +1453,15 @@ type LocationMetadata struct {
 	//   "STANDARD" - Standard service level.
 	//   "FLEX" - Flex service level.
 	SupportedServiceLevels []string `json:"supportedServiceLevels,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SupportedFlexPerformance")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "HasVcp") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SupportedFlexPerformance") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "HasVcp") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2061,6 +2110,9 @@ type StoragePool struct {
 	CapacityGib int64 `json:"capacityGib,omitempty,string"`
 	// CreateTime: Output only. Create time of the storage pool
 	CreateTime string `json:"createTime,omitempty"`
+	// CustomPerformanceEnabled: Optional. True if using Independent Scaling of
+	// capacity and performance (Hyperdisk) By default set to false
+	CustomPerformanceEnabled bool `json:"customPerformanceEnabled,omitempty"`
 	// Description: Optional. Description of the storage pool
 	Description string `json:"description,omitempty"`
 	// EncryptionType: Output only. Specifies the current pool encryption key
@@ -2120,6 +2172,12 @@ type StoragePool struct {
 	State string `json:"state,omitempty"`
 	// StateDetails: Output only. State details of the storage pool
 	StateDetails string `json:"stateDetails,omitempty"`
+	// TotalIops: Optional. Custom Performance Total IOPS of the pool if not
+	// provided, it will be calculated based on the total_throughput_mibps
+	TotalIops int64 `json:"totalIops,omitempty,string"`
+	// TotalThroughputMibps: Optional. Custom Performance Total Throughput of the
+	// pool (in MiBps)
+	TotalThroughputMibps int64 `json:"totalThroughputMibps,omitempty,string"`
 	// VolumeCapacityGib: Output only. Allocated size of all volumes in GIB in the
 	// storage pool
 	VolumeCapacityGib int64 `json:"volumeCapacityGib,omitempty,string"`
@@ -2209,8 +2267,8 @@ type TransferStats struct {
 	// TotalTransferDuration: Cumulative time taken across all transfers for the
 	// replication relationship.
 	TotalTransferDuration string `json:"totalTransferDuration,omitempty"`
-	// TransferBytes: Cumulative bytes trasferred so far for the replication
-	// relatinonship.
+	// TransferBytes: Cumulative bytes transferred so far for the replication
+	// relationship.
 	TransferBytes int64 `json:"transferBytes,omitempty,string"`
 	// UpdateTime: Time when progress was updated last.
 	UpdateTime string `json:"updateTime,omitempty"`

@@ -1267,7 +1267,7 @@ func (s ConnectSettings) MarshalJSON() ([]byte, error) {
 type ConnectionPoolConfig struct {
 	// ConnectionPoolingEnabled: Whether managed connection pooling is enabled.
 	ConnectionPoolingEnabled bool `json:"connectionPoolingEnabled,omitempty"`
-	// Flags: Optional. List of connection pool configuration flags
+	// Flags: Optional. List of connection pool configuration flags.
 	Flags []*ConnectionPoolFlags `json:"flags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConnectionPoolingEnabled")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -1427,6 +1427,8 @@ type DatabaseInstance struct {
 	//   "SECOND_GEN" - V2 speckle instance.
 	//   "EXTERNAL" - On premises instance.
 	BackendType string `json:"backendType,omitempty"`
+	// ClearNetwork: Clears private network settings when the instance is restored.
+	ClearNetwork bool `json:"clearNetwork,omitempty"`
 	// ConnectionName: Connection name of the Cloud SQL instance used in connection
 	// strings.
 	ConnectionName string `json:"connectionName,omitempty"`
@@ -1585,6 +1587,9 @@ type DatabaseInstance struct {
 	// database wellness job for OOD. * Readers: * the proactive database wellness
 	// job
 	OutOfDiskReport *SqlOutOfDiskReport `json:"outOfDiskReport,omitempty"`
+	// PitrFields: Input only. PITR related fields added for Instance Independent
+	// PITR.
+	PitrFields *PITRFields `json:"pitrFields,omitempty"`
 	// PrimaryDnsName: Output only. DEPRECATED: please use write_endpoint instead.
 	PrimaryDnsName string `json:"primaryDnsName,omitempty"`
 	// Project: The project ID of the project containing the Cloud SQL instance.
@@ -2885,9 +2890,9 @@ type InsightsConfig struct {
 	// per minute for all queries combined. Default is 5.
 	QueryPlansPerMinute int64 `json:"queryPlansPerMinute,omitempty"`
 	// QueryStringLength: Maximum query length stored in bytes. Default value: 1024
-	// bytes. Range: 256-4500 bytes. Query length more than this field value will
-	// be truncated to this value. When unset, query length will be the default
-	// value. Changing query length will restart the database.
+	// bytes. Range: 256-4500 bytes. Query lengths greater than this field value
+	// will be truncated to this value. When unset, query length will be the
+	// default value. Changing query length will restart the database.
 	QueryStringLength int64 `json:"queryStringLength,omitempty"`
 	// RecordApplicationTags: Whether Query Insights will record application tags
 	// from query when enabled.
@@ -4034,6 +4039,37 @@ func (s OperationsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PITRFields: PITR related fields include enablement settings, archiving
+// settings, and the bucket name.
+type PITRFields struct {
+	// EnableBinLog: The enablement setting for PITR for MySQL.
+	EnableBinLog bool `json:"enableBinLog,omitempty"`
+	// ReplicationLogArchivingEnabled: The enablement setting for PITR for
+	// PostgreSQL.
+	ReplicationLogArchivingEnabled bool `json:"replicationLogArchivingEnabled,omitempty"`
+	// SqlserverPitrEnabled: The enablement setting for PITR for SQL Server.
+	SqlserverPitrEnabled bool `json:"sqlserverPitrEnabled,omitempty"`
+	// TransactionLogRetentionDays: The number of transaction log days to retain
+	// for PITR
+	TransactionLogRetentionDays int64 `json:"transactionLogRetentionDays,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableBinLog") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableBinLog") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PITRFields) MarshalJSON() ([]byte, error) {
+	type NoMethod PITRFields
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PasswordStatus: Read-only password status.
 type PasswordStatus struct {
 	// Locked: If true, user does not have login privileges.
@@ -4226,17 +4262,17 @@ func (s PoolNodeConfig) MarshalJSON() ([]byte, error) {
 // PscAutoConnectionConfig: Settings for an automatically-setup Private Service
 // Connect consumer endpoint that is used to connect to a Cloud SQL instance.
 type PscAutoConnectionConfig struct {
-	// ConsumerNetwork: The consumer network of this consumer endpoint. This must
-	// be a resource path that includes both the host project and the network name.
-	// For example, `projects/project1/global/networks/network1`. The consumer host
-	// project of this network might be different from the consumer service
-	// project.
+	// ConsumerNetwork: Optional. The consumer network of this consumer endpoint.
+	// This must be a resource path that includes both the host project and the
+	// network name. For example, `projects/project1/global/networks/network1`. The
+	// consumer host project of this network might be different from the consumer
+	// service project.
 	ConsumerNetwork string `json:"consumerNetwork,omitempty"`
 	// ConsumerNetworkStatus: The connection policy status of the consumer network.
 	ConsumerNetworkStatus string `json:"consumerNetworkStatus,omitempty"`
-	// ConsumerProject: This is the project ID of consumer service project of this
-	// consumer endpoint. Optional. This is only applicable if consumer_network is
-	// a shared vpc network.
+	// ConsumerProject: Optional. This is the project ID of consumer service
+	// project of this consumer endpoint. Optional. This is only applicable if
+	// consumer_network is a shared vpc network.
 	ConsumerProject string `json:"consumerProject,omitempty"`
 	// IpAddress: The IP address of the consumer endpoint.
 	IpAddress string `json:"ipAddress,omitempty"`
@@ -4268,6 +4304,11 @@ type PscConfig struct {
 	// project in this list may be represented by a project number (numeric) or by
 	// a project id (alphanumeric).
 	AllowedConsumerProjects []string `json:"allowedConsumerProjects,omitempty"`
+	// NetworkAttachmentUri: Optional. The network attachment of the consumer
+	// network that the Private Service Connect enabled Cloud SQL instance is
+	// authorized to connect via PSC interface. format:
+	// projects/PROJECT/regions/REGION/networkAttachments/ID
+	NetworkAttachmentUri string `json:"networkAttachmentUri,omitempty"`
 	// PscAutoConnections: Optional. The list of settings for requested Private
 	// Service Connect consumer endpoints that can be used to connect to this Cloud
 	// SQL instance.
@@ -4658,7 +4699,7 @@ type Settings struct {
 	//   "PER_USE" - The instance is billed per usage.
 	PricingPlan string `json:"pricingPlan,omitempty"`
 	// ReplicationLagMaxSeconds: Optional. Configuration value for recreation of
-	// replica after certain replication lag
+	// replica after certain replication lag.
 	ReplicationLagMaxSeconds int64 `json:"replicationLagMaxSeconds,omitempty"`
 	// ReplicationType: The type of replication this instance uses. This can be
 	// either `ASYNCHRONOUS` or `SYNCHRONOUS`. (Deprecated) This property was only
@@ -4869,6 +4910,8 @@ type SqlExternalSyncSettingError struct {
 	// this is an error and will block the migration.
 	//   "SELECTED_OBJECTS_NOT_EXIST_ON_SOURCE" - The selected objects don't exist
 	// on the source instance.
+	//   "PSC_ONLY_INSTANCE_WITH_NO_NETWORK_ATTACHMENT_URI" - PSC only destination
+	// instance does not have a network attachment URI.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Detail") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

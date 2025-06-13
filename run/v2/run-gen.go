@@ -3534,19 +3534,6 @@ type GoogleCloudRunV2WorkerPoolScaling struct {
 	// ManualInstanceCount: Optional. The total number of instances in manual
 	// scaling mode.
 	ManualInstanceCount int64 `json:"manualInstanceCount,omitempty"`
-	// MaxInstanceCount: Optional. The maximum count of instances distributed among
-	// revisions based on the specified instance split percentages.
-	MaxInstanceCount int64 `json:"maxInstanceCount,omitempty"`
-	// MinInstanceCount: Optional. The minimum count of instances distributed among
-	// revisions based on the specified instance split percentages.
-	MinInstanceCount int64 `json:"minInstanceCount,omitempty"`
-	// ScalingMode: Optional. The scaling mode for the worker pool.
-	//
-	// Possible values:
-	//   "SCALING_MODE_UNSPECIFIED" - Unspecified.
-	//   "AUTOMATIC" - Automatically scale between min and max instances.
-	//   "MANUAL" - Scale to exactly min instances and ignore the max instances.
-	ScalingMode string `json:"scalingMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ManualInstanceCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

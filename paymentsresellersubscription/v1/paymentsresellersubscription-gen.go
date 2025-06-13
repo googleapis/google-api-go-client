@@ -1599,10 +1599,14 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetail
 	// Possible values:
 	//   "BILLING_CYCLE_SPEC_UNSPECIFIED" - Billing cycle spec is not specified.
 	//   "BILLING_CYCLE_SPEC_ALIGN_WITH_PREVIOUS_SUBSCRIPTION" - The billing cycle
-	// of the new subscription aligns with the previous subscription it upgrades or
-	// downgrades from.
+	// of the new subscription starts immediately but aligns with the previous
+	// subscription it upgrades or downgrades from. First cycle of the new
+	// subscription will be prorated.
 	//   "BILLING_CYCLE_SPEC_START_IMMEDIATELY" - The billing cycle of the new
 	// subscription starts immediately.
+	//   "BILLING_CYCLE_SPEC_DEFERRED_TO_NEXT_RECURRENCE" - The billing cycle
+	// starts at the end of the previous subscription's billing cycle and aligns
+	// with the previous subscription's billing cycle.
 	BillingCycleSpec string `json:"billingCycleSpec,omitempty"`
 	// PreviousSubscriptionId: Required. The previous subscription id to be
 	// replaced. This is not the full resource name, use the subscription_id
@@ -3325,7 +3329,7 @@ type PartnersUserSessionsGenerateCall struct {
 // You can use the session token to redirect the user to Google to finish the
 // signup flow. You can re-generate new session token repeatedly for the same
 // request if necessary, regardless of the previous tokens being expired or
-// not.
+// not. By default, the session token is valid for 1 hour.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.

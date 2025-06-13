@@ -1063,6 +1063,8 @@ type DiscoveryOccurrence struct {
 	ContinuousAnalysis string `json:"continuousAnalysis,omitempty"`
 	// Cpe: The CPE of the resource being scanned.
 	Cpe string `json:"cpe,omitempty"`
+	// Files: Files that make up the resource described by the occurrence.
+	Files []*File `json:"files,omitempty"`
 	// LastScanTime: The last time this resource was scanned.
 	LastScanTime string `json:"lastScanTime,omitempty"`
 	// SbomStatus: The status of an SBOM generation.
@@ -1137,6 +1139,27 @@ type EnvelopeSignature struct {
 
 func (s EnvelopeSignature) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvelopeSignature
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type File struct {
+	Digest map[string]string `json:"digest,omitempty"`
+	Name   string            `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Digest") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Digest") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s File) MarshalJSON() ([]byte, error) {
+	type NoMethod File
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

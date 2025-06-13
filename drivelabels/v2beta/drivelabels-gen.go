@@ -1791,6 +1791,8 @@ type GoogleAppsDriveLabelsV2betaLabel struct {
 	Disabler *GoogleAppsDriveLabelsV2betaUserInfo `json:"disabler,omitempty"`
 	// DisplayHints: Output only. UI display hints for rendering the label.
 	DisplayHints *GoogleAppsDriveLabelsV2betaLabelDisplayHints `json:"displayHints,omitempty"`
+	// EnabledAppSettings: Optional. The EnabledAppSettings for this Label.
+	EnabledAppSettings *GoogleAppsDriveLabelsV2betaLabelEnabledAppSettings `json:"enabledAppSettings,omitempty"`
 	// Fields: List of fields in descending priority order.
 	Fields []*GoogleAppsDriveLabelsV2betaField `json:"fields,omitempty"`
 	// Id: Output only. Globally unique identifier of this label. ID makes up part
@@ -1948,6 +1950,57 @@ type GoogleAppsDriveLabelsV2betaLabelDisplayHints struct {
 
 func (s GoogleAppsDriveLabelsV2betaLabelDisplayHints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaLabelDisplayHints
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2betaLabelEnabledAppSettings: Describes the Workspace
+// apps in which the Label can be used.
+type GoogleAppsDriveLabelsV2betaLabelEnabledAppSettings struct {
+	// EnabledApps: Optional. The list of Apps where the Label can be used.
+	EnabledApps []*GoogleAppsDriveLabelsV2betaLabelEnabledAppSettingsEnabledApp `json:"enabledApps,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnabledApps") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnabledApps") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsDriveLabelsV2betaLabelEnabledAppSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2betaLabelEnabledAppSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2betaLabelEnabledAppSettingsEnabledApp: An App where
+// the Label can be used.
+type GoogleAppsDriveLabelsV2betaLabelEnabledAppSettingsEnabledApp struct {
+	// App: Optional. The name of the App.
+	//
+	// Possible values:
+	//   "APP_UNSPECIFIED" - Unspecified
+	//   "DRIVE" - Drive.
+	//   "GMAIL" - Gmail
+	App string `json:"app,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "App") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "App") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsDriveLabelsV2betaLabelEnabledAppSettingsEnabledApp) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2betaLabelEnabledAppSettingsEnabledApp
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2544,6 +2597,47 @@ type GoogleAppsDriveLabelsV2betaUpdateLabelCopyModeRequest struct {
 
 func (s GoogleAppsDriveLabelsV2betaUpdateLabelCopyModeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaUpdateLabelCopyModeRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2betaUpdateLabelEnabledAppSettingsRequest: Request to
+// update the `EnabledAppSettings` of the given Label. This change is not
+// revisioned, does not require publishing, and takes effect immediately. \
+type GoogleAppsDriveLabelsV2betaUpdateLabelEnabledAppSettingsRequest struct {
+	// EnabledAppSettings: Required. The new `EnabledAppSettings` value for the
+	// Label.
+	EnabledAppSettings *GoogleAppsDriveLabelsV2betaLabelEnabledAppSettings `json:"enabledAppSettings,omitempty"`
+	// LanguageCode: Optional. The BCP-47 language code to use for evaluating
+	// localized field labels. When not specified, values in the default configured
+	// language will be used.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// UseAdminAccess: Optional. Set to `true` in order to use the user's admin
+	// credentials. The server will verify the user is an admin for the Label
+	// before allowing access.
+	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
+	// View: Optional. When specified, only certain fields belonging to the
+	// indicated view will be returned.
+	//
+	// Possible values:
+	//   "LABEL_VIEW_BASIC" - Implies the field mask:
+	// `name,id,revision_id,label_type,properties.*`
+	//   "LABEL_VIEW_FULL" - All possible fields.
+	View string `json:"view,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnabledAppSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnabledAppSettings") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsDriveLabelsV2betaUpdateLabelEnabledAppSettingsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2betaUpdateLabelEnabledAppSettingsRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3969,6 +4063,114 @@ func (c *LabelsUpdateLabelCopyModeCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "drivelabels.labels.updateLabelCopyMode", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type LabelsUpdateLabelEnabledAppSettingsCall struct {
+	s                                                               *Service
+	name                                                            string
+	googleappsdrivelabelsv2betaupdatelabelenabledappsettingsrequest *GoogleAppsDriveLabelsV2betaUpdateLabelEnabledAppSettingsRequest
+	urlParams_                                                      gensupport.URLParams
+	ctx_                                                            context.Context
+	header_                                                         http.Header
+}
+
+// UpdateLabelEnabledAppSettings: Updates a Label's EabledAppSettings. Enabling
+// a Label in a Workspace Application allows it to be used in that application.
+// This change is not revisioned, does not require publishing, and takes effect
+// immediately.
+//
+//   - name: The resource name of the Label to update. The resource name of the
+//     Label to update.
+func (r *LabelsService) UpdateLabelEnabledAppSettings(name string, googleappsdrivelabelsv2betaupdatelabelenabledappsettingsrequest *GoogleAppsDriveLabelsV2betaUpdateLabelEnabledAppSettingsRequest) *LabelsUpdateLabelEnabledAppSettingsCall {
+	c := &LabelsUpdateLabelEnabledAppSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleappsdrivelabelsv2betaupdatelabelenabledappsettingsrequest = googleappsdrivelabelsv2betaupdatelabelenabledappsettingsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *LabelsUpdateLabelEnabledAppSettingsCall) Fields(s ...googleapi.Field) *LabelsUpdateLabelEnabledAppSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *LabelsUpdateLabelEnabledAppSettingsCall) Context(ctx context.Context) *LabelsUpdateLabelEnabledAppSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *LabelsUpdateLabelEnabledAppSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsUpdateLabelEnabledAppSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleappsdrivelabelsv2betaupdatelabelenabledappsettingsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}:updateLabelEnabledAppSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "drivelabels.labels.updateLabelEnabledAppSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.updateLabelEnabledAppSettings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAppsDriveLabelsV2betaLabel.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *LabelsUpdateLabelEnabledAppSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2betaLabel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2betaLabel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "drivelabels.labels.updateLabelEnabledAppSettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

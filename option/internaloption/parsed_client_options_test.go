@@ -11,13 +11,6 @@ import (
 	"google.golang.org/api/option"
 )
 
-type testReceiver struct {
-	APIKey    string
-	Endpoint  string
-	Scopes    []string
-	UserAgent string
-}
-
 func TestParseClientOptions(t *testing.T) {
 	testEndpoint := "test.example.com"
 	testAPIKey := "testAPIKey"
@@ -28,23 +21,21 @@ func TestParseClientOptions(t *testing.T) {
 		option.WithAPIKey(testAPIKey),
 		option.WithScopes(testScopes...),
 	}
-
-	receiver := &testReceiver{}
-	err := ParseClientOptions(receiver, opts)
+	po, err := ParseClientOptions(opts)
 	if err != nil {
-		t.Fatalf("ParseClientOptions(receiver, %v) err = %v, want nil", opts, err)
+		t.Fatalf("ParseClientOptions(%v) err = %v, want nil", opts, err)
 	}
 
-	if receiver.Endpoint != testEndpoint {
-		t.Errorf("receiver.Endpoint = %q, want %q", receiver.Endpoint, testEndpoint)
+	if po.Endpoint != testEndpoint {
+		t.Errorf("po.Endpoint = %q, want %q", po.Endpoint, testEndpoint)
 	}
-	if receiver.APIKey != testAPIKey {
-		t.Errorf("receiver.APIKey = %q, want %q", receiver.APIKey, testAPIKey)
+	if po.APIKey != testAPIKey {
+		t.Errorf("po.APIKey = %q, want %q", po.APIKey, testAPIKey)
 	}
-	if !cmp.Equal(receiver.Scopes, testScopes) {
-		t.Errorf("receiver.Scopes diff (-got +want):\n%s", cmp.Diff(receiver.Scopes, testScopes))
+	if !cmp.Equal(po.Scopes, testScopes) {
+		t.Errorf("po.Scopes diff (-got +want):\n%s", cmp.Diff(po.Scopes, testScopes))
 	}
-	if receiver.UserAgent != "" {
-		t.Errorf("receiver.UserAgent != nil, got %q", receiver.UserAgent)
+	if po.UserAgent != "" {
+		t.Errorf("po.UserAgent != nil, got %q", po.UserAgent)
 	}
 }

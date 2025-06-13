@@ -199,9 +199,10 @@ type AndroidConfig struct {
 	// Data: Arbitrary key/value payload. If present, it will override
 	// google.firebase.fcm.v1.Message.data.
 	Data map[string]string `json:"data,omitempty"`
-	// DirectBootOk: If set to true, messages will be allowed to be delivered to
-	// the app while the device is in direct boot mode. See Support Direct Boot
-	// mode (https://developer.android.com/training/articles/direct-boot).
+	// DirectBootOk: Optional. If set to true, messages will be allowed to be
+	// delivered to the app while the device is in direct boot mode. See Support
+	// Direct Boot mode
+	// (https://developer.android.com/training/articles/direct-boot).
 	DirectBootOk bool `json:"directBootOk,omitempty"`
 	// FcmOptions: Options for features provided by the FCM SDK for Android.
 	FcmOptions *AndroidFcmOptions `json:"fcmOptions,omitempty"`
@@ -229,6 +230,14 @@ type AndroidConfig struct {
 	// RestrictedPackageName: Package name of the application where the
 	// registration token must match in order to receive the message.
 	RestrictedPackageName string `json:"restrictedPackageName,omitempty"`
+	// RestrictedSatelliteOk: Optional. If set to true, messages will be allowed to
+	// be delivered to the app while the device is connected over a restricted
+	// satellite network. This should only be enabled for messages that can be
+	// handled over a restricted satellite network and only for apps that are
+	// allowed to work over a restricted satellite network. Note that the ability
+	// of the app to connect to a restricted satellite network is dependent on the
+	// carrier's settings and the device model.
+	RestrictedSatelliteOk bool `json:"restrictedSatelliteOk,omitempty"`
 	// Ttl: How long (in seconds) the message should be kept in FCM storage if the
 	// device is offline. The maximum time to live supported is 4 weeks, and the
 	// default value is 4 weeks if not set. Set it to 0 if want to send the message

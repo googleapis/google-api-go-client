@@ -255,6 +255,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.AddressGroups = NewProjectsLocationsAddressGroupsService(s)
 	rs.AuthorizationPolicies = NewProjectsLocationsAuthorizationPoliciesService(s)
 	rs.AuthzPolicies = NewProjectsLocationsAuthzPoliciesService(s)
+	rs.BackendAuthenticationConfigs = NewProjectsLocationsBackendAuthenticationConfigsService(s)
 	rs.ClientTlsPolicies = NewProjectsLocationsClientTlsPoliciesService(s)
 	rs.FirewallEndpointAssociations = NewProjectsLocationsFirewallEndpointAssociationsService(s)
 	rs.GatewaySecurityPolicies = NewProjectsLocationsGatewaySecurityPoliciesService(s)
@@ -281,6 +282,8 @@ type ProjectsLocationsService struct {
 	AuthorizationPolicies *ProjectsLocationsAuthorizationPoliciesService
 
 	AuthzPolicies *ProjectsLocationsAuthzPoliciesService
+
+	BackendAuthenticationConfigs *ProjectsLocationsBackendAuthenticationConfigsService
 
 	ClientTlsPolicies *ProjectsLocationsClientTlsPoliciesService
 
@@ -337,6 +340,15 @@ func NewProjectsLocationsAuthzPoliciesService(s *Service) *ProjectsLocationsAuth
 }
 
 type ProjectsLocationsAuthzPoliciesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsBackendAuthenticationConfigsService(s *Service) *ProjectsLocationsBackendAuthenticationConfigsService {
+	rs := &ProjectsLocationsBackendAuthenticationConfigsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsBackendAuthenticationConfigsService struct {
 	s *Service
 }
 
@@ -1179,6 +1191,83 @@ type AuthzPolicyTarget struct {
 
 func (s AuthzPolicyTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthzPolicyTarget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackendAuthenticationConfig: BackendAuthenticationConfig message groups the
+// TrustConfig together with other settings that control how the load balancer
+// authenticates, and expresses its identity to, the backend: * `trustConfig`
+// is the attached TrustConfig. * `wellKnownRoots` indicates whether the load
+// balance should trust backend server certificates that are issued by public
+// certificate authorities, in addition to certificates trusted by the
+// TrustConfig. * `clientCertificate` is a client certificate that the load
+// balancer uses to express its identity to the backend, if the connection to
+// the backend uses mTLS. You can attach the BackendAuthenticationConfig to the
+// load balancer’s BackendService directly determining how that
+// BackendService negotiates TLS.
+type BackendAuthenticationConfig struct {
+	// ClientCertificate: Optional. A reference to a
+	// certificatemanager.googleapis.com.Certificate resource. This is a relative
+	// resource path following the form
+	// "projects/{project}/locations/{location}/certificates/{certificate}". Used
+	// by a BackendService to negotiate mTLS when the backend connection uses TLS
+	// and the backend requests a client certificate. Must have a CLIENT_AUTH
+	// scope.
+	ClientCertificate string `json:"clientCertificate,omitempty"`
+	// CreateTime: Output only. The timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. Free-text description of the resource.
+	Description string `json:"description,omitempty"`
+	// Etag: Output only. Etag of the resource.
+	Etag string `json:"etag,omitempty"`
+	// Labels: Set of label tags associated with the resource.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Required. Name of the BackendAuthenticationConfig resource. It matches
+	// the pattern
+	// `projects/*/locations/{location}/backendAuthenticationConfigs/{backend_authen
+	// tication_config}`
+	Name string `json:"name,omitempty"`
+	// TrustConfig: Optional. A reference to a TrustConfig resource from the
+	// certificatemanager.googleapis.com namespace. This is a relative resource
+	// path following the form
+	// "projects/{project}/locations/{location}/trustConfigs/{trust_config}". A
+	// BackendService uses the chain of trust represented by this TrustConfig, if
+	// specified, to validate the server certificates presented by the backend.
+	// Required unless wellKnownRoots is set to PUBLIC_ROOTS.
+	TrustConfig string `json:"trustConfig,omitempty"`
+	// UpdateTime: Output only. The timestamp when the resource was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// WellKnownRoots: Well known roots to use for server certificate validation.
+	//
+	// Possible values:
+	//   "WELL_KNOWN_ROOTS_UNSPECIFIED" - Equivalent to NONE.
+	//   "NONE" - The BackendService will only validate server certificates against
+	// roots specified in TrustConfig.
+	//   "PUBLIC_ROOTS" - The BackendService uses a set of well-known public roots,
+	// in addition to any roots specified in the trustConfig field, when validating
+	// the server certificates presented by the backend. Validation with these
+	// roots is only considered when the TlsSettings.sni field in the
+	// BackendService is set. The well-known roots are a set of root CAs managed by
+	// Google. CAs in this set can be added or removed without notice.
+	WellKnownRoots string `json:"wellKnownRoots,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ClientCertificate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientCertificate") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackendAuthenticationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BackendAuthenticationConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2789,6 +2878,39 @@ type ListAuthzPoliciesResponse struct {
 
 func (s ListAuthzPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAuthzPoliciesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListBackendAuthenticationConfigsResponse: Response returned by the
+// ListBackendAuthenticationConfigs method.
+type ListBackendAuthenticationConfigsResponse struct {
+	// BackendAuthenticationConfigs: List of BackendAuthenticationConfig resources.
+	BackendAuthenticationConfigs []*BackendAuthenticationConfig `json:"backendAuthenticationConfigs,omitempty"`
+	// NextPageToken: If there might be more results than those appearing in this
+	// response, then `next_page_token` is included. To get the next set of
+	// results, call this method again using the value of `next_page_token` as
+	// `page_token`.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "BackendAuthenticationConfigs") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackendAuthenticationConfigs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListBackendAuthenticationConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBackendAuthenticationConfigsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11776,6 +11898,606 @@ func (c *ProjectsLocationsAuthzPoliciesTestIamPermissionsCall) Do(opts ...google
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.authzPolicies.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBackendAuthenticationConfigsCreateCall struct {
+	s                           *Service
+	parent                      string
+	backendauthenticationconfig *BackendAuthenticationConfig
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Create: Creates a new BackendAuthenticationConfig in a given project and
+// location.
+//
+//   - parent: The parent resource of the BackendAuthenticationConfig. Must be in
+//     the format `projects/*/locations/{location}`.
+func (r *ProjectsLocationsBackendAuthenticationConfigsService) Create(parent string, backendauthenticationconfig *BackendAuthenticationConfig) *ProjectsLocationsBackendAuthenticationConfigsCreateCall {
+	c := &ProjectsLocationsBackendAuthenticationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.backendauthenticationconfig = backendauthenticationconfig
+	return c
+}
+
+// BackendAuthenticationConfigId sets the optional parameter
+// "backendAuthenticationConfigId": Required. Short name of the
+// BackendAuthenticationConfig resource to be created. This value should be
+// 1-63 characters long, containing only letters, numbers, hyphens, and
+// underscores, and should not start with a number. E.g. "backend-auth-config".
+func (c *ProjectsLocationsBackendAuthenticationConfigsCreateCall) BackendAuthenticationConfigId(backendAuthenticationConfigId string) *ProjectsLocationsBackendAuthenticationConfigsCreateCall {
+	c.urlParams_.Set("backendAuthenticationConfigId", backendAuthenticationConfigId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackendAuthenticationConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackendAuthenticationConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackendAuthenticationConfigsCreateCall) Context(ctx context.Context) *ProjectsLocationsBackendAuthenticationConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackendAuthenticationConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackendAuthenticationConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.backendauthenticationconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backendAuthenticationConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.backendAuthenticationConfigs.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackendAuthenticationConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBackendAuthenticationConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single BackendAuthenticationConfig to
+// BackendAuthenticationConfig.
+//
+//   - name: A name of the BackendAuthenticationConfig to delete. Must be in the
+//     format `projects/*/locations/{location}/backendAuthenticationConfigs/*`.
+func (r *ProjectsLocationsBackendAuthenticationConfigsService) Delete(name string) *ProjectsLocationsBackendAuthenticationConfigsDeleteCall {
+	c := &ProjectsLocationsBackendAuthenticationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": Etag of the resource. If this is
+// provided, it must match the server's etag.
+func (c *ProjectsLocationsBackendAuthenticationConfigsDeleteCall) Etag(etag string) *ProjectsLocationsBackendAuthenticationConfigsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackendAuthenticationConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackendAuthenticationConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackendAuthenticationConfigsDeleteCall) Context(ctx context.Context) *ProjectsLocationsBackendAuthenticationConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackendAuthenticationConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackendAuthenticationConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.backendAuthenticationConfigs.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackendAuthenticationConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBackendAuthenticationConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single BackendAuthenticationConfig to
+// BackendAuthenticationConfig.
+//
+//   - name: A name of the BackendAuthenticationConfig to get. Must be in the
+//     format `projects/*/locations/{location}/backendAuthenticationConfigs/*`.
+func (r *ProjectsLocationsBackendAuthenticationConfigsService) Get(name string) *ProjectsLocationsBackendAuthenticationConfigsGetCall {
+	c := &ProjectsLocationsBackendAuthenticationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackendAuthenticationConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackendAuthenticationConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBackendAuthenticationConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackendAuthenticationConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackendAuthenticationConfigsGetCall) Context(ctx context.Context) *ProjectsLocationsBackendAuthenticationConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackendAuthenticationConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackendAuthenticationConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.backendAuthenticationConfigs.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BackendAuthenticationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackendAuthenticationConfigsGetCall) Do(opts ...googleapi.CallOption) (*BackendAuthenticationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BackendAuthenticationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBackendAuthenticationConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists BackendAuthenticationConfigs in a given project and location.
+//
+//   - parent: The project and location from which the
+//     BackendAuthenticationConfigs should be listed, specified in the format
+//     `projects/*/locations/{location}`.
+func (r *ProjectsLocationsBackendAuthenticationConfigsService) List(parent string) *ProjectsLocationsBackendAuthenticationConfigsListCall {
+	c := &ProjectsLocationsBackendAuthenticationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// BackendAuthenticationConfigs to return per call.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) PageSize(pageSize int64) *ProjectsLocationsBackendAuthenticationConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListBackendAuthenticationConfigsResponse` Indicates that this is a
+// continuation of a prior `ListBackendAuthenticationConfigs` call, and that
+// the system should return the next page of data.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) PageToken(pageToken string) *ProjectsLocationsBackendAuthenticationConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackendAuthenticationConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackendAuthenticationConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) Context(ctx context.Context) *ProjectsLocationsBackendAuthenticationConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backendAuthenticationConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.backendAuthenticationConfigs.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBackendAuthenticationConfigsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) Do(opts ...googleapi.CallOption) (*ListBackendAuthenticationConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBackendAuthenticationConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsBackendAuthenticationConfigsListCall) Pages(ctx context.Context, f func(*ListBackendAuthenticationConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsBackendAuthenticationConfigsPatchCall struct {
+	s                           *Service
+	name                        string
+	backendauthenticationconfig *BackendAuthenticationConfig
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Patch: Updates the parameters of a single BackendAuthenticationConfig to
+// BackendAuthenticationConfig.
+//
+//   - name: Name of the BackendAuthenticationConfig resource. It matches the
+//     pattern
+//     `projects/*/locations/{location}/backendAuthenticationConfigs/{backend_auth
+//     entication_config}`.
+func (r *ProjectsLocationsBackendAuthenticationConfigsService) Patch(name string, backendauthenticationconfig *BackendAuthenticationConfig) *ProjectsLocationsBackendAuthenticationConfigsPatchCall {
+	c := &ProjectsLocationsBackendAuthenticationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.backendauthenticationconfig = backendauthenticationconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the BackendAuthenticationConfig
+// resource by the update. The fields specified in the update_mask are relative
+// to the resource, not the full request. A field will be overwritten if it is
+// in the mask. If the user does not provide a mask then all fields will be
+// overwritten.
+func (c *ProjectsLocationsBackendAuthenticationConfigsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsBackendAuthenticationConfigsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackendAuthenticationConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackendAuthenticationConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackendAuthenticationConfigsPatchCall) Context(ctx context.Context) *ProjectsLocationsBackendAuthenticationConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackendAuthenticationConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackendAuthenticationConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.backendauthenticationconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.backendAuthenticationConfigs.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackendAuthenticationConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.backendAuthenticationConfigs.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

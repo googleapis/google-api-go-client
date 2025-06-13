@@ -515,6 +515,14 @@ type Backup struct {
 	// version is 41.
 	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
 	// version is 42.
+	//   "MYSQL_8_0_43" - The database major version is MySQL 8.0 and the minor
+	// version is 43.
+	//   "MYSQL_8_0_44" - The database major version is MySQL 8.0 and the minor
+	// version is 44.
+	//   "MYSQL_8_0_45" - The database major version is MySQL 8.0 and the minor
+	// version is 45.
+	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
+	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
@@ -849,6 +857,14 @@ type BackupRun struct {
 	// version is 41.
 	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
 	// version is 42.
+	//   "MYSQL_8_0_43" - The database major version is MySQL 8.0 and the minor
+	// version is 43.
+	//   "MYSQL_8_0_44" - The database major version is MySQL 8.0 and the minor
+	// version is 44.
+	//   "MYSQL_8_0_45" - The database major version is MySQL 8.0 and the minor
+	// version is 45.
+	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
+	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
@@ -1180,6 +1196,14 @@ type ConnectSettings struct {
 	// version is 41.
 	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
 	// version is 42.
+	//   "MYSQL_8_0_43" - The database major version is MySQL 8.0 and the minor
+	// version is 43.
+	//   "MYSQL_8_0_44" - The database major version is MySQL 8.0 and the minor
+	// version is 44.
+	//   "MYSQL_8_0_45" - The database major version is MySQL 8.0 and the minor
+	// version is 45.
+	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
+	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
@@ -1490,6 +1514,14 @@ type DatabaseInstance struct {
 	// version is 41.
 	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
 	// version is 42.
+	//   "MYSQL_8_0_43" - The database major version is MySQL 8.0 and the minor
+	// version is 43.
+	//   "MYSQL_8_0_44" - The database major version is MySQL 8.0 and the minor
+	// version is 44.
+	//   "MYSQL_8_0_45" - The database major version is MySQL 8.0 and the minor
+	// version is 45.
+	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
+	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
@@ -2407,6 +2439,14 @@ type Flag struct {
 	// version is 41.
 	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
 	// version is 42.
+	//   "MYSQL_8_0_43" - The database major version is MySQL 8.0 and the minor
+	// version is 43.
+	//   "MYSQL_8_0_44" - The database major version is MySQL 8.0 and the minor
+	// version is 44.
+	//   "MYSQL_8_0_45" - The database major version is MySQL 8.0 and the minor
+	// version is 45.
+	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
+	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
@@ -3866,8 +3906,6 @@ type Operation struct {
 	//   "REPAIR_READ_POOL" - Repairs entire read pool or specified read pool nodes
 	// in the read pool.
 	//   "CREATE_READ_POOL" - Creates a Cloud SQL read pool instance.
-	//   "PRE_CHECK_MAJOR_VERSION_UPGRADE" - Pre-checks the major version upgrade
-	// operation.
 	OperationType string `json:"operationType,omitempty"`
 	// SelfLink: The URI of this resource.
 	SelfLink string `json:"selfLink,omitempty"`

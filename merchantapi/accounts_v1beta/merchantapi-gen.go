@@ -6300,7 +6300,9 @@ type AccountsGbpAccountsLinkGbpAccountCall struct {
 }
 
 // LinkGbpAccount: Link the specified merchant to a GBP account for all
-// countries.
+// countries. To run this method, you must have admin access to the Merchant
+// Center account. If you don't have admin access, the request fails with the
+// error message `User is not an administrator of account {ACCOUNT_ID}`.
 //
 //   - parent: The name of the parent resource to which the GBP account is
 //     linked. Format: `accounts/{account}`.

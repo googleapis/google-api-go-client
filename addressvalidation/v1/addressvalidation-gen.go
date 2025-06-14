@@ -1105,10 +1105,10 @@ func (s *GoogleTypeLatLng) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleTypePostalAddress: Represents a postal address (for example, for
-// postal delivery or payments addresses). Given a postal address, a postal
-// service can deliver items to a premise, P.O. box or similar. It is not
-// intended to model geographical locations (roads, towns, mountains). In
+// GoogleTypePostalAddress: Represents a postal address, such as for postal
+// delivery or payments addresses. With a postal address, a postal service can
+// deliver items to a premise, P.O. box, or similar. A postal address is not
+// intended to model geographical locations like roads, towns, or mountains. In
 // typical usage, an address would be created by user input or from importing
 // existing data, depending on the type of process. Advice on address input or
 // editing: - Use an internationalization-ready address widget such as

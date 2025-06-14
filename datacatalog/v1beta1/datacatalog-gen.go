@@ -1031,8 +1031,8 @@ type GoogleCloudDatacatalogV1DatabaseTableSpec struct {
 	// DatabaseViewSpec: Spec what applies to tables that are actually views. Not
 	// set for "real" tables.
 	DatabaseViewSpec *GoogleCloudDatacatalogV1DatabaseTableSpecDatabaseViewSpec `json:"databaseViewSpec,omitempty"`
-	// DataplexTable: Output only. Fields specific to a Dataplex table and present
-	// only in the Dataplex table entries.
+	// DataplexTable: Output only. Fields specific to a Dataplex Universal Catalog
+	// table and present only in the Dataplex Universal Catalog table entries.
 	DataplexTable *GoogleCloudDatacatalogV1DataplexTableSpec `json:"dataplexTable,omitempty"`
 	// Type: Type of this table.
 	//
@@ -1092,11 +1092,12 @@ func (s GoogleCloudDatacatalogV1DatabaseTableSpecDatabaseViewSpec) MarshalJSON()
 }
 
 // GoogleCloudDatacatalogV1DataplexExternalTable: External table registered by
-// Dataplex. Dataplex publishes data discovered from an asset into multiple
-// other systems (BigQuery, DPMS) in form of tables. We call them "external
-// tables". External tables are also synced into the Data Catalog. This message
-// contains pointers to those external tables (fully qualified name, resource
-// name et cetera) within the Data Catalog.
+// Dataplex Universal Catalog. Dataplex Universal Catalog publishes data
+// discovered from an asset into multiple other systems (BigQuery, DPMS) in
+// form of tables. We call them "external tables". External tables are also
+// synced into the Data Catalog. This message contains pointers to those
+// external tables (fully qualified name, resource name et cetera) within the
+// Data Catalog.
 type GoogleCloudDatacatalogV1DataplexExternalTable struct {
 	// DataCatalogEntry: Name of the Data Catalog entry representing the external
 	// table.
@@ -1112,7 +1113,7 @@ type GoogleCloudDatacatalogV1DataplexExternalTable struct {
 	//   "BIGQUERY" - BigQuery.
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
-	//   "DATAPLEX" - Dataplex.
+	//   "DATAPLEX" - Dataplex Universal Catalog.
 	//   "CLOUD_SPANNER" - Cloud Spanner
 	//   "CLOUD_BIGTABLE" - Cloud Bigtable
 	//   "CLOUD_SQL" - Cloud Sql
@@ -1137,10 +1138,10 @@ func (s GoogleCloudDatacatalogV1DataplexExternalTable) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogV1DataplexFilesetSpec: Entry specyfication for a
-// Dataplex fileset.
+// GoogleCloudDatacatalogV1DataplexFilesetSpec: Entry specification for a
+// Dataplex Universal Catalog fileset.
 type GoogleCloudDatacatalogV1DataplexFilesetSpec struct {
-	// DataplexSpec: Common Dataplex fields.
+	// DataplexSpec: Common Dataplex Universal Catalog fields.
 	DataplexSpec *GoogleCloudDatacatalogV1DataplexSpec `json:"dataplexSpec,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataplexSpec") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1160,19 +1161,20 @@ func (s GoogleCloudDatacatalogV1DataplexFilesetSpec) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogV1DataplexSpec: Common Dataplex fields.
+// GoogleCloudDatacatalogV1DataplexSpec: Common Dataplex Universal Catalog
+// fields.
 type GoogleCloudDatacatalogV1DataplexSpec struct {
-	// Asset: Fully qualified resource name of an asset in Dataplex, to which the
-	// underlying data source (Cloud Storage bucket or BigQuery dataset) of the
-	// entity is attached.
+	// Asset: Fully qualified resource name of an asset in Dataplex Universal
+	// Catalog, to which the underlying data source (Cloud Storage bucket or
+	// BigQuery dataset) of the entity is attached.
 	Asset string `json:"asset,omitempty"`
 	// CompressionFormat: Compression format of the data, e.g., zip, gzip etc.
 	CompressionFormat string `json:"compressionFormat,omitempty"`
 	// DataFormat: Format of the data.
 	DataFormat *GoogleCloudDatacatalogV1PhysicalSchema `json:"dataFormat,omitempty"`
 	// ProjectId: Project ID of the underlying Cloud Storage or BigQuery data. Note
-	// that this may not be the same project as the correspondingly Dataplex lake /
-	// zone / asset.
+	// that this may not be the same project as the corresponding Dataplex
+	// Universal Catalog lake / zone / asset.
 	ProjectId string `json:"projectId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Asset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1193,13 +1195,13 @@ func (s GoogleCloudDatacatalogV1DataplexSpec) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDatacatalogV1DataplexTableSpec: Entry specification for a
-// Dataplex table.
+// Dataplex Universal Catalog table.
 type GoogleCloudDatacatalogV1DataplexTableSpec struct {
-	// DataplexSpec: Common Dataplex fields.
+	// DataplexSpec: Common Dataplex Universal Catalog fields.
 	DataplexSpec *GoogleCloudDatacatalogV1DataplexSpec `json:"dataplexSpec,omitempty"`
-	// ExternalTables: List of external tables registered by Dataplex in other
-	// systems based on the same underlying data. External tables allow to query
-	// this data in those systems.
+	// ExternalTables: List of external tables registered by Dataplex Universal
+	// Catalog in other systems based on the same underlying data. External tables
+	// allow to query this data in those systems.
 	ExternalTables []*GoogleCloudDatacatalogV1DataplexExternalTable `json:"externalTables,omitempty"`
 	// UserManaged: Indicates if the table schema is managed by the user or not.
 	UserManaged bool `json:"userManaged,omitempty"`
@@ -1330,7 +1332,7 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//   "BIGQUERY" - BigQuery.
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
-	//   "DATAPLEX" - Dataplex.
+	//   "DATAPLEX" - Dataplex Universal Catalog.
 	//   "CLOUD_SPANNER" - Cloud Spanner
 	//   "CLOUD_BIGTABLE" - Cloud Bigtable
 	//   "CLOUD_SQL" - Cloud Sql
@@ -1400,8 +1402,8 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//   "DATA_SOURCE_CONNECTION" - Connection to a data source. For example, a
 	// BigQuery connection.
 	//   "ROUTINE" - Routine, for example, a BigQuery routine.
-	//   "LAKE" - A Dataplex lake.
-	//   "ZONE" - A Dataplex zone.
+	//   "LAKE" - A Dataplex Universal Catalog lake.
+	//   "ZONE" - A Dataplex Universal Catalog zone.
 	//   "SERVICE" - A service, for example, a Dataproc Metastore service.
 	//   "DATABASE_SCHEMA" - Schema within a relational database.
 	//   "DASHBOARD" - A Dashboard, for example from Looker.
@@ -1508,8 +1510,8 @@ func (s GoogleCloudDatacatalogV1FeatureOnlineStoreSpec) MarshalJSON() ([]byte, e
 // GoogleCloudDatacatalogV1FilesetSpec: Specification that applies to a
 // fileset. Valid only for entries with the 'FILESET' type.
 type GoogleCloudDatacatalogV1FilesetSpec struct {
-	// DataplexFileset: Fields specific to a Dataplex fileset and present only in
-	// the Dataplex fileset entries.
+	// DataplexFileset: Fields specific to a Dataplex Universal Catalog fileset and
+	// present only in the Dataplex Universal Catalog fileset entries.
 	DataplexFileset *GoogleCloudDatacatalogV1DataplexFilesetSpec `json:"dataplexFileset,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataplexFileset") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2188,14 +2190,15 @@ type GoogleCloudDatacatalogV1Tag struct {
 	//
 	// Possible values:
 	//   "DATAPLEX_TRANSFER_STATUS_UNSPECIFIED" - Default value. TagTemplate and
-	// its tags are only visible and editable in DataCatalog.
-	//   "MIGRATED" - TagTemplate and its tags are auto-copied to Dataplex service.
-	// Visible in both services. Editable in DataCatalog, read-only in Dataplex.
-	// Deprecated: Individual TagTemplate migration is deprecated in favor of
-	// organization or project wide TagTemplate migration opt-in.
+	// its tags are only visible and editable in Data Catalog.
+	//   "MIGRATED" - TagTemplate and its tags are auto-copied to Dataplex
+	// Universal Catalog service. Visible in both services. Editable in Data
+	// Catalog, read-only in Dataplex Universal Catalog. Deprecated: Individual
+	// TagTemplate migration is deprecated in favor of organization or project wide
+	// TagTemplate migration opt-in.
 	//   "TRANSFERRED" - TagTemplate and its tags are auto-copied to Dataplex
-	// service. Visible in both services. Editable in Dataplex, read-only in
-	// DataCatalog.
+	// Universal Catalog service. Visible in both services. Editable in Dataplex
+	// Universal Catalog, read-only in Data Catalog.
 	DataplexTransferStatus string `json:"dataplexTransferStatus,omitempty"`
 	// Fields: Required. Maps the ID of a tag field to its value and additional
 	// information about that field. Tag template defines valid field IDs. A tag
@@ -3772,10 +3775,11 @@ type GoogleCloudDatacatalogV1beta1TagTemplate struct {
 	// Possible values:
 	//   "DATAPLEX_TRANSFER_STATUS_UNSPECIFIED" - Default value. TagTemplate and
 	// its tags are only visible and editable in DataCatalog.
-	//   "MIGRATED" - TagTemplate and its tags are auto-copied to Dataplex service.
-	// Visible in both services. Editable in DataCatalog, read-only in Dataplex.
-	// Deprecated: Individual TagTemplate migration is deprecated in favor of
-	// organization or project wide TagTemplate migration opt-in.
+	//   "MIGRATED" - TagTemplate and its tags are auto-copied to Dataplex
+	// Universal Catalog service. Visible in both services. Editable in Data
+	// Catalog, read-only in Dataplex Universal Catalog. Deprecated: Individual
+	// TagTemplate migration is deprecated in favor of organization or project wide
+	// TagTemplate migration opt-in.
 	DataplexTransferStatus string `json:"dataplexTransferStatus,omitempty"`
 	// DisplayName: The display name for this template. Defaults to an empty
 	// string.
@@ -3925,7 +3929,7 @@ type GoogleCloudDatacatalogV1beta1TaxonomyService struct {
 	//
 	// Possible values:
 	//   "MANAGING_SYSTEM_UNSPECIFIED" - Default value
-	//   "MANAGING_SYSTEM_DATAPLEX" - Dataplex.
+	//   "MANAGING_SYSTEM_DATAPLEX" - Dataplex Universal Catalog.
 	//   "MANAGING_SYSTEM_OTHER" - Other
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Identity") to

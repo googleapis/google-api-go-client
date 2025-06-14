@@ -602,7 +602,7 @@
         "gbpAccounts": {
           "methods": {
             "linkGbpAccount": {
-              "description": "Link the specified merchant to a GBP account for all countries.",
+              "description": "Link the specified merchant to a GBP account for all countries. To run this method, you must have admin access to the Merchant Center account. If you don't have admin access, the request fails with the error message `User is not an administrator of account {ACCOUNT_ID}`.",
               "flatPath": "accounts/v1beta/accounts/{accountsId}/gbpAccounts:linkGbpAccount",
               "httpMethod": "POST",
               "id": "merchantapi.accounts.gbpAccounts.linkGbpAccount",
@@ -2108,7 +2108,7 @@
       }
     }
   },
-  "revision": "20250606",
+  "revision": "20250611",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "About": {

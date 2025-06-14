@@ -6970,6 +6970,12 @@ type GoogleCloudDialogflowCxV3QueryParameters struct {
 	// LlmModelSettings: Optional. Use the specified LLM model settings for
 	// processing the request.
 	LlmModelSettings *GoogleCloudDialogflowCxV3LlmModelSettings `json:"llmModelSettings,omitempty"`
+	// ParameterScope: Scope for the parameters. If not specified, parameters will
+	// be treated as session parameters. Parameters with custom scope will not be
+	// put into session parameters. You can reference the parameters with custom
+	// scope in the agent with the following format:
+	// $parameter-scope.params.parameter-id.
+	ParameterScope string `json:"parameterScope,omitempty"`
 	// Parameters: Additional parameters to be put into session parameters. To
 	// remove a parameter from the session, clients should explicitly set the
 	// parameter value to null. You can reference the session parameters in the
@@ -17111,13 +17117,13 @@ func (s GoogleCloudDialogflowV2SummarySuggestionSummarySection) MarshalJSON() ([
 // GoogleCloudDialogflowV2ToolCall: Represents a call of a specific tool's
 // action with the specified inputs.
 type GoogleCloudDialogflowV2ToolCall struct {
-	// Action: Required. The name of the tool's action associated with this call.
+	// Action: Optional. The name of the tool's action associated with this call.
 	Action string `json:"action,omitempty"`
 	// CreateTime: Output only. Create time of the tool call.
 	CreateTime string `json:"createTime,omitempty"`
 	// InputParameters: Optional. The action's input parameters.
 	InputParameters googleapi.RawMessage `json:"inputParameters,omitempty"`
-	// Tool: Required. The tool associated with this call. Format:
+	// Tool: Optional. The tool associated with this call. Format:
 	// `projects//locations//tools/`.
 	Tool string `json:"tool,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
@@ -17141,7 +17147,7 @@ func (s GoogleCloudDialogflowV2ToolCall) MarshalJSON() ([]byte, error) {
 // GoogleCloudDialogflowV2ToolCallResult: The result of calling a tool's
 // action.
 type GoogleCloudDialogflowV2ToolCallResult struct {
-	// Action: Required. The name of the tool's action associated with this call.
+	// Action: Optional. The name of the tool's action associated with this call.
 	Action string `json:"action,omitempty"`
 	// Content: Only populated if the response content is utf-8 encoded.
 	Content string `json:"content,omitempty"`
@@ -17152,7 +17158,7 @@ type GoogleCloudDialogflowV2ToolCallResult struct {
 	// RawContent: Only populated if the response content is not utf-8 encoded. (by
 	// definition byte fields are base64 encoded).
 	RawContent string `json:"rawContent,omitempty"`
-	// Tool: Required. The tool associated with this call. Format:
+	// Tool: Optional. The tool associated with this call. Format:
 	// `projects//locations//tools/`.
 	Tool string `json:"tool,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
@@ -21147,13 +21153,13 @@ func (s GoogleCloudDialogflowV2beta1TelephonyDtmfEvents) MarshalJSON() ([]byte, 
 // GoogleCloudDialogflowV2beta1ToolCall: Represents a call of a specific tool's
 // action with the specified inputs.
 type GoogleCloudDialogflowV2beta1ToolCall struct {
-	// Action: Required. The name of the tool's action associated with this call.
+	// Action: Optional. The name of the tool's action associated with this call.
 	Action string `json:"action,omitempty"`
 	// CreateTime: Output only. Create time of the tool call.
 	CreateTime string `json:"createTime,omitempty"`
 	// InputParameters: Optional. The action's input parameters.
 	InputParameters googleapi.RawMessage `json:"inputParameters,omitempty"`
-	// Tool: Required. The tool associated with this call. Format:
+	// Tool: Optional. The tool associated with this call. Format:
 	// `projects//locations//tools/`.
 	Tool string `json:"tool,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
@@ -21177,7 +21183,7 @@ func (s GoogleCloudDialogflowV2beta1ToolCall) MarshalJSON() ([]byte, error) {
 // GoogleCloudDialogflowV2beta1ToolCallResult: The result of calling a tool's
 // action.
 type GoogleCloudDialogflowV2beta1ToolCallResult struct {
-	// Action: Required. The name of the tool's action associated with this call.
+	// Action: Optional. The name of the tool's action associated with this call.
 	Action string `json:"action,omitempty"`
 	// Content: Only populated if the response content is utf-8 encoded.
 	Content string `json:"content,omitempty"`
@@ -21188,7 +21194,7 @@ type GoogleCloudDialogflowV2beta1ToolCallResult struct {
 	// RawContent: Only populated if the response content is not utf-8 encoded. (by
 	// definition byte fields are base64 encoded).
 	RawContent string `json:"rawContent,omitempty"`
-	// Tool: Required. The tool associated with this call. Format:
+	// Tool: Optional. The tool associated with this call. Format:
 	// `projects//locations//tools/`.
 	Tool string `json:"tool,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally

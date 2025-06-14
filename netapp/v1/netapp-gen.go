@@ -2115,6 +2115,11 @@ type StoragePool struct {
 	CustomPerformanceEnabled bool `json:"customPerformanceEnabled,omitempty"`
 	// Description: Optional. Description of the storage pool
 	Description string `json:"description,omitempty"`
+	// EnableHotTierAutoResize: Optional. Flag indicating that the hot-tier
+	// threshold will be auto-increased by 10% of the hot-tier when it hits 100%.
+	// Default is true. The increment will kick in only if the new size after
+	// increment is still less than or equal to storage pool size.
+	EnableHotTierAutoResize bool `json:"enableHotTierAutoResize,omitempty"`
 	// EncryptionType: Output only. Specifies the current pool encryption key
 	// source.
 	//
@@ -2127,6 +2132,11 @@ type StoragePool struct {
 	// GlobalAccessAllowed: Deprecated. Used to allow SO pool to access AD or DNS
 	// server from other regions.
 	GlobalAccessAllowed bool `json:"globalAccessAllowed,omitempty"`
+	// HotTierSizeGib: Optional. Total hot tier capacity for the Storage Pool. It
+	// is applicable only to Flex service level. It should be less than the minimum
+	// storage pool size and cannot be more than the current storage pool size. It
+	// cannot be decreased once set.
+	HotTierSizeGib int64 `json:"hotTierSizeGib,omitempty,string"`
 	// KmsConfig: Optional. Specifies the KMS config to be used for volume
 	// encryption.
 	KmsConfig string `json:"kmsConfig,omitempty"`
@@ -2222,6 +2232,10 @@ type TieringPolicy struct {
 	// as cold and make it eligible for tiering, can be range from 2-183. Default
 	// is 31.
 	CoolingThresholdDays int64 `json:"coolingThresholdDays,omitempty"`
+	// HotTierBypassModeEnabled: Optional. Flag indicating that the hot tier bypass
+	// mode is enabled. Default is false. This is only applicable to Flex service
+	// level.
+	HotTierBypassModeEnabled bool `json:"hotTierBypassModeEnabled,omitempty"`
 	// TierAction: Optional. Flag indicating if the volume has tiering policy
 	// enable/pause. Default is PAUSED.
 	//

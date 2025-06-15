@@ -1954,6 +1954,7 @@ type GoogleChromeManagementV1HeartbeatStatusReport struct {
 	//   "UNKNOWN" - Device is not eligible for heartbeat monitoring
 	//   "ONLINE" - Device is online
 	//   "OFFLINE" - Device is offline
+	//   "DEVICE_OUTDATED" - Device is outdated
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ReportTime") to
 	// unconditionally include in API requests. By default, fields with empty or

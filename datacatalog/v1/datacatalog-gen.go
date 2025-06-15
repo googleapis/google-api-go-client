@@ -1093,8 +1093,8 @@ type GoogleCloudDatacatalogV1DatabaseTableSpec struct {
 	// DatabaseViewSpec: Spec what applies to tables that are actually views. Not
 	// set for "real" tables.
 	DatabaseViewSpec *GoogleCloudDatacatalogV1DatabaseTableSpecDatabaseViewSpec `json:"databaseViewSpec,omitempty"`
-	// DataplexTable: Output only. Fields specific to a Dataplex table and present
-	// only in the Dataplex table entries.
+	// DataplexTable: Output only. Fields specific to a Dataplex Universal Catalog
+	// table and present only in the Dataplex Universal Catalog table entries.
 	DataplexTable *GoogleCloudDatacatalogV1DataplexTableSpec `json:"dataplexTable,omitempty"`
 	// Type: Type of this table.
 	//
@@ -1154,11 +1154,12 @@ func (s GoogleCloudDatacatalogV1DatabaseTableSpecDatabaseViewSpec) MarshalJSON()
 }
 
 // GoogleCloudDatacatalogV1DataplexExternalTable: External table registered by
-// Dataplex. Dataplex publishes data discovered from an asset into multiple
-// other systems (BigQuery, DPMS) in form of tables. We call them "external
-// tables". External tables are also synced into the Data Catalog. This message
-// contains pointers to those external tables (fully qualified name, resource
-// name et cetera) within the Data Catalog.
+// Dataplex Universal Catalog. Dataplex Universal Catalog publishes data
+// discovered from an asset into multiple other systems (BigQuery, DPMS) in
+// form of tables. We call them "external tables". External tables are also
+// synced into the Data Catalog. This message contains pointers to those
+// external tables (fully qualified name, resource name et cetera) within the
+// Data Catalog.
 type GoogleCloudDatacatalogV1DataplexExternalTable struct {
 	// DataCatalogEntry: Name of the Data Catalog entry representing the external
 	// table.
@@ -1174,7 +1175,7 @@ type GoogleCloudDatacatalogV1DataplexExternalTable struct {
 	//   "BIGQUERY" - BigQuery.
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
-	//   "DATAPLEX" - Dataplex.
+	//   "DATAPLEX" - Dataplex Universal Catalog.
 	//   "CLOUD_SPANNER" - Cloud Spanner
 	//   "CLOUD_BIGTABLE" - Cloud Bigtable
 	//   "CLOUD_SQL" - Cloud Sql
@@ -1199,10 +1200,10 @@ func (s GoogleCloudDatacatalogV1DataplexExternalTable) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogV1DataplexFilesetSpec: Entry specyfication for a
-// Dataplex fileset.
+// GoogleCloudDatacatalogV1DataplexFilesetSpec: Entry specification for a
+// Dataplex Universal Catalog fileset.
 type GoogleCloudDatacatalogV1DataplexFilesetSpec struct {
-	// DataplexSpec: Common Dataplex fields.
+	// DataplexSpec: Common Dataplex Universal Catalog fields.
 	DataplexSpec *GoogleCloudDatacatalogV1DataplexSpec `json:"dataplexSpec,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataplexSpec") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1222,19 +1223,20 @@ func (s GoogleCloudDatacatalogV1DataplexFilesetSpec) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogV1DataplexSpec: Common Dataplex fields.
+// GoogleCloudDatacatalogV1DataplexSpec: Common Dataplex Universal Catalog
+// fields.
 type GoogleCloudDatacatalogV1DataplexSpec struct {
-	// Asset: Fully qualified resource name of an asset in Dataplex, to which the
-	// underlying data source (Cloud Storage bucket or BigQuery dataset) of the
-	// entity is attached.
+	// Asset: Fully qualified resource name of an asset in Dataplex Universal
+	// Catalog, to which the underlying data source (Cloud Storage bucket or
+	// BigQuery dataset) of the entity is attached.
 	Asset string `json:"asset,omitempty"`
 	// CompressionFormat: Compression format of the data, e.g., zip, gzip etc.
 	CompressionFormat string `json:"compressionFormat,omitempty"`
 	// DataFormat: Format of the data.
 	DataFormat *GoogleCloudDatacatalogV1PhysicalSchema `json:"dataFormat,omitempty"`
 	// ProjectId: Project ID of the underlying Cloud Storage or BigQuery data. Note
-	// that this may not be the same project as the correspondingly Dataplex lake /
-	// zone / asset.
+	// that this may not be the same project as the corresponding Dataplex
+	// Universal Catalog lake / zone / asset.
 	ProjectId string `json:"projectId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Asset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1255,13 +1257,13 @@ func (s GoogleCloudDatacatalogV1DataplexSpec) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDatacatalogV1DataplexTableSpec: Entry specification for a
-// Dataplex table.
+// Dataplex Universal Catalog table.
 type GoogleCloudDatacatalogV1DataplexTableSpec struct {
-	// DataplexSpec: Common Dataplex fields.
+	// DataplexSpec: Common Dataplex Universal Catalog fields.
 	DataplexSpec *GoogleCloudDatacatalogV1DataplexSpec `json:"dataplexSpec,omitempty"`
-	// ExternalTables: List of external tables registered by Dataplex in other
-	// systems based on the same underlying data. External tables allow to query
-	// this data in those systems.
+	// ExternalTables: List of external tables registered by Dataplex Universal
+	// Catalog in other systems based on the same underlying data. External tables
+	// allow to query this data in those systems.
 	ExternalTables []*GoogleCloudDatacatalogV1DataplexExternalTable `json:"externalTables,omitempty"`
 	// UserManaged: Indicates if the table schema is managed by the user or not.
 	UserManaged bool `json:"userManaged,omitempty"`
@@ -1392,7 +1394,7 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//   "BIGQUERY" - BigQuery.
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
-	//   "DATAPLEX" - Dataplex.
+	//   "DATAPLEX" - Dataplex Universal Catalog.
 	//   "CLOUD_SPANNER" - Cloud Spanner
 	//   "CLOUD_BIGTABLE" - Cloud Bigtable
 	//   "CLOUD_SQL" - Cloud Sql
@@ -1462,8 +1464,8 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//   "DATA_SOURCE_CONNECTION" - Connection to a data source. For example, a
 	// BigQuery connection.
 	//   "ROUTINE" - Routine, for example, a BigQuery routine.
-	//   "LAKE" - A Dataplex lake.
-	//   "ZONE" - A Dataplex zone.
+	//   "LAKE" - A Dataplex Universal Catalog lake.
+	//   "ZONE" - A Dataplex Universal Catalog zone.
 	//   "SERVICE" - A service, for example, a Dataproc Metastore service.
 	//   "DATABASE_SCHEMA" - Schema within a relational database.
 	//   "DASHBOARD" - A Dashboard, for example from Looker.
@@ -1534,10 +1536,10 @@ type GoogleCloudDatacatalogV1EntryGroup struct {
 	// location specified in its name.
 	Name string `json:"name,omitempty"`
 	// TransferredToDataplex: Optional. When set to [true], it means DataCatalog
-	// EntryGroup was transferred to Dataplex Catalog Service. It makes EntryGroup
-	// and its Entries to be read-only in DataCatalog. However, new Tags on
-	// EntryGroup and its Entries can be created. After setting the flag to [true]
-	// it cannot be unset.
+	// EntryGroup was transferred to Dataplex Universal Catalog. It makes
+	// EntryGroup and its Entries to be read-only in DataCatalog. However, new Tags
+	// on EntryGroup and its Entries can be created. After setting the flag to
+	// [true] it cannot be unset.
 	TransferredToDataplex bool `json:"transferredToDataplex,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1728,8 +1730,8 @@ func (s GoogleCloudDatacatalogV1FieldTypeEnumTypeEnumValue) MarshalJSON() ([]byt
 // GoogleCloudDatacatalogV1FilesetSpec: Specification that applies to a
 // fileset. Valid only for entries with the 'FILESET' type.
 type GoogleCloudDatacatalogV1FilesetSpec struct {
-	// DataplexFileset: Fields specific to a Dataplex fileset and present only in
-	// the Dataplex fileset entries.
+	// DataplexFileset: Fields specific to a Dataplex Universal Catalog fileset and
+	// present only in the Dataplex Universal Catalog fileset entries.
 	DataplexFileset *GoogleCloudDatacatalogV1DataplexFilesetSpec `json:"dataplexFileset,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataplexFileset") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1861,8 +1863,8 @@ type GoogleCloudDatacatalogV1ImportEntriesRequest struct {
 	// GcsBucketPath: Path to a Cloud Storage bucket that contains a dump ready for
 	// ingestion.
 	GcsBucketPath string `json:"gcsBucketPath,omitempty"`
-	// JobId: Optional. (Optional) Dataplex task job id, if specified will be used
-	// as part of ImportEntries LRO ID
+	// JobId: Optional. (Optional) Dataplex Universal Catalog task job id, if
+	// specified will be used as part of ImportEntries LRO ID
 	JobId string `json:"jobId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GcsBucketPath") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2164,35 +2166,37 @@ func (s GoogleCloudDatacatalogV1LookerSystemSpec) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudDatacatalogV1MigrationConfig: The configuration related to the
-// migration to Dataplex applied to an organization or project. It is the
-// response message for SetConfig and RetrieveEffectiveConfig.
+// migration to Dataplex Universal Catalog applied to an organization or
+// project. It is the response message for SetConfig and
+// RetrieveEffectiveConfig.
 type GoogleCloudDatacatalogV1MigrationConfig struct {
-	// CatalogUiExperience: Opt-in status for the UI switch to Dataplex.
+	// CatalogUiExperience: Opt-in status for the UI switch to Dataplex Universal
+	// Catalog.
 	//
 	// Possible values:
 	//   "CATALOG_UI_EXPERIENCE_UNSPECIFIED" - Default value. The default UI is
-	// Dataplex.
-	//   "CATALOG_UI_EXPERIENCE_ENABLED" - The UI is Dataplex.
+	// Dataplex Universal Catalog.
+	//   "CATALOG_UI_EXPERIENCE_ENABLED" - The UI is Dataplex Universal Catalog.
 	//   "CATALOG_UI_EXPERIENCE_DISABLED" - The UI is Data Catalog.
 	CatalogUiExperience string `json:"catalogUiExperience,omitempty"`
 	// TagTemplateMigration: Opt-in status for the migration of Tag Templates to
-	// Dataplex.
+	// Dataplex Universal Catalog.
 	//
 	// Possible values:
 	//   "TAG_TEMPLATE_MIGRATION_UNSPECIFIED" - Default value. Migration of Tag
-	// Templates from Data Catalog to Dataplex is not performed. For projects that
-	// are under an organization, the project inherits the organization's
-	// configuration when you set the project-level configuration to unspecified
-	// (`TAG_TEMPLATE_MIGRATION_UNSPECIFIED`). This means that when migration is
-	// enabled at the organization level, and the project-level configuration is
-	// unspecified, the project is migrated. To explicitly opt-in or opt-out
-	// individual projects, set the project-level configuration to enabled
-	// (`TAG_TEMPLATE_MIGRATION_ENABLED`) or disabled
+	// Templates from Data Catalog to Dataplex Universal Catalog is not performed.
+	// For projects that are under an organization, the project inherits the
+	// organization's configuration when you set the project-level configuration to
+	// unspecified (`TAG_TEMPLATE_MIGRATION_UNSPECIFIED`). This means that when
+	// migration is enabled at the organization level, and the project-level
+	// configuration is unspecified, the project is migrated. To explicitly opt-in
+	// or opt-out individual projects, set the project-level configuration to
+	// enabled (`TAG_TEMPLATE_MIGRATION_ENABLED`) or disabled
 	// (`TAG_TEMPLATE_MIGRATION_DISABLED`).
 	//   "TAG_TEMPLATE_MIGRATION_ENABLED" - Migration of Tag Templates from Data
-	// Catalog to Dataplex is enabled.
+	// Catalog to Dataplex Universal Catalog is enabled.
 	//   "TAG_TEMPLATE_MIGRATION_DISABLED" - Migration of Tag Templates from Data
-	// Catalog to Dataplex is disabled.
+	// Catalog to Dataplex Universal Catalog is disabled.
 	TagTemplateMigration string `json:"tagTemplateMigration,omitempty"`
 	// TemplateMigrationEnabledTime: The time when the Tag Template migration was
 	// enabled. If the Tag Template migration is not enabled, this field is not
@@ -2289,9 +2293,9 @@ func (s GoogleCloudDatacatalogV1ModifyEntryOverviewRequest) MarshalJSON() ([]byt
 }
 
 // GoogleCloudDatacatalogV1OrganizationConfig: The configuration related to the
-// migration from Data Catalog to Dataplex that has been applied to an
-// organization and any projects under it. It is the response message for
-// RetrieveConfig.
+// migration from Data Catalog to Dataplex Universal Catalog that has been
+// applied to an organization and any projects under it. It is the response
+// message for RetrieveConfig.
 type GoogleCloudDatacatalogV1OrganizationConfig struct {
 	// Config: Map of organizations and project resource names and their
 	// configuration. The format for the map keys is
@@ -2943,7 +2947,7 @@ type GoogleCloudDatacatalogV1SearchCatalogResult struct {
 	//   "BIGQUERY" - BigQuery.
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
-	//   "DATAPLEX" - Dataplex.
+	//   "DATAPLEX" - Dataplex Universal Catalog.
 	//   "CLOUD_SPANNER" - Cloud Spanner
 	//   "CLOUD_BIGTABLE" - Cloud Bigtable
 	//   "CLOUD_SQL" - Cloud Sql
@@ -3094,32 +3098,33 @@ func (s GoogleCloudDatacatalogV1ServiceSpec) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudDatacatalogV1SetConfigRequest: Request message for SetConfig.
 type GoogleCloudDatacatalogV1SetConfigRequest struct {
-	// CatalogUiExperience: Opt-in status for the UI switch to Dataplex.
+	// CatalogUiExperience: Opt-in status for the UI switch to Dataplex Universal
+	// Catalog.
 	//
 	// Possible values:
 	//   "CATALOG_UI_EXPERIENCE_UNSPECIFIED" - Default value. The default UI is
-	// Dataplex.
-	//   "CATALOG_UI_EXPERIENCE_ENABLED" - The UI is Dataplex.
+	// Dataplex Universal Catalog.
+	//   "CATALOG_UI_EXPERIENCE_ENABLED" - The UI is Dataplex Universal Catalog.
 	//   "CATALOG_UI_EXPERIENCE_DISABLED" - The UI is Data Catalog.
 	CatalogUiExperience string `json:"catalogUiExperience,omitempty"`
 	// TagTemplateMigration: Opt-in status for the migration of Tag Templates to
-	// Dataplex.
+	// Dataplex Universal Catalog.
 	//
 	// Possible values:
 	//   "TAG_TEMPLATE_MIGRATION_UNSPECIFIED" - Default value. Migration of Tag
-	// Templates from Data Catalog to Dataplex is not performed. For projects that
-	// are under an organization, the project inherits the organization's
-	// configuration when you set the project-level configuration to unspecified
-	// (`TAG_TEMPLATE_MIGRATION_UNSPECIFIED`). This means that when migration is
-	// enabled at the organization level, and the project-level configuration is
-	// unspecified, the project is migrated. To explicitly opt-in or opt-out
-	// individual projects, set the project-level configuration to enabled
-	// (`TAG_TEMPLATE_MIGRATION_ENABLED`) or disabled
+	// Templates from Data Catalog to Dataplex Universal Catalog is not performed.
+	// For projects that are under an organization, the project inherits the
+	// organization's configuration when you set the project-level configuration to
+	// unspecified (`TAG_TEMPLATE_MIGRATION_UNSPECIFIED`). This means that when
+	// migration is enabled at the organization level, and the project-level
+	// configuration is unspecified, the project is migrated. To explicitly opt-in
+	// or opt-out individual projects, set the project-level configuration to
+	// enabled (`TAG_TEMPLATE_MIGRATION_ENABLED`) or disabled
 	// (`TAG_TEMPLATE_MIGRATION_DISABLED`).
 	//   "TAG_TEMPLATE_MIGRATION_ENABLED" - Migration of Tag Templates from Data
-	// Catalog to Dataplex is enabled.
+	// Catalog to Dataplex Universal Catalog is enabled.
 	//   "TAG_TEMPLATE_MIGRATION_DISABLED" - Migration of Tag Templates from Data
-	// Catalog to Dataplex is disabled.
+	// Catalog to Dataplex Universal Catalog is disabled.
 	TagTemplateMigration string `json:"tagTemplateMigration,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CatalogUiExperience") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3290,14 +3295,15 @@ type GoogleCloudDatacatalogV1Tag struct {
 	//
 	// Possible values:
 	//   "DATAPLEX_TRANSFER_STATUS_UNSPECIFIED" - Default value. TagTemplate and
-	// its tags are only visible and editable in DataCatalog.
-	//   "MIGRATED" - TagTemplate and its tags are auto-copied to Dataplex service.
-	// Visible in both services. Editable in DataCatalog, read-only in Dataplex.
-	// Deprecated: Individual TagTemplate migration is deprecated in favor of
-	// organization or project wide TagTemplate migration opt-in.
+	// its tags are only visible and editable in Data Catalog.
+	//   "MIGRATED" - TagTemplate and its tags are auto-copied to Dataplex
+	// Universal Catalog service. Visible in both services. Editable in Data
+	// Catalog, read-only in Dataplex Universal Catalog. Deprecated: Individual
+	// TagTemplate migration is deprecated in favor of organization or project wide
+	// TagTemplate migration opt-in.
 	//   "TRANSFERRED" - TagTemplate and its tags are auto-copied to Dataplex
-	// service. Visible in both services. Editable in Dataplex, read-only in
-	// DataCatalog.
+	// Universal Catalog service. Visible in both services. Editable in Dataplex
+	// Universal Catalog, read-only in Data Catalog.
 	DataplexTransferStatus string `json:"dataplexTransferStatus,omitempty"`
 	// Fields: Required. Maps the ID of a tag field to its value and additional
 	// information about that field. Tag template defines valid field IDs. A tag
@@ -3428,14 +3434,15 @@ type GoogleCloudDatacatalogV1TagTemplate struct {
 	//
 	// Possible values:
 	//   "DATAPLEX_TRANSFER_STATUS_UNSPECIFIED" - Default value. TagTemplate and
-	// its tags are only visible and editable in DataCatalog.
-	//   "MIGRATED" - TagTemplate and its tags are auto-copied to Dataplex service.
-	// Visible in both services. Editable in DataCatalog, read-only in Dataplex.
-	// Deprecated: Individual TagTemplate migration is deprecated in favor of
-	// organization or project wide TagTemplate migration opt-in.
+	// its tags are only visible and editable in Data Catalog.
+	//   "MIGRATED" - TagTemplate and its tags are auto-copied to Dataplex
+	// Universal Catalog service. Visible in both services. Editable in Data
+	// Catalog, read-only in Dataplex Universal Catalog. Deprecated: Individual
+	// TagTemplate migration is deprecated in favor of organization or project wide
+	// TagTemplate migration opt-in.
 	//   "TRANSFERRED" - TagTemplate and its tags are auto-copied to Dataplex
-	// service. Visible in both services. Editable in Dataplex, read-only in
-	// DataCatalog.
+	// Universal Catalog service. Visible in both services. Editable in Dataplex
+	// Universal Catalog, read-only in Data Catalog.
 	DataplexTransferStatus string `json:"dataplexTransferStatus,omitempty"`
 	// DisplayName: Display name for this template. Defaults to an empty string.
 	// The name must contain only Unicode letters, numbers (0-9), underscores (_),
@@ -3623,7 +3630,7 @@ type GoogleCloudDatacatalogV1TaxonomyService struct {
 	//
 	// Possible values:
 	//   "MANAGING_SYSTEM_UNSPECIFIED" - Default value
-	//   "MANAGING_SYSTEM_DATAPLEX" - Dataplex.
+	//   "MANAGING_SYSTEM_DATAPLEX" - Dataplex Universal Catalog.
 	//   "MANAGING_SYSTEM_OTHER" - Other
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Identity") to
@@ -4460,8 +4467,8 @@ type OrganizationsLocationsRetrieveConfigCall struct {
 }
 
 // RetrieveConfig: Retrieves the configuration related to the migration from
-// Data Catalog to Dataplex for a specific organization, including all the
-// projects under it which have a separate configuration set.
+// Data Catalog to Dataplex Universal Catalog for a specific organization,
+// including all the projects under it which have a separate configuration set.
 //
 // - name: The organization whose config is being retrieved.
 func (r *OrganizationsLocationsService) RetrieveConfig(name string) *OrganizationsLocationsRetrieveConfigCall {
@@ -4572,10 +4579,10 @@ type OrganizationsLocationsRetrieveEffectiveConfigCall struct {
 }
 
 // RetrieveEffectiveConfig: Retrieves the effective configuration related to
-// the migration from Data Catalog to Dataplex for a specific organization or
-// project. If there is no specific configuration set for the resource, the
-// setting is checked hierarchicahlly through the ancestors of the resource,
-// starting from the resource itself.
+// the migration from Data Catalog to Dataplex Universal Catalog for a specific
+// organization or project. If there is no specific configuration set for the
+// resource, the setting is checked hierarchicahlly through the ancestors of
+// the resource, starting from the resource itself.
 //
 // - name: The resource whose effective config is being retrieved.
 func (r *OrganizationsLocationsService) RetrieveEffectiveConfig(name string) *OrganizationsLocationsRetrieveEffectiveConfigCall {
@@ -4685,8 +4692,8 @@ type OrganizationsLocationsSetConfigCall struct {
 	header_                                  http.Header
 }
 
-// SetConfig: Sets the configuration related to the migration to Dataplex for
-// an organization or project.
+// SetConfig: Sets the configuration related to the migration to Dataplex
+// Universal Catalog for an organization or project.
 //
 // - name: The organization or project whose config is being specified.
 func (r *OrganizationsLocationsService) SetConfig(name string, googleclouddatacatalogv1setconfigrequest *GoogleCloudDatacatalogV1SetConfigRequest) *OrganizationsLocationsSetConfigCall {
@@ -4791,10 +4798,10 @@ type ProjectsLocationsRetrieveEffectiveConfigCall struct {
 }
 
 // RetrieveEffectiveConfig: Retrieves the effective configuration related to
-// the migration from Data Catalog to Dataplex for a specific organization or
-// project. If there is no specific configuration set for the resource, the
-// setting is checked hierarchicahlly through the ancestors of the resource,
-// starting from the resource itself.
+// the migration from Data Catalog to Dataplex Universal Catalog for a specific
+// organization or project. If there is no specific configuration set for the
+// resource, the setting is checked hierarchicahlly through the ancestors of
+// the resource, starting from the resource itself.
 //
 // - name: The resource whose effective config is being retrieved.
 func (r *ProjectsLocationsService) RetrieveEffectiveConfig(name string) *ProjectsLocationsRetrieveEffectiveConfigCall {
@@ -4904,8 +4911,8 @@ type ProjectsLocationsSetConfigCall struct {
 	header_                                  http.Header
 }
 
-// SetConfig: Sets the configuration related to the migration to Dataplex for
-// an organization or project.
+// SetConfig: Sets the configuration related to the migration to Dataplex
+// Universal Catalog for an organization or project.
 //
 // - name: The organization or project whose config is being specified.
 func (r *ProjectsLocationsService) SetConfig(name string, googleclouddatacatalogv1setconfigrequest *GoogleCloudDatacatalogV1SetConfigRequest) *ProjectsLocationsSetConfigCall {

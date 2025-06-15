@@ -2950,11 +2950,16 @@ func (s GoogleCloudRunV2Task) MarshalJSON() ([]byte, error) {
 type GoogleCloudRunV2TaskAttemptResult struct {
 	// ExitCode: Output only. The exit code of this attempt. This may be unset if
 	// the container was unable to exit cleanly with a code due to some other
-	// failure. See status field for possible failure details.
+	// failure. See status field for possible failure details. At most one of
+	// exit_code or term_signal will be set.
 	ExitCode int64 `json:"exitCode,omitempty"`
 	// Status: Output only. The status of this attempt. If the status code is OK,
 	// then the attempt succeeded.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
+	// TermSignal: Output only. Termination signal of the container. This is set to
+	// non-zero if the container is terminated by the system. At most one of
+	// exit_code or term_signal will be set.
+	TermSignal int64 `json:"termSignal,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExitCode") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3503,8 +3508,6 @@ type GoogleCloudRunV2WorkerPoolRevisionTemplate struct {
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// ServiceMesh: Optional. Enables service mesh connectivity.
 	ServiceMesh *GoogleCloudRunV2ServiceMesh `json:"serviceMesh,omitempty"`
-	// SessionAffinity: Optional. Enable session affinity.
-	SessionAffinity bool `json:"sessionAffinity,omitempty"`
 	// Volumes: Optional. A list of Volumes to make available to containers.
 	Volumes []*GoogleCloudRunV2Volume `json:"volumes,omitempty"`
 	// VpcAccess: Optional. VPC Access configuration to use for this Revision. For
@@ -4429,8 +4432,7 @@ func (s GoogleDevtoolsCloudbuildV1GitSourceDependency) MarshalJSON() ([]byte, er
 // GoogleDevtoolsCloudbuildV1GitSourceRepository: A repository for a git
 // source.
 type GoogleDevtoolsCloudbuildV1GitSourceRepository struct {
-	// DeveloperConnect: The Developer Connect Git repository link or the url that
-	// matches a repository link in the current project, formatted as
+	// DeveloperConnect: The Developer Connect Git repository link formatted as
 	// `projects/*/locations/*/connections/*/gitRepositoryLink/*`
 	DeveloperConnect string `json:"developerConnect,omitempty"`
 	// Url: Location of the Git repository.

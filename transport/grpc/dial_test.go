@@ -16,6 +16,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/internal"
+	"google.golang.org/api/option"
 	"google.golang.org/grpc"
 )
 
@@ -38,15 +39,15 @@ func TestDial(t *testing.T) {
 
 func TestDialPoolNewAuthDialOptions(t *testing.T) {
 	oldDialContextNewAuth := dialContextNewAuth
-	var wantNumOpts int
-	var universeDomain string
+	var wantNumDialOpts int
+	var wantUniverseDomain string
 	// Replace package var in order to assert DialContext args.
 	dialContextNewAuth = func(ctx context.Context, secure bool, opts *grpctransport.Options) (grpctransport.GRPCClientConnPool, error) {
-		if len(opts.GRPCDialOpts) != wantNumOpts {
-			t.Fatalf("got: %d, want: %d", len(opts.GRPCDialOpts), wantNumOpts)
+		if len(opts.GRPCDialOpts) != wantNumDialOpts {
+			t.Fatalf("got: %d, want: %d", len(opts.GRPCDialOpts), wantNumDialOpts)
 		}
-		if opts.UniverseDomain != universeDomain {
-			t.Fatalf("got: %q, want: %q", opts.UniverseDomain, universeDomain)
+		if opts.UniverseDomain != wantUniverseDomain {
+			t.Fatalf("got: %q, want: %q", opts.UniverseDomain, wantUniverseDomain)
 		}
 		return nil, nil
 	}
@@ -55,34 +56,31 @@ func TestDialPoolNewAuthDialOptions(t *testing.T) {
 	}()
 
 	for _, testcase := range []struct {
-		name        string
-		ds          *internal.DialSettings
-		wantNumOpts int
+		name               string
+		ds                 []option.ClientOption
+		wantUniverseDomain string
+		wantNumDialOpts    int
 	}{
 		{
-			name:        "no dial options",
-			ds:          &internal.DialSettings{},
-			wantNumOpts: 0,
+			name: "no dial options",
+			ds:   make([]option.ClientOption, 0),
 		},
 		{
-			name: "with user agent",
-			ds: &internal.DialSettings{
-				UserAgent: "test",
-			},
-			wantNumOpts: 1,
+			name:            "with user agent",
+			ds:              []option.ClientOption{option.WithUserAgent("test")},
+			wantNumDialOpts: 1,
 		},
 		{
-			name: "universe domain",
-			ds: &internal.DialSettings{
-				UniverseDomain: "example.com",
-			},
-			wantNumOpts: 0,
+			name:               "universe domain",
+			ds:                 []option.ClientOption{option.WithUniverseDomain("example.com")},
+			wantUniverseDomain: "example.com",
 		},
 	} {
 		t.Run(testcase.name, func(t *testing.T) {
-			wantNumOpts = testcase.wantNumOpts
-			universeDomain = testcase.ds.UniverseDomain
-			dialPoolNewAuth(context.Background(), false, 1, testcase.ds)
+			wantNumDialOpts = testcase.wantNumDialOpts
+			wantUniverseDomain = testcase.wantUniverseDomain
+			poolSize := 1
+			dialPoolNewAuth(context.Background(), false, &poolSize, testcase.ds)
 		})
 	}
 }

@@ -7907,6 +7907,10 @@ type GoogleCloudApigeeV1Organization struct {
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
 	// Name: Output only. Name of the Apigee organization.
 	Name string `json:"name,omitempty"`
+	// NetworkEgressRestricted: Optional. Flag that specifies if internet egress is
+	// restricted for VPC Service Controls. Valid only when runtime_type is `CLOUD`
+	// and disable_vpc_peering is `true`.
+	NetworkEgressRestricted bool `json:"networkEgressRestricted,omitempty"`
 	// PortalDisabled: Optional. Configuration for the Portals settings.
 	PortalDisabled bool `json:"portalDisabled,omitempty"`
 	// ProjectId: Output only. Project ID associated with the Apigee organization.
@@ -21067,7 +21071,7 @@ func (c *OrganizationsAppsListCall) PageToken(pageToken string) *OrganizationsAp
 }
 
 // Rows sets the optional parameter "rows": Maximum number of app IDs to
-// return. Defaults to 10000.
+// return. Defaults to 1000.
 func (c *OrganizationsAppsListCall) Rows(rows int64) *OrganizationsAppsListCall {
 	c.urlParams_.Set("rows", fmt.Sprint(rows))
 	return c

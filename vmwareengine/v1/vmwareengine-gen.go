@@ -2332,6 +2332,8 @@ type NetworkPeering struct {
 	// PowerScale Filers
 	//   "GOOGLE_CLOUD_NETAPP_VOLUMES" - Peering connection used for connecting to
 	// Google Cloud NetApp Volumes.
+	//   "GOOGLE_CLOUD_FILESTORE_INSTANCES" - Peering connection used for
+	// connecting to Google Cloud Filestore Instances.
 	PeerNetworkType string `json:"peerNetworkType,omitempty"`
 	// State: Output only. State of the network peering. This field has a value of
 	// 'ACTIVE' when there's a matching configuration in the peer network. New

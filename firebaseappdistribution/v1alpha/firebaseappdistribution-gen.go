@@ -318,6 +318,30 @@ func (s AndroidxCrawlerOutputPoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AndroidxCrawlerOutputRectangle: Rectangle for describing bounding boxes
+type AndroidxCrawlerOutputRectangle struct {
+	Bottom int64 `json:"bottom,omitempty"`
+	Left   int64 `json:"left,omitempty"`
+	Right  int64 `json:"right,omitempty"`
+	Top    int64 `json:"top,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bottom") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bottom") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AndroidxCrawlerOutputRectangle) MarshalJSON() ([]byte, error) {
+	type NoMethod AndroidxCrawlerOutputRectangle
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirebaseAppdistroV1Release: A release of a Firebase app.
 type GoogleFirebaseAppdistroV1Release struct {
 	// BinaryDownloadUri: Output only. A signed link (which expires in one hour) to
@@ -821,6 +845,11 @@ func (s GoogleFirebaseAppdistroV1alphaDeviceExecution) MarshalJSON() ([]byte, er
 // GoogleFirebaseAppdistroV1alphaDeviceInteraction: An interaction with the
 // device, such as a tap, text entry, wait, etc.
 type GoogleFirebaseAppdistroV1alphaDeviceInteraction struct {
+	// EnterText: Output only. A text entry action, that enters text into a
+	// particular text field, clearing any existing text in the field. Unlike
+	// `text_input` this action does not require any other actions such as a tap to
+	// be performed before it can enter the text.
+	EnterText *GoogleFirebaseAppdistroV1alphaDeviceInteractionEnterText `json:"enterText,omitempty"`
 	// KeyCode: Output only. Key code for a key event action.
 	KeyCode string `json:"keyCode,omitempty"`
 	// Screenshot: Output only. The screenshot used in the context of this action.
@@ -830,17 +859,20 @@ type GoogleFirebaseAppdistroV1alphaDeviceInteraction struct {
 	Swipe *GoogleFirebaseAppdistroV1alphaDeviceInteractionSwipe `json:"swipe,omitempty"`
 	// Tap: Output only. A tap action.
 	Tap *AndroidxCrawlerOutputPoint `json:"tap,omitempty"`
-	// TextInput: Output only. Text entered for a text entry action.
+	// TextInput: Output only. A text input action, that types some text into
+	// whatever field is currently focused, if any. Unlike `enter_text` this action
+	// requires that the field be brought into focus first, for example by emitting
+	// a tap action before this one.
 	TextInput string `json:"textInput,omitempty"`
 	// Wait: Output only. A wait action.
 	Wait *GoogleFirebaseAppdistroV1alphaDeviceInteractionWait `json:"wait,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "KeyCode") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "EnterText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "KeyCode") to include in API
+	// NullFields is a list of field names (e.g. "EnterText") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -849,6 +881,33 @@ type GoogleFirebaseAppdistroV1alphaDeviceInteraction struct {
 
 func (s GoogleFirebaseAppdistroV1alphaDeviceInteraction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaDeviceInteraction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppdistroV1alphaDeviceInteractionEnterText: A text entry
+// action, that enters text into a particular text field, clearing any existing
+// text in the field.
+type GoogleFirebaseAppdistroV1alphaDeviceInteractionEnterText struct {
+	// ElementBounds: Output only. The visible bounds of the element to enter text
+	// into.
+	ElementBounds *AndroidxCrawlerOutputRectangle `json:"elementBounds,omitempty"`
+	// Text: Output only. The text to enter.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ElementBounds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ElementBounds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppdistroV1alphaDeviceInteractionEnterText) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaDeviceInteractionEnterText
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

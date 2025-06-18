@@ -326,6 +326,7 @@ type ProjectsLocationsService struct {
 
 func NewProjectsLocationsApplicationsService(s *APIService) *ProjectsLocationsApplicationsService {
 	rs := &ProjectsLocationsApplicationsService{s: s}
+	rs.AuthorizedCertificates = NewProjectsLocationsApplicationsAuthorizedCertificatesService(s)
 	rs.AuthorizedDomains = NewProjectsLocationsApplicationsAuthorizedDomainsService(s)
 	rs.DomainMappings = NewProjectsLocationsApplicationsDomainMappingsService(s)
 	rs.Services = NewProjectsLocationsApplicationsServicesService(s)
@@ -335,11 +336,22 @@ func NewProjectsLocationsApplicationsService(s *APIService) *ProjectsLocationsAp
 type ProjectsLocationsApplicationsService struct {
 	s *APIService
 
+	AuthorizedCertificates *ProjectsLocationsApplicationsAuthorizedCertificatesService
+
 	AuthorizedDomains *ProjectsLocationsApplicationsAuthorizedDomainsService
 
 	DomainMappings *ProjectsLocationsApplicationsDomainMappingsService
 
 	Services *ProjectsLocationsApplicationsServicesService
+}
+
+func NewProjectsLocationsApplicationsAuthorizedCertificatesService(s *APIService) *ProjectsLocationsApplicationsAuthorizedCertificatesService {
+	rs := &ProjectsLocationsApplicationsAuthorizedCertificatesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsApplicationsAuthorizedCertificatesService struct {
+	s *APIService
 }
 
 func NewProjectsLocationsApplicationsAuthorizedDomainsService(s *APIService) *ProjectsLocationsApplicationsAuthorizedDomainsService {
@@ -8646,6 +8658,671 @@ func (c *ProjectsLocationsApplicationsPatchCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 }
 
+type ProjectsLocationsApplicationsAuthorizedCertificatesCreateCall struct {
+	s                     *APIService
+	projectsId            string
+	locationsId           string
+	applicationsId        string
+	authorizedcertificate *AuthorizedCertificate
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Create: Uploads the specified SSL certificate.
+//
+//   - applicationsId: Part of `parent`. See documentation of `projectsId`.
+//   - locationsId: Part of `parent`. See documentation of `projectsId`.
+//   - projectsId: Part of `parent`. Name of the parent Application resource.
+//     Example: apps/myapp.
+func (r *ProjectsLocationsApplicationsAuthorizedCertificatesService) Create(projectsId string, locationsId string, applicationsId string, authorizedcertificate *AuthorizedCertificate) *ProjectsLocationsApplicationsAuthorizedCertificatesCreateCall {
+	c := &ProjectsLocationsApplicationsAuthorizedCertificatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.applicationsId = applicationsId
+	c.authorizedcertificate = authorizedcertificate
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsAuthorizedCertificatesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesCreateCall) Context(ctx context.Context) *ProjectsLocationsApplicationsAuthorizedCertificatesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.authorizedcertificate)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/authorizedCertificates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":     c.projectsId,
+		"locationsId":    c.locationsId,
+		"applicationsId": c.applicationsId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.authorizedCertificates.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.projects.locations.applications.authorizedCertificates.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AuthorizedCertificate.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesCreateCall) Do(opts ...googleapi.CallOption) (*AuthorizedCertificate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AuthorizedCertificate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.authorizedCertificates.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsApplicationsAuthorizedCertificatesDeleteCall struct {
+	s                        *APIService
+	projectsId               string
+	locationsId              string
+	applicationsId           string
+	authorizedCertificatesId string
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Delete: Deletes the specified SSL certificate.
+//
+//   - applicationsId: Part of `name`. See documentation of `projectsId`.
+//   - authorizedCertificatesId: Part of `name`. See documentation of
+//     `projectsId`.
+//   - locationsId: Part of `name`. See documentation of `projectsId`.
+//   - projectsId: Part of `name`. Name of the resource to delete. Example:
+//     apps/myapp/authorizedCertificates/12345.
+func (r *ProjectsLocationsApplicationsAuthorizedCertificatesService) Delete(projectsId string, locationsId string, applicationsId string, authorizedCertificatesId string) *ProjectsLocationsApplicationsAuthorizedCertificatesDeleteCall {
+	c := &ProjectsLocationsApplicationsAuthorizedCertificatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.applicationsId = applicationsId
+	c.authorizedCertificatesId = authorizedCertificatesId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsAuthorizedCertificatesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesDeleteCall) Context(ctx context.Context) *ProjectsLocationsApplicationsAuthorizedCertificatesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/authorizedCertificates/{authorizedCertificatesId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":               c.projectsId,
+		"locationsId":              c.locationsId,
+		"applicationsId":           c.applicationsId,
+		"authorizedCertificatesId": c.authorizedCertificatesId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.authorizedCertificates.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.projects.locations.applications.authorizedCertificates.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.authorizedCertificates.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsApplicationsAuthorizedCertificatesGetCall struct {
+	s                        *APIService
+	projectsId               string
+	locationsId              string
+	applicationsId           string
+	authorizedCertificatesId string
+	urlParams_               gensupport.URLParams
+	ifNoneMatch_             string
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Get: Gets the specified SSL certificate.
+//
+//   - applicationsId: Part of `name`. See documentation of `projectsId`.
+//   - authorizedCertificatesId: Part of `name`. See documentation of
+//     `projectsId`.
+//   - locationsId: Part of `name`. See documentation of `projectsId`.
+//   - projectsId: Part of `name`. Name of the resource requested. Example:
+//     apps/myapp/authorizedCertificates/12345.
+func (r *ProjectsLocationsApplicationsAuthorizedCertificatesService) Get(projectsId string, locationsId string, applicationsId string, authorizedCertificatesId string) *ProjectsLocationsApplicationsAuthorizedCertificatesGetCall {
+	c := &ProjectsLocationsApplicationsAuthorizedCertificatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.applicationsId = applicationsId
+	c.authorizedCertificatesId = authorizedCertificatesId
+	return c
+}
+
+// View sets the optional parameter "view": Controls the set of fields returned
+// in the GET response.
+//
+// Possible values:
+//
+//	"BASIC_CERTIFICATE" - Basic certificate information, including applicable
+//
+// domains and expiration date.
+//
+//	"FULL_CERTIFICATE" - The information from BASIC_CERTIFICATE, plus detailed
+//
+// information on the domain mappings that have this certificate mapped.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesGetCall) View(view string) *ProjectsLocationsApplicationsAuthorizedCertificatesGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsAuthorizedCertificatesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsApplicationsAuthorizedCertificatesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesGetCall) Context(ctx context.Context) *ProjectsLocationsApplicationsAuthorizedCertificatesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/authorizedCertificates/{authorizedCertificatesId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":               c.projectsId,
+		"locationsId":              c.locationsId,
+		"applicationsId":           c.applicationsId,
+		"authorizedCertificatesId": c.authorizedCertificatesId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.authorizedCertificates.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.projects.locations.applications.authorizedCertificates.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AuthorizedCertificate.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesGetCall) Do(opts ...googleapi.CallOption) (*AuthorizedCertificate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AuthorizedCertificate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.authorizedCertificates.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsApplicationsAuthorizedCertificatesListCall struct {
+	s              *APIService
+	projectsId     string
+	locationsId    string
+	applicationsId string
+	urlParams_     gensupport.URLParams
+	ifNoneMatch_   string
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// List: Lists all SSL certificates the user is authorized to administer.
+//
+//   - applicationsId: Part of `parent`. See documentation of `projectsId`.
+//   - locationsId: Part of `parent`. See documentation of `projectsId`.
+//   - projectsId: Part of `parent`. Name of the parent Application resource.
+//     Example: apps/myapp.
+func (r *ProjectsLocationsApplicationsAuthorizedCertificatesService) List(projectsId string, locationsId string, applicationsId string) *ProjectsLocationsApplicationsAuthorizedCertificatesListCall {
+	c := &ProjectsLocationsApplicationsAuthorizedCertificatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.applicationsId = applicationsId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum results to return
+// per page.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesListCall) PageSize(pageSize int64) *ProjectsLocationsApplicationsAuthorizedCertificatesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token for
+// fetching the next page of results.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesListCall) PageToken(pageToken string) *ProjectsLocationsApplicationsAuthorizedCertificatesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Controls the set of fields returned
+// in the LIST response.
+//
+// Possible values:
+//
+//	"BASIC_CERTIFICATE" - Basic certificate information, including applicable
+//
+// domains and expiration date.
+//
+//	"FULL_CERTIFICATE" - The information from BASIC_CERTIFICATE, plus detailed
+//
+// information on the domain mappings that have this certificate mapped.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesListCall) View(view string) *ProjectsLocationsApplicationsAuthorizedCertificatesListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsAuthorizedCertificatesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsApplicationsAuthorizedCertificatesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesListCall) Context(ctx context.Context) *ProjectsLocationsApplicationsAuthorizedCertificatesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/authorizedCertificates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":     c.projectsId,
+		"locationsId":    c.locationsId,
+		"applicationsId": c.applicationsId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.authorizedCertificates.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.projects.locations.applications.authorizedCertificates.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAuthorizedCertificatesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesListCall) Do(opts ...googleapi.CallOption) (*ListAuthorizedCertificatesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAuthorizedCertificatesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.authorizedCertificates.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesListCall) Pages(ctx context.Context, f func(*ListAuthorizedCertificatesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsApplicationsAuthorizedCertificatesPatchCall struct {
+	s                        *APIService
+	projectsId               string
+	locationsId              string
+	applicationsId           string
+	authorizedCertificatesId string
+	authorizedcertificate    *AuthorizedCertificate
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Patch: Updates the specified SSL certificate. To renew a certificate and
+// maintain its existing domain mappings, update certificate_data with a new
+// certificate. The new certificate must be applicable to the same domains as
+// the original certificate. The certificate display_name may also be updated.
+//
+//   - applicationsId: Part of `name`. See documentation of `projectsId`.
+//   - authorizedCertificatesId: Part of `name`. See documentation of
+//     `projectsId`.
+//   - locationsId: Part of `name`. See documentation of `projectsId`.
+//   - projectsId: Part of `name`. Name of the resource to update. Example:
+//     apps/myapp/authorizedCertificates/12345.
+func (r *ProjectsLocationsApplicationsAuthorizedCertificatesService) Patch(projectsId string, locationsId string, applicationsId string, authorizedCertificatesId string, authorizedcertificate *AuthorizedCertificate) *ProjectsLocationsApplicationsAuthorizedCertificatesPatchCall {
+	c := &ProjectsLocationsApplicationsAuthorizedCertificatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.applicationsId = applicationsId
+	c.authorizedCertificatesId = authorizedCertificatesId
+	c.authorizedcertificate = authorizedcertificate
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Standard field mask for
+// the set of fields to be updated. Updates are only supported on the
+// certificate_raw_data and display_name fields.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsApplicationsAuthorizedCertificatesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsAuthorizedCertificatesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesPatchCall) Context(ctx context.Context) *ProjectsLocationsApplicationsAuthorizedCertificatesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.authorizedcertificate)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/authorizedCertificates/{authorizedCertificatesId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":               c.projectsId,
+		"locationsId":              c.locationsId,
+		"applicationsId":           c.applicationsId,
+		"authorizedCertificatesId": c.authorizedCertificatesId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.authorizedCertificates.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.projects.locations.applications.authorizedCertificates.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AuthorizedCertificate.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsApplicationsAuthorizedCertificatesPatchCall) Do(opts ...googleapi.CallOption) (*AuthorizedCertificate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AuthorizedCertificate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.authorizedCertificates.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsApplicationsAuthorizedDomainsListCall struct {
 	s              *APIService
 	projectsId     string
@@ -8798,6 +9475,145 @@ func (c *ProjectsLocationsApplicationsAuthorizedDomainsListCall) Pages(ctx conte
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsApplicationsDomainMappingsCreateCall struct {
+	s              *APIService
+	projectsId     string
+	locationsId    string
+	applicationsId string
+	domainmapping  *DomainMapping
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Maps a domain to an application. A user must be authorized to
+// administer a domain in order to map it to an application. For a list of
+// available authorized domains, see AuthorizedDomains.ListAuthorizedDomains.
+//
+//   - applicationsId: Part of `parent`. See documentation of `projectsId`.
+//   - locationsId: Part of `parent`. See documentation of `projectsId`.
+//   - projectsId: Part of `parent`. Name of the parent Application resource.
+//     Example: apps/myapp.
+func (r *ProjectsLocationsApplicationsDomainMappingsService) Create(projectsId string, locationsId string, applicationsId string, domainmapping *DomainMapping) *ProjectsLocationsApplicationsDomainMappingsCreateCall {
+	c := &ProjectsLocationsApplicationsDomainMappingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.applicationsId = applicationsId
+	c.domainmapping = domainmapping
+	return c
+}
+
+// OverrideStrategy sets the optional parameter "overrideStrategy": Whether the
+// domain creation should override any existing mappings for this domain. By
+// default, overrides are rejected.
+//
+// Possible values:
+//
+//	"UNSPECIFIED_DOMAIN_OVERRIDE_STRATEGY" - Strategy unspecified. Defaults to
+//
+// STRICT.
+//
+//	"STRICT" - Overrides not allowed. If a mapping already exists for the
+//
+// specified domain, the request will return an ALREADY_EXISTS (409).
+//
+//	"OVERRIDE" - Overrides allowed. If a mapping already exists for the
+//
+// specified domain, the request will overwrite it. Note that this might stop
+// another Google product from serving. For example, if the domain is mapped to
+// another App Engine application, that app will no longer serve from that
+// domain.
+func (c *ProjectsLocationsApplicationsDomainMappingsCreateCall) OverrideStrategy(overrideStrategy string) *ProjectsLocationsApplicationsDomainMappingsCreateCall {
+	c.urlParams_.Set("overrideStrategy", overrideStrategy)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsApplicationsDomainMappingsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsDomainMappingsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsApplicationsDomainMappingsCreateCall) Context(ctx context.Context) *ProjectsLocationsApplicationsDomainMappingsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsApplicationsDomainMappingsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsDomainMappingsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.domainmapping)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/domainMappings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":     c.projectsId,
+		"locationsId":    c.locationsId,
+		"applicationsId": c.applicationsId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.domainMappings.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.projects.locations.applications.domainMappings.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsApplicationsDomainMappingsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.domainMappings.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsApplicationsDomainMappingsGetCall struct {

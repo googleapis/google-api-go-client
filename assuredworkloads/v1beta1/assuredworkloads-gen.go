@@ -474,6 +474,8 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	// Boundary for US Healthcare and Life Sciences with Support
 	//   "KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS" - KSA Data Boundary with
 	// Access Justifications
+	//   "REGIONAL_DATA_BOUNDARY" - Regional Data Boundary
+	//   "JAPAN_DATA_BOUNDARY" - JAPAN Data Boundary
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// CreateTime: Optional. Time when the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1199,6 +1201,8 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// Boundary for US Healthcare and Life Sciences with Support
 	//   "KSA_DATA_BOUNDARY_WITH_ACCESS_JUSTIFICATIONS" - KSA Data Boundary with
 	// Access Justifications
+	//   "REGIONAL_DATA_BOUNDARY" - Regional Data Boundary
+	//   "JAPAN_DATA_BOUNDARY" - JAPAN Data Boundary
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// ComplianceStatus: Output only. Count of active Violations in the Workload.
 	ComplianceStatus *GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus `json:"complianceStatus,omitempty"`

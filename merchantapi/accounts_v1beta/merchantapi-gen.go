@@ -3014,13 +3014,13 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PostalAddress: Represents a postal address (for example, for postal delivery
-// or payments addresses). Given a postal address, a postal service can deliver
-// items to a premise, P.O. box or similar. It is not intended to model
-// geographical locations (roads, towns, mountains). In typical usage, an
-// address would be created by user input or from importing existing data,
-// depending on the type of process. Advice on address input or editing: - Use
-// an internationalization-ready address widget such as
+// PostalAddress: Represents a postal address, such as for postal delivery or
+// payments addresses. With a postal address, a postal service can deliver
+// items to a premise, P.O. box, or similar. A postal address is not intended
+// to model geographical locations like roads, towns, or mountains. In typical
+// usage, an address would be created by user input or from importing existing
+// data, depending on the type of process. Advice on address input or editing:
+// - Use an internationalization-ready address widget such as
 // https://github.com/google/libaddressinput. - Users should not be presented
 // with UI elements for input or editing of fields outside countries where that
 // field is used. For more guidance on how to use this schema, see:
@@ -6300,7 +6300,9 @@ type AccountsGbpAccountsLinkGbpAccountCall struct {
 }
 
 // LinkGbpAccount: Link the specified merchant to a GBP account for all
-// countries.
+// countries. To run this method, you must have admin access to the Merchant
+// Center account. If you don't have admin access, the request fails with the
+// error message `User is not an administrator of account {ACCOUNT_ID}`.
 //
 //   - parent: The name of the parent resource to which the GBP account is
 //     linked. Format: `accounts/{account}`.

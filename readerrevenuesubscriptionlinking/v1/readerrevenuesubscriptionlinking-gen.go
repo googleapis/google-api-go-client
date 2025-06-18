@@ -215,6 +215,14 @@ type Reader struct {
 	// Name: Output only. The resource name of the reader. The last part of ppid in
 	// the resource name is the publisher provided id.
 	Name string `json:"name,omitempty"`
+	// OriginatingPublicationId: Output only. The SwG publication id that the
+	// reader's subscription linking was originating from.
+	OriginatingPublicationId string `json:"originatingPublicationId,omitempty"`
+	// Ppid: Output only. The publisher provided id of the reader.
+	Ppid string `json:"ppid,omitempty"`
+	// PublicationId: Output only. The SwG publication id that the reader has
+	// linked their subscription to.
+	PublicationId string `json:"publicationId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

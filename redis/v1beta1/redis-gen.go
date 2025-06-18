@@ -1076,6 +1076,7 @@ func (s CustomMetadataData) MarshalJSON() ([]byte, error) {
 
 // DatabaseResourceFeed: DatabaseResourceFeed is the top level proto to be used
 // to ingest different database resource level events into Condor platform.
+// Next ID: 8
 type DatabaseResourceFeed struct {
 	// FeedTimestamp: Required. Timestamp when feed is generated.
 	FeedTimestamp string `json:"feedTimestamp,omitempty"`
@@ -1135,6 +1136,9 @@ type DatabaseResourceHealthSignalData struct {
 	// about this signal can be obtained. In GCP, this will take user to SCC page
 	// to get more details about signals.
 	ExternalUri string `json:"externalUri,omitempty"`
+	// Location: This is used to identify the location of the resource. Example:
+	// "us-central1"
+	Location string `json:"location,omitempty"`
 	// Name: Required. The name of the signal, ex: PUBLIC_SQL_INSTANCE,
 	// SQL_LOG_ERROR_VERBOSITY etc.
 	Name string `json:"name,omitempty"`
@@ -1466,14 +1470,16 @@ type DatabaseResourceId struct {
 	// PROVIDER_OTHER.
 	ProviderDescription string `json:"providerDescription,omitempty"`
 	// ResourceType: Required. The type of resource this ID is identifying. Ex
-	// redis.googleapis.com/Instance, redis.googleapis.com/Cluster,
-	// alloydb.googleapis.com/Cluster, alloydb.googleapis.com/Instance,
-	// spanner.googleapis.com/Instance, spanner.googleapis.com/Database,
-	// firestore.googleapis.com/Database, sqladmin.googleapis.com/Instance,
-	// bigtableadmin.googleapis.com/Cluster, bigtableadmin.googleapis.com/Instance
+	// go/keep-sorted start alloydb.googleapis.com/Cluster,
+	// alloydb.googleapis.com/Instance, bigtableadmin.googleapis.com/Cluster,
+	// bigtableadmin.googleapis.com/Instance compute.googleapis.com/Instance
+	// firestore.googleapis.com/Database, redis.googleapis.com/Instance,
+	// redis.googleapis.com/Cluster,
 	// oracledatabase.googleapis.com/cloudExadataInfrastructures
 	// oracledatabase.googleapis.com/cloudVmClusters
-	// oracledatabase.googleapis.com/autonomousDatabases REQUIRED Please refer
+	// oracledatabase.googleapis.com/autonomousDatabases
+	// spanner.googleapis.com/Instance, spanner.googleapis.com/Database,
+	// sqladmin.googleapis.com/Instance, go/keep-sorted end REQUIRED Please refer
 	// go/condor-common-datamodel
 	ResourceType string `json:"resourceType,omitempty"`
 	// UniqueId: Required. A service-local token that distinguishes this resource
@@ -3376,6 +3382,7 @@ type Product struct {
 	//   "PRODUCT_TYPE_BIGTABLE" - Bigtable product area in GCP
 	//   "PRODUCT_TYPE_FIRESTORE" - Firestore product area in GCP.
 	//   "PRODUCT_TYPE_COMPUTE_ENGINE" - Compute Engine self managed databases
+	//   "PRODUCT_TYPE_ORACLE_ON_GCP" - Oracle product area in GCP
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type. This is
 	// to be when product type is known, but it is not present in this enum.
 	Type string `json:"type,omitempty"`
@@ -3510,7 +3517,8 @@ type PscConnection struct {
 	// Network: Required. The consumer network where the IP address resides, in the
 	// form of projects/{project_id}/global/networks/{network_id}.
 	Network string `json:"network,omitempty"`
-	// Port: Output only. The port number of the exposed discovery endpoint.
+	// Port: Output only. port will only be set for Primary/Reader or Discovery
+	// endpoint.
 	Port int64 `json:"port,omitempty"`
 	// ProjectId: Optional. Project ID of the consumer project where the forwarding
 	// rule is created in.

@@ -1070,6 +1070,49 @@ func (s AffectedResources) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AiModel: Contains information about the AI model associated with the
+// finding.
+type AiModel struct {
+	// DeploymentPlatform: The platform on which the model is deployed.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_PLATFORM_UNSPECIFIED" - Unspecified deployment platform.
+	//   "VERTEX_AI" - Vertex AI.
+	//   "GKE" - Google Kubernetes Engine.
+	DeploymentPlatform string `json:"deploymentPlatform,omitempty"`
+	// DisplayName: The user defined display name of model. Ex.
+	// baseline-classification-model
+	DisplayName string `json:"displayName,omitempty"`
+	// Domain: The domain of the model, for example, “image-classification”.
+	Domain string `json:"domain,omitempty"`
+	// Library: The name of the model library, for example, “transformers”.
+	Library string `json:"library,omitempty"`
+	// Location: The region in which the model is used, for example,
+	// “us-central1”.
+	Location string `json:"location,omitempty"`
+	// Name: The name of the AI model, for example, "gemini:1.0.0".
+	Name string `json:"name,omitempty"`
+	// Publisher: The publisher of the model, for example, “google” or
+	// “nvidia”.
+	Publisher string `json:"publisher,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeploymentPlatform") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeploymentPlatform") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AiModel) MarshalJSON() ([]byte, error) {
+	type NoMethod AiModel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Allowed: Allowed IP rule.
 type Allowed struct {
 	// IpRules: Optional. Optional list of allowed IP rules.
@@ -2821,6 +2864,34 @@ func (s Database) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Dataset: Vertex AI dataset associated with the finding.
+type Dataset struct {
+	// DisplayName: The user defined display name of dataset, e.g. plants-dataset
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Resource name of dataset, e.g.
+	// projects/{project}/locations/{location}/datasets/2094040236064505856
+	Name string `json:"name,omitempty"`
+	// Source: Data source, such as BigQuery source URI, e.g.
+	// bq://scc-nexus-test.AIPPtest.gsod
+	Source string `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Dataset) MarshalJSON() ([]byte, error) {
+	type NoMethod Dataset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Denied: Denied IP rule.
 type Denied struct {
 	// IpRules: Optional. Optional list of denied IP rules.
@@ -3323,6 +3394,8 @@ type Finding struct {
 	Access *Access `json:"access,omitempty"`
 	// AffectedResources: AffectedResources associated with the finding.
 	AffectedResources *AffectedResources `json:"affectedResources,omitempty"`
+	// AiModel: The AI model associated with the finding.
+	AiModel *AiModel `json:"aiModel,omitempty"`
 	// Application: Represents an application associated with the finding.
 	Application *Application `json:"application,omitempty"`
 	// AttackExposure: The results of an attack path simulation relevant to this
@@ -3580,6 +3653,8 @@ type Finding struct {
 	// combination. This field cannot be updated. Its value is ignored in all
 	// update requests.
 	ToxicCombination *ToxicCombination `json:"toxicCombination,omitempty"`
+	// VertexAi: VertexAi associated with the finding.
+	VertexAi *VertexAi `json:"vertexAi,omitempty"`
 	// Vulnerability: Represents vulnerability-specific fields like CVE and CVSS
 	// scores. CVE stands for Common Vulnerabilities and Exposures
 	// (https://cve.mitre.org/about/)
@@ -4971,6 +5046,49 @@ func (s GoogleCloudSecuritycenterV2AffectedResources) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2AiModel: Contains information about the AI model
+// associated with the finding.
+type GoogleCloudSecuritycenterV2AiModel struct {
+	// DeploymentPlatform: The platform on which the model is deployed.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_PLATFORM_UNSPECIFIED" - Unspecified deployment platform.
+	//   "VERTEX_AI" - Vertex AI.
+	//   "GKE" - Google Kubernetes Engine.
+	DeploymentPlatform string `json:"deploymentPlatform,omitempty"`
+	// DisplayName: The user defined display name of model. Ex.
+	// baseline-classification-model
+	DisplayName string `json:"displayName,omitempty"`
+	// Domain: The domain of the model, for example, “image-classification”.
+	Domain string `json:"domain,omitempty"`
+	// Library: The name of the model library, for example, “transformers”.
+	Library string `json:"library,omitempty"`
+	// Location: The region in which the model is used, for example,
+	// “us-central1”.
+	Location string `json:"location,omitempty"`
+	// Name: The name of the AI model, for example, "gemini:1.0.0".
+	Name string `json:"name,omitempty"`
+	// Publisher: The publisher of the model, for example, “google” or
+	// “nvidia”.
+	Publisher string `json:"publisher,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeploymentPlatform") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeploymentPlatform") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2AiModel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AiModel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2Allowed: Allowed IP rule.
 type GoogleCloudSecuritycenterV2Allowed struct {
 	// IpRules: Optional. Optional list of allowed IP rules.
@@ -6265,6 +6383,35 @@ func (s GoogleCloudSecuritycenterV2Database) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2Dataset: Vertex AI dataset associated with the
+// finding.
+type GoogleCloudSecuritycenterV2Dataset struct {
+	// DisplayName: The user defined display name of dataset, e.g. plants-dataset
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Resource name of dataset, e.g.
+	// projects/{project}/locations/{location}/datasets/2094040236064505856
+	Name string `json:"name,omitempty"`
+	// Source: Data source, such as BigQuery source URI, e.g.
+	// bq://scc-nexus-test.AIPPtest.gsod
+	Source string `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2Dataset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2Dataset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2Denied: Denied IP rule.
 type GoogleCloudSecuritycenterV2Denied struct {
 	// IpRules: Optional. Optional list of denied IP rules.
@@ -6639,6 +6786,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	Access *GoogleCloudSecuritycenterV2Access `json:"access,omitempty"`
 	// AffectedResources: AffectedResources associated with the finding.
 	AffectedResources *GoogleCloudSecuritycenterV2AffectedResources `json:"affectedResources,omitempty"`
+	// AiModel: The AI model associated with the finding.
+	AiModel *GoogleCloudSecuritycenterV2AiModel `json:"aiModel,omitempty"`
 	// Application: Represents an application associated with the finding.
 	Application *GoogleCloudSecuritycenterV2Application `json:"application,omitempty"`
 	// AttackExposure: The results of an attack path simulation relevant to this
@@ -6801,7 +6950,7 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// MuteUpdateTime: Output only. The most recent time this finding was muted or
 	// unmuted.
 	MuteUpdateTime string `json:"muteUpdateTime,omitempty"`
-	// Name: The relative resource name
+	// Name: Identifier. The relative resource name
 	// (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
 	// of the finding. The following list shows some examples: +
 	// `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
@@ -6913,6 +7062,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// combination. This field cannot be updated. Its value is ignored in all
 	// update requests.
 	ToxicCombination *GoogleCloudSecuritycenterV2ToxicCombination `json:"toxicCombination,omitempty"`
+	// VertexAi: VertexAi associated with the finding.
+	VertexAi *GoogleCloudSecuritycenterV2VertexAi `json:"vertexAi,omitempty"`
 	// Vulnerability: Represents vulnerability-specific fields like CVE and CVSS
 	// scores. CVE stands for Common Vulnerabilities and Exposures
 	// (https://cve.mitre.org/about/)
@@ -7951,7 +8102,9 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
 	//   "SUPPLY_CHAIN_COMPROMISE" - T1195
 	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
+	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
 	//   "USER_EXECUTION" - T1204
+	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
 	//   "DATA_ENCRYPTED_FOR_IMPACT" - T1486
@@ -7971,6 +8124,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
 	//   "SHORTCUT_MODIFICATION" - T1547.009
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID" - T1548.001
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING" - T1548.003
 	//   "UNSECURED_CREDENTIALS" - T1552
 	//   "CREDENTIALS_IN_FILES" - T1552.001
@@ -8114,7 +8268,9 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
 	//   "SUPPLY_CHAIN_COMPROMISE" - T1195
 	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
+	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
 	//   "USER_EXECUTION" - T1204
+	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
 	//   "DATA_ENCRYPTED_FOR_IMPACT" - T1486
@@ -8134,6 +8290,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
 	//   "SHORTCUT_MODIFICATION" - T1547.009
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID" - T1548.001
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING" - T1548.003
 	//   "UNSECURED_CREDENTIALS" - T1552
 	//   "CREDENTIALS_IN_FILES" - T1552.001
@@ -8517,6 +8674,33 @@ type GoogleCloudSecuritycenterV2Package struct {
 
 func (s GoogleCloudSecuritycenterV2Package) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Package
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2Pipeline: Vertex AI training pipeline associated
+// with the finding.
+type GoogleCloudSecuritycenterV2Pipeline struct {
+	// DisplayName: The user defined display name of pipeline, e.g.
+	// plants-classification
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Resource name of pipeline, e.g.
+	// projects/{project}/locations/{location}/trainingPipelines/5253428229225578496
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2Pipeline) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2Pipeline
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9366,6 +9550,31 @@ func (s *GoogleCloudSecuritycenterV2ToxicCombination) UnmarshalJSON(data []byte)
 	}
 	s.AttackExposureScore = float64(s1.AttackExposureScore)
 	return nil
+}
+
+// GoogleCloudSecuritycenterV2VertexAi: Vertex AI-related information
+// associated with the finding.
+type GoogleCloudSecuritycenterV2VertexAi struct {
+	// Datasets: Datasets associated with the finding.
+	Datasets []*GoogleCloudSecuritycenterV2Dataset `json:"datasets,omitempty"`
+	// Pipelines: Pipelines associated with the finding.
+	Pipelines []*GoogleCloudSecuritycenterV2Pipeline `json:"pipelines,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Datasets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Datasets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2VertexAi) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2VertexAi
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Vulnerability: Refers to common vulnerability
@@ -10787,7 +10996,9 @@ type MitreAttack struct {
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
 	//   "SUPPLY_CHAIN_COMPROMISE" - T1195
 	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
+	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
 	//   "USER_EXECUTION" - T1204
+	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
 	//   "DATA_ENCRYPTED_FOR_IMPACT" - T1486
@@ -10807,6 +11018,7 @@ type MitreAttack struct {
 	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
 	//   "SHORTCUT_MODIFICATION" - T1547.009
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID" - T1548.001
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING" - T1548.003
 	//   "UNSECURED_CREDENTIALS" - T1552
 	//   "CREDENTIALS_IN_FILES" - T1552.001
@@ -10950,7 +11162,9 @@ type MitreAttack struct {
 	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
 	//   "SUPPLY_CHAIN_COMPROMISE" - T1195
 	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
+	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
 	//   "USER_EXECUTION" - T1204
+	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
 	//   "DATA_ENCRYPTED_FOR_IMPACT" - T1486
@@ -10970,6 +11184,7 @@ type MitreAttack struct {
 	//   "KERNEL_MODULES_AND_EXTENSIONS" - T1547.006
 	//   "SHORTCUT_MODIFICATION" - T1547.009
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SETUID_AND_SETGID" - T1548.001
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM_SUDO_AND_SUDO_CACHING" - T1548.003
 	//   "UNSECURED_CREDENTIALS" - T1552
 	//   "CREDENTIALS_IN_FILES" - T1552.001
@@ -11401,6 +11616,32 @@ type PathNodeAssociatedFinding struct {
 
 func (s PathNodeAssociatedFinding) MarshalJSON() ([]byte, error) {
 	type NoMethod PathNodeAssociatedFinding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Pipeline: Vertex AI training pipeline associated with the finding.
+type Pipeline struct {
+	// DisplayName: The user defined display name of pipeline, e.g.
+	// plants-classification
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Resource name of pipeline, e.g.
+	// projects/{project}/locations/{location}/trainingPipelines/5253428229225578496
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Pipeline) MarshalJSON() ([]byte, error) {
+	type NoMethod Pipeline
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12851,6 +13092,30 @@ func (s *ValuedResource) UnmarshalJSON(data []byte) error {
 	}
 	s.ExposedScore = float64(s1.ExposedScore)
 	return nil
+}
+
+// VertexAi: Vertex AI-related information associated with the finding.
+type VertexAi struct {
+	// Datasets: Datasets associated with the finding.
+	Datasets []*Dataset `json:"datasets,omitempty"`
+	// Pipelines: Pipelines associated with the finding.
+	Pipelines []*Pipeline `json:"pipelines,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Datasets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Datasets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VertexAi) MarshalJSON() ([]byte, error) {
+	type NoMethod VertexAi
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Vulnerability: Refers to common vulnerability fields e.g. cve, cvss, cwe

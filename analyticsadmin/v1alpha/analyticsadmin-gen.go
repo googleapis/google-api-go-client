@@ -5180,7 +5180,7 @@ type GoogleAnalyticsAdminV1alphaListSubpropertySyncConfigsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
 	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// SubpropertySyncConfigs: List of Subproperty Sync Configs.
+	// SubpropertySyncConfigs: List of `SubpropertySyncConfig` resources.
 	SubpropertySyncConfigs []*GoogleAnalyticsAdminV1alphaSubpropertySyncConfig `json:"subpropertySyncConfigs,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5607,9 +5607,9 @@ type GoogleAnalyticsAdminV1alphaProvisionSubpropertyRequest struct {
 	//   "SYNCHRONIZATION_MODE_UNSPECIFIED" - Synchronization mode unknown or not
 	// specified.
 	//   "NONE" - Entities are not synchronized. Local edits are allowed on the
-	// Subproperty.
-	//   "ALL" - Entities are synchronized from Parent Property. Local mutations
-	// are not allowed on the Subproperty (Create / Update / Delete)
+	// subproperty.
+	//   "ALL" - Entities are synchronized from parent property. Local mutations
+	// are not allowed on the subproperty (Create / Update / Delete)
 	CustomDimensionAndMetricSynchronizationMode string `json:"customDimensionAndMetricSynchronizationMode,omitempty"`
 	// Subproperty: Required. The subproperty to create.
 	Subproperty *GoogleAnalyticsAdminV1alphaProperty `json:"subproperty,omitempty"`
@@ -6400,14 +6400,14 @@ func (s GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpressionList) Marshal
 // are synchronized to subproperties. This resource is provisioned
 // automatically for each subproperty.
 type GoogleAnalyticsAdminV1alphaSubpropertySyncConfig struct {
-	// ApplyToProperty: Output only. Immutable. Resource name of the Subproperty
+	// ApplyToProperty: Output only. Immutable. Resource name of the subproperty
 	// that these settings apply to.
 	ApplyToProperty string `json:"applyToProperty,omitempty"`
 	// CustomDimensionAndMetricSyncMode: Required. Specifies the Custom Dimension /
-	// Metric synchronization mode for the Subproperty. If set to ALL, Custom
+	// Metric synchronization mode for the subproperty. If set to ALL, Custom
 	// Dimension / Metric synchronization will be immediately enabled. Local
 	// configuration of Custom Dimensions / Metrics will not be allowed on the
-	// Subproperty so long as the synchronization mode is set to ALL. If set to
+	// subproperty so long as the synchronization mode is set to ALL. If set to
 	// NONE, Custom Dimensions / Metric synchronization is disabled. Custom
 	// Dimensions / Metrics must be configured explicitly on the Subproperty.
 	//
@@ -6415,9 +6415,9 @@ type GoogleAnalyticsAdminV1alphaSubpropertySyncConfig struct {
 	//   "SYNCHRONIZATION_MODE_UNSPECIFIED" - Synchronization mode unknown or not
 	// specified.
 	//   "NONE" - Entities are not synchronized. Local edits are allowed on the
-	// Subproperty.
-	//   "ALL" - Entities are synchronized from Parent Property. Local mutations
-	// are not allowed on the Subproperty (Create / Update / Delete)
+	// subproperty.
+	//   "ALL" - Entities are synchronized from parent property. Local mutations
+	// are not allowed on the subproperty (Create / Update / Delete)
 	CustomDimensionAndMetricSyncMode string `json:"customDimensionAndMetricSyncMode,omitempty"`
 	// Name: Output only. Identifier. Format:
 	// properties/{ordinary_property_id}/subpropertySyncConfigs/{subproperty_id}
@@ -25572,7 +25572,7 @@ type PropertiesSubpropertySyncConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Lookup for a single Subproperty Sync Config.
+// Get: Lookup for a single `SubpropertySyncConfig`.
 //
 //   - name: Resource name of the SubpropertySyncConfig to lookup. Format:
 //     properties/{ordinary_property_id}/subpropertySyncConfigs/{subproperty_id}
@@ -25684,7 +25684,7 @@ type PropertiesSubpropertySyncConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: List all Subproperty Sync Configs on a property.
+// List: List all `SubpropertySyncConfig` resources for a property.
 //
 //   - parent: Resource name of the property. Format: properties/property_id
 //     Example: properties/123.
@@ -25836,7 +25836,7 @@ type PropertiesSubpropertySyncConfigsPatchCall struct {
 	header_                                          http.Header
 }
 
-// Patch: Updates a Subproperty Sync Config.
+// Patch: Updates a `SubpropertySyncConfig`.
 //
 //   - name: Output only. Identifier. Format:
 //     properties/{ordinary_property_id}/subpropertySyncConfigs/{subproperty_id}

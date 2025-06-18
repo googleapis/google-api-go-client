@@ -269,6 +269,7 @@ type AudioConfig struct {
 	//   "PCM" - Uncompressed 16-bit signed little-endian samples (Linear PCM).
 	// Note that as opposed to LINEAR16, audio won't be wrapped in a WAV (or any
 	// other) header.
+	//   "M4A" - M4A audio.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 	// EffectsProfileId: Optional. Input only. An identifier which selects 'audio
 	// effects' profiles that are applied on (post synthesized) text to speech.

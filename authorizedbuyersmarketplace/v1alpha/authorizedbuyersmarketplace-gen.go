@@ -785,8 +785,9 @@ type DataSegment struct {
 	// CreateTime: Output only. Time the data segment was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Name: Immutable. Identifier. The unique identifier for the data segment.
-	// Account ID corresponds to the account ID that created the segment. Format:
-	// `buyers/{accountId}/dataSegments/{curatorDataSegmentId}`
+	// Account ID corresponds to the account ID that created the segment. v1alpha
+	// format: `buyers/{accountId}/dataSegments/{curatorDataSegmentId}` v1beta
+	// format: `curators/{curatorAccountId}/dataSegments/{curatorDataSegmentId}`
 	Name string `json:"name,omitempty"`
 	// State: Output only. The state of the data segment.
 	//
@@ -4998,8 +4999,9 @@ type BuyersDataSegmentsActivateCall struct {
 
 // Activate: Activates a data segment.
 //
-//   - name: Name of data segment to activate. Format:
-//     `buyers/{accountId}/dataSegments/{curatorDataSegmentId}`.
+//   - name: Name of data segment to activate. v1alpha format:
+//     `buyers/{accountId}/dataSegments/{curatorDataSegmentId}` v1beta format:
+//     `curators/{accountId}/dataSegments/{curatorDataSegmentId}`.
 func (r *BuyersDataSegmentsService) Activate(name string, activatedatasegmentrequest *ActivateDataSegmentRequest) *BuyersDataSegmentsActivateCall {
 	c := &BuyersDataSegmentsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5106,7 +5108,7 @@ type BuyersDataSegmentsCreateCall struct {
 // auction packages.
 //
 //   - parent: The parent resource where this data segment will be created.
-//     Format: `buyers/{accountId}`.
+//     v1alpha format: `buyers/{accountId}` v1beta format: `curators/{accountId}`.
 func (r *BuyersDataSegmentsService) Create(parent string, datasegment *DataSegment) *BuyersDataSegmentsCreateCall {
 	c := &BuyersDataSegmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5209,8 +5211,9 @@ type BuyersDataSegmentsDeactivateCall struct {
 
 // Deactivate: Deactivates a data segment.
 //
-//   - name: Name of data segment to deactivate. Format:
-//     `buyers/{accountId}/dataSegments/{curatorDataSegmentId}`.
+//   - name: Name of data segment to deactivate. v1alpha format:
+//     `buyers/{accountId}/dataSegments/{curatorDataSegmentId}` v1beta format:
+//     `curators/{accountId}/dataSegments/{curatorDataSegmentId}`.
 func (r *BuyersDataSegmentsService) Deactivate(name string, deactivatedatasegmentrequest *DeactivateDataSegmentRequest) *BuyersDataSegmentsDeactivateCall {
 	c := &BuyersDataSegmentsDeactivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5313,8 +5316,9 @@ type BuyersDataSegmentsGetCall struct {
 
 // Get: Gets a data segment given its name.
 //
-//   - name: Name of data segment to get. Format:
-//     `buyers/{accountId}/dataSegments/{curatorDataSegmentId}`.
+//   - name: Name of data segment to get. v1alpha format:
+//     `buyers/{accountId}/dataSegments/{curatorDataSegmentId}` v1beta format:
+//     `curators/{accountId}/dataSegments/{curatorDataSegmentId}`.
 func (r *BuyersDataSegmentsService) Get(name string) *BuyersDataSegmentsGetCall {
 	c := &BuyersDataSegmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5423,8 +5427,8 @@ type BuyersDataSegmentsListCall struct {
 
 // List: List the data segments owned by a curator.
 //
-//   - parent: Name of the parent buyer that can access the data segment. Format:
-//     `buyers/{accountId}`.
+//   - parent: Name of the parent curator that can access the data segment.
+//     v1alpha format: `buyers/{accountId}` v1beta format: `curators/{accountId}`.
 func (r *BuyersDataSegmentsService) List(parent string) *BuyersDataSegmentsListCall {
 	c := &BuyersDataSegmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5571,8 +5575,9 @@ type BuyersDataSegmentsPatchCall struct {
 // Patch: Updates a data segment.
 //
 //   - name: Immutable. Identifier. The unique identifier for the data segment.
-//     Account ID corresponds to the account ID that created the segment. Format:
-//     `buyers/{accountId}/dataSegments/{curatorDataSegmentId}`.
+//     Account ID corresponds to the account ID that created the segment. v1alpha
+//     format: `buyers/{accountId}/dataSegments/{curatorDataSegmentId}` v1beta
+//     format: `curators/{curatorAccountId}/dataSegments/{curatorDataSegmentId}`.
 func (r *BuyersDataSegmentsService) Patch(nameid string, datasegment *DataSegment) *BuyersDataSegmentsPatchCall {
 	c := &BuyersDataSegmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid

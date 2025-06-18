@@ -3924,6 +3924,39 @@ func (s GoogleCloudRetailV2betaControl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2betaConversationalSearchCustomizationConfig: The public
+// proto to represent the conversational search customization config. It will
+// be converted to the internal proto in the backend.
+type GoogleCloudRetailV2betaConversationalSearchCustomizationConfig struct {
+	// Catalog: Required. Resource name of the catalog. Format:
+	// projects/{project}/locations/{location}/catalogs/{catalog}
+	Catalog string `json:"catalog,omitempty"`
+	// IntentClassificationConfig: Optional. The configs for intent classification.
+	IntentClassificationConfig *GoogleCloudRetailV2betaIntentClassificationConfig `json:"intentClassificationConfig,omitempty"`
+	// RetailerDisplayName: Optional. The retailer's display name that could be
+	// used in our LLM answers. Example - "Google"
+	RetailerDisplayName string `json:"retailerDisplayName,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Catalog") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Catalog") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaConversationalSearchCustomizationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaConversationalSearchCustomizationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaCreateModelMetadata: Metadata associated with a
 // create operation.
 type GoogleCloudRetailV2betaCreateModelMetadata struct {
@@ -4892,6 +4925,73 @@ type GoogleCloudRetailV2betaImportUserEventsResponse struct {
 
 func (s GoogleCloudRetailV2betaImportUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaImportUserEventsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaIntentClassificationConfig: The public proto to
+// represent the intent classification config. It will be converted to the
+// internal proto in the backend.
+type GoogleCloudRetailV2betaIntentClassificationConfig struct {
+	// BlocklistKeywords: Optional. A list of keywords that will be used to
+	// classify the query to the "BLOCKLISTED" intent type. The keywords are case
+	// insensitive.
+	BlocklistKeywords []string `json:"blocklistKeywords,omitempty"`
+	// DisabledIntentTypes: Optional. A list of intent types that will be disabled
+	// for this customer. The intent types must match one of the predefined intent
+	// types defined at
+	// https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2alpha#querytype
+	DisabledIntentTypes []string `json:"disabledIntentTypes,omitempty"`
+	// Example: Optional. A list of examples for intent classification.
+	Example []*GoogleCloudRetailV2betaIntentClassificationConfigExample `json:"example,omitempty"`
+	// ModelPreamble: Optional. Customers can use the preamble to specify any
+	// requirements for blocklisting intent classification. This preamble will be
+	// added to the blocklisting intent classification model prompt.
+	ModelPreamble string `json:"modelPreamble,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BlocklistKeywords") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BlocklistKeywords") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaIntentClassificationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaIntentClassificationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaIntentClassificationConfigExample: An example for
+// intent classification.
+type GoogleCloudRetailV2betaIntentClassificationConfigExample struct {
+	// IntentType: Optional. The intent_type must match one of the predefined
+	// intent types defined at
+	// https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2alpha#querytype
+	IntentType string `json:"intentType,omitempty"`
+	// Query: Required. Example query.
+	Query string `json:"query,omitempty"`
+	// Reason: Optional. The reason for the intent classification. This is used to
+	// explain the intent classification decision.
+	Reason string `json:"reason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IntentType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IntentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaIntentClassificationConfigExample) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaIntentClassificationConfigExample
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8022,9 +8122,9 @@ type GoogleCloudRetailV2betaSearchRequestQueryExpansionSpec struct {
 	// used, even if SearchResponse.total_size is zero.
 	//   "AUTO" - Automatic query expansion built by Google Retail Search.
 	Condition string `json:"condition,omitempty"`
-	// PinUnexpandedResults: Whether to pin unexpanded results. If this field is
-	// set to true, unexpanded products are always at the top of the search
-	// results, followed by the expanded results.
+	// PinUnexpandedResults: Whether to pin unexpanded results. The default value
+	// is false. If this field is set to true, unexpanded products are always at
+	// the top of the search results, followed by the expanded results.
 	PinUnexpandedResults bool `json:"pinUnexpandedResults,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8954,7 +9054,7 @@ type GoogleCloudRetailV2betaUserEvent struct {
 	SearchQuery string `json:"searchQuery,omitempty"`
 	// SessionId: A unique identifier for tracking a visitor session with a length
 	// limit of 128 bytes. A session is an aggregation of an end user behavior in a
-	// time span. A general guideline to populate the sesion_id: 1. If user has no
+	// time span. A general guideline to populate the session_id: 1. If user has no
 	// activity for 30 min, a new session_id should be assigned. 2. The session_id
 	// should be unique across users, suggest use uuid or add visitor_id as prefix.
 	SessionId string `json:"sessionId,omitempty"`
@@ -10042,6 +10142,118 @@ func (c *ProjectsLocationsCatalogsGetCompletionConfigCall) Do(opts ...googleapi.
 	return ret, nil
 }
 
+type ProjectsLocationsCatalogsGetConversationalSearchCustomizationConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetConversationalSearchCustomizationConfig: Returns the conversational
+// search customization config for a given catalog.
+//
+//   - name: Resource name of the parent catalog. Format:
+//     projects/{project}/locations/{location}/catalogs/{catalog}.
+func (r *ProjectsLocationsCatalogsService) GetConversationalSearchCustomizationConfig(name string) *ProjectsLocationsCatalogsGetConversationalSearchCustomizationConfigCall {
+	c := &ProjectsLocationsCatalogsGetConversationalSearchCustomizationConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCatalogsGetConversationalSearchCustomizationConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsGetConversationalSearchCustomizationConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCatalogsGetConversationalSearchCustomizationConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsGetConversationalSearchCustomizationConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCatalogsGetConversationalSearchCustomizationConfigCall) Context(ctx context.Context) *ProjectsLocationsCatalogsGetConversationalSearchCustomizationConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCatalogsGetConversationalSearchCustomizationConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsGetConversationalSearchCustomizationConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}/conversationalSearchCustomizationConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "retail.projects.locations.catalogs.getConversationalSearchCustomizationConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.getConversationalSearchCustomizationConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRetailV2betaConversationalSearchCustomizationConfig.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsGetConversationalSearchCustomizationConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2betaConversationalSearchCustomizationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2betaConversationalSearchCustomizationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "retail.projects.locations.catalogs.getConversationalSearchCustomizationConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsCatalogsGetDefaultBranchCall struct {
 	s            *Service
 	catalog      string
@@ -10889,6 +11101,120 @@ func (c *ProjectsLocationsCatalogsUpdateCompletionConfigCall) Do(opts ...googlea
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "retail.projects.locations.catalogs.updateCompletionConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCatalogsUpdateConversationalSearchCustomizationConfigCall struct {
+	s                                                              *Service
+	catalog                                                        string
+	googlecloudretailv2betaconversationalsearchcustomizationconfig *GoogleCloudRetailV2betaConversationalSearchCustomizationConfig
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// UpdateConversationalSearchCustomizationConfig: Updates the conversational
+// search customization config for a given catalog.
+//
+//   - catalog: Resource name of the catalog. Format:
+//     projects/{project}/locations/{location}/catalogs/{catalog}.
+func (r *ProjectsLocationsCatalogsService) UpdateConversationalSearchCustomizationConfig(catalog string, googlecloudretailv2betaconversationalsearchcustomizationconfig *GoogleCloudRetailV2betaConversationalSearchCustomizationConfig) *ProjectsLocationsCatalogsUpdateConversationalSearchCustomizationConfigCall {
+	c := &ProjectsLocationsCatalogsUpdateConversationalSearchCustomizationConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.catalog = catalog
+	c.googlecloudretailv2betaconversationalsearchcustomizationconfig = googlecloudretailv2betaconversationalsearchcustomizationconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Indicates which fields
+// in the provided ConversationalSearchCustomizationConfig to update. If not
+// set or empty, all supported fields are updated.
+func (c *ProjectsLocationsCatalogsUpdateConversationalSearchCustomizationConfigCall) UpdateMask(updateMask string) *ProjectsLocationsCatalogsUpdateConversationalSearchCustomizationConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCatalogsUpdateConversationalSearchCustomizationConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsUpdateConversationalSearchCustomizationConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCatalogsUpdateConversationalSearchCustomizationConfigCall) Context(ctx context.Context) *ProjectsLocationsCatalogsUpdateConversationalSearchCustomizationConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCatalogsUpdateConversationalSearchCustomizationConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsUpdateConversationalSearchCustomizationConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudretailv2betaconversationalsearchcustomizationconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+catalog}/conversationalSearchCustomizationConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"catalog": c.catalog,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "retail.projects.locations.catalogs.updateConversationalSearchCustomizationConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.updateConversationalSearchCustomizationConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRetailV2betaConversationalSearchCustomizationConfig.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsUpdateConversationalSearchCustomizationConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2betaConversationalSearchCustomizationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2betaConversationalSearchCustomizationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "retail.projects.locations.catalogs.updateConversationalSearchCustomizationConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

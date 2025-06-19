@@ -103,6 +103,15 @@ const mtlsBasePath = "https://workspaceevents.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// On their own behalf, apps in Google Chat can see, add, update, and remove
+	// members from conversations and spaces
+	ChatAppMembershipsScope = "https://www.googleapis.com/auth/chat.app.memberships"
+
+	// On their own behalf, apps in Google Chat can create conversations and spaces
+	// and see or update their metadata (including history settings and access
+	// settings)
+	ChatAppSpacesScope = "https://www.googleapis.com/auth/chat.app.spaces"
+
 	// Private Service: https://www.googleapis.com/auth/chat.bot
 	ChatBotScope = "https://www.googleapis.com/auth/chat.bot"
 
@@ -161,6 +170,8 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/chat.app.memberships",
+		"https://www.googleapis.com/auth/chat.app.spaces",
 		"https://www.googleapis.com/auth/chat.bot",
 		"https://www.googleapis.com/auth/chat.memberships",
 		"https://www.googleapis.com/auth/chat.memberships.readonly",

@@ -2753,8 +2753,8 @@ type MachineImageTargetDetails struct {
 	// based on the source machine image configurations.
 	MachineImageParametersOverrides *MachineImageParametersOverrides `json:"machineImageParametersOverrides,omitempty"`
 	// NetworkInterfaces: Optional. The network interfaces to create with the
-	// instance created by the machine image. Internal and external IP addresses
-	// are ignored for machine image import.
+	// instance created by the machine image. Internal and external IP addresses,
+	// and network tiers are ignored for machine image import.
 	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty"`
 	// OsAdaptationParameters: Optional. Use to set the parameters relevant for the
 	// OS adaptation process.

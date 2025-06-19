@@ -833,6 +833,9 @@ type SignatureInfo struct {
 	// Signature Algorithm, at security level 3. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
 	// digital signature algorithm, at security level 1. Randomized version.
+	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
+	// hash-based digital signature algorithm, at security level 1. Randomized
+	// pre-hash version supporting SHA256 digests.
 	GoogleKeyAlgorithm string `json:"googleKeyAlgorithm,omitempty"`
 	// GooglePublicKeyPem: The public key for the Google default signing, encoded
 	// in PEM format. The signature was created using a private key which may be

@@ -1628,6 +1628,291 @@ func (s GoogleCloudPolicysimulatorV1ResourceContext) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPolicysimulatorV1betaCreateOrgPolicyViolationsPreviewOperationMeta
+// data: CreateOrgPolicyViolationsPreviewOperationMetadata is metadata about an
+// OrgPolicyViolationsPreview generations operation.
+type GoogleCloudPolicysimulatorV1betaCreateOrgPolicyViolationsPreviewOperationMetadata struct {
+	// RequestTime: Time when the request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+	// ResourcesFound: Total number of resources that need scanning. Should equal
+	// resource_scanned + resources_pending
+	ResourcesFound int64 `json:"resourcesFound,omitempty"`
+	// ResourcesPending: Number of resources still to scan.
+	ResourcesPending int64 `json:"resourcesPending,omitempty"`
+	// ResourcesScanned: Number of resources already scanned.
+	ResourcesScanned int64 `json:"resourcesScanned,omitempty"`
+	// StartTime: Time when the request started processing, i.e., when the state
+	// was set to RUNNING.
+	StartTime string `json:"startTime,omitempty"`
+	// State: Output only. The current state of the operation.
+	//
+	// Possible values:
+	//   "PREVIEW_STATE_UNSPECIFIED" - The state is unspecified.
+	//   "PREVIEW_PENDING" - The OrgPolicyViolationsPreview has not been created
+	// yet.
+	//   "PREVIEW_RUNNING" - The OrgPolicyViolationsPreview is currently being
+	// created.
+	//   "PREVIEW_SUCCEEDED" - The OrgPolicyViolationsPreview creation finished
+	// successfully.
+	//   "PREVIEW_FAILED" - The OrgPolicyViolationsPreview creation failed with an
+	// error.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicysimulatorV1betaCreateOrgPolicyViolationsPreviewOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicysimulatorV1betaCreateOrgPolicyViolationsPreviewOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPolicysimulatorV1betaGenerateOrgPolicyViolationsPreviewOperationMe
+// tadata: GenerateOrgPolicyViolationsPreviewOperationMetadata is metadata
+// about an OrgPolicyViolationsPreview generations operation.
+type GoogleCloudPolicysimulatorV1betaGenerateOrgPolicyViolationsPreviewOperationMetadata struct {
+	// RequestTime: Time when the request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+	// ResourcesFound: Total number of resources that need scanning. Should equal
+	// resource_scanned + resources_pending
+	ResourcesFound int64 `json:"resourcesFound,omitempty"`
+	// ResourcesPending: Number of resources still to scan.
+	ResourcesPending int64 `json:"resourcesPending,omitempty"`
+	// ResourcesScanned: Number of resources already scanned.
+	ResourcesScanned int64 `json:"resourcesScanned,omitempty"`
+	// StartTime: Time when the request started processing, i.e. when the state was
+	// set to RUNNING.
+	StartTime string `json:"startTime,omitempty"`
+	// State: The current state of the operation.
+	//
+	// Possible values:
+	//   "PREVIEW_STATE_UNSPECIFIED" - The state is unspecified.
+	//   "PREVIEW_PENDING" - The OrgPolicyViolationsPreview has not been created
+	// yet.
+	//   "PREVIEW_RUNNING" - The OrgPolicyViolationsPreview is currently being
+	// created.
+	//   "PREVIEW_SUCCEEDED" - The OrgPolicyViolationsPreview creation finished
+	// successfully.
+	//   "PREVIEW_FAILED" - The OrgPolicyViolationsPreview creation failed with an
+	// error.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicysimulatorV1betaGenerateOrgPolicyViolationsPreviewOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicysimulatorV1betaGenerateOrgPolicyViolationsPreviewOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay: The proposed changes to
+// OrgPolicy.
+type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay struct {
+	// CustomConstraints: Optional. The OrgPolicy CustomConstraint changes to
+	// preview violations for. Any existing CustomConstraints with the same name
+	// will be overridden in the simulation. That is, violations will be determined
+	// as if all custom constraints in the overlay were instantiated. Only a single
+	// custom_constraint is supported in the overlay at a time. For evaluating
+	// multiple constraints, multiple `GenerateOrgPolicyViolationsPreview` requests
+	// are made, where each request evaluates a single constraint.
+	CustomConstraints []*GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay `json:"customConstraints,omitempty"`
+	// Policies: Optional. The OrgPolicy changes to preview violations for. Any
+	// existing OrgPolicies with the same name will be overridden in the
+	// simulation. That is, violations will be determined as if all policies in the
+	// overlay were created or updated.
+	Policies []*GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay `json:"policies,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomConstraints") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomConstraints") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay: A
+// change to an OrgPolicy custom constraint.
+type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay struct {
+	// CustomConstraint: Optional. The new or updated custom constraint.
+	CustomConstraint *GoogleCloudOrgpolicyV2CustomConstraint `json:"customConstraint,omitempty"`
+	// CustomConstraintParent: Optional. Resource the constraint is attached to.
+	// Example: "organization/987654"
+	CustomConstraintParent string `json:"customConstraintParent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomConstraint") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomConstraint") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay: A change to
+// an OrgPolicy.
+type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay struct {
+	// Policy: Optional. The new or updated OrgPolicy.
+	Policy *GoogleCloudOrgpolicyV2Policy `json:"policy,omitempty"`
+	// PolicyParent: Optional. The parent of the policy we are attaching to.
+	// Example: "projects/123456"
+	PolicyParent string `json:"policyParent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview:
+// OrgPolicyViolationsPreview is a resource providing a preview of the
+// violations that will exist if an OrgPolicy change is made. The list of
+// violations are modeled as child resources and retrieved via a
+// ListOrgPolicyViolations API call. There are potentially more
+// OrgPolicyViolations than could fit in an embedded field. Thus, the use of a
+// child resource instead of a field.
+type GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview struct {
+	// CreateTime: Output only. Time when this `OrgPolicyViolationsPreview` was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// CustomConstraints: Output only. The names of the constraints against which
+	// all `OrgPolicyViolations` were evaluated. If `OrgPolicyOverlay` only
+	// contains `PolicyOverlay` then it contains the name of the configured custom
+	// constraint, applicable to the specified policies. Otherwise it contains the
+	// name of the constraint specified in `CustomConstraintOverlay`. Format:
+	// `organizations/{organization_id}/customConstraints/{custom_constraint_id}`
+	// Example: `organizations/123/customConstraints/custom.createOnlyE2TypeVms`
+	CustomConstraints []string `json:"customConstraints,omitempty"`
+	// Name: Output only. The resource name of the `OrgPolicyViolationsPreview`. It
+	// has the following format:
+	// `organizations/{organization}/locations/{location}/orgPolicyViolationsPreview
+	// s/{orgPolicyViolationsPreview}` Example:
+	// `organizations/my-example-org/locations/global/orgPolicyViolationsPreviews/50
+	// 6a5f7f`
+	Name string `json:"name,omitempty"`
+	// Overlay: Required. The proposed changes we are previewing violations for.
+	Overlay *GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay `json:"overlay,omitempty"`
+	// ResourceCounts: Output only. A summary of the state of all resources scanned
+	// for compliance with the changed OrgPolicy.
+	ResourceCounts *GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts `json:"resourceCounts,omitempty"`
+	// State: Output only. The state of the `OrgPolicyViolationsPreview`.
+	//
+	// Possible values:
+	//   "PREVIEW_STATE_UNSPECIFIED" - The state is unspecified.
+	//   "PREVIEW_PENDING" - The OrgPolicyViolationsPreview has not been created
+	// yet.
+	//   "PREVIEW_RUNNING" - The OrgPolicyViolationsPreview is currently being
+	// created.
+	//   "PREVIEW_SUCCEEDED" - The OrgPolicyViolationsPreview creation finished
+	// successfully.
+	//   "PREVIEW_FAILED" - The OrgPolicyViolationsPreview creation failed with an
+	// error.
+	State string `json:"state,omitempty"`
+	// ViolationsCount: Output only. The number of OrgPolicyViolations in this
+	// `OrgPolicyViolationsPreview`. This count may differ from
+	// `resource_summary.noncompliant_count` because each OrgPolicyViolation is
+	// specific to a resource **and** constraint. If there are multiple constraints
+	// being evaluated (i.e. multiple policies in the overlay), a single resource
+	// may violate multiple constraints.
+	ViolationsCount int64 `json:"violationsCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts: A
+// summary of the state of all resources scanned for compliance with the
+// changed OrgPolicy.
+type GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts struct {
+	// Compliant: Output only. Number of scanned resources with zero violations.
+	Compliant int64 `json:"compliant,omitempty"`
+	// Errors: Output only. Number of resources that returned an error when
+	// scanned.
+	Errors int64 `json:"errors,omitempty"`
+	// Noncompliant: Output only. Number of scanned resources with at least one
+	// violation.
+	Noncompliant int64 `json:"noncompliant,omitempty"`
+	// Scanned: Output only. Number of resources checked for compliance. Must
+	// equal: unenforced + noncompliant + compliant + error
+	Scanned int64 `json:"scanned,omitempty"`
+	// Unenforced: Output only. Number of resources where the constraint was not
+	// enforced, i.e. the Policy set `enforced: false` for that resource.
+	Unenforced int64 `json:"unenforced,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Compliant") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Compliant") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleIamV1AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must have one

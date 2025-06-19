@@ -1377,6 +1377,35 @@ func (s ApplicationPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ApplicationPolicyChange: A change to be made to a single ApplicationPolicy
+// object.
+type ApplicationPolicyChange struct {
+	// Application: If ApplicationPolicy.packageName matches an existing
+	// ApplicationPolicy object within the Policy being modified, then that object
+	// will be updated. Otherwise, it will be added to the end of the
+	// Policy.applications.
+	Application *ApplicationPolicy `json:"application,omitempty"`
+	// UpdateMask: The field mask indicating the fields to update. If omitted, all
+	// modifiable fields are updated.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Application") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Application") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApplicationPolicyChange) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplicationPolicyChange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ApplicationReport: Information reported about an installed app.
 type ApplicationReport struct {
 	// ApplicationSource: The source of the package.
@@ -4783,6 +4812,56 @@ func (s MigrationToken) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ModifyPolicyApplicationsRequest: Request to update or create
+// ApplicationPolicy objects in the given Policy.
+type ModifyPolicyApplicationsRequest struct {
+	// Changes: Required. The changes to be made to the ApplicationPolicy objects.
+	// There must be at least one ApplicationPolicyChange.
+	Changes []*ApplicationPolicyChange `json:"changes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Changes") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Changes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ModifyPolicyApplicationsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ModifyPolicyApplicationsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ModifyPolicyApplicationsResponse: Response to a request to update or create
+// ApplicationPolicy objects in the given policy.
+type ModifyPolicyApplicationsResponse struct {
+	// Policy: The updated policy.
+	Policy *Policy `json:"policy,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ModifyPolicyApplicationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ModifyPolicyApplicationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // NetworkInfo: Device network info.
 type NetworkInfo struct {
 	// Imei: IMEI number of the GSM device. For example, A1000031212.
@@ -6593,6 +6672,57 @@ type RemoveEsimParams struct {
 
 func (s RemoveEsimParams) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveEsimParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemovePolicyApplicationsRequest: Request to remove ApplicationPolicy objects
+// in the given policy.
+type RemovePolicyApplicationsRequest struct {
+	// PackageNames: Required. Package names to be removed. Entries that are not
+	// found are ignored. There must be at least one entry in package_names.
+	PackageNames []string `json:"packageNames,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PackageNames") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PackageNames") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemovePolicyApplicationsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RemovePolicyApplicationsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemovePolicyApplicationsResponse: Response to a request to remove
+// ApplicationPolicy objects in the given policy.
+type RemovePolicyApplicationsResponse struct {
+	// Policy: The updated policy after ApplicationPolicy objects have been
+	// removed.
+	Policy *Policy `json:"policy,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemovePolicyApplicationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RemovePolicyApplicationsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11061,6 +11191,111 @@ func (c *EnterprisesPoliciesListCall) Pages(ctx context.Context, f func(*ListPol
 	}
 }
 
+type EnterprisesPoliciesModifyPolicyApplicationsCall struct {
+	s                               *Service
+	name                            string
+	modifypolicyapplicationsrequest *ModifyPolicyApplicationsRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// ModifyPolicyApplications: Updates or creates applications in a policy.
+//
+//   - name: The name of the Policy containing the ApplicationPolicy objects to
+//     be updated, in the form enterprises/{enterpriseId}/policies/{policyId}.
+func (r *EnterprisesPoliciesService) ModifyPolicyApplications(name string, modifypolicyapplicationsrequest *ModifyPolicyApplicationsRequest) *EnterprisesPoliciesModifyPolicyApplicationsCall {
+	c := &EnterprisesPoliciesModifyPolicyApplicationsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.modifypolicyapplicationsrequest = modifypolicyapplicationsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *EnterprisesPoliciesModifyPolicyApplicationsCall) Fields(s ...googleapi.Field) *EnterprisesPoliciesModifyPolicyApplicationsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *EnterprisesPoliciesModifyPolicyApplicationsCall) Context(ctx context.Context) *EnterprisesPoliciesModifyPolicyApplicationsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *EnterprisesPoliciesModifyPolicyApplicationsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EnterprisesPoliciesModifyPolicyApplicationsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.modifypolicyapplicationsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:modifyPolicyApplications")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidmanagement.enterprises.policies.modifyPolicyApplications", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidmanagement.enterprises.policies.modifyPolicyApplications" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ModifyPolicyApplicationsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *EnterprisesPoliciesModifyPolicyApplicationsCall) Do(opts ...googleapi.CallOption) (*ModifyPolicyApplicationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ModifyPolicyApplicationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidmanagement.enterprises.policies.modifyPolicyApplications", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type EnterprisesPoliciesPatchCall struct {
 	s          *Service
 	name       string
@@ -11170,6 +11405,111 @@ func (c *EnterprisesPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Policy
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidmanagement.enterprises.policies.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type EnterprisesPoliciesRemovePolicyApplicationsCall struct {
+	s                               *Service
+	name                            string
+	removepolicyapplicationsrequest *RemovePolicyApplicationsRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// RemovePolicyApplications: Removes applications in a policy.
+//
+//   - name: The name of the policy containing the ApplicationPolicy objects to
+//     be removed, in the form enterprises/{enterpriseId}/policies/{policyId}.
+func (r *EnterprisesPoliciesService) RemovePolicyApplications(name string, removepolicyapplicationsrequest *RemovePolicyApplicationsRequest) *EnterprisesPoliciesRemovePolicyApplicationsCall {
+	c := &EnterprisesPoliciesRemovePolicyApplicationsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.removepolicyapplicationsrequest = removepolicyapplicationsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *EnterprisesPoliciesRemovePolicyApplicationsCall) Fields(s ...googleapi.Field) *EnterprisesPoliciesRemovePolicyApplicationsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *EnterprisesPoliciesRemovePolicyApplicationsCall) Context(ctx context.Context) *EnterprisesPoliciesRemovePolicyApplicationsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *EnterprisesPoliciesRemovePolicyApplicationsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EnterprisesPoliciesRemovePolicyApplicationsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.removepolicyapplicationsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:removePolicyApplications")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidmanagement.enterprises.policies.removePolicyApplications", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidmanagement.enterprises.policies.removePolicyApplications" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RemovePolicyApplicationsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *EnterprisesPoliciesRemovePolicyApplicationsCall) Do(opts ...googleapi.CallOption) (*RemovePolicyApplicationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RemovePolicyApplicationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidmanagement.enterprises.policies.removePolicyApplications", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

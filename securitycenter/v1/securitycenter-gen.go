@@ -1913,6 +1913,30 @@ func (s BatchCreateResourceValueConfigsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BigQueryDestination: The destination big query dataset to export findings
+// to.
+type BigQueryDestination struct {
+	// Dataset: Required. The relative resource name of the destination dataset, in
+	// the form projects/{projectId}/datasets/{datasetId}.
+	Dataset string `json:"dataset,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Dataset") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Dataset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BigQueryDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -2868,7 +2892,7 @@ func (s Database) MarshalJSON() ([]byte, error) {
 type Dataset struct {
 	// DisplayName: The user defined display name of dataset, e.g. plants-dataset
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Resource name of dataset, e.g.
+	// Name: Resource name of the dataset, e.g.
 	// projects/{project}/locations/{location}/datasets/2094040236064505856
 	Name string `json:"name,omitempty"`
 	// Source: Data source, such as BigQuery source URI, e.g.
@@ -3262,6 +3286,36 @@ type Exfiltration struct {
 func (s Exfiltration) MarshalJSON() ([]byte, error) {
 	type NoMethod Exfiltration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExportFindingsMetadata: The LRO metadata for a ExportFindings request.
+type ExportFindingsMetadata struct {
+	// BigQueryDestination: Required. The destination big query dataset to export
+	// findings to.
+	BigQueryDestination *BigQueryDestination `json:"bigQueryDestination,omitempty"`
+	// ExportStartTime: Optional. Timestamp at which export was started
+	ExportStartTime string `json:"exportStartTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BigQueryDestination") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BigQueryDestination") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExportFindingsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportFindingsMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExportFindingsResponse: The response to a ExportFindings request. Contains
+// the LRO information.
+type ExportFindingsResponse struct {
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -6388,10 +6442,10 @@ func (s GoogleCloudSecuritycenterV2Database) MarshalJSON() ([]byte, error) {
 type GoogleCloudSecuritycenterV2Dataset struct {
 	// DisplayName: The user defined display name of dataset, e.g. plants-dataset
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Resource name of dataset, e.g.
+	// Name: Resource name of the dataset, e.g.
 	// projects/{project}/locations/{location}/datasets/2094040236064505856
 	Name string `json:"name,omitempty"`
-	// Source: Data source, such as BigQuery source URI, e.g.
+	// Source: Data source, such as a BigQuery source URI, e.g.
 	// bq://scc-nexus-test.AIPPtest.gsod
 	Source string `json:"source,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -8680,10 +8734,10 @@ func (s GoogleCloudSecuritycenterV2Package) MarshalJSON() ([]byte, error) {
 // GoogleCloudSecuritycenterV2Pipeline: Vertex AI training pipeline associated
 // with the finding.
 type GoogleCloudSecuritycenterV2Pipeline struct {
-	// DisplayName: The user defined display name of pipeline, e.g.
+	// DisplayName: The user-defined display name of pipeline, e.g.
 	// plants-classification
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Resource name of pipeline, e.g.
+	// Name: Resource name of the pipeline, e.g.
 	// projects/{project}/locations/{location}/trainingPipelines/5253428229225578496
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -11624,7 +11678,7 @@ type Pipeline struct {
 	// DisplayName: The user defined display name of pipeline, e.g.
 	// plants-classification
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Resource name of pipeline, e.g.
+	// Name: Resource name of the pipeline, e.g.
 	// projects/{project}/locations/{location}/trainingPipelines/5253428229225578496
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to

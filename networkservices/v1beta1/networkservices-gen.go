@@ -957,8 +957,8 @@ func (s Gateway) MarshalJSON() ([]byte, error) {
 type GatewayRouteView struct {
 	// Name: Output only. Identifier. Full path name of the GatewayRouteView
 	// resource. Format:
-	// projects/{project_number}/locations/{location}/gateways/{gateway_name}/routeV
-	// iews/{route_view_name}
+	// projects/{project_number}/locations/{location}/gateways/{gateway}/routeViews/
+	// {route_view}
 	Name string `json:"name,omitempty"`
 	// RouteId: Output only. The resource id for the route.
 	RouteId string `json:"routeId,omitempty"`
@@ -3160,8 +3160,8 @@ func (s Mesh) MarshalJSON() ([]byte, error) {
 type MeshRouteView struct {
 	// Name: Output only. Identifier. Full path name of the MeshRouteView resource.
 	// Format:
-	// projects/{project_number}/locations/{location}/meshes/{mesh_name}/routeViews/
-	// {route_view_name}
+	// projects/{project_number}/locations/{location}/meshes/{mesh}/routeViews/{rout
+	// e_view}
 	Name string `json:"name,omitempty"`
 	// RouteId: Output only. The resource id for the route.
 	RouteId string `json:"routeId,omitempty"`
@@ -6363,8 +6363,8 @@ type ProjectsLocationsGatewaysRouteViewsGetCall struct {
 // Get: Get a single RouteView of a Gateway.
 //
 //   - name: Name of the GatewayRouteView resource. Formats:
-//     projects/{project_number}/locations/{location}/gateways/{gateway_name}/rout
-//     eViews/{route_view_name}.
+//     projects/{project_number}/locations/{location}/gateways/{gateway}/routeView
+//     s/{route_view}.
 func (r *ProjectsLocationsGatewaysRouteViewsService) Get(name string) *ProjectsLocationsGatewaysRouteViewsGetCall {
 	c := &ProjectsLocationsGatewaysRouteViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6475,7 +6475,7 @@ type ProjectsLocationsGatewaysRouteViewsListCall struct {
 // List: Lists RouteViews
 //
 //   - parent: The Gateway to which a Route is associated. Formats:
-//     projects/{project_number}/locations/{location}/gateways/{gateway_name}.
+//     projects/{project_number}/locations/{location}/gateways/{gateway}.
 func (r *ProjectsLocationsGatewaysRouteViewsService) List(parent string) *ProjectsLocationsGatewaysRouteViewsListCall {
 	c := &ProjectsLocationsGatewaysRouteViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10337,8 +10337,8 @@ type ProjectsLocationsMeshesRouteViewsGetCall struct {
 // Get: Get a single RouteView of a Mesh.
 //
 //   - name: Name of the MeshRouteView resource. Format:
-//     projects/{project_number}/locations/{location}/meshes/{mesh_name}/routeView
-//     s/{route_view_name}.
+//     projects/{project_number}/locations/{location}/meshes/{mesh}/routeViews/{ro
+//     ute_view}.
 func (r *ProjectsLocationsMeshesRouteViewsService) Get(name string) *ProjectsLocationsMeshesRouteViewsGetCall {
 	c := &ProjectsLocationsMeshesRouteViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10448,7 +10448,7 @@ type ProjectsLocationsMeshesRouteViewsListCall struct {
 // List: Lists RouteViews
 //
 //   - parent: The Mesh to which a Route is associated. Format:
-//     projects/{project_number}/locations/{location}/meshes/{mesh_name}.
+//     projects/{project_number}/locations/{location}/meshes/{mesh}.
 func (r *ProjectsLocationsMeshesRouteViewsService) List(parent string) *ProjectsLocationsMeshesRouteViewsListCall {
 	c := &ProjectsLocationsMeshesRouteViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

@@ -1523,7 +1523,7 @@ func (s Channel) MarshalJSON() ([]byte, error) {
 // ChromeOsDevice: Google Chrome devices run on the Chrome OS
 // (https://support.google.com/chromeos). For more information about common API
 // tasks, see the Developer's Guide
-// (/admin-sdk/directory/v1/guides/manage-chrome-devices).
+// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-chrome-devices).
 type ChromeOsDevice struct {
 	// ActiveTimeRanges: A list of active time ranges (Read-only).
 	ActiveTimeRanges []*ChromeOsDeviceActiveTimeRanges `json:"activeTimeRanges,omitempty"`
@@ -1682,16 +1682,17 @@ type ChromeOsDevice struct {
 	// post-pay service plan. If the device does not have this information, this
 	// property is not included in the response. For more information on how to
 	// export a MEID/IMEI list, see the Developer's Guide
-	// (/admin-sdk/directory/v1/guides/manage-chrome-devices.html#export_meid).
+	// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-chrome-devices.html#export_meid).
 	Meid string `json:"meid,omitempty"`
 	// Model: The device's model information. If the device does not have this
 	// information, this property is not included in the response.
 	Model string `json:"model,omitempty"`
 	// Notes: Notes about this device added by the administrator. This property can
 	// be searched (https://support.google.com/chrome/a/answer/1698333) with the
-	// list (/admin-sdk/directory/v1/reference/chromeosdevices/list) method's
-	// `query` parameter. Maximum length is 500 characters. Empty values are
-	// allowed.
+	// list
+	// (https://developers.google.com/workspace/admin/directory/v1/reference/chromeosdevices/list)
+	// method's `query` parameter. Maximum length is 500 characters. Empty values
+	// are allowed.
 	Notes string `json:"notes,omitempty"`
 	// OrderNumber: The device's order number. Only devices directly purchased from
 	// Google have an order number.
@@ -1700,18 +1701,18 @@ type ChromeOsDevice struct {
 	// human readable version of orgUnitId. While orgUnitPath may change by
 	// renaming an organizational unit within the path, orgUnitId is unchangeable
 	// for one organizational unit. This property can be updated
-	// (/admin-sdk/directory/v1/guides/manage-chrome-devices#move_chrome_devices_to_
-	// ou) using the API. For more information about how to create an
-	// organizational structure for your device, see the administration help center
+	// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-chrome-devices#move_chrome_devices_to_ou)
+	// using the API. For more information about how to create an organizational
+	// structure for your device, see the administration help center
 	// (https://support.google.com/a/answer/182433).
 	OrgUnitId string `json:"orgUnitId,omitempty"`
 	// OrgUnitPath: The full parent path with the organizational unit's name
 	// associated with the device. Path names are case insensitive. If the parent
 	// organizational unit is the top-level organization, it is represented as a
 	// forward slash, `/`. This property can be updated
-	// (/admin-sdk/directory/v1/guides/manage-chrome-devices#move_chrome_devices_to_
-	// ou) using the API. For more information about how to create an
-	// organizational structure for your device, see the administration help center
+	// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-chrome-devices#move_chrome_devices_to_ou)
+	// using the API. For more information about how to create an organizational
+	// structure for your device, see the administration help center
 	// (https://support.google.com/a/answer/182433).
 	OrgUnitPath string `json:"orgUnitPath,omitempty"`
 	// OsUpdateStatus: The status of the OS updates for the device.
@@ -1766,7 +1767,7 @@ func (s ChromeOsDevice) MarshalJSON() ([]byte, error) {
 
 type ChromeOsDeviceActiveTimeRanges struct {
 	// ActiveTime: Duration of usage in milliseconds.
-	ActiveTime int64 `json:"activeTime,omitempty"`
+	ActiveTime int64 `json:"activeTime,omitempty,string"`
 	// Date: Date of usage
 	Date string `json:"date,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActiveTime") to
@@ -2208,14 +2209,14 @@ func (s ChromeOsMoveDevicesToOu) MarshalJSON() ([]byte, error) {
 // CreatePrintServerRequest: Request for adding a new print server.
 type CreatePrintServerRequest struct {
 	// Parent: Required. The unique ID
-	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers)
+	// (https://developers.google.com/workspace/admin/directory/reference/rest/v1/customers)
 	// of the customer's Google Workspace account. Format: `customers/{id}`
 	Parent string `json:"parent,omitempty"`
 	// PrintServer: Required. A print server to create. If you want to place the
 	// print server under a specific organizational unit (OU), then populate the
 	// `org_unit_id`. Otherwise the print server is created under the root OU. The
 	// `org_unit_id` can be retrieved using the Directory API
-	// (https://developers.google.com/admin-sdk/directory/v1/guides/manage-org-units).
+	// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-org-units).
 	PrintServer *PrintServer `json:"printServer,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Parent") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2278,9 +2279,10 @@ type Customer struct {
 	// `admin#directory#customer`
 	Kind string `json:"kind,omitempty"`
 	// Language: The customer's ISO 639-2 language code. See the Language Codes
-	// (/admin-sdk/directory/v1/languages) page for the list of supported codes.
-	// Valid language codes outside the supported set will be accepted by the API
-	// but may lead to unexpected behavior. The default value is `en`.
+	// (https://developers.google.com/workspace/admin/directory/v1/languages) page
+	// for the list of supported codes. Valid language codes outside the supported
+	// set will be accepted by the API but may lead to unexpected behavior. The
+	// default value is `en`.
 	Language string `json:"language,omitempty"`
 	// PhoneNumber: The customer's contact phone number in E.164
 	// (https://en.wikipedia.org/wiki/E.164) format.
@@ -2402,8 +2404,8 @@ type DirectoryChromeosdevicesCommand struct {
 	//   "DEVICE_START_CRD_SESSION" - Starts a Chrome Remote Desktop session.
 	//   "CAPTURE_LOGS" - Capture the system logs of a kiosk device. The logs can
 	// be downloaded from the downloadUrl link present in `deviceFiles` field of
-	// [chromeosdevices](https://developers.google.com/admin-sdk/directory/reference
-	// /rest/v1/chromeosdevices)
+	// [chromeosdevices](https://developers.google.com/workspace/admin/directory/ref
+	// erence/rest/v1/chromeosdevices)
 	//   "FETCH_CRD_AVAILABILITY_INFO" - Fetches available type(s) of Chrome Remote
 	// Desktop sessions (private or shared) that can be used to remotely connect to
 	// the device.
@@ -2411,8 +2413,8 @@ type DirectoryChromeosdevicesCommand struct {
 	// Support packet is a zip archive that contains various system logs and debug
 	// data from a ChromeOS device. The support packet can be downloaded from the
 	// downloadURL link present in the `deviceFiles` field of
-	// [`chromeosdevices`](https://developers.google.com/admin-sdk/directory/referen
-	// ce/rest/v1/chromeosdevices)
+	// [`chromeosdevices`](https://developers.google.com/workspace/admin/directory/r
+	// eference/rest/v1/chromeosdevices)
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2506,8 +2508,8 @@ type DirectoryChromeosdevicesIssueCommandRequest struct {
 	//   "DEVICE_START_CRD_SESSION" - Starts a Chrome Remote Desktop session.
 	//   "CAPTURE_LOGS" - Capture the system logs of a kiosk device. The logs can
 	// be downloaded from the downloadUrl link present in `deviceFiles` field of
-	// [chromeosdevices](https://developers.google.com/admin-sdk/directory/reference
-	// /rest/v1/chromeosdevices)
+	// [chromeosdevices](https://developers.google.com/workspace/admin/directory/ref
+	// erence/rest/v1/chromeosdevices)
 	//   "FETCH_CRD_AVAILABILITY_INFO" - Fetches available type(s) of Chrome Remote
 	// Desktop sessions (private or shared) that can be used to remotely connect to
 	// the device.
@@ -2515,8 +2517,8 @@ type DirectoryChromeosdevicesIssueCommandRequest struct {
 	// Support packet is a zip archive that contains various system logs and debug
 	// data from a ChromeOS device. The support packet can be downloaded from the
 	// downloadURL link present in the `deviceFiles` field of
-	// [`chromeosdevices`](https://developers.google.com/admin-sdk/directory/referen
-	// ce/rest/v1/chromeosdevices)
+	// [`chromeosdevices`](https://developers.google.com/workspace/admin/directory/r
+	// eference/rest/v1/chromeosdevices)
 	CommandType string `json:"commandType,omitempty"`
 	// Payload: The payload for the command, provide it only if command supports
 	// it. The following commands support adding payload: * `SET_VOLUME`: Payload
@@ -2976,12 +2978,12 @@ func (s Features) MarshalJSON() ([]byte, error) {
 // Group: Google Groups provide your users the ability to send messages to
 // groups of people using the group's email address. For more information about
 // common tasks, see the Developer's Guide
-// (https://developers.google.com/admin-sdk/directory/v1/guides/manage-groups).
+// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-groups).
 // For information about other types of groups, see the Cloud Identity Groups
 // API documentation (https://cloud.google.com/identity/docs/groups). Note: The
 // user calling the API (or being impersonated by a service account) must have
 // an assigned role
-// (https://developers.google.com/admin-sdk/directory/v1/guides/manage-roles)
+// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-roles)
 // that includes Admin API Groups permissions, such as Super Admin or Groups
 // Admin.
 type Group struct {
@@ -3197,7 +3199,7 @@ func (s ListPrintersResponse) MarshalJSON() ([]byte, error) {
 // Member: A Google Groups member can be a user or another group. This member
 // can be inside or outside of your account's domains. For more information
 // about common group member tasks, see the Developer's Guide
-// (/admin-sdk/directory/v1/guides/manage-group-members).
+// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-group-members).
 type Member struct {
 	// DeliverySettings: Defines mail delivery preferences of member. This field is
 	// only supported by `insert`, `update`, and `get` methods.
@@ -3305,7 +3307,8 @@ func (s MembersHasMember) MarshalJSON() ([]byte, error) {
 // MobileDevice: Google Workspace Mobile Management includes Android, Google
 // Sync (https://support.google.com/a/answer/135937), and iOS devices. For more
 // information about common group mobile device API tasks, see the Developer's
-// Guide (/admin-sdk/directory/v1/guides/manage-mobile-devices.html).
+// Guide
+// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-mobile-devices.html).
 type MobileDevice struct {
 	// AdbStatus: Adb (USB debugging) enabled or disabled on device (Read-only)
 	AdbStatus bool `json:"adbStatus,omitempty"`
@@ -3339,9 +3342,10 @@ type MobileDevice struct {
 	DevicePasswordStatus string `json:"devicePasswordStatus,omitempty"`
 	// Email: The list of the owner's email addresses. If your application needs
 	// the current list of user emails, use the get
-	// (/admin-sdk/directory/v1/reference/mobiledevices/get.html) method. For
-	// additional information, see the retrieve a user
-	// (/admin-sdk/directory/v1/guides/manage-users#get_user) method.
+	// (https://developers.google.com/workspace/admin/directory/v1/reference/mobiledevices/get.html)
+	// method. For additional information, see the retrieve a user
+	// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-users#get_user)
+	// method.
 	Email []string `json:"email,omitempty"`
 	// EncryptionStatus: Mobile Device Encryption Status (Read-only)
 	EncryptionStatus string `json:"encryptionStatus,omitempty"`
@@ -3376,24 +3380,25 @@ type MobileDevice struct {
 	Meid string `json:"meid,omitempty"`
 	// Model: The mobile device's model name, for example Nexus S. This property
 	// can be updated
-	// (/admin-sdk/directory/v1/reference/mobiledevices/update.html). For more
-	// information, see the Developer's Guide
-	// (/admin-sdk/directory/v1/guides/manage-mobile=devices#update_mobile_device).
+	// (https://developers.google.com/workspace/admin/directory/v1/reference/mobiledevices/update.html).
+	// For more information, see the Developer's Guide
+	// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-mobile=devices#update_mobile_device).
 	Model string `json:"model,omitempty"`
 	// Name: The list of the owner's user names. If your application needs the
 	// current list of device owner names, use the get
-	// (/admin-sdk/directory/v1/reference/mobiledevices/get.html) method. For more
-	// information about retrieving mobile device user information, see the
-	// Developer's Guide (/admin-sdk/directory/v1/guides/manage-users#get_user).
+	// (https://developers.google.com/workspace/admin/directory/v1/reference/mobiledevices/get.html)
+	// method. For more information about retrieving mobile device user
+	// information, see the Developer's Guide
+	// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-users#get_user).
 	Name []string `json:"name,omitempty"`
 	// NetworkOperator: Mobile Device mobile or network operator (if available)
 	// (Read-only)
 	NetworkOperator string `json:"networkOperator,omitempty"`
 	// Os: The mobile device's operating system, for example IOS 4.3 or Android
 	// 2.3.5. This property can be updated
-	// (/admin-sdk/directory/v1/reference/mobiledevices/update.html). For more
-	// information, see the Developer's Guide
-	// (/admin-sdk/directory/v1/guides/manage-mobile-devices#update_mobile_device).
+	// (https://developers.google.com/workspace/admin/directory/v1/reference/mobiledevices/update.html).
+	// For more information, see the Developer's Guide
+	// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-mobile-devices#update_mobile_device).
 	Os string `json:"os,omitempty"`
 	// OtherAccountsInfo: The list of accounts added on device (Read-only)
 	OtherAccountsInfo []string `json:"otherAccountsInfo,omitempty"`
@@ -3419,9 +3424,9 @@ type MobileDevice struct {
 	UnknownSourcesStatus bool `json:"unknownSourcesStatus,omitempty"`
 	// UserAgent: Gives information about the device such as `os` version. This
 	// property can be updated
-	// (/admin-sdk/directory/v1/reference/mobiledevices/update.html). For more
-	// information, see the Developer's Guide
-	// (/admin-sdk/directory/v1/guides/manage-mobile-devices#update_mobile_device).
+	// (https://developers.google.com/workspace/admin/directory/v1/reference/mobiledevices/update.html).
+	// For more information, see the Developer's Guide
+	// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-mobile-devices#update_mobile_device).
 	UserAgent string `json:"userAgent,omitempty"`
 	// WifiMacAddress: The device's MAC address on Wi-Fi networks.
 	WifiMacAddress string `json:"wifiMacAddress,omitempty"`
@@ -3535,8 +3540,10 @@ func (s MobileDevices) MarshalJSON() ([]byte, error) {
 // OrgUnit: Managing your account's organizational units allows you to
 // configure your users' access to services and custom settings. For more
 // information about common organizational unit tasks, see the Developer's
-// Guide (/admin-sdk/directory/v1/guides/manage-org-units.html). The customer's
-// organizational unit hierarchy is limited to 35 levels of depth.
+// Guide
+// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-org-units.html).
+// The customer's organizational unit hierarchy is limited to 35 levels of
+// depth.
 type OrgUnit struct {
 	// BlockInheritance: This field is deprecated and setting its value has no
 	// effect.
@@ -3565,7 +3572,7 @@ type OrgUnit struct {
 	// information about organization structures, see the administration help
 	// center (https://support.google.com/a/answer/4352075). For more information
 	// about moving a user to a different organization, see Update a user
-	// (/admin-sdk/directory/v1/guides/manage-users.html#update_user).
+	// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-users.html#update_user).
 	OrgUnitPath string `json:"orgUnitPath,omitempty"`
 	// ParentOrgUnitId: The unique ID of the parent organizational unit. Required,
 	// unless `parentOrgUnitPath` is set.
@@ -3688,7 +3695,7 @@ type PrintServer struct {
 	// This value can only be set when the print server is initially created. If
 	// it's not populated, the print server is placed under the root OU. The
 	// `org_unit_id` can be retrieved using the Directory API
-	// (/admin-sdk/directory/reference/rest/v1/orgunits).
+	// (https://developers.google.com/workspace/admin/directory/reference/rest/v1/orgunits).
 	OrgUnitId string `json:"orgUnitId,omitempty"`
 	// Uri: Editable. Print server URI.
 	Uri string `json:"uri,omitempty"`
@@ -3913,7 +3920,7 @@ type Privilege struct {
 	PrivilegeName string `json:"privilegeName,omitempty"`
 	// ServiceId: The obfuscated ID of the service this privilege is for. This
 	// value is returned with `Privileges.list()`
-	// (/admin-sdk/directory/v1/reference/privileges/list).
+	// (https://developers.google.com/workspace/admin/directory/v1/reference/privileges/list).
 	ServiceId string `json:"serviceId,omitempty"`
 	// ServiceName: The name of the service this privilege is for.
 	ServiceName string `json:"serviceName,omitempty"`
@@ -4007,7 +4014,7 @@ type RoleRolePrivileges struct {
 	PrivilegeName string `json:"privilegeName,omitempty"`
 	// ServiceId: The obfuscated ID of the service this privilege is for. This
 	// value is returned with `Privileges.list()`
-	// (/admin-sdk/directory/v1/reference/privileges/list).
+	// (https://developers.google.com/workspace/admin/directory/v1/reference/privileges/list).
 	ServiceId string `json:"serviceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PrivilegeName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4204,7 +4211,7 @@ func (s Schema) MarshalJSON() ([]byte, error) {
 // You can use these fields to store information such as the projects your
 // users work on, their physical locations, their hire dates, or whatever else
 // fits your business needs. For more information, see Custom User Fields
-// (/admin-sdk/directory/v1/guides/manage-schemas).
+// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-schemas).
 type SchemaFieldSpec struct {
 	// DisplayName: Display Name of the field.
 	DisplayName string `json:"displayName,omitempty"`
@@ -4233,9 +4240,9 @@ type SchemaFieldSpec struct {
 	NumericIndexingSpec *SchemaFieldSpecNumericIndexingSpec `json:"numericIndexingSpec,omitempty"`
 	// ReadAccessType: Specifies who can view values of this field. See Retrieve
 	// users as a non-administrator
-	// (/admin-sdk/directory/v1/guides/manage-users#retrieve_users_non_admin) for
-	// more information. Note: It may take up to 24 hours for changes to this field
-	// to be reflected.
+	// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-users#retrieve_users_non_admin)
+	// for more information. Note: It may take up to 24 hours for changes to this
+	// field to be reflected.
 	ReadAccessType string `json:"readAccessType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4439,8 +4446,9 @@ func (s Tokens) MarshalJSON() ([]byte, error) {
 // User: The Directory API allows you to create and manage your account's
 // users, user aliases, and user Google profile photos. For more information
 // about common tasks, see the User Accounts Developer's Guide
-// (/admin-sdk/directory/v1/guides/manage-users.html) and the User Aliases
-// Developer's Guide (/admin-sdk/directory/v1/guides/manage-user-aliases.html).
+// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-users.html)
+// and the User Aliases Developer's Guide
+// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-user-aliases.html).
 type User struct {
 	// Addresses: The list of the user's addresses. The maximum allowed data size
 	// for this field is 10KB.
@@ -4463,12 +4471,13 @@ type User struct {
 	// values are `'field_name': 'field_value'`.
 	CustomSchemas map[string]googleapi.RawMessage `json:"customSchemas,omitempty"`
 	// CustomerId: Output only. The customer ID to retrieve all account users
-	// (/admin-sdk/directory/v1/guides/manage-users.html#get_all_users). You can
-	// use the alias `my_customer` to represent your account's `customerId`. As a
-	// reseller administrator, you can use the resold customer account's
-	// `customerId`. To get a `customerId`, use the account's primary domain in the
-	// `domain` parameter of a users.list
-	// (/admin-sdk/directory/v1/reference/users/list) request.
+	// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-users.html#get_all_users).
+	// You can use the alias `my_customer` to represent your account's
+	// `customerId`. As a reseller administrator, you can use the resold customer
+	// account's `customerId`. To get a `customerId`, use the account's primary
+	// domain in the `domain` parameter of a users.list
+	// (https://developers.google.com/workspace/admin/directory/v1/reference/users/list)
+	// request.
 	CustomerId   string `json:"customerId,omitempty"`
 	DeletionTime string `json:"deletionTime,omitempty"`
 	// Emails: The list of the user's email addresses. The maximum allowed data
@@ -4510,14 +4519,17 @@ type User struct {
 	// IP address `allowlist` (https://support.google.com/a/answer/60752)
 	// configuration.
 	IpWhitelisted bool `json:"ipWhitelisted,omitempty"`
-	// IsAdmin: Output only. Indicates a user with super admininistrator
-	// privileges. The `isAdmin` property can only be edited in the Make a user an
-	// administrator (/admin-sdk/directory/v1/guides/manage-users.html#make_admin)
+	// IsAdmin: Output only. Indicates a user with super administrator privileges.
+	// The `isAdmin` property can only be edited in the Make a user an
+	// administrator
+	// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-users.html#make_admin)
 	// operation ( makeAdmin
-	// (/admin-sdk/directory/v1/reference/users/makeAdmin.html) method). If edited
-	// in the user insert (/admin-sdk/directory/v1/reference/users/insert.html) or
-	// update (/admin-sdk/directory/v1/reference/users/update.html) methods, the
-	// edit is ignored by the API service.
+	// (https://developers.google.com/workspace/admin/directory/v1/reference/users/makeAdmin.html)
+	// method). If edited in the user insert
+	// (https://developers.google.com/workspace/admin/directory/v1/reference/users/insert.html)
+	// or update
+	// (https://developers.google.com/workspace/admin/directory/v1/reference/users/update.html)
+	// methods, the edit is ignored by the API service.
 	IsAdmin bool `json:"isAdmin,omitempty"`
 	// IsDelegatedAdmin: Output only. Indicates if the user is a delegated
 	// administrator. Delegated administrators are supported by the API but cannot
@@ -5806,9 +5818,9 @@ type ChromeosdevicesActionCall struct {
 }
 
 // Action: Use BatchChangeChromeOsDeviceStatus
-// (/admin-sdk/directory/reference/rest/v1/customer.devices.chromeos/batchChange
-// Status) instead. Takes an action that affects a Chrome OS Device. This
-// includes deprovisioning, disabling, and re-enabling devices. *Warning:* *
+// (https://developers.google.com/workspace/admin/directory/reference/rest/v1/customer.devices.chromeos/batchChangeStatus)
+// instead. Takes an action that affects a Chrome OS Device. This includes
+// deprovisioning, disabling, and re-enabling devices. *Warning:* *
 // Deprovisioning a device will stop device policy syncing and remove
 // device-level printers. After a device is deprovisioned, it must be wiped
 // before it can be re-enrolled. * Lost or stolen devices should use the
@@ -5821,10 +5833,12 @@ type ChromeosdevicesActionCall struct {
 //   - customerId: The unique ID for the customer's Google Workspace account. As
 //     an account administrator, you can also use the `my_customer` alias to
 //     represent your account's `customerId`. The `customerId` is also returned
-//     as part of the Users resource (/admin-sdk/directory/v1/reference/users).
+//     as part of the Users resource
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users).
 //   - resourceId: The unique ID of the device. The `resourceId`s are returned in
 //     the response from the chromeosdevices.list
-//     (/admin-sdk/directory/v1/reference/chromeosdevices/list) method.
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/chromeosdevices/list)
+//     method.
 func (r *ChromeosdevicesService) Action(customerId string, resourceId string, chromeosdeviceaction *ChromeOsDeviceAction) *ChromeosdevicesActionCall {
 	c := &ChromeosdevicesActionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -5909,10 +5923,12 @@ type ChromeosdevicesGetCall struct {
 //   - customerId: The unique ID for the customer's Google Workspace account. As
 //     an account administrator, you can also use the `my_customer` alias to
 //     represent your account's `customerId`. The `customerId` is also returned
-//     as part of the Users resource (/admin-sdk/directory/v1/reference/users).
+//     as part of the Users resource
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users).
 //   - deviceId: The unique ID of the device. The `deviceId`s are returned in the
 //     response from the chromeosdevices.list
-//     (/admin-sdk/directory/v1/reference/chromeosdevices/list) method.
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/chromeosdevices/list)
+//     method.
 func (r *ChromeosdevicesService) Get(customerId string, deviceId string) *ChromeosdevicesGetCall {
 	c := &ChromeosdevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -6041,7 +6057,8 @@ type ChromeosdevicesListCall struct {
 //   - customerId: The unique ID for the customer's Google Workspace account. As
 //     an account administrator, you can also use the `my_customer` alias to
 //     represent your account's `customerId`. The `customerId` is also returned
-//     as part of the Users resource (/admin-sdk/directory/v1/reference/users).
+//     as part of the Users resource
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users).
 func (r *ChromeosdevicesService) List(customerId string) *ChromeosdevicesListCall {
 	c := &ChromeosdevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -6084,7 +6101,8 @@ func (c *ChromeosdevicesListCall) MaxResults(maxResults int64) *ChromeosdevicesL
 //
 //	"status" - Chrome device status. For more information, see the <a
 //
-// [chromeosdevices](/admin-sdk/directory/v1/reference/chromeosdevices.html).
+// [chromeosdevices](https://developers.google.com/workspace/admin/directory/v1/
+// reference/chromeosdevices.html).
 func (c *ChromeosdevicesListCall) OrderBy(orderBy string) *ChromeosdevicesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -6122,7 +6140,8 @@ func (c *ChromeosdevicesListCall) Projection(projection string) *Chromeosdevices
 }
 
 // Query sets the optional parameter "query": Search string in the format given
-// at https://developers.google.com/admin-sdk/directory/v1/list-query-operators
+// at
+// https://developers.google.com/workspace/admin/directory/v1/list-query-operators
 func (c *ChromeosdevicesListCall) Query(query string) *ChromeosdevicesListCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -6348,15 +6367,17 @@ type ChromeosdevicesPatchCall struct {
 // Patch: Updates a device's updatable properties, such as `annotatedUser`,
 // `annotatedLocation`, `notes`, `orgUnitPath`, or `annotatedAssetId`. This
 // method supports patch semantics
-// (/admin-sdk/directory/v1/guides/performance#patch).
+// (https://developers.google.com/workspace/admin/directory/v1/guides/performance#patch).
 //
 //   - customerId: The unique ID for the customer's Google Workspace account. As
 //     an account administrator, you can also use the `my_customer` alias to
 //     represent your account's `customerId`. The `customerId` is also returned
-//     as part of the Users resource (/admin-sdk/directory/v1/reference/users).
+//     as part of the Users resource
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users).
 //   - deviceId: The unique ID of the device. The `deviceId`s are returned in the
 //     response from the chromeosdevices.list
-//     (/admin-sdk/v1/reference/chromeosdevices/list) method.
+//     (https://developers.google.com/workspace/admin/v1/reference/chromeosdevices/list)
+//     method.
 func (r *ChromeosdevicesService) Patch(customerId string, deviceId string, chromeosdevice *ChromeOsDevice) *ChromeosdevicesPatchCall {
 	c := &ChromeosdevicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -6481,10 +6502,12 @@ type ChromeosdevicesUpdateCall struct {
 //   - customerId: The unique ID for the customer's Google Workspace account. As
 //     an account administrator, you can also use the `my_customer` alias to
 //     represent your account's `customerId`. The `customerId` is also returned
-//     as part of the Users resource (/admin-sdk/directory/v1/reference/users).
+//     as part of the Users resource
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users).
 //   - deviceId: The unique ID of the device. The `deviceId`s are returned in the
 //     response from the chromeosdevices.list
-//     (/admin-sdk/v1/reference/chromeosdevices/list) method.
+//     (https://developers.google.com/workspace/admin/v1/reference/chromeosdevices/list)
+//     method.
 func (r *ChromeosdevicesService) Update(customerId string, deviceId string, chromeosdevice *ChromeOsDevice) *ChromeosdevicesUpdateCall {
 	c := &ChromeosdevicesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -7253,7 +7276,7 @@ type CustomersChromePrintServersBatchCreatePrintServersCall struct {
 // BatchCreatePrintServers: Creates multiple print servers.
 //
 //   - parent: The unique ID
-//     (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers)
+//     (https://developers.google.com/workspace/admin/directory/reference/rest/v1/customers)
 //     of the customer's Google Workspace account. Format: `customers/{id}`.
 func (r *CustomersChromePrintServersService) BatchCreatePrintServers(parent string, batchcreateprintserversrequest *BatchCreatePrintServersRequest) *CustomersChromePrintServersBatchCreatePrintServersCall {
 	c := &CustomersChromePrintServersBatchCreatePrintServersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7359,7 +7382,7 @@ type CustomersChromePrintServersBatchDeletePrintServersCall struct {
 // BatchDeletePrintServers: Deletes multiple print servers.
 //
 //   - parent: The unique ID
-//     (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers)
+//     (https://developers.google.com/workspace/admin/directory/reference/rest/v1/customers)
 //     of the customer's Google Workspace account. Format:
 //     `customers/{customer.id}`.
 func (r *CustomersChromePrintServersService) BatchDeletePrintServers(parent string, batchdeleteprintserversrequest *BatchDeletePrintServersRequest) *CustomersChromePrintServersBatchDeletePrintServersCall {
@@ -7466,7 +7489,7 @@ type CustomersChromePrintServersCreateCall struct {
 // Create: Creates a print server.
 //
 //   - parent: The unique ID
-//     (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers)
+//     (https://developers.google.com/workspace/admin/directory/reference/rest/v1/customers)
 //     of the customer's Google Workspace account. Format: `customers/{id}`.
 func (r *CustomersChromePrintServersService) Create(parent string, printserver *PrintServer) *CustomersChromePrintServersCreateCall {
 	c := &CustomersChromePrintServersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7669,7 +7692,7 @@ type CustomersChromePrintServersGetCall struct {
 // Get: Returns a print server's configuration.
 //
 //   - name: The unique ID
-//     (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers)
+//     (https://developers.google.com/workspace/admin/directory/reference/rest/v1/customers)
 //     of the customer's Google Workspace account. Format: `customers/{id}`.
 func (r *CustomersChromePrintServersService) Get(name string) *CustomersChromePrintServersGetCall {
 	c := &CustomersChromePrintServersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7780,7 +7803,7 @@ type CustomersChromePrintServersListCall struct {
 // List: Lists print server configurations.
 //
 //   - parent: The unique ID
-//     (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers)
+//     (https://developers.google.com/workspace/admin/directory/reference/rest/v1/customers)
 //     of the customer's Google Workspace account. Format: `customers/{id}`.
 func (r *CustomersChromePrintServersService) List(parent string) *CustomersChromePrintServersListCall {
 	c := &CustomersChromePrintServersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9120,7 +9143,8 @@ type DomainAliasesGetCall struct {
 //     case of a multi-domain account, to fetch all groups for a customer, use
 //     this field instead of `domain`. You can also use the `my_customer` alias
 //     to represent your account's `customerId`. The `customerId` is also
-//     returned as part of the Users (/admin-sdk/directory/v1/reference/users)
+//     returned as part of the Users
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users)
 //     resource. You must provide either the `customer` or the `domain`
 //     parameter.
 //   - domainAliasName: Name of domain alias to be retrieved.
@@ -9341,7 +9365,8 @@ type DomainAliasesListCall struct {
 //     case of a multi-domain account, to fetch all groups for a customer, use
 //     this field instead of `domain`. You can also use the `my_customer` alias
 //     to represent your account's `customerId`. The `customerId` is also
-//     returned as part of the Users (/admin-sdk/directory/v1/reference/users)
+//     returned as part of the Users
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users)
 //     resource. You must provide either the `customer` or the `domain`
 //     parameter.
 func (r *DomainAliasesService) List(customer string) *DomainAliasesListCall {
@@ -9541,7 +9566,8 @@ type DomainsGetCall struct {
 //     case of a multi-domain account, to fetch all groups for a customer, use
 //     this field instead of `domain`. You can also use the `my_customer` alias
 //     to represent your account's `customerId`. The `customerId` is also
-//     returned as part of the Users (/admin-sdk/directory/v1/reference/users)
+//     returned as part of the Users
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users)
 //     resource. You must provide either the `customer` or the `domain`
 //     parameter.
 //   - domainName: Name of domain to be retrieved.
@@ -9762,7 +9788,8 @@ type DomainsListCall struct {
 //     case of a multi-domain account, to fetch all groups for a customer, use
 //     this field instead of `domain`. You can also use the `my_customer` alias
 //     to represent your account's `customerId`. The `customerId` is also
-//     returned as part of the Users (/admin-sdk/directory/v1/reference/users)
+//     returned as part of the Users
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users)
 //     resource. You must provide either the `customer` or the `domain`
 //     parameter.
 func (r *DomainsService) List(customer string) *DomainsListCall {
@@ -10162,8 +10189,8 @@ func (r *GroupsService) List() *GroupsListCall {
 // fetch all groups for a customer, use this field instead of `domain`. You can
 // also use the `my_customer` alias to represent your account's `customerId`.
 // The `customerId` is also returned as part of the Users
-// (/admin-sdk/directory/v1/reference/users) resource. You must provide either
-// the `customer` or the `domain` parameter.
+// (https://developers.google.com/workspace/admin/directory/v1/reference/users)
+// resource. You must provide either the `customer` or the `domain` parameter.
 func (c *GroupsListCall) Customer(customer string) *GroupsListCall {
 	c.urlParams_.Set("customer", customer)
 	return c
@@ -10350,7 +10377,7 @@ type GroupsPatchCall struct {
 }
 
 // Patch: Updates a group's properties. This method supports patch semantics
-// (/admin-sdk/directory/v1/guides/performance#patch).
+// (https://developers.google.com/workspace/admin/directory/v1/guides/performance#patch).
 //
 //   - groupKey: Identifies the group in the API request. The value can be the
 //     group's email address, group alias, or the unique group ID.
@@ -11275,7 +11302,7 @@ type MembersListCall struct {
 // List: Retrieves a paginated list of all members in a group. This method
 // times out after 60 minutes. For more information, see Troubleshoot error
 // codes
-// (https://developers.google.com/admin-sdk/directory/v1/guides/troubleshoot-error-codes).
+// (https://developers.google.com/workspace/admin/directory/v1/guides/troubleshoot-error-codes).
 //
 //   - groupKey: Identifies the group in the API request. The value can be the
 //     group's email address, group alias, or the unique group ID.
@@ -11439,7 +11466,7 @@ type MembersPatchCall struct {
 
 // Patch: Updates the membership properties of a user in the specified group.
 // This method supports patch semantics
-// (/admin-sdk/directory/v1/guides/performance#patch).
+// (https://developers.google.com/workspace/admin/directory/v1/guides/performance#patch).
 //
 //   - groupKey: Identifies the group in the API request. The value can be the
 //     group's email address, group alias, or the unique group ID.
@@ -11665,7 +11692,8 @@ type MobiledevicesActionCall struct {
 //   - customerId: The unique ID for the customer's Google Workspace account. As
 //     an account administrator, you can also use the `my_customer` alias to
 //     represent your account's `customerId`. The `customerId` is also returned
-//     as part of the Users resource (/admin-sdk/directory/v1/reference/users).
+//     as part of the Users resource
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users).
 //   - resourceId: The unique ID the API service uses to identify the mobile
 //     device.
 func (r *MobiledevicesService) Action(customerId string, resourceId string, mobiledeviceaction *MobileDeviceAction) *MobiledevicesActionCall {
@@ -11751,7 +11779,8 @@ type MobiledevicesDeleteCall struct {
 //   - customerId: The unique ID for the customer's Google Workspace account. As
 //     an account administrator, you can also use the `my_customer` alias to
 //     represent your account's `customerId`. The `customerId` is also returned
-//     as part of the Users resource (/admin-sdk/directory/v1/reference/users).
+//     as part of the Users resource
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users).
 //   - resourceId: The unique ID the API service uses to identify the mobile
 //     device.
 func (r *MobiledevicesService) Delete(customerId string, resourceId string) *MobiledevicesDeleteCall {
@@ -11833,7 +11862,8 @@ type MobiledevicesGetCall struct {
 //   - customerId: The unique ID for the customer's Google Workspace account. As
 //     an account administrator, you can also use the `my_customer` alias to
 //     represent your account's `customerId`. The `customerId` is also returned
-//     as part of the Users resource (/admin-sdk/directory/v1/reference/users).
+//     as part of the Users resource
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users).
 //   - resourceId: The unique ID the API service uses to identify the mobile
 //     device.
 func (r *MobiledevicesService) Get(customerId string, resourceId string) *MobiledevicesGetCall {
@@ -11965,12 +11995,13 @@ type MobiledevicesListCall struct {
 // (https://cloud.google.com/identity/docs/concepts/overview-devices) instead.
 // This method times out after 60 minutes. For more information, see
 // Troubleshoot error codes
-// (https://developers.google.com/admin-sdk/directory/v1/guides/troubleshoot-error-codes).
+// (https://developers.google.com/workspace/admin/directory/v1/guides/troubleshoot-error-codes).
 //
 //   - customerId: The unique ID for the customer's Google Workspace account. As
 //     an account administrator, you can also use the `my_customer` alias to
 //     represent your account's `customerId`. The `customerId` is also returned
-//     as part of the Users resource (/admin-sdk/directory/v1/reference/users).
+//     as part of the Users resource
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users).
 func (r *MobiledevicesService) List(customerId string) *MobiledevicesListCall {
 	c := &MobiledevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -12028,7 +12059,8 @@ func (c *MobiledevicesListCall) Projection(projection string) *MobiledevicesList
 }
 
 // Query sets the optional parameter "query": Search string in the format given
-// at https://developers.google.com/admin-sdk/directory/v1/search-operators
+// at
+// https://developers.google.com/workspace/admin/directory/v1/search-operators
 func (c *MobiledevicesListCall) Query(query string) *MobiledevicesListCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -12172,7 +12204,8 @@ type OrgunitsDeleteCall struct {
 //   - customerId: The unique ID for the customer's Google Workspace account. As
 //     an account administrator, you can also use the `my_customer` alias to
 //     represent your account's `customerId`. The `customerId` is also returned
-//     as part of the Users resource (/admin-sdk/directory/v1/reference/users).
+//     as part of the Users resource
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users).
 //   - orgUnitPath: The full path of the organizational unit (minus the leading
 //     `/`) or its unique ID.
 func (r *OrgunitsService) Delete(customerId string, orgUnitPath string) *OrgunitsDeleteCall {
@@ -12254,7 +12287,8 @@ type OrgunitsGetCall struct {
 //   - customerId: The unique ID for the customer's Google Workspace account. As
 //     an account administrator, you can also use the `my_customer` alias to
 //     represent your account's `customerId`. The `customerId` is also returned
-//     as part of the Users resource (/admin-sdk/directory/v1/reference/users).
+//     as part of the Users resource
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users).
 //   - orgUnitPath: The full path of the organizational unit (minus the leading
 //     `/`) or its unique ID.
 func (r *OrgunitsService) Get(customerId string, orgUnitPath string) *OrgunitsGetCall {
@@ -12370,7 +12404,8 @@ type OrgunitsInsertCall struct {
 //   - customerId: The unique ID for the customer's Google Workspace account. As
 //     an account administrator, you can also use the `my_customer` alias to
 //     represent your account's `customerId`. The `customerId` is also returned
-//     as part of the Users resource (/admin-sdk/directory/v1/reference/users).
+//     as part of the Users resource
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users).
 func (r *OrgunitsService) Insert(customerId string, orgunit *OrgUnit) *OrgunitsInsertCall {
 	c := &OrgunitsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -12476,7 +12511,8 @@ type OrgunitsListCall struct {
 //   - customerId: The unique ID for the customer's Google Workspace account. As
 //     an account administrator, you can also use the `my_customer` alias to
 //     represent your account's `customerId`. The `customerId` is also returned
-//     as part of the Users resource (/admin-sdk/directory/v1/reference/users).
+//     as part of the Users resource
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users).
 func (r *OrgunitsService) List(customerId string) *OrgunitsListCall {
 	c := &OrgunitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -12608,12 +12644,13 @@ type OrgunitsPatchCall struct {
 }
 
 // Patch: Updates an organizational unit. This method supports patch semantics
-// (/admin-sdk/directory/v1/guides/performance#patch)
+// (https://developers.google.com/workspace/admin/directory/v1/guides/performance#patch)
 //
 //   - customerId: The unique ID for the customer's Google Workspace account. As
 //     an account administrator, you can also use the `my_customer` alias to
 //     represent your account's `customerId`. The `customerId` is also returned
-//     as part of the Users resource (/admin-sdk/directory/v1/reference/users).
+//     as part of the Users resource
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users).
 //   - orgUnitPath: The full path of the organizational unit (minus the leading
 //     `/`) or its unique ID.
 func (r *OrgunitsService) Patch(customerId string, orgUnitPath string, orgunit *OrgUnit) *OrgunitsPatchCall {
@@ -12724,7 +12761,8 @@ type OrgunitsUpdateCall struct {
 //   - customerId: The unique ID for the customer's Google Workspace account. As
 //     an account administrator, you can also use the `my_customer` alias to
 //     represent your account's `customerId`. The `customerId` is also returned
-//     as part of the Users resource (/admin-sdk/directory/v1/reference/users).
+//     as part of the Users resource
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users).
 //   - orgUnitPath: The full path of the organizational unit (minus the leading
 //     `/`) or its unique ID.
 func (r *OrgunitsService) Update(customerId string, orgUnitPath string, orgunit *OrgUnit) *OrgunitsUpdateCall {
@@ -12835,7 +12873,8 @@ type PrivilegesListCall struct {
 //     case of a multi-domain account, to fetch all groups for a customer, use
 //     this field instead of `domain`. You can also use the `my_customer` alias
 //     to represent your account's `customerId`. The `customerId` is also
-//     returned as part of the Users (/admin-sdk/directory/v1/reference/users)
+//     returned as part of the Users
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users)
 //     resource. You must provide either the `customer` or the `domain`
 //     parameter.
 func (r *PrivilegesService) List(customer string) *PrivilegesListCall {
@@ -15202,7 +15241,8 @@ type RoleAssignmentsGetCall struct {
 //     case of a multi-domain account, to fetch all groups for a customer, use
 //     this field instead of `domain`. You can also use the `my_customer` alias
 //     to represent your account's `customerId`. The `customerId` is also
-//     returned as part of the Users (/admin-sdk/directory/v1/reference/users)
+//     returned as part of the Users
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users)
 //     resource. You must provide either the `customer` or the `domain`
 //     parameter.
 //   - roleAssignmentId: Immutable ID of the role assignment.
@@ -15423,7 +15463,8 @@ type RoleAssignmentsListCall struct {
 //     case of a multi-domain account, to fetch all groups for a customer, use
 //     this field instead of `domain`. You can also use the `my_customer` alias
 //     to represent your account's `customerId`. The `customerId` is also
-//     returned as part of the Users (/admin-sdk/directory/v1/reference/users)
+//     returned as part of the Users
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users)
 //     resource. You must provide either the `customer` or the `domain`
 //     parameter.
 func (r *RoleAssignmentsService) List(customer string) *RoleAssignmentsListCall {
@@ -15678,7 +15719,8 @@ type RolesGetCall struct {
 //     case of a multi-domain account, to fetch all groups for a customer, use
 //     this field instead of `domain`. You can also use the `my_customer` alias
 //     to represent your account's `customerId`. The `customerId` is also
-//     returned as part of the Users (/admin-sdk/directory/v1/reference/users)
+//     returned as part of the Users
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users)
 //     resource. You must provide either the `customer` or the `domain`
 //     parameter.
 //   - roleId: Immutable ID of the role.
@@ -15899,7 +15941,8 @@ type RolesListCall struct {
 //     case of a multi-domain account, to fetch all groups for a customer, use
 //     this field instead of `domain`. You can also use the `my_customer` alias
 //     to represent your account's `customerId`. The `customerId` is also
-//     returned as part of the Users (/admin-sdk/directory/v1/reference/users)
+//     returned as part of the Users
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users)
 //     resource. You must provide either the `customer` or the `domain`
 //     parameter.
 func (r *RolesService) List(customer string) *RolesListCall {
@@ -16341,7 +16384,8 @@ type SchemasGetCall struct {
 //     case of a multi-domain account, to fetch all groups for a customer, use
 //     this field instead of `domain`. You can also use the `my_customer` alias
 //     to represent your account's `customerId`. The `customerId` is also
-//     returned as part of the Users (/admin-sdk/directory/v1/reference/users)
+//     returned as part of the Users
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users)
 //     resource. You must provide either the `customer` or the `domain`
 //     parameter.
 //   - schemaKey: Name or immutable ID of the schema.
@@ -16562,7 +16606,8 @@ type SchemasListCall struct {
 //     case of a multi-domain account, to fetch all groups for a customer, use
 //     this field instead of `domain`. You can also use the `my_customer` alias
 //     to represent your account's `customerId`. The `customerId` is also
-//     returned as part of the Users (/admin-sdk/directory/v1/reference/users)
+//     returned as part of the Users
+//     (https://developers.google.com/workspace/admin/directory/v1/reference/users)
 //     resource. You must provide either the `customer` or the `domain`
 //     parameter.
 func (r *SchemasService) List(customerId string) *SchemasListCall {
@@ -17373,7 +17418,7 @@ func (c *UsersGetCall) Projection(projection string) *UsersGetCall {
 // ViewType sets the optional parameter "viewType": Whether to fetch the
 // administrator-only or domain-wide public view of the user. For more
 // information, see Retrieve a user as a non-administrator
-// (/admin-sdk/directory/v1/guides/manage-users#retrieve_users_non_admin).
+// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-users#retrieve_users_non_admin).
 //
 // Possible values:
 //
@@ -17621,8 +17666,8 @@ func (c *UsersListCall) CustomFieldMask(customFieldMask string) *UsersListCall {
 // fetch all users for a customer, use this field instead of `domain`. You can
 // also use the `my_customer` alias to represent your account's `customerId`.
 // The `customerId` is also returned as part of the Users
-// (/admin-sdk/directory/v1/reference/users) resource. You must provide either
-// the `customer` or the `domain` parameter.
+// (https://developers.google.com/workspace/admin/directory/v1/reference/users)
+// resource. You must provide either the `customer` or the `domain` parameter.
 func (c *UsersListCall) Customer(customer string) *UsersListCall {
 	c.urlParams_.Set("customer", customer)
 	return c
@@ -17697,7 +17742,8 @@ func (c *UsersListCall) Projection(projection string) *UsersListCall {
 
 // Query sets the optional parameter "query": Query string for searching user
 // fields. For more information on constructing user queries, see Search for
-// Users (/admin-sdk/directory/v1/guides/search-users).
+// Users
+// (https://developers.google.com/workspace/admin/directory/v1/guides/search-users).
 func (c *UsersListCall) Query(query string) *UsersListCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -17725,7 +17771,7 @@ func (c *UsersListCall) SortOrder(sortOrder string) *UsersListCall {
 // ViewType sets the optional parameter "viewType": Whether to fetch the
 // administrator-only or domain-wide public view of the user. For more
 // information, see Retrieve a user as a non-administrator
-// (/admin-sdk/directory/v1/guides/manage-users#retrieve_users_non_admin).
+// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-users#retrieve_users_non_admin).
 //
 // Possible values:
 //
@@ -17943,7 +17989,7 @@ type UsersPatchCall struct {
 // used instead, because it also supports patch semantics and has better
 // performance. If you're mapping an external identity to a Google identity,
 // use the `update`
-// (https://developers.google.com/admin-sdk/directory/v1/reference/users/update)
+// (https://developers.google.com/workspace/admin/directory/v1/reference/users/update)
 // method instead of the `patch` method. This method is unable to clear fields
 // that contain repeated objects (`addresses`, `phones`, etc). Use the update
 // method instead.
@@ -18210,7 +18256,7 @@ type UsersUpdateCall struct {
 // cleared. For repeating fields that contain arrays, individual items in the
 // array can't be patched piecemeal; they must be supplied in the request body
 // with the desired values for all items. See the user accounts guide
-// (https://developers.google.com/admin-sdk/directory/v1/guides/manage-users#update_user)
+// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-users#update_user)
 // for more information.
 //
 //   - userKey: Identifies the user in the API request. The value can be the
@@ -18432,7 +18478,7 @@ func (c *UsersWatchCall) SortOrder(sortOrder string) *UsersWatchCall {
 // ViewType sets the optional parameter "viewType": Whether to fetch the
 // administrator-only or domain-wide public view of the user. For more
 // information, see Retrieve a user as a non-administrator
-// (/admin-sdk/directory/v1/guides/manage-users#retrieve_users_non_admin).
+// (https://developers.google.com/workspace/admin/directory/v1/guides/manage-users#retrieve_users_non_admin).
 //
 // Possible values:
 //
@@ -19140,7 +19186,7 @@ type UsersPhotosPatchCall struct {
 }
 
 // Patch: Adds a photo for the user. This method supports patch semantics
-// (/admin-sdk/directory/v1/guides/performance#patch).
+// (https://developers.google.com/workspace/admin/directory/v1/guides/performance#patch).
 //
 //   - userKey: Identifies the user in the API request. The value can be the
 //     user's primary email address, alias email address, or unique user ID.

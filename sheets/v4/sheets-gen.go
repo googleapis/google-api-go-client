@@ -2480,11 +2480,11 @@ type CellData struct {
 	// ChipRuns: Optional. Runs of chips applied to subsections of the cell.
 	// Properties of a run start at a specific index in the text and continue until
 	// the next run. When reading, all chipped and non-chipped runs are included.
-	// Non-chipped runs will have an empty chip_run.chip. When writing, only runs
-	// with chips are included. Runs containing chips are of length 1 and are
-	// represented in the user-entered text by an “@” placeholder symbol. New
-	// runs will overwrite any prior runs. Writing a new user_entered_value will
-	// erase previous runs.
+	// Non-chipped runs will have an empty Chip. When writing, only runs with chips
+	// are included. Runs containing chips are of length 1 and are represented in
+	// the user-entered text by an “@” placeholder symbol. New runs will
+	// overwrite any prior runs. Writing a new user_entered_value will erase
+	// previous runs.
 	ChipRuns []*ChipRun `json:"chipRuns,omitempty"`
 	// DataSourceFormula: Output only. Information about a data source formula on
 	// the cell. The field is set if user_entered_value is a formula referencing

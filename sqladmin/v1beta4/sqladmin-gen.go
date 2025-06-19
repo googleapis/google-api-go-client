@@ -515,6 +515,14 @@ type Backup struct {
 	// version is 41.
 	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
 	// version is 42.
+	//   "MYSQL_8_0_43" - The database major version is MySQL 8.0 and the minor
+	// version is 43.
+	//   "MYSQL_8_0_44" - The database major version is MySQL 8.0 and the minor
+	// version is 44.
+	//   "MYSQL_8_0_45" - The database major version is MySQL 8.0 and the minor
+	// version is 45.
+	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
+	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
@@ -848,6 +856,14 @@ type BackupRun struct {
 	// version is 41.
 	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
 	// version is 42.
+	//   "MYSQL_8_0_43" - The database major version is MySQL 8.0 and the minor
+	// version is 43.
+	//   "MYSQL_8_0_44" - The database major version is MySQL 8.0 and the minor
+	// version is 44.
+	//   "MYSQL_8_0_45" - The database major version is MySQL 8.0 and the minor
+	// version is 45.
+	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
+	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
@@ -1179,6 +1195,14 @@ type ConnectSettings struct {
 	// version is 41.
 	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
 	// version is 42.
+	//   "MYSQL_8_0_43" - The database major version is MySQL 8.0 and the minor
+	// version is 43.
+	//   "MYSQL_8_0_44" - The database major version is MySQL 8.0 and the minor
+	// version is 44.
+	//   "MYSQL_8_0_45" - The database major version is MySQL 8.0 and the minor
+	// version is 45.
+	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
+	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
@@ -1490,6 +1514,14 @@ type DatabaseInstance struct {
 	// version is 41.
 	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
 	// version is 42.
+	//   "MYSQL_8_0_43" - The database major version is MySQL 8.0 and the minor
+	// version is 43.
+	//   "MYSQL_8_0_44" - The database major version is MySQL 8.0 and the minor
+	// version is 44.
+	//   "MYSQL_8_0_45" - The database major version is MySQL 8.0 and the minor
+	// version is 45.
+	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
+	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
@@ -1587,9 +1619,6 @@ type DatabaseInstance struct {
 	// database wellness job for OOD. * Readers: * the proactive database wellness
 	// job
 	OutOfDiskReport *SqlOutOfDiskReport `json:"outOfDiskReport,omitempty"`
-	// PitrFields: Input only. PITR related fields added for Instance Independent
-	// PITR.
-	PitrFields *PITRFields `json:"pitrFields,omitempty"`
 	// PrimaryDnsName: Output only. DEPRECATED: please use write_endpoint instead.
 	PrimaryDnsName string `json:"primaryDnsName,omitempty"`
 	// Project: The project ID of the project containing the Cloud SQL instance.
@@ -2409,6 +2438,14 @@ type Flag struct {
 	// version is 41.
 	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
 	// version is 42.
+	//   "MYSQL_8_0_43" - The database major version is MySQL 8.0 and the minor
+	// version is 43.
+	//   "MYSQL_8_0_44" - The database major version is MySQL 8.0 and the minor
+	// version is 44.
+	//   "MYSQL_8_0_45" - The database major version is MySQL 8.0 and the minor
+	// version is 45.
+	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
+	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
@@ -4036,37 +4073,6 @@ type OperationsListResponse struct {
 
 func (s OperationsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationsListResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// PITRFields: PITR related fields include enablement settings, archiving
-// settings, and the bucket name.
-type PITRFields struct {
-	// EnableBinLog: The enablement setting for PITR for MySQL.
-	EnableBinLog bool `json:"enableBinLog,omitempty"`
-	// ReplicationLogArchivingEnabled: The enablement setting for PITR for
-	// PostgreSQL.
-	ReplicationLogArchivingEnabled bool `json:"replicationLogArchivingEnabled,omitempty"`
-	// SqlserverPitrEnabled: The enablement setting for PITR for SQL Server.
-	SqlserverPitrEnabled bool `json:"sqlserverPitrEnabled,omitempty"`
-	// TransactionLogRetentionDays: The number of transaction log days to retain
-	// for PITR
-	TransactionLogRetentionDays int64 `json:"transactionLogRetentionDays,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnableBinLog") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnableBinLog") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s PITRFields) MarshalJSON() ([]byte, error) {
-	type NoMethod PITRFields
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

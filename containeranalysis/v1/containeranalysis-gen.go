@@ -4537,6 +4537,10 @@ type ListNotesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Notes: The notes requested.
 	Notes []*Note `json:"notes,omitempty"`
+	// Unreachable: Unordered list. Unreachable regions. Populated for requests
+	// from the global region when `return_partial_success` is set. Format:
+	// projects//locations/
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4566,6 +4570,10 @@ type ListOccurrencesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Occurrences: The occurrences requested.
 	Occurrences []*Occurrence `json:"occurrences,omitempty"`
+	// Unreachable: Unordered list. Unreachable regions. Populated for requests
+	// from the global region when `return_partial_success` is set. Format:
+	// projects//locations/
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -6625,6 +6633,10 @@ type VulnerabilityOccurrencesSummary struct {
 	// Counts: A listing by resource of the number of fixable and total
 	// vulnerabilities.
 	Counts []*FixableTotalByDigest `json:"counts,omitempty"`
+	// Unreachable: Unordered list. Unreachable regions. Populated for requests
+	// from the global region when `return_partial_success` is set. Format:
+	// projects//locations/
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -7286,6 +7298,15 @@ func (c *ProjectsLocationsNotesListCall) PageSize(pageSize int64) *ProjectsLocat
 // to a particular spot in the list.
 func (c *ProjectsLocationsNotesListCall) PageToken(pageToken string) *ProjectsLocationsNotesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// set, the request will return all reachable Notes and report all unreachable
+// regions in the `unreachable` field in the response. Only applicable for
+// requests in the global region.
+func (c *ProjectsLocationsNotesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsNotesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -8554,6 +8575,15 @@ func (c *ProjectsLocationsOccurrencesGetVulnerabilitySummaryCall) Filter(filter 
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// set, the request will return all reachable occurrence summaries and report
+// all unreachable regions in the `unreachable` field in the response. Only
+// applicable for requests in the global region.
+func (c *ProjectsLocationsOccurrencesGetVulnerabilitySummaryCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOccurrencesGetVulnerabilitySummaryCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -8683,6 +8713,15 @@ func (c *ProjectsLocationsOccurrencesListCall) PageSize(pageSize int64) *Project
 // to a particular spot in the list.
 func (c *ProjectsLocationsOccurrencesListCall) PageToken(pageToken string) *ProjectsLocationsOccurrencesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// set, the request will return all reachable Occurrences and report all
+// unreachable regions in the `unreachable` field in the response. Only
+// applicable for requests in the global region.
+func (c *ProjectsLocationsOccurrencesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOccurrencesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -9806,6 +9845,15 @@ func (c *ProjectsNotesListCall) PageSize(pageSize int64) *ProjectsNotesListCall 
 // to a particular spot in the list.
 func (c *ProjectsNotesListCall) PageToken(pageToken string) *ProjectsNotesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// set, the request will return all reachable Notes and report all unreachable
+// regions in the `unreachable` field in the response. Only applicable for
+// requests in the global region.
+func (c *ProjectsNotesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsNotesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -11074,6 +11122,15 @@ func (c *ProjectsOccurrencesGetVulnerabilitySummaryCall) Filter(filter string) *
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// set, the request will return all reachable occurrence summaries and report
+// all unreachable regions in the `unreachable` field in the response. Only
+// applicable for requests in the global region.
+func (c *ProjectsOccurrencesGetVulnerabilitySummaryCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsOccurrencesGetVulnerabilitySummaryCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -11203,6 +11260,15 @@ func (c *ProjectsOccurrencesListCall) PageSize(pageSize int64) *ProjectsOccurren
 // to a particular spot in the list.
 func (c *ProjectsOccurrencesListCall) PageToken(pageToken string) *ProjectsOccurrencesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// set, the request will return all reachable Occurrences and report all
+// unreachable regions in the `unreachable` field in the response. Only
+// applicable for requests in the global region.
+func (c *ProjectsOccurrencesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsOccurrencesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

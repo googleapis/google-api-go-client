@@ -379,6 +379,289 @@ type ProjectsLocationsReplaysOperationsService struct {
 	s *Service
 }
 
+// GoogleCloudOrgpolicyV2AlternatePolicySpec: Similar to PolicySpec but with an
+// extra 'launch' field for launch reference. The PolicySpec here is specific
+// for dry-run.
+type GoogleCloudOrgpolicyV2AlternatePolicySpec struct {
+	// Launch: Reference to the launch that will be used while audit logging and to
+	// control the launch. Should be set only in the alternate policy.
+	Launch string `json:"launch,omitempty"`
+	// Spec: Specify constraint for configurations of Google Cloud resources.
+	Spec *GoogleCloudOrgpolicyV2PolicySpec `json:"spec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Launch") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Launch") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOrgpolicyV2AlternatePolicySpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOrgpolicyV2AlternatePolicySpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOrgpolicyV2CustomConstraint: A custom constraint defined by
+// customers which can *only* be applied to the given resource types and
+// organization. By creating a custom constraint, customers can apply policies
+// of this custom constraint. *Creating a custom constraint itself does NOT
+// apply any policy enforcement*.
+type GoogleCloudOrgpolicyV2CustomConstraint struct {
+	// ActionType: Allow or deny type.
+	//
+	// Possible values:
+	//   "ACTION_TYPE_UNSPECIFIED" - This is only used for distinguishing unset
+	// values and should never be used. Results in an error.
+	//   "ALLOW" - Allowed action type.
+	//   "DENY" - Deny action type.
+	ActionType string `json:"actionType,omitempty"`
+	// Condition: A Common Expression Language (CEL) condition which is used in the
+	// evaluation of the constraint. For example:
+	// `resource.instanceName.matches("[production|test]_.*_(\d)+")` or,
+	// `resource.management.auto_upgrade == true` The max length of the condition
+	// is 1000 characters.
+	Condition string `json:"condition,omitempty"`
+	// Description: Detailed information about this custom policy constraint. The
+	// max length of the description is 2000 characters.
+	Description string `json:"description,omitempty"`
+	// DisplayName: One line display name for the UI. The max length of the
+	// display_name is 200 characters.
+	DisplayName string `json:"displayName,omitempty"`
+	// MethodTypes: All the operations being applied for this constraint.
+	//
+	// Possible values:
+	//   "METHOD_TYPE_UNSPECIFIED" - This is only used for distinguishing unset
+	// values and should never be used. Results in an error.
+	//   "CREATE" - Constraint applied when creating the resource.
+	//   "UPDATE" - Constraint applied when updating the resource.
+	//   "DELETE" - Constraint applied when deleting the resource. Not currently
+	// supported.
+	//   "REMOVE_GRANT" - Constraint applied when removing an IAM grant.
+	//   "GOVERN_TAGS" - Constraint applied when enforcing forced tagging.
+	MethodTypes []string `json:"methodTypes,omitempty"`
+	// Name: Immutable. Name of the constraint. This is unique within the
+	// organization. Format of the name should be *
+	// `organizations/{organization_id}/customConstraints/{custom_constraint_id}`
+	// Example: `organizations/123/customConstraints/custom.createOnlyE2TypeVms`
+	// The max length is 70 characters and the minimum length is 1. Note that the
+	// prefix `organizations/{organization_id}/customConstraints/` is not counted.
+	Name string `json:"name,omitempty"`
+	// ResourceTypes: Immutable. The resource instance type on which this policy
+	// applies. Format will be of the form : `/` Example: *
+	// `compute.googleapis.com/Instance`.
+	ResourceTypes []string `json:"resourceTypes,omitempty"`
+	// UpdateTime: Output only. The last time this custom constraint was updated.
+	// This represents the last time that the `CreateCustomConstraint` or
+	// `UpdateCustomConstraint` methods were called.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActionType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActionType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOrgpolicyV2CustomConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOrgpolicyV2CustomConstraint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOrgpolicyV2Policy: Defines an organization policy which is used
+// to specify constraints for configurations of Google Cloud resources.
+type GoogleCloudOrgpolicyV2Policy struct {
+	// Alternate: Deprecated.
+	Alternate *GoogleCloudOrgpolicyV2AlternatePolicySpec `json:"alternate,omitempty"`
+	// DryRunSpec: Dry-run policy. Audit-only policy, can be used to monitor how
+	// the policy would have impacted the existing and future resources if it's
+	// enforced.
+	DryRunSpec *GoogleCloudOrgpolicyV2PolicySpec `json:"dryRunSpec,omitempty"`
+	// Etag: Optional. An opaque tag indicating the current state of the policy,
+	// used for concurrency control. This 'etag' is computed by the server based on
+	// the value of other fields, and may be sent on update and delete requests to
+	// ensure the client has an up-to-date value before proceeding.
+	Etag string `json:"etag,omitempty"`
+	// Name: Immutable. The resource name of the policy. Must be one of the
+	// following forms, where `constraint_name` is the name of the constraint which
+	// this policy configures: *
+	// `projects/{project_number}/policies/{constraint_name}` *
+	// `folders/{folder_id}/policies/{constraint_name}` *
+	// `organizations/{organization_id}/policies/{constraint_name}` For example,
+	// `projects/123/policies/compute.disableSerialPortAccess`. Note:
+	// `projects/{project_id}/policies/{constraint_name}` is also an acceptable
+	// name for API requests, but responses will return the name using the
+	// equivalent project number.
+	Name string `json:"name,omitempty"`
+	// Spec: Basic information about the organization policy.
+	Spec *GoogleCloudOrgpolicyV2PolicySpec `json:"spec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Alternate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Alternate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOrgpolicyV2Policy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOrgpolicyV2Policy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOrgpolicyV2PolicySpec: Defines a Google Cloud policy
+// specification which is used to specify constraints for configurations of
+// Google Cloud resources.
+type GoogleCloudOrgpolicyV2PolicySpec struct {
+	// Etag: An opaque tag indicating the current version of the policySpec, used
+	// for concurrency control. This field is ignored if used in a `CreatePolicy`
+	// request. When the policy is returned from either a `GetPolicy` or a
+	// `ListPolicies` request, this `etag` indicates the version of the current
+	// policySpec to use when executing a read-modify-write loop. When the policy
+	// is returned from a `GetEffectivePolicy` request, the `etag` will be unset.
+	Etag string `json:"etag,omitempty"`
+	// InheritFromParent: Determines the inheritance behavior for this policy. If
+	// `inherit_from_parent` is true, policy rules set higher up in the hierarchy
+	// (up to the closest root) are inherited and present in the effective policy.
+	// If it is false, then no rules are inherited, and this policy becomes the new
+	// root for evaluation. This field can be set only for policies which configure
+	// list constraints.
+	InheritFromParent bool `json:"inheritFromParent,omitempty"`
+	// Reset: Ignores policies set above this resource and restores the
+	// `constraint_default` enforcement behavior of the specific constraint at this
+	// resource. This field can be set in policies for either list or boolean
+	// constraints. If set, `rules` must be empty and `inherit_from_parent` must be
+	// set to false.
+	Reset bool `json:"reset,omitempty"`
+	// Rules: In policies for boolean constraints, the following requirements
+	// apply: - There must be one and only one policy rule where condition is
+	// unset. - Boolean policy rules with conditions must set `enforced` to the
+	// opposite of the policy rule without a condition. - During policy evaluation,
+	// policy rules with conditions that are true for a target resource take
+	// precedence.
+	Rules []*GoogleCloudOrgpolicyV2PolicySpecPolicyRule `json:"rules,omitempty"`
+	// UpdateTime: Output only. The time stamp this was previously updated. This
+	// represents the last time a call to `CreatePolicy` or `UpdatePolicy` was made
+	// for that policy.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOrgpolicyV2PolicySpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOrgpolicyV2PolicySpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOrgpolicyV2PolicySpecPolicyRule: A rule used to express this
+// policy.
+type GoogleCloudOrgpolicyV2PolicySpecPolicyRule struct {
+	// AllowAll: Setting this to true means that all values are allowed. This field
+	// can be set only in policies for list constraints.
+	AllowAll bool `json:"allowAll,omitempty"`
+	// Condition: A condition which determines whether this rule is used in the
+	// evaluation of the policy. When set, the `expression` field in the `Expr'
+	// must include from 1 to 10 subexpressions, joined by the "||" or "&&"
+	// operators. Each subexpression must be of the form
+	// "resource.matchTag('/tag_key_short_name, 'tag_value_short_name')". or
+	// "resource.matchTagId('tagKeys/key_id', 'tagValues/value_id')". where
+	// key_name and value_name are the resource names for Label Keys and Values.
+	// These names are available from the Tag Manager Service. An example
+	// expression is: "resource.matchTag('123456789/environment, 'prod')". or
+	// "resource.matchTagId('tagKeys/123', 'tagValues/456')".
+	Condition *GoogleTypeExpr `json:"condition,omitempty"`
+	// DenyAll: Setting this to true means that all values are denied. This field
+	// can be set only in policies for list constraints.
+	DenyAll bool `json:"denyAll,omitempty"`
+	// Enforce: If `true`, then the policy is enforced. If `false`, then any
+	// configuration is acceptable. This field can be set in policies for boolean
+	// constraints, custom constraints and managed constraints.
+	Enforce bool `json:"enforce,omitempty"`
+	// Parameters: Optional. Required for managed constraints if parameters are
+	// defined. Passes parameter values when policy enforcement is enabled. Ensure
+	// that parameter value types match those defined in the constraint definition.
+	// For example: { "allowedLocations" : ["us-east1", "us-west1"], "allowAll" :
+	// true }
+	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
+	// Values: List of values to be used for this policy rule. This field can be
+	// set only in policies for list constraints.
+	Values *GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowAll") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowAll") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOrgpolicyV2PolicySpecPolicyRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOrgpolicyV2PolicySpecPolicyRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues: A message that holds
+// specific allowed and denied values. This message can define specific values
+// and subtrees of the Resource Manager resource hierarchy (`Organizations`,
+// `Folders`, `Projects`) that are allowed or denied. This is achieved by using
+// the `under:` and optional `is:` prefixes. The `under:` prefix is used to
+// denote resource subtree values. The `is:` prefix is used to denote specific
+// values, and is required only if the value contains a ":". Values prefixed
+// with "is:" are treated the same as values with no prefix. Ancestry subtrees
+// must be in one of the following formats: - `projects/` (for example,
+// `projects/tokyo-rain-123`) - `folders/` (for example, `folders/1234`) -
+// `organizations/` (for example, `organizations/1234`) The `supports_under`
+// field of the associated `Constraint` defines whether ancestry prefixes can
+// be used.
+type GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues struct {
+	// AllowedValues: List of values allowed at this resource.
+	AllowedValues []string `json:"allowedValues,omitempty"`
+	// DeniedValues: List of values denied at this resource.
+	DeniedValues []string `json:"deniedValues,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedValues") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedValues") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudPolicysimulatorV1Replay: A resource describing a `Replay`, or
 // simulation.
 type GoogleCloudPolicysimulatorV1Replay struct {
@@ -517,6 +800,291 @@ type GoogleCloudPolicysimulatorV1ReplayResultsSummary struct {
 
 func (s GoogleCloudPolicysimulatorV1ReplayResultsSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1ReplayResultsSummary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPolicysimulatorV1betaCreateOrgPolicyViolationsPreviewOperationMeta
+// data: CreateOrgPolicyViolationsPreviewOperationMetadata is metadata about an
+// OrgPolicyViolationsPreview generations operation.
+type GoogleCloudPolicysimulatorV1betaCreateOrgPolicyViolationsPreviewOperationMetadata struct {
+	// RequestTime: Time when the request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+	// ResourcesFound: Total number of resources that need scanning. Should equal
+	// resource_scanned + resources_pending
+	ResourcesFound int64 `json:"resourcesFound,omitempty"`
+	// ResourcesPending: Number of resources still to scan.
+	ResourcesPending int64 `json:"resourcesPending,omitempty"`
+	// ResourcesScanned: Number of resources already scanned.
+	ResourcesScanned int64 `json:"resourcesScanned,omitempty"`
+	// StartTime: Time when the request started processing, i.e., when the state
+	// was set to RUNNING.
+	StartTime string `json:"startTime,omitempty"`
+	// State: Output only. The current state of the operation.
+	//
+	// Possible values:
+	//   "PREVIEW_STATE_UNSPECIFIED" - The state is unspecified.
+	//   "PREVIEW_PENDING" - The OrgPolicyViolationsPreview has not been created
+	// yet.
+	//   "PREVIEW_RUNNING" - The OrgPolicyViolationsPreview is currently being
+	// created.
+	//   "PREVIEW_SUCCEEDED" - The OrgPolicyViolationsPreview creation finished
+	// successfully.
+	//   "PREVIEW_FAILED" - The OrgPolicyViolationsPreview creation failed with an
+	// error.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicysimulatorV1betaCreateOrgPolicyViolationsPreviewOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicysimulatorV1betaCreateOrgPolicyViolationsPreviewOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPolicysimulatorV1betaGenerateOrgPolicyViolationsPreviewOperationMe
+// tadata: GenerateOrgPolicyViolationsPreviewOperationMetadata is metadata
+// about an OrgPolicyViolationsPreview generations operation.
+type GoogleCloudPolicysimulatorV1betaGenerateOrgPolicyViolationsPreviewOperationMetadata struct {
+	// RequestTime: Time when the request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+	// ResourcesFound: Total number of resources that need scanning. Should equal
+	// resource_scanned + resources_pending
+	ResourcesFound int64 `json:"resourcesFound,omitempty"`
+	// ResourcesPending: Number of resources still to scan.
+	ResourcesPending int64 `json:"resourcesPending,omitempty"`
+	// ResourcesScanned: Number of resources already scanned.
+	ResourcesScanned int64 `json:"resourcesScanned,omitempty"`
+	// StartTime: Time when the request started processing, i.e. when the state was
+	// set to RUNNING.
+	StartTime string `json:"startTime,omitempty"`
+	// State: The current state of the operation.
+	//
+	// Possible values:
+	//   "PREVIEW_STATE_UNSPECIFIED" - The state is unspecified.
+	//   "PREVIEW_PENDING" - The OrgPolicyViolationsPreview has not been created
+	// yet.
+	//   "PREVIEW_RUNNING" - The OrgPolicyViolationsPreview is currently being
+	// created.
+	//   "PREVIEW_SUCCEEDED" - The OrgPolicyViolationsPreview creation finished
+	// successfully.
+	//   "PREVIEW_FAILED" - The OrgPolicyViolationsPreview creation failed with an
+	// error.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicysimulatorV1betaGenerateOrgPolicyViolationsPreviewOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicysimulatorV1betaGenerateOrgPolicyViolationsPreviewOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay: The proposed changes to
+// OrgPolicy.
+type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay struct {
+	// CustomConstraints: Optional. The OrgPolicy CustomConstraint changes to
+	// preview violations for. Any existing CustomConstraints with the same name
+	// will be overridden in the simulation. That is, violations will be determined
+	// as if all custom constraints in the overlay were instantiated. Only a single
+	// custom_constraint is supported in the overlay at a time. For evaluating
+	// multiple constraints, multiple `GenerateOrgPolicyViolationsPreview` requests
+	// are made, where each request evaluates a single constraint.
+	CustomConstraints []*GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay `json:"customConstraints,omitempty"`
+	// Policies: Optional. The OrgPolicy changes to preview violations for. Any
+	// existing OrgPolicies with the same name will be overridden in the
+	// simulation. That is, violations will be determined as if all policies in the
+	// overlay were created or updated.
+	Policies []*GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay `json:"policies,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomConstraints") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomConstraints") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay: A
+// change to an OrgPolicy custom constraint.
+type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay struct {
+	// CustomConstraint: Optional. The new or updated custom constraint.
+	CustomConstraint *GoogleCloudOrgpolicyV2CustomConstraint `json:"customConstraint,omitempty"`
+	// CustomConstraintParent: Optional. Resource the constraint is attached to.
+	// Example: "organization/987654"
+	CustomConstraintParent string `json:"customConstraintParent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomConstraint") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomConstraint") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay: A change to
+// an OrgPolicy.
+type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay struct {
+	// Policy: Optional. The new or updated OrgPolicy.
+	Policy *GoogleCloudOrgpolicyV2Policy `json:"policy,omitempty"`
+	// PolicyParent: Optional. The parent of the policy we are attaching to.
+	// Example: "projects/123456"
+	PolicyParent string `json:"policyParent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview:
+// OrgPolicyViolationsPreview is a resource providing a preview of the
+// violations that will exist if an OrgPolicy change is made. The list of
+// violations are modeled as child resources and retrieved via a
+// ListOrgPolicyViolations API call. There are potentially more
+// OrgPolicyViolations than could fit in an embedded field. Thus, the use of a
+// child resource instead of a field.
+type GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview struct {
+	// CreateTime: Output only. Time when this `OrgPolicyViolationsPreview` was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// CustomConstraints: Output only. The names of the constraints against which
+	// all `OrgPolicyViolations` were evaluated. If `OrgPolicyOverlay` only
+	// contains `PolicyOverlay` then it contains the name of the configured custom
+	// constraint, applicable to the specified policies. Otherwise it contains the
+	// name of the constraint specified in `CustomConstraintOverlay`. Format:
+	// `organizations/{organization_id}/customConstraints/{custom_constraint_id}`
+	// Example: `organizations/123/customConstraints/custom.createOnlyE2TypeVms`
+	CustomConstraints []string `json:"customConstraints,omitempty"`
+	// Name: Output only. The resource name of the `OrgPolicyViolationsPreview`. It
+	// has the following format:
+	// `organizations/{organization}/locations/{location}/orgPolicyViolationsPreview
+	// s/{orgPolicyViolationsPreview}` Example:
+	// `organizations/my-example-org/locations/global/orgPolicyViolationsPreviews/50
+	// 6a5f7f`
+	Name string `json:"name,omitempty"`
+	// Overlay: Required. The proposed changes we are previewing violations for.
+	Overlay *GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay `json:"overlay,omitempty"`
+	// ResourceCounts: Output only. A summary of the state of all resources scanned
+	// for compliance with the changed OrgPolicy.
+	ResourceCounts *GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts `json:"resourceCounts,omitempty"`
+	// State: Output only. The state of the `OrgPolicyViolationsPreview`.
+	//
+	// Possible values:
+	//   "PREVIEW_STATE_UNSPECIFIED" - The state is unspecified.
+	//   "PREVIEW_PENDING" - The OrgPolicyViolationsPreview has not been created
+	// yet.
+	//   "PREVIEW_RUNNING" - The OrgPolicyViolationsPreview is currently being
+	// created.
+	//   "PREVIEW_SUCCEEDED" - The OrgPolicyViolationsPreview creation finished
+	// successfully.
+	//   "PREVIEW_FAILED" - The OrgPolicyViolationsPreview creation failed with an
+	// error.
+	State string `json:"state,omitempty"`
+	// ViolationsCount: Output only. The number of OrgPolicyViolations in this
+	// `OrgPolicyViolationsPreview`. This count may differ from
+	// `resource_summary.noncompliant_count` because each OrgPolicyViolation is
+	// specific to a resource **and** constraint. If there are multiple constraints
+	// being evaluated (i.e. multiple policies in the overlay), a single resource
+	// may violate multiple constraints.
+	ViolationsCount int64 `json:"violationsCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts: A
+// summary of the state of all resources scanned for compliance with the
+// changed OrgPolicy.
+type GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts struct {
+	// Compliant: Output only. Number of scanned resources with zero violations.
+	Compliant int64 `json:"compliant,omitempty"`
+	// Errors: Output only. Number of resources that returned an error when
+	// scanned.
+	Errors int64 `json:"errors,omitempty"`
+	// Noncompliant: Output only. Number of scanned resources with at least one
+	// violation.
+	Noncompliant int64 `json:"noncompliant,omitempty"`
+	// Scanned: Output only. Number of resources checked for compliance. Must
+	// equal: unenforced + noncompliant + compliant + error
+	Scanned int64 `json:"scanned,omitempty"`
+	// Unenforced: Output only. Number of resources where the constraint was not
+	// enforced, i.e. the Policy set `enforced: false` for that resource.
+	Unenforced int64 `json:"unenforced,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Compliant") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Compliant") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

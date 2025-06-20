@@ -1010,7 +1010,7 @@ type ProductStatusChangeMessage struct {
 	// the order of receiving the notifications.
 	EventTime string `json:"eventTime,omitempty"`
 	// ExpirationTime: Optional. The product expiration time. This field will not
-	// bet set if the notification is sent for a product deletion event.
+	// be set if the notification is sent for a product deletion event.
 	ExpirationTime string `json:"expirationTime,omitempty"`
 	// ManagingAccount: The account that manages the merchant's account. can be the
 	// same as merchant id if it is standalone account. Format :

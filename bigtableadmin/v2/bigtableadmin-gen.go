@@ -3858,6 +3858,13 @@ type Table struct {
 	// column family, see ColumnFamilyStats in the mapped ColumnFamily collection
 	// above.
 	Stats *TableStats `json:"stats,omitempty"`
+	// TieredStorageConfig: Rules to specify what data is stored in each storage
+	// tier. Different tiers store data differently, providing different trade-offs
+	// between cost and performance. Different parts of a table can be stored
+	// separately on different tiers. If a config is specified, tiered storage is
+	// enabled for this table. Otherwise, tiered storage is disabled. Only SSD
+	// instances can configure tiered storage.
+	TieredStorageConfig *TieredStorageConfig `json:"tieredStorageConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4023,6 +4030,56 @@ type TestIamPermissionsResponse struct {
 
 func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TieredStorageConfig: Config for tiered storage. A valid config must have a
+// valid TieredStorageRule. Otherwise the whole TieredStorageConfig must be
+// unset. By default all data is stored in the SSD tier (only SSD instances can
+// configure tiered storage).
+type TieredStorageConfig struct {
+	// InfrequentAccess: Rule to specify what data is stored in the infrequent
+	// access(IA) tier. The IA tier allows storing more data per node with reduced
+	// performance.
+	InfrequentAccess *TieredStorageRule `json:"infrequentAccess,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InfrequentAccess") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InfrequentAccess") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TieredStorageConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TieredStorageConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TieredStorageRule: Rule to specify what data is stored in a storage tier.
+type TieredStorageRule struct {
+	// IncludeIfOlderThan: Include cells older than the given age. For the
+	// infrequent access tier, this value must be at least 30 days.
+	IncludeIfOlderThan string `json:"includeIfOlderThan,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IncludeIfOlderThan") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IncludeIfOlderThan") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TieredStorageRule) MarshalJSON() ([]byte, error) {
+	type NoMethod TieredStorageRule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

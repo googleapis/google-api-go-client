@@ -17889,7 +17889,9 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// from a user's perspective. A higher pCTR suggests that the result is more
 	// likely to satisfy the user's query and intent, making it a valuable signal
 	// for ranking. * `freshness_rank`: freshness adjustment as a rank *
-	// `base_rank`: the default rank of the result
+	// `topicality_rank`: topicality adjustment as a rank. Uses proprietary Google
+	// model to determine the keyword-based overlap between the query and the
+	// document. * `base_rank`: the default rank of the result
 	RankingExpression string `json:"rankingExpression,omitempty"`
 	// RankingExpressionBackend: Optional. The backend to use for the ranking
 	// expression evaluation.
@@ -20292,6 +20294,11 @@ type GoogleCloudDiscoveryengineV1alphaSessionTurn struct {
 	// Query: Optional. The user query. May not be set if this turn is merely
 	// regenerating an answer to a different turn
 	Query *GoogleCloudDiscoveryengineV1alphaQuery `json:"query,omitempty"`
+	// QueryConfig: Optional. Represents metadata related to the query config, for
+	// example LLM model and version used, model parameters (temperature, grounding
+	// parameters, etc.). The prefix "google." is reserved for Google-developed
+	// functionality.
+	QueryConfig map[string]string `json:"queryConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -25467,7 +25474,9 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// from a user's perspective. A higher pCTR suggests that the result is more
 	// likely to satisfy the user's query and intent, making it a valuable signal
 	// for ranking. * `freshness_rank`: freshness adjustment as a rank *
-	// `base_rank`: the default rank of the result
+	// `topicality_rank`: topicality adjustment as a rank. Uses proprietary Google
+	// model to determine the keyword-based overlap between the query and the
+	// document. * `base_rank`: the default rank of the result
 	RankingExpression string `json:"rankingExpression,omitempty"`
 	// RankingExpressionBackend: Optional. The backend to use for the ranking
 	// expression evaluation.

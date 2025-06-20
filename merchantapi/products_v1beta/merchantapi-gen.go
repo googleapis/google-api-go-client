@@ -1458,7 +1458,7 @@ type ProductStatusChangeMessage struct {
 	// the order of receiving the notifications.
 	EventTime string `json:"eventTime,omitempty"`
 	// ExpirationTime: Optional. The product expiration time. This field will not
-	// bet set if the notification is sent for a product deletion event.
+	// be set if the notification is sent for a product deletion event.
 	ExpirationTime string `json:"expirationTime,omitempty"`
 	// ManagingAccount: The account that manages the merchant's account. can be the
 	// same as merchant id if it is standalone account. Format :
@@ -2055,11 +2055,14 @@ type AccountsProductInputsInsertCall struct {
 	header_      http.Header
 }
 
-// Insert: Uploads a product input to your Merchant Center account. If an input
-// with the same contentLanguage, offerId, and dataSource already exists, this
-// method replaces that entry. After inserting, updating, or deleting a product
-// input, it may take several minutes before the processed product can be
-// retrieved.
+// Insert: Uploads a product input to your Merchant Center account
+// (/merchant/api/guides/products/overview#upload-product-input). You must have
+// a products data source to be able to insert a product. The unique identifier
+// of the data source is passed as a query parameter in the request URL. If an
+// input with the same contentLanguage, offerId, and dataSource already exists,
+// this method replaces that entry. After inserting, updating, or deleting a
+// product input, it may take several minutes before the processed product can
+// be retrieved.
 //
 //   - parent: The account where this product will be inserted. Format:
 //     `accounts/{account}`.

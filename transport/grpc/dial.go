@@ -68,9 +68,9 @@ var (
 
 // otelGRPCStatsHandler returns singleton otelStatsHandler for reuse across all
 // dial connections.
-func otelGRPCStatsHandler() stats.Handler {
+func otelGRPCStatsHandler(opts []otelgrpc.Option) stats.Handler {
 	initOtelStatsHandlerOnce.Do(func() {
-		otelStatsHandler = otelgrpc.NewClientHandler()
+		otelStatsHandler = otelgrpc.NewClientHandler(opts...)
 	})
 	return otelStatsHandler
 }
@@ -400,7 +400,8 @@ func addOpenTelemetryStatsHandler(opts []grpc.DialOption, settings *internal.Dia
 	if settings.TelemetryDisabled {
 		return opts
 	}
-	return append(opts, grpc.WithStatsHandler(otelGRPCStatsHandler()))
+	otelOpts := settings.OpenTelemetryOptsGRPC
+	return append(opts, grpc.WithStatsHandler(otelGRPCStatsHandler(otelOpts)))
 }
 
 // grpcTokenSource supplies PerRPCCredentials from an oauth.TokenSource.

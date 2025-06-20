@@ -414,3 +414,20 @@ type withLogger struct{ l *slog.Logger }
 func (w withLogger) Apply(o *internal.DialSettings) {
 	o.Logger = w.l
 }
+
+// WithOpenTelemetryOpts returns a ClientOption that sets the options for
+// the OpenTelemetry HTTP/gRPC client. This option is used to configure
+// the OpenTelemetry HTTP/gRPC client instrumentation.
+// It can accept any number of options, which can be
+// go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp.Option or
+// go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc.Option
+func WithOpenTelemetryOpts(opts ...any) ClientOption {
+	return withOpenTelemetryOpts{opts}
+}
+
+type withOpenTelemetryOpts struct{ opts []any }
+
+func (w withOpenTelemetryOpts) Apply(o *internal.DialSettings) {
+	o.OpenTelemetryOpts = make([]any, len(w.opts))
+	copy(o.OpenTelemetryOpts, w.opts)
+}

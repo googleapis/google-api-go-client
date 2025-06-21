@@ -5647,6 +5647,11 @@ func (r *ProjectsLocationsApisService) List(parent string) *ProjectsLocationsApi
 // of the user defined JSON attribute associated with the Resource. Allowed
 // comparison operator is `:`. Here user-defined-attribute-json is a
 // placeholder that can be replaced with any user defined JSON attribute name.
+// A filter function is also supported in the filter string. The filter
+// function is `id(name)`. The `id(name)` function returns the id of the
+// resource name. For example, `id(name) = \"api-1\" is equivalent to `name =
+// \"projects/test-project-id/locations/test-location-id/apis/api-1\" provided
+// the parent is `projects/test-project-id/locations/test-location-id`.
 // Expressions are combined with either `AND` logic operator or `OR` logical
 // operator but not both of them together i.e. only one of the `AND` or `OR`
 // operator can be used throughout the filter string and both the operators
@@ -10558,23 +10563,29 @@ func (r *ProjectsLocationsDeploymentsService) List(parent string) *ProjectsLocat
 // of the user defined JSON attribute associated with the Resource. Allowed
 // comparison operator is `:`. Here user-defined-attribute-json is a
 // placeholder that can be replaced with any user defined JSON attribute name.
-// Expressions are combined with either `AND` logic operator or `OR` logical
-// operator but not both of them together i.e. only one of the `AND` or `OR`
-// operator can be used throughout the filter string and both the operators
-// cannot be used together. No other logical operators are supported. At most
-// three filter fields are allowed in the filter string and if provided more
-// than that then `INVALID_ARGUMENT` error is returned by the API. Here are a
-// few examples: * `environment.enum_values.values.id: staging-id` - The
-// allowed value id of the environment attribute associated with the Deployment
-// is _staging-id_. * `environment.enum_values.values.display_name: \"Staging
-// Deployment\" - The allowed value display name of the environment attribute
-// associated with the Deployment is `Staging Deployment`. *
-// `environment.enum_values.values.id: production-id AND create_time <
-// \"2021-08-15T14:50:00Z\" AND create_time > \"2021-08-10T12:00:00Z\" - The
-// allowed value id of the environment attribute associated with the Deployment
-// is _production-id_ and Deployment was created before _2021-08-15 14:50:00
-// UTC_ and after _2021-08-10 12:00:00 UTC_. *
-// `environment.enum_values.values.id: production-id OR
+// A filter function is also supported in the filter string. The filter
+// function is `id(name)`. The `id(name)` function returns the id of the
+// resource name. For example, `id(name) = \"deployment-1\" is equivalent to
+// `name =
+// \"projects/test-project-id/locations/test-location-id/deployments/deployment-
+// 1\" provided the parent is
+// `projects/test-project-id/locations/test-location-id`. Expressions are
+// combined with either `AND` logic operator or `OR` logical operator but not
+// both of them together i.e. only one of the `AND` or `OR` operator can be
+// used throughout the filter string and both the operators cannot be used
+// together. No other logical operators are supported. At most three filter
+// fields are allowed in the filter string and if provided more than that then
+// `INVALID_ARGUMENT` error is returned by the API. Here are a few examples: *
+// `environment.enum_values.values.id: staging-id` - The allowed value id of
+// the environment attribute associated with the Deployment is _staging-id_. *
+// `environment.enum_values.values.display_name: \"Staging Deployment\" - The
+// allowed value display name of the environment attribute associated with the
+// Deployment is `Staging Deployment`. * `environment.enum_values.values.id:
+// production-id AND create_time < \"2021-08-15T14:50:00Z\" AND create_time >
+// \"2021-08-10T12:00:00Z\" - The allowed value id of the environment
+// attribute associated with the Deployment is _production-id_ and Deployment
+// was created before _2021-08-15 14:50:00 UTC_ and after _2021-08-10 12:00:00
+// UTC_. * `environment.enum_values.values.id: production-id OR
 // slo.string_values.values: \"99.99%\" - The allowed value id of the
 // environment attribute Deployment is _production-id_ or string value of the
 // slo attribute is _99.99%_. * `environment.enum_values.values.id: staging-id
@@ -10732,7 +10743,8 @@ type ProjectsLocationsDeploymentsPatchCall struct {
 // Patch: Update a deployment resource in the API hub. The following fields in
 // the deployment resource can be updated: * display_name * description *
 // documentation * deployment_type * resource_uri * endpoints * slo *
-// environment * attributes The update_mask should be used to specify the
+// environment * attributes * source_project * source_environment *
+// management_url * source_uri The update_mask should be used to specify the
 // fields being updated.
 //
 //   - name: Identifier. The name of the deployment. Format:
@@ -13917,14 +13929,20 @@ func (r *ProjectsLocationsPluginsInstancesService) List(parent string) *Projects
 // The comparison operator must be one of: `<`, `>` or `=`. Filters are not
 // case sensitive. The following fields in the `PluginInstances` are eligible
 // for filtering: * `state` - The state of the Plugin Instance. Allowed
-// comparison operators: `=`. Expressions are combined with either `AND` logic
-// operator or `OR` logical operator but not both of them together i.e. only
-// one of the `AND` or `OR` operator can be used throughout the filter string
-// and both the operators cannot be used together. No other logical operators
-// are supported. At most three filter fields are allowed in the filter string
-// and if provided more than that then `INVALID_ARGUMENT` error is returned by
-// the API. Here are a few examples: * `state = ENABLED` - The plugin instance
-// is in enabled state.
+// comparison operators: `=`. A filter function is also supported in the filter
+// string. The filter function is `id(name)`. The `id(name)` function returns
+// the id of the resource name. For example, `id(name) = \"plugin-instance-1\"
+// is equivalent to `name =
+// \"projects/test-project-id/locations/test-location-id/plugins/plugin-1/instan
+// ces/plugin-instance-1\" provided the parent is
+// `projects/test-project-id/locations/test-location-id/plugins/plugin-1`.
+// Expressions are combined with either `AND` logic operator or `OR` logical
+// operator but not both of them together i.e. only one of the `AND` or `OR`
+// operator can be used throughout the filter string and both the operators
+// cannot be used together. No other logical operators are supported. At most
+// three filter fields are allowed in the filter string and if provided more
+// than that then `INVALID_ARGUMENT` error is returned by the API. Here are a
+// few examples: * `state = ENABLED` - The plugin instance is in enabled state.
 func (c *ProjectsLocationsPluginsInstancesListCall) Filter(filter string) *ProjectsLocationsPluginsInstancesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

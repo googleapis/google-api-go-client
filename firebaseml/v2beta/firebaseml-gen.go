@@ -1600,8 +1600,7 @@ type GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig struct {
 	// IncludeThoughts: Optional. Indicates whether to include thoughts in the
 	// response. If true, thoughts are returned only when available.
 	IncludeThoughts bool `json:"includeThoughts,omitempty"`
-	// ThinkingBudget: Optional. Indicates the thinking budget in tokens. This is
-	// only applied when enable_thinking is true.
+	// ThinkingBudget: Optional. Indicates the thinking budget in tokens.
 	ThinkingBudget int64 `json:"thinkingBudget,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IncludeThoughts") to
 	// unconditionally include in API requests. By default, fields with empty or

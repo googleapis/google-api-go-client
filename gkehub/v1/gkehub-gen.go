@@ -1458,7 +1458,7 @@ type ConfigManagementDeploymentOverride struct {
 	// overridden.
 	DeploymentName string `json:"deploymentName,omitempty"`
 	// DeploymentNamespace: Required. The namespace of the deployment resource to
-	// be overridden..
+	// be overridden.
 	DeploymentNamespace string `json:"deploymentNamespace,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Containers") to
 	// unconditionally include in API requests. By default, fields with empty or

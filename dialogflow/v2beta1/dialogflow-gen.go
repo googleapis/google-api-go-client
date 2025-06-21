@@ -1957,6 +1957,8 @@ type GoogleCloudDialogflowCxV3Fulfillment struct {
 	// the fulfillment will be respected. This flag is only useful for fulfillments
 	// associated with no-match event handlers.
 	EnableGenerativeFallback bool `json:"enableGenerativeFallback,omitempty"`
+	// Generators: A list of Generators to be called during this fulfillment.
+	Generators []*GoogleCloudDialogflowCxV3FulfillmentGeneratorSettings `json:"generators,omitempty"`
 	// Messages: The list of rich message responses to present to the user.
 	Messages []*GoogleCloudDialogflowCxV3ResponseMessage `json:"messages,omitempty"`
 	// ReturnPartialResponses: Whether Dialogflow should return currently queued
@@ -2071,6 +2073,41 @@ type GoogleCloudDialogflowCxV3FulfillmentConditionalCasesCaseCaseContent struct 
 
 func (s GoogleCloudDialogflowCxV3FulfillmentConditionalCasesCaseCaseContent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3FulfillmentConditionalCasesCaseCaseContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3FulfillmentGeneratorSettings: Generator settings
+// used by the LLM to generate a text response.
+type GoogleCloudDialogflowCxV3FulfillmentGeneratorSettings struct {
+	// Generator: Required. The generator to call. Format:
+	// `projects//locations//agents//generators/`.
+	Generator string `json:"generator,omitempty"`
+	// InputParameters: Map from placeholder parameter in the Generator to
+	// corresponding session parameters. By default, Dialogflow uses the session
+	// parameter with the same name to fill in the generator template. e.g. If
+	// there is a placeholder parameter `city` in the Generator, Dialogflow default
+	// to fill in the `$city` with `$session.params.city`. However, you may choose
+	// to fill `$city` with `$session.params.desination-city`. - Map key: parameter
+	// ID - Map value: session parameter name
+	InputParameters map[string]string `json:"inputParameters,omitempty"`
+	// OutputParameter: Required. Output parameter which should contain the
+	// generator response.
+	OutputParameter string `json:"outputParameter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Generator") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Generator") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3FulfillmentGeneratorSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3FulfillmentGeneratorSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5378,6 +5415,8 @@ type GoogleCloudDialogflowCxV3beta1Fulfillment struct {
 	// the fulfillment will be respected. This flag is only useful for fulfillments
 	// associated with no-match event handlers.
 	EnableGenerativeFallback bool `json:"enableGenerativeFallback,omitempty"`
+	// Generators: A list of Generators to be called during this fulfillment.
+	Generators []*GoogleCloudDialogflowCxV3beta1FulfillmentGeneratorSettings `json:"generators,omitempty"`
 	// Messages: The list of rich message responses to present to the user.
 	Messages []*GoogleCloudDialogflowCxV3beta1ResponseMessage `json:"messages,omitempty"`
 	// ReturnPartialResponses: Whether Dialogflow should return currently queued
@@ -5492,6 +5531,41 @@ type GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCasesCaseCaseContent st
 
 func (s GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCasesCaseCaseContent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCasesCaseCaseContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1FulfillmentGeneratorSettings: Generator
+// settings used by the LLM to generate a text response.
+type GoogleCloudDialogflowCxV3beta1FulfillmentGeneratorSettings struct {
+	// Generator: Required. The generator to call. Format:
+	// `projects//locations//agents//generators/`.
+	Generator string `json:"generator,omitempty"`
+	// InputParameters: Map from placeholder parameter in the Generator to
+	// corresponding session parameters. By default, Dialogflow uses the session
+	// parameter with the same name to fill in the generator template. e.g. If
+	// there is a placeholder parameter `city` in the Generator, Dialogflow default
+	// to fill in the `$city` with `$session.params.city`. However, you may choose
+	// to fill `$city` with `$session.params.desination-city`. - Map key: parameter
+	// ID - Map value: session parameter name
+	InputParameters map[string]string `json:"inputParameters,omitempty"`
+	// OutputParameter: Required. Output parameter which should contain the
+	// generator response.
+	OutputParameter string `json:"outputParameter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Generator") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Generator") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1FulfillmentGeneratorSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1FulfillmentGeneratorSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8194,6 +8268,8 @@ type GoogleCloudDialogflowV2CreateConversationModelOperationMetadata struct {
 	// CreateTime: Timestamp when the request to create conversation model is
 	// submitted. The time is measured on server side.
 	CreateTime string `json:"createTime,omitempty"`
+	// DoneTime: The time when the operation finished.
+	DoneTime string `json:"doneTime,omitempty"`
 	// State: State of CreateConversationModel operation.
 	//
 	// Possible values:
@@ -8239,6 +8315,8 @@ type GoogleCloudDialogflowV2DeleteConversationModelOperationMetadata struct {
 	// CreateTime: Timestamp when delete conversation model request was created.
 	// The time is measured on server side.
 	CreateTime string `json:"createTime,omitempty"`
+	// DoneTime: The time when the operation finished.
+	DoneTime string `json:"doneTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConversationModel") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8266,6 +8344,8 @@ type GoogleCloudDialogflowV2DeployConversationModelOperationMetadata struct {
 	// CreateTime: Timestamp when request to deploy conversation model was
 	// submitted. The time is measured on server side.
 	CreateTime string `json:"createTime,omitempty"`
+	// DoneTime: The time when the operation finished.
+	DoneTime string `json:"doneTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConversationModel") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10168,6 +10248,8 @@ func (s GoogleCloudDialogflowV2KnowledgeAssistAnswerSuggestedQuery) MarshalJSON(
 // GoogleCloudDialogflowV2KnowledgeOperationMetadata: Metadata in
 // google::longrunning::Operation for Knowledge operations.
 type GoogleCloudDialogflowV2KnowledgeOperationMetadata struct {
+	// DoneTime: The time when the operation finished.
+	DoneTime string `json:"doneTime,omitempty"`
 	// ExportOperationMetadata: Metadata for the Export Data Operation such as the
 	// destination of export.
 	ExportOperationMetadata *GoogleCloudDialogflowV2ExportOperationMetadata `json:"exportOperationMetadata,omitempty"`
@@ -10182,15 +10264,15 @@ type GoogleCloudDialogflowV2KnowledgeOperationMetadata struct {
 	//   "RUNNING" - The operation is currently running.
 	//   "DONE" - The operation is done, either cancelled or completed.
 	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExportOperationMetadata") to
+	// ForceSendFields is a list of field names (e.g. "DoneTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExportOperationMetadata") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DoneTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -11147,6 +11229,8 @@ type GoogleCloudDialogflowV2UndeployConversationModelOperationMetadata struct {
 	// CreateTime: Timestamp when the request to undeploy conversation model was
 	// submitted. The time is measured on server side.
 	CreateTime string `json:"createTime,omitempty"`
+	// DoneTime: The time when the operation finished.
+	DoneTime string `json:"doneTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConversationModel") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -17544,6 +17628,8 @@ func (s GoogleCloudDialogflowV2beta1KnowledgeBase) MarshalJSON() ([]byte, error)
 // GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata: Metadata in
 // google::longrunning::Operation for Knowledge operations.
 type GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata struct {
+	// DoneTime: The time when the operation finished.
+	DoneTime string `json:"doneTime,omitempty"`
 	// ExportOperationMetadata: Metadata for the Export Data Operation such as the
 	// destination of export.
 	ExportOperationMetadata *GoogleCloudDialogflowV2beta1ExportOperationMetadata `json:"exportOperationMetadata,omitempty"`
@@ -17558,15 +17644,15 @@ type GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata struct {
 	//   "RUNNING" - The operation is currently running.
 	//   "DONE" - The operation is done, either cancelled or completed.
 	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExportOperationMetadata") to
+	// ForceSendFields is a list of field names (e.g. "DoneTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExportOperationMetadata") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DoneTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

@@ -1559,7 +1559,8 @@ func (s SearchChainsResponse) MarshalJSON() ([]byte, error) {
 // GoogleLocations.SearchGoogleLocations.
 type SearchGoogleLocationsRequest struct {
 	// Location: Location to search for. If provided, will find locations which
-	// match the provided location details.
+	// match the provided location details, which must include a value for the
+	// title.
 	Location *Location `json:"location,omitempty"`
 	// PageSize: The number of matches to return. The default value is 3, with a
 	// maximum of 10. Note that latency may increase if more are requested. There

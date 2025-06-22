@@ -1602,6 +1602,9 @@ type SchedulingConfig struct {
 	//   "RESERVATION_BOUND" - Reservation provisioning with runtime bound to the
 	// lifetime of the consumed reservation.
 	ProvisioningModel string `json:"provisioningModel,omitempty"`
+	// ReservationName: Optional. Name of the reservation in which the node should
+	// be provisioned.
+	ReservationName string `json:"reservationName,omitempty"`
 	// Reserved: Whether the node is created under a reservation.
 	Reserved bool `json:"reserved,omitempty"`
 	// Spot: Optional. Defines whether the node is Spot VM.

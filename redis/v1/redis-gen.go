@@ -724,6 +724,9 @@ type Cluster struct {
 	ReplicaCount int64 `json:"replicaCount,omitempty"`
 	// ShardCount: Optional. Number of shards for the Redis cluster.
 	ShardCount int64 `json:"shardCount,omitempty"`
+	// SimulateMaintenanceEvent: Optional. Input only. Simulate a maintenance
+	// event.
+	SimulateMaintenanceEvent bool `json:"simulateMaintenanceEvent,omitempty"`
 	// SizeGb: Output only. Redis memory size in GB for the entire cluster rounded
 	// up to the next integer.
 	SizeGb int64 `json:"sizeGb,omitempty"`
@@ -1475,9 +1478,9 @@ type DatabaseResourceId struct {
 	// bigtableadmin.googleapis.com/Instance compute.googleapis.com/Instance
 	// firestore.googleapis.com/Database, redis.googleapis.com/Instance,
 	// redis.googleapis.com/Cluster,
-	// oracledatabase.googleapis.com/cloudExadataInfrastructures
-	// oracledatabase.googleapis.com/cloudVmClusters
-	// oracledatabase.googleapis.com/autonomousDatabases
+	// oracledatabase.googleapis.com/CloudExadataInfrastructure
+	// oracledatabase.googleapis.com/CloudVmCluster
+	// oracledatabase.googleapis.com/AutonomousDatabase
 	// spanner.googleapis.com/Instance, spanner.googleapis.com/Database,
 	// sqladmin.googleapis.com/Instance, go/keep-sorted end REQUIRED Please refer
 	// go/condor-common-datamodel
@@ -2532,6 +2535,10 @@ type Instance struct {
 	//   "CUSTOMER_MANAGED_KEY_ISSUE" - Something wrong with the CMEK key provided
 	// by customer.
 	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// Tier: Required. The service tier of the instance.
 	//
 	// Possible values:
@@ -3361,6 +3368,8 @@ type Product struct {
 	// be when engine is known, but it is not present in this enum.
 	//   "ENGINE_FIRESTORE_WITH_NATIVE_MODE" - Firestore with native mode.
 	//   "ENGINE_FIRESTORE_WITH_DATASTORE_MODE" - Firestore with datastore mode.
+	//   "ENGINE_EXADATA_ORACLE" - Oracle Exadata engine.
+	//   "ENGINE_ADB_SERVERLESS_ORACLE" - Oracle Autonomous DB Serverless engine.
 	Engine string `json:"engine,omitempty"`
 	// Type: Type of specific database product. It could be CloudSQL, AlloyDB etc..
 	//

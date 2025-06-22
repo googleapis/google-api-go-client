@@ -1676,7 +1676,7 @@ type ConfigManagementDeploymentOverride struct {
 	// overridden.
 	DeploymentName string `json:"deploymentName,omitempty"`
 	// DeploymentNamespace: Required. The namespace of the deployment resource to
-	// be overridden..
+	// be overridden.
 	DeploymentNamespace string `json:"deploymentNamespace,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Containers") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6787,8 +6787,8 @@ func (s WorkloadIdentityFeatureSpec) MarshalJSON() ([]byte, error) {
 type WorkloadIdentityFeatureState struct {
 	// NamespaceStateDetails: The state of the IAM namespaces for the fleet.
 	NamespaceStateDetails map[string]WorkloadIdentityNamespaceStateDetail `json:"namespaceStateDetails,omitempty"`
-	// NamespaceStates: Deprecated, will erase after code is changed to use the new
-	// field.
+	// NamespaceStates: Deprecated, this field will be erased after code is changed
+	// to use the new field.
 	NamespaceStates map[string]string `json:"namespaceStates,omitempty"`
 	// ScopeTenancyWorkloadIdentityPool: The full name of the scope-tenancy pool
 	// for the fleet.
@@ -6819,8 +6819,8 @@ func (s WorkloadIdentityFeatureState) MarshalJSON() ([]byte, error) {
 // WorkloadIdentityMembershipState: **WorkloadIdentity**: The
 // membership-specific state for WorkloadIdentity feature.
 type WorkloadIdentityMembershipState struct {
-	// Description: Deprecated, will erase after code is changed to use the new
-	// field.
+	// Description: Deprecated, this field will be erased after code is changed to
+	// use the new field.
 	Description string `json:"description,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or

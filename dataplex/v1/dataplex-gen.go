@@ -2927,8 +2927,8 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 	// characters.
 	Description string `json:"description,omitempty"`
 	// Dimension: Required. The dimension a rule belongs to. Results are also
-	// aggregated at the dimension level. Supported dimensions are "COMPLETENESS",
-	// "ACCURACY", "CONSISTENCY", "VALIDITY", "UNIQUENESS", "FRESHNESS", "VOLUME"
+	// aggregated at the dimension level. Custom dimension name is supported with
+	// all uppercase letters and maximum length of 30 characters.
 	Dimension string `json:"dimension,omitempty"`
 	// IgnoreNull: Optional. Rows with null values will automatically fail a rule,
 	// unless ignore_null is true. In that case, such null rows are trivially
@@ -3602,7 +3602,7 @@ func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigge
 // (https://cloud.google.com/dataplex/docs/data-profiling-overview). Data
 // discovery: scans data in Cloud Storage buckets to extract and then catalog
 // metadata. For more information, see Discover and catalog Cloud Storage data
-// (https://cloud.google.com/bigquery/docs/automatic-discovery).
+// (https://cloud.google.com/bigquery/docs/automatic-discovery). LINT.IfChange
 type GoogleCloudDataplexV1DataScan struct {
 	// CreateTime: Output only. The time when the scan was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -4145,7 +4145,9 @@ type GoogleCloudDataplexV1DataSource struct {
 	// _id}/entities/{entity_id}.
 	Entity string `json:"entity,omitempty"`
 	// Resource: Immutable. The service-qualified full resource name of the cloud
-	// resource for a DataScan job to scan against. The field could be: BigQuery
+	// resource for a DataScan job to scan against. The field could eitherbe: Cloud
+	// Storage bucket for DataDiscoveryScan Format:
+	// //storage.googleapis.com/projects/PROJECT_ID/buckets/BUCKET_ID or BigQuery
 	// table of type "TABLE" for DataProfileScan/DataQualityScan Format:
 	// //bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tables/TABL
 	// E_ID
@@ -11006,7 +11008,9 @@ func (c *ProjectsLocationsSearchEntriesCall) Scope(scope string) *ProjectsLocati
 	return c
 }
 
-// SemanticSearch sets the optional parameter "semanticSearch": Internal only.
+// SemanticSearch sets the optional parameter "semanticSearch": Specifies
+// whether the search should understand the meaning and intent behind the
+// query, rather than just matching keywords.
 func (c *ProjectsLocationsSearchEntriesCall) SemanticSearch(semanticSearch bool) *ProjectsLocationsSearchEntriesCall {
 	c.urlParams_.Set("semanticSearch", fmt.Sprint(semanticSearch))
 	return c

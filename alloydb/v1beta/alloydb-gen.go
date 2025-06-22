@@ -344,6 +344,7 @@ type Backup struct {
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
+	//   "POSTGRES_17" - The database version is Postgres 17.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// DeleteTime: Output only. Delete time stamp
 	DeleteTime string `json:"deleteTime,omitempty"`
@@ -603,6 +604,7 @@ type Cluster struct {
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
+	//   "POSTGRES_17" - The database version is Postgres 17.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// DeleteTime: Output only. Delete time stamp
 	DeleteTime string `json:"deleteTime,omitempty"`
@@ -678,11 +680,8 @@ type Cluster struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The state of the cluster is unknown.
 	//   "READY" - The cluster is active and running.
-	//   "STOPPED" - The cluster is stopped. All instances in the cluster are
-	// stopped. Customers can start a stopped cluster at any point and all their
-	// instances will come back to life with same names and IP resources. In this
-	// state, customer pays for storage. Associated backups could also be present
-	// in a stopped cluster.
+	//   "STOPPED" - This is unused. Even when all instances in the cluster are
+	// stopped, the cluster remains in READY state.
 	//   "EMPTY" - The cluster is empty and has no associated resources. All
 	// instances, associated storage and backups have been deleted.
 	//   "CREATING" - The cluster is being created.
@@ -758,6 +757,7 @@ type ClusterUpgradeDetails struct {
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
+	//   "POSTGRES_17" - The database version is Postgres 17.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// InstanceUpgradeDetails: Upgrade details of the instances directly associated
 	// with this cluster.
@@ -844,7 +844,8 @@ func (s ConnectionInfo) MarshalJSON() ([]byte, error) {
 // ConnectionPoolConfig: Configuration for Managed Connection Pool (MCP).
 type ConnectionPoolConfig struct {
 	// DefaultPoolSize: Optional. Deprecated. Use 'flags' instead. The default pool
-	// size. Defaults to 20.
+	// size. Defaults to 20. Note: This field should not be added to client
+	// libraries if not present already.
 	DefaultPoolSize string `json:"defaultPoolSize,omitempty"`
 	// Enable: Optional. Deprecated; Prefer 'enabled' as this will be removed soon.
 	Enable bool `json:"enable,omitempty"`
@@ -853,23 +854,28 @@ type ConnectionPoolConfig struct {
 	// Flags: Optional. Connection Pool flags, as a list of "key": "value" pairs.
 	Flags map[string]string `json:"flags,omitempty"`
 	// IgnoreStartupParameters: Optional. Deprecated. Use 'flags' instead. The list
-	// of startup parameters to ignore. Defaults to ["extra_float_digits"]
+	// of startup parameters to ignore. Defaults to ["extra_float_digits"] Note:
+	// This field should not be added to client libraries if not present already.
 	IgnoreStartupParameters []string `json:"ignoreStartupParameters,omitempty"`
 	// MaxClientConn: Optional. Deprecated. Use 'flags' instead. The maximum number
-	// of client connections allowed.
+	// of client connections allowed. Note: This field should not be added to
+	// client libraries if not present already.
 	MaxClientConn string `json:"maxClientConn,omitempty"`
 	// MaxPreparedStatements: Optional. Deprecated. Use 'flags' instead. The
 	// maximum number of prepared statements allowed. MCP makes sure that any
 	// statement prepared by a client, up to this limit, is available on the
 	// backing server connection in transaction and statement pooling mode. Even if
 	// the statement was originally prepared on another server connection. Defaults
-	// to 0.
+	// to 0. Note: This field should not be added to client libraries if not
+	// present already.
 	MaxPreparedStatements string `json:"maxPreparedStatements,omitempty"`
 	// MinPoolSize: Optional. Deprecated. Use 'flags' instead. The minimum pool
-	// size. Defaults to 0.
+	// size. Defaults to 0. Note: This field should not be added to client
+	// libraries if not present already.
 	MinPoolSize string `json:"minPoolSize,omitempty"`
 	// PoolMode: Optional. Deprecated. Use 'flags' instead. The pool mode. Defaults
-	// to `POOL_MODE_TRANSACTION`.
+	// to `POOL_MODE_TRANSACTION`. Note: This field should not be added to client
+	// libraries if not present already.
 	//
 	// Possible values:
 	//   "POOL_MODE_UNSPECIFIED" - The pool mode is not specified. Defaults to
@@ -884,15 +890,18 @@ type ConnectionPoolConfig struct {
 	// QueryWaitTimeout: Optional. Deprecated. Use 'flags' instead. The maximum
 	// number of seconds queries are allowed to spend waiting for execution. If the
 	// query is not assigned to a server during that time, the client is
-	// disconnected. 0 disables.
+	// disconnected. 0 disables. Note: This field should not be added to client
+	// libraries if not present already.
 	QueryWaitTimeout string `json:"queryWaitTimeout,omitempty"`
 	// ServerIdleTimeout: Optional. Deprecated. Use 'flags' instead. The maximum
 	// number of seconds a server is allowed to be idle before it is disconnected.
-	// 0 disables.
+	// 0 disables. Note: This field should not be added to client libraries if not
+	// present already.
 	ServerIdleTimeout string `json:"serverIdleTimeout,omitempty"`
 	// StatsUsers: Optional. Deprecated. Use 'flags' instead. The list of users
 	// that are allowed to connect to the MCP stats console. The users must exist
-	// in the database.
+	// in the database. Note: This field should not be added to client libraries if
+	// not present already.
 	StatsUsers []string `json:"statsUsers,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DefaultPoolSize") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1317,7 +1326,7 @@ func (s GcsDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GeminiClusterConfig: Deprecated and unused. This field will be removed in
+// GeminiClusterConfig: Deprecated and unused. This message will be removed in
 // the near future.
 type GeminiClusterConfig struct {
 	// Entitled: Output only. Deprecated and unused. This field will be removed in
@@ -1341,7 +1350,7 @@ func (s GeminiClusterConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GeminiInstanceConfig: Deprecated and unused. This field will be removed in
+// GeminiInstanceConfig: Deprecated and unused. This message will be removed in
 // the near future.
 type GeminiInstanceConfig struct {
 	// Entitled: Output only. Deprecated and unused. This field will be removed in
@@ -3361,6 +3370,9 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// about this signal can be obtained. In GCP, this will take user to SCC page
 	// to get more details about signals.
 	ExternalUri string `json:"externalUri,omitempty"`
+	// Location: This is used to identify the location of the resource. Example:
+	// "us-central1"
+	Location string `json:"location,omitempty"`
 	// Name: Required. The name of the signal, ex: PUBLIC_SQL_INSTANCE,
 	// SQL_LOG_ERROR_VERBOSITY etc.
 	Name string `json:"name,omitempty"`
@@ -3697,9 +3709,9 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceId struct {
 	// bigtableadmin.googleapis.com/Instance compute.googleapis.com/Instance
 	// firestore.googleapis.com/Database, redis.googleapis.com/Instance,
 	// redis.googleapis.com/Cluster,
-	// oracledatabase.googleapis.com/cloudExadataInfrastructures
-	// oracledatabase.googleapis.com/cloudVmClusters
-	// oracledatabase.googleapis.com/autonomousDatabases
+	// oracledatabase.googleapis.com/CloudExadataInfrastructure
+	// oracledatabase.googleapis.com/CloudVmCluster
+	// oracledatabase.googleapis.com/AutonomousDatabase
 	// spanner.googleapis.com/Instance, spanner.googleapis.com/Database,
 	// sqladmin.googleapis.com/Instance, go/keep-sorted end REQUIRED Please refer
 	// go/condor-common-datamodel
@@ -4503,6 +4515,8 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	// be when engine is known, but it is not present in this enum.
 	//   "ENGINE_FIRESTORE_WITH_NATIVE_MODE" - Firestore with native mode.
 	//   "ENGINE_FIRESTORE_WITH_DATASTORE_MODE" - Firestore with datastore mode.
+	//   "ENGINE_EXADATA_ORACLE" - Oracle Exadata engine.
+	//   "ENGINE_ADB_SERVERLESS_ORACLE" - Oracle Autonomous DB Serverless engine.
 	Engine string `json:"engine,omitempty"`
 	// Type: Type of specific database product. It could be CloudSQL, AlloyDB etc..
 	//
@@ -4520,6 +4534,7 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	//   "PRODUCT_TYPE_BIGTABLE" - Bigtable product area in GCP
 	//   "PRODUCT_TYPE_FIRESTORE" - Firestore product area in GCP.
 	//   "PRODUCT_TYPE_COMPUTE_ENGINE" - Compute Engine self managed databases
+	//   "PRODUCT_TYPE_ORACLE_ON_GCP" - Oracle product area in GCP
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type. This is
 	// to be when product type is known, but it is not present in this enum.
 	Type string `json:"type,omitempty"`
@@ -4657,6 +4672,7 @@ type SupportedDatabaseFlag struct {
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
+	//   "POSTGRES_17" - The database version is Postgres 17.
 	SupportedDbVersions []string `json:"supportedDbVersions,omitempty"`
 	// Possible values:
 	//   "VALUE_TYPE_UNSPECIFIED" - This is an unknown flag type.
@@ -4829,6 +4845,7 @@ type UpgradeClusterRequest struct {
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
+	//   "POSTGRES_17" - The database version is Postgres 17.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4900,6 +4917,7 @@ type UpgradeClusterStatus struct {
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
+	//   "POSTGRES_17" - The database version is Postgres 17.
 	SourceVersion string `json:"sourceVersion,omitempty"`
 	// Stages: Status of all upgrade stages.
 	Stages []*StageStatus `json:"stages,omitempty"`
@@ -4923,6 +4941,7 @@ type UpgradeClusterStatus struct {
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
+	//   "POSTGRES_17" - The database version is Postgres 17.
 	TargetVersion string `json:"targetVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cancellable") to
 	// unconditionally include in API requests. By default, fields with empty or

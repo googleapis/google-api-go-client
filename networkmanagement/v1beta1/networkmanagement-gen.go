@@ -1593,6 +1593,7 @@ type ForwardInfo struct {
 	//   "ANOTHER_PROJECT" - Forwarded to a VPC network in another project.
 	//   "NCC_HUB" - Forwarded to an NCC Hub.
 	//   "ROUTER_APPLIANCE" - Forwarded to a router appliance.
+	//   "SECURE_WEB_PROXY_GATEWAY" - Forwarded to a Secure Web Proxy Gateway.
 	Target string `json:"target,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IpAddress") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2767,6 +2768,7 @@ type RouteInfo struct {
 	//   "NEXT_HOP_NCC_HUB" - Next hop is an NCC hub. This scenario only happens
 	// when the user doesn't have permissions to the project where the next hop
 	// resource is located.
+	//   "SECURE_WEB_PROXY_GATEWAY" - Next hop is Secure Web Proxy Gateway.
 	NextHopType string `json:"nextHopType,omitempty"`
 	// NextHopUri: URI of the next hop resource.
 	NextHopUri string `json:"nextHopUri,omitempty"`

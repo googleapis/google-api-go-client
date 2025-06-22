@@ -4494,6 +4494,155 @@ func (c *ProjectsLocationsApplicationsAuthorizedDomainsListCall) Pages(ctx conte
 	}
 }
 
+type ProjectsLocationsApplicationsDomainMappingsCreateCall struct {
+	s              *APIService
+	projectsId     string
+	locationsId    string
+	applicationsId string
+	domainmapping  *DomainMapping
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Maps a domain to an application. A user must be authorized to
+// administer a domain in order to map it to an application. For a list of
+// available authorized domains, see AuthorizedDomains.ListAuthorizedDomains.
+//
+//   - applicationsId: Part of `parent`. See documentation of `projectsId`.
+//   - locationsId: Part of `parent`. See documentation of `projectsId`.
+//   - projectsId: Part of `parent`. Name of the parent Application resource.
+//     Example: apps/myapp.
+func (r *ProjectsLocationsApplicationsDomainMappingsService) Create(projectsId string, locationsId string, applicationsId string, domainmapping *DomainMapping) *ProjectsLocationsApplicationsDomainMappingsCreateCall {
+	c := &ProjectsLocationsApplicationsDomainMappingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.applicationsId = applicationsId
+	c.domainmapping = domainmapping
+	return c
+}
+
+// NoManagedCertificate sets the optional parameter "noManagedCertificate":
+// Whether a managed certificate should be provided by App Engine. If true, a
+// certificate ID must be manaually set in the DomainMapping resource to
+// configure SSL for this domain. If false, a managed certificate will be
+// provisioned and a certificate ID will be automatically populated.
+func (c *ProjectsLocationsApplicationsDomainMappingsCreateCall) NoManagedCertificate(noManagedCertificate bool) *ProjectsLocationsApplicationsDomainMappingsCreateCall {
+	c.urlParams_.Set("noManagedCertificate", fmt.Sprint(noManagedCertificate))
+	return c
+}
+
+// OverrideStrategy sets the optional parameter "overrideStrategy": Whether the
+// domain creation should override any existing mappings for this domain. By
+// default, overrides are rejected.
+//
+// Possible values:
+//
+//	"UNSPECIFIED_DOMAIN_OVERRIDE_STRATEGY" - Strategy unspecified. Defaults to
+//
+// STRICT.
+//
+//	"STRICT" - Overrides not allowed. If a mapping already exists for the
+//
+// specified domain, the request will return an ALREADY_EXISTS (409).
+//
+//	"OVERRIDE" - Overrides allowed. If a mapping already exists for the
+//
+// specified domain, the request will overwrite it. Note that this might stop
+// another Google product from serving. For example, if the domain is mapped to
+// another App Engine application, that app will no longer serve from that
+// domain.
+func (c *ProjectsLocationsApplicationsDomainMappingsCreateCall) OverrideStrategy(overrideStrategy string) *ProjectsLocationsApplicationsDomainMappingsCreateCall {
+	c.urlParams_.Set("overrideStrategy", overrideStrategy)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsApplicationsDomainMappingsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsDomainMappingsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsApplicationsDomainMappingsCreateCall) Context(ctx context.Context) *ProjectsLocationsApplicationsDomainMappingsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsApplicationsDomainMappingsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsDomainMappingsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.domainmapping)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/domainMappings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":     c.projectsId,
+		"locationsId":    c.locationsId,
+		"applicationsId": c.applicationsId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.domainMappings.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.projects.locations.applications.domainMappings.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsApplicationsDomainMappingsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.domainMappings.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsApplicationsDomainMappingsGetCall struct {
 	s                *APIService
 	projectsId       string

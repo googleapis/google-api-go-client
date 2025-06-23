@@ -674,11 +674,8 @@ type Cluster struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The state of the cluster is unknown.
 	//   "READY" - The cluster is active and running.
-	//   "STOPPED" - The cluster is stopped. All instances in the cluster are
-	// stopped. Customers can start a stopped cluster at any point and all their
-	// instances will come back to life with same names and IP resources. In this
-	// state, customer pays for storage. Associated backups could also be present
-	// in a stopped cluster.
+	//   "STOPPED" - This is unused. Even when all instances in the cluster are
+	// stopped, the cluster remains in READY state.
 	//   "EMPTY" - The cluster is empty and has no associated resources. All
 	// instances, associated storage and backups have been deleted.
 	//   "CREATING" - The cluster is being created.
@@ -3229,6 +3226,9 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// about this signal can be obtained. In GCP, this will take user to SCC page
 	// to get more details about signals.
 	ExternalUri string `json:"externalUri,omitempty"`
+	// Location: This is used to identify the location of the resource. Example:
+	// "us-central1"
+	Location string `json:"location,omitempty"`
 	// Name: Required. The name of the signal, ex: PUBLIC_SQL_INSTANCE,
 	// SQL_LOG_ERROR_VERBOSITY etc.
 	Name string `json:"name,omitempty"`
@@ -3565,9 +3565,9 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceId struct {
 	// bigtableadmin.googleapis.com/Instance compute.googleapis.com/Instance
 	// firestore.googleapis.com/Database, redis.googleapis.com/Instance,
 	// redis.googleapis.com/Cluster,
-	// oracledatabase.googleapis.com/cloudExadataInfrastructures
-	// oracledatabase.googleapis.com/cloudVmClusters
-	// oracledatabase.googleapis.com/autonomousDatabases
+	// oracledatabase.googleapis.com/CloudExadataInfrastructure
+	// oracledatabase.googleapis.com/CloudVmCluster
+	// oracledatabase.googleapis.com/AutonomousDatabase
 	// spanner.googleapis.com/Instance, spanner.googleapis.com/Database,
 	// sqladmin.googleapis.com/Instance, go/keep-sorted end REQUIRED Please refer
 	// go/condor-common-datamodel
@@ -4371,6 +4371,8 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	// be when engine is known, but it is not present in this enum.
 	//   "ENGINE_FIRESTORE_WITH_NATIVE_MODE" - Firestore with native mode.
 	//   "ENGINE_FIRESTORE_WITH_DATASTORE_MODE" - Firestore with datastore mode.
+	//   "ENGINE_EXADATA_ORACLE" - Oracle Exadata engine.
+	//   "ENGINE_ADB_SERVERLESS_ORACLE" - Oracle Autonomous DB Serverless engine.
 	Engine string `json:"engine,omitempty"`
 	// Type: Type of specific database product. It could be CloudSQL, AlloyDB etc..
 	//
@@ -4388,6 +4390,7 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	//   "PRODUCT_TYPE_BIGTABLE" - Bigtable product area in GCP
 	//   "PRODUCT_TYPE_FIRESTORE" - Firestore product area in GCP.
 	//   "PRODUCT_TYPE_COMPUTE_ENGINE" - Compute Engine self managed databases
+	//   "PRODUCT_TYPE_ORACLE_ON_GCP" - Oracle product area in GCP
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type. This is
 	// to be when product type is known, but it is not present in this enum.
 	Type string `json:"type,omitempty"`

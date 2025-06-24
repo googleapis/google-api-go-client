@@ -365,3 +365,124 @@ func TestRetry_EachChunkHasItsOwnRetryDeadline(t *testing.T) {
 		}
 	}
 }
+
+// slowMediaReader wraps an io.Reader, introducing a delay on each Read call.
+type slowMediaReader struct {
+	r     io.Reader
+	delay time.Duration
+}
+
+func (s *slowMediaReader) Read(p []byte) (n int, err error) {
+	time.Sleep(s.delay)
+	return s.r.Read(p)
+}
+
+// slowTransport wraps an http.RoundTripper, introducing a delay before each RoundTrip.
+type slowTransport struct {
+	t     http.RoundTripper
+	delay time.Duration
+}
+
+func (s *slowTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	time.Sleep(s.delay)
+	return s.t.RoundTrip(req)
+}
+
+func TestChunkTransferTimeout(t *testing.T) {
+	const (
+		data = "some media data" // length is 15
+	)
+	tests := []struct {
+		name                 string
+		mediaReadDelay       time.Duration
+		networkDelay         time.Duration
+		chunkTransferTimeout time.Duration
+		events               []event
+		shouldFail           bool
+		wantError            error
+	}{
+		{
+			name:                 "timeout-in-media-read-should-succeed",
+			mediaReadDelay:       100 * time.Millisecond,
+			networkDelay:         0,
+			chunkTransferTimeout: 50 * time.Millisecond,
+			events: []event{
+				// When media size is a multiple of chunk size, a non-final
+				// chunk is sent, followed by a final, zero-byte chunk.
+				{"bytes 0-14/*", 308},
+				{"bytes */15", http.StatusOK},
+			},
+			shouldFail: false,
+			wantError:  nil,
+		},
+		{
+			name:                 "timeout-in-network-should-fail",
+			mediaReadDelay:       0,
+			networkDelay:         100 * time.Millisecond,
+			chunkTransferTimeout: 50 * time.Millisecond,
+			events: []event{
+				// The first attempt will be a non-final chunk. It should be answered
+				// with a 308 to keep the upload process going, which allows the ChunkRetryDeadline timeout to fire.
+				{"bytes 0-14/*", 308},
+				{"bytes 0-14/*", 308},
+				{"bytes 0-14/*", 308},
+			},
+			shouldFail: true,
+			wantError:  context.DeadlineExceeded,
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			// A media source that is slow to provide its data.
+			media := &slowMediaReader{
+				r:     strings.NewReader(data),
+				delay: tc.mediaReadDelay,
+			}
+
+			// A transport that is slow to respond.
+			baseTransport := &interruptibleTransport{
+				events: tc.events,
+				bodies: bodyTracker{},
+			}
+			slowRoundTripper := &slowTransport{
+				t:     baseTransport,
+				delay: tc.networkDelay,
+			}
+
+			rx := &ResumableUpload{
+				Client:               &http.Client{Transport: slowRoundTripper},
+				Media:                NewMediaBuffer(media, len(data)), // Chunk size is the whole payload
+				MediaType:            "text/plain",
+				ChunkTransferTimeout: tc.chunkTransferTimeout,
+				ChunkRetryDeadline:   170 * time.Millisecond,
+			}
+
+			// Use a backoff with no pause to speed up retries.
+			oldBackoff := backoff
+			backoff = func() Backoff { return new(NoPauseBackoff) }
+			defer func() { backoff = oldBackoff }()
+
+			res, err := rx.Upload(context.Background())
+			if res != nil {
+				res.Body.Close()
+			}
+
+			if tc.shouldFail {
+				if err == nil {
+					t.Fatalf("expected upload to fail, but it succeeded")
+				}
+				if !errors.Is(err, tc.wantError) {
+					t.Fatalf("got error: %v, want error of type: %v", err, tc.wantError)
+				}
+			} else {
+				if err != nil {
+					t.Fatalf("expected upload to succeed, but it failed with: %v", err)
+				}
+				if res.StatusCode != http.StatusOK {
+					t.Fatalf("got status code: %d, want: %d", res.StatusCode, http.StatusOK)
+				}
+			}
+		})
+	}
+}

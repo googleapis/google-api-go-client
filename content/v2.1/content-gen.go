@@ -8108,6 +8108,9 @@ type Product struct {
 	MaxEnergyEfficiencyClass string `json:"maxEnergyEfficiencyClass,omitempty"`
 	// MaxHandlingTime: Maximal product handling time (in business days).
 	MaxHandlingTime int64 `json:"maxHandlingTime,omitempty,string"`
+	// MaximumRetailPrice: Maximum retail price (MRP) of the item. Applicable to
+	// India only.
+	MaximumRetailPrice *Price `json:"maximumRetailPrice,omitempty"`
 	// MinEnergyEfficiencyClass: The energy efficiency class as defined in EU
 	// directive 2010/30/EU.
 	MinEnergyEfficiencyClass string `json:"minEnergyEfficiencyClass,omitempty"`
@@ -9839,6 +9842,10 @@ type Promotion struct {
 	//   "FREE_SHIPPING_OVERNIGHT" - Overnight free shipping coupon value type.
 	//   "FREE_SHIPPING_TWO_DAY" - Two day free shipping coupon value type.
 	CouponValueType string `json:"couponValueType,omitempty"`
+	// CustomRedemptionRestriction: The custom redemption restriction for the
+	// promotion. If the `redemption_restriction` field is set to `CUSTOM`, this
+	// field must be set.
+	CustomRedemptionRestriction string `json:"customRedemptionRestriction,omitempty"`
 	// FreeGiftDescription: Free gift description for the promotion.
 	FreeGiftDescription string `json:"freeGiftDescription,omitempty"`
 	// FreeGiftItemId: Free gift item ID for the promotion.
@@ -9871,6 +9878,10 @@ type Promotion struct {
 	LimitValue *PriceAmount `json:"limitValue,omitempty"`
 	// LongTitle: Required. Long title for the promotion.
 	LongTitle string `json:"longTitle,omitempty"`
+	// MaxDiscountAmount: The maximum monetary discount a customer can receive for
+	// the promotion. This field is only supported with the `Percent off` coupon
+	// value type.
+	MaxDiscountAmount *PriceAmount `json:"maxDiscountAmount,omitempty"`
 	// MinimumPurchaseAmount: Minimum purchase amount for the promotion.
 	MinimumPurchaseAmount *PriceAmount `json:"minimumPurchaseAmount,omitempty"`
 	// MinimumPurchaseQuantity: Minimum purchase quantity for the promotion.
@@ -9938,6 +9949,25 @@ type Promotion struct {
 	//   "IN_STORE" - Indicates that the channel is in store.
 	//   "ONLINE" - Indicates that the channel is online.
 	RedemptionChannel []string `json:"redemptionChannel,omitempty"`
+	// RedemptionRestriction: The redemption restriction for the promotion.
+	//
+	// Possible values:
+	//   "REDEMPTION_RESTRICTION_UNSPECIFIED" - The redemption restriction is
+	// unspecified.
+	//   "SUBSCRIBE_AND_SAVE" - The customer must subscribe to the merchant's
+	// channel to redeem the promotion.
+	//   "FIRST_ORDER" - The customer must be a first-time customer to redeem the
+	// promotion.
+	//   "SIGN_UP_FOR_EMAIL" - The customer must sign up for email's to redeem the
+	// promotion.
+	//   "SIGN_UP_FOR_TEXT" - The customer must sign up for text to redeem the
+	// promotion.
+	//   "FORMS_OF_PAYMENT" - The customer must use a specific form of payment to
+	// redeem the promotion.
+	//   "CUSTOM" - The customer must meet a custom restriction to redeem the
+	// promotion. If selected, the `custom_redemption_restriction` field must be
+	// set.
+	RedemptionRestriction string `json:"redemptionRestriction,omitempty"`
 	// ShippingServiceNames: Shipping service names for the promotion.
 	ShippingServiceNames []string `json:"shippingServiceNames,omitempty"`
 	// StoreApplicability: Whether the promotion applies to all stores, or only

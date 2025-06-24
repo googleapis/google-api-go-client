@@ -6,7 +6,7 @@
 
 // Package merchantapi provides access to the Merchant API.
 //
-// For product documentation, see: https://developers.devsite.corp.google.com/merchant/api
+// For product documentation, see: https://developers.google.com/merchant/api
 //
 // # Library status
 //
@@ -740,7 +740,8 @@ type ProductReviewAttributes struct {
 	// reviewer. Omit boilerplate text like "con:" unless it was written by the
 	// reviewer.
 	Cons []string `json:"cons,omitempty"`
-	// Content: Required. The content of the review.
+	// Content: Optional. The content of the review. If empty, the content might
+	// still get populated from pros and cons.
 	Content string `json:"content,omitempty"`
 	// Gtins: Optional. Contains GTINs (global trade item numbers) associated with
 	// a product. Sub-types of GTINs (e.g. UPC, EAN, ISBN, JAN) are supported.

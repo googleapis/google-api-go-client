@@ -6,7 +6,7 @@
 
 // Package merchantapi provides access to the Merchant API.
 //
-// For product documentation, see: https://developers.devsite.corp.google.com/merchant/api
+// For product documentation, see: https://developers.google.com/merchant/api
 //
 // # Library status
 //
@@ -365,6 +365,9 @@ type Attributes struct {
 	MaxEnergyEfficiencyClass string `json:"maxEnergyEfficiencyClass,omitempty"`
 	// MaxHandlingTime: Maximal product handling time (in business days).
 	MaxHandlingTime int64 `json:"maxHandlingTime,omitempty,string"`
+	// MaximumRetailPrice: Maximum retail price (MRP) of the item. Applicable to
+	// India only.
+	MaximumRetailPrice *Price `json:"maximumRetailPrice,omitempty"`
 	// MinEnergyEfficiencyClass: The energy efficiency class as defined in EU
 	// directive 2010/30/EU.
 	MinEnergyEfficiencyClass string `json:"minEnergyEfficiencyClass,omitempty"`
@@ -2076,9 +2079,10 @@ func (r *AccountsProductInputsService) Insert(parent string, productinput *Produ
 // DataSource sets the optional parameter "dataSource": Required. The primary
 // or supplemental product data source name. If the product already exists and
 // data source provided is different, then the product will be moved to a new
-// data source. Only API data sources are supported. Format:
-// `accounts/{account}/dataSources/{datasource}`. For example,
-// `accounts/123456/dataSources/104628`.
+// data source. For more information, see Overview of Data sources sub-API
+// (/merchant/api/guides/data-sources/overview). Only API data sources are
+// supported. Format: `accounts/{account}/dataSources/{datasource}`. For
+// example, `accounts/123456/dataSources/104628`.
 func (c *AccountsProductInputsInsertCall) DataSource(dataSource string) *AccountsProductInputsInsertCall {
 	c.urlParams_.Set("dataSource", dataSource)
 	return c

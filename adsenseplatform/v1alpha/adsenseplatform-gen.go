@@ -1260,9 +1260,9 @@ func (c *AccountsPlatformsChildAccountsSitesListCall) PageSize(pageSize int64) *
 }
 
 // PageToken sets the optional parameter "pageToken": A page token, received
-// from a previous `ListPlatformChildren` call. Provide this to retrieve the
+// from a previous `ListPlatformChildSites` call. Provide this to retrieve the
 // subsequent page. When paginating, all other parameters provided to
-// `ListPlatformChildren` must match the call that provided the page token.
+// `ListPlatformChildSites` must match the call that provided the page token.
 func (c *AccountsPlatformsChildAccountsSitesListCall) PageToken(pageToken string) *AccountsPlatformsChildAccountsSitesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

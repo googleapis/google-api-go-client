@@ -6,7 +6,7 @@
 
 // Package merchantapi provides access to the Merchant API.
 //
-// For product documentation, see: https://developers.devsite.corp.google.com/merchant/api
+// For product documentation, see: https://developers.google.com/merchant/api
 //
 // # Library status
 //

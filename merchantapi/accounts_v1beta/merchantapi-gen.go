@@ -6,7 +6,7 @@
 
 // Package merchantapi provides access to the Merchant API.
 //
-// For product documentation, see: https://developers.devsite.corp.google.com/merchant/api
+// For product documentation, see: https://developers.google.com/merchant/api
 //
 // # Library status
 //
@@ -2342,7 +2342,7 @@ func (s ListAccountServicesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListAccountsResponse: Response message for the `ListAccounts` method.
+// ListAccountsResponse: Response message for the `accounts.list` method.
 type ListAccountsResponse struct {
 	// Accounts: The accounts matching the `ListAccountsRequest`.
 	Accounts []*Account `json:"accounts,omitempty"`
@@ -4767,9 +4767,9 @@ func (c *AccountsListCall) PageSize(pageSize int64) *AccountsListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": A page token, received
-// from a previous `ListAccounts` call. Provide this to retrieve the subsequent
-// page. When paginating, all other parameters provided to `ListAccounts` must
-// match the call that provided the page token.
+// from a previous `accounts.list` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided in the
+// `accounts.list` request must match the call that provided the page token.
 func (c *AccountsListCall) PageToken(pageToken string) *AccountsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4894,10 +4894,10 @@ type AccountsListSubaccountsCall struct {
 	header_      http.Header
 }
 
-// ListSubaccounts: List all sub-accounts for a given multi client account.
-// This is a convenience wrapper for the more powerful `ListAccounts` method.
-// This method will produce the same results as calling `ListsAccounts` with
-// the following filter: `relationship(providerId={parent} AND
+// ListSubaccounts: List all sub-accounts for a given advanced account. This is
+// a convenience wrapper for the more powerful `accounts.list` method. This
+// method will produce the same results as calling `ListsAccounts` with the
+// following filter: `relationship(providerId={parent} AND
 // service(type="ACCOUNT_AGGREGATION"))`
 //
 // - provider: The aggregation service provider. Format: `accounts/{accountId}`.
@@ -4917,9 +4917,9 @@ func (c *AccountsListSubaccountsCall) PageSize(pageSize int64) *AccountsListSuba
 }
 
 // PageToken sets the optional parameter "pageToken": A page token, received
-// from a previous `ListAccounts` call. Provide this to retrieve the subsequent
-// page. When paginating, all other parameters provided to `ListAccounts` must
-// match the call that provided the page token.
+// from a previous `accounts.list` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided in the
+// `accounts.list` request must match the call that provided the page token.
 func (c *AccountsListSubaccountsCall) PageToken(pageToken string) *AccountsListSubaccountsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

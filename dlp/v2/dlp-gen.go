@@ -9574,6 +9574,30 @@ func (s GooglePrivacyDlpV2SaveFindings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2SaveToGcsFindingsOutput: Collection of findings saved to a
+// Cloud Storage bucket. This is used as the proto schema for textproto files
+// created when specifying a cloud storage path to save Inspect findings.
+type GooglePrivacyDlpV2SaveToGcsFindingsOutput struct {
+	// Findings: List of findings.
+	Findings []*GooglePrivacyDlpV2Finding `json:"findings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Findings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Findings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2SaveToGcsFindingsOutput) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2SaveToGcsFindingsOutput
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2Schedule: Schedule for inspect job triggers.
 type GooglePrivacyDlpV2Schedule struct {
 	// RecurrencePeriodDuration: With this option a job is started on a regular

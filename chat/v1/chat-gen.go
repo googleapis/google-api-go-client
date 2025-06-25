@@ -3709,7 +3709,7 @@ type GoogleAppsCardV1Widget struct {
 	// date and time. For example, the following JSON creates a date time picker to
 	// schedule an appointment: ``` "dateTimePicker": { "name": "appointment_time",
 	// "label": "Book your appointment at:", "type": "DATE_AND_TIME",
-	// "valueMsEpoch": "796435200000" } ```
+	// "valueMsEpoch": 796435200000 } ```
 	DateTimePicker *GoogleAppsCardV1DateTimePicker `json:"dateTimePicker,omitempty"`
 	// DecoratedText: Displays a decorated text item. For example, the following
 	// JSON creates a decorated text widget showing email address: ```

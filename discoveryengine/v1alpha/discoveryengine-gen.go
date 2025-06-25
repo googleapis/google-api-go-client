@@ -4101,7 +4101,7 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// feature state settings are ignored. * `agent-gallery` *
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
-	// `bi-directional-audio` * `feedback`
+	// `bi-directional-audio` * `feedback` * `session-sharing`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -6061,7 +6061,7 @@ type GoogleCloudDiscoveryengineV1UserLicense struct {
 	// logged in yet, this field will be empty.
 	LastLoginTime string `json:"lastLoginTime,omitempty"`
 	// LicenseAssignmentState: Output only. License assignment state of the user.
-	// If the user is assigned with a license config, the user loggin will be
+	// If the user is assigned with a license config, the user login will be
 	// assigned with the license; If the user's license assignment state is
 	// unassigned or unspecified, no license config will be associated to the user;
 	//
@@ -11029,6 +11029,28 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// ActionConfig: Optional. Action configurations to make the connector support
 	// actions.
 	ActionConfig *GoogleCloudDiscoveryengineV1alphaActionConfig `json:"actionConfig,omitempty"`
+	// ActionState: Output only. State of the action connector. This reflects
+	// whether the action connector is initializing, active or has encountered
+	// errors.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value.
+	//   "CREATING" - The connector is being set up.
+	//   "ACTIVE" - The connector is successfully set up and awaiting next sync
+	// run.
+	//   "FAILED" - The connector is in error. The error details can be found in
+	// DataConnector.errors. If the error is unfixable, the DataConnector can be
+	// deleted by [CollectionService.DeleteCollection] API.
+	//   "RUNNING" - The connector is actively syncing records from the data
+	// source.
+	//   "WARNING" - The connector has completed a sync run, but encountered
+	// non-fatal errors.
+	//   "INITIALIZATION_FAILED" - Connector initialization failed. Potential
+	// causes include runtime errors or issues in the asynchronous pipeline,
+	// preventing the request from reaching downstream services (except for some
+	// connector types).
+	//   "UPDATING" - Connector is in the process of an update.
+	ActionState string `json:"actionState,omitempty"`
 	// AlertPolicyConfigs: Optional. The connector level alert config.
 	AlertPolicyConfigs []*GoogleCloudDiscoveryengineV1alphaAlertPolicyConfig `json:"alertPolicyConfigs,omitempty"`
 	// AutoRunDisabled: Optional. Indicates whether the connector is disabled for
@@ -11057,6 +11079,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	//   "ACTIONS" - Connector utilized for actions.
 	//   "FEDERATED" - Connector utilized for federated search.
 	//   "EUA" - Connector utilized for End User Authentication.
+	//   "FEDERATED_AND_EUA" - Hybrid connector utilized for federated search and
+	// End User Authentication.
 	ConnectorModes []string `json:"connectorModes,omitempty"`
 	// ConnectorType: Output only. The type of connector. Each source can only map
 	// to one type. For example, salesforce, confluence and jira have THIRD_PARTY
@@ -11113,11 +11137,15 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// IncrementalRefreshInterval: Optional. The refresh interval specifically for
 	// incremental data syncs. If unset, incremental syncs will use the default
 	// from env, set to 3hrs. The minimum is 30 minutes and maximum is 7 days.
-	// Applicable to only 3P connectors.
+	// Applicable to only 3P connectors. When the refresh interval is set to the
+	// same value as the incremental refresh interval, incremental sync will be
+	// disabled.
 	IncrementalRefreshInterval string `json:"incrementalRefreshInterval,omitempty"`
 	// IncrementalSyncDisabled: Optional. Indicates whether incremental syncs are
 	// paused for this connector. This is independent of auto_run_disabled.
-	// Applicable to only 3P connectors.
+	// Applicable to only 3P connectors. When the refresh interval is set to the
+	// same value as the incremental refresh interval, incremental sync will be
+	// disabled, i.e. set to true.
 	IncrementalSyncDisabled bool `json:"incrementalSyncDisabled,omitempty"`
 	// KmsKeyName: Input only. The KMS key to be used to protect the DataStores
 	// managed by this connector. Must be set for requests that need to comply with
@@ -11190,12 +11218,15 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// causes include runtime errors or issues in the asynchronous pipeline,
 	// preventing the request from reaching downstream services (except for some
 	// connector types).
+	//   "UPDATING" - Connector is in the process of an update.
 	RealtimeState string `json:"realtimeState,omitempty"`
 	// RealtimeSyncConfig: Optional. The configuration for realtime sync.
 	RealtimeSyncConfig *GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig `json:"realtimeSyncConfig,omitempty"`
 	// RefreshInterval: Required. The refresh interval for data sync. If duration
 	// is set to 0, the data will be synced in real time. The streaming feature is
-	// not supported yet. The minimum is 30 minutes and maximum is 7 days.
+	// not supported yet. The minimum is 30 minutes and maximum is 7 days. When the
+	// refresh interval is set to the same value as the incremental refresh
+	// interval, incremental sync will be disabled.
 	RefreshInterval string `json:"refreshInterval,omitempty"`
 	// State: Output only. State of the connector.
 	//
@@ -11215,6 +11246,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// causes include runtime errors or issues in the asynchronous pipeline,
 	// preventing the request from reaching downstream services (except for some
 	// connector types).
+	//   "UPDATING" - Connector is in the process of an update.
 	State string `json:"state,omitempty"`
 	// StaticIpAddresses: Output only. The static IP addresses used by this
 	// connector.
@@ -12512,7 +12544,7 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// feature state settings are ignored. * `agent-gallery` *
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
-	// `bi-directional-audio` * `feedback`
+	// `bi-directional-audio` * `feedback` * `session-sharing`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -21503,7 +21535,7 @@ type GoogleCloudDiscoveryengineV1alphaUserLicense struct {
 	// logged in yet, this field will be empty.
 	LastLoginTime string `json:"lastLoginTime,omitempty"`
 	// LicenseAssignmentState: Output only. License assignment state of the user.
-	// If the user is assigned with a license config, the user loggin will be
+	// If the user is assigned with a license config, the user login will be
 	// assigned with the license; If the user's license assignment state is
 	// unassigned or unspecified, no license config will be associated to the user;
 	//
@@ -22154,7 +22186,8 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfigUiSettings struct {
 	// Features: Output only. Feature config for the engine to opt in or opt out of
 	// features. Supported keys: * `agent-gallery` * `no-code-agent-builder` *
 	// `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` *
-	// `people-search-org-chart` * `bi-directional-audio` * `feedback`
+	// `people-search-org-chart` * `bi-directional-audio` * `feedback` *
+	// `session-sharing`
 	Features map[string]string `json:"features,omitempty"`
 	// GenerativeAnswerConfig: Describes generative answer configuration.
 	GenerativeAnswerConfig *GoogleCloudDiscoveryengineV1alphaWidgetConfigUiSettingsGenerativeAnswerConfig `json:"generativeAnswerConfig,omitempty"`
@@ -23761,7 +23794,7 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// feature state settings are ignored. * `agent-gallery` *
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
-	// `bi-directional-audio` * `feedback`
+	// `bi-directional-audio` * `feedback` * `session-sharing`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -27102,7 +27135,7 @@ type GoogleCloudDiscoveryengineV1betaUserLicense struct {
 	// logged in yet, this field will be empty.
 	LastLoginTime string `json:"lastLoginTime,omitempty"`
 	// LicenseAssignmentState: Output only. License assignment state of the user.
-	// If the user is assigned with a license config, the user loggin will be
+	// If the user is assigned with a license config, the user login will be
 	// assigned with the license; If the user's license assignment state is
 	// unassigned or unspecified, no license config will be associated to the user;
 	//
@@ -30316,8 +30349,9 @@ func (r *ProjectsLocationsCollectionsService) UpdateDataConnector(name string, g
 // in the provided DataConnector to update. Supported field paths include: -
 // refresh_interval - params - auto_run_disabled - action_config -
 // action_config.action_params - action_config.service_name -
-// destination_configs - blocking_reasons - sync_mode Note: Support for these
-// fields may vary depending on the connector type. For example, not all
+// destination_configs - blocking_reasons - sync_mode -
+// incremental_sync_disabled - incremental_refresh_interval Note: Support for
+// these fields may vary depending on the connector type. For example, not all
 // connectors support `destination_configs`. If an unsupported or unknown field
 // path is provided, the request will return an INVALID_ARGUMENT error.
 func (c *ProjectsLocationsCollectionsUpdateDataConnectorCall) UpdateMask(updateMask string) *ProjectsLocationsCollectionsUpdateDataConnectorCall {

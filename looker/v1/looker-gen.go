@@ -583,6 +583,9 @@ type Instance struct {
 	//   "LOOKER_CORE_NONPROD_STANDARD_ANNUAL" - Nonprod Subscription Standard.
 	//   "LOOKER_CORE_NONPROD_ENTERPRISE_ANNUAL" - Nonprod Subscription Enterprise.
 	//   "LOOKER_CORE_NONPROD_EMBED_ANNUAL" - Nonprod Subscription Embed.
+	//   "LOOKER_CORE_TRIAL_STANDARD" - Trial Standard.
+	//   "LOOKER_CORE_TRIAL_ENTERPRISE" - Trial Enterprise.
+	//   "LOOKER_CORE_TRIAL_EMBED" - Trial Embed.
 	PlatformEdition string `json:"platformEdition,omitempty"`
 	// PrivateIpEnabled: Whether private IP is enabled on the Looker instance.
 	PrivateIpEnabled bool `json:"privateIpEnabled,omitempty"`

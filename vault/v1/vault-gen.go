@@ -816,8 +816,11 @@ type DriveOptions struct {
 	//   "SHARED_DRIVES_OPTION_UNSPECIFIED" - No shared drive option specified.
 	//   "NOT_INCLUDED" - If a resource is in a shared drive, it isn't included in
 	// the search.
-	//   "INCLUDED_IF_ACCOUNT_IS_NOT_A_MEMBER" - (Previously
-	// "include_shared_drives" off)
+	//   "INCLUDED_IF_ACCOUNT_IS_NOT_A_MEMBER" - Shared drive resources are only
+	// included in instances where the account is a collaborator on a resource but
+	// they are not a member of the shared drive. This maps to the *"Included only
+	// if documents shared directly (not due to shared drive membership)"* option
+	// in the Vault UI. (Previously "include_shared_drives" off)
 	//   "INCLUDED" - Resources in shared drives are included in the search.
 	// (Previously "include_shared_drives" on)
 	SharedDrivesOption string `json:"sharedDrivesOption,omitempty"`

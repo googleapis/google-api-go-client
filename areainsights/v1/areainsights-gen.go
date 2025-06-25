@@ -6,7 +6,7 @@
 
 // Package areainsights provides access to the Places Aggregate API.
 //
-// For product documentation, see: https://g3doc.corp.google.com/geo/platform/area_insights/README.md?cl=head
+// For product documentation, see: https://developers.google.com/maps/documentation/places-aggregate/overview
 //
 // # Library status
 //

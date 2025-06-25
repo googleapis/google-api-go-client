@@ -378,11 +378,11 @@ type AdvancedSecurityOverrides struct {
 	//   "CONTENT_PROTECTION_DISABLED" - Content protection is disabled and the
 	// user cannot change this.
 	//   "CONTENT_PROTECTION_ENFORCED" - Content protection is enabled and the user
-	// cannot change this.Supported on Android 15 and above. A nonComplianceDetail
+	// cannot change this.Supported on Android 15 and above. A NonComplianceDetail
 	// with API_LEVEL is reported if the Android version is less than 15.
 	//   "CONTENT_PROTECTION_USER_CHOICE" - Content protection is not controlled by
 	// the policy. The user is allowed to choose the behavior of content
-	// protection.Supported on Android 15 and above. A nonComplianceDetail with
+	// protection.Supported on Android 15 and above. A NonComplianceDetail with
 	// API_LEVEL is reported if the Android version is less than 15.
 	ContentProtectionPolicy string `json:"contentProtectionPolicy,omitempty"`
 	// DeveloperSettings: Controls access to developer settings: developer options
@@ -418,16 +418,16 @@ type AdvancedSecurityOverrides struct {
 	// device if the device supports this.
 	//   "MTE_ENFORCED" - MTE is enabled on the device and the user is not allowed
 	// to change this setting. This can be set on fully managed devices and work
-	// profiles on company-owned devices. A nonComplianceDetail with
+	// profiles on company-owned devices. A NonComplianceDetail with
 	// MANAGEMENT_MODE is reported for other management modes. A
-	// nonComplianceDetail with DEVICE_INCOMPATIBLE is reported if the device does
-	// not support MTE.Supported on Android 14 and above. A nonComplianceDetail
+	// NonComplianceDetail with DEVICE_INCOMPATIBLE is reported if the device does
+	// not support MTE.Supported on Android 14 and above. A NonComplianceDetail
 	// with API_LEVEL is reported if the Android version is less than 14.
 	//   "MTE_DISABLED" - MTE is disabled on the device and the user is not allowed
 	// to change this setting. This applies only on fully managed devices. In other
-	// cases, a nonComplianceDetail with MANAGEMENT_MODE is reported. A
-	// nonComplianceDetail with DEVICE_INCOMPATIBLE is reported if the device does
-	// not support MTE.Supported on Android 14 and above. A nonComplianceDetail
+	// cases, a NonComplianceDetail with MANAGEMENT_MODE is reported. A
+	// NonComplianceDetail with DEVICE_INCOMPATIBLE is reported if the device does
+	// not support MTE.Supported on Android 14 and above. A NonComplianceDetail
 	// with API_LEVEL is reported if the Android version is less than 14.
 	MtePolicy string `json:"mtePolicy,omitempty"`
 	// PersonalAppsThatCanReadWorkNotifications: Personal apps that can read work
@@ -532,8 +532,8 @@ type ApnPolicy struct {
 	// INVALID_VALUE , they will be ignored. This can be set on fully managed
 	// devices on Android 10 and above. This can also be set on work profiles on
 	// Android 13 and above and only with ApnSetting's with ENTERPRISE APN type. A
-	// nonComplianceDetail with API_LEVEL is reported if the Android version is
-	// less than 10. A nonComplianceDetail with MANAGEMENT_MODE is reported for
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 10. A NonComplianceDetail with MANAGEMENT_MODE is reported for
 	// work profiles on Android versions less than 13.
 	ApnSettings []*ApnSetting `json:"apnSettings,omitempty"`
 	// OverrideApns: Optional. Whether override APNs are disabled or enabled. See
@@ -551,8 +551,8 @@ type ApnPolicy struct {
 	// use, any other APNs are ignored. This can only be set on fully managed
 	// devices on Android 10 and above. For work profiles override APNs are enabled
 	// via preferentialNetworkServiceSettings and this value cannot be set. A
-	// nonComplianceDetail with API_LEVEL is reported if the Android version is
-	// less than 10. A nonComplianceDetail with MANAGEMENT_MODE is reported for
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 10. A NonComplianceDetail with MANAGEMENT_MODE is reported for
 	// work profiles.
 	OverrideApns string `json:"overrideApns,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApnSettings") to
@@ -588,7 +588,7 @@ type ApnSetting struct {
 	//   "NOT_ALWAYS_ON" - The PDU session brought up by this APN should not be
 	// always on.
 	//   "ALWAYS_ON" - The PDU session brought up by this APN should always be on.
-	// Supported on Android 15 and above. A nonComplianceDetail with API_LEVEL is
+	// Supported on Android 15 and above. A NonComplianceDetail with API_LEVEL is
 	// reported if the Android version is less than 15.
 	AlwaysOnSetting string `json:"alwaysOnSetting,omitempty"`
 	// Apn: Required. Name of the APN. Policy will be rejected if this field is
@@ -597,70 +597,70 @@ type ApnSetting struct {
 	// ApnTypes: Required. Usage categories for the APN. Policy will be rejected if
 	// this field is empty or contains APN_TYPE_UNSPECIFIED or duplicates. Multiple
 	// APN types can be set on fully managed devices. ENTERPRISE is the only
-	// allowed APN type on work profiles. A nonComplianceDetail with
+	// allowed APN type on work profiles. A NonComplianceDetail with
 	// MANAGEMENT_MODE is reported for any other value on work profiles. APN types
 	// that are not supported on the device or management mode will be ignored. If
 	// this results in the empty list, the APN setting will be ignored, because
-	// apnTypes is a required field. A nonComplianceDetail with INVALID_VALUE is
+	// apnTypes is a required field. A NonComplianceDetail with INVALID_VALUE is
 	// reported if none of the APN types are supported on the device or management
 	// mode.
 	//
 	// Possible values:
 	//   "APN_TYPE_UNSPECIFIED" - Unspecified. This value is not used.
 	//   "ENTERPRISE" - APN type for enterprise traffic. Supported on Android 13
-	// and above. A nonComplianceDetail with API_LEVEL is reported if the Android
+	// and above. A NonComplianceDetail with API_LEVEL is reported if the Android
 	// version is less than 13.
 	//   "BIP" - APN type for BIP (Bearer Independent Protocol). This can only be
-	// set on fully managed devices on Android 12 and above. A nonComplianceDetail
+	// set on fully managed devices on Android 12 and above. A NonComplianceDetail
 	// with API_LEVEL is reported if the Android version is less than 12. A
-	// nonComplianceDetail with MANAGEMENT_MODE is reported for work profiles.
+	// NonComplianceDetail with MANAGEMENT_MODE is reported for work profiles.
 	//   "CBS" - APN type for CBS (Carrier Branded Services). This can only be set
-	// on fully managed devices. A nonComplianceDetail with MANAGEMENT_MODE is
+	// on fully managed devices. A NonComplianceDetail with MANAGEMENT_MODE is
 	// reported for work profiles.
 	//   "DEFAULT" - APN type for default data traffic. This can only be set on
-	// fully managed devices. A nonComplianceDetail with MANAGEMENT_MODE is
+	// fully managed devices. A NonComplianceDetail with MANAGEMENT_MODE is
 	// reported for work profiles.
 	//   "DUN" - APN type for DUN (Dial-up networking) traffic. This can only be
-	// set on fully managed devices. A nonComplianceDetail with MANAGEMENT_MODE is
+	// set on fully managed devices. A NonComplianceDetail with MANAGEMENT_MODE is
 	// reported for work profiles.
 	//   "EMERGENCY" - APN type for Emergency PDN. This is not an IA apn, but is
 	// used for access to carrier services in an emergency call situation. This can
-	// only be set on fully managed devices. A nonComplianceDetail with
+	// only be set on fully managed devices. A NonComplianceDetail with
 	// MANAGEMENT_MODE is reported for work profiles.
 	//   "FOTA" - APN type for accessing the carrier's FOTA (Firmware Over-the-Air)
 	// portal, used for over the air updates. This can only be set on fully managed
-	// devices. A nonComplianceDetail with MANAGEMENT_MODE is reported for work
+	// devices. A NonComplianceDetail with MANAGEMENT_MODE is reported for work
 	// profiles.
 	//   "HIPRI" - APN type for HiPri (high-priority) traffic. This can only be set
-	// on fully managed devices. A nonComplianceDetail with MANAGEMENT_MODE is
+	// on fully managed devices. A NonComplianceDetail with MANAGEMENT_MODE is
 	// reported for work profiles.
 	//   "IA" - APN type for IA (Initial Attach) APN. This can only be set on fully
-	// managed devices. A nonComplianceDetail with MANAGEMENT_MODE is reported for
+	// managed devices. A NonComplianceDetail with MANAGEMENT_MODE is reported for
 	// work profiles.
 	//   "IMS" - APN type for IMS (IP Multimedia Subsystem) traffic. This can only
-	// be set on fully managed devices. A nonComplianceDetail with MANAGEMENT_MODE
+	// be set on fully managed devices. A NonComplianceDetail with MANAGEMENT_MODE
 	// is reported for work profiles.
 	//   "MCX" - APN type for MCX (Mission Critical Service) where X can be
 	// PTT/Video/Data. This can only be set on fully managed devices. A
-	// nonComplianceDetail with MANAGEMENT_MODE is reported for work profiles.
+	// NonComplianceDetail with MANAGEMENT_MODE is reported for work profiles.
 	//   "MMS" - APN type for MMS (Multimedia Messaging Service) traffic. This can
-	// only be set on fully managed devices. A nonComplianceDetail with
+	// only be set on fully managed devices. A NonComplianceDetail with
 	// MANAGEMENT_MODE is reported for work profiles.
 	//   "RCS" - APN type for RCS (Rich Communication Services). This can only be
-	// set on fully managed devices on Android 15 and above. A nonComplianceDetail
+	// set on fully managed devices on Android 15 and above. A NonComplianceDetail
 	// with API_LEVEL is reported if the Android version is less than 15. A
-	// nonComplianceDetail with MANAGEMENT_MODE is reported for work profiles.
+	// NonComplianceDetail with MANAGEMENT_MODE is reported for work profiles.
 	//   "SUPL" - APN type for SUPL (Secure User Plane Location) assisted GPS. This
-	// can only be set on fully managed devices. A nonComplianceDetail with
+	// can only be set on fully managed devices. A NonComplianceDetail with
 	// MANAGEMENT_MODE is reported for work profiles.
 	//   "VSIM" - APN type for VSIM (Virtual SIM) service. This can only be set on
-	// fully managed devices on Android 12 and above. A nonComplianceDetail with
+	// fully managed devices on Android 12 and above. A NonComplianceDetail with
 	// API_LEVEL is reported if the Android version is less than 12. A
-	// nonComplianceDetail with MANAGEMENT_MODE is reported for work profiles.
+	// NonComplianceDetail with MANAGEMENT_MODE is reported for work profiles.
 	//   "XCAP" - APN type for XCAP (XML Configuration Access Protocol) traffic.
 	// This can only be set on fully managed devices on Android 11 and above. A
-	// nonComplianceDetail with API_LEVEL is reported if the Android version is
-	// less than 11. A nonComplianceDetail with MANAGEMENT_MODE is reported for
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 11. A NonComplianceDetail with MANAGEMENT_MODE is reported for
 	// work profiles.
 	ApnTypes []string `json:"apnTypes,omitempty"`
 	// AuthType: Optional. Authentication type of the APN.
@@ -690,13 +690,13 @@ type ApnSetting struct {
 	// MtuV4: Optional. The default MTU (Maximum Transmission Unit) size in bytes
 	// of the IPv4 routes brought up by this APN setting. A value of 0 (default)
 	// means not set and negative values are rejected. Supported on Android 13 and
-	// above. A nonComplianceDetail with API_LEVEL is reported if the Android
+	// above. A NonComplianceDetail with API_LEVEL is reported if the Android
 	// version is less than 13.
 	MtuV4 int64 `json:"mtuV4,omitempty"`
 	// MtuV6: Optional. The MTU (Maximum Transmission Unit) size of the IPv6 mobile
 	// interface to which the APN connected. A value of 0 (default) means not set
 	// and negative values are rejected. Supported on Android 13 and above. A
-	// nonComplianceDetail with API_LEVEL is reported if the Android version is
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
 	// less than 13.
 	MtuV6 int64 `json:"mtuV6,omitempty"`
 	// MvnoType: Optional. MVNO match type for the APN.
@@ -1246,7 +1246,7 @@ type ApplicationPolicy struct {
 	// signingKeyFingerprintsSha256 or the signing key certificate fingerprints
 	// obtained from Play Store for the app to be able to communicate with Android
 	// Device Policy. If the app is not on Play Store and
-	// signingKeyFingerprintsSha256 is not set, a nonComplianceDetail with
+	// signingKeyFingerprintsSha256 is not set, a NonComplianceDetail with
 	// INVALID_VALUE is reported.
 	ExtensionConfig *ExtensionConfig `json:"extensionConfig,omitempty"`
 	// InstallConstraint: Optional. The constraints for installing the app. You can
@@ -2112,7 +2112,7 @@ func (s ContentProviderEndpoint) MarshalJSON() ([]byte, error) {
 }
 
 // CrossProfilePolicies: Controls the data from the work profile that can be
-// accessed from the personal profile and vice versa. A nonComplianceDetail
+// accessed from the personal profile and vice versa. A NonComplianceDetail
 // with MANAGEMENT_MODE is reported if the device does not have a work profile.
 type CrossProfilePolicies struct {
 	// CrossProfileCopyPaste: Whether text copied from one profile (personal or
@@ -2156,7 +2156,7 @@ type CrossProfilePolicies struct {
 	// SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED_EXCEPT_SYSTEM. In this
 	// case, these exemptions act as an allowlist, in addition to the already
 	// allowlisted system apps.Supported on Android 14 and above. A
-	// nonComplianceDetail with API_LEVEL is reported if the Android version is
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
 	// less than 14.
 	ExemptionsToShowWorkContactsInPersonalProfile *PackageNameList `json:"exemptionsToShowWorkContactsInPersonalProfile,omitempty"`
 	// ShowWorkContactsInPersonalProfile: Whether personal apps can access contacts
@@ -2172,14 +2172,14 @@ type CrossProfilePolicies struct {
 	// this is set, personal apps specified in
 	// exemptions_to_show_work_contacts_in_personal_profile are allowlisted and can
 	// access work profile contacts directly.Supported on Android 7.0 and above. A
-	// nonComplianceDetail with API_LEVEL is reported if the Android version is
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
 	// less than 7.0.
 	//   "SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_ALLOWED" - Default. Allows apps in
 	// the personal profile to access work profile contacts including contact
 	// searches and incoming calls.When this is set, personal apps specified in
 	// exemptions_to_show_work_contacts_in_personal_profile are blocklisted and can
 	// not access work profile contacts directly.Supported on Android 7.0 and
-	// above. A nonComplianceDetail with API_LEVEL is reported if the Android
+	// above. A NonComplianceDetail with API_LEVEL is reported if the Android
 	// version is less than 7.0.
 	//   "SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED_EXCEPT_SYSTEM" -
 	// Prevents most personal apps from accessing work profile contacts including
@@ -2191,7 +2191,7 @@ type CrossProfilePolicies struct {
 	// access work profile contacts.Supported on Android 14 and above. If this is
 	// set on a device with Android version less than 14, the behaviour falls back
 	// to SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED and a
-	// nonComplianceDetail with API_LEVEL is reported.
+	// NonComplianceDetail with API_LEVEL is reported.
 	ShowWorkContactsInPersonalProfile string `json:"showWorkContactsInPersonalProfile,omitempty"`
 	// WorkProfileWidgetsDefault: Specifies the default behaviour for work profile
 	// widgets. If the policy does not specify work_profile_widgets for a specific
@@ -2527,7 +2527,7 @@ type DeviceConnectivityManagement struct {
 	// disallowed. The user is only able to switch between already configured
 	// networks. Supported on Android 13 and above, on fully managed devices and
 	// work profiles on company-owned devices. If the setting is not supported,
-	// ALLOW_CONFIGURING_WIFI is set. A nonComplianceDetail with API_LEVEL is
+	// ALLOW_CONFIGURING_WIFI is set. A NonComplianceDetail with API_LEVEL is
 	// reported if the Android version is less than 13. wifiConfigDisabled is
 	// ignored.
 	//   "DISALLOW_CONFIGURING_WIFI" - Disallows configuring Wi-Fi networks. The
@@ -2563,7 +2563,7 @@ type DeviceConnectivityManagement struct {
 	//   "DISALLOW_WIFI_TETHERING" - Disallows the user from using Wi-Fi tethering.
 	// Supported on company owned devices running Android 13 and above. If the
 	// setting is not supported, ALLOW_ALL_TETHERING will be set. A
-	// nonComplianceDetail with API_LEVEL is reported if the Android version is
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
 	// less than 13. tetheringConfigDisabled is ignored.
 	//   "DISALLOW_ALL_TETHERING" - Disallows all forms of tethering. Supported on
 	// fully managed devices and work profile on company-owned devices, on all
@@ -2583,8 +2583,8 @@ type DeviceConnectivityManagement struct {
 	//   "DISALLOW_USB_DATA_TRANSFER" - When set, all types of USB data transfers
 	// are prohibited. Supported for devices running Android 12 or above with USB
 	// HAL 1.3 or above. If the setting is not supported,
-	// DISALLOW_USB_FILE_TRANSFER will be set. A nonComplianceDetail with API_LEVEL
-	// is reported if the Android version is less than 12. A nonComplianceDetail
+	// DISALLOW_USB_FILE_TRANSFER will be set. A NonComplianceDetail with API_LEVEL
+	// is reported if the Android version is less than 12. A NonComplianceDetail
 	// with DEVICE_INCOMPATIBLE is reported if the device does not have USB HAL 1.3
 	// or above. usbFileTransferDisabled is ignored.
 	UsbDataAccess string `json:"usbDataAccess,omitempty"`
@@ -2596,7 +2596,7 @@ type DeviceConnectivityManagement struct {
 	// ALLOW_WIFI_DIRECT
 	//   "ALLOW_WIFI_DIRECT" - The user is allowed to use Wi-Fi direct.
 	//   "DISALLOW_WIFI_DIRECT" - The user is not allowed to use Wi-Fi direct. A
-	// nonComplianceDetail with API_LEVEL is reported if the Android version is
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
 	// less than 13.
 	WifiDirectSettings string `json:"wifiDirectSettings,omitempty"`
 	// WifiRoamingPolicy: Optional. Wi-Fi roaming policy.
@@ -2634,7 +2634,7 @@ type DeviceRadioState struct {
 	//   "AIRPLANE_MODE_USER_CHOICE" - The user is allowed to toggle airplane mode
 	// on or off.
 	//   "AIRPLANE_MODE_DISABLED" - Airplane mode is disabled. The user is not
-	// allowed to toggle airplane mode on. A nonComplianceDetail with API_LEVEL is
+	// allowed to toggle airplane mode on. A NonComplianceDetail with API_LEVEL is
 	// reported if the Android version is less than 9.
 	AirplaneModeState string `json:"airplaneModeState,omitempty"`
 	// CellularTwoGState: Controls whether cellular 2G setting can be toggled by
@@ -2646,7 +2646,7 @@ type DeviceRadioState struct {
 	//   "CELLULAR_TWO_G_USER_CHOICE" - The user is allowed to toggle cellular 2G
 	// on or off.
 	//   "CELLULAR_TWO_G_DISABLED" - Cellular 2G is disabled. The user is not
-	// allowed to toggle cellular 2G on via settings. A nonComplianceDetail with
+	// allowed to toggle cellular 2G on via settings. A NonComplianceDetail with
 	// API_LEVEL is reported if the Android version is less than 14.
 	CellularTwoGState string `json:"cellularTwoGState,omitempty"`
 	// MinimumWifiSecurityLevel: The minimum required security level of Wi-Fi
@@ -2661,17 +2661,17 @@ type DeviceRadioState struct {
 	//   "PERSONAL_NETWORK_SECURITY" - A personal network such as WEP, WPA2-PSK is
 	// the minimum required security. The device will not be able to connect to
 	// open wifi networks. This is stricter than OPEN_NETWORK_SECURITY. A
-	// nonComplianceDetail with API_LEVEL is reported if the Android version is
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
 	// less than 13.
 	//   "ENTERPRISE_NETWORK_SECURITY" - An enterprise EAP network is the minimum
 	// required security level. The device will not be able to connect to Wi-Fi
 	// network below this security level. This is stricter than
-	// PERSONAL_NETWORK_SECURITY. A nonComplianceDetail with API_LEVEL is reported
+	// PERSONAL_NETWORK_SECURITY. A NonComplianceDetail with API_LEVEL is reported
 	// if the Android version is less than 13.
 	//   "ENTERPRISE_BIT192_NETWORK_SECURITY" - A 192-bit enterprise network is the
 	// minimum required security level. The device will not be able to connect to
 	// Wi-Fi network below this security level. This is stricter than
-	// ENTERPRISE_NETWORK_SECURITY. A nonComplianceDetail with API_LEVEL is
+	// ENTERPRISE_NETWORK_SECURITY. A NonComplianceDetail with API_LEVEL is
 	// reported if the Android version is less than 13.
 	MinimumWifiSecurityLevel string `json:"minimumWifiSecurityLevel,omitempty"`
 	// UltraWidebandState: Controls the state of the ultra wideband setting and
@@ -2683,7 +2683,7 @@ type DeviceRadioState struct {
 	//   "ULTRA_WIDEBAND_USER_CHOICE" - The user is allowed to toggle ultra
 	// wideband on or off.
 	//   "ULTRA_WIDEBAND_DISABLED" - Ultra wideband is disabled. The user is not
-	// allowed to toggle ultra wideband on via settings. A nonComplianceDetail with
+	// allowed to toggle ultra wideband on via settings. A NonComplianceDetail with
 	// API_LEVEL is reported if the Android version is less than 14.
 	UltraWidebandState string `json:"ultraWidebandState,omitempty"`
 	// WifiState: Controls current state of Wi-Fi and if user can change its state.
@@ -2692,10 +2692,10 @@ type DeviceRadioState struct {
 	//   "WIFI_STATE_UNSPECIFIED" - Unspecified. Defaults to WIFI_STATE_USER_CHOICE
 	//   "WIFI_STATE_USER_CHOICE" - User is allowed to enable/disable Wi-Fi.
 	//   "WIFI_ENABLED" - Wi-Fi is on and the user is not allowed to turn it off. A
-	// nonComplianceDetail with API_LEVEL is reported if the Android version is
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
 	// less than 13.
 	//   "WIFI_DISABLED" - Wi-Fi is off and the user is not allowed to turn it on.
-	// A nonComplianceDetail with API_LEVEL is reported if the Android version is
+	// A NonComplianceDetail with API_LEVEL is reported if the Android version is
 	// less than 13.
 	WifiState string `json:"wifiState,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AirplaneModeState") to
@@ -3289,7 +3289,7 @@ type ExtensionConfig struct {
 	// always obtained from the Play Store and this field is used to provide
 	// additional signing key certificate fingerprints. However, if the application
 	// is not available on the Play Store, this field needs to be set. A
-	// nonComplianceDetail with INVALID_VALUE is reported if this field is not set
+	// NonComplianceDetail with INVALID_VALUE is reported if this field is not set
 	// when the application is not available on the Play Store.The signing key
 	// certificate fingerprint of the extension app on the device must match one of
 	// the signing key certificate fingerprints obtained from the Play Store or the
@@ -5741,7 +5741,7 @@ type Policy struct {
 	//   "ASSIST_CONTENT_POLICY_UNSPECIFIED" - Unspecified. Defaults to
 	// ASSIST_CONTENT_ALLOWED.
 	//   "ASSIST_CONTENT_DISALLOWED" - Assist content is blocked from being sent to
-	// a privileged app.Supported on Android 15 and above. A nonComplianceDetail
+	// a privileged app.Supported on Android 15 and above. A NonComplianceDetail
 	// with API_LEVEL is reported if the Android version is less than 15.
 	//   "ASSIST_CONTENT_ALLOWED" - Assist content is allowed to be sent to a
 	// privileged app.Supported on Android 15 and above.
@@ -5909,9 +5909,9 @@ type Policy struct {
 	// future, this will default to ENTERPRISE_DISPLAY_NAME_VISIBLE.
 	//   "ENTERPRISE_DISPLAY_NAME_VISIBLE" - The enterprise display name is visible
 	// on the device. Supported on work profiles on Android 7 and above. Supported
-	// on fully managed devices on Android 8 and above. A nonComplianceDetail with
+	// on fully managed devices on Android 8 and above. A NonComplianceDetail with
 	// API_LEVEL is reported if the Android version is less than 7. A
-	// nonComplianceDetail with MANAGEMENT_MODE is reported on fully managed
+	// NonComplianceDetail with MANAGEMENT_MODE is reported on fully managed
 	// devices on Android 7.
 	//   "ENTERPRISE_DISPLAY_NAME_HIDDEN" - The enterprise display name is hidden
 	// on the device.
@@ -6123,7 +6123,7 @@ type Policy struct {
 	//
 	// Possible values:
 	//   "PRINTING_POLICY_UNSPECIFIED" - Unspecified. Defaults to PRINTING_ALLOWED.
-	//   "PRINTING_DISALLOWED" - Printing is disallowed. A nonComplianceDetail with
+	//   "PRINTING_DISALLOWED" - Printing is disallowed. A NonComplianceDetail with
 	// API_LEVEL is reported if the Android version is less than 9.
 	//   "PRINTING_ALLOWED" - Printing is allowed.
 	PrintingPolicy string `json:"printingPolicy,omitempty"`
@@ -6245,7 +6245,7 @@ type Policy struct {
 	// will remove all eSIMs on the device when wipe is triggered due to any
 	// reason. On personally-owned devices, this will remove only managed eSIMs on
 	// the device. (eSIMs which are added via the ADD_ESIM command). This is
-	// supported on devices running Android 15 and above. A nonComplianceDetail
+	// supported on devices running Android 15 and above. A NonComplianceDetail
 	// with API_LEVEL is reported if the Android version is less than 15.
 	WipeDataFlags []string `json:"wipeDataFlags,omitempty"`
 	// WorkAccountSetupConfig: Optional. Controls the work account setup
@@ -6435,7 +6435,7 @@ type PreferentialNetworkServiceConfig struct {
 	// allowed to use networks other than the preferential service.
 	//   "NON_MATCHING_NETWORKS_DISALLOWED" - Apps this configuration applies to
 	// are disallowed from using other networks than the preferential service. This
-	// can be set on Android 14 and above. A nonComplianceDetail with API_LEVEL is
+	// can be set on Android 14 and above. A NonComplianceDetail with API_LEVEL is
 	// reported if the Android version is less than 14. If this is set,
 	// fallbackToDefaultConnection must be set to
 	// FALLBACK_TO_DEFAULT_CONNECTION_DISALLOWED, the policy will be rejected
@@ -8005,16 +8005,16 @@ type WifiRoamingSetting struct {
 	// WIFI_ROAMING_DEFAULT.
 	//   "WIFI_ROAMING_DISABLED" - Wi-Fi roaming is disabled. Supported on Android
 	// 15 and above on fully managed devices and work profiles on company-owned
-	// devices. A nonComplianceDetail with MANAGEMENT_MODE is reported for other
-	// management modes. A nonComplianceDetail with API_LEVEL is reported if the
+	// devices. A NonComplianceDetail with MANAGEMENT_MODE is reported for other
+	// management modes. A NonComplianceDetail with API_LEVEL is reported if the
 	// Android version is less than 15.
 	//   "WIFI_ROAMING_DEFAULT" - Default Wi-Fi roaming mode of the device.
 	//   "WIFI_ROAMING_AGGRESSIVE" - Aggressive roaming mode which allows quicker
 	// Wi-Fi roaming. Supported on Android 15 and above on fully managed devices
-	// and work profiles on company-owned devices. A nonComplianceDetail with
+	// and work profiles on company-owned devices. A NonComplianceDetail with
 	// MANAGEMENT_MODE is reported for other management modes. A
-	// nonComplianceDetail with API_LEVEL is reported if the Android version is
-	// less than 15. A nonComplianceDetail with DEVICE_INCOMPATIBLE is reported if
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 15. A NonComplianceDetail with DEVICE_INCOMPATIBLE is reported if
 	// the device does not support aggressive roaming mode.
 	WifiRoamingMode string `json:"wifiRoamingMode,omitempty"`
 	// WifiSsid: Required. SSID of the Wi-Fi network.
@@ -8078,8 +8078,8 @@ type WifiSsidPolicy struct {
 	// WifiSsids: Optional. List of Wi-Fi SSIDs that should be applied in the
 	// policy. This field must be non-empty when WifiSsidPolicyType is set to
 	// WIFI_SSID_ALLOWLIST. If this is set to a non-empty list, then a
-	// nonComplianceDetail detail with API_LEVEL is reported if the Android version
-	// is less than 13 and a nonComplianceDetail with MANAGEMENT_MODE is reported
+	// NonComplianceDetail detail with API_LEVEL is reported if the Android version
+	// is less than 13 and a NonComplianceDetail with MANAGEMENT_MODE is reported
 	// for non-company-owned devices.
 	WifiSsids []*WifiSsid `json:"wifiSsids,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "WifiSsidPolicyType") to

@@ -1758,6 +1758,31 @@ func (s GoogleCloudRunV2Metadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRunV2MultiRegionSettings: Settings for multi-region deployment.
+type GoogleCloudRunV2MultiRegionSettings struct {
+	// MultiRegionId: Optional. System-generated unique id for the multi-region
+	// Service.
+	MultiRegionId string `json:"multiRegionId,omitempty"`
+	// Regions: Required. List of regions to deploy to, including primary region.
+	Regions []string `json:"regions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MultiRegionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MultiRegionId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2MultiRegionSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2MultiRegionSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRunV2NFSVolumeSource: Represents an NFS mount.
 type GoogleCloudRunV2NFSVolumeSource struct {
 	// Path: Path that is exported by the NFS server.
@@ -2530,6 +2555,8 @@ type GoogleCloudRunV2Service struct {
 	// Platform Subject to the Deprecation
 	// Policy](https://cloud.google.com/terms/deprecation) documentation.
 	LaunchStage string `json:"launchStage,omitempty"`
+	// MultiRegionSettings: Optional. Settings for multi-region deployment.
+	MultiRegionSettings *GoogleCloudRunV2MultiRegionSettings `json:"multiRegionSettings,omitempty"`
 	// Name: The fully qualified name of this Service. In CreateServiceRequest,
 	// this field is ignored, and instead composed from CreateServiceRequest.parent
 	// and CreateServiceRequest.service_id. Format:

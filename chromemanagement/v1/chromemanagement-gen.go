@@ -492,22 +492,22 @@ type GoogleChromeManagementV1AppUsageData struct {
 	// Possible values:
 	//   "TELEMETRY_APPLICATION_TYPE_UNSPECIFIED" - Application type unknown.
 	//   "APPLICATION_TYPE_ARC" - Application type arc (Android app).
-	//   "APPLICATION_TYPE_BUILT_IN" - Deprecated. This vaule is no longer used.
+	//   "APPLICATION_TYPE_BUILT_IN" - Deprecated. This value is no longer used.
 	// Application type built-in.
 	//   "APPLICATION_TYPE_CROSTINI" - Application type Linux (via Crostini).
 	//   "APPLICATION_TYPE_CHROME_APP" - Application type Chrome app.
 	//   "APPLICATION_TYPE_WEB" - Application type web.
 	//   "APPLICATION_TYPE_MAC_OS" - Application type Mac OS.
 	//   "APPLICATION_TYPE_PLUGIN_VM" - Application type Plugin VM.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Deprecated. This vaule is no
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Deprecated. This value is no
 	// longer used. Application type standalone browser (Lacros browser app).
 	//   "APPLICATION_TYPE_REMOTE" - Application type remote.
 	//   "APPLICATION_TYPE_BOREALIS" - Application type borealis.
 	//   "APPLICATION_TYPE_SYSTEM_WEB" - Application type system web.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Deprecated. This vaule
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Deprecated. This value
 	// is no longer used. Application type standalone browser chrome app.
 	//   "APPLICATION_TYPE_EXTENSION" - Application type extension.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Deprecated. This vaule
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Deprecated. This value
 	// is no longer used. Application type standalone browser extension.
 	//   "APPLICATION_TYPE_BRUSCHETTA" - Application type bruschetta.
 	AppType string `json:"appType,omitempty"`
@@ -2989,22 +2989,22 @@ type GoogleChromeManagementV1TelemetryAppInstallEvent struct {
 	// Possible values:
 	//   "TELEMETRY_APPLICATION_TYPE_UNSPECIFIED" - Application type unknown.
 	//   "APPLICATION_TYPE_ARC" - Application type arc (Android app).
-	//   "APPLICATION_TYPE_BUILT_IN" - Deprecated. This vaule is no longer used.
+	//   "APPLICATION_TYPE_BUILT_IN" - Deprecated. This value is no longer used.
 	// Application type built-in.
 	//   "APPLICATION_TYPE_CROSTINI" - Application type Linux (via Crostini).
 	//   "APPLICATION_TYPE_CHROME_APP" - Application type Chrome app.
 	//   "APPLICATION_TYPE_WEB" - Application type web.
 	//   "APPLICATION_TYPE_MAC_OS" - Application type Mac OS.
 	//   "APPLICATION_TYPE_PLUGIN_VM" - Application type Plugin VM.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Deprecated. This vaule is no
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Deprecated. This value is no
 	// longer used. Application type standalone browser (Lacros browser app).
 	//   "APPLICATION_TYPE_REMOTE" - Application type remote.
 	//   "APPLICATION_TYPE_BOREALIS" - Application type borealis.
 	//   "APPLICATION_TYPE_SYSTEM_WEB" - Application type system web.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Deprecated. This vaule
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Deprecated. This value
 	// is no longer used. Application type standalone browser chrome app.
 	//   "APPLICATION_TYPE_EXTENSION" - Application type extension.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Deprecated. This vaule
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Deprecated. This value
 	// is no longer used. Application type standalone browser extension.
 	//   "APPLICATION_TYPE_BRUSCHETTA" - Application type bruschetta.
 	AppType string `json:"appType,omitempty"`
@@ -3122,22 +3122,22 @@ type GoogleChromeManagementV1TelemetryAppLaunchEvent struct {
 	// Possible values:
 	//   "TELEMETRY_APPLICATION_TYPE_UNSPECIFIED" - Application type unknown.
 	//   "APPLICATION_TYPE_ARC" - Application type arc (Android app).
-	//   "APPLICATION_TYPE_BUILT_IN" - Deprecated. This vaule is no longer used.
+	//   "APPLICATION_TYPE_BUILT_IN" - Deprecated. This value is no longer used.
 	// Application type built-in.
 	//   "APPLICATION_TYPE_CROSTINI" - Application type Linux (via Crostini).
 	//   "APPLICATION_TYPE_CHROME_APP" - Application type Chrome app.
 	//   "APPLICATION_TYPE_WEB" - Application type web.
 	//   "APPLICATION_TYPE_MAC_OS" - Application type Mac OS.
 	//   "APPLICATION_TYPE_PLUGIN_VM" - Application type Plugin VM.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Deprecated. This vaule is no
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Deprecated. This value is no
 	// longer used. Application type standalone browser (Lacros browser app).
 	//   "APPLICATION_TYPE_REMOTE" - Application type remote.
 	//   "APPLICATION_TYPE_BOREALIS" - Application type borealis.
 	//   "APPLICATION_TYPE_SYSTEM_WEB" - Application type system web.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Deprecated. This vaule
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Deprecated. This value
 	// is no longer used. Application type standalone browser chrome app.
 	//   "APPLICATION_TYPE_EXTENSION" - Application type extension.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Deprecated. This vaule
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Deprecated. This value
 	// is no longer used. Application type standalone browser extension.
 	//   "APPLICATION_TYPE_BRUSCHETTA" - Application type bruschetta.
 	AppType string `json:"appType,omitempty"`
@@ -3169,22 +3169,22 @@ type GoogleChromeManagementV1TelemetryAppUninstallEvent struct {
 	// Possible values:
 	//   "TELEMETRY_APPLICATION_TYPE_UNSPECIFIED" - Application type unknown.
 	//   "APPLICATION_TYPE_ARC" - Application type arc (Android app).
-	//   "APPLICATION_TYPE_BUILT_IN" - Deprecated. This vaule is no longer used.
+	//   "APPLICATION_TYPE_BUILT_IN" - Deprecated. This value is no longer used.
 	// Application type built-in.
 	//   "APPLICATION_TYPE_CROSTINI" - Application type Linux (via Crostini).
 	//   "APPLICATION_TYPE_CHROME_APP" - Application type Chrome app.
 	//   "APPLICATION_TYPE_WEB" - Application type web.
 	//   "APPLICATION_TYPE_MAC_OS" - Application type Mac OS.
 	//   "APPLICATION_TYPE_PLUGIN_VM" - Application type Plugin VM.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Deprecated. This vaule is no
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER" - Deprecated. This value is no
 	// longer used. Application type standalone browser (Lacros browser app).
 	//   "APPLICATION_TYPE_REMOTE" - Application type remote.
 	//   "APPLICATION_TYPE_BOREALIS" - Application type borealis.
 	//   "APPLICATION_TYPE_SYSTEM_WEB" - Application type system web.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Deprecated. This vaule
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_CHROME_APP" - Deprecated. This value
 	// is no longer used. Application type standalone browser chrome app.
 	//   "APPLICATION_TYPE_EXTENSION" - Application type extension.
-	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Deprecated. This vaule
+	//   "APPLICATION_TYPE_STANDALONE_BROWSER_EXTENSION" - Deprecated. This value
 	// is no longer used. Application type standalone browser extension.
 	//   "APPLICATION_TYPE_BRUSCHETTA" - Application type bruschetta.
 	AppType string `json:"appType,omitempty"`

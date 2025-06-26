@@ -303,7 +303,8 @@ type Account struct {
 	// part of the sign-up process for a new account. e.g.
 	// "billing-profile-creation", "phone-pin-verification".
 	PendingTasks []string `json:"pendingTasks,omitempty"`
-	// Premium: Output only. Whether this account is premium.
+	// Premium: Output only. Whether this account is premium. Premium accounts have
+	// access to additional spam-related metrics.
 	Premium bool `json:"premium,omitempty"`
 	// State: Output only. State of the account.
 	//
@@ -5003,27 +5004,39 @@ func (c *AccountsReportsGenerateCall) Limit(limit int64) *AccountsReportsGenerat
 //	"CLICKS" - Number of times a user clicked on a standard content ad.
 //	"PAGE_VIEWS_SPAM_RATIO" - Fraction of page views considered to be spam.
 //
-// Only available to premium accounts.
+// Only available to [premium
+// accounts](https://developers.google.com/adsense/management/reference/rest/v2/
+// accounts#Account.FIELDS.premium).
 //
 //	"AD_REQUESTS_SPAM_RATIO" - Fraction of ad requests considered to be spam.
 //
-// Only available to premium accounts.
+// Only available to [premium
+// accounts](https://developers.google.com/adsense/management/reference/rest/v2/
+// accounts#Account.FIELDS.premium).
 //
 //	"MATCHED_AD_REQUESTS_SPAM_RATIO" - Fraction of ad requests that returned
 //
-// ads considered to be spam. Only available to premium accounts.
+// ads considered to be spam. Only available to [premium
+// accounts](https://developers.google.com/adsense/management/reference/rest/v2/
+// accounts#Account.FIELDS.premium).
 //
 //	"IMPRESSIONS_SPAM_RATIO" - Fraction of impressions considered to be spam.
 //
-// Only available to premium accounts.
+// Only available to [premium
+// accounts](https://developers.google.com/adsense/management/reference/rest/v2/
+// accounts#Account.FIELDS.premium).
 //
 //	"INDIVIDUAL_AD_IMPRESSIONS_SPAM_RATIO" - Fraction of ad impressions
 //
-// considered to be spam. Only available to premium accounts.
+// considered to be spam. Only available to [premium
+// accounts](https://developers.google.com/adsense/management/reference/rest/v2/
+// accounts#Account.FIELDS.premium).
 //
 //	"CLICKS_SPAM_RATIO" - Fraction of clicks considered to be spam. Only
 //
-// available to premium accounts.
+// available to [premium
+// accounts](https://developers.google.com/adsense/management/reference/rest/v2/
+// accounts#Account.FIELDS.premium).
 //
 //	"AD_REQUESTS_COVERAGE" - Ratio of requested ad units or queries to the
 //
@@ -5593,27 +5606,39 @@ func (c *AccountsReportsGenerateCsvCall) Limit(limit int64) *AccountsReportsGene
 //	"CLICKS" - Number of times a user clicked on a standard content ad.
 //	"PAGE_VIEWS_SPAM_RATIO" - Fraction of page views considered to be spam.
 //
-// Only available to premium accounts.
+// Only available to [premium
+// accounts](https://developers.google.com/adsense/management/reference/rest/v2/
+// accounts#Account.FIELDS.premium).
 //
 //	"AD_REQUESTS_SPAM_RATIO" - Fraction of ad requests considered to be spam.
 //
-// Only available to premium accounts.
+// Only available to [premium
+// accounts](https://developers.google.com/adsense/management/reference/rest/v2/
+// accounts#Account.FIELDS.premium).
 //
 //	"MATCHED_AD_REQUESTS_SPAM_RATIO" - Fraction of ad requests that returned
 //
-// ads considered to be spam. Only available to premium accounts.
+// ads considered to be spam. Only available to [premium
+// accounts](https://developers.google.com/adsense/management/reference/rest/v2/
+// accounts#Account.FIELDS.premium).
 //
 //	"IMPRESSIONS_SPAM_RATIO" - Fraction of impressions considered to be spam.
 //
-// Only available to premium accounts.
+// Only available to [premium
+// accounts](https://developers.google.com/adsense/management/reference/rest/v2/
+// accounts#Account.FIELDS.premium).
 //
 //	"INDIVIDUAL_AD_IMPRESSIONS_SPAM_RATIO" - Fraction of ad impressions
 //
-// considered to be spam. Only available to premium accounts.
+// considered to be spam. Only available to [premium
+// accounts](https://developers.google.com/adsense/management/reference/rest/v2/
+// accounts#Account.FIELDS.premium).
 //
 //	"CLICKS_SPAM_RATIO" - Fraction of clicks considered to be spam. Only
 //
-// available to premium accounts.
+// available to [premium
+// accounts](https://developers.google.com/adsense/management/reference/rest/v2/
+// accounts#Account.FIELDS.premium).
 //
 //	"AD_REQUESTS_COVERAGE" - Ratio of requested ad units or queries to the
 //

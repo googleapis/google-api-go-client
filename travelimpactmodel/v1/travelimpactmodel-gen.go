@@ -294,6 +294,53 @@ func (s Date) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// EasaLabelMetadata: Metadata about the EASA Flight Emissions Label.
+type EasaLabelMetadata struct {
+	// LabelExpiryDate: The date when the label expires. The label can be displayed
+	// until the end of this date.
+	LabelExpiryDate *Date `json:"labelExpiryDate,omitempty"`
+	// LabelIssueDate: The date when the label was issued.
+	LabelIssueDate *Date `json:"labelIssueDate,omitempty"`
+	// LabelVersion: Version of the label.
+	LabelVersion string `json:"labelVersion,omitempty"`
+	// SafDiscountPercentage: Sustainable Aviation Fuel (SAF) emissions discount
+	// percentage applied to the label. It is a percentage as a decimal. The values
+	// are in the interval [0,1]. For example, 0.0021 means 0.21%. This discount
+	// and reduction in emissions are reported by the EASA label but they are not
+	// included in the CO2e estimates distributed by this API.
+	SafDiscountPercentage float64 `json:"safDiscountPercentage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LabelExpiryDate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LabelExpiryDate") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EasaLabelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod EasaLabelMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *EasaLabelMetadata) UnmarshalJSON(data []byte) error {
+	type NoMethod EasaLabelMetadata
+	var s1 struct {
+		SafDiscountPercentage gensupport.JSONFloat64 `json:"safDiscountPercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SafDiscountPercentage = float64(s1.SafDiscountPercentage)
+	return nil
+}
+
 // EmissionsGramsPerPax: Grouped emissions per seating class results.
 type EmissionsGramsPerPax struct {
 	// Business: Emissions for one passenger in business class in grams. This field
@@ -364,6 +411,21 @@ func (s Flight) MarshalJSON() ([]byte, error) {
 
 // FlightWithEmissions: Direct flight with emission estimates.
 type FlightWithEmissions struct {
+	// ContrailsImpactBucket: Optional. The significance of contrails warming
+	// impact compared to the total CO2e emissions impact.
+	//
+	// Possible values:
+	//   "CONTRAILS_IMPACT_UNSPECIFIED" - The contrails impact is unspecified.
+	//   "CONTRAILS_IMPACT_NEGLIGIBLE" - The contrails impact is negligible
+	// compared to the total CO2e emissions.
+	//   "CONTRAILS_IMPACT_MODERATE" - The contrails impact is comparable to the
+	// total CO2e emissions.
+	//   "CONTRAILS_IMPACT_SEVERE" - The contrails impact is higher than the total
+	// CO2e emissions impact.
+	ContrailsImpactBucket string `json:"contrailsImpactBucket,omitempty"`
+	// EasaLabelMetadata: Optional. Metadata about the EASA Flight Emissions Label.
+	// Only set when the emissions data source is EASA.
+	EasaLabelMetadata *EasaLabelMetadata `json:"easaLabelMetadata,omitempty"`
 	// EmissionsGramsPerPax: Optional. Per-passenger emission estimate numbers.
 	// Will not be present if emissions could not be computed. For the list of
 	// reasons why emissions could not be computed, see ComputeFlightEmissions.
@@ -371,15 +433,22 @@ type FlightWithEmissions struct {
 	// Flight: Required. Matches the flight identifiers in the request. Note: all
 	// IATA codes are capitalized.
 	Flight *Flight `json:"flight,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EmissionsGramsPerPax") to
+	// Source: Optional. The source of the emissions data.
+	//
+	// Possible values:
+	//   "SOURCE_UNSPECIFIED" - The source of the emissions data is unspecified.
+	//   "TIM" - The emissions data is from the Travel Impact Model.
+	//   "EASA" - The emissions data is from the EASA environmental labels.
+	Source string `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContrailsImpactBucket") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EmissionsGramsPerPax") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ContrailsImpactBucket") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

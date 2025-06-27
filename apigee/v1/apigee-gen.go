@@ -11535,7 +11535,8 @@ type GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest struct {
 	// API Products for this App Key. Duplicates will be ignored.
 	ApiProducts []string `json:"apiProducts,omitempty"`
 	// AppGroupAppKey: Note that only Scopes and Attributes of the AppGroupAppKey
-	// can be amended.
+	// can be amended. Scopes and Attributes mentioned in the request will be
+	// inserted and the existing scopes and attributes will be removed.
 	AppGroupAppKey *GoogleCloudApigeeV1AppGroupAppKey `json:"appGroupAppKey,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -38401,6 +38402,105 @@ func (c *OrganizationsEnvironmentsSecurityActionsCreateCall) Do(opts ...googleap
 	return ret, nil
 }
 
+type OrganizationsEnvironmentsSecurityActionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a SecurityAction.
+//
+//   - name: The name of the security monitoring condition to delete. Format:
+//     `organizations/{org}/environment/{env}/securityActions/{security_action}`.
+func (r *OrganizationsEnvironmentsSecurityActionsService) Delete(name string) *OrganizationsEnvironmentsSecurityActionsDeleteCall {
+	c := &OrganizationsEnvironmentsSecurityActionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsEnvironmentsSecurityActionsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityActionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsEnvironmentsSecurityActionsDeleteCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityActionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsEnvironmentsSecurityActionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityActionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.environments.securityActions.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityActions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityActionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.environments.securityActions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type OrganizationsEnvironmentsSecurityActionsDisableCall struct {
 	s                                               *Service
 	name                                            string
@@ -38886,6 +38986,121 @@ func (c *OrganizationsEnvironmentsSecurityActionsListCall) Pages(ctx context.Con
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type OrganizationsEnvironmentsSecurityActionsPatchCall struct {
+	s                                 *Service
+	name                              string
+	googlecloudapigeev1securityaction *GoogleCloudApigeeV1SecurityAction
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Patch: Update a SecurityAction.
+//
+//   - name: Immutable. This field is ignored during creation as per AIP-133.
+//     Please set the `security_action_id` field in the
+//     CreateSecurityActionRequest when creating a new SecurityAction. Format:
+//     organizations/{org}/environments/{env}/securityActions/{security_action}.
+func (r *OrganizationsEnvironmentsSecurityActionsService) Patch(name string, googlecloudapigeev1securityaction *GoogleCloudApigeeV1SecurityAction) *OrganizationsEnvironmentsSecurityActionsPatchCall {
+	c := &OrganizationsEnvironmentsSecurityActionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1securityaction = googlecloudapigeev1securityaction
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Valid fields to update are `description`, `state`, `allow`, `deny`,
+// and `flag`, `expire_time`, and `ttl`, `api_proxies`, and `condition_config`.
+func (c *OrganizationsEnvironmentsSecurityActionsPatchCall) UpdateMask(updateMask string) *OrganizationsEnvironmentsSecurityActionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsEnvironmentsSecurityActionsPatchCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityActionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsEnvironmentsSecurityActionsPatchCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityActionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsEnvironmentsSecurityActionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityActionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securityaction)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.environments.securityActions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityActions.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1SecurityAction.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsEnvironmentsSecurityActionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityAction, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityAction{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.environments.securityActions.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type OrganizationsEnvironmentsSecurityIncidentsBatchUpdateCall struct {

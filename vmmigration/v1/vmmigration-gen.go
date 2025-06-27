@@ -1199,6 +1199,14 @@ type ComputeEngineTargetDefaults struct {
 	// ComputeScheduling: Compute instance scheduling information (if empty default
 	// is used).
 	ComputeScheduling *ComputeScheduling `json:"computeScheduling,omitempty"`
+	// DiskReplicaZones: Optional. Additional replica zones of the target regional
+	// disks. If this list is not empty a regional disk will be created. The first
+	// supported zone would be the one stated in the zone field. The rest are taken
+	// from this list. Please refer to the regional disk creation API
+	// (https://cloud.google.com/compute/docs/regions-zones/global-regional-zonal-resources)
+	// for further details about regional vs zonal disks. If not specified, a zonal
+	// disk will be created in the same zone the VM is created.
+	DiskReplicaZones []string `json:"diskReplicaZones,omitempty"`
 	// DiskType: The disk type to use in the VM.
 	//
 	// Possible values:
@@ -1301,6 +1309,14 @@ type ComputeEngineTargetDetails struct {
 	// ComputeScheduling: Compute instance scheduling information (if empty default
 	// is used).
 	ComputeScheduling *ComputeScheduling `json:"computeScheduling,omitempty"`
+	// DiskReplicaZones: Optional. Additional replica zones of the target regional
+	// disks. If this list is not empty a regional disk will be created. The first
+	// supported zone would be the one stated in the zone field. The rest are taken
+	// from this list. Please refer to the regional disk creation API
+	// (https://cloud.google.com/compute/docs/regions-zones/global-regional-zonal-resources)
+	// for further details about regional vs zonal disks. If not specified, a zonal
+	// disk will be created in the same zone the VM is created.
+	DiskReplicaZones []string `json:"diskReplicaZones,omitempty"`
 	// DiskType: The disk type to use in the VM.
 	//
 	// Possible values:
@@ -2742,7 +2758,9 @@ type MachineImageTargetDetails struct {
 	AdditionalLicenses []string `json:"additionalLicenses,omitempty"`
 	// Description: Optional. An optional description of the machine image.
 	Description string `json:"description,omitempty"`
-	// Encryption: Immutable. The encryption to apply to the machine image.
+	// Encryption: Immutable. The encryption to apply to the machine image. If the
+	// Image Import resource has an encryption, this field must be set to the same
+	// encryption key.
 	Encryption *Encryption `json:"encryption,omitempty"`
 	// Labels: Optional. The labels to apply to the instance created by the machine
 	// image.

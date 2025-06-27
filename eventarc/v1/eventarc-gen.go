@@ -2230,6 +2230,9 @@ type Pipeline struct {
 	Name string `json:"name,omitempty"`
 	// RetryPolicy: Optional. The retry policy to use in the pipeline.
 	RetryPolicy *GoogleCloudEventarcV1PipelineRetryPolicy `json:"retryPolicy,omitempty"`
+	// SatisfiesPzs: Output only. Whether or not this Pipeline satisfies the
+	// requirements of physical zone separation
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Uid: Output only. Server-assigned unique identifier for the Pipeline. The
 	// value is a UUID4 string and guaranteed to remain unchanged until the
 	// resource is deleted.

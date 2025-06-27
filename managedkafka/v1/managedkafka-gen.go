@@ -704,6 +704,32 @@ func (s CapacityConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CertificateAuthorityServiceConfig: A configuration for the Google
+// Certificate Authority Service.
+type CertificateAuthorityServiceConfig struct {
+	// CaPool: Required. The name of the CA pool to pull CA certificates from.
+	// Structured like: projects/{project}/locations/{location}/caPools/{ca_pool}.
+	// The CA pool does not need to be in the same project or location as the Kafka
+	// cluster.
+	CaPool string `json:"caPool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CaPool") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CaPool") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CertificateAuthorityServiceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CertificateAuthorityServiceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CheckCompatibilityRequest: Request for CheckCompatibility.
 type CheckCompatibilityRequest struct {
 	// References: Optional. The schema references used by the schema.
@@ -795,6 +821,8 @@ type Cluster struct {
 	//   "ACTIVE" - The cluster is active.
 	//   "DELETING" - The cluster is being deleted.
 	State string `json:"state,omitempty"`
+	// TlsConfig: Optional. TLS configuration for the Kafka cluster.
+	TlsConfig *TlsConfig `json:"tlsConfig,omitempty"`
 	// UpdateTime: Output only. The time when the cluster was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -1928,20 +1956,22 @@ func (s SchemaConfig) MarshalJSON() ([]byte, error) {
 }
 
 // SchemaMode: SchemaMode represents the mode of a schema registry or a
-// specific subject. Four modes are supported: * NONE: This is the default mode
-// for a subject and essentially means that the subject does not have any mode
-// set. This means the subject will follow the schema registry's mode. *
-// READONLY: The schema registry is in read-only mode. * READWRITE: The schema
-// registry is in read-write mode, which allows limited write operations on the
-// schema. * IMPORT: The schema registry is in import mode, which allows more
-// editing operations on the schema for data importing purposes.
+// specific subject. Four modes are supported: * NONE: deprecated. This was the
+// default mode for a subject, but now the default is unset (which means use
+// the global schema registry setting) * READONLY: The schema registry is in
+// read-only mode. * READWRITE: The schema registry is in read-write mode,
+// which allows limited write operations on the schema. * IMPORT: The schema
+// registry is in import mode, which allows more editing operations on the
+// schema for data importing purposes.
 type SchemaMode struct {
 	// Mode: Required. The mode type of a schema registry (READWRITE by default) or
-	// of a subject (NONE by default, which means use the global schema registry
+	// of a subject (unset by default, which means use the global schema registry
 	// setting).
 	//
 	// Possible values:
-	//   "NONE" - No mode.
+	//   "NONE" - The default / unset value. The subject mode is NONE/unset by
+	// default, which means use the global schema registry mode. This should not be
+	// used for setting the mode.
 	//   "READONLY" - READONLY mode.
 	//   "READWRITE" - READWRITE mode.
 	//   "IMPORT" - IMPORT mode.
@@ -2141,6 +2171,38 @@ func (s TaskRetryPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TlsConfig: The TLS configuration for the Kafka cluster.
+type TlsConfig struct {
+	// SslPrincipalMappingRules: Optional. A list of rules for mapping from SSL
+	// principal names to short names. These are applied in order by Kafka. Refer
+	// to the Apache Kafka documentation for `ssl.principal.mapping.rules` for the
+	// precise formatting details and syntax. Example:
+	// "RULE:^CN=(.*?),OU=ServiceUsers.*$/$1@example.com/,DEFAULT" This is a static
+	// Kafka broker configuration. Setting or modifying this field will trigger a
+	// rolling restart of the Kafka brokers to apply the change. An empty string
+	// means no rules are applied (Kafka default).
+	SslPrincipalMappingRules string `json:"sslPrincipalMappingRules,omitempty"`
+	// TrustConfig: Optional. The configuration of the broker truststore. If
+	// specified, clients can use mTLS for authentication.
+	TrustConfig *TrustConfig `json:"trustConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SslPrincipalMappingRules")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SslPrincipalMappingRules") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TlsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TlsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Topic: A Kafka topic in a given cluster.
 type Topic struct {
 	// Configs: Optional. Configurations for the topic that are overridden from the
@@ -2177,6 +2239,30 @@ type Topic struct {
 
 func (s Topic) MarshalJSON() ([]byte, error) {
 	type NoMethod Topic
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TrustConfig: Sources of CA certificates to install in the broker's
+// truststore.
+type TrustConfig struct {
+	// CasConfigs: Optional. Configuration for the Google Certificate Authority
+	// Service. Maximum 10.
+	CasConfigs []*CertificateAuthorityServiceConfig `json:"casConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CasConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CasConfigs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TrustConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TrustConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2228,7 +2314,9 @@ type UpdateSchemaModeRequest struct {
 	// Mode: Required. The mode type.
 	//
 	// Possible values:
-	//   "NONE" - No mode.
+	//   "NONE" - The default / unset value. The subject mode is NONE/unset by
+	// default, which means use the global schema registry mode. This should not be
+	// used for setting the mode.
 	//   "READONLY" - READONLY mode.
 	//   "READWRITE" - READWRITE mode.
 	//   "IMPORT" - IMPORT mode.

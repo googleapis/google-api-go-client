@@ -1260,7 +1260,7 @@
       }
     }
   },
-  "revision": "20250623",
+  "revision": "20250625",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdbShellCommandEvent": {
@@ -2235,16 +2235,16 @@
           "type": "string"
         },
         "userControlSettings": {
-          "description": "Optional. Specifies whether user control is permitted for the app. User control includes user actions like force-stopping and clearing app data. Supported on Android 11 and above.",
+          "description": "Optional. Specifies whether user control is permitted for the app. User control includes user actions like force-stopping and clearing app data. Certain types of apps have special treatment, see USER_CONTROL_SETTINGS_UNSPECIFIED and USER_CONTROL_ALLOWED for more details.",
           "enum": [
             "USER_CONTROL_SETTINGS_UNSPECIFIED",
             "USER_CONTROL_ALLOWED",
             "USER_CONTROL_DISALLOWED"
           ],
           "enumDescriptions": [
-            "Uses the default behaviour of the app to determine if user control is allowed or disallowed. For most apps, user control is allowed by default, but for some critical apps such as companion apps (extensionConfig set to true), kiosk apps and other critical system apps, user control is disallowed.",
-            "User control is allowed for the app. Kiosk apps can use this to allow user control.",
-            "User control is disallowed for the app. API_LEVEL is reported if the Android version is less than 11."
+            "Uses the default behaviour of the app to determine if user control is allowed or disallowed. For most apps, user control is allowed by default, but user control is disallowed for some critical apps such as: * extension apps (see extensionConfig for more details) * kiosk apps (see KIOSK install type for more details) * other critical system apps",
+            "User control is allowed for the app. Kiosk apps can use this to allow user control. For extension apps (see extensionConfig for more details), user control is disallowed even if this value is set. For kiosk apps (see KIOSK install type for more details), this value can be used to allow user control.",
+            "User control is disallowed for the app. This is supported on Android 11 and above. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 11."
           ],
           "type": "string"
         },
@@ -2864,6 +2864,20 @@
       "description": "Controls the data from the work profile that can be accessed from the personal profile and vice versa. A NonComplianceDetail with MANAGEMENT_MODE is reported if the device does not have a work profile.",
       "id": "CrossProfilePolicies",
       "properties": {
+        "crossProfileAppFunctions": {
+          "description": "Optional. Controls whether personal profile apps can invoke app functions exposed by apps in the work profile.",
+          "enum": [
+            "CROSS_PROFILE_APP_FUNCTIONS_UNSPECIFIED",
+            "CROSS_PROFILE_APP_FUNCTIONS_DISALLOWED",
+            "CROSS_PROFILE_APP_FUNCTIONS_ALLOWED"
+          ],
+          "enumDescriptions": [
+            "Unspecified. If appFunctions is set to APP_FUNCTIONS_ALLOWED, defaults to CROSS_PROFILE_APP_FUNCTIONS_ALLOWED. If appFunctions is set to APP_FUNCTIONS_DISALLOWED, defaults to CROSS_PROFILE_APP_FUNCTIONS_DISALLOWED.",
+            "Personal profile apps are not allowed to invoke app functions exposed by apps in the work profile.",
+            "Personal profile apps can invoke app functions exposed by apps in the work profile. If this is set, appFunctions must not be set to APP_FUNCTIONS_DISALLOWED, otherwise the policy will be rejected."
+          ],
+          "type": "string"
+        },
         "crossProfileCopyPaste": {
           "description": "Whether text copied from one profile (personal or work) can be pasted in the other profile.",
           "enum": [
@@ -5751,6 +5765,20 @@
             "Apps are never auto-updated.",
             "Apps are auto-updated over Wi-Fi only.",
             "Apps are auto-updated at any time. Data charges may apply."
+          ],
+          "type": "string"
+        },
+        "appFunctions": {
+          "description": "Optional. Controls whether apps on the device for fully managed devices or in the work profile for devices with work profiles are allowed to expose app functions.",
+          "enum": [
+            "APP_FUNCTIONS_UNSPECIFIED",
+            "APP_FUNCTIONS_DISALLOWED",
+            "APP_FUNCTIONS_ALLOWED"
+          ],
+          "enumDescriptions": [
+            "Unspecified. Defaults to APP_FUNCTIONS_ALLOWED.",
+            "Apps on the device for fully managed devices or in the work profile for devices with work profiles are not allowed to expose app functions. If this is set, crossProfileAppFunctions must not be set to CROSS_PROFILE_APP_FUNCTIONS_ALLOWED, otherwise the policy will be rejected.",
+            "Apps on the device for fully managed devices or in the work profile for devices with work profiles are allowed to expose app functions."
           ],
           "type": "string"
         },

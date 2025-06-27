@@ -1131,6 +1131,10 @@ type Federation struct {
 	// StateMessage: Output only. Additional information about the current state of
 	// the metastore federation, if available.
 	StateMessage string `json:"stateMessage,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// Uid: Output only. The globally unique resource identifier of the metastore
 	// federation.
 	Uid string `json:"uid,omitempty"`
@@ -2500,6 +2504,10 @@ type Service struct {
 	// StateMessage: Output only. Additional information about the current state of
 	// the metastore service, if available.
 	StateMessage string `json:"stateMessage,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// TelemetryConfig: Optional. The configuration specifying telemetry settings
 	// for the Dataproc Metastore service. If unspecified defaults to JSON.
 	TelemetryConfig *TelemetryConfig `json:"telemetryConfig,omitempty"`

@@ -1334,18 +1334,24 @@ type ApplicationPolicy struct {
 	PreferentialNetworkId string `json:"preferentialNetworkId,omitempty"`
 	// UserControlSettings: Optional. Specifies whether user control is permitted
 	// for the app. User control includes user actions like force-stopping and
-	// clearing app data. Supported on Android 11 and above.
+	// clearing app data. Certain types of apps have special treatment, see
+	// USER_CONTROL_SETTINGS_UNSPECIFIED and USER_CONTROL_ALLOWED for more details.
 	//
 	// Possible values:
 	//   "USER_CONTROL_SETTINGS_UNSPECIFIED" - Uses the default behaviour of the
 	// app to determine if user control is allowed or disallowed. For most apps,
-	// user control is allowed by default, but for some critical apps such as
-	// companion apps (extensionConfig set to true), kiosk apps and other critical
-	// system apps, user control is disallowed.
+	// user control is allowed by default, but user control is disallowed for some
+	// critical apps such as: * extension apps (see extensionConfig for more
+	// details) * kiosk apps (see KIOSK install type for more details) * other
+	// critical system apps
 	//   "USER_CONTROL_ALLOWED" - User control is allowed for the app. Kiosk apps
-	// can use this to allow user control.
-	//   "USER_CONTROL_DISALLOWED" - User control is disallowed for the app.
-	// API_LEVEL is reported if the Android version is less than 11.
+	// can use this to allow user control. For extension apps (see extensionConfig
+	// for more details), user control is disallowed even if this value is set. For
+	// kiosk apps (see KIOSK install type for more details), this value can be used
+	// to allow user control.
+	//   "USER_CONTROL_DISALLOWED" - User control is disallowed for the app. This
+	// is supported on Android 11 and above. A NonComplianceDetail with API_LEVEL
+	// is reported if the Android version is less than 11.
 	UserControlSettings string `json:"userControlSettings,omitempty"`
 	// WorkProfileWidgets: Specifies whether the app installed in the work profile
 	// is allowed to add widgets to the home screen.
@@ -2115,6 +2121,22 @@ func (s ContentProviderEndpoint) MarshalJSON() ([]byte, error) {
 // accessed from the personal profile and vice versa. A NonComplianceDetail
 // with MANAGEMENT_MODE is reported if the device does not have a work profile.
 type CrossProfilePolicies struct {
+	// CrossProfileAppFunctions: Optional. Controls whether personal profile apps
+	// can invoke app functions exposed by apps in the work profile.
+	//
+	// Possible values:
+	//   "CROSS_PROFILE_APP_FUNCTIONS_UNSPECIFIED" - Unspecified. If appFunctions
+	// is set to APP_FUNCTIONS_ALLOWED, defaults to
+	// CROSS_PROFILE_APP_FUNCTIONS_ALLOWED. If appFunctions is set to
+	// APP_FUNCTIONS_DISALLOWED, defaults to
+	// CROSS_PROFILE_APP_FUNCTIONS_DISALLOWED.
+	//   "CROSS_PROFILE_APP_FUNCTIONS_DISALLOWED" - Personal profile apps are not
+	// allowed to invoke app functions exposed by apps in the work profile.
+	//   "CROSS_PROFILE_APP_FUNCTIONS_ALLOWED" - Personal profile apps can invoke
+	// app functions exposed by apps in the work profile. If this is set,
+	// appFunctions must not be set to APP_FUNCTIONS_DISALLOWED, otherwise the
+	// policy will be rejected.
+	CrossProfileAppFunctions string `json:"crossProfileAppFunctions,omitempty"`
 	// CrossProfileCopyPaste: Whether text copied from one profile (personal or
 	// work) can be pasted in the other profile.
 	//
@@ -2209,13 +2231,13 @@ type CrossProfilePolicies struct {
 	// work_profile_widgets as WORK_PROFILE_WIDGETS_ALLOWED for the application, it
 	// will be unable to add widgets to the home screen.
 	WorkProfileWidgetsDefault string `json:"workProfileWidgetsDefault,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CrossProfileCopyPaste") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "CrossProfileAppFunctions")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CrossProfileCopyPaste") to
+	// NullFields is a list of field names (e.g. "CrossProfileAppFunctions") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5729,6 +5751,22 @@ type Policy struct {
 	//   "WIFI_ONLY" - Apps are auto-updated over Wi-Fi only.
 	//   "ALWAYS" - Apps are auto-updated at any time. Data charges may apply.
 	AppAutoUpdatePolicy string `json:"appAutoUpdatePolicy,omitempty"`
+	// AppFunctions: Optional. Controls whether apps on the device for fully
+	// managed devices or in the work profile for devices with work profiles are
+	// allowed to expose app functions.
+	//
+	// Possible values:
+	//   "APP_FUNCTIONS_UNSPECIFIED" - Unspecified. Defaults to
+	// APP_FUNCTIONS_ALLOWED.
+	//   "APP_FUNCTIONS_DISALLOWED" - Apps on the device for fully managed devices
+	// or in the work profile for devices with work profiles are not allowed to
+	// expose app functions. If this is set, crossProfileAppFunctions must not be
+	// set to CROSS_PROFILE_APP_FUNCTIONS_ALLOWED, otherwise the policy will be
+	// rejected.
+	//   "APP_FUNCTIONS_ALLOWED" - Apps on the device for fully managed devices or
+	// in the work profile for devices with work profiles are allowed to expose app
+	// functions.
+	AppFunctions string `json:"appFunctions,omitempty"`
 	// Applications: Policy applied to apps. This can have at most 3,000 elements.
 	Applications []*ApplicationPolicy `json:"applications,omitempty"`
 	// AssistContentPolicy: Optional. Controls whether AssistContent

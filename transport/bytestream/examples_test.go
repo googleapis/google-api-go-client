@@ -12,13 +12,14 @@ import (
 	"log"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func ExampleNewClient() {
 	serverPort := 8080
 	resourceName := "foo"
 	ctx := context.Background()
-	conn, err := grpc.Dial(fmt.Sprintf("localhost:%d", serverPort), grpc.WithInsecure())
+	conn, err := grpc.Dial(fmt.Sprintf("localhost:%d", serverPort), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("grpc.Dial: %v", err)
 		return
@@ -40,7 +41,7 @@ func ExampleClient_NewReader() {
 	serverPort := 8080
 	resourceName := "foo"
 	ctx := context.Background()
-	conn, err := grpc.Dial(fmt.Sprintf("localhost:%d", serverPort), grpc.WithInsecure())
+	conn, err := grpc.Dial(fmt.Sprintf("localhost:%d", serverPort), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("grpc.Dial: %v", err)
 		return
@@ -62,7 +63,7 @@ func ExampleClient_NewWriter() {
 	serverPort := 8080
 	resourceName := "foo"
 	ctx := context.Background()
-	conn, err := grpc.Dial(fmt.Sprintf("localhost:%d", serverPort), grpc.WithInsecure())
+	conn, err := grpc.Dial(fmt.Sprintf("localhost:%d", serverPort), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("grpc.Dial: %v", err)
 		return

@@ -1912,11 +1912,20 @@ type Command struct {
 	//   "REMOVE_ESIM" - Removes an eSIM profile from the device. This is supported
 	// on Android 15 and above. See also removeEsimParams.
 	//   "REQUEST_DEVICE_INFO" - Request information related to the device.
+	//   "WIPE" - Wipes the device, via a factory reset for a company owned device,
+	// or by deleting the work profile for a personally owned device with work
+	// profile. The wipe only occurs once the device acknowledges the command. The
+	// command can be cancelled before then.
 	Type string `json:"type,omitempty"`
 	// UserName: The resource name of the user that owns the device in the form
 	// enterprises/{enterpriseId}/users/{userId}. This is automatically generated
 	// by the server based on the device the command is sent to.
 	UserName string `json:"userName,omitempty"`
+	// WipeParams: Optional. Parameters for the WIPE command to wipe the device. If
+	// this is set, then it is suggested that type should not be set. In this case,
+	// the server automatically sets it to WIPE. It is also acceptable to
+	// explicitly set type to WIPE.
+	WipeParams *WipeParams `json:"wipeParams,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AddEsimParams") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8169,6 +8178,43 @@ func (s WipeAction) MarshalJSON() ([]byte, error) {
 // when requested. This could be user initiated or admin initiated e.g. delete
 // was received. Intentionally empty.
 type WipeFailureEvent struct {
+}
+
+// WipeParams: Parameters associated with the WIPE command to wipe the device.
+type WipeParams struct {
+	// WipeDataFlags: Optional. Flags to determine what data to wipe.
+	//
+	// Possible values:
+	//   "WIPE_DATA_FLAG_UNSPECIFIED" - This value is ignored.
+	//   "PRESERVE_RESET_PROTECTION_DATA" - Preserve the factory reset protection
+	// data on the device.
+	//   "WIPE_EXTERNAL_STORAGE" - Additionally wipe the device's external storage
+	// (such as SD cards).
+	//   "WIPE_ESIMS" - For company-owned devices, this removes all eSIMs from the
+	// device when the device is wiped. In personally-owned devices, this will
+	// remove managed eSIMs (eSIMs which are added via the ADD_ESIM command) on the
+	// devices and no personally owned eSIMs will be removed.
+	WipeDataFlags []string `json:"wipeDataFlags,omitempty"`
+	// WipeReason: Optional. A short message displayed to the user before wiping
+	// the work profile on personal devices. This has no effect on company owned
+	// devices. The maximum message length is 200 characters.
+	WipeReason *UserFacingMessage `json:"wipeReason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WipeDataFlags") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WipeDataFlags") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WipeParams) MarshalJSON() ([]byte, error) {
+	type NoMethod WipeParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WorkAccountSetupConfig: Controls the work account setup configuration, such

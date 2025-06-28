@@ -4925,7 +4925,7 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	// Possible values:
 	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified.
 	//   "AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed little-endian
-	// samples (Linear PCM).
+	// samples (Linear PCM). LINT: LEGACY_NAMES
 	//   "AUDIO_ENCODING_FLAC" - [`FLAC`](https://xiph.org/flac/documentation.html)
 	// (Free Lossless Audio Codec) is the recommended encoding because it is
 	// lossless (therefore recognition is not compromised) and requires only about
@@ -9889,6 +9889,9 @@ type GoogleCloudDialogflowCxV3VoiceSelectionParams struct {
 	// For the list of available voices, please refer to Supported voices and
 	// languages (https://cloud.google.com/text-to-speech/docs/voices).
 	Name string `json:"name,omitempty"`
+	// SecondLanguageModel: Optional. The name of the second voice (non-English) if
+	// language detection is supported.
+	SecondLanguageModel string `json:"secondLanguageModel,omitempty"`
 	// SsmlGender: Optional. The preferred gender of the voice. If not set, the
 	// service will choose a voice based on the other parameters such as
 	// language_code and name. Note that this is only a preference, not

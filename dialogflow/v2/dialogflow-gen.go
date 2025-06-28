@@ -2420,7 +2420,7 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	// Possible values:
 	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified.
 	//   "AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed little-endian
-	// samples (Linear PCM).
+	// samples (Linear PCM). LINT: LEGACY_NAMES
 	//   "AUDIO_ENCODING_FLAC" - [`FLAC`](https://xiph.org/flac/documentation.html)
 	// (Free Lossless Audio Codec) is the recommended encoding because it is
 	// lossless (therefore recognition is not compromised) and requires only about

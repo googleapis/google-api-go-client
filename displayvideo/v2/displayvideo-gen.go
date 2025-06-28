@@ -2452,13 +2452,15 @@ type BulkEditAdvertiserAssignedTargetingOptionsRequest struct {
 	// as a list of `CreateAssignedTargetingOptionsRequest`. Supported targeting
 	// types: * `TARGETING_TYPE_CHANNEL` *
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`
+	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
+	// `TARGETING_TYPE_INVENTORY_MODE`
 	CreateRequests []*CreateAssignedTargetingOptionsRequest `json:"createRequests,omitempty"`
 	// DeleteRequests: The assigned targeting options to delete in batch, specified
 	// as a list of `DeleteAssignedTargetingOptionsRequest`. Supported targeting
 	// types: * `TARGETING_TYPE_CHANNEL` *
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`
+	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
+	// `TARGETING_TYPE_INVENTORY_MODE`
 	DeleteRequests []*DeleteAssignedTargetingOptionsRequest `json:"deleteRequests,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateRequests") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13501,6 +13503,7 @@ type ThirdPartyVendorConfig struct {
 	//   "THIRD_PARTY_VENDOR_NIELSEN" - Nielsen.
 	//   "THIRD_PARTY_VENDOR_KANTAR" - Kantar.
 	//   "THIRD_PARTY_VENDOR_DYNATA" - Dynata.
+	//   "THIRD_PARTY_VENDOR_TRANSUNION" - Transunion.
 	Vendor string `json:"vendor,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PlacementId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14502,11 +14505,9 @@ type YoutubeAndPartnersSettings struct {
 	// BiddingStrategy: Required. The bidding strategy of the YouTube and Partners
 	// line item.
 	BiddingStrategy *YoutubeAndPartnersBiddingStrategy `json:"biddingStrategy,omitempty"`
-	// ContentCategory: The kind of content on which the YouTube and Partners ads
-	// will be shown. *Warning*: Starting **June 12, 2025**, this setting will no
-	// longer be editable. This field will eventually be removed. Read more about
-	// this announced change
-	// (/display-video/api/deprecations#features.li_yt_content_category)
+	// ContentCategory: Output only. The kind of content on which the YouTube and
+	// Partners ads will be shown. *Warning*: This field will be removed in the
+	// near future. Use effective_content_category instead.
 	//
 	// Possible values:
 	//   "YOUTUBE_AND_PARTNERS_CONTENT_CATEGORY_UNSPECIFIED" - Content category is
@@ -14525,10 +14526,7 @@ type YoutubeAndPartnersSettings struct {
 	// EffectiveContentCategory: Output only. The content category which takes
 	// effect when serving the line item. When content category is set in both line
 	// item and advertiser, the stricter one will take effect when serving the line
-	// item. *Warning*: Starting **June 12, 2025**, this field will only reflect
-	// the advertiser level setting for new line items. Read more about this
-	// announced change
-	// (/display-video/api/deprecations#features.li_yt_content_category)
+	// item. New line items will only inherit the advertiser level setting.
 	//
 	// Possible values:
 	//   "YOUTUBE_AND_PARTNERS_CONTENT_CATEGORY_UNSPECIFIED" - Content category is
@@ -20837,8 +20835,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall struct {
 //     `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER` *
 //     `TARGETING_TYPE_URL` * `TARGETING_TYPE_USER_REWARDED_CONTENT` *
 //     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY` *
-//     `TARGETING_TYPE_YOUTUBE_CHANNEL` (only for
-//     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) *
+//     `TARGETING_TYPE_INVENTORY_MODE` * `TARGETING_TYPE_YOUTUBE_CHANNEL` (only
+//     for `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) *
 //     `TARGETING_TYPE_YOUTUBE_VIDEO` (only for
 //     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items).
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, lineItemId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall {
@@ -20988,8 +20986,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall struct {
 //     `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER` *
 //     `TARGETING_TYPE_URL` * `TARGETING_TYPE_USER_REWARDED_CONTENT` *
 //     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY` *
-//     `TARGETING_TYPE_YOUTUBE_CHANNEL` (only for
-//     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) *
+//     `TARGETING_TYPE_INVENTORY_MODE` * `TARGETING_TYPE_YOUTUBE_CHANNEL` (only
+//     for `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) *
 //     `TARGETING_TYPE_YOUTUBE_VIDEO` (only for
 //     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items).
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, lineItemId int64, targetingType string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
@@ -24160,7 +24158,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall struct {
 //   - targetingType: Identifies the type of this assigned targeting option.
 //     Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_INVENTORY_MODE`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -24273,7 +24272,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall struct {
 //   - targetingType: Identifies the type of this assigned targeting option.
 //     Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_INVENTORY_MODE`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Delete(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId

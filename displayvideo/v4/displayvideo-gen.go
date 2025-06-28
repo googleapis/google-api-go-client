@@ -840,6 +840,7 @@ type AdGroup struct {
 	// in-stream and bumper ads.
 	//   "AD_GROUP_FORMAT_MASTHEAD" - Masthead Ad that is surfaced on the top slot
 	// on the YouTube homepage.
+	//   "AD_GROUP_FORMAT_DEMAND_GEN" - Demand Gen ads.
 	AdGroupFormat string `json:"adGroupFormat,omitempty"`
 	// AdGroupId: The unique ID of the ad group. Assigned by the system.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
@@ -3466,13 +3467,15 @@ type BulkEditAdvertiserAssignedTargetingOptionsRequest struct {
 	// as a list of `CreateAssignedTargetingOptionsRequest`. Supported targeting
 	// types: * `TARGETING_TYPE_CHANNEL` *
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`
+	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
+	// `TARGETING_TYPE_INVENTORY_MODE`
 	CreateRequests []*CreateAssignedTargetingOptionsRequest `json:"createRequests,omitempty"`
 	// DeleteRequests: The assigned targeting options to delete in batch, specified
 	// as a list of `DeleteAssignedTargetingOptionsRequest`. Supported targeting
 	// types: * `TARGETING_TYPE_CHANNEL` *
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`
+	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
+	// `TARGETING_TYPE_INVENTORY_MODE`
 	DeleteRequests []*DeleteAssignedTargetingOptionsRequest `json:"deleteRequests,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateRequests") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -15184,22 +15187,32 @@ func (s TargetingOption) MarshalJSON() ([]byte, error) {
 type ThirdPartyMeasurementConfigs struct {
 	// BrandLiftVendorConfigs: Optional. The third-party vendors measuring brand
 	// lift. The following third-party vendors are applicable: *
-	// `THIRD_PARTY_VENDOR_DYNATA` * `THIRD_PARTY_VENDOR_KANTAR`
+	// `THIRD_PARTY_VENDOR_DYNATA` * `THIRD_PARTY_VENDOR_KANTAR` *
+	// `THIRD_PARTY_VENDOR_KANTAR_MILLWARD_BROWN` *
+	// `THIRD_PARTY_VENDOR_GOOGLE_INTERNAL` * `THIRD_PARTY_VENDOR_INTAGE` *
+	// `THIRD_PARTY_VENDOR_NIELSEN` * `THIRD_PARTY_VENDOR_MACROMILL`
 	BrandLiftVendorConfigs []*ThirdPartyVendorConfig `json:"brandLiftVendorConfigs,omitempty"`
 	// BrandSafetyVendorConfigs: Optional. The third-party vendors measuring brand
 	// safety. The following third-party vendors are applicable: *
 	// `THIRD_PARTY_VENDOR_ZERF` * `THIRD_PARTY_VENDOR_DOUBLE_VERIFY` *
-	// `THIRD_PARTY_VENDOR_INTEGRAL_AD_SCIENCE`
+	// `THIRD_PARTY_VENDOR_INTEGRAL_AD_SCIENCE` *
+	// `THIRD_PARTY_VENDOR_GOOGLE_INTERNAL` * `THIRD_PARTY_VENDOR_ZEFR`
 	BrandSafetyVendorConfigs []*ThirdPartyVendorConfig `json:"brandSafetyVendorConfigs,omitempty"`
 	// ReachVendorConfigs: Optional. The third-party vendors measuring reach. The
 	// following third-party vendors are applicable: * `THIRD_PARTY_VENDOR_NIELSEN`
-	// * `THIRD_PARTY_VENDOR_COMSCORE` * `THIRD_PARTY_VENDOR_KANTAR`
+	// * `THIRD_PARTY_VENDOR_COMSCORE` * `THIRD_PARTY_VENDOR_KANTAR` *
+	// `THIRD_PARTY_VENDOR_GOOGLE_INTERNAL` *
+	// `THIRD_PARTY_VENDOR_KANTAR_MILLWARD_BROWN` *
+	// `THIRD_PARTY_VENDOR_VIDEO_RESEARCH` * `THIRD_PARTY_VENDOR_MEDIA_SCOPE` *
+	// `THIRD_PARTY_VENDOR_AUDIENCE_PROJECT` * `THIRD_PARTY_VENDOR_VIDEO_AMP` *
+	// `THIRD_PARTY_VENDOR_ISPOT_TV`
 	ReachVendorConfigs []*ThirdPartyVendorConfig `json:"reachVendorConfigs,omitempty"`
 	// ViewabilityVendorConfigs: Optional. The third-party vendors measuring
 	// viewability. The following third-party vendors are applicable: *
 	// `THIRD_PARTY_VENDOR_MOAT` * `THIRD_PARTY_VENDOR_DOUBLE_VERIFY` *
 	// `THIRD_PARTY_VENDOR_INTEGRAL_AD_SCIENCE` * `THIRD_PARTY_VENDOR_COMSCORE` *
-	// `THIRD_PARTY_VENDOR_TELEMETRY` * `THIRD_PARTY_VENDOR_MEETRICS`
+	// `THIRD_PARTY_VENDOR_TELEMETRY` * `THIRD_PARTY_VENDOR_MEETRICS` *
+	// `THIRD_PARTY_VENDOR_GOOGLE_INTERNAL`
 	ViewabilityVendorConfigs []*ThirdPartyVendorConfig `json:"viewabilityVendorConfigs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BrandLiftVendorConfigs") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -15326,6 +15339,7 @@ type ThirdPartyVendorConfig struct {
 	//   "THIRD_PARTY_VENDOR_NIELSEN" - Nielsen.
 	//   "THIRD_PARTY_VENDOR_KANTAR" - Kantar.
 	//   "THIRD_PARTY_VENDOR_DYNATA" - Dynata.
+	//   "THIRD_PARTY_VENDOR_TRANSUNION" - Transunion.
 	Vendor string `json:"vendor,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PlacementId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -16127,11 +16141,9 @@ func (s YoutubeAndPartnersInventorySourceConfig) MarshalJSON() ([]byte, error) {
 
 // YoutubeAndPartnersSettings: Settings for YouTube and Partners line items.
 type YoutubeAndPartnersSettings struct {
-	// ContentCategory: The kind of content on which the YouTube and Partners ads
-	// will be shown. *Warning*: Starting **June 12, 2025**, this setting will no
-	// longer be editable. This field will eventually be removed. Read more about
-	// this announced change
-	// (/display-video/api/deprecations#features.li_yt_content_category)
+	// ContentCategory: Output only. The kind of content on which the YouTube and
+	// Partners ads will be shown. *Warning*: This field will be removed in the
+	// near future. Use effective_content_category instead.
 	//
 	// Possible values:
 	//   "YOUTUBE_AND_PARTNERS_CONTENT_CATEGORY_UNSPECIFIED" - Content category is
@@ -16150,10 +16162,7 @@ type YoutubeAndPartnersSettings struct {
 	// EffectiveContentCategory: Output only. The content category which takes
 	// effect when serving the line item. When content category is set in both line
 	// item and advertiser, the stricter one will take effect when serving the line
-	// item. *Warning*: Starting **June 12, 2025**, this field will only reflect
-	// the advertiser level setting for new line items. Read more about this
-	// announced change
-	// (/display-video/api/deprecations#features.li_yt_content_category)
+	// item. New line items will only inherit the advertiser level setting.
 	//
 	// Possible values:
 	//   "YOUTUBE_AND_PARTNERS_CONTENT_CATEGORY_UNSPECIFIED" - Content category is
@@ -23514,8 +23523,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall struct {
 //     `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER` *
 //     `TARGETING_TYPE_URL` * `TARGETING_TYPE_USER_REWARDED_CONTENT` *
 //     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY` *
-//     `TARGETING_TYPE_YOUTUBE_CHANNEL` (only for
-//     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) *
+//     `TARGETING_TYPE_INVENTORY_MODE` * `TARGETING_TYPE_YOUTUBE_CHANNEL` (only
+//     for `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) *
 //     `TARGETING_TYPE_YOUTUBE_VIDEO` (only for
 //     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items).
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, lineItemId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall {
@@ -23665,8 +23674,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall struct {
 //     `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER` *
 //     `TARGETING_TYPE_URL` * `TARGETING_TYPE_USER_REWARDED_CONTENT` *
 //     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY` *
-//     `TARGETING_TYPE_YOUTUBE_CHANNEL` (only for
-//     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) *
+//     `TARGETING_TYPE_INVENTORY_MODE` * `TARGETING_TYPE_YOUTUBE_CHANNEL` (only
+//     for `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) *
 //     `TARGETING_TYPE_YOUTUBE_VIDEO` (only for
 //     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items).
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, lineItemId int64, targetingType string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
@@ -26088,7 +26097,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall struct {
 //   - targetingType: Identifies the type of this assigned targeting option.
 //     Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_INVENTORY_MODE`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -26201,7 +26211,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall struct {
 //   - targetingType: Identifies the type of this assigned targeting option.
 //     Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_INVENTORY_MODE`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Delete(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId

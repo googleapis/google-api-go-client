@@ -5228,6 +5228,11 @@ type NodeKubeletConfig struct {
 	// Controls the maximum number of processes allowed to run in a pod. The value
 	// must be greater than or equal to 1024 and less than 4194304.
 	PodPidsLimit int64 `json:"podPidsLimit,omitempty,string"`
+	// SingleProcessOomKill: Optional. Defines whether to enable single process OOM
+	// killer. If true, will prevent the memory.oom.group flag from being set for
+	// container cgroups in cgroups v2. This causes processes in the container to
+	// be OOM killed individually instead of as a group.
+	SingleProcessOomKill bool `json:"singleProcessOomKill,omitempty"`
 	// TopologyManager: Optional. Controls Topology Manager configuration on the
 	// node. For more information, see:
 	// https://kubernetes.io/docs/tasks/administer-cluster/topology-manager/
@@ -5352,6 +5357,12 @@ type NodeNetworkConfig struct {
 	// `ip_allocation_policy.use_ip_aliases` is true. This field cannot be changed
 	// after the node pool has been created.
 	PodRange string `json:"podRange,omitempty"`
+	// Subnetwork: Output only. The subnetwork path for the node pool. Format:
+	// projects/{project}/regions/{region}/subnetworks/{subnetwork} If the cluster
+	// is associated with multiple subnetworks, the subnetwork for the node pool is
+	// picked based on the IP utilization during node pool creation and is
+	// immutable.
+	Subnetwork string `json:"subnetwork,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "AdditionalNodeNetworkConfigs") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -7742,18 +7753,22 @@ func (s ShieldedNodes) MarshalJSON() ([]byte, error) {
 // SoleTenantConfig: SoleTenantConfig contains the NodeAffinities to specify
 // what shared sole tenant node groups should back the node pool.
 type SoleTenantConfig struct {
+	// MinNodeCpus: Optional. The minimum number of virtual CPUs this instance will
+	// consume when running on a sole-tenant node. This field can only be set if
+	// the node pool is created in a shared sole-tenant node group.
+	MinNodeCpus int64 `json:"minNodeCpus,omitempty"`
 	// NodeAffinities: NodeAffinities used to match to a shared sole tenant node
 	// group.
 	NodeAffinities []*NodeAffinity `json:"nodeAffinities,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "NodeAffinities") to
+	// ForceSendFields is a list of field names (e.g. "MinNodeCpus") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "NodeAffinities") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "MinNodeCpus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -8003,6 +8018,8 @@ type StatusCondition struct {
 	//   "CA_EXPIRING" - Cluster CA is expiring soon.
 	//   "NODE_SERVICE_ACCOUNT_MISSING_PERMISSIONS" - Node service account is
 	// missing permissions.
+	//   "CLOUD_KMS_KEY_DESTROYED" - Cloud KMS key version used for etcd level
+	// encryption has been destroyed. This is a permanent error.
 	Code string `json:"code,omitempty"`
 	// Message: Human-friendly representation of the condition
 	Message string `json:"message,omitempty"`

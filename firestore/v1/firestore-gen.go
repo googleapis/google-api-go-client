@@ -1654,6 +1654,95 @@ func (s GoogleFirestoreAdminV1BulkDeleteDocumentsRequest) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1CloneDatabaseMetadata: Metadata for the long-running
+// operation from the CloneDatabase request.
+type GoogleFirestoreAdminV1CloneDatabaseMetadata struct {
+	// Database: The name of the database being cloned to.
+	Database string `json:"database,omitempty"`
+	// EndTime: The time the clone finished, unset for ongoing clones.
+	EndTime string `json:"endTime,omitempty"`
+	// OperationState: The operation state of the clone.
+	//
+	// Possible values:
+	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "INITIALIZING" - Request is being prepared for processing.
+	//   "PROCESSING" - Request is actively being processed.
+	//   "CANCELLING" - Request is in the process of being cancelled after user
+	// called google.longrunning.Operations.CancelOperation on the operation.
+	//   "FINALIZING" - Request has been processed and is in its finalization
+	// stage.
+	//   "SUCCESSFUL" - Request has completed successfully.
+	//   "FAILED" - Request has finished being processed, but encountered an error.
+	//   "CANCELLED" - Request has finished being cancelled after user called
+	// google.longrunning.Operations.CancelOperation.
+	OperationState string `json:"operationState,omitempty"`
+	// PitrSnapshot: The snapshot from which this database was cloned.
+	PitrSnapshot *GoogleFirestoreAdminV1PitrSnapshot `json:"pitrSnapshot,omitempty"`
+	// ProgressPercentage: How far along the clone is as an estimated percentage of
+	// remaining time.
+	ProgressPercentage *GoogleFirestoreAdminV1Progress `json:"progressPercentage,omitempty"`
+	// StartTime: The time the clone was started.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Database") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1CloneDatabaseMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1CloneDatabaseMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1CloneDatabaseRequest: The request message for
+// FirestoreAdmin.CloneDatabase.
+type GoogleFirestoreAdminV1CloneDatabaseRequest struct {
+	// DatabaseId: Required. The ID to use for the database, which will become the
+	// final component of the database's resource name. This database ID must not
+	// be associated with an existing database. This value should be 4-63
+	// characters. Valid characters are /a-z-/ with first character a letter and
+	// the last a letter or a number. Must not be UUID-like
+	// /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. "(default)" database ID is also
+	// valid.
+	DatabaseId string `json:"databaseId,omitempty"`
+	// EncryptionConfig: Optional. Encryption configuration for the cloned
+	// database. If this field is not specified, the cloned database will use the
+	// same encryption configuration as the source database, namely
+	// use_source_encryption.
+	EncryptionConfig *GoogleFirestoreAdminV1EncryptionConfig `json:"encryptionConfig,omitempty"`
+	// PitrSnapshot: Required. Specification of the PITR data to clone from. The
+	// source database must exist. The cloned database will be created in the same
+	// location as the source database.
+	PitrSnapshot *GoogleFirestoreAdminV1PitrSnapshot `json:"pitrSnapshot,omitempty"`
+	// Tags: Optional. Immutable. Tags to be bound to the cloned database. The tags
+	// should be provided in the format of `tagKeys/{tag_key_id} ->
+	// tagValues/{tag_value_id}`.
+	Tags map[string]string `json:"tags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatabaseId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatabaseId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1CloneDatabaseRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1CloneDatabaseRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1CmekConfig: The CMEK (Customer Managed Encryption Key)
 // configuration for a Firestore database. If not present, the database is
 // secured by the default Google encryption key.
@@ -2705,6 +2794,38 @@ func (s GoogleFirestoreAdminV1ListUserCredsResponse) MarshalJSON() ([]byte, erro
 // GoogleFirestoreAdminV1LocationMetadata: The metadata message for
 // google.cloud.location.Location.metadata.
 type GoogleFirestoreAdminV1LocationMetadata struct {
+}
+
+// GoogleFirestoreAdminV1PitrSnapshot: A consistent snapshot of a database at a
+// specific point in time. A PITR (Point-in-time recovery) snapshot with
+// previous versions of a database's data is available for every minute up to
+// the associated database's data retention period. If the PITR feature is
+// enabled, the retention period is 7 days; otherwise, it is one hour.
+type GoogleFirestoreAdminV1PitrSnapshot struct {
+	// Database: Required. The name of the database that this was a snapshot of.
+	// Format: `projects/{project}/databases/{database}`.
+	Database string `json:"database,omitempty"`
+	// DatabaseUid: Output only. Public UUID of the database the snapshot was
+	// associated with.
+	DatabaseUid string `json:"databaseUid,omitempty"`
+	// SnapshotTime: Required. Snapshot time of the database.
+	SnapshotTime string `json:"snapshotTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Database") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1PitrSnapshot) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1PitrSnapshot
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1Progress: Describes the progress of the operation.
@@ -4569,6 +4690,119 @@ func (c *ProjectsDatabasesBulkDeleteDocumentsCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firestore.projects.databases.bulkDeleteDocuments", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsDatabasesCloneCall struct {
+	s                                          *Service
+	parent                                     string
+	googlefirestoreadminv1clonedatabaserequest *GoogleFirestoreAdminV1CloneDatabaseRequest
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// Clone: Creates a new database by cloning an existing one. The new database
+// must be in the same cloud region or multi-region location as the existing
+// database. This behaves similar to FirestoreAdmin.CreateDatabase except
+// instead of creating a new empty database, a new database is created with the
+// database type, index configuration, and documents from an existing database.
+// The long-running operation can be used to track the progress of the clone,
+// with the Operation's metadata field type being the CloneDatabaseMetadata.
+// The response type is the Database if the clone was successful. The new
+// database is not readable or writeable until the LRO has completed.
+//
+//   - parent: The project to clone the database in. Format is
+//     `projects/{project_id}`.
+func (r *ProjectsDatabasesService) Clone(parent string, googlefirestoreadminv1clonedatabaserequest *GoogleFirestoreAdminV1CloneDatabaseRequest) *ProjectsDatabasesCloneCall {
+	c := &ProjectsDatabasesCloneCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlefirestoreadminv1clonedatabaserequest = googlefirestoreadminv1clonedatabaserequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsDatabasesCloneCall) Fields(s ...googleapi.Field) *ProjectsDatabasesCloneCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsDatabasesCloneCall) Context(ctx context.Context) *ProjectsDatabasesCloneCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsDatabasesCloneCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesCloneCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlefirestoreadminv1clonedatabaserequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/databases:clone")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firestore.projects.databases.clone", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.clone" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsDatabasesCloneCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firestore.projects.databases.clone", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

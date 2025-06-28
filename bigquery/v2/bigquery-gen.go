@@ -3392,6 +3392,58 @@ func (s ExternalDatasetReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExternalRuntimeOptions: Options for the runtime of the external system.
+type ExternalRuntimeOptions struct {
+	// ContainerCpu: Optional. Amount of CPU provisioned for the container
+	// instance. If not specified, the default value is 0.33 vCPUs.
+	ContainerCpu float64 `json:"containerCpu,omitempty"`
+	// ContainerMemory: Optional. Amount of memory provisioned for the container
+	// instance. Format: {number}{unit} where unit is one of "M", "G", "Mi" and
+	// "Gi" (e.g. 1G, 512Mi). If not specified, the default value is 512Mi.
+	ContainerMemory string `json:"containerMemory,omitempty"`
+	// MaxBatchingRows: Optional. Maximum number of rows in each batch sent to the
+	// external runtime. If absent or if 0, BigQuery dynamically decides the number
+	// of rows in a batch.
+	MaxBatchingRows int64 `json:"maxBatchingRows,omitempty,string"`
+	// RuntimeConnection: Optional. Fully qualified name of the connection whose
+	// service account will be used to execute the code in the container. Format:
+	// ``"projects/{project_id}/locations/{location_id}/connections/{connection_id}
+	// "``
+	RuntimeConnection string `json:"runtimeConnection,omitempty"`
+	// RuntimeVersion: Optional. Language runtime version (e.g. python-3.11).
+	RuntimeVersion string `json:"runtimeVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContainerCpu") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContainerCpu") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExternalRuntimeOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalRuntimeOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ExternalRuntimeOptions) UnmarshalJSON(data []byte) error {
+	type NoMethod ExternalRuntimeOptions
+	var s1 struct {
+		ContainerCpu gensupport.JSONFloat64 `json:"containerCpu"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ContainerCpu = float64(s1.ContainerCpu)
+	return nil
+}
+
 // ExternalServiceCost: The external service cost is a portion of the total
 // cost, these costs are not additive with total_bytes_billed. Moreover, this
 // field only track external service costs that will show up as BigQuery costs
@@ -4016,6 +4068,11 @@ type IndexUnusedReason struct {
 	//   "ESTIMATED_PERFORMANCE_GAIN_TOO_LOW" - Indicates that the estimated
 	// performance gain from using the search index is too low for the given search
 	// query.
+	//   "COLUMN_METADATA_INDEX_NOT_USED" - Indicates that the column metadata
+	// index (which the search index depends on) is not used. User can refer to the
+	// [column metadata index
+	// usage](https://cloud.google.com/bigquery/docs/metadata-indexing-managed-table
+	// s#view_column_metadata_index_usage) for more details on why it was not used.
 	//   "NOT_SUPPORTED_IN_STANDARD_EDITION" - Indicates that search indexes can
 	// not be used for search query with STANDARD edition.
 	//   "INDEX_SUPPRESSED_BY_FUNCTION_OPTION" - Indicates that an option in the
@@ -4264,8 +4321,7 @@ type Job struct {
 	Etag string `json:"etag,omitempty"`
 	// Id: Output only. Opaque ID field of the job.
 	Id string `json:"id,omitempty"`
-	// JobCreationReason: Output only. The reason why a Job was created. Preview
-	// (https://cloud.google.com/products/#product-launch-stages)
+	// JobCreationReason: Output only. The reason why a Job was created.
 	JobCreationReason *JobCreationReason `json:"jobCreationReason,omitempty"`
 	// JobReference: Optional. Reference describing the unique-per-user name of the
 	// job.
@@ -5019,8 +5075,7 @@ func (s JobConfigurationTableCopy) MarshalJSON() ([]byte, error) {
 // (https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query) method
 // when used with `JOB_CREATION_OPTIONAL` Job creation mode. For `jobs.insert`
 // (https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/insert)
-// method calls it will always be `REQUESTED`. Preview
-// (https://cloud.google.com/products/#product-launch-stages)
+// method calls it will always be `REQUESTED`.
 type JobCreationReason struct {
 	// Code: Output only. Specifies the high level reason why a Job was created.
 	//
@@ -6864,6 +6919,32 @@ func (s ProjectReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PythonOptions: Options for a user-defined Python function.
+type PythonOptions struct {
+	// EntryPoint: Required. The entry point function in the user's Python code.
+	EntryPoint string `json:"entryPoint,omitempty"`
+	// Packages: Optional. A list of package names along with versions to be
+	// installed. Follows requirements.txt syntax (e.g. numpy==2.0, permutation,
+	// urllib3<2.2.1)
+	Packages []string `json:"packages,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EntryPoint") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntryPoint") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PythonOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod PythonOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // QueryInfo: Query optimization information for a QUERY job.
 type QueryInfo struct {
 	// OptimizationDetails: Output only. Information about query optimizations.
@@ -7027,8 +7108,7 @@ type QueryRequest struct {
 	// FormatOptions: Optional. Output format adjustments.
 	FormatOptions *DataFormatOptions `json:"formatOptions,omitempty"`
 	// JobCreationMode: Optional. If not set, jobs are always required. If set, the
-	// query request will follow the behavior described JobCreationMode. Preview
-	// (https://cloud.google.com/products/#product-launch-stages)
+	// query request will follow the behavior described JobCreationMode.
 	//
 	// Possible values:
 	//   "JOB_CREATION_MODE_UNSPECIFIED" - If unspecified JOB_CREATION_REQUIRED is
@@ -7180,8 +7260,7 @@ type QueryResponse struct {
 	JobComplete bool `json:"jobComplete,omitempty"`
 	// JobCreationReason: Optional. The reason why a Job was created. Only relevant
 	// when a job_reference is present in the response. If job_reference is not
-	// present it will always be unset. Preview
-	// (https://cloud.google.com/products/#product-launch-stages)
+	// present it will always be unset.
 	JobCreationReason *JobCreationReason `json:"jobCreationReason,omitempty"`
 	// JobReference: Reference to the Job that was created to run the query. This
 	// field will be present even if the original request timed out, in which case
@@ -7207,8 +7286,7 @@ type QueryResponse struct {
 	// method. For more information, see Paging through table data
 	// (https://cloud.google.com/bigquery/docs/paging-results).
 	PageToken string `json:"pageToken,omitempty"`
-	// QueryId: Auto-generated ID for the query. Preview
-	// (https://cloud.google.com/products/#product-launch-stages)
+	// QueryId: Auto-generated ID for the query.
 	QueryId string `json:"queryId,omitempty"`
 	// Rows: An object with as many results as can be contained within the maximum
 	// permitted reply size. To get any additional rows, you can call
@@ -7668,6 +7746,10 @@ type Routine struct {
 	DeterminismLevel string `json:"determinismLevel,omitempty"`
 	// Etag: Output only. A hash of this resource.
 	Etag string `json:"etag,omitempty"`
+	// ExternalRuntimeOptions: Optional. Options for the runtime of the external
+	// system executing the routine. This field is only applicable for Python UDFs.
+	// Preview (https://cloud.google.com/products/#product-launch-stages)
+	ExternalRuntimeOptions *ExternalRuntimeOptions `json:"externalRuntimeOptions,omitempty"`
 	// ImportedLibraries: Optional. If language = "JAVASCRIPT", this field stores
 	// the path of the imported JAVASCRIPT libraries.
 	ImportedLibraries []string `json:"importedLibraries,omitempty"`
@@ -7685,6 +7767,9 @@ type Routine struct {
 	// LastModifiedTime: Output only. The time when this routine was last modified,
 	// in milliseconds since the epoch.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
+	// PythonOptions: Optional. Options for Python UDF. Preview
+	// (https://cloud.google.com/products/#product-launch-stages)
+	PythonOptions *PythonOptions `json:"pythonOptions,omitempty"`
 	// RemoteFunctionOptions: Optional. Remote function specific options.
 	RemoteFunctionOptions *RemoteFunctionOptions `json:"remoteFunctionOptions,omitempty"`
 	// ReturnTableType: Optional. Can be set only if routine_type =
@@ -8810,7 +8895,8 @@ type Table struct {
 	// Possible values:
 	//   "MANAGED_TABLE_TYPE_UNSPECIFIED" - No managed table type specified.
 	//   "NATIVE" - The managed table is a native BigQuery table.
-	//   "ICEBERG" - The managed table is a BigQuery table for Apache Iceberg.
+	//   "BIGLAKE" - The managed table is a BigLake table for Apache Iceberg in
+	// BigQuery.
 	ManagedTableType string `json:"managedTableType,omitempty"`
 	// MaterializedView: Optional. The materialized view definition.
 	MaterializedView *MaterializedViewDefinition `json:"materializedView,omitempty"`
@@ -10789,15 +10875,15 @@ func (c *DatasetsGetCall) AccessPolicyVersion(accessPolicyVersion int64) *Datase
 // Possible values:
 //
 //	"DATASET_VIEW_UNSPECIFIED" - The default value. Default to the FULL view.
-//	"METADATA" - Updates metadata information for the dataset, such as
+//	"METADATA" - View metadata information for the dataset, such as
 //
 // friendlyName, description, labels, etc.
 //
-//	"ACL" - Updates ACL information for the dataset, which defines dataset
+//	"ACL" - View ACL information for the dataset, which defines dataset access
 //
-// access for one or more entities.
+// for one or more entities.
 //
-//	"FULL" - Updates both dataset metadata and ACL information.
+//	"FULL" - View both dataset metadata and ACL information.
 func (c *DatasetsGetCall) DatasetView(datasetView string) *DatasetsGetCall {
 	c.urlParams_.Set("datasetView", datasetView)
 	return c
@@ -13998,6 +14084,117 @@ func (c *RoutinesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigquery.routines.setIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type RoutinesTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource. If the resource does not exist, this will return an empty set of
+// permissions, not a `NOT_FOUND` error. Note: This operation is designed to be
+// used for building permission-aware UIs and command-line tools, not for
+// authorization checking. This operation may "fail open" without warning.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
+func (r *RoutinesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *RoutinesTestIamPermissionsCall {
+	c := &RoutinesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *RoutinesTestIamPermissionsCall) Fields(s ...googleapi.Field) *RoutinesTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *RoutinesTestIamPermissionsCall) Context(ctx context.Context) *RoutinesTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *RoutinesTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RoutinesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigquery.routines.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquery.routines.testIamPermissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *RoutinesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigquery.routines.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

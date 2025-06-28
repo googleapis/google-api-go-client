@@ -286,6 +286,53 @@ func (s GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1CloneDatabaseMetadata: Metadata for the long-running
+// operation from the CloneDatabase request.
+type GoogleFirestoreAdminV1CloneDatabaseMetadata struct {
+	// Database: The name of the database being cloned to.
+	Database string `json:"database,omitempty"`
+	// EndTime: The time the clone finished, unset for ongoing clones.
+	EndTime string `json:"endTime,omitempty"`
+	// OperationState: The operation state of the clone.
+	//
+	// Possible values:
+	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "INITIALIZING" - Request is being prepared for processing.
+	//   "PROCESSING" - Request is actively being processed.
+	//   "CANCELLING" - Request is in the process of being cancelled after user
+	// called google.longrunning.Operations.CancelOperation on the operation.
+	//   "FINALIZING" - Request has been processed and is in its finalization
+	// stage.
+	//   "SUCCESSFUL" - Request has completed successfully.
+	//   "FAILED" - Request has finished being processed, but encountered an error.
+	//   "CANCELLED" - Request has finished being cancelled after user called
+	// google.longrunning.Operations.CancelOperation.
+	OperationState string `json:"operationState,omitempty"`
+	// PitrSnapshot: The snapshot from which this database was cloned.
+	PitrSnapshot *GoogleFirestoreAdminV1PitrSnapshot `json:"pitrSnapshot,omitempty"`
+	// ProgressPercentage: How far along the clone is as an estimated percentage of
+	// remaining time.
+	ProgressPercentage *GoogleFirestoreAdminV1Progress `json:"progressPercentage,omitempty"`
+	// StartTime: The time the clone was started.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Database") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1CloneDatabaseMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1CloneDatabaseMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1CreateDatabaseMetadata: Metadata related to the create
 // database operation.
 type GoogleFirestoreAdminV1CreateDatabaseMetadata struct {
@@ -294,6 +341,38 @@ type GoogleFirestoreAdminV1CreateDatabaseMetadata struct {
 // GoogleFirestoreAdminV1DeleteDatabaseMetadata: Metadata related to the delete
 // database operation.
 type GoogleFirestoreAdminV1DeleteDatabaseMetadata struct {
+}
+
+// GoogleFirestoreAdminV1PitrSnapshot: A consistent snapshot of a database at a
+// specific point in time. A PITR (Point-in-time recovery) snapshot with
+// previous versions of a database's data is available for every minute up to
+// the associated database's data retention period. If the PITR feature is
+// enabled, the retention period is 7 days; otherwise, it is one hour.
+type GoogleFirestoreAdminV1PitrSnapshot struct {
+	// Database: Required. The name of the database that this was a snapshot of.
+	// Format: `projects/{project}/databases/{database}`.
+	Database string `json:"database,omitempty"`
+	// DatabaseUid: Output only. Public UUID of the database the snapshot was
+	// associated with.
+	DatabaseUid string `json:"databaseUid,omitempty"`
+	// SnapshotTime: Required. Snapshot time of the database.
+	SnapshotTime string `json:"snapshotTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Database") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1PitrSnapshot) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1PitrSnapshot
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1Progress: Describes the progress of the operation.

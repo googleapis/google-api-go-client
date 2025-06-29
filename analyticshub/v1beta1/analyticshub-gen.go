@@ -929,7 +929,7 @@ type Listing struct {
 	AllowOnlyMetadataSharing bool `json:"allowOnlyMetadataSharing,omitempty"`
 	// BigqueryDataset: Required. Shared dataset i.e. BigQuery dataset source.
 	BigqueryDataset *BigQueryDatasetSource `json:"bigqueryDataset,omitempty"`
-	// Categories: Optional. Categories of the listing. Up to two categories are
+	// Categories: Optional. Categories of the listing. Up to five categories are
 	// allowed.
 	//
 	// Possible values:
@@ -953,6 +953,7 @@ type Listing struct {
 	//   "CATEGORY_SCIENCE_AND_RESEARCH"
 	//   "CATEGORY_TRANSPORTATION_AND_LOGISTICS"
 	//   "CATEGORY_TRAVEL_AND_TOURISM"
+	//   "CATEGORY_GOOGLE_EARTH_ENGINE"
 	Categories []string `json:"categories,omitempty"`
 	// DataProvider: Optional. Details of the data provider who owns the source
 	// data.

@@ -2588,7 +2588,7 @@ type PscConfig struct {
 	AllowedGoogleProducersResourceHierarchyLevel []string `json:"allowedGoogleProducersResourceHierarchyLevel,omitempty"`
 	// Limit: Optional. Max number of PSC connections for this policy.
 	Limit int64 `json:"limit,omitempty,string"`
-	// ProducerInstanceLocation: Required. ProducerInstanceLocation is used to
+	// ProducerInstanceLocation: Optional. ProducerInstanceLocation is used to
 	// specify which authorization mechanism to use to determine which projects the
 	// Producer instance can be within.
 	//

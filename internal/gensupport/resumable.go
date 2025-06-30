@@ -135,7 +135,19 @@ func (rx *ResumableUpload) transferChunk(ctx context.Context) (*http.Response, e
 		return nil, err
 	}
 
-	res, err := rx.doUploadRequest(ctx, chunk, off, int64(size), done)
+	// rCtx is derived from a context with a defined transferTimeout with non-zero value.
+	// If a particular request exceeds this transfer time for getting response, the rCtx deadline will be exceeded,
+	// triggering a retry of the request.
+	var rCtx context.Context
+	var cancel context.CancelFunc
+
+	rCtx = ctx
+	if rx.ChunkTransferTimeout != 0 {
+		rCtx, cancel = context.WithTimeout(ctx, rx.ChunkTransferTimeout)
+		defer cancel()
+	}
+
+	res, err := rx.doUploadRequest(rCtx, chunk, off, int64(size), done)
 	if err != nil {
 		return res, err
 	}
@@ -247,17 +259,6 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 			default:
 			}
 
-			// rCtx is derived from a context with a defined transferTimeout with non-zero value.
-			// If a particular request exceeds this transfer time for getting response, the rCtx deadline will be exceeded,
-			// triggering a retry of the request.
-			var rCtx context.Context
-			var cancel context.CancelFunc
-
-			rCtx = ctx
-			if rx.ChunkTransferTimeout != 0 {
-				rCtx, cancel = context.WithTimeout(ctx, rx.ChunkTransferTimeout)
-			}
-
 			// We close the response's body here, since we definitely will not
 			// return `resp` now. If we close it before the select case above, a
 			// timer may fire and cause us to return a response with a closed body
@@ -270,22 +271,16 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 				io.Copy(io.Discard, resp.Body)
 				resp.Body.Close()
 			}
-			resp, err = rx.transferChunk(rCtx)
+			resp, err = rx.transferChunk(ctx)
 
 			var status int
 			if resp != nil {
 				status = resp.StatusCode
 			}
 
-			// The upload should be retried if the rCtx is canceled due to a timeout.
-			select {
-			case <-rCtx.Done():
-				if rx.ChunkTransferTimeout != 0 && errors.Is(rCtx.Err(), context.DeadlineExceeded) {
-					// Cancel the context for rCtx
-					cancel()
-					continue
-				}
-			default:
+			// The upload should be retried if the err indicates the context timed out.
+			if rx.ChunkTransferTimeout != 0 && errors.Is(err, context.DeadlineExceeded) {
+				continue
 			}
 
 			// Check if we should retry the request.

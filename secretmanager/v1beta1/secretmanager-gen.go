@@ -794,6 +794,11 @@ type Secret struct {
 	// attached to the Secret. The replication policy cannot be changed after the
 	// Secret has been created.
 	Replication *Replication `json:"replication,omitempty"`
+	// Tags: Optional. Input only. Immutable. Mapping of Tag keys/values directly
+	// bound to this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing" Tags are used to organize and group resources.
+	// Tags can be used to control policy evaluation for the resource.
+	Tags map[string]string `json:"tags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

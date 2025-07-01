@@ -4379,7 +4379,7 @@ func (s Rule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SACAttachment: Represents a Secure Access Connect (SAC) Attachment resource.
+// SACAttachment: Represents a Secure Access Connect (SAC) attachment resource.
 // A Secure Access Connect attachment enables NCC Gateway to process traffic
 // with an SSE product.
 type SACAttachment struct {
@@ -4442,7 +4442,7 @@ func (s SACAttachment) MarshalJSON() ([]byte, error) {
 type SACAttachmentSACAttachmentSymantecOptions struct {
 	// SymantecLocationName: Immutable. Name to be used when creating a location on
 	// the customer's behalf in Symantec's Location API. Not to be confused with
-	// GCP locations.
+	// Google Cloud locations.
 	SymantecLocationName string `json:"symantecLocationName,omitempty"`
 	// SymantecSite: Immutable. Symantec data center identifier that this
 	// attachment will connect to.
@@ -4465,7 +4465,7 @@ func (s SACAttachmentSACAttachmentSymantecOptions) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SACRealm: Represents a Secure Access Connect (SAC) Realm resource. A Secure
+// SACRealm: Represents a Secure Access Connect (SAC) realm resource. A Secure
 // Access Connect realm establishes a connection between your Google Cloud
 // project and an SSE service.
 type SACRealm struct {

@@ -10048,28 +10048,28 @@ func (s GoogleCloudDiscoveryengineV1alphaConnectorRun) MarshalJSON() ([]byte, er
 // GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun: Represents an entity
 // that was synced in this ConnectorRun.
 type GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun struct {
-	// DeletedRecordCount: The number of documents deleted.
+	// DeletedRecordCount: Optional. The number of documents deleted.
 	DeletedRecordCount int64 `json:"deletedRecordCount,omitempty,string"`
 	// EntityName: The name of the source entity.
 	EntityName string `json:"entityName,omitempty"`
-	// ErrorRecordCount: The total number of documents failed at sync at any stage
-	// (extraction, indexing, etc).
+	// ErrorRecordCount: Optional. The total number of documents failed at sync at
+	// indexing stage.
 	ErrorRecordCount int64 `json:"errorRecordCount,omitempty,string"`
 	// Errors: The errors from the entity's sync run. Only exist if running into an
 	// error state. Contains error code and error message.
 	Errors []*GoogleRpcStatus `json:"errors,omitempty"`
-	// ExtractedRecordCount: The number of documents extracted from connector
-	// source, ready to be ingested to VAIS.
+	// ExtractedRecordCount: Optional. The number of documents extracted from
+	// connector source, ready to be ingested to VAIS.
 	ExtractedRecordCount int64 `json:"extractedRecordCount,omitempty,string"`
-	// IndexedRecordCount: The number of documents indexed.
+	// IndexedRecordCount: Optional. The number of documents indexed.
 	IndexedRecordCount int64 `json:"indexedRecordCount,omitempty,string"`
 	// Progress: Metadata to generate the progress bar.
 	Progress *GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRunProgress `json:"progress,omitempty"`
-	// ScheduledRecordCount: The number of documents scheduled to be
+	// ScheduledRecordCount: Optional. The number of documents scheduled to be
 	// crawled/extracted from connector source. This only applies to third party
 	// connectors.
 	ScheduledRecordCount int64 `json:"scheduledRecordCount,omitempty,string"`
-	// SourceApiRequestCount: The number of requests sent to 3p API.
+	// SourceApiRequestCount: Optional. The number of requests sent to 3p API.
 	SourceApiRequestCount int64 `json:"sourceApiRequestCount,omitempty,string"`
 	// State: The state of the entity's sync run.
 	//
@@ -11104,6 +11104,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// application's API.
 	//   "THIRD_PARTY_EUA" - Connector utilized for End User Authentication
 	// features.
+	//   "GCNV" - Google Cloud NetApp Volumes connector.
 	ConnectorType string `json:"connectorType,omitempty"`
 	// CreateEuaSaas: Optional. Whether the END USER AUTHENTICATION connector is
 	// created in SaaS.
@@ -11296,6 +11297,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnectorEndUserConfig struct {
 	// AuthParams: Optional. Any authentication parameters specific to EUA
 	// connectors.
 	AuthParams googleapi.RawMessage `json:"authParams,omitempty"`
+	// Tenant: Optional. The tenant project the connector is connected to.
+	Tenant *GoogleCloudDiscoveryengineV1alphaTenant `json:"tenant,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalParams") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -20922,6 +20925,38 @@ func (s GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReasonQuotaFailure) Ma
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaTenant: Tenant information for a connector
+// source. This includes some of the same information stored in the Credential
+// message, but is limited to only what is needed to provide a list of
+// accessible tenants to the user.
+type GoogleCloudDiscoveryengineV1alphaTenant struct {
+	// DisplayName: Optional display name for the tenant, e.g. "My Slack Team".
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: The tenant's instance ID. Examples: Jira
+	// ("8594f221-9797-5f78-1fa4-485e198d7cd0"), Slack ("T123456").
+	Id string `json:"id,omitempty"`
+	// Uri: The URI of the tenant, if applicable. For example, the URI of a Jira
+	// instance is https://my-jira-instance.atlassian.net, and a Slack tenant does
+	// not have a URI.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaTenant) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaTenant
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaTextInput: Defines text input.
 type GoogleCloudDiscoveryengineV1alphaTextInput struct {
 	// Context: Conversation context of the input.
@@ -21826,6 +21861,8 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfigCollectionComponent struct {
 	// DataSource: The name of the data source, retrieved from
 	// `Collection.data_connector.data_source`.
 	DataSource string `json:"dataSource,omitempty"`
+	// DataSourceDisplayName: Output only. The display name of the data source.
+	DataSourceDisplayName string `json:"dataSourceDisplayName,omitempty"`
 	// DataStoreComponents: For the data store collection, list of the children
 	// data stores.
 	DataStoreComponents []*GoogleCloudDiscoveryengineV1alphaWidgetConfigDataStoreComponent `json:"dataStoreComponents,omitempty"`

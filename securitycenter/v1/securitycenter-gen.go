@@ -8870,6 +8870,9 @@ type GoogleCloudSecuritycenterV2Process struct {
 	// provides information about the interpreter, while `script` provides
 	// information about the script file provided to the interpreter.
 	Script *GoogleCloudSecuritycenterV2File `json:"script,omitempty"`
+	// UserId: The ID of the user that executed the process. E.g. If this is the
+	// root user this will always be 0.
+	UserId int64 `json:"userId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -11927,6 +11930,9 @@ type Process struct {
 	// provides information about the interpreter, while `script` provides
 	// information about the script file provided to the interpreter.
 	Script *File `json:"script,omitempty"`
+	// UserId: The ID of the user that executed the process. E.g. If this is the
+	// root user this will always be 0.
+	UserId int64 `json:"userId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

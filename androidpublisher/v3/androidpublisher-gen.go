@@ -453,6 +453,7 @@ type OrdersService struct {
 func NewPurchasesService(s *Service) *PurchasesService {
 	rs := &PurchasesService{s: s}
 	rs.Products = NewPurchasesProductsService(s)
+	rs.Productsv2 = NewPurchasesProductsv2Service(s)
 	rs.Subscriptions = NewPurchasesSubscriptionsService(s)
 	rs.Subscriptionsv2 = NewPurchasesSubscriptionsv2Service(s)
 	rs.Voidedpurchases = NewPurchasesVoidedpurchasesService(s)
@@ -463,6 +464,8 @@ type PurchasesService struct {
 	s *Service
 
 	Products *PurchasesProductsService
+
+	Productsv2 *PurchasesProductsv2Service
 
 	Subscriptions *PurchasesSubscriptionsService
 
@@ -477,6 +480,15 @@ func NewPurchasesProductsService(s *Service) *PurchasesProductsService {
 }
 
 type PurchasesProductsService struct {
+	s *Service
+}
+
+func NewPurchasesProductsv2Service(s *Service) *PurchasesProductsv2Service {
+	rs := &PurchasesProductsv2Service{s: s}
+	return rs
+}
+
+type PurchasesProductsv2Service struct {
 	s *Service
 }
 
@@ -5042,6 +5054,78 @@ func (s ProcessedEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ProductLineItem: Contains item-level info for a ProductPurchaseV2.
+type ProductLineItem struct {
+	// ProductId: The purchased product ID (for example, 'monthly001').
+	ProductId string `json:"productId,omitempty"`
+	// ProductOfferDetails: The offer details for this item.
+	ProductOfferDetails *ProductOfferDetails `json:"productOfferDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProductLineItem) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductLineItem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProductOfferDetails: Offer details information related to a purchase line
+// item.
+type ProductOfferDetails struct {
+	// ConsumptionState: Output only. The consumption state of the purchase.
+	//
+	// Possible values:
+	//   "CONSUMPTION_STATE_UNSPECIFIED" - Consumption state unspecified. This
+	// value should never be set.
+	//   "CONSUMPTION_STATE_YET_TO_BE_CONSUMED" - Yet to be consumed.
+	//   "CONSUMPTION_STATE_CONSUMED" - Consumed already.
+	ConsumptionState string `json:"consumptionState,omitempty"`
+	// OfferId: The offer ID. Only present for offers.
+	OfferId string `json:"offerId,omitempty"`
+	// OfferTags: The latest offer tags associated with the offer. It includes tags
+	// inherited from the purchase option.
+	OfferTags []string `json:"offerTags,omitempty"`
+	// OfferToken: The per-transaction offer token used to make this purchase line
+	// item.
+	OfferToken string `json:"offerToken,omitempty"`
+	// PurchaseOptionId: The purchase option ID.
+	PurchaseOptionId string `json:"purchaseOptionId,omitempty"`
+	// Quantity: The quantity associated with the purchase of the inapp product.
+	Quantity int64 `json:"quantity,omitempty"`
+	// RefundableQuantity: The quantity eligible for refund, i.e. quantity that
+	// hasn't been refunded. The value reflects quantity-based partial refunds and
+	// full refunds.
+	RefundableQuantity int64 `json:"refundableQuantity,omitempty"`
+	// RentOfferDetails: Offer details about rent offers. This will only be set for
+	// rental line items.
+	RentOfferDetails *RentOfferDetails `json:"rentOfferDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConsumptionState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsumptionState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProductOfferDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductOfferDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ProductPurchase: A ProductPurchase resource indicates the status of a user's
 // inapp product purchase.
 type ProductPurchase struct {
@@ -5119,6 +5203,74 @@ func (s ProductPurchase) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ProductPurchaseV2: A ProductPurchaseV2 resource indicates the status of a
+// user's inapp product purchase.
+type ProductPurchaseV2 struct {
+	// AcknowledgementState: Output only. The acknowledgement state of the
+	// purchase.
+	//
+	// Possible values:
+	//   "ACKNOWLEDGEMENT_STATE_UNSPECIFIED" - Unspecified acknowledgement state.
+	//   "ACKNOWLEDGEMENT_STATE_PENDING" - The purchase is not acknowledged yet.
+	//   "ACKNOWLEDGEMENT_STATE_ACKNOWLEDGED" - The purchase is acknowledged.
+	AcknowledgementState string `json:"acknowledgementState,omitempty"`
+	// Kind: This kind represents a ProductPurchaseV2 object in the
+	// androidpublisher service.
+	Kind string `json:"kind,omitempty"`
+	// ObfuscatedExternalAccountId: An obfuscated version of the id that is
+	// uniquely associated with the user's account in your app. Only present if
+	// specified using
+	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedaccountid
+	// when the purchase was made.
+	ObfuscatedExternalAccountId string `json:"obfuscatedExternalAccountId,omitempty"`
+	// ObfuscatedExternalProfileId: An obfuscated version of the id that is
+	// uniquely associated with the user's profile in your app. Only present if
+	// specified using
+	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedprofileid
+	// when the purchase was made.
+	ObfuscatedExternalProfileId string `json:"obfuscatedExternalProfileId,omitempty"`
+	// OrderId: The order id associated with the purchase of the inapp product. May
+	// not be set if there is no order associated with the purchase.
+	OrderId string `json:"orderId,omitempty"`
+	// ProductLineItem: Contains item-level info for a ProductPurchaseV2.
+	ProductLineItem []*ProductLineItem `json:"productLineItem,omitempty"`
+	// PurchaseCompletionTime: The time when the purchase was successful, i.e.,
+	// when the PurchaseState has changed to PURCHASED. This field will not be
+	// present until the payment is complete. For example, if the user initiated a
+	// pending transaction
+	// (https://developer.android.com/google/play/billing/integrate#pending), this
+	// field will not be populated until the user successfully completes the steps
+	// required to complete the transaction.
+	PurchaseCompletionTime string `json:"purchaseCompletionTime,omitempty"`
+	// PurchaseStateContext: Information about the purchase state of the purchase.
+	PurchaseStateContext *PurchaseStateContext `json:"purchaseStateContext,omitempty"`
+	// RegionCode: ISO 3166-1 alpha-2 billing region code of the user at the time
+	// the product was granted.
+	RegionCode string `json:"regionCode,omitempty"`
+	// TestPurchaseContext: Information related to test purchases. This will only
+	// be set for test purchases.
+	TestPurchaseContext *TestPurchaseContext `json:"testPurchaseContext,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AcknowledgementState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcknowledgementState") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProductPurchaseV2) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductPurchaseV2
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ProductPurchasesAcknowledgeRequest: Request for the
 // product.purchases.acknowledge API.
 type ProductPurchasesAcknowledgeRequest struct {
@@ -5139,6 +5291,37 @@ type ProductPurchasesAcknowledgeRequest struct {
 
 func (s ProductPurchasesAcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductPurchasesAcknowledgeRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PurchaseStateContext: Context about the purchase state.
+type PurchaseStateContext struct {
+	// PurchaseState: Output only. The purchase state of the purchase.
+	//
+	// Possible values:
+	//   "PURCHASE_STATE_UNSPECIFIED" - Purchase state unspecified. This value
+	// should never be set.
+	//   "PURCHASED" - Purchased successfully.
+	//   "CANCELLED" - Purchase canceled.
+	//   "PENDING" - The purchase is in a pending state and has not yet been
+	// completed. For more information on handling pending purchases, see
+	// https://developer.android.com/google/play/billing/integrate#pending.
+	PurchaseState string `json:"purchaseState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PurchaseState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PurchaseState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PurchaseStateContext) MarshalJSON() ([]byte, error) {
+	type NoMethod PurchaseStateContext
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5634,6 +5817,10 @@ type RemoteInAppUpdateDataPerBundle struct {
 func (s RemoteInAppUpdateDataPerBundle) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteInAppUpdateDataPerBundle
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RentOfferDetails: Offer details information related to a rental line item.
+type RentOfferDetails struct {
 }
 
 // ReplacementCancellation: Information specific to cancellations caused by
@@ -7197,6 +7384,33 @@ func (s TargetingUpdate) MarshalJSON() ([]byte, error) {
 
 // TestPurchase: Whether this subscription purchase is a test purchase.
 type TestPurchase struct {
+}
+
+// TestPurchaseContext: Context about a test purchase.
+type TestPurchaseContext struct {
+	// FopType: The fop type of the test purchase.
+	//
+	// Possible values:
+	//   "FOP_TYPE_UNSPECIFIED" - Fop type unspecified. This value should never be
+	// set.
+	//   "TEST" - The purchase was made using a test card.
+	FopType string `json:"fopType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FopType") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FopType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TestPurchaseContext) MarshalJSON() ([]byte, error) {
+	type NoMethod TestPurchaseContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Testers: The testers of an app. The resource for TestersService. Note: while
@@ -19473,6 +19687,123 @@ func (c *PurchasesProductsGetCall) Do(opts ...googleapi.CallOption) (*ProductPur
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.products.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type PurchasesProductsv2Getproductpurchasev2Call struct {
+	s            *Service
+	packageName  string
+	token        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Getproductpurchasev2: Checks the purchase and consumption status of an inapp
+// item.
+//
+//   - packageName: The package name of the application the inapp product was
+//     sold in (for example, 'com.some.thing').
+//   - token: The token provided to the user's device when the inapp product was
+//     purchased.
+func (r *PurchasesProductsv2Service) Getproductpurchasev2(packageName string, token string) *PurchasesProductsv2Getproductpurchasev2Call {
+	c := &PurchasesProductsv2Getproductpurchasev2Call{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.token = token
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PurchasesProductsv2Getproductpurchasev2Call) Fields(s ...googleapi.Field) *PurchasesProductsv2Getproductpurchasev2Call {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PurchasesProductsv2Getproductpurchasev2Call) IfNoneMatch(entityTag string) *PurchasesProductsv2Getproductpurchasev2Call {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PurchasesProductsv2Getproductpurchasev2Call) Context(ctx context.Context) *PurchasesProductsv2Getproductpurchasev2Call {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PurchasesProductsv2Getproductpurchasev2Call) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PurchasesProductsv2Getproductpurchasev2Call) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/purchases/productsv2/tokens/{token}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"token":       c.token,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.purchases.productsv2.getproductpurchasev2", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.purchases.productsv2.getproductpurchasev2" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ProductPurchaseV2.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PurchasesProductsv2Getproductpurchasev2Call) Do(opts ...googleapi.CallOption) (*ProductPurchaseV2, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ProductPurchaseV2{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.productsv2.getproductpurchasev2", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

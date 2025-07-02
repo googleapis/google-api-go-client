@@ -282,11 +282,8 @@ type Attributes struct {
 	// MinimumPurchaseAmount: Optional. Minimum purchase amount
 	// (https://support.google.com/merchants/answer/13837705?ref_topic=13773355&sjid=17642868584668136159-NC)
 	// for the promotion.
-	MinimumPurchaseAmount *Price `json:"minimumPurchaseAmount,omitempty"`
-	// MinimumPurchaseQuantity: Optional. Minimum purchase quantity
-	// (https://support.google.com/merchants/answer/13838182?ref_topic=13773355&sjid=17642868584668136159-NC)
-	// for the promotion.
-	MinimumPurchaseQuantity int64 `json:"minimumPurchaseQuantity,omitempty,string"`
+	MinimumPurchaseAmount   *Price `json:"minimumPurchaseAmount,omitempty"`
+	MinimumPurchaseQuantity int64  `json:"minimumPurchaseQuantity,omitempty,string"`
 	// MoneyOffAmount: Optional. The money off amount
 	// (https://support.google.com/merchants/answer/13838101?ref_topic=13773355&sjid=17642868584668136159-NC)
 	// offered in the promotion.

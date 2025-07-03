@@ -836,7 +836,7 @@ type BigQueryDestination struct {
 	// Force: If the destination table already exists and this flag is `TRUE`, the
 	// table will be overwritten by the contents of assets snapshot. If the flag is
 	// `FALSE` or unset and the destination table already exists, the export call
-	// returns an INVALID_ARGUMEMT error.
+	// returns an INVALID_ARGUMENT error.
 	Force bool `json:"force,omitempty"`
 	// PartitionSpec: [partition_spec] determines whether to export to partitioned
 	// table(s) and how to partition the data. If [partition_spec] is unset or

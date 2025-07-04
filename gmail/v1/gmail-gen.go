@@ -4977,7 +4977,9 @@ type UsersMessagesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the messages in the user's mailbox.
+// List: Lists the messages in the user's mailbox. For example usage, see List
+// Gmail messages
+// (https://developers.google.com/workspace/gmail/api/guides/list-messages).
 //
 //   - userId: The user's email address. The special value `me` can be used to
 //     indicate the authenticated user.

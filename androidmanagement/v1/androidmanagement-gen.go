@@ -1339,11 +1339,10 @@ type ApplicationPolicy struct {
 	//
 	// Possible values:
 	//   "USER_CONTROL_SETTINGS_UNSPECIFIED" - Uses the default behaviour of the
-	// app to determine if user control is allowed or disallowed. For most apps,
-	// user control is allowed by default, but user control is disallowed for some
-	// critical apps such as: * extension apps (see extensionConfig for more
-	// details) * kiosk apps (see KIOSK install type for more details) * other
-	// critical system apps
+	// app to determine if user control is allowed or disallowed. User control is
+	// allowed by default for most apps but disallowed for following types of apps:
+	// extension apps (see extensionConfig for more details) kiosk apps (see KIOSK
+	// install type for more details) other critical system apps
 	//   "USER_CONTROL_ALLOWED" - User control is allowed for the app. Kiosk apps
 	// can use this to allow user control. For extension apps (see extensionConfig
 	// for more details), user control is disallowed even if this value is set. For
@@ -3312,7 +3311,12 @@ func (s EuiccChipInfo) MarshalJSON() ([]byte, error) {
 type ExtensionConfig struct {
 	// NotificationReceiver: Fully qualified class name of the receiver service
 	// class for Android Device Policy to notify the extension app of any local
-	// command status updates.
+	// command status updates. The service must be exported in the extension app's
+	// AndroidManifest.xml and extend NotificationReceiverService
+	// (https://developers.google.com/android/management/reference/amapi/com/google/android/managementapi/notification/NotificationReceiverService)
+	// (see Integrate with the AMAPI SDK
+	// (https://developers.google.com/android/management/sdk-integration) guide for
+	// more details).
 	NotificationReceiver string `json:"notificationReceiver,omitempty"`
 	// SigningKeyFingerprintsSha256: Hex-encoded SHA-256 hashes of the signing key
 	// certificates of the extension app. Only hexadecimal string representations

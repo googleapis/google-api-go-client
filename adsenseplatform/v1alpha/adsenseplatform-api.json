@@ -346,6 +346,40 @@
                     "https://www.googleapis.com/auth/adsense",
                     "https://www.googleapis.com/auth/adsense.readonly"
                   ]
+                },
+                "patch": {
+                  "description": "Update a Platform Group.",
+                  "flatPath": "v1alpha/accounts/{accountsId}/platforms/{platformsId}/groups/{groupsId}",
+                  "httpMethod": "PATCH",
+                  "id": "adsenseplatform.accounts.platforms.groups.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Identifier. Format: accounts/{account}/platforms/{platform}/groups/{platform_group}",
+                      "location": "path",
+                      "pattern": "^accounts/[^/]+/platforms/[^/]+/groups/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Optional. The list of fields to update - currently only supports updating the `description` field.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha/{+name}",
+                  "request": {
+                    "$ref": "PlatformGroup"
+                  },
+                  "response": {
+                    "$ref": "PlatformGroup"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/adsense"
+                  ]
                 }
               }
             }
@@ -691,7 +725,7 @@
       }
     }
   },
-  "revision": "20250702",
+  "revision": "20250703",
   "rootUrl": "https://adsenseplatform.googleapis.com/",
   "schemas": {
     "Account": {

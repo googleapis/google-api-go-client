@@ -171,6 +171,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.BackupPlanAssociations = NewProjectsLocationsBackupPlanAssociationsService(s)
 	rs.BackupPlans = NewProjectsLocationsBackupPlansService(s)
 	rs.BackupVaults = NewProjectsLocationsBackupVaultsService(s)
+	rs.DataSourceReferences = NewProjectsLocationsDataSourceReferencesService(s)
 	rs.ManagementServers = NewProjectsLocationsManagementServersService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.ResourceBackupConfigs = NewProjectsLocationsResourceBackupConfigsService(s)
@@ -186,6 +187,8 @@ type ProjectsLocationsService struct {
 	BackupPlans *ProjectsLocationsBackupPlansService
 
 	BackupVaults *ProjectsLocationsBackupVaultsService
+
+	DataSourceReferences *ProjectsLocationsDataSourceReferencesService
 
 	ManagementServers *ProjectsLocationsManagementServersService
 
@@ -256,6 +259,15 @@ func NewProjectsLocationsBackupVaultsDataSourcesBackupsService(s *Service) *Proj
 }
 
 type ProjectsLocationsBackupVaultsDataSourcesBackupsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDataSourceReferencesService(s *Service) *ProjectsLocationsDataSourceReferencesService {
+	rs := &ProjectsLocationsDataSourceReferencesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDataSourceReferencesService struct {
 	s *Service
 }
 
@@ -699,7 +711,11 @@ type Backup struct {
 	//   "BACKUP_TYPE_UNSPECIFIED" - Backup type is unspecified.
 	//   "SCHEDULED" - Scheduled backup.
 	//   "ON_DEMAND" - On demand backup.
+	//   "ON_DEMAND_OPERATIONAL" - Operational backup.
 	BackupType string `json:"backupType,omitempty"`
+	// CloudSqlInstanceBackupProperties: Output only. Cloud SQL specific backup
+	// properties.
+	CloudSqlInstanceBackupProperties *CloudSqlInstanceBackupProperties `json:"cloudSqlInstanceBackupProperties,omitempty"`
 	// ComputeInstanceBackupProperties: Output only. Compute Engine specific backup
 	// properties.
 	ComputeInstanceBackupProperties *ComputeInstanceBackupProperties `json:"computeInstanceBackupProperties,omitempty"`
@@ -750,6 +766,7 @@ type Backup struct {
 	//   "ACTIVE" - The backup has been created and is fully usable.
 	//   "DELETING" - The backup is being deleted.
 	//   "ERROR" - The backup is experiencing an issue and might be unusable.
+	//   "UPLOADING" - The backup is being uploaded.
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. The time when the instance was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1176,6 +1193,11 @@ type BackupPlan struct {
 	// Labels: Optional. This collection of key/value pairs allows for custom
 	// labels to be supplied by the user. Example, {"tag": "Weekly"}.
 	Labels map[string]string `json:"labels,omitempty"`
+	// LogRetentionDays: Optional. Required for CloudSQL resource_type Configures
+	// how long logs will be stored. It is defined in “days”. This value should
+	// be greater than or equal to minimum enforced log retention duration of the
+	// backup vault.
+	LogRetentionDays int64 `json:"logRetentionDays,omitempty,string"`
 	// Name: Output only. Identifier. The resource name of the `BackupPlan`.
 	// Format: `projects/{project}/locations/{location}/backupPlans/{backup_plan}`
 	Name string `json:"name,omitempty"`
@@ -1240,6 +1262,9 @@ type BackupPlanAssociation struct {
 	// `projects/{project}/locations/{location}/backupPlans/{backup_plan}/revisions/
 	// {revision_id}`
 	BackupPlanRevisionName string `json:"backupPlanRevisionName,omitempty"`
+	// CloudSqlInstanceBackupPlanAssociationProperties: Output only. Cloud SQL
+	// instance's backup plan association properties.
+	CloudSqlInstanceBackupPlanAssociationProperties *CloudSqlInstanceBackupPlanAssociationProperties `json:"cloudSqlInstanceBackupPlanAssociationProperties,omitempty"`
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DataSource: Output only. Resource name of data source which will be used as
@@ -1347,11 +1372,7 @@ type BackupRule struct {
 	// will be kept. It is defined in “days”. The value should be greater than
 	// or equal to minimum enforced retention of the backup vault. Minimum value is
 	// 1 and maximum value is 36159 for custom retention on-demand backup. Minimum
-	// value is 1 and maximum value is 90 for hourly backups. Minimum value is 1
-	// and maximum value is 186 for daily backups. Minimum value is 7 and maximum
-	// value is 366 for weekly backups. Minimum value is 30 and maximum value is
-	// 732 for monthly backups. Minimum value is 365 and maximum value is 36159 for
-	// yearly backups.
+	// and maximum values are workload specific for all other rules.
 	BackupRetentionDays int64 `json:"backupRetentionDays,omitempty"`
 	// RuleId: Required. Immutable. The unique id of this `BackupRule`. The
 	// `rule_id` is unique per `BackupPlan`.The `rule_id` must start with a
@@ -1607,6 +1628,155 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// CloudSqlInstanceBackupPlanAssociationProperties: Cloud SQL instance's BPA
+// properties.
+type CloudSqlInstanceBackupPlanAssociationProperties struct {
+	// InstanceCreateTime: Output only. The time when the instance was created.
+	InstanceCreateTime string `json:"instanceCreateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstanceCreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstanceCreateTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudSqlInstanceBackupPlanAssociationProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSqlInstanceBackupPlanAssociationProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudSqlInstanceBackupProperties: CloudSqlInstanceBackupProperties
+// represents Cloud SQL Instance Backup properties. .
+type CloudSqlInstanceBackupProperties struct {
+	// DatabaseInstalledVersion: Output only. The installed database version of the
+	// Cloud SQL instance when the backup was taken.
+	DatabaseInstalledVersion string `json:"databaseInstalledVersion,omitempty"`
+	// FinalBackup: Output only. Whether the backup is a final backup.
+	FinalBackup bool `json:"finalBackup,omitempty"`
+	// InstanceTier: Output only. The tier (or machine type) for this instance.
+	// Example: `db-custom-1-3840`
+	InstanceTier string `json:"instanceTier,omitempty"`
+	// SourceInstance: Output only. The source instance of the backup. Format:
+	// projects/{project}/instances/{instance}
+	SourceInstance string `json:"sourceInstance,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatabaseInstalledVersion")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatabaseInstalledVersion") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudSqlInstanceBackupProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSqlInstanceBackupProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudSqlInstanceDataSourceProperties: CloudSqlInstanceDataSourceProperties
+// represents the properties of a Cloud SQL resource that are stored in the
+// DataSource. .
+type CloudSqlInstanceDataSourceProperties struct {
+	// DatabaseInstalledVersion: Output only. The installed database version of the
+	// Cloud SQL instance.
+	DatabaseInstalledVersion string `json:"databaseInstalledVersion,omitempty"`
+	// InstanceCreateTime: Output only. The instance creation timestamp.
+	InstanceCreateTime string `json:"instanceCreateTime,omitempty"`
+	// InstanceTier: Output only. The tier (or machine type) for this instance.
+	// Example: `db-custom-1-3840`
+	InstanceTier string `json:"instanceTier,omitempty"`
+	// Name: Output only. Name of the Cloud SQL instance backed up by the
+	// datasource. Format: projects/{project}/instances/{instance}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatabaseInstalledVersion")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatabaseInstalledVersion") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudSqlInstanceDataSourceProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSqlInstanceDataSourceProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudSqlInstanceDataSourceReferenceProperties:
+// CloudSqlInstanceDataSourceReferenceProperties represents the properties of a
+// Cloud SQL resource that are stored in the DataSourceReference. .
+type CloudSqlInstanceDataSourceReferenceProperties struct {
+	// DatabaseInstalledVersion: Output only. The installed database version of the
+	// Cloud SQL instance.
+	DatabaseInstalledVersion string `json:"databaseInstalledVersion,omitempty"`
+	// InstanceCreateTime: Output only. The instance creation timestamp.
+	InstanceCreateTime string `json:"instanceCreateTime,omitempty"`
+	// InstanceTier: Output only. The tier (or machine type) for this instance.
+	// Example: `db-custom-1-3840`
+	InstanceTier string `json:"instanceTier,omitempty"`
+	// Name: Output only. Name of the Cloud SQL instance backed up by the
+	// datasource. Format: projects/{project}/instances/{instance}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatabaseInstalledVersion")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatabaseInstalledVersion") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudSqlInstanceDataSourceReferenceProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSqlInstanceDataSourceReferenceProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudSqlInstanceInitializationConfig: CloudSqlInstanceInitializationConfig
+// contains the configuration for initializing a Cloud SQL instance.
+type CloudSqlInstanceInitializationConfig struct {
+	// Edition: Required. The edition of the Cloud SQL instance.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - Unspecified edition.
+	//   "ENTERPRISE" - Enterprise edition.
+	//   "ENTERPRISE_PLUS" - Enterprise Plus edition.
+	Edition string `json:"edition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Edition") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Edition") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudSqlInstanceInitializationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSqlInstanceInitializationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComputeInstanceBackupProperties: ComputeInstanceBackupProperties represents
@@ -2041,10 +2211,49 @@ func (s DataSourceBackupApplianceApplication) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DataSourceBackupConfigInfo: Information of backup configuration on the
+// DataSource.
+type DataSourceBackupConfigInfo struct {
+	// LastBackupState: Output only. The status of the last backup in this
+	// DataSource
+	//
+	// Possible values:
+	//   "LAST_BACKUP_STATE_UNSPECIFIED" - Status not set.
+	//   "FIRST_BACKUP_PENDING" - The first backup has not yet completed
+	//   "SUCCEEDED" - The most recent backup was successful
+	//   "FAILED" - The most recent backup failed
+	//   "PERMISSION_DENIED" - The most recent backup could not be run/failed
+	// because of the lack of permissions
+	LastBackupState string `json:"lastBackupState,omitempty"`
+	// LastSuccessfulBackupConsistencyTime: Output only. Timestamp of the last
+	// successful backup to this DataSource.
+	LastSuccessfulBackupConsistencyTime string `json:"lastSuccessfulBackupConsistencyTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LastBackupState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LastBackupState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataSourceBackupConfigInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceBackupConfigInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DataSourceGcpResource: DataSourceGcpResource is used for protected resources
 // that are Google Cloud Resources. This name is easeier to understand than
 // GcpResourceDataSource or GcpDataSourceResource
 type DataSourceGcpResource struct {
+	// CloudSqlInstanceDatasourceProperties: Output only.
+	// CloudSqlInstanceDataSourceProperties has a subset of Cloud SQL Instance
+	// properties that are useful at the Datasource level.
+	CloudSqlInstanceDatasourceProperties *CloudSqlInstanceDataSourceProperties `json:"cloudSqlInstanceDatasourceProperties,omitempty"`
 	// ComputeInstanceDatasourceProperties: ComputeInstanceDataSourceProperties has
 	// a subset of Compute Instance properties that are useful at the Datasource
 	// level.
@@ -2061,14 +2270,14 @@ type DataSourceGcpResource struct {
 	// eg. compute.googleapis.com/Instance.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
-	// "ComputeInstanceDatasourceProperties") to unconditionally include in API
+	// "CloudSqlInstanceDatasourceProperties") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
 	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
 	// NullFields is a list of field names (e.g.
-	// "ComputeInstanceDatasourceProperties") to include in API requests with the
+	// "CloudSqlInstanceDatasourceProperties") to include in API requests with the
 	// JSON null value. By default, fields with empty values are omitted from API
 	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
 	// more details.
@@ -2077,6 +2286,92 @@ type DataSourceGcpResource struct {
 
 func (s DataSourceGcpResource) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSourceGcpResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceGcpResourceInfo: The GCP resource that the DataSource is
+// associated with.
+type DataSourceGcpResourceInfo struct {
+	// CloudSqlInstanceProperties: Output only. The properties of the Cloud SQL
+	// instance.
+	CloudSqlInstanceProperties *CloudSqlInstanceDataSourceReferenceProperties `json:"cloudSqlInstanceProperties,omitempty"`
+	// GcpResourcename: Output only. The resource name of the GCP resource. Ex:
+	// projects/{project}/zones/{zone}/instances/{instance}
+	GcpResourcename string `json:"gcpResourcename,omitempty"`
+	// Location: Output only. The location of the GCP resource. Ex:
+	// //"global"/"unspecified"
+	Location string `json:"location,omitempty"`
+	// Type: Output only. The type of the GCP resource. Ex:
+	// compute.googleapis.com/Instance
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudSqlInstanceProperties")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudSqlInstanceProperties") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataSourceGcpResourceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceGcpResourceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceReference: DataSourceReference is a reference to a DataSource
+// resource.
+type DataSourceReference struct {
+	// CreateTime: Output only. The time when the DataSourceReference was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DataSource: Output only. The resource name of the DataSource. Format:
+	// projects/{project}/locations/{location}/backupVaults/{backupVault}/dataSource
+	// s/{dataSource}
+	DataSource string `json:"dataSource,omitempty"`
+	// DataSourceBackupConfigInfo: Output only. Information of backup configuration
+	// on the DataSource.
+	DataSourceBackupConfigInfo *DataSourceBackupConfigInfo `json:"dataSourceBackupConfigInfo,omitempty"`
+	// DataSourceBackupConfigState: Output only. The backup configuration state of
+	// the DataSource.
+	//
+	// Possible values:
+	//   "BACKUP_CONFIG_STATE_UNSPECIFIED" - The possible states of backup
+	// configuration. Status not set.
+	//   "ACTIVE" - The data source is actively protected (i.e. there is a
+	// BackupPlanAssociation or Appliance SLA pointing to it)
+	//   "PASSIVE" - The data source is no longer protected (but may have backups
+	// under it)
+	DataSourceBackupConfigState string `json:"dataSourceBackupConfigState,omitempty"`
+	// DataSourceBackupCount: Output only. Number of backups in the DataSource.
+	DataSourceBackupCount int64 `json:"dataSourceBackupCount,omitempty,string"`
+	// DataSourceGcpResourceInfo: Output only. The GCP resource that the DataSource
+	// is associated with.
+	DataSourceGcpResourceInfo *DataSourceGcpResourceInfo `json:"dataSourceGcpResourceInfo,omitempty"`
+	// Name: Identifier. The resource name of the DataSourceReference. Format:
+	// projects/{project}/locations/{location}/dataSourceReferences/{data_source_ref
+	// erence}
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataSourceReference) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceReference
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2431,6 +2726,66 @@ func (s FetchAccessTokenResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FetchBackupPlanAssociationsForResourceTypeResponse: Response for the
+// FetchBackupPlanAssociationsForResourceType method.
+type FetchBackupPlanAssociationsForResourceTypeResponse struct {
+	// BackupPlanAssociations: Output only. The BackupPlanAssociations from the
+	// specified parent.
+	BackupPlanAssociations []*BackupPlanAssociation `json:"backupPlanAssociations,omitempty"`
+	// NextPageToken: Output only. A token, which can be sent as `page_token` to
+	// retrieve the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BackupPlanAssociations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupPlanAssociations") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchBackupPlanAssociationsForResourceTypeResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchBackupPlanAssociationsForResourceTypeResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchDataSourceReferencesForResourceTypeResponse: Response for the
+// FetchDataSourceReferencesForResourceType method.
+type FetchDataSourceReferencesForResourceTypeResponse struct {
+	// DataSourceReferences: The DataSourceReferences from the specified parent.
+	DataSourceReferences []*DataSourceReference `json:"dataSourceReferences,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DataSourceReferences") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataSourceReferences") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchDataSourceReferencesForResourceTypeResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchDataSourceReferencesForResourceTypeResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FetchUsableBackupVaultsResponse: Response message for fetching usable
 // BackupVaults.
 type FetchUsableBackupVaultsResponse struct {
@@ -2688,6 +3043,9 @@ func (s InitializeParams) MarshalJSON() ([]byte, error) {
 
 // InitializeServiceRequest: Request message for initializing the service.
 type InitializeServiceRequest struct {
+	// CloudSqlInstanceInitializationConfig: Optional. The configuration for
+	// initializing a Cloud SQL instance.
+	CloudSqlInstanceInitializationConfig *CloudSqlInstanceInitializationConfig `json:"cloudSqlInstanceInitializationConfig,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
 	// know to ignore the request if it has already been completed. The server will
@@ -2704,16 +3062,18 @@ type InitializeServiceRequest struct {
 	// config will be applied. Examples include, "compute.googleapis.com/Instance"
 	// and "storage.googleapis.com/Bucket".
 	ResourceType string `json:"resourceType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RequestId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "CloudSqlInstanceInitializationConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RequestId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "CloudSqlInstanceInitializationConfig") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
@@ -5023,6 +5383,182 @@ func (c *ProjectsLocationsBackupPlanAssociationsDeleteCall) Do(opts ...googleapi
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.backupPlanAssociations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchForResourceType: List BackupPlanAssociations for a given resource type.
+//
+//   - parent: The parent resource name. Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsBackupPlanAssociationsService) FetchForResourceType(parent string) *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall {
+	c := &ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters the results fetched in the response. The expression must specify the
+// field name, a comparison operator, and the value that you want to use for
+// filtering. Supported fields: * resource * backup_plan * state * data_source
+// * cloud_sql_instance_backup_plan_association_properties.instance_create_time
+func (c *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall) Filter(filter string) *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": A comma-separated list of
+// fields to order by, sorted in ascending order. Use "desc" after a field name
+// for descending. Supported fields: * name
+func (c *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall) OrderBy(orderBy string) *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// BackupPlanAssociations to return. The service may return fewer than this
+// value. If unspecified, at most 50 BackupPlanAssociations will be returned.
+// The maximum value is 100; values above 100 will be coerced to 100.
+func (c *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall) PageSize(pageSize int64) *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous call of `FetchBackupPlanAssociationsForResourceType`.
+// Provide this to retrieve the subsequent page. When paginating, all other
+// parameters provided to `FetchBackupPlanAssociationsForResourceType` must
+// match the call that provided the page token.
+func (c *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall) PageToken(pageToken string) *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ResourceType sets the optional parameter "resourceType": Required. The type
+// of the GCP resource. Ex: sql.googleapis.com/Instance
+func (c *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall) ResourceType(resourceType string) *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall {
+	c.urlParams_.Set("resourceType", resourceType)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall) Context(ctx context.Context) *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backupPlanAssociations:fetchForResourceType")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.backupPlanAssociations.fetchForResourceType", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.backupPlanAssociations.fetchForResourceType" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchBackupPlanAssociationsForResourceTypeResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall) Do(opts ...googleapi.CallOption) (*FetchBackupPlanAssociationsForResourceTypeResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchBackupPlanAssociationsForResourceTypeResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.backupPlanAssociations.fetchForResourceType", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall) Pages(ctx context.Context, f func(*FetchBackupPlanAssociationsForResourceTypeResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsBackupPlanAssociationsGetCall struct {
@@ -9191,6 +9727,302 @@ func (c *ProjectsLocationsBackupVaultsDataSourcesBackupsRestoreCall) Do(opts ...
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.backupVaults.dataSources.backups.restore", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchForResourceType: Fetch DataSourceReferences for a given project,
+// location and resource type.
+//
+//   - parent: The parent resource name. Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsDataSourceReferencesService) FetchForResourceType(parent string) *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall {
+	c := &ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters the results fetched in the response. The expression must specify the
+// field name, a comparison operator, and the value that you want to use for
+// filtering. Supported fields: * data_source *
+// data_source_gcp_resource_info.gcp_resourcename *
+// data_source_backup_config_state * data_source_backup_count *
+// data_source_backup_config_info.last_backup_state *
+// data_source_gcp_resource_info.gcp_resourcename *
+// data_source_gcp_resource_info.type * data_source_gcp_resource_info.location
+// *
+// data_source_gcp_resource_info.cloud_sql_instance_properties.instance_create_t
+// ime
+func (c *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall) Filter(filter string) *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": A comma-separated list of
+// fields to order by, sorted in ascending order. Use "desc" after a field name
+// for descending. Supported fields: * name
+func (c *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall) OrderBy(orderBy string) *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// DataSourceReferences to return. The service may return fewer than this
+// value. If unspecified, at most 50 DataSourceReferences will be returned. The
+// maximum value is 100; values above 100 will be coerced to 100.
+func (c *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall) PageSize(pageSize int64) *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous call of `FetchDataSourceReferencesForResourceType`. Provide
+// this to retrieve the subsequent page. When paginating, all other parameters
+// provided to `FetchDataSourceReferencesForResourceType` must match the call
+// that provided the page token.
+func (c *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall) PageToken(pageToken string) *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ResourceType sets the optional parameter "resourceType": Required. The type
+// of the GCP resource. Ex: sql.googleapis.com/Instance
+func (c *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall) ResourceType(resourceType string) *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall {
+	c.urlParams_.Set("resourceType", resourceType)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall) Context(ctx context.Context) *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dataSourceReferences:fetchForResourceType")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.dataSourceReferences.fetchForResourceType", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.dataSourceReferences.fetchForResourceType" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchDataSourceReferencesForResourceTypeResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall) Do(opts ...googleapi.CallOption) (*FetchDataSourceReferencesForResourceTypeResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchDataSourceReferencesForResourceTypeResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.dataSourceReferences.fetchForResourceType", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall) Pages(ctx context.Context, f func(*FetchDataSourceReferencesForResourceTypeResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsDataSourceReferencesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single DataSourceReference.
+//
+//   - name: The name of the DataSourceReference to retrieve. Format:
+//     projects/{project}/locations/{location}/dataSourceReferences/{data_source_r
+//     eference}.
+func (r *ProjectsLocationsDataSourceReferencesService) Get(name string) *ProjectsLocationsDataSourceReferencesGetCall {
+	c := &ProjectsLocationsDataSourceReferencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataSourceReferencesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataSourceReferencesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDataSourceReferencesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataSourceReferencesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataSourceReferencesGetCall) Context(ctx context.Context) *ProjectsLocationsDataSourceReferencesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataSourceReferencesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataSourceReferencesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.dataSourceReferences.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.dataSourceReferences.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DataSourceReference.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDataSourceReferencesGetCall) Do(opts ...googleapi.CallOption) (*DataSourceReference, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DataSourceReference{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.dataSourceReferences.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

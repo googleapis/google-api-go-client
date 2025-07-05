@@ -2178,8 +2178,8 @@ func (s HttpRouteURLRewrite) MarshalJSON() ([]byte, error) {
 }
 
 // LbEdgeExtension: `LbEdgeExtension` is a resource that lets the extension
-// service influence the Backend Service selection or Cloud CDN cache keys by
-// modifying the request headers.
+// service influence the selection of backend services and Cloud CDN cache keys
+// by modifying request headers.
 type LbEdgeExtension struct {
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`

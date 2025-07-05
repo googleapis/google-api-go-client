@@ -12,6 +12,7 @@ import (
 
 	"google.golang.org/api/internal/impersonate"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
@@ -57,14 +58,14 @@ func TestSettingsValidate(t *testing.T) {
 		{CredentialsFile: "f", CredentialsJSON: []byte("json")},
 		{CredentialsJSON: []byte("json"), TokenSource: dummyTS{}},
 		{HTTPClient: &http.Client{}, GRPCConn: &grpc.ClientConn{}},
-		{HTTPClient: &http.Client{}, GRPCDialOpts: []grpc.DialOption{grpc.WithInsecure()}},
+		{HTTPClient: &http.Client{}, GRPCDialOpts: []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}},
 		{Audiences: []string{"foo"}, Scopes: []string{"foo"}},
 		{HTTPClient: &http.Client{}, QuotaProject: "foo"},
 		{HTTPClient: &http.Client{}, RequestReason: "foo"},
 		{HTTPClient: &http.Client{}, ClientCertSource: dummyGetClientCertificate},
 		{ClientCertSource: dummyGetClientCertificate, GRPCConn: &grpc.ClientConn{}},
 		{ClientCertSource: dummyGetClientCertificate, GRPCConnPool: struct{ ConnPool }{}},
-		{ClientCertSource: dummyGetClientCertificate, GRPCDialOpts: []grpc.DialOption{grpc.WithInsecure()}},
+		{ClientCertSource: dummyGetClientCertificate, GRPCDialOpts: []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}},
 		{ClientCertSource: dummyGetClientCertificate, GRPCConnPoolSize: 1},
 		{ImpersonationConfig: &impersonate.Config{}},
 	} {

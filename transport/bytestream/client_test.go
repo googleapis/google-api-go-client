@@ -16,6 +16,7 @@ import (
 
 	"google.golang.org/api/transport/bytestream/internal"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
 
 	pb "google.golang.org/genproto/googleapis/bytestream"
@@ -39,7 +40,7 @@ const testData = "0123456789"
 //
 // Clients should connect to the server with no security:
 //
-//	conn, err := grpc.Dial(srv.Addr, grpc.WithInsecure())
+//	conn, err := grpc.Dial(srv.Addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 //	...
 type grpcServer struct {
 	Addr string
@@ -415,7 +416,7 @@ func newTestSetup(input string) *TestSetup {
 	}
 	testSetup.rpcTest.Start()
 
-	conn, err := grpc.Dial(testSetup.rpcTest.Addr, grpc.WithInsecure())
+	conn, err := grpc.Dial(testSetup.rpcTest.Addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("grpc.Dial: %v", err)
 	}

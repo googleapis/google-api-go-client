@@ -4239,6 +4239,16 @@ type LifecycleConfig struct {
 	// maximum value is 14 days (see JSON representation of Duration
 	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
 	AutoDeleteTtl string `json:"autoDeleteTtl,omitempty"`
+	// AutoStopTime: Optional. The time when cluster will be auto-stopped (see JSON
+	// representation of Timestamp
+	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
+	AutoStopTime string `json:"autoStopTime,omitempty"`
+	// AutoStopTtl: Optional. The lifetime duration of the cluster. The cluster
+	// will be auto-stopped at the end of this period, calculated from the time of
+	// submission of the create or update cluster request. Minimum value is 10
+	// minutes; maximum value is 14 days (see JSON representation of Duration
+	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
+	AutoStopTtl string `json:"autoStopTtl,omitempty"`
 	// IdleDeleteTtl: Optional. The duration to keep the cluster alive while idling
 	// (when no jobs are running). Passing this threshold will cause the cluster to
 	// be deleted. Minimum value is 5 minutes; maximum value is 14 days (see JSON
@@ -4250,6 +4260,12 @@ type LifecycleConfig struct {
 	// representation of Timestamp
 	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
 	IdleStartTime string `json:"idleStartTime,omitempty"`
+	// IdleStopTtl: Optional. The duration to keep the cluster started while idling
+	// (when no jobs are running). Passing this threshold will cause the cluster to
+	// be stopped. Minimum value is 5 minutes; maximum value is 14 days (see JSON
+	// representation of Duration
+	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
+	IdleStopTtl string `json:"idleStopTtl,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoDeleteTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -18139,6 +18155,17 @@ func (r *ProjectsLocationsSessionsSparkApplicationsService) SummarizeJobs(name s
 	return c
 }
 
+// JobIds sets the optional parameter "jobIds": List of Job IDs to filter by if
+// provided.
+func (c *ProjectsLocationsSessionsSparkApplicationsSummarizeJobsCall) JobIds(jobIds ...int64) *ProjectsLocationsSessionsSparkApplicationsSummarizeJobsCall {
+	var jobIds_ []string
+	for _, v := range jobIds {
+		jobIds_ = append(jobIds_, fmt.Sprint(v))
+	}
+	c.urlParams_.SetMulti("jobIds", jobIds_)
+	return c
+}
+
 // Parent sets the optional parameter "parent": Required. Parent (Session)
 // resource reference.
 func (c *ProjectsLocationsSessionsSparkApplicationsSummarizeJobsCall) Parent(parent string) *ProjectsLocationsSessionsSparkApplicationsSummarizeJobsCall {
@@ -18395,6 +18422,17 @@ func (r *ProjectsLocationsSessionsSparkApplicationsService) SummarizeStages(name
 // resource reference.
 func (c *ProjectsLocationsSessionsSparkApplicationsSummarizeStagesCall) Parent(parent string) *ProjectsLocationsSessionsSparkApplicationsSummarizeStagesCall {
 	c.urlParams_.Set("parent", parent)
+	return c
+}
+
+// StageIds sets the optional parameter "stageIds": List of Stage IDs to filter
+// by if provided.
+func (c *ProjectsLocationsSessionsSparkApplicationsSummarizeStagesCall) StageIds(stageIds ...int64) *ProjectsLocationsSessionsSparkApplicationsSummarizeStagesCall {
+	var stageIds_ []string
+	for _, v := range stageIds {
+		stageIds_ = append(stageIds_, fmt.Sprint(v))
+	}
+	c.urlParams_.SetMulti("stageIds", stageIds_)
 	return c
 }
 

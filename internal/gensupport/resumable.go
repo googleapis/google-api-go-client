@@ -126,51 +126,136 @@ func (rx *ResumableUpload) reportProgress(old, updated int64) {
 	}
 }
 
-// transferChunk performs a single HTTP request to upload a single chunk from rx.Media.
-func (rx *ResumableUpload) transferChunk(ctx context.Context) (*http.Response, error) {
-	chunk, off, size, err := rx.Media.Chunk()
+// transferChunk performs the transfer of a single chunk of media from rx.Media.
+// It handles retries with backoff for failed attempts and respects several
+// timeout and cancellation mechanisms:
+//  1. It respects cancellation from the parent context `ctx`.
+//  2. It enforces a per-chunk deadline, `rx.ChunkRetryDeadline`, for all
+//     retries of a chunk.
+//  3. It applies a per-attempt timeout, `rx.ChunkTransferTimeout`, to each HTTP
+//     request to prevent stalls.
+//
+// Upon successful upload of a chunk, it reports the progress and advances the
+// media buffer to the next chunk.
+func (rx *ResumableUpload) transferChunk(ctx context.Context) (resp *http.Response, err error) {
+	select {
+	case <-ctx.Done():
+		err = ctx.Err()
+		return
+	default:
+	}
 
+	chunk, off, size, err := rx.Media.Chunk()
 	done := err == io.EOF
 	if !done && err != nil {
 		return nil, err
 	}
 
-	// rCtx is derived from a context with a defined transferTimeout with non-zero value.
-	// If a particular request exceeds this transfer time for getting response, the rCtx deadline will be exceeded,
-	// triggering a retry of the request.
-	var rCtx context.Context
-	var cancel context.CancelFunc
+	// Configure retryable error criteria.
+	errorFunc := rx.Retry.errorFunc()
 
-	rCtx = ctx
-	if rx.ChunkTransferTimeout != 0 {
-		rCtx, cancel = context.WithTimeout(ctx, rx.ChunkTransferTimeout)
-		defer cancel()
+	// Each chunk gets its own initialized-at-zero backoff and invocation ID.
+	bo := rx.Retry.backoff()
+	var pause time.Duration
+	rx.invocationID = uuid.New().String()
+	rx.attempts = 1
+
+	// Configure per-chunk retry deadline.
+	var retryDeadline time.Duration
+	if rx.ChunkRetryDeadline != 0 {
+		retryDeadline = rx.ChunkRetryDeadline
+	} else {
+		retryDeadline = defaultRetryDeadline
+	}
+	quitAfterTimer := time.NewTimer(retryDeadline)
+	defer quitAfterTimer.Stop()
+
+	for {
+		pauseTimer := time.NewTimer(pause)
+		select {
+		case <-ctx.Done():
+			pauseTimer.Stop()
+			if err == nil {
+				err = ctx.Err()
+			}
+			return
+		case <-pauseTimer.C:
+		case <-quitAfterTimer.C:
+			pauseTimer.Stop()
+			return
+		}
+		pauseTimer.Stop()
+
+		// Check for context cancellation or timeout once more after backoff time.
+		// If more than one case in the select statement above was satisfied at the same time,
+		// Go will choose one arbitrarily.
+		// That can cause an operation to go through even if the context was
+		// canceled before or the timeout was reached.
+		select {
+		case <-ctx.Done():
+			if err == nil {
+				err = ctx.Err()
+			}
+			return
+		case <-quitAfterTimer.C:
+			return
+		default:
+		}
+
+		// We close the response's body here, since we definitely will not
+		// return `resp` now. If we close it before the select case above, a
+		// timer may fire and cause us to return a response with a closed body
+		// (in which case, the caller will not get the error message in the body).
+		if resp != nil && resp.Body != nil {
+			// Read the body to EOF - if the Body is not both read to EOF and closed,
+			// the Client's underlying RoundTripper may not be able to re-use the
+			// persistent TCP connection to the server for a subsequent "keep-alive" request.
+			// See https://pkg.go.dev/net/http#Client.Do
+			io.Copy(io.Discard, resp.Body)
+			resp.Body.Close()
+		}
+
+		// rCtx is derived from a context with a defined transferTimeout with non-zero value.
+		// If a particular request exceeds this transfer time for getting response, the rCtx deadline will be exceeded,
+		// triggering a retry of the request.
+		var rCtx context.Context
+		var cancel context.CancelFunc
+		rCtx = ctx
+		if rx.ChunkTransferTimeout != 0 {
+			rCtx, cancel = context.WithTimeout(ctx, rx.ChunkTransferTimeout)
+		}
+
+		resp, err = rx.doUploadRequest(rCtx, chunk, off, int64(size), done)
+		// Cancel context right after the operation is done.
+		if cancel != nil {
+			cancel()
+		}
+		var status int
+		if resp != nil {
+			status = resp.StatusCode
+		}
+		// We sent "X-GUploader-No-308: yes" (see comment elsewhere in
+		// this file), so we don't expect to get a 308.
+		if status == 308 {
+			return nil, errors.New("unexpected 308 response status code")
+		}
+		if status == http.StatusOK {
+			break
+		}
+		// Check if we should retry the request.
+		if !errorFunc(status, err) {
+			return
+		}
+		rx.attempts++
+		pause = bo.Pause()
 	}
 
-	res, err := rx.doUploadRequest(rCtx, chunk, off, int64(size), done)
-	if err != nil {
-		return res, err
-	}
-
-	// We sent "X-GUploader-No-308: yes" (see comment elsewhere in
-	// this file), so we don't expect to get a 308.
-	if res.StatusCode == 308 {
-		return nil, errors.New("unexpected 308 response status code")
-	}
-
-	if res.StatusCode == http.StatusOK {
-		rx.reportProgress(off, off+int64(size))
-	}
-
-	if statusResumeIncomplete(res) {
-		rx.Media.Next()
-	}
-	return res, nil
+	rx.reportProgress(off, off+int64(size))
+	rx.Media.Next()
+	return resp, nil
 }
 
 // Upload starts the process of a resumable upload with a cancellable context.
-// It retries using the provided back off strategy until cancelled or the
-// strategy indicates to stop retrying.
 // It is called from the auto-generated API code and is not visible to the user.
 // Before sending an HTTP request, Upload calls any registered hook functions,
 // and calls the returned functions after the request returns (see send.go).
@@ -203,99 +288,25 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 		}
 		return resp, nil
 	}
-	// Configure retryable error criteria.
-	errorFunc := rx.Retry.errorFunc()
-
-	// Configure per-chunk retry deadline.
-	var retryDeadline time.Duration
-	if rx.ChunkRetryDeadline != 0 {
-		retryDeadline = rx.ChunkRetryDeadline
-	} else {
-		retryDeadline = defaultRetryDeadline
-	}
 
 	// Send all chunks.
 	for {
-		var pause time.Duration
 
-		// Each chunk gets its own initialized-at-zero backoff and invocation ID.
-		bo := rx.Retry.backoff()
-		quitAfterTimer := time.NewTimer(retryDeadline)
-		rx.attempts = 1
-		rx.invocationID = uuid.New().String()
+		// Transfer a single chunk.
+		resp, err = rx.transferChunk(ctx)
 
-		// Retry loop for a single chunk.
-		for {
-			pauseTimer := time.NewTimer(pause)
-			select {
-			case <-ctx.Done():
-				quitAfterTimer.Stop()
-				pauseTimer.Stop()
-				if err == nil {
-					err = ctx.Err()
-				}
-				return prepareReturn(resp, err)
-			case <-pauseTimer.C:
-			case <-quitAfterTimer.C:
-				pauseTimer.Stop()
-				return prepareReturn(resp, err)
-			}
-			pauseTimer.Stop()
-
-			// Check for context cancellation or timeout once more. If more than one
-			// case in the select statement above was satisfied at the same time, Go
-			// will choose one arbitrarily.
-			// That can cause an operation to go through even if the context was
-			// canceled before or the timeout was reached.
-			select {
-			case <-ctx.Done():
-				quitAfterTimer.Stop()
-				if err == nil {
-					err = ctx.Err()
-				}
-				return prepareReturn(resp, err)
-			case <-quitAfterTimer.C:
-				return prepareReturn(resp, err)
-			default:
-			}
-
-			// We close the response's body here, since we definitely will not
-			// return `resp` now. If we close it before the select case above, a
-			// timer may fire and cause us to return a response with a closed body
-			// (in which case, the caller will not get the error message in the body).
-			if resp != nil && resp.Body != nil {
-				// Read the body to EOF - if the Body is not both read to EOF and closed,
-				// the Client's underlying RoundTripper may not be able to re-use the
-				// persistent TCP connection to the server for a subsequent "keep-alive" request.
-				// See https://pkg.go.dev/net/http#Client.Do
-				io.Copy(io.Discard, resp.Body)
-				resp.Body.Close()
-			}
-			resp, err = rx.transferChunk(ctx)
-
-			var status int
-			if resp != nil {
-				status = resp.StatusCode
-			}
-
-			// The upload should be retried if the err indicates the context timed out.
-			if rx.ChunkTransferTimeout != 0 && errors.Is(err, context.DeadlineExceeded) {
-				continue
-			}
-
-			// Check if we should retry the request.
-			if !errorFunc(status, err) {
-				quitAfterTimer.Stop()
-				break
-			}
-
-			rx.attempts++
-			pause = bo.Pause()
+		// If an error occurred, the upload has failed. Return immediately.
+		if err != nil {
+			return prepareReturn(resp, err)
 		}
 
 		// If the chunk was uploaded successfully, but there's still
 		// more to go, upload the next chunk without any delay.
 		if statusResumeIncomplete(resp) {
+			// Read the body to EOF and close it to allow the underlying
+			// transport to reuse the connection for next chunk upload.
+			io.Copy(io.Discard, resp.Body)
+			resp.Body.Close()
 			continue
 		}
 

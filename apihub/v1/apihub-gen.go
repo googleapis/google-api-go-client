@@ -1658,6 +1658,13 @@ type GoogleCloudApihubV1Deployment struct {
 	// API. All values should be from the list of allowed values defined for the
 	// attribute.
 	Environment *GoogleCloudApihubV1AttributeValues `json:"environment,omitempty"`
+	// ManagementUrl: Optional. The uri where users can navigate to for the
+	// management of the deployment. This maps to the following system defined
+	// attribute:
+	// `projects/{project}/locations/{location}/attributes/system-management-url`
+	// The number of values for this attribute will be based on the cardinality of
+	// the attribute. The same can be retrieved via GetAttribute API.
+	ManagementUrl *GoogleCloudApihubV1AttributeValues `json:"managementUrl,omitempty"`
 	// Name: Identifier. The name of the deployment. Format:
 	// `projects/{project}/locations/{location}/deployments/{deployment}`
 	Name string `json:"name,omitempty"`
@@ -1673,9 +1680,23 @@ type GoogleCloudApihubV1Deployment struct {
 	// the attribute. The same can be retrieved via GetAttribute API. All values
 	// should be from the list of allowed values defined for the attribute.
 	Slo *GoogleCloudApihubV1AttributeValues `json:"slo,omitempty"`
+	// SourceEnvironment: Optional. The environment at source for the deployment.
+	// For example: prod, dev, staging, etc.
+	SourceEnvironment string `json:"sourceEnvironment,omitempty"`
 	// SourceMetadata: Output only. The list of sources and metadata from the
 	// sources of the deployment.
 	SourceMetadata []*GoogleCloudApihubV1SourceMetadata `json:"sourceMetadata,omitempty"`
+	// SourceProject: Optional. The project to which the deployment belongs. For
+	// GCP gateways, this will refer to the project identifier. For others like
+	// Edge/OPDK, this will refer to the org identifier.
+	SourceProject string `json:"sourceProject,omitempty"`
+	// SourceUri: Optional. The uri where additional source specific information
+	// for this deployment can be found. This maps to the following system defined
+	// attribute:
+	// `projects/{project}/locations/{location}/attributes/system-source-uri` The
+	// number of values for this attribute will be based on the cardinality of the
+	// attribute. The same can be retrieved via GetAttribute API.
+	SourceUri *GoogleCloudApihubV1AttributeValues `json:"sourceUri,omitempty"`
 	// UpdateTime: Output only. The time at which the deployment was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -2919,6 +2940,19 @@ type GoogleCloudApihubV1Plugin struct {
 	// Documentation: Optional. The documentation of the plugin, that explains how
 	// to set up and use the plugin.
 	Documentation *GoogleCloudApihubV1Documentation `json:"documentation,omitempty"`
+	// GatewayType: Optional. The type of the gateway.
+	//
+	// Possible values:
+	//   "GATEWAY_TYPE_UNSPECIFIED" - The gateway type is not specified.
+	//   "APIGEE_X_AND_HYBRID" - The gateway type is Apigee X and Hybrid.
+	//   "APIGEE_EDGE_PUBLIC_CLOUD" - The gateway type is Apigee Edge Public Cloud.
+	//   "APIGEE_EDGE_PRIVATE_CLOUD" - The gateway type is Apigee Edge Private
+	// Cloud.
+	//   "CLOUD_API_GATEWAY" - The gateway type is Cloud API Gateway.
+	//   "CLOUD_ENDPOINTS" - The gateway type is Cloud Endpoints.
+	//   "API_DISCOVERY" - The gateway type is API Discovery.
+	//   "OTHERS" - The gateway type for any other types of gateways.
+	GatewayType string `json:"gatewayType,omitempty"`
 	// HostingService: Optional. This field is optional. It is used to notify the
 	// plugin hosting service for any lifecycle changes of the plugin instance and
 	// trigger execution of plugin instance actions in case of API hub managed
@@ -3074,6 +3108,10 @@ type GoogleCloudApihubV1PluginInstance struct {
 	// `projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance
 	// }`
 	Name string `json:"name,omitempty"`
+	// SourceProjectId: Optional. The source project id of the plugin instance.
+	// This will be the id of runtime project in case of gcp based plugins and org
+	// id in case of non gcp based plugins. This is a required field.
+	SourceProjectId string `json:"sourceProjectId,omitempty"`
 	// State: Output only. The current state of the plugin instance (e.g., enabled,
 	// disabled, provisioning).
 	//
@@ -3133,6 +3171,10 @@ type GoogleCloudApihubV1PluginInstanceAction struct {
 	// HubInstanceAction: Optional. The execution information for the plugin
 	// instance action done corresponding to an API hub instance.
 	HubInstanceAction *GoogleCloudApihubV1ExecutionStatus `json:"hubInstanceAction,omitempty"`
+	// ResourceConfig: Output only. The configuration of resources created for a
+	// given plugin instance action. Note these will be returned only in case of
+	// Non-GCP plugins like OPDK.
+	ResourceConfig *GoogleCloudApihubV1ResourceConfig `json:"resourceConfig,omitempty"`
 	// ScheduleCronExpression: Optional. The schedule for this plugin instance
 	// action. This can only be set if the plugin supports API_HUB_SCHEDULE_TRIGGER
 	// mode for this action.
@@ -3140,6 +3182,9 @@ type GoogleCloudApihubV1PluginInstanceAction struct {
 	// ScheduleTimeZone: Optional. The time zone for the schedule cron expression.
 	// If not provided, UTC will be used.
 	ScheduleTimeZone string `json:"scheduleTimeZone,omitempty"`
+	// ServiceAccount: Optional. The service account used to publish data. Note,
+	// the service account will only be accepted for non GCP plugins like OPDK.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// State: Output only. The current state of the plugin action in the plugin
 	// instance.
 	//
@@ -3280,6 +3325,37 @@ type GoogleCloudApihubV1Range struct {
 
 func (s GoogleCloudApihubV1Range) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApihubV1Range
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1ResourceConfig: The configuration of resources created
+// for a given plugin instance action.
+type GoogleCloudApihubV1ResourceConfig struct {
+	// ActionType: Output only. The type of the action.
+	//
+	// Possible values:
+	//   "ACTION_TYPE_UNSPECIFIED" - Default unspecified action type.
+	//   "SYNC_METADATA" - Action type for sync metadata.
+	//   "SYNC_RUNTIME_DATA" - Action type for sync runtime data.
+	ActionType string `json:"actionType,omitempty"`
+	// PubsubTopic: Output only. The pubsub topic to publish the data to. Format is
+	// projects/{project}/topics/{topic}
+	PubsubTopic string `json:"pubsubTopic,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActionType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActionType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1ResourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1ResourceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -14077,6 +14153,123 @@ func (c *ProjectsLocationsPluginsInstancesListCall) Pages(ctx context.Context, f
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsPluginsInstancesPatchCall struct {
+	s                                 *Service
+	name                              string
+	googlecloudapihubv1plugininstance *GoogleCloudApihubV1PluginInstance
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Patch: Updates a plugin instance in the API hub. The following fields in the
+// plugin_instance can be updated currently: * display_name *
+// schedule_cron_expression The update_mask should be used to specify the
+// fields being updated. To update the auth_config and additional_config of the
+// plugin instance, use the ApplyPluginInstanceConfig method.
+//
+//   - name: Identifier. The unique name of the plugin instance resource. Format:
+//     `projects/{project}/locations/{location}/plugins/{plugin}/instances/{instan
+//     ce}`.
+func (r *ProjectsLocationsPluginsInstancesService) Patch(name string, googlecloudapihubv1plugininstance *GoogleCloudApihubV1PluginInstance) *ProjectsLocationsPluginsInstancesPatchCall {
+	c := &ProjectsLocationsPluginsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapihubv1plugininstance = googlecloudapihubv1plugininstance
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *ProjectsLocationsPluginsInstancesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsPluginsInstancesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPluginsInstancesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsPluginsInstancesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPluginsInstancesPatchCall) Context(ctx context.Context) *ProjectsLocationsPluginsInstancesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPluginsInstancesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPluginsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapihubv1plugininstance)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apihub.projects.locations.plugins.instances.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apihub.projects.locations.plugins.instances.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApihubV1PluginInstance.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPluginsInstancesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApihubV1PluginInstance, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApihubV1PluginInstance{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.plugins.instances.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsPluginsStyleGuideGetContentsCall struct {

@@ -468,6 +468,20 @@ type BoostConfig struct {
 	// PoolSize: Optional. The number of boost VMs that the system should keep idle
 	// so that workstations can be boosted quickly. Defaults to `0`.
 	PoolSize int64 `json:"poolSize,omitempty"`
+	// ReservationAffinity: Optional. ReservationAffinity
+	// (https://cloud.google.com/compute/docs/instances/reserving-zonal-resources)
+	// specifies a reservation that can be consumed to create boost VM instances.
+	// If SPECIFIC_RESERVATION is specified, Cloud Workstations will only create
+	// VMs in the zone where the reservation is located. This would affect
+	// availability since the service will no longer be resilient to zonal outages.
+	// If ANY_RESERVATION is specified, creating reservations in both zones that
+	// the config creates VMs in will ensure higher availability. **Important
+	// Considerations for Reservation Affinity:** * This feature is intended for
+	// advanced users and requires familiarity with Google Compute Engine
+	// reservations. * Using reservations incurs charges, regardless of
+	// utilization. * The resources in the pool will consume the specified
+	// reservation. Take this into account when setting the pool size.
+	ReservationAffinity *ReservationAffinity `json:"reservationAffinity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Accelerators") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -773,6 +787,20 @@ type GceInstance struct {
 	// PooledInstances: Output only. Number of instances currently available in the
 	// pool for faster workstation startup.
 	PooledInstances int64 `json:"pooledInstances,omitempty"`
+	// ReservationAffinity: Optional. ReservationAffinity
+	// (https://cloud.google.com/compute/docs/instances/reserving-zonal-resources)
+	// specifies a reservation that can be consumed to create boost VM instances.
+	// If SPECIFIC_RESERVATION is specified, Cloud Workstations will only create
+	// VMs in the zone where the reservation is located. This would affect
+	// availability since the service will no longer be resilient to zonal outages.
+	// If ANY_RESERVATION is specified, creating reservations in both zones that
+	// the config creates VMs in will ensure higher availability. **Important
+	// Considerations for Reservation Affinity:** * This feature is intended for
+	// advanced users and requires familiarity with Google Compute Engine
+	// reservations. * Using reservations incurs charges, regardless of
+	// utilization. * The resources in the pool will consume the specified
+	// reservation. Take this into account when setting the pool size.
+	ReservationAffinity *ReservationAffinity `json:"reservationAffinity,omitempty"`
 	// ServiceAccount: Optional. The email address of the service account for Cloud
 	// Workstations VMs created with this configuration. When specified, be sure
 	// that the service account has `logging.logEntries.create` and
@@ -1579,6 +1607,44 @@ type ReadinessCheck struct {
 
 func (s ReadinessCheck) MarshalJSON() ([]byte, error) {
 	type NoMethod ReadinessCheck
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReservationAffinity: ReservationAffinity is the configuration of the desired
+// reservation from which instances can consume resources.
+type ReservationAffinity struct {
+	// ConsumeReservationType: Optional. Corresponds to the type of reservation
+	// consumption.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value. This should not be used.
+	//   "NO_RESERVATION" - Do not consume from any reserved capacity.
+	//   "ANY_RESERVATION" - Consume any reservation available.
+	//   "SPECIFIC_RESERVATION" - Must consume from a specific reservation. Must
+	// specify key value fields for specifying the reservations.
+	ConsumeReservationType string `json:"consumeReservationType,omitempty"`
+	// Key: Optional. Corresponds to the label key of reservation resource.
+	Key string `json:"key,omitempty"`
+	// Values: Optional. Corresponds to the label values of reservation resources.
+	// Valid values are either a name to a reservation in the same project or
+	// "projects/{project}/reservations/{reservation}" to target a shared
+	// reservation in the same zone but in a different project.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConsumeReservationType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsumeReservationType") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReservationAffinity) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservationAffinity
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

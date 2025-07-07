@@ -133,3 +133,23 @@ func TestApplyClientCertSource(t *testing.T) {
 		t.Error(cmp.Diff(certGot, certWant, cmpopts.IgnoreUnexported(big.Int{}), cmpopts.IgnoreFields(tls.Certificate{}, "Leaf")))
 	}
 }
+
+func TestOpenTelemetryOpts(t *testing.T) {
+	otelOpts := []any{
+		"non-otelhttp-otelgrpc-option",
+	}
+	opts := []ClientOption{
+		WithOpenTelemetryOpts(otelOpts...),
+	}
+	var got internal.DialSettings
+	for _, opt := range opts {
+		opt.Apply(&got)
+	}
+	want := internal.DialSettings{
+		OpenTelemetryOpts: []any{},
+	}
+
+	if cmp.Equal(got, want) {
+		t.Error(cmp.Diff(got, want))
+	}
+}

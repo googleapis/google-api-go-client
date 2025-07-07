@@ -108,6 +108,8 @@ func newClientNewAuth(ctx context.Context, base http.RoundTripper, ds *internal.
 	if ds.UserAgent != "" {
 		headers.Set("User-Agent", ds.UserAgent)
 	}
+	// TODO: propagate settings.OpenTelemetryOptsHTTP
+	// see https://github.com/googleapis/google-api-go-client/pull/3130#discussion_r2091318522
 	client, err := httptransport.NewClient(&httptransport.Options{
 		DisableTelemetry:      ds.TelemetryDisabled,
 		DisableAuthentication: ds.NoAuth,
@@ -306,7 +308,7 @@ func addOpenTelemetryTransport(trans http.RoundTripper, settings *internal.DialS
 	if settings.TelemetryDisabled {
 		return trans
 	}
-	return otelhttp.NewTransport(trans)
+	return otelhttp.NewTransport(trans, settings.OpenTelemetryOptsHTTP...)
 }
 
 // clonedTransport returns the given RoundTripper as a cloned *http.Transport.

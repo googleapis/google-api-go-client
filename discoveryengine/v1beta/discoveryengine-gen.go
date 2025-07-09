@@ -7564,6 +7564,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig struct {
 	// RealtimeSyncSecret: Optional. The ID of the Secret Manager secret used for
 	// webhook secret.
 	RealtimeSyncSecret string `json:"realtimeSyncSecret,omitempty"`
+	// StreamingError: Optional. Streaming error details.
+	StreamingError *GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingError `json:"streamingError,omitempty"`
 	// WebhookUri: Optional. Webhook url for the connector to specify additional
 	// params for realtime sync.
 	WebhookUri string `json:"webhookUri,omitempty"`
@@ -7582,6 +7584,40 @@ type GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingErro
+// r: Streaming error details.
+type GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingError struct {
+	// Error: Optional. Error details.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// StreamingErrorReason: Optional. Streaming error.
+	//
+	// Possible values:
+	//   "STREAMING_ERROR_REASON_UNSPECIFIED" - Streaming error reason unspecified.
+	//   "STREAMING_SETUP_ERROR" - Some error occurred while setting up resources
+	// for realtime sync.
+	//   "STREAMING_SYNC_ERROR" - Some error was encountered while running realtime
+	// sync for the connector.
+	//   "INGRESS_ENDPOINT_REQUIRED" - Ingress endpoint is required when setting up
+	// realtime sync in private connectivity.
+	StreamingErrorReason string `json:"streamingErrorReason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingError) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingError
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9895,7 +9931,8 @@ func (s GoogleCloudDiscoveryengineV1alphaLanguageInfo) MarshalJSON() ([]byte, er
 // ListSessions method.
 type GoogleCloudDiscoveryengineV1alphaListSessionsRequest struct {
 	// Filter: A filter to apply on the list results. The supported features are:
-	// user_pseudo_id, state. Example: "user_pseudo_id = some_id"
+	// user_pseudo_id, state, starred. Examples: "user_pseudo_id = some_id"
+	// "starred = true"
 	Filter string `json:"filter,omitempty"`
 	// OrderBy: A comma-separated list of fields to order by, sorted in ascending
 	// order. Use "desc" after a field name for descending. Supported fields: *
@@ -11012,6 +11049,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// from a user's perspective. A higher pCTR suggests that the result is more
 	// likely to satisfy the user's query and intent, making it a valuable signal
 	// for ranking. * `freshness_rank`: freshness adjustment as a rank *
+	// `document_age`: The time in hours elapsed since the document was last
+	// updated, a floating-point number (e.g., 0.25 means 15 minutes). *
 	// `topicality_rank`: topicality adjustment as a rank. Uses proprietary Google
 	// model to determine the keyword-based overlap between the query and the
 	// document. * `base_rank`: the default rank of the result
@@ -22446,6 +22485,8 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// from a user's perspective. A higher pCTR suggests that the result is more
 	// likely to satisfy the user's query and intent, making it a valuable signal
 	// for ranking. * `freshness_rank`: freshness adjustment as a rank *
+	// `document_age`: The time in hours elapsed since the document was last
+	// updated, a floating-point number (e.g., 0.25 means 15 minutes). *
 	// `topicality_rank`: topicality adjustment as a rank. Uses proprietary Google
 	// model to determine the keyword-based overlap between the query and the
 	// document. * `base_rank`: the default rank of the result
@@ -34562,8 +34603,8 @@ func (r *ProjectsLocationsCollectionsDataStoresSessionsService) List(parent stri
 }
 
 // Filter sets the optional parameter "filter": A filter to apply on the list
-// results. The supported features are: user_pseudo_id, state. Example:
-// "user_pseudo_id = some_id"
+// results. The supported features are: user_pseudo_id, state, starred.
+// Examples: "user_pseudo_id = some_id" "starred = true"
 func (c *ProjectsLocationsCollectionsDataStoresSessionsListCall) Filter(filter string) *ProjectsLocationsCollectionsDataStoresSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -41800,8 +41841,8 @@ func (r *ProjectsLocationsCollectionsEnginesSessionsService) List(parent string)
 }
 
 // Filter sets the optional parameter "filter": A filter to apply on the list
-// results. The supported features are: user_pseudo_id, state. Example:
-// "user_pseudo_id = some_id"
+// results. The supported features are: user_pseudo_id, state, starred.
+// Examples: "user_pseudo_id = some_id" "starred = true"
 func (c *ProjectsLocationsCollectionsEnginesSessionsListCall) Filter(filter string) *ProjectsLocationsCollectionsEnginesSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -48789,8 +48830,8 @@ func (r *ProjectsLocationsDataStoresSessionsService) List(parent string) *Projec
 }
 
 // Filter sets the optional parameter "filter": A filter to apply on the list
-// results. The supported features are: user_pseudo_id, state. Example:
-// "user_pseudo_id = some_id"
+// results. The supported features are: user_pseudo_id, state, starred.
+// Examples: "user_pseudo_id = some_id" "starred = true"
 func (c *ProjectsLocationsDataStoresSessionsListCall) Filter(filter string) *ProjectsLocationsDataStoresSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

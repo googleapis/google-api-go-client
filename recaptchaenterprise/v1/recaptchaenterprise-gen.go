@@ -1845,7 +1845,7 @@ func (s GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse) Marshal
 // GoogleCloudRecaptchaenterpriseV1RiskAnalysis: Risk analysis result for an
 // event.
 type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
-	// Challenge: Output only. Challenge information for SCORE_AND_CHALLENGE and
+	// Challenge: Output only. Challenge information for POLICY_BASED_CHALLENGE and
 	// INVISIBLE keys
 	//
 	// Possible values:
@@ -2643,8 +2643,8 @@ type GoogleCloudRecaptchaenterpriseV1WebKeySettings struct {
 	AllowedDomains []string `json:"allowedDomains,omitempty"`
 	// ChallengeSecurityPreference: Optional. Settings for the frequency and
 	// difficulty at which this key triggers captcha challenges. This should only
-	// be specified for IntegrationTypes CHECKBOX and INVISIBLE and
-	// SCORE_AND_CHALLENGE.
+	// be specified for `IntegrationType` CHECKBOX, INVISIBLE or
+	// POLICY_BASED_CHALLENGE.
 	//
 	// Possible values:
 	//   "CHALLENGE_SECURITY_PREFERENCE_UNSPECIFIED" - Default type that indicates
@@ -2654,6 +2654,8 @@ type GoogleCloudRecaptchaenterpriseV1WebKeySettings struct {
 	// challenges.
 	//   "SECURITY" - Key tends to show more and harder challenges.
 	ChallengeSecurityPreference string `json:"challengeSecurityPreference,omitempty"`
+	// ChallengeSettings: Optional. Challenge settings.
+	ChallengeSettings *GoogleCloudRecaptchaenterpriseV1WebKeySettingsChallengeSettings `json:"challengeSettings,omitempty"`
 	// IntegrationType: Required. Describes how this key is integrated with the
 	// website.
 	//
@@ -2667,6 +2669,8 @@ type GoogleCloudRecaptchaenterpriseV1WebKeySettings struct {
 	// challenges after it is checked.
 	//   "INVISIBLE" - Doesn't display the "I'm not a robot" checkbox, but may show
 	// captcha challenges after risk analysis.
+	//   "POLICY_BASED_CHALLENGE" - Displays a visual challenge or not depending on
+	// the user risk analysis score.
 	IntegrationType string `json:"integrationType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowAllDomains") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2683,6 +2687,75 @@ type GoogleCloudRecaptchaenterpriseV1WebKeySettings struct {
 
 func (s GoogleCloudRecaptchaenterpriseV1WebKeySettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1WebKeySettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1WebKeySettingsActionSettings: Per-action
+// challenge settings.
+type GoogleCloudRecaptchaenterpriseV1WebKeySettingsActionSettings struct {
+	// ScoreThreshold: Required. A challenge is triggered if the end-user score is
+	// below that threshold. Value must be between 0 and 1 (inclusive).
+	ScoreThreshold float64 `json:"scoreThreshold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScoreThreshold") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScoreThreshold") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1WebKeySettingsActionSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1WebKeySettingsActionSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1WebKeySettingsActionSettings) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1WebKeySettingsActionSettings
+	var s1 struct {
+		ScoreThreshold gensupport.JSONFloat64 `json:"scoreThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ScoreThreshold = float64(s1.ScoreThreshold)
+	return nil
+}
+
+// GoogleCloudRecaptchaenterpriseV1WebKeySettingsChallengeSettings: Settings
+// for POLICY_BASED_CHALLENGE keys to control when a challenge is triggered.
+type GoogleCloudRecaptchaenterpriseV1WebKeySettingsChallengeSettings struct {
+	// ActionSettings: Optional. The action to score threshold map. The action name
+	// should be the same as the action name passed in the `data-action` attribute
+	// (see https://cloud.google.com/recaptcha/docs/actions-website). Action names
+	// are case-insensitive. There is a maximum of 100 action settings. An action
+	// name has a maximum length of 100.
+	ActionSettings map[string]GoogleCloudRecaptchaenterpriseV1WebKeySettingsActionSettings `json:"actionSettings,omitempty"`
+	// DefaultSettings: Required. Defines when a challenge is triggered (unless the
+	// default threshold is overridden for the given action, see
+	// `action_settings`).
+	DefaultSettings *GoogleCloudRecaptchaenterpriseV1WebKeySettingsActionSettings `json:"defaultSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActionSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActionSettings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1WebKeySettingsChallengeSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1WebKeySettingsChallengeSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

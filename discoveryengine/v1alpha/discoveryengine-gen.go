@@ -6180,6 +6180,40 @@ func (s GoogleCloudDiscoveryengineV1alphaAclConfig) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenRequest: Request message
+// for the DataConnectorService.AcquireAccessToken method.
+type GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenRequest struct {
+}
+
+// GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenResponse: Response
+// message for the DataConnectorService.AcquireAccessToken method.
+type GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenResponse struct {
+	// AccessToken: The created access token.
+	AccessToken string `json:"accessToken,omitempty"`
+	// RefreshTokenInfo: Info about the stored refresh token used to create the
+	// access token.
+	RefreshTokenInfo *GoogleCloudDiscoveryengineV1alphaRefreshTokenInfo `json:"refreshTokenInfo,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AccessToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaActionConfig: Informations to support
 // actions on the connector.
 type GoogleCloudDiscoveryengineV1alphaActionConfig struct {
@@ -11324,6 +11358,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig struct {
 	// RealtimeSyncSecret: Optional. The ID of the Secret Manager secret used for
 	// webhook secret.
 	RealtimeSyncSecret string `json:"realtimeSyncSecret,omitempty"`
+	// StreamingError: Optional. Streaming error details.
+	StreamingError *GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingError `json:"streamingError,omitempty"`
 	// WebhookUri: Optional. Webhook url for the connector to specify additional
 	// params for realtime sync.
 	WebhookUri string `json:"webhookUri,omitempty"`
@@ -11342,6 +11378,40 @@ type GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingErro
+// r: Streaming error details.
+type GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingError struct {
+	// Error: Optional. Error details.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// StreamingErrorReason: Optional. Streaming error.
+	//
+	// Possible values:
+	//   "STREAMING_ERROR_REASON_UNSPECIFIED" - Streaming error reason unspecified.
+	//   "STREAMING_SETUP_ERROR" - Some error occurred while setting up resources
+	// for realtime sync.
+	//   "STREAMING_SYNC_ERROR" - Some error was encountered while running realtime
+	// sync for the connector.
+	//   "INGRESS_ENDPOINT_REQUIRED" - Ingress endpoint is required when setting up
+	// realtime sync in private connectivity.
+	StreamingErrorReason string `json:"streamingErrorReason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingError) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingError
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15438,7 +15508,8 @@ func (s GoogleCloudDiscoveryengineV1alphaListServingConfigsResponse) MarshalJSON
 // ListSessions method.
 type GoogleCloudDiscoveryengineV1alphaListSessionsRequest struct {
 	// Filter: A filter to apply on the list results. The supported features are:
-	// user_pseudo_id, state. Example: "user_pseudo_id = some_id"
+	// user_pseudo_id, state, starred. Examples: "user_pseudo_id = some_id"
+	// "starred = true"
 	Filter string `json:"filter,omitempty"`
 	// OrderBy: A comma-separated list of fields to order by, sorted in ascending
 	// order. Use "desc" after a field name for descending. Supported fields: *
@@ -17003,6 +17074,31 @@ func (s GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfoFailureRe
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaRefreshTokenInfo: Describes a refresh
+// token.
+type GoogleCloudDiscoveryengineV1alphaRefreshTokenInfo struct {
+	// Name: Required. The connection for which this token applies.
+	Name string `json:"name,omitempty"`
+	// Scopes: The list of scopes for this token.
+	Scopes []string `json:"scopes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaRefreshTokenInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRefreshTokenInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaRemoveDedicatedCrawlRateMetadata: Metadata
 // related to the progress of the
 // CrawlRateManagementService.RemoveDedicatedCrawlRate operation. This will be
@@ -17924,6 +18020,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// from a user's perspective. A higher pCTR suggests that the result is more
 	// likely to satisfy the user's query and intent, making it a valuable signal
 	// for ranking. * `freshness_rank`: freshness adjustment as a rank *
+	// `document_age`: The time in hours elapsed since the document was last
+	// updated, a floating-point number (e.g., 0.25 means 15 minutes). *
 	// `topicality_rank`: topicality adjustment as a rank. Uses proprietary Google
 	// model to determine the keyword-based overlap between the query and the
 	// document. * `base_rank`: the default rank of the result
@@ -25544,6 +25642,8 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// from a user's perspective. A higher pCTR suggests that the result is more
 	// likely to satisfy the user's query and intent, making it a valuable signal
 	// for ranking. * `freshness_rank`: freshness adjustment as a rank *
+	// `document_age`: The time in hours elapsed since the document was last
+	// updated, a floating-point number (e.g., 0.25 means 15 minutes). *
 	// `topicality_rank`: topicality adjustment as a rank. Uses proprietary Google
 	// model to determine the keyword-based overlap between the query and the
 	// document. * `base_rank`: the default rank of the result
@@ -30478,6 +30578,115 @@ func (c *ProjectsLocationsCollectionsUpdateDataConnectorCall) Do(opts ...googlea
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.updateDataConnector", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsDataConnectorAcquireAccessTokenCall struct {
+	s                                                          *Service
+	name                                                       string
+	googleclouddiscoveryenginev1alphaacquireaccesstokenrequest *GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenRequest
+	urlParams_                                                 gensupport.URLParams
+	ctx_                                                       context.Context
+	header_                                                    http.Header
+}
+
+// AcquireAccessToken: Uses the per-user refresh token minted with
+// AcquireAndStoreRefreshToken to generate and return a new access token and
+// its details. Takes the access token from cache if available. Rotates the
+// stored refresh token if needed. Uses the end user identity to return the
+// user specific access token. Does *not* return the credentials configured by
+// the administrator. Used by Agentspace action execution and Agentspace UI.
+//
+// - name: The resource name of the connector for which a token is queried.
+func (r *ProjectsLocationsCollectionsDataConnectorService) AcquireAccessToken(name string, googleclouddiscoveryenginev1alphaacquireaccesstokenrequest *GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenRequest) *ProjectsLocationsCollectionsDataConnectorAcquireAccessTokenCall {
+	c := &ProjectsLocationsCollectionsDataConnectorAcquireAccessTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphaacquireaccesstokenrequest = googleclouddiscoveryenginev1alphaacquireaccesstokenrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataConnectorAcquireAccessTokenCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataConnectorAcquireAccessTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataConnectorAcquireAccessTokenCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataConnectorAcquireAccessTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataConnectorAcquireAccessTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataConnectorAcquireAccessTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphaacquireaccesstokenrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:acquireAccessToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataConnector.acquireAccessToken", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataConnector.acquireAccessToken" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataConnectorAcquireAccessTokenCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataConnector.acquireAccessToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -38617,8 +38826,8 @@ func (r *ProjectsLocationsCollectionsDataStoresSessionsService) List(parent stri
 }
 
 // Filter sets the optional parameter "filter": A filter to apply on the list
-// results. The supported features are: user_pseudo_id, state. Example:
-// "user_pseudo_id = some_id"
+// results. The supported features are: user_pseudo_id, state, starred.
+// Examples: "user_pseudo_id = some_id" "starred = true"
 func (c *ProjectsLocationsCollectionsDataStoresSessionsListCall) Filter(filter string) *ProjectsLocationsCollectionsDataStoresSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -42057,6 +42266,15 @@ func (r *ProjectsLocationsCollectionsDataStoresWidgetConfigsService) Get(name st
 // prod right away, if your widget is under development.
 func (c *ProjectsLocationsCollectionsDataStoresWidgetConfigsGetCall) AcceptCache(acceptCache bool) *ProjectsLocationsCollectionsDataStoresWidgetConfigsGetCall {
 	c.urlParams_.Set("acceptCache", fmt.Sprint(acceptCache))
+	return c
+}
+
+// GetWidgetConfigRequestOptionTurnOffCollectionComponents sets the optional
+// parameter "getWidgetConfigRequestOption.turnOffCollectionComponents":
+// Whether to turn off collection_components in WidgetConfig to reduce latency
+// and data transmission.
+func (c *ProjectsLocationsCollectionsDataStoresWidgetConfigsGetCall) GetWidgetConfigRequestOptionTurnOffCollectionComponents(getWidgetConfigRequestOptionTurnOffCollectionComponents bool) *ProjectsLocationsCollectionsDataStoresWidgetConfigsGetCall {
+	c.urlParams_.Set("getWidgetConfigRequestOption.turnOffCollectionComponents", fmt.Sprint(getWidgetConfigRequestOptionTurnOffCollectionComponents))
 	return c
 }
 
@@ -46198,8 +46416,8 @@ func (r *ProjectsLocationsCollectionsEnginesSessionsService) List(parent string)
 }
 
 // Filter sets the optional parameter "filter": A filter to apply on the list
-// results. The supported features are: user_pseudo_id, state. Example:
-// "user_pseudo_id = some_id"
+// results. The supported features are: user_pseudo_id, state, starred.
+// Examples: "user_pseudo_id = some_id" "starred = true"
 func (c *ProjectsLocationsCollectionsEnginesSessionsListCall) Filter(filter string) *ProjectsLocationsCollectionsEnginesSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -46599,6 +46817,15 @@ func (r *ProjectsLocationsCollectionsEnginesWidgetConfigsService) Get(name strin
 // prod right away, if your widget is under development.
 func (c *ProjectsLocationsCollectionsEnginesWidgetConfigsGetCall) AcceptCache(acceptCache bool) *ProjectsLocationsCollectionsEnginesWidgetConfigsGetCall {
 	c.urlParams_.Set("acceptCache", fmt.Sprint(acceptCache))
+	return c
+}
+
+// GetWidgetConfigRequestOptionTurnOffCollectionComponents sets the optional
+// parameter "getWidgetConfigRequestOption.turnOffCollectionComponents":
+// Whether to turn off collection_components in WidgetConfig to reduce latency
+// and data transmission.
+func (c *ProjectsLocationsCollectionsEnginesWidgetConfigsGetCall) GetWidgetConfigRequestOptionTurnOffCollectionComponents(getWidgetConfigRequestOptionTurnOffCollectionComponents bool) *ProjectsLocationsCollectionsEnginesWidgetConfigsGetCall {
+	c.urlParams_.Set("getWidgetConfigRequestOption.turnOffCollectionComponents", fmt.Sprint(getWidgetConfigRequestOptionTurnOffCollectionComponents))
 	return c
 }
 
@@ -53974,8 +54201,8 @@ func (r *ProjectsLocationsDataStoresSessionsService) List(parent string) *Projec
 }
 
 // Filter sets the optional parameter "filter": A filter to apply on the list
-// results. The supported features are: user_pseudo_id, state. Example:
-// "user_pseudo_id = some_id"
+// results. The supported features are: user_pseudo_id, state, starred.
+// Examples: "user_pseudo_id = some_id" "starred = true"
 func (c *ProjectsLocationsDataStoresSessionsListCall) Filter(filter string) *ProjectsLocationsDataStoresSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -56405,6 +56632,15 @@ func (r *ProjectsLocationsDataStoresWidgetConfigsService) Get(name string) *Proj
 // prod right away, if your widget is under development.
 func (c *ProjectsLocationsDataStoresWidgetConfigsGetCall) AcceptCache(acceptCache bool) *ProjectsLocationsDataStoresWidgetConfigsGetCall {
 	c.urlParams_.Set("acceptCache", fmt.Sprint(acceptCache))
+	return c
+}
+
+// GetWidgetConfigRequestOptionTurnOffCollectionComponents sets the optional
+// parameter "getWidgetConfigRequestOption.turnOffCollectionComponents":
+// Whether to turn off collection_components in WidgetConfig to reduce latency
+// and data transmission.
+func (c *ProjectsLocationsDataStoresWidgetConfigsGetCall) GetWidgetConfigRequestOptionTurnOffCollectionComponents(getWidgetConfigRequestOptionTurnOffCollectionComponents bool) *ProjectsLocationsDataStoresWidgetConfigsGetCall {
+	c.urlParams_.Set("getWidgetConfigRequestOption.turnOffCollectionComponents", fmt.Sprint(getWidgetConfigRequestOptionTurnOffCollectionComponents))
 	return c
 }
 

@@ -749,13 +749,13 @@ func (s PlatformChildSite) MarshalJSON() ([]byte, error) {
 
 // PlatformGroup: Representation of a Transparent Platform Group.
 type PlatformGroup struct {
-	// Description: Output only. Description of the PlatformGroup.
+	// Description: Required. Description of the PlatformGroup.
 	Description string `json:"description,omitempty"`
 	// Name: Identifier. Format:
 	// accounts/{account}/platforms/{platform}/groups/{platform_group}
 	Name string `json:"name,omitempty"`
-	// RevshareMillipercent: The revenue share of the PlatformGroup, in
-	// millipercent (e.g. 15000 = 15%).
+	// RevshareMillipercent: Output only. The revenue share of the PlatformGroup,
+	// in millipercent (e.g. 15000 = 15%).
 	RevshareMillipercent *Decimal `json:"revshareMillipercent,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

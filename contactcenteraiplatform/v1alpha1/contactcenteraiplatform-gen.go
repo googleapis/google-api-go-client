@@ -295,6 +295,9 @@ type ContactCenter struct {
 	PrivateAccess *PrivateAccess `json:"privateAccess,omitempty"`
 	// PrivateComponents: Output only. TODO(b/283407860) Deprecate this field.
 	PrivateComponents []string `json:"privateComponents,omitempty"`
+	// ReleaseVersion: Output only. UJET release version, unique for each new
+	// release.
+	ReleaseVersion string `json:"releaseVersion,omitempty"`
 	// SamlParams: Optional. Params that sets up Google as IdP.
 	SamlParams *SAMLParams `json:"samlParams,omitempty"`
 	// State: Output only. The state of this contact center.

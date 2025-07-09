@@ -297,6 +297,7 @@ type AlloyDbSettings struct {
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
+	//   "POSTGRES_17" - The database version is Postgres 17.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// EncryptionConfig: Optional. The encryption config can be specified to
 	// encrypt the data disks and other persistent data resources of a cluster with
@@ -3982,6 +3983,8 @@ type PrivateConnection struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: The name of the resource.
 	Name string `json:"name,omitempty"`
+	// PscInterfaceConfig: PSC Interface configuration.
+	PscInterfaceConfig *PscInterfaceConfig `json:"pscInterfaceConfig,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
@@ -4094,6 +4097,31 @@ type PromoteMigrationJobRequest struct {
 
 func (s PromoteMigrationJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PromoteMigrationJobRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PscInterfaceConfig: The PSC Interface configuration is used to create PSC
+// Interface between DMS's internal VPC and the consumer's PSC.
+type PscInterfaceConfig struct {
+	// NetworkAttachment: Required. Fully qualified name of the Network Attachment
+	// that DMS will connect to. Format:
+	// `projects/{{project}}/regions/{{region}}/networkAttachments/{{name}}`
+	NetworkAttachment string `json:"networkAttachment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NetworkAttachment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NetworkAttachment") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscInterfaceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscInterfaceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12979,6 +13007,13 @@ func (c *ProjectsLocationsPrivateConnectionsCreateCall) RequestId(requestId stri
 // will skip validations.
 func (c *ProjectsLocationsPrivateConnectionsCreateCall) SkipValidation(skipValidation bool) *ProjectsLocationsPrivateConnectionsCreateCall {
 	c.urlParams_.Set("skipValidation", fmt.Sprint(skipValidation))
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": For PSC Interface
+// only - get the tenant project before creating the resource.
+func (c *ProjectsLocationsPrivateConnectionsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsPrivateConnectionsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 

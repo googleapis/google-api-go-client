@@ -2855,6 +2855,9 @@ func (s SourceConfig) MarshalJSON() ([]byte, error) {
 type SourceHierarchyDatasets struct {
 	// DatasetTemplate: The dataset template to use for dynamic dataset creation.
 	DatasetTemplate *DatasetTemplate `json:"datasetTemplate,omitempty"`
+	// ProjectId: Optional. The project id of the BigQuery dataset. If not
+	// specified, the project will be inferred from the stream resource.
+	ProjectId string `json:"projectId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatasetTemplate") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

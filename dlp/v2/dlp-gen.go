@@ -5050,6 +5050,53 @@ func (s GooglePrivacyDlpV2DocumentLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2Domain: A domain represents a thematic category that a
+// data profile can fall under.
+type GooglePrivacyDlpV2Domain struct {
+	// Category: A domain category that this profile is related to.
+	//
+	// Possible values:
+	//   "CATEGORY_UNSPECIFIED" - Category unspecified.
+	//   "AI" - Indicates that the data profile is related to artificial
+	// intelligence. When set, all findings stored to Security Command Center will
+	// set the corresponding AI domain field of `Finding` objects.
+	//   "CODE" - Indicates that the data profile is related to code.
+	Category string `json:"category,omitempty"`
+	// Signals: The collection of signals that influenced selection of the
+	// category.
+	//
+	// Possible values:
+	//   "SIGNAL_UNSPECIFIED" - Unused.
+	//   "MODEL" - One or more machine learning models are present.
+	//   "TEXT_EMBEDDING" - A table appears to be a text embedding.
+	//   "VERTEX_PLUGIN" - The [Cloud SQL Vertex
+	// AI](https://cloud.google.com/sql/docs/postgres/integrate-cloud-sql-with-verte
+	// x-ai) plugin is installed on the database.
+	//   "VECTOR_PLUGIN" - Support for [Cloud SQL vector
+	// embeddings](https://cloud.google.com/sql/docs/mysql/enable-vector-search) is
+	// enabled on the database.
+	//   "SOURCE_CODE" - Source code is present.
+	//   "SERVICE" - If the service determines the category type. For example,
+	// Vertex AI assets would always have a `Category` of `AI`.
+	Signals []string `json:"signals,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2Domain) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2Domain
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2EntityId: An entity in a dataset is a field or set of
 // fields that correspond to a single person. For example, in medical records
 // the `EntityId` might be a patient identifier, or for financial records it
@@ -5540,6 +5587,8 @@ type GooglePrivacyDlpV2FileStoreDataProfile struct {
 	// region is always picked as the processing and storage location for the data
 	// profile.
 	DataStorageLocations []string `json:"dataStorageLocations,omitempty"`
+	// Domains: Domains associated with the profile.
+	Domains []*GooglePrivacyDlpV2Domain `json:"domains,omitempty"`
 	// FileClusterSummaries: FileClusterSummary per each cluster.
 	FileClusterSummaries []*GooglePrivacyDlpV2FileClusterSummary `json:"fileClusterSummaries,omitempty"`
 	// FileStoreInfoTypeSummaries: InfoTypes detected in this file store.
@@ -10146,6 +10195,8 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	DatasetLocation string `json:"datasetLocation,omitempty"`
 	// DatasetProjectId: The Google Cloud project ID that owns the resource.
 	DatasetProjectId string `json:"datasetProjectId,omitempty"`
+	// Domains: Domains associated with the profile.
+	Domains []*GooglePrivacyDlpV2Domain `json:"domains,omitempty"`
 	// EncryptionStatus: How the table is encrypted.
 	//
 	// Possible values:
@@ -10204,7 +10255,8 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	ScannedColumnCount int64 `json:"scannedColumnCount,omitempty,string"`
 	// SensitivityScore: The sensitivity score of this table.
 	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
-	// State: State of a profile.
+	// State: State of a profile. This will always be set to DONE when the table
+	// data profile is written to another service like BigQuery or Pub/Sub.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unused.

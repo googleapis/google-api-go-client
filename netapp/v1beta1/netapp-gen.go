@@ -1782,8 +1782,7 @@ type Replication struct {
 	//   "TRANSFERRING" - Incremental replication is in progress.
 	//   "BASELINE_TRANSFERRING" - Baseline replication is in progress.
 	//   "ABORTED" - Replication is aborted.
-	//   "EXTERNALLY_MANAGED" - Mirror state for when replication is managed from
-	// Onprem ONTAP.
+	//   "EXTERNALLY_MANAGED" - Replication is being managed from Onprem ONTAP.
 	MirrorState string `json:"mirrorState,omitempty"`
 	// Name: Identifier. The resource name of the Replication. Format:
 	// `projects/{project_id}/locations/{location}/volumes/{volume_id}/replications/

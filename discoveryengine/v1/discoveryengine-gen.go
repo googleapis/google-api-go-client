@@ -13502,28 +13502,28 @@ func (s GoogleCloudDiscoveryengineV1alphaConnectorRun) MarshalJSON() ([]byte, er
 // GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun: Represents an entity
 // that was synced in this ConnectorRun.
 type GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRun struct {
-	// DeletedRecordCount: The number of documents deleted.
+	// DeletedRecordCount: Optional. The number of documents deleted.
 	DeletedRecordCount int64 `json:"deletedRecordCount,omitempty,string"`
 	// EntityName: The name of the source entity.
 	EntityName string `json:"entityName,omitempty"`
-	// ErrorRecordCount: The total number of documents failed at sync at any stage
-	// (extraction, indexing, etc).
+	// ErrorRecordCount: Optional. The total number of documents failed at sync at
+	// indexing stage.
 	ErrorRecordCount int64 `json:"errorRecordCount,omitempty,string"`
 	// Errors: The errors from the entity's sync run. Only exist if running into an
 	// error state. Contains error code and error message.
 	Errors []*GoogleRpcStatus `json:"errors,omitempty"`
-	// ExtractedRecordCount: The number of documents extracted from connector
-	// source, ready to be ingested to VAIS.
+	// ExtractedRecordCount: Optional. The number of documents extracted from
+	// connector source, ready to be ingested to VAIS.
 	ExtractedRecordCount int64 `json:"extractedRecordCount,omitempty,string"`
-	// IndexedRecordCount: The number of documents indexed.
+	// IndexedRecordCount: Optional. The number of documents indexed.
 	IndexedRecordCount int64 `json:"indexedRecordCount,omitempty,string"`
 	// Progress: Metadata to generate the progress bar.
 	Progress *GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRunProgress `json:"progress,omitempty"`
-	// ScheduledRecordCount: The number of documents scheduled to be
+	// ScheduledRecordCount: Optional. The number of documents scheduled to be
 	// crawled/extracted from connector source. This only applies to third party
 	// connectors.
 	ScheduledRecordCount int64 `json:"scheduledRecordCount,omitempty,string"`
-	// SourceApiRequestCount: The number of requests sent to 3p API.
+	// SourceApiRequestCount: Optional. The number of requests sent to 3p API.
 	SourceApiRequestCount int64 `json:"sourceApiRequestCount,omitempty,string"`
 	// State: The state of the entity's sync run.
 	//
@@ -14227,6 +14227,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// application's API.
 	//   "THIRD_PARTY_EUA" - Connector utilized for End User Authentication
 	// features.
+	//   "GCNV" - Google Cloud NetApp Volumes connector.
 	ConnectorType string `json:"connectorType,omitempty"`
 	// CreateEuaSaas: Optional. Whether the END USER AUTHENTICATION connector is
 	// created in SaaS.
@@ -14416,6 +14417,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnectorEndUserConfig struct {
 	// AuthParams: Optional. Any authentication parameters specific to EUA
 	// connectors.
 	AuthParams googleapi.RawMessage `json:"authParams,omitempty"`
+	// Tenant: Optional. The tenant project the connector is connected to.
+	Tenant *GoogleCloudDiscoveryengineV1alphaTenant `json:"tenant,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalParams") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -14441,6 +14444,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig struct {
 	// RealtimeSyncSecret: Optional. The ID of the Secret Manager secret used for
 	// webhook secret.
 	RealtimeSyncSecret string `json:"realtimeSyncSecret,omitempty"`
+	// StreamingError: Optional. Streaming error details.
+	StreamingError *GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingError `json:"streamingError,omitempty"`
 	// WebhookUri: Optional. Webhook url for the connector to specify additional
 	// params for realtime sync.
 	WebhookUri string `json:"webhookUri,omitempty"`
@@ -14459,6 +14464,40 @@ type GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingErro
+// r: Streaming error details.
+type GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingError struct {
+	// Error: Optional. Error details.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// StreamingErrorReason: Optional. Streaming error.
+	//
+	// Possible values:
+	//   "STREAMING_ERROR_REASON_UNSPECIFIED" - Streaming error reason unspecified.
+	//   "STREAMING_SETUP_ERROR" - Some error occurred while setting up resources
+	// for realtime sync.
+	//   "STREAMING_SYNC_ERROR" - Some error was encountered while running realtime
+	// sync for the connector.
+	//   "INGRESS_ENDPOINT_REQUIRED" - Ingress endpoint is required when setting up
+	// realtime sync in private connectivity.
+	StreamingErrorReason string `json:"streamingErrorReason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingError) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingError
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -16772,7 +16811,8 @@ func (s GoogleCloudDiscoveryengineV1alphaLanguageInfo) MarshalJSON() ([]byte, er
 // ListSessions method.
 type GoogleCloudDiscoveryengineV1alphaListSessionsRequest struct {
 	// Filter: A filter to apply on the list results. The supported features are:
-	// user_pseudo_id, state. Example: "user_pseudo_id = some_id"
+	// user_pseudo_id, state, starred. Examples: "user_pseudo_id = some_id"
+	// "starred = true"
 	Filter string `json:"filter,omitempty"`
 	// OrderBy: A comma-separated list of fields to order by, sorted in ascending
 	// order. Use "desc" after a field name for descending. Supported fields: *
@@ -17889,6 +17929,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// from a user's perspective. A higher pCTR suggests that the result is more
 	// likely to satisfy the user's query and intent, making it a valuable signal
 	// for ranking. * `freshness_rank`: freshness adjustment as a rank *
+	// `document_age`: The time in hours elapsed since the document was last
+	// updated, a floating-point number (e.g., 0.25 means 15 minutes). *
 	// `topicality_rank`: topicality adjustment as a rank. Uses proprietary Google
 	// model to determine the keyword-based overlap between the query and the
 	// document. * `base_rank`: the default rank of the result
@@ -19443,6 +19485,38 @@ type GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReasonQuotaFailure struct
 
 func (s GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReasonQuotaFailure) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReasonQuotaFailure
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaTenant: Tenant information for a connector
+// source. This includes some of the same information stored in the Credential
+// message, but is limited to only what is needed to provide a list of
+// accessible tenants to the user.
+type GoogleCloudDiscoveryengineV1alphaTenant struct {
+	// DisplayName: Optional display name for the tenant, e.g. "My Slack Team".
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: The tenant's instance ID. Examples: Jira
+	// ("8594f221-9797-5f78-1fa4-485e198d7cd0"), Slack ("T123456").
+	Id string `json:"id,omitempty"`
+	// Uri: The URI of the tenant, if applicable. For example, the URI of a Jira
+	// instance is https://my-jira-instance.atlassian.net, and a Slack tenant does
+	// not have a URI.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaTenant) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaTenant
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -22988,6 +23062,8 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// from a user's perspective. A higher pCTR suggests that the result is more
 	// likely to satisfy the user's query and intent, making it a valuable signal
 	// for ranking. * `freshness_rank`: freshness adjustment as a rank *
+	// `document_age`: The time in hours elapsed since the document was last
+	// updated, a floating-point number (e.g., 0.25 means 15 minutes). *
 	// `topicality_rank`: topicality adjustment as a rank. Uses proprietary Google
 	// model to determine the keyword-based overlap between the query and the
 	// document. * `base_rank`: the default rank of the result
@@ -32658,8 +32734,8 @@ func (r *ProjectsLocationsCollectionsDataStoresSessionsService) List(parent stri
 }
 
 // Filter sets the optional parameter "filter": A filter to apply on the list
-// results. The supported features are: user_pseudo_id, state. Example:
-// "user_pseudo_id = some_id"
+// results. The supported features are: user_pseudo_id, state, starred.
+// Examples: "user_pseudo_id = some_id" "starred = true"
 func (c *ProjectsLocationsCollectionsDataStoresSessionsListCall) Filter(filter string) *ProjectsLocationsCollectionsDataStoresSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -39205,8 +39281,8 @@ func (r *ProjectsLocationsCollectionsEnginesSessionsService) List(parent string)
 }
 
 // Filter sets the optional parameter "filter": A filter to apply on the list
-// results. The supported features are: user_pseudo_id, state. Example:
-// "user_pseudo_id = some_id"
+// results. The supported features are: user_pseudo_id, state, starred.
+// Examples: "user_pseudo_id = some_id" "starred = true"
 func (c *ProjectsLocationsCollectionsEnginesSessionsListCall) Filter(filter string) *ProjectsLocationsCollectionsEnginesSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -45821,8 +45897,8 @@ func (r *ProjectsLocationsDataStoresSessionsService) List(parent string) *Projec
 }
 
 // Filter sets the optional parameter "filter": A filter to apply on the list
-// results. The supported features are: user_pseudo_id, state. Example:
-// "user_pseudo_id = some_id"
+// results. The supported features are: user_pseudo_id, state, starred.
+// Examples: "user_pseudo_id = some_id" "starred = true"
 func (c *ProjectsLocationsDataStoresSessionsListCall) Filter(filter string) *ProjectsLocationsDataStoresSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

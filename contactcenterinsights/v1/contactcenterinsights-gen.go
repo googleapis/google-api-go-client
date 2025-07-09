@@ -1075,7 +1075,7 @@ type GoogleCloudContactcenterinsightsV1AuthorizedView struct {
 	// there is no restriction on the conversations that the AuthorizedView can
 	// access. Having *authorizedViews.get* access to the AuthorizedView means
 	// having the same read/write access to the Conversations (as well as
-	// metadata/annotations liked to the conversation) that this AuthorizedView
+	// metadata/annotations linked to the conversation) that this AuthorizedView
 	// has.
 	ConversationFilter string `json:"conversationFilter,omitempty"`
 	// CreateTime: Output only. The time at which the authorized view was created.

@@ -313,8 +313,7 @@ func (s Content) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CreateProjectRequest: Request to create a script project. Request to create
-// a script project.
+// CreateProjectRequest: Request to create a script project.
 type CreateProjectRequest struct {
 	// ParentId: The Drive ID of a parent file that the created script project is
 	// bound to. This is usually the ID of a Google Doc, Google Sheet, Google Form,

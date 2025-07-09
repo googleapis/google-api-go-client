@@ -2350,6 +2350,9 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 	// ReportingDataAnnotation: A snapshot of a ReportingDataAnnotation resource in
 	// change history.
 	ReportingDataAnnotation *GoogleAnalyticsAdminV1alphaReportingDataAnnotation `json:"reportingDataAnnotation,omitempty"`
+	// ReportingIdentitySettings: A snapshot of a ReportingIdentitySettings
+	// resource in change history.
+	ReportingIdentitySettings *GoogleAnalyticsAdminV1alphaReportingIdentitySettings `json:"reportingIdentitySettings,omitempty"`
 	// SearchAds360Link: A snapshot of a SearchAds360Link resource in change
 	// history.
 	SearchAds360Link *GoogleAnalyticsAdminV1alphaSearchAds360Link `json:"searchAds360Link,omitempty"`
@@ -5776,6 +5779,44 @@ func (s GoogleAnalyticsAdminV1alphaReportingDataAnnotationDateRange) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaReportingIdentitySettings: A resource containing
+// settings related to reporting identity.
+type GoogleAnalyticsAdminV1alphaReportingIdentitySettings struct {
+	// Name: Output only. Identifier. Resource name for this reporting identity
+	// settings singleton resource. Format:
+	// properties/{property_id}/reportingIdentitySettings Example:
+	// "properties/1234/reportingIdentitySettings"
+	Name string `json:"name,omitempty"`
+	// ReportingIdentity: The strategy used for identifying user identities in
+	// reports.
+	//
+	// Possible values:
+	//   "IDENTITY_BLENDING_STRATEGY_UNSPECIFIED" - Unspecified blending strategy.
+	//   "BLENDED" - Blended reporting identity strategy.
+	//   "OBSERVED" - Observed reporting identity strategy.
+	//   "DEVICE_BASED" - Device-based reporting identity strategy.
+	ReportingIdentity string `json:"reportingIdentity,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAnalyticsAdminV1alphaReportingIdentitySettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaReportingIdentitySettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaRollupPropertySourceLink: A link that references
 // a source property under the parent rollup property.
 type GoogleAnalyticsAdminV1alphaRollupPropertySourceLink struct {
@@ -6119,6 +6160,7 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
 	//   "CALCULATED_METRIC" - CalculatedMetric resource
 	//   "REPORTING_DATA_ANNOTATION" - ReportingDataAnnotation resource
 	//   "SUBPROPERTY_SYNC_CONFIG" - SubpropertySyncConfig resource
+	//   "REPORTING_IDENTITY_SETTINGS" - ReportingIdentitySettings resource
 	ResourceType []string `json:"resourceType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9881,6 +9923,119 @@ func (c *PropertiesGetGoogleSignalsSettingsCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsadmin.properties.getGoogleSignalsSettings", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type PropertiesGetReportingIdentitySettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetReportingIdentitySettings: Returns the singleton data retention settings
+// for this property.
+//
+//   - name: The name of the settings to lookup. Format:
+//     properties/{property}/reportingIdentitySettings Example:
+//     "properties/1000/reportingIdentitySettings".
+func (r *PropertiesService) GetReportingIdentitySettings(name string) *PropertiesGetReportingIdentitySettingsCall {
+	c := &PropertiesGetReportingIdentitySettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesGetReportingIdentitySettingsCall) Fields(s ...googleapi.Field) *PropertiesGetReportingIdentitySettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PropertiesGetReportingIdentitySettingsCall) IfNoneMatch(entityTag string) *PropertiesGetReportingIdentitySettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesGetReportingIdentitySettingsCall) Context(ctx context.Context) *PropertiesGetReportingIdentitySettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesGetReportingIdentitySettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesGetReportingIdentitySettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsadmin.properties.getReportingIdentitySettings", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.getReportingIdentitySettings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1alphaReportingIdentitySettings.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PropertiesGetReportingIdentitySettingsCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaReportingIdentitySettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaReportingIdentitySettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsadmin.properties.getReportingIdentitySettings", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -1432,16 +1432,21 @@ type GoogleMapsPlacesV1Place struct {
 	PriceLevel string `json:"priceLevel,omitempty"`
 	// PriceRange: The price range associated with a Place.
 	PriceRange *GoogleMapsPlacesV1PriceRange `json:"priceRange,omitempty"`
-	// PrimaryType: The primary type of the given result. This type must one of the
-	// Places API supported types. For example, "restaurant", "cafe", "airport",
-	// etc. A place can only have a single primary type. For the complete list of
-	// possible values, see Table A and Table B at
-	// https://developers.google.com/maps/documentation/places/web-service/place-types
+	// PrimaryType: The primary type of the given result. This type must be one of
+	// the Places API supported types. For example, "restaurant", "cafe",
+	// "airport", etc. A place can only have a single primary type. For the
+	// complete list of possible values, see Table A and Table B at
+	// https://developers.google.com/maps/documentation/places/web-service/place-types.
+	// The primary type may be missing if the place's primary type is not a
+	// supported type. When a primary type is present, it is always one of the
+	// types in the `types` field.
 	PrimaryType string `json:"primaryType,omitempty"`
 	// PrimaryTypeDisplayName: The display name of the primary type, localized to
 	// the request language if applicable. For the complete list of possible
 	// values, see Table A and Table B at
-	// https://developers.google.com/maps/documentation/places/web-service/place-types
+	// https://developers.google.com/maps/documentation/places/web-service/place-types.
+	// The primary type may be missing if the place's primary type is not a
+	// supported type.
 	PrimaryTypeDisplayName *GoogleTypeLocalizedText `json:"primaryTypeDisplayName,omitempty"`
 	// PureServiceAreaBusiness: Indicates whether the place is a pure service area
 	// business. Pure service area business is a business that visits or delivers
@@ -1821,9 +1826,16 @@ type GoogleMapsPlacesV1PlaceOpeningHours struct {
 	// is open. For secondary opening hours and current secondary opening hours,
 	// this field means whether the secondary hours of this place is active.
 	OpenNow bool `json:"openNow,omitempty"`
-	// Periods: NOTE: The ordering of the `periods` array is independent of the
-	// ordering of the `weekday_descriptions` array. Do not assume they will begin
-	// on the same day.
+	// Periods: The periods that this place is open during the week. The periods
+	// are in chronological order, in the place-local timezone. An empty (but not
+	// absent) value indicates a place that is never open, e.g. because it is
+	// closed temporarily for renovations. The starting day of `periods` is NOT
+	// fixed and should not be assumed to be Sunday. The API determines the start
+	// day based on a variety of factors. For example, for a 24/7 business, the
+	// first period may begin on the day of the request. For other businesses, it
+	// might be the first day of the week that they are open. NOTE: The ordering of
+	// the `periods` array is independent of the ordering of the
+	// `weekday_descriptions` array. Do not assume they will begin on the same day.
 	Periods []*GoogleMapsPlacesV1PlaceOpeningHoursPeriod `json:"periods,omitempty"`
 	// SecondaryHoursType: A type string used to identify the type of secondary
 	// hours.

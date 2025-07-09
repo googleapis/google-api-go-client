@@ -2420,7 +2420,7 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	// Possible values:
 	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified.
 	//   "AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed little-endian
-	// samples (Linear PCM).
+	// samples (Linear PCM). LINT: LEGACY_NAMES
 	//   "AUDIO_ENCODING_FLAC" - [`FLAC`](https://xiph.org/flac/documentation.html)
 	// (Free Lossless Audio Codec) is the recommended encoding because it is
 	// lossless (therefore recognition is not compromised) and requires only about
@@ -5878,7 +5878,7 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	// Possible values:
 	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified.
 	//   "AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed little-endian
-	// samples (Linear PCM).
+	// samples (Linear PCM). LINT: LEGACY_NAMES
 	//   "AUDIO_ENCODING_FLAC" - [`FLAC`](https://xiph.org/flac/documentation.html)
 	// (Free Lossless Audio Codec) is the recommended encoding because it is
 	// lossless (therefore recognition is not compromised) and requires only about
@@ -9512,8 +9512,8 @@ type GoogleCloudDialogflowV2ConversationTelephonyConnectionInfo struct {
 	// INVITE.
 	ExtraMimeContents []*GoogleCloudDialogflowV2ConversationTelephonyConnectionInfoMimeContent `json:"extraMimeContents,omitempty"`
 	// Sdp: Optional. SDP of the call. It's initially the SDP answer to the
-	// endpoint, but maybe later updated for the purpose of making the link active,
-	// etc.
+	// incoming call, but maybe later updated for the purpose of making the link
+	// active, etc.
 	Sdp string `json:"sdp,omitempty"`
 	// SipHeaders: Output only. The SIP headers from the initial SIP INVITE.
 	SipHeaders []*GoogleCloudDialogflowV2ConversationTelephonyConnectionInfoSipHeader `json:"sipHeaders,omitempty"`
@@ -11346,8 +11346,8 @@ func (s GoogleCloudDialogflowV2HumanAgentAssistantConfig) MarshalJSON() ([]byte,
 // ARTICLE_SUGGESTION, SMART_COMPOSE, SMART_REPLY, CONVERSATION_SUMMARIZATION.
 type GoogleCloudDialogflowV2HumanAgentAssistantConfigConversationModelConfig struct {
 	// BaselineModelVersion: Version of current baseline model. It will be ignored
-	// if model is set. Valid versions are: Article Suggestion baseline model: -
-	// 0.9 - 1.0 (default) Summarization baseline model: - 1.0
+	// if model is set. Valid versions are: - Article Suggestion baseline model: -
+	// 0.9 - 1.0 (default) - Summarization baseline model: - 1.0
 	BaselineModelVersion string `json:"baselineModelVersion,omitempty"`
 	// Model: Conversation model resource name. Format:
 	// `projects//conversationModels/`.

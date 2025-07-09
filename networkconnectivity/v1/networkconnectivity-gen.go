@@ -1475,9 +1475,8 @@ func (s InternalRange) MarshalJSON() ([]byte, error) {
 // prefixes to Google Cloud. Alternatively, in active/passive configurations,
 // all attachments should be capable of advertising the same prefixes.
 type LinkedInterconnectAttachments struct {
-	// IncludeImportRanges: Optional. IP ranges allowed to be included during
-	// import from hub (does not control transit connectivity). The only allowed
-	// value for now is "ALL_IPV4_RANGES".
+	// IncludeImportRanges: Optional. Hub routes fully encompassed by include
+	// import ranges are included during import from hub.
 	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
 	// transfer is enabled for these resources. Data transfer is available only in
@@ -1554,9 +1553,8 @@ func (s LinkedProducerVpcNetwork) MarshalJSON() ([]byte, error) {
 // the same set of sites outside of Google Cloud, we recommend that you
 // associate those instances with the same spoke.
 type LinkedRouterApplianceInstances struct {
-	// IncludeImportRanges: Optional. IP ranges allowed to be included during
-	// import from hub (does not control transit connectivity). The only allowed
-	// value for now is "ALL_IPV4_RANGES".
+	// IncludeImportRanges: Optional. Hub routes fully encompassed by include
+	// import ranges are included during import from hub.
 	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
 	// Instances: The list of router appliance instances.
 	Instances []*RouterApplianceInstance `json:"instances,omitempty"`
@@ -1633,9 +1631,8 @@ func (s LinkedVpcNetwork) MarshalJSON() ([]byte, error) {
 // prefixes to Google Cloud. Alternatively, in a passive/active configuration,
 // all tunnels should be capable of advertising the same prefixes.
 type LinkedVpnTunnels struct {
-	// IncludeImportRanges: Optional. IP ranges allowed to be included during
-	// import from hub (does not control transit connectivity). The only allowed
-	// value for now is "ALL_IPV4_RANGES".
+	// IncludeImportRanges: Optional. Hub routes fully encompassed by include
+	// import ranges are included during import from hub.
 	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
 	// transfer is enabled for these resources. Data transfer is available only in
@@ -2588,7 +2585,7 @@ type PscConfig struct {
 	AllowedGoogleProducersResourceHierarchyLevel []string `json:"allowedGoogleProducersResourceHierarchyLevel,omitempty"`
 	// Limit: Optional. Max number of PSC connections for this policy.
 	Limit int64 `json:"limit,omitempty,string"`
-	// ProducerInstanceLocation: Required. ProducerInstanceLocation is used to
+	// ProducerInstanceLocation: Optional. ProducerInstanceLocation is used to
 	// specify which authorization mechanism to use to determine which projects the
 	// Producer instance can be within.
 	//

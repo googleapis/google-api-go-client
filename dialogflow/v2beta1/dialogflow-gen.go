@@ -2384,7 +2384,7 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	// Possible values:
 	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified.
 	//   "AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed little-endian
-	// samples (Linear PCM).
+	// samples (Linear PCM). LINT: LEGACY_NAMES
 	//   "AUDIO_ENCODING_FLAC" - [`FLAC`](https://xiph.org/flac/documentation.html)
 	// (Free Lossless Audio Codec) is the recommended encoding because it is
 	// lossless (therefore recognition is not compromised) and requires only about
@@ -5842,7 +5842,7 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	// Possible values:
 	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified.
 	//   "AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed little-endian
-	// samples (Linear PCM).
+	// samples (Linear PCM). LINT: LEGACY_NAMES
 	//   "AUDIO_ENCODING_FLAC" - [`FLAC`](https://xiph.org/flac/documentation.html)
 	// (Free Lossless Audio Codec) is the recommended encoding because it is
 	// lossless (therefore recognition is not compromised) and requires only about
@@ -13088,8 +13088,8 @@ type GoogleCloudDialogflowV2beta1ConversationTelephonyConnectionInfo struct {
 	// INVITE.
 	ExtraMimeContents []*GoogleCloudDialogflowV2beta1ConversationTelephonyConnectionInfoMimeContent `json:"extraMimeContents,omitempty"`
 	// Sdp: Optional. SDP of the call. It's initially the SDP answer to the
-	// endpoint, but maybe later updated for the purpose of making the link active,
-	// etc.
+	// incoming call, but maybe later updated for the purpose of making the link
+	// active, etc.
 	Sdp string `json:"sdp,omitempty"`
 	// SipHeaders: Output only. The SIP headers from the initial SIP INVITE.
 	SipHeaders []*GoogleCloudDialogflowV2beta1ConversationTelephonyConnectionInfoSipHeader `json:"sipHeaders,omitempty"`
@@ -14676,8 +14676,8 @@ func (s GoogleCloudDialogflowV2beta1HumanAgentAssistantConfig) MarshalJSON() ([]
 // ARTICLE_SUGGESTION, SMART_COMPOSE, SMART_REPLY, CONVERSATION_SUMMARIZATION.
 type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigConversationModelConfig struct {
 	// BaselineModelVersion: Version of current baseline model. It will be ignored
-	// if model is set. Valid versions are: Article Suggestion baseline model: -
-	// 0.9 - 1.0 (default) Summarization baseline model: - 1.0
+	// if model is set. Valid versions are: - Article Suggestion baseline model: -
+	// 0.9 - 1.0 (default) - Summarization baseline model: - 1.0
 	BaselineModelVersion string `json:"baselineModelVersion,omitempty"`
 	// Model: Conversation model resource name. Format:
 	// `projects//conversationModels/`.
@@ -15567,7 +15567,7 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	// Possible values:
 	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified.
 	//   "AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed little-endian
-	// samples (Linear PCM).
+	// samples (Linear PCM). LINT: LEGACY_NAMES
 	//   "AUDIO_ENCODING_FLAC" - [`FLAC`](https://xiph.org/flac/documentation.html)
 	// (Free Lossless Audio Codec) is the recommended encoding because it is
 	// lossless (therefore recognition is not compromised) and requires only about
@@ -18431,9 +18431,10 @@ type GoogleCloudDialogflowV2beta1OutputAudioConfig struct {
 	//   "OUTPUT_AUDIO_ENCODING_UNSPECIFIED" - Not specified.
 	//   "OUTPUT_AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed
 	// little-endian samples (Linear PCM). Audio content returned as LINEAR16 also
-	// contains a WAV header.
+	// contains a WAV header. LINT: LEGACY_NAMES
 	//   "OUTPUT_AUDIO_ENCODING_MP3" - MP3 audio at 32kbps.
-	//   "OUTPUT_AUDIO_ENCODING_MP3_64_KBPS" - MP3 audio at 64kbps.
+	//   "OUTPUT_AUDIO_ENCODING_MP3_64_KBPS" - MP3 audio at 64kbps. LINT:
+	// LEGACY_NAMES
 	//   "OUTPUT_AUDIO_ENCODING_OGG_OPUS" - Opus encoded audio wrapped in an ogg
 	// container. The result will be a file which can be played natively on
 	// Android, and in browsers (at least Chrome and Firefox). The quality of the
@@ -19891,7 +19892,7 @@ type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
 	// Possible values:
 	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified.
 	//   "AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed little-endian
-	// samples (Linear PCM).
+	// samples (Linear PCM). LINT: LEGACY_NAMES
 	//   "AUDIO_ENCODING_FLAC" - [`FLAC`](https://xiph.org/flac/documentation.html)
 	// (Free Lossless Audio Codec) is the recommended encoding because it is
 	// lossless (therefore recognition is not compromised) and requires only about
@@ -21156,9 +21157,10 @@ type GoogleCloudDialogflowV2beta1TextToSpeechSettings struct {
 	//   "OUTPUT_AUDIO_ENCODING_UNSPECIFIED" - Not specified.
 	//   "OUTPUT_AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed
 	// little-endian samples (Linear PCM). Audio content returned as LINEAR16 also
-	// contains a WAV header.
+	// contains a WAV header. LINT: LEGACY_NAMES
 	//   "OUTPUT_AUDIO_ENCODING_MP3" - MP3 audio at 32kbps.
-	//   "OUTPUT_AUDIO_ENCODING_MP3_64_KBPS" - MP3 audio at 64kbps.
+	//   "OUTPUT_AUDIO_ENCODING_MP3_64_KBPS" - MP3 audio at 64kbps. LINT:
+	// LEGACY_NAMES
 	//   "OUTPUT_AUDIO_ENCODING_OGG_OPUS" - Opus encoded audio wrapped in an ogg
 	// container. The result will be a file which can be played natively on
 	// Android, and in browsers (at least Chrome and Firefox). The quality of the

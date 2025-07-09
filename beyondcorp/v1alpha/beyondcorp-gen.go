@@ -259,7 +259,6 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Applications = NewProjectsLocationsApplicationsService(s)
 	rs.Connections = NewProjectsLocationsConnectionsService(s)
 	rs.Connectors = NewProjectsLocationsConnectorsService(s)
-	rs.Global = NewProjectsLocationsGlobalService(s)
 	rs.Insights = NewProjectsLocationsInsightsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.SecurityGateways = NewProjectsLocationsSecurityGatewaysService(s)
@@ -282,8 +281,6 @@ type ProjectsLocationsService struct {
 	Connections *ProjectsLocationsConnectionsService
 
 	Connectors *ProjectsLocationsConnectorsService
-
-	Global *ProjectsLocationsGlobalService
 
 	Insights *ProjectsLocationsInsightsService
 
@@ -352,39 +349,6 @@ func NewProjectsLocationsConnectorsService(s *Service) *ProjectsLocationsConnect
 }
 
 type ProjectsLocationsConnectorsService struct {
-	s *Service
-}
-
-func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalService {
-	rs := &ProjectsLocationsGlobalService{s: s}
-	rs.SecurityGateways = NewProjectsLocationsGlobalSecurityGatewaysService(s)
-	return rs
-}
-
-type ProjectsLocationsGlobalService struct {
-	s *Service
-
-	SecurityGateways *ProjectsLocationsGlobalSecurityGatewaysService
-}
-
-func NewProjectsLocationsGlobalSecurityGatewaysService(s *Service) *ProjectsLocationsGlobalSecurityGatewaysService {
-	rs := &ProjectsLocationsGlobalSecurityGatewaysService{s: s}
-	rs.Applications = NewProjectsLocationsGlobalSecurityGatewaysApplicationsService(s)
-	return rs
-}
-
-type ProjectsLocationsGlobalSecurityGatewaysService struct {
-	s *Service
-
-	Applications *ProjectsLocationsGlobalSecurityGatewaysApplicationsService
-}
-
-func NewProjectsLocationsGlobalSecurityGatewaysApplicationsService(s *Service) *ProjectsLocationsGlobalSecurityGatewaysApplicationsService {
-	rs := &ProjectsLocationsGlobalSecurityGatewaysApplicationsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsGlobalSecurityGatewaysApplicationsService struct {
 	s *Service
 }
 
@@ -12552,368 +12516,6 @@ func (c *ProjectsLocationsConnectorsSetIamPolicyCall) Do(opts ...googleapi.CallO
 	return ret, nil
 }
 
-type ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall struct {
-	s                                                       *Service
-	parent                                                  string
-	googlecloudbeyondcorpsecuritygatewaysv1alphaapplication *GoogleCloudBeyondcorpSecuritygatewaysV1alphaApplication
-	urlParams_                                              gensupport.URLParams
-	ctx_                                                    context.Context
-	header_                                                 http.Header
-}
-
-// Create: Creates a new Application in a given project and location.
-//
-//   - parent: The resource name of the parent SecurityGateway using the form:
-//     `projects/{project_id}/locations/global/securityGateways/{security_gateway_
-//     id}`.
-func (r *ProjectsLocationsGlobalSecurityGatewaysApplicationsService) Create(parent string, googlecloudbeyondcorpsecuritygatewaysv1alphaapplication *GoogleCloudBeyondcorpSecuritygatewaysV1alphaApplication) *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall {
-	c := &ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googlecloudbeyondcorpsecuritygatewaysv1alphaapplication = googlecloudbeyondcorpsecuritygatewaysv1alphaapplication
-	return c
-}
-
-// ApplicationId sets the optional parameter "applicationId": User-settable
-// Application resource ID. * Must start with a letter. * Must contain between
-// 4-63 characters from `/a-z-/`. * Must end with a number or letter.
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall) ApplicationId(applicationId string) *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall {
-	c.urlParams_.Set("applicationId", applicationId)
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore request if it has already been
-// completed. The server will guarantee that for at least 60 minutes since the
-// first request.
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall) RequestId(requestId string) *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall) Context(ctx context.Context) *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudbeyondcorpsecuritygatewaysv1alphaapplication)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/applications")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.global.securityGateways.applications.create", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "beyondcorp.projects.locations.global.securityGateways.applications.create" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleLongrunningOperation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.global.securityGateways.applications.create", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall struct {
-	s                                                       *Service
-	name                                                    string
-	googlecloudbeyondcorpsecuritygatewaysv1alphaapplication *GoogleCloudBeyondcorpSecuritygatewaysV1alphaApplication
-	urlParams_                                              gensupport.URLParams
-	ctx_                                                    context.Context
-	header_                                                 http.Header
-}
-
-// Patch: Updates the parameters of a single Application.
-//
-// - name: Identifier. Name of the resource.
-func (r *ProjectsLocationsGlobalSecurityGatewaysApplicationsService) Patch(name string, googlecloudbeyondcorpsecuritygatewaysv1alphaapplication *GoogleCloudBeyondcorpSecuritygatewaysV1alphaApplication) *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall {
-	c := &ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlecloudbeyondcorpsecuritygatewaysv1alphaapplication = googlecloudbeyondcorpsecuritygatewaysv1alphaapplication
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request timed out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) RequestId(requestId string) *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": Mutable fields include:
-// display_name.
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) Context(ctx context.Context) *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudbeyondcorpsecuritygatewaysv1alphaapplication)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.global.securityGateways.applications.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "beyondcorp.projects.locations.global.securityGateways.applications.patch" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleLongrunningOperation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.global.securityGateways.applications.patch", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsGlobalSecurityGatewaysApplicationsTestIamPermissionsCall struct {
-	s                                    *Service
-	resource                             string
-	googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest
-	urlParams_                           gensupport.URLParams
-	ctx_                                 context.Context
-	header_                              http.Header
-}
-
-// TestIamPermissions: Returns permissions that a caller has on the specified
-// resource. If the resource does not exist, this will return an empty set of
-// permissions, not a `NOT_FOUND` error. Note: This operation is designed to be
-// used for building permission-aware UIs and command-line tools, not for
-// authorization checking. This operation may "fail open" without warning.
-//
-//   - resource: REQUIRED: The resource for which the policy detail is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
-//     value for this field.
-func (r *ProjectsLocationsGlobalSecurityGatewaysApplicationsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsGlobalSecurityGatewaysApplicationsTestIamPermissionsCall {
-	c := &ProjectsLocationsGlobalSecurityGatewaysApplicationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.googleiamv1testiampermissionsrequest = googleiamv1testiampermissionsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalSecurityGatewaysApplicationsTestIamPermissionsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsGlobalSecurityGatewaysApplicationsTestIamPermissionsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsTestIamPermissionsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1testiampermissionsrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:testIamPermissions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.global.securityGateways.applications.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "beyondcorp.projects.locations.global.securityGateways.applications.testIamPermissions" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleIamV1TestIamPermissionsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleIamV1TestIamPermissionsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.global.securityGateways.applications.testIamPermissions", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
 type ProjectsLocationsInsightsConfiguredInsightCall struct {
 	s            *Service
 	insight      string
@@ -14987,6 +14589,130 @@ func (c *ProjectsLocationsSecurityGatewaysTestIamPermissionsCall) Do(opts ...goo
 	return ret, nil
 }
 
+type ProjectsLocationsSecurityGatewaysApplicationsCreateCall struct {
+	s                                                       *Service
+	parent                                                  string
+	googlecloudbeyondcorpsecuritygatewaysv1alphaapplication *GoogleCloudBeyondcorpSecuritygatewaysV1alphaApplication
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// Create: Creates a new Application in a given project and location.
+//
+//   - parent: The resource name of the parent SecurityGateway using the form:
+//     `projects/{project_id}/locations/global/securityGateways/{security_gateway_
+//     id}`.
+func (r *ProjectsLocationsSecurityGatewaysApplicationsService) Create(parent string, googlecloudbeyondcorpsecuritygatewaysv1alphaapplication *GoogleCloudBeyondcorpSecuritygatewaysV1alphaApplication) *ProjectsLocationsSecurityGatewaysApplicationsCreateCall {
+	c := &ProjectsLocationsSecurityGatewaysApplicationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudbeyondcorpsecuritygatewaysv1alphaapplication = googlecloudbeyondcorpsecuritygatewaysv1alphaapplication
+	return c
+}
+
+// ApplicationId sets the optional parameter "applicationId": User-settable
+// Application resource ID. * Must start with a letter. * Must contain between
+// 4-63 characters from `/a-z-/`. * Must end with a number or letter.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsCreateCall) ApplicationId(applicationId string) *ProjectsLocationsSecurityGatewaysApplicationsCreateCall {
+	c.urlParams_.Set("applicationId", applicationId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore request if it has already been
+// completed. The server will guarantee that for at least 60 minutes since the
+// first request.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsCreateCall) RequestId(requestId string) *ProjectsLocationsSecurityGatewaysApplicationsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecurityGatewaysApplicationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsCreateCall) Context(ctx context.Context) *ProjectsLocationsSecurityGatewaysApplicationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecurityGatewaysApplicationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudbeyondcorpsecuritygatewaysv1alphaapplication)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/applications")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.securityGateways.applications.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.securityGateways.applications.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.securityGateways.applications.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsSecurityGatewaysApplicationsDeleteCall struct {
 	s          *Service
 	name       string
@@ -15520,6 +15246,133 @@ func (c *ProjectsLocationsSecurityGatewaysApplicationsListCall) Pages(ctx contex
 	}
 }
 
+type ProjectsLocationsSecurityGatewaysApplicationsPatchCall struct {
+	s                                                       *Service
+	name                                                    string
+	googlecloudbeyondcorpsecuritygatewaysv1alphaapplication *GoogleCloudBeyondcorpSecuritygatewaysV1alphaApplication
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// Patch: Updates the parameters of a single Application.
+//
+// - name: Identifier. Name of the resource.
+func (r *ProjectsLocationsSecurityGatewaysApplicationsService) Patch(name string, googlecloudbeyondcorpsecuritygatewaysv1alphaapplication *GoogleCloudBeyondcorpSecuritygatewaysV1alphaApplication) *ProjectsLocationsSecurityGatewaysApplicationsPatchCall {
+	c := &ProjectsLocationsSecurityGatewaysApplicationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudbeyondcorpsecuritygatewaysv1alphaapplication = googlecloudbeyondcorpsecuritygatewaysv1alphaapplication
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request timed out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsSecurityGatewaysApplicationsPatchCall) RequestId(requestId string) *ProjectsLocationsSecurityGatewaysApplicationsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Mutable fields include:
+// display_name.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSecurityGatewaysApplicationsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecurityGatewaysApplicationsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsPatchCall) Context(ctx context.Context) *ProjectsLocationsSecurityGatewaysApplicationsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecurityGatewaysApplicationsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudbeyondcorpsecuritygatewaysv1alphaapplication)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.securityGateways.applications.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.securityGateways.applications.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.securityGateways.applications.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsSecurityGatewaysApplicationsSetIamPolicyCall struct {
 	s                              *Service
 	resource                       string
@@ -15625,5 +15478,116 @@ func (c *ProjectsLocationsSecurityGatewaysApplicationsSetIamPolicyCall) Do(opts 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.securityGateways.applications.setIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSecurityGatewaysApplicationsTestIamPermissionsCall struct {
+	s                                    *Service
+	resource                             string
+	googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource. If the resource does not exist, this will return an empty set of
+// permissions, not a `NOT_FOUND` error. Note: This operation is designed to be
+// used for building permission-aware UIs and command-line tools, not for
+// authorization checking. This operation may "fail open" without warning.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
+func (r *ProjectsLocationsSecurityGatewaysApplicationsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsSecurityGatewaysApplicationsTestIamPermissionsCall {
+	c := &ProjectsLocationsSecurityGatewaysApplicationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1testiampermissionsrequest = googleiamv1testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecurityGatewaysApplicationsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsSecurityGatewaysApplicationsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecurityGatewaysApplicationsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.securityGateways.applications.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.securityGateways.applications.testIamPermissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1TestIamPermissionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "beyondcorp.projects.locations.securityGateways.applications.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

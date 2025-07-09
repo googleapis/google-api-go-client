@@ -2642,6 +2642,8 @@ type GoogleCloudRetailV2IntentClassificationConfig struct {
 	DisabledIntentTypes []string `json:"disabledIntentTypes,omitempty"`
 	// Example: Optional. A list of examples for intent classification.
 	Example []*GoogleCloudRetailV2IntentClassificationConfigExample `json:"example,omitempty"`
+	// InlineSource: Optional. Inline source for intent classifications.
+	InlineSource *GoogleCloudRetailV2IntentClassificationConfigInlineSource `json:"inlineSource,omitempty"`
 	// ModelPreamble: Optional. Customers can use the preamble to specify any
 	// requirements for blocklisting intent classification. This preamble will be
 	// added to the blocklisting intent classification model prompt.
@@ -2667,6 +2669,8 @@ func (s GoogleCloudRetailV2IntentClassificationConfig) MarshalJSON() ([]byte, er
 // GoogleCloudRetailV2IntentClassificationConfigExample: An example for intent
 // classification.
 type GoogleCloudRetailV2IntentClassificationConfigExample struct {
+	// ClassifiedPositive: Required. Whether the example is classified positively.
+	ClassifiedPositive bool `json:"classifiedPositive,omitempty"`
 	// IntentType: Optional. The intent_type must match one of the predefined
 	// intent types defined at
 	// https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2alpha#querytype
@@ -2676,6 +2680,40 @@ type GoogleCloudRetailV2IntentClassificationConfigExample struct {
 	// Reason: Optional. The reason for the intent classification. This is used to
 	// explain the intent classification decision.
 	Reason string `json:"reason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClassifiedPositive") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClassifiedPositive") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2IntentClassificationConfigExample) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2IntentClassificationConfigExample
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2IntentClassificationConfigInlineForceIntent: An inline
+// force intent classification configuration.
+type GoogleCloudRetailV2IntentClassificationConfigInlineForceIntent struct {
+	// IntentType: Optional. The intent_type must match one of the predefined
+	// intent types defined at
+	// https://cloud.google.com/retail/docs/reference/rpc/google.cloud.retail.v2alpha#querytype
+	IntentType string `json:"intentType,omitempty"`
+	// Operation: Optional. The operation to perform for the query.
+	//
+	// Possible values:
+	//   "OPERATION_UNSPECIFIED" - Unspecified match operation.
+	//   "EXACT_MATCH" - Exact match.
+	//   "CONTAINS" - Contains match.
+	Operation string `json:"operation,omitempty"`
+	// Query: Optional. A example query.
+	Query string `json:"query,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IntentType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2689,8 +2727,31 @@ type GoogleCloudRetailV2IntentClassificationConfigExample struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudRetailV2IntentClassificationConfigExample) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2IntentClassificationConfigExample
+func (s GoogleCloudRetailV2IntentClassificationConfigInlineForceIntent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2IntentClassificationConfigInlineForceIntent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2IntentClassificationConfigInlineSource: Inline source for
+// intent classifications.
+type GoogleCloudRetailV2IntentClassificationConfigInlineSource struct {
+	// InlineForceIntents: Optional. A list of inline force intent classifications.
+	InlineForceIntents []*GoogleCloudRetailV2IntentClassificationConfigInlineForceIntent `json:"inlineForceIntents,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InlineForceIntents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InlineForceIntents") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2IntentClassificationConfigInlineSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2IntentClassificationConfigInlineSource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5244,6 +5305,13 @@ type GoogleCloudRetailV2SearchRequest struct {
 	// TileNavigationSpec: Optional. This field specifies tile navigation related
 	// parameters.
 	TileNavigationSpec *GoogleCloudRetailV2SearchRequestTileNavigationSpec `json:"tileNavigationSpec,omitempty"`
+	// UserAttributes: Optional. The user attributes that could be used for
+	// personalization of search results. * Populate at most 100 key-value pairs
+	// per query. * Only supports string keys and repeated string values. *
+	// Duplicate keys are not allowed within a single query. Example:
+	// user_attributes: [ { key: "pets" value { values: "dog" values: "cat" } }, {
+	// key: "state" value { values: "CA" } } ]
+	UserAttributes map[string]GoogleCloudRetailV2StringList `json:"userAttributes,omitempty"`
 	// UserInfo: User information.
 	UserInfo *GoogleCloudRetailV2UserInfo `json:"userInfo,omitempty"`
 	// VariantRollupKeys: The keys to fetch and rollup the matching variant
@@ -6420,6 +6488,28 @@ func (s GoogleCloudRetailV2SetInventoryRequest) MarshalJSON() ([]byte, error) {
 // SetInventoryRequest. Currently empty because there is no meaningful response
 // populated from the ProductService.SetInventory method.
 type GoogleCloudRetailV2SetInventoryResponse struct {
+}
+
+// GoogleCloudRetailV2StringList: A list of string values.
+type GoogleCloudRetailV2StringList struct {
+	// Values: String values.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2StringList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2StringList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2Tile: This field specifies the tile information including

@@ -1032,6 +1032,35 @@ func (s DownloadRestriction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DownloadRestrictionsMetadata: Download restrictions applied to the file.
+type DownloadRestrictionsMetadata struct {
+	// EffectiveDownloadRestrictionWithContext: The effective download restriction
+	// applied to this file. This considers all restriction settings and DLP rules.
+	EffectiveDownloadRestrictionWithContext *DownloadRestriction `json:"effectiveDownloadRestrictionWithContext,omitempty"`
+	// ItemDownloadRestriction: The download restriction of the file applied
+	// directly by the owner or organizer. This does not take into account shared
+	// drive settings or DLP rules.
+	ItemDownloadRestriction *DownloadRestriction `json:"itemDownloadRestriction,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectiveDownloadRestrictionWithContext") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "EffectiveDownloadRestrictionWithContext") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted from
+	// API requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields
+	// for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DownloadRestrictionsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod DownloadRestrictionsMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Drive: Representation of a shared drive. Some resource methods (such as
 // `drives.update`) require a `driveId`. Use the `drives.list` method to
 // retrieve the ID for a shared drive.
@@ -1176,6 +1205,9 @@ type DriveCapabilities struct {
 	// CanChangeDomainUsersOnlyRestriction: Output only. Whether the current user
 	// can change the `domainUsersOnly` restriction of this shared drive.
 	CanChangeDomainUsersOnlyRestriction bool `json:"canChangeDomainUsersOnlyRestriction,omitempty"`
+	// CanChangeDownloadRestriction: Output only. Whether the current user can
+	// change organizer-applied download restrictions of this shared drive.
+	CanChangeDownloadRestriction bool `json:"canChangeDownloadRestriction,omitempty"`
 	// CanChangeDriveBackground: Output only. Whether the current user can change
 	// the background of this shared drive.
 	CanChangeDriveBackground bool `json:"canChangeDriveBackground,omitempty"`
@@ -1356,6 +1388,8 @@ type File struct {
 	CreatedTime string `json:"createdTime,omitempty"`
 	// Description: A short description of the file.
 	Description string `json:"description,omitempty"`
+	// DownloadRestrictions: Download restrictions applied on the file.
+	DownloadRestrictions *DownloadRestrictionsMetadata `json:"downloadRestrictions,omitempty"`
 	// DriveId: Output only. ID of the shared drive the file resides in. Only
 	// populated for items in shared drives.
 	DriveId string `json:"driveId,omitempty"`
@@ -1593,6 +1627,9 @@ type FileCapabilities struct {
 	// CanChangeCopyRequiresWriterPermission: Output only. Whether the current user
 	// can change the `copyRequiresWriterPermission` restriction of this file.
 	CanChangeCopyRequiresWriterPermission bool `json:"canChangeCopyRequiresWriterPermission,omitempty"`
+	// CanChangeItemDownloadRestriction: Output only. Whether the current user can
+	// change the owner-applied download restrictions of the file.
+	CanChangeItemDownloadRestriction bool `json:"canChangeItemDownloadRestriction,omitempty"`
 	// CanChangeSecurityUpdateEnabled: Output only. Whether the current user can
 	// change the securityUpdateEnabled field on link share metadata.
 	CanChangeSecurityUpdateEnabled bool `json:"canChangeSecurityUpdateEnabled,omitempty"`
@@ -3056,6 +3093,9 @@ type TeamDriveCapabilities struct {
 	// CanChangeDomainUsersOnlyRestriction: Whether the current user can change the
 	// `domainUsersOnly` restriction of this Team Drive.
 	CanChangeDomainUsersOnlyRestriction bool `json:"canChangeDomainUsersOnlyRestriction,omitempty"`
+	// CanChangeDownloadRestriction: Whether the current user can change
+	// organizer-applied download restrictions of this shared drive.
+	CanChangeDownloadRestriction bool `json:"canChangeDownloadRestriction,omitempty"`
 	// CanChangeSharingFoldersRequiresOrganizerPermissionRestriction: Whether the
 	// current user can change the `sharingFoldersRequiresOrganizerPermission`
 	// restriction of this Team Drive.

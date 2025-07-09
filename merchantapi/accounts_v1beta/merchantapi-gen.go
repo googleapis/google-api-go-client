@@ -320,10 +320,22 @@ type AccountsOnlineReturnPoliciesService struct {
 
 func NewAccountsProgramsService(s *APIService) *AccountsProgramsService {
 	rs := &AccountsProgramsService{s: s}
+	rs.CheckoutSettings = NewAccountsProgramsCheckoutSettingsService(s)
 	return rs
 }
 
 type AccountsProgramsService struct {
+	s *APIService
+
+	CheckoutSettings *AccountsProgramsCheckoutSettingsService
+}
+
+func NewAccountsProgramsCheckoutSettingsService(s *APIService) *AccountsProgramsCheckoutSettingsService {
+	rs := &AccountsProgramsCheckoutSettingsService{s: s}
+	return rs
+}
+
+type AccountsProgramsCheckoutSettingsService struct {
 	s *APIService
 }
 
@@ -1233,6 +1245,130 @@ type CarrierRate struct {
 
 func (s CarrierRate) MarshalJSON() ([]byte, error) {
 	type NoMethod CarrierRate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CheckoutSettings: CheckoutSettings
+// (https://support.google.com/merchants/answer/13945960) for a specific
+// merchant.
+type CheckoutSettings struct {
+	// EffectiveEnrollmentState: Output only. The effective value of
+	// enrollment_state for a given merchant ID. If account level settings are
+	// present then this value will be a copy of the account level settings.
+	// Otherwise, it will have the value of the parent account (for only
+	// marketplace sellers).
+	//
+	// Possible values:
+	//   "CHECKOUT_ENROLLMENT_STATE_UNSPECIFIED" - Default enrollment state when
+	// enrollment state is not specified.
+	//   "INACTIVE" - Merchant has not enrolled into the program.
+	//   "ENROLLED" - Merchant has enrolled into the program by providing either an
+	// account level URL or checkout URLs as part of their feed.
+	//   "OPTED_OUT" - Merchant has previously enrolled but opted out of the
+	// program.
+	EffectiveEnrollmentState string `json:"effectiveEnrollmentState,omitempty"`
+	// EffectiveReviewState: Output only. The effective value of `review_state` for
+	// a given merchant ID. If account level settings are present then this value
+	// will be a copy of the account level settings. Otherwise, it will have the
+	// value of the parent account (for only marketplace sellers).
+	//
+	// Possible values:
+	//   "CHECKOUT_REVIEW_STATE_UNSPECIFIED" - Default review state when review
+	// state is not specified.
+	//   "IN_REVIEW" - Merchant provided URLs are being reviewed for data quality
+	// issues.
+	//   "APPROVED" - Merchant account has been approved. Indicates the data
+	// quality checks have passed.
+	//   "DISAPPROVED" - Merchant account has been disapproved due to data quality
+	// issues.
+	EffectiveReviewState string `json:"effectiveReviewState,omitempty"`
+	// EffectiveUriSettings: Output only. The effective value of `uri_settings` for
+	// a given merchant. If account level settings are present then this value will
+	// be a copy of url settings. Otherwise, it will have the value of the parent
+	// account (for only marketplace sellers).
+	EffectiveUriSettings *UriSettings `json:"effectiveUriSettings,omitempty"`
+	// EligibleDestinations: Optional. The destinations to which the checkout
+	// program applies, valid destination values are `SHOPPING_ADS`,
+	// `FREE_LISTINGS`
+	//
+	// Possible values:
+	//   "DESTINATION_ENUM_UNSPECIFIED" - Not specified.
+	//   "SHOPPING_ADS" - [Shopping
+	// ads](https://support.google.com/google-ads/answer/2454022).
+	//   "DISPLAY_ADS" - [Display
+	// ads](https://support.google.com/merchants/answer/6069387).
+	//   "LOCAL_INVENTORY_ADS" - [Local inventory
+	// ads](https://support.google.com/merchants/answer/3057972).
+	//   "FREE_LISTINGS" - [Free
+	// listings](https://support.google.com/merchants/answer/9199328).
+	//   "FREE_LOCAL_LISTINGS" - [Free local product
+	// listings](https://support.google.com/merchants/answer/9825611).
+	//   "YOUTUBE_SHOPPING" - [YouTube
+	// Shopping](https://support.google.com/merchants/answer/12362804).
+	//   "YOUTUBE_SHOPPING_CHECKOUT" - Youtube shopping checkout.
+	//   "YOUTUBE_AFFILIATE" - [Youtube
+	// Affiliate](https://support.google.com/youtube/answer/13376398).
+	//   "FREE_VEHICLE_LISTINGS" - [Free vehicle
+	// listings](https://support.google.com/merchants/answer/11189169).
+	//   "VEHICLE_ADS" - [Vehicle
+	// ads](https://support.google.com/merchants/answer/11189169).
+	//   "CLOUD_RETAIL" - [Cloud
+	// retail](https://cloud.google.com/solutions/retail).
+	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
+	// retail](https://cloud.google.com/solutions/retail).
+	EligibleDestinations []string `json:"eligibleDestinations,omitempty"`
+	// EnrollmentState: Output only. Reflects the merchant enrollment state in
+	// `Checkout` program.
+	//
+	// Possible values:
+	//   "CHECKOUT_ENROLLMENT_STATE_UNSPECIFIED" - Default enrollment state when
+	// enrollment state is not specified.
+	//   "INACTIVE" - Merchant has not enrolled into the program.
+	//   "ENROLLED" - Merchant has enrolled into the program by providing either an
+	// account level URL or checkout URLs as part of their feed.
+	//   "OPTED_OUT" - Merchant has previously enrolled but opted out of the
+	// program.
+	EnrollmentState string `json:"enrollmentState,omitempty"`
+	// Name: Identifier. The resource name of the program configuration settings.
+	// Format: `accounts/{account}/programs/{program}/checkoutSettings`
+	Name string `json:"name,omitempty"`
+	// ReviewState: Output only. Reflects the merchant review state in `Checkout`
+	// program. This is set based on the data quality reviews of the URL provided
+	// by the merchant. A merchant with enrollment state as `ENROLLED` can be in
+	// the following review states: `IN_REVIEW`, `APPROVED` or `DISAPPROVED`. A
+	// merchant must be in an `enrollment_state` of `ENROLLED` before a review can
+	// begin for the merchant.For more details, check the help center doc.
+	//
+	// Possible values:
+	//   "CHECKOUT_REVIEW_STATE_UNSPECIFIED" - Default review state when review
+	// state is not specified.
+	//   "IN_REVIEW" - Merchant provided URLs are being reviewed for data quality
+	// issues.
+	//   "APPROVED" - Merchant account has been approved. Indicates the data
+	// quality checks have passed.
+	//   "DISAPPROVED" - Merchant account has been disapproved due to data quality
+	// issues.
+	ReviewState string `json:"reviewState,omitempty"`
+	// UriSettings: URI settings for cart or checkout URL.
+	UriSettings *UriSettings `json:"uriSettings,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EffectiveEnrollmentState")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveEnrollmentState") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CheckoutSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckoutSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4190,6 +4326,36 @@ func (s TransitTimeValue) MarshalJSON() ([]byte, error) {
 
 // UnclaimHomepageRequest: Request message for the `UnclaimHomepage` method.
 type UnclaimHomepageRequest struct {
+}
+
+// UriSettings: URL settings for cart or checkout URL.
+type UriSettings struct {
+	// CartUriTemplate: Cart URL template. When the placeholders are expanded will
+	// redirect the buyer to the cart page on the merchant website with the
+	// selected item in cart. For more details, check the help center doc
+	// (https://support.google.com/merchants/answer/13945960#method1&zippy=%2Cproduct-level-url-formatting%2Caccount-level-url-formatting)
+	CartUriTemplate string `json:"cartUriTemplate,omitempty"`
+	// CheckoutUriTemplate: Checkout URL template. When the placeholders are
+	// expanded will redirect the buyer to the merchant checkout page with the item
+	// in the cart. For more details, check the help center doc
+	// (https://support.google.com/merchants/answer/13945960#method1&zippy=%2Cproduct-level-url-formatting%2Caccount-level-url-formatting)
+	CheckoutUriTemplate string `json:"checkoutUriTemplate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CartUriTemplate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CartUriTemplate") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UriSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod UriSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // User: The `User` message represents a user associated with a Merchant Center
@@ -9062,6 +9228,436 @@ func (c *AccountsProgramsListCall) Pages(ctx context.Context, f func(*ListProgra
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type AccountsProgramsCheckoutSettingsCreateCall struct {
+	s                *APIService
+	parent           string
+	checkoutsettings *CheckoutSettings
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Create: Creates `CheckoutSettings` for the given merchant.
+//
+//   - parent: The merchant account for which the `CheckoutSettings` will be
+//     created.
+func (r *AccountsProgramsCheckoutSettingsService) Create(parent string, checkoutsettings *CheckoutSettings) *AccountsProgramsCheckoutSettingsCreateCall {
+	c := &AccountsProgramsCheckoutSettingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.checkoutsettings = checkoutsettings
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsProgramsCheckoutSettingsCreateCall) Fields(s ...googleapi.Field) *AccountsProgramsCheckoutSettingsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsProgramsCheckoutSettingsCreateCall) Context(ctx context.Context) *AccountsProgramsCheckoutSettingsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsProgramsCheckoutSettingsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsProgramsCheckoutSettingsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.checkoutsettings)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+parent}/checkoutSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.programs.checkoutSettings.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.programs.checkoutSettings.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CheckoutSettings.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsProgramsCheckoutSettingsCreateCall) Do(opts ...googleapi.CallOption) (*CheckoutSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CheckoutSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.programs.checkoutSettings.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountsProgramsCheckoutSettingsDeleteCheckoutSettingsCall struct {
+	s          *APIService
+	nameid     string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// DeleteCheckoutSettings: Deletes `CheckoutSettings` and unenrolls merchant
+// from `Checkout` program.
+//
+//   - name: The name/identifier of the merchant account. Format:
+//     `accounts/{account}/programs/{program}/checkoutSettings`.
+func (r *AccountsProgramsCheckoutSettingsService) DeleteCheckoutSettings(nameid string) *AccountsProgramsCheckoutSettingsDeleteCheckoutSettingsCall {
+	c := &AccountsProgramsCheckoutSettingsDeleteCheckoutSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsProgramsCheckoutSettingsDeleteCheckoutSettingsCall) Fields(s ...googleapi.Field) *AccountsProgramsCheckoutSettingsDeleteCheckoutSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsProgramsCheckoutSettingsDeleteCheckoutSettingsCall) Context(ctx context.Context) *AccountsProgramsCheckoutSettingsDeleteCheckoutSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsProgramsCheckoutSettingsDeleteCheckoutSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsProgramsCheckoutSettingsDeleteCheckoutSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.programs.checkoutSettings.deleteCheckoutSettings", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.programs.checkoutSettings.deleteCheckoutSettings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountsProgramsCheckoutSettingsDeleteCheckoutSettingsCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.programs.checkoutSettings.deleteCheckoutSettings", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountsProgramsCheckoutSettingsGetCheckoutSettingsCall struct {
+	s            *APIService
+	nameid       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetCheckoutSettings: Gets `CheckoutSettings` for the given merchant. This
+// includes information about review state, enrollment state and URL settings.
+//
+//   - name: The name/identifier of the merchant account. Format:
+//     `accounts/{account}/programs/{program}/checkoutSettings`.
+func (r *AccountsProgramsCheckoutSettingsService) GetCheckoutSettings(nameid string) *AccountsProgramsCheckoutSettingsGetCheckoutSettingsCall {
+	c := &AccountsProgramsCheckoutSettingsGetCheckoutSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsProgramsCheckoutSettingsGetCheckoutSettingsCall) Fields(s ...googleapi.Field) *AccountsProgramsCheckoutSettingsGetCheckoutSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsProgramsCheckoutSettingsGetCheckoutSettingsCall) IfNoneMatch(entityTag string) *AccountsProgramsCheckoutSettingsGetCheckoutSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsProgramsCheckoutSettingsGetCheckoutSettingsCall) Context(ctx context.Context) *AccountsProgramsCheckoutSettingsGetCheckoutSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsProgramsCheckoutSettingsGetCheckoutSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsProgramsCheckoutSettingsGetCheckoutSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.programs.checkoutSettings.getCheckoutSettings", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.programs.checkoutSettings.getCheckoutSettings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CheckoutSettings.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsProgramsCheckoutSettingsGetCheckoutSettingsCall) Do(opts ...googleapi.CallOption) (*CheckoutSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CheckoutSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.programs.checkoutSettings.getCheckoutSettings", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountsProgramsCheckoutSettingsUpdateCheckoutSettingsCall struct {
+	s                *APIService
+	name             string
+	checkoutsettings *CheckoutSettings
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// UpdateCheckoutSettings: Updates `CheckoutSettings` for the given merchant.
+//
+//   - name: Identifier. The resource name of the program configuration settings.
+//     Format: `accounts/{account}/programs/{program}/checkoutSettings`.
+func (r *AccountsProgramsCheckoutSettingsService) UpdateCheckoutSettings(name string, checkoutsettings *CheckoutSettings) *AccountsProgramsCheckoutSettingsUpdateCheckoutSettingsCall {
+	c := &AccountsProgramsCheckoutSettingsUpdateCheckoutSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.checkoutsettings = checkoutsettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. List of
+// fields being updated. The following fields are supported (in both
+// `snake_case` and `lowerCamelCase`): - `eligible_destinations` -
+// `uri_settings`
+func (c *AccountsProgramsCheckoutSettingsUpdateCheckoutSettingsCall) UpdateMask(updateMask string) *AccountsProgramsCheckoutSettingsUpdateCheckoutSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsProgramsCheckoutSettingsUpdateCheckoutSettingsCall) Fields(s ...googleapi.Field) *AccountsProgramsCheckoutSettingsUpdateCheckoutSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsProgramsCheckoutSettingsUpdateCheckoutSettingsCall) Context(ctx context.Context) *AccountsProgramsCheckoutSettingsUpdateCheckoutSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsProgramsCheckoutSettingsUpdateCheckoutSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsProgramsCheckoutSettingsUpdateCheckoutSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.checkoutsettings)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.programs.checkoutSettings.updateCheckoutSettings", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.programs.checkoutSettings.updateCheckoutSettings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CheckoutSettings.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsProgramsCheckoutSettingsUpdateCheckoutSettingsCall) Do(opts ...googleapi.CallOption) (*CheckoutSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CheckoutSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.programs.checkoutSettings.updateCheckoutSettings", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type AccountsRegionsCreateCall struct {

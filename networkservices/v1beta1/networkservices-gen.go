@@ -612,7 +612,8 @@ type ExtensionChain struct {
 	// Extensions: Required. A set of extensions to execute for the matching
 	// request. At least one extension is required. Up to 3 extensions can be
 	// defined for each extension chain for `LbTrafficExtension` resource.
-	// `LbRouteExtension` chains are limited to 1 extension per extension chain.
+	// `LbRouteExtension` and `LbEdgeExtension` chains are limited to 1 extension
+	// per extension chain.
 	Extensions []*ExtensionChainExtension `json:"extensions,omitempty"`
 	// MatchCondition: Required. Conditions under which this chain is invoked for a
 	// request.
@@ -753,12 +754,15 @@ type ExtensionChainExtension struct {
 	// `projects/{project}/locations/{location}/wasmPlugins/{plugin}` or
 	// `//networkservices.googleapis.com/projects/{project}/locations/{location}/was
 	// mPlugins/{wasmPlugin}`. Plugin extensions are currently supported for the
-	// `LbTrafficExtension` and the `LbRouteExtension` resources.
+	// `LbTrafficExtension`, the `LbRouteExtension`, and the `LbEdgeExtension`
+	// resources.
 	Service string `json:"service,omitempty"`
 	// SupportedEvents: Optional. A set of events during request or response
-	// processing for which this extension is called. This field is required for
-	// the `LbTrafficExtension` resource. It is optional for the `LbRouteExtension`
-	// resource. If unspecified `REQUEST_HEADERS` event is assumed as supported.
+	// processing for which this extension is called. For the `LbTrafficExtension`
+	// resource, this field is required. For the `LbRouteExtension` resource, this
+	// field is optional. If unspecified, `REQUEST_HEADERS` event is assumed as
+	// supported. For the `LbEdgeExtension` resource, this field is required and
+	// must only contain `REQUEST_HEADERS` event.
 	//
 	// Possible values:
 	//   "EVENT_TYPE_UNSPECIFIED" - Unspecified value. Do not use.
@@ -2174,8 +2178,8 @@ func (s HttpRouteURLRewrite) MarshalJSON() ([]byte, error) {
 }
 
 // LbEdgeExtension: `LbEdgeExtension` is a resource that lets the extension
-// service influence the Backend Service selection or Cloud CDN cache keys by
-// modifying the request headers.
+// service influence the selection of backend services and Cloud CDN cache keys
+// by modifying request headers.
 type LbEdgeExtension struct {
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2198,11 +2202,9 @@ type LbEdgeExtension struct {
 	// (https://cloud.google.com/compute/docs/labeling-resources#requirements) for
 	// Google Cloud resources.
 	Labels map[string]string `json:"labels,omitempty"`
-	// LoadBalancingScheme: Required. All backend services and forwarding rules
-	// referenced by this extension must share the same load balancing scheme.
-	// Supported values: `EXTERNAL_MANAGED`. For more information, refer to Backend
-	// services overview
-	// (https://cloud.google.com/load-balancing/docs/backend-service).
+	// LoadBalancingScheme: Required. All forwarding rules referenced by this
+	// extension must share the same load balancing scheme. Supported values:
+	// `EXTERNAL_MANAGED`.
 	//
 	// Possible values:
 	//   "LOAD_BALANCING_SCHEME_UNSPECIFIED" - Default value. Do not use.

@@ -2092,6 +2092,8 @@ type GoogleCloudDialogflowCxV3DataStoreConnectionSignalsSearchSnippet struct {
 	DocumentTitle string `json:"documentTitle,omitempty"`
 	// DocumentUri: Uri for the document. Present if specified for the document.
 	DocumentUri string `json:"documentUri,omitempty"`
+	// Metadata: Metadata associated with the document.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Text: Text included in the prompt.
 	Text string `json:"text,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DocumentTitle") to
@@ -4925,7 +4927,7 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	// Possible values:
 	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified.
 	//   "AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed little-endian
-	// samples (Linear PCM).
+	// samples (Linear PCM). LINT: LEGACY_NAMES
 	//   "AUDIO_ENCODING_FLAC" - [`FLAC`](https://xiph.org/flac/documentation.html)
 	// (Free Lossless Audio Codec) is the recommended encoding because it is
 	// lossless (therefore recognition is not compromised) and requires only about
@@ -6355,9 +6357,10 @@ type GoogleCloudDialogflowCxV3OutputAudioConfig struct {
 	//   "OUTPUT_AUDIO_ENCODING_UNSPECIFIED" - Not specified.
 	//   "OUTPUT_AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed
 	// little-endian samples (Linear PCM). Audio content returned as LINEAR16 also
-	// contains a WAV header.
+	// contains a WAV header. LINT: LEGACY_NAMES
 	//   "OUTPUT_AUDIO_ENCODING_MP3" - MP3 audio at 32kbps.
-	//   "OUTPUT_AUDIO_ENCODING_MP3_64_KBPS" - MP3 audio at 64kbps.
+	//   "OUTPUT_AUDIO_ENCODING_MP3_64_KBPS" - MP3 audio at 64kbps. LINT:
+	// LEGACY_NAMES
 	//   "OUTPUT_AUDIO_ENCODING_OGG_OPUS" - Opus encoded audio wrapped in an ogg
 	// container. The result will be a file which can be played natively on
 	// Android, and in browsers (at least Chrome and Firefox). The quality of the
@@ -11931,7 +11934,7 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	// Possible values:
 	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified.
 	//   "AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed little-endian
-	// samples (Linear PCM).
+	// samples (Linear PCM). LINT: LEGACY_NAMES
 	//   "AUDIO_ENCODING_FLAC" - [`FLAC`](https://xiph.org/flac/documentation.html)
 	// (Free Lossless Audio Codec) is the recommended encoding because it is
 	// lossless (therefore recognition is not compromised) and requires only about

@@ -3072,7 +3072,7 @@ type EffectiveEventThreatDetectionCustomModule struct {
 	//
 	// Possible values:
 	//   "CLOUD_PROVIDER_UNSPECIFIED" - Unspecified cloud provider.
-	//   "GOOGLE_CLOUD_PLATFORM" - Google Cloud Platform.
+	//   "GOOGLE_CLOUD_PLATFORM" - Google Cloud.
 	//   "AMAZON_WEB_SERVICES" - Amazon Web Services.
 	//   "MICROSOFT_AZURE" - Microsoft Azure.
 	CloudProvider string `json:"cloudProvider,omitempty"`
@@ -3760,8 +3760,8 @@ func (s Folder) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GcpMetadata: GCP metadata associated with the resource, only applicable if
-// the finding's cloud provider is Google Cloud Platform.
+// GcpMetadata: Google Cloud metadata associated with the resource. Only
+// applicable if the finding's cloud provider is Google Cloud.
 type GcpMetadata struct {
 	// Folders: Output only. Contains a Folder message for each folder in the
 	// assets ancestry. The first folder is the deepest nested folder, and the last
@@ -4062,7 +4062,7 @@ type GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule str
 	//
 	// Possible values:
 	//   "CLOUD_PROVIDER_UNSPECIFIED" - Unspecified cloud provider.
-	//   "GOOGLE_CLOUD_PLATFORM" - Google Cloud Platform.
+	//   "GOOGLE_CLOUD_PLATFORM" - Google Cloud.
 	//   "AMAZON_WEB_SERVICES" - Amazon Web Services.
 	//   "MICROSOFT_AZURE" - Microsoft Azure.
 	CloudProvider string `json:"cloudProvider,omitempty"`
@@ -4314,7 +4314,7 @@ type GoogleCloudSecuritycenterV1Resource struct {
 	//
 	// Possible values:
 	//   "CLOUD_PROVIDER_UNSPECIFIED" - The cloud provider is unspecified.
-	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud Platform.
+	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud.
 	//   "AMAZON_WEB_SERVICES" - The cloud provider is Amazon Web Services.
 	//   "MICROSOFT_AZURE" - The cloud provider is Microsoft Azure.
 	CloudProvider string `json:"cloudProvider,omitempty"`
@@ -4409,7 +4409,7 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	//
 	// Possible values:
 	//   "CLOUD_PROVIDER_UNSPECIFIED" - The cloud provider is unspecified.
-	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud Platform.
+	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud.
 	//   "AMAZON_WEB_SERVICES" - The cloud provider is Amazon Web Services.
 	//   "MICROSOFT_AZURE" - The cloud provider is Microsoft Azure.
 	CloudProvider string `json:"cloudProvider,omitempty"`
@@ -8190,6 +8190,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "CREDENTIALS_FROM_PASSWORD_STORES" - T1555
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	//   "PLUGGABLE_AUTHENTICATION_MODULES" - T1556.003
+	//   "MULTI_FACTOR_AUTHENTICATION" - T1556.006
 	//   "IMPAIR_DEFENSES" - T1562
 	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
 	//   "INDICATOR_BLOCKING" - T1562.006
@@ -8356,6 +8357,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "CREDENTIALS_FROM_PASSWORD_STORES" - T1555
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	//   "PLUGGABLE_AUTHENTICATION_MODULES" - T1556.003
+	//   "MULTI_FACTOR_AUTHENTICATION" - T1556.006
 	//   "IMPAIR_DEFENSES" - T1562
 	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
 	//   "INDICATOR_BLOCKING" - T1562.006
@@ -9005,7 +9007,7 @@ type GoogleCloudSecuritycenterV2Resource struct {
 	//
 	// Possible values:
 	//   "CLOUD_PROVIDER_UNSPECIFIED" - The cloud provider is unspecified.
-	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud Platform.
+	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud.
 	//   "AMAZON_WEB_SERVICES" - The cloud provider is Amazon Web Services.
 	//   "MICROSOFT_AZURE" - The cloud provider is Microsoft Azure.
 	CloudProvider string `json:"cloudProvider,omitempty"`
@@ -9127,7 +9129,7 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	//
 	// Possible values:
 	//   "CLOUD_PROVIDER_UNSPECIFIED" - The cloud provider is unspecified.
-	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud Platform.
+	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud.
 	//   "AMAZON_WEB_SERVICES" - The cloud provider is Amazon Web Services.
 	//   "MICROSOFT_AZURE" - The cloud provider is Microsoft Azure.
 	CloudProvider string `json:"cloudProvider,omitempty"`
@@ -11087,6 +11089,7 @@ type MitreAttack struct {
 	//   "CREDENTIALS_FROM_PASSWORD_STORES" - T1555
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	//   "PLUGGABLE_AUTHENTICATION_MODULES" - T1556.003
+	//   "MULTI_FACTOR_AUTHENTICATION" - T1556.006
 	//   "IMPAIR_DEFENSES" - T1562
 	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
 	//   "INDICATOR_BLOCKING" - T1562.006
@@ -11253,6 +11256,7 @@ type MitreAttack struct {
 	//   "CREDENTIALS_FROM_PASSWORD_STORES" - T1555
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
 	//   "PLUGGABLE_AUTHENTICATION_MODULES" - T1556.003
+	//   "MULTI_FACTOR_AUTHENTICATION" - T1556.006
 	//   "IMPAIR_DEFENSES" - T1562
 	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
 	//   "INDICATOR_BLOCKING" - T1562.006
@@ -12063,7 +12067,7 @@ type Resource struct {
 	//
 	// Possible values:
 	//   "CLOUD_PROVIDER_UNSPECIFIED" - The cloud provider is unspecified.
-	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud Platform.
+	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud.
 	//   "AMAZON_WEB_SERVICES" - The cloud provider is Amazon Web Services.
 	//   "MICROSOFT_AZURE" - The cloud provider is Microsoft Azure.
 	CloudProvider string `json:"cloudProvider,omitempty"`
@@ -12690,7 +12694,7 @@ type Simulation struct {
 	//
 	// Possible values:
 	//   "CLOUD_PROVIDER_UNSPECIFIED" - The cloud provider is unspecified.
-	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud Platform.
+	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud.
 	//   "AMAZON_WEB_SERVICES" - The cloud provider is Amazon Web Services.
 	//   "MICROSOFT_AZURE" - The cloud provider is Microsoft Azure.
 	CloudProvider string `json:"cloudProvider,omitempty"`
@@ -13246,7 +13250,7 @@ type VulnerabilitySnapshot struct {
 	//
 	// Possible values:
 	//   "CLOUD_PROVIDER_UNSPECIFIED" - The cloud provider is unspecified.
-	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud Platform.
+	//   "GOOGLE_CLOUD_PLATFORM" - The cloud provider is Google Cloud.
 	//   "AMAZON_WEB_SERVICES" - The cloud provider is Amazon Web Services.
 	//   "MICROSOFT_AZURE" - The cloud provider is Microsoft Azure.
 	CloudProvider string `json:"cloudProvider,omitempty"`

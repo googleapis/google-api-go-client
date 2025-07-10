@@ -1486,7 +1486,7 @@ func (s DeletionMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DeprecatedEvent: A Google Chat app interaction event that represents and
+// DeprecatedEvent:  A Google Chat app interaction event that represents and
 // contains data about a user's interaction with a Chat app. To configure your
 // Chat app to receive interaction events, see Receive and respond to user
 // interactions
@@ -1494,7 +1494,14 @@ func (s DeletionMetadata) MarshalJSON() ([]byte, error) {
 // In addition to receiving events from user interactions, Chat apps can
 // receive events about changes to spaces, such as when a new member is added
 // to a space. To learn about space events, see Work with events from Google
-// Chat (https://developers.google.com/workspace/chat/events-overview).
+// Chat (https://developers.google.com/workspace/chat/events-overview). Note:
+// This event is only used for Chat interaction events
+// (https://developers.google.com/workspace/chat/receive-respond-interactions).
+// If your Chat app is built as a Google Workspace add-on
+// (https://developers.google.com/workspace/add-ons/chat/build), see Chat event
+// objects
+// (https://developers.google.com/workspace/add-ons/concepts/event-objects#chat-event-object)
+// in the add-ons documentation.
 type DeprecatedEvent struct {
 	// Action: For `CARD_CLICKED` interaction events, the form action data
 	// associated when a user clicks a card or dialog. To learn more, see Read form
@@ -3286,6 +3293,11 @@ func (s GoogleAppsCardV1Section) MarshalJSON() ([]byte, error) {
 type GoogleAppsCardV1SelectionInput struct {
 	// ExternalDataSource: An external data source, such as a relational database.
 	ExternalDataSource *GoogleAppsCardV1Action `json:"externalDataSource,omitempty"`
+	// HintText: Optional. Text that appears below the selection input field meant
+	// to assist users by prompting them to enter a certain value. This text is
+	// always visible. Only supported by Google Workspace Workflows, but not Google
+	// Chat API or Google Workspace Add-ons.
+	HintText string `json:"hintText,omitempty"`
 	// Items: An array of selectable items. For example, an array of radio buttons
 	// or checkboxes. Supports up to 100 items.
 	Items []*GoogleAppsCardV1SelectionItem `json:"items,omitempty"`

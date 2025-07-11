@@ -189,7 +189,8 @@ type Application struct {
 	// Etag: Etag of the resource.
 	Etag string `json:"etag,omitempty"`
 	// Id: The application's ID. Retrievable by using the `applications.list()`
-	// (/admin-sdk/data-transfer/reference/rest/v1/applications/list) method.
+	// (https://developers.google.com/workspace/admin/data-transfer/reference/rest/v1/applications/list)
+	// method.
 	Id int64 `json:"id,omitempty,string"`
 	// Kind: Identifies the resource as a DataTransfer Application Resource.
 	Kind string `json:"kind,omitempty"`
@@ -229,7 +230,8 @@ type ApplicationDataTransfer struct {
 	// These parameters are used to select the data which will get transferred in
 	// context of this application. For more information about the specific values
 	// available for each application, see the Transfer parameters
-	// (/admin-sdk/data-transfer/v1/parameters) reference.
+	// (https://developers.google.com/workspace/admin/data-transfer/v1/parameters)
+	// reference.
 	ApplicationTransferParams []*ApplicationTransferParam `json:"applicationTransferParams,omitempty"`
 	// ApplicationTransferStatus: Read-only. Current status of transfer for this
 	// application.
@@ -757,8 +759,8 @@ type TransfersInsertCall struct {
 }
 
 // Insert: Inserts a data transfer request. See the Transfer parameters
-// (/admin-sdk/data-transfer/v1/parameters) reference for specific application
-// requirements.
+// (https://developers.google.com/workspace/admin/data-transfer/v1/parameters)
+// reference for specific application requirements.
 func (r *TransfersService) Insert(datatransfer *DataTransfer) *TransfersInsertCall {
 	c := &TransfersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datatransfer = datatransfer

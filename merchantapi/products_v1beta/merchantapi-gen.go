@@ -315,8 +315,12 @@ type Attributes struct {
 	GoogleProductCategory string `json:"googleProductCategory,omitempty"`
 	// Gtin: Global Trade Item Numbers (GTIN
 	// (https://support.google.com/merchants/answer/188494#gtin)) of the item. You
-	// can provide up to 10 GTINs.
+	// can provide up to 10 GTINs. Deprecated: Use `gtins` instead.
 	Gtin []string `json:"gtin,omitempty"`
+	// Gtins: Global Trade Item Numbers (GTIN
+	// (https://support.google.com/merchants/answer/188494#gtin)) of the item. You
+	// can provide up to 10 GTINs.
+	Gtins []string `json:"gtins,omitempty"`
 	// IdentifierExists: Set this value to false when the item does not have unique
 	// product identifiers appropriate to its category, such as GTIN, MPN, and
 	// brand. Defaults to true, if not provided.

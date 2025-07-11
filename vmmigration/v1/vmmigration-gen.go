@@ -628,7 +628,7 @@ type AwsVmDetails struct {
 	BootOption string `json:"bootOption,omitempty"`
 	// CommittedStorageMb: The total size of the storage allocated to the VM in MB.
 	CommittedStorageMb int64 `json:"committedStorageMb,omitempty,string"`
-	// CpuCount: The number of cpus the VM has.
+	// CpuCount: The number of CPU cores the VM has.
 	CpuCount int64 `json:"cpuCount,omitempty"`
 	// DiskCount: The number of disks the VM has.
 	DiskCount int64 `json:"diskCount,omitempty"`
@@ -661,6 +661,9 @@ type AwsVmDetails struct {
 	SourceId string `json:"sourceId,omitempty"`
 	// Tags: The tags of the VM.
 	Tags map[string]string `json:"tags,omitempty"`
+	// VcpuCount: The number of vCPUs the VM has. It is calculated as the number of
+	// CPU cores * threads per CPU the VM has.
+	VcpuCount int64 `json:"vcpuCount,omitempty"`
 	// VirtualizationType: The virtualization type.
 	//
 	// Possible values:

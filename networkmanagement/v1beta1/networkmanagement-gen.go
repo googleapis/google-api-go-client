@@ -1210,6 +1210,8 @@ type DropInfo struct {
 	//   "NO_KNOWN_ROUTE_FROM_NCC_NETWORK_TO_DESTINATION" - Packet from the unknown
 	// NCC network is dropped due to no known route from the source network to the
 	// destination IP address.
+	//   "CLOUD_NAT_PROTOCOL_UNSUPPORTED" - Packet is dropped by Cloud NAT due to
+	// using an unsupported protocol.
 	Cause string `json:"cause,omitempty"`
 	// DestinationIp: Destination IP address of the dropped packet (if relevant).
 	DestinationIp string `json:"destinationIp,omitempty"`

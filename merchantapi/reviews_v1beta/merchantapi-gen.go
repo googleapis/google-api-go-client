@@ -746,9 +746,15 @@ type ProductReviewAttributes struct {
 	// Gtins: Optional. Contains GTINs (global trade item numbers) associated with
 	// a product. Sub-types of GTINs (e.g. UPC, EAN, ISBN, JAN) are supported.
 	Gtins []string `json:"gtins,omitempty"`
+	// IsIncentivizedReview: Optional. Indicates whether the review is
+	// incentivized.
+	IsIncentivizedReview bool `json:"isIncentivizedReview,omitempty"`
 	// IsSpam: Optional. Indicates whether the review is marked as spam in the
 	// publisher's system.
 	IsSpam bool `json:"isSpam,omitempty"`
+	// IsVerifiedPurchase: Optional. Indicates whether the reviewer's purchase is
+	// verified.
+	IsVerifiedPurchase bool `json:"isVerifiedPurchase,omitempty"`
 	// MaxRating: Optional. The maximum possible number for the rating. The value
 	// of the max rating must be greater than the value of the min attribute.
 	MaxRating int64 `json:"maxRating,omitempty,string"`

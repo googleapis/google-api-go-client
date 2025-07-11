@@ -901,6 +901,7 @@ func (s CivicinfoSchemaV2Precinct) MarshalJSON() ([]byte, error) {
 
 // CivicinfoSchemaV2SimpleAddressType: A simple representation of an address.
 type CivicinfoSchemaV2SimpleAddressType struct {
+	AddressLine []string `json:"addressLine,omitempty"`
 	// City: The city or town for the address.
 	City string `json:"city,omitempty"`
 	// Line1: The street name and number of this address.
@@ -915,15 +916,15 @@ type CivicinfoSchemaV2SimpleAddressType struct {
 	State string `json:"state,omitempty"`
 	// Zip: The US Postal Zip Code of the address.
 	Zip string `json:"zip,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "City") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AddressLine") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "City") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "AddressLine") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

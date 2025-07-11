@@ -895,6 +895,10 @@ type ConnectCluster struct {
 	// projects/{project_number}/locations/{location}/connectClusters/{connect_clust
 	// er_id}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. The current state of the cluster.
 	//
 	// Possible values:

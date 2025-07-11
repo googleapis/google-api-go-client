@@ -831,6 +831,8 @@ type GoogleChromeManagementV1ChromeAppInfo struct {
 	// KioskEnabled: Output only. Whether this app is enabled for Kiosk mode on
 	// ChromeOS devices
 	KioskEnabled bool `json:"kioskEnabled,omitempty"`
+	// ManifestVersion: Output only. The version of this extension's manifest.
+	ManifestVersion int64 `json:"manifestVersion,omitempty,string"`
 	// MinUserCount: Output only. The minimum number of users using this app.
 	MinUserCount int64 `json:"minUserCount,omitempty"`
 	// Permissions: Output only. Every custom permission requested by the app.

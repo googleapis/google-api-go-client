@@ -380,7 +380,8 @@ func (s GoogleCloudPaymentsResellerSubscriptionV1Duration) MarshalJSON() ([]byte
 // for entitling the previously provisioned subscription to an end user.
 type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionIntent struct {
 	// Name: Required. The name of the subscription resource that is entitled to
-	// the current end user.
+	// the current end user. It is in the format of
+	// "partners/{partner_id}/subscriptions/{subscriptionId}".
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1704,8 +1705,7 @@ func (s GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse)
 // guaranteed by the same subscription id. Please refer to the Google Managed
 // Signup
 // (/payments/reseller/subscription/reference/index/User.Signup.Integration/Goog
-// le.Managed.Signup.\(In.Preview\)) documentation for additional integration
-// details.
+// le.Managed.Signup) documentation for additional integration details.
 type GoogleCloudPaymentsResellerSubscriptionV1UserSession struct {
 	// ExpireTime: Output only. The time at which the user session expires.
 	ExpireTime string `json:"expireTime,omitempty"`

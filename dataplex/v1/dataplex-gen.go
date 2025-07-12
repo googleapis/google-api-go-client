@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	dataplexService, err := dataplex.NewService(ctx, option.WithScopes(dataplex.CloudPlatformReadOnlyScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -101,12 +106,17 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// View your data across Google Cloud services and see the email address of
+	// your Google Account
+	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/cloud-platform.read-only",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -3602,7 +3612,7 @@ func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigge
 // (https://cloud.google.com/dataplex/docs/data-profiling-overview). Data
 // discovery: scans data in Cloud Storage buckets to extract and then catalog
 // metadata. For more information, see Discover and catalog Cloud Storage data
-// (https://cloud.google.com/bigquery/docs/automatic-discovery). LINT.IfChange
+// (https://cloud.google.com/bigquery/docs/automatic-discovery).
 type GoogleCloudDataplexV1DataScan struct {
 	// CreateTime: Output only. The time when the scan was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3637,7 +3647,7 @@ type GoogleCloudDataplexV1DataScan struct {
 	// the form:
 	// projects/{project}/locations/{location_id}/dataScans/{datascan_id}, where
 	// project refers to a project_id or project_number and location_id refers to a
-	// GCP region.
+	// Google Cloud region.
 	Name string `json:"name,omitempty"`
 	// State: Output only. Current state of the DataScan.
 	//
@@ -4091,7 +4101,7 @@ type GoogleCloudDataplexV1DataScanJob struct {
 	// DataScanJob, of the form:
 	// projects/{project}/locations/{location_id}/dataScans/{datascan_id}/jobs/{job_
 	// id}, where project refers to a project_id or project_number and location_id
-	// refers to a GCP region.
+	// refers to a Google Cloud region.
 	Name string `json:"name,omitempty"`
 	// StartTime: Output only. The time when the DataScanJob was started.
 	StartTime string `json:"startTime,omitempty"`
@@ -4145,8 +4155,8 @@ type GoogleCloudDataplexV1DataSource struct {
 	// _id}/entities/{entity_id}.
 	Entity string `json:"entity,omitempty"`
 	// Resource: Immutable. The service-qualified full resource name of the cloud
-	// resource for a DataScan job to scan against. The field could eitherbe: Cloud
-	// Storage bucket for DataDiscoveryScan Format:
+	// resource for a DataScan job to scan against. The field could either be:
+	// Cloud Storage bucket for DataDiscoveryScan Format:
 	// //storage.googleapis.com/projects/PROJECT_ID/buckets/BUCKET_ID or BigQuery
 	// table of type "TABLE" for DataProfileScan/DataQualityScan Format:
 	// //bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tables/TABL
@@ -5344,8 +5354,8 @@ func (s GoogleCloudDataplexV1GenerateDataQualityRulesResponse) MarshalJSON() ([]
 
 // GoogleCloudDataplexV1Glossary: A Glossary represents a collection of
 // GlossaryCategories and GlossaryTerms defined by the user. Glossary is a top
-// level resource and is the GCP parent resource of all the GlossaryCategories
-// and GlossaryTerms within it.
+// level resource and is the Google Cloud parent resource of all the
+// GlossaryCategories and GlossaryTerms within it.
 type GoogleCloudDataplexV1Glossary struct {
 	// CategoryCount: Output only. The number of GlossaryCategories in the
 	// Glossary.
@@ -10364,7 +10374,7 @@ func (c *OrganizationsLocationsOperationsGetCall) Do(opts ...googleapi.CallOptio
 	return ret, nil
 }
 
-type OrganizationsLocationsOperationsListOperationsCall struct {
+type OrganizationsLocationsOperationsListCall struct {
 	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
@@ -10373,33 +10383,32 @@ type OrganizationsLocationsOperationsListOperationsCall struct {
 	header_      http.Header
 }
 
-// ListOperations: Lists operations that match the specified filter in the
-// request. If the server doesn't support this method, it returns
-// UNIMPLEMENTED.
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns UNIMPLEMENTED.
 //
 // - name: The name of the operation's parent resource.
-func (r *OrganizationsLocationsOperationsService) ListOperations(name string) *OrganizationsLocationsOperationsListOperationsCall {
-	c := &OrganizationsLocationsOperationsListOperationsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsLocationsOperationsService) List(name string) *OrganizationsLocationsOperationsListCall {
+	c := &OrganizationsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
 // Filter sets the optional parameter "filter": The standard list filter.
-func (c *OrganizationsLocationsOperationsListOperationsCall) Filter(filter string) *OrganizationsLocationsOperationsListOperationsCall {
+func (c *OrganizationsLocationsOperationsListCall) Filter(filter string) *OrganizationsLocationsOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The standard list page
 // size.
-func (c *OrganizationsLocationsOperationsListOperationsCall) PageSize(pageSize int64) *OrganizationsLocationsOperationsListOperationsCall {
+func (c *OrganizationsLocationsOperationsListCall) PageSize(pageSize int64) *OrganizationsLocationsOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The standard list page
 // token.
-func (c *OrganizationsLocationsOperationsListOperationsCall) PageToken(pageToken string) *OrganizationsLocationsOperationsListOperationsCall {
+func (c *OrganizationsLocationsOperationsListCall) PageToken(pageToken string) *OrganizationsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
@@ -10407,7 +10416,7 @@ func (c *OrganizationsLocationsOperationsListOperationsCall) PageToken(pageToken
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *OrganizationsLocationsOperationsListOperationsCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOperationsListOperationsCall {
+func (c *OrganizationsLocationsOperationsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOperationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -10415,34 +10424,34 @@ func (c *OrganizationsLocationsOperationsListOperationsCall) Fields(s ...googlea
 // IfNoneMatch sets an optional parameter which makes the operation fail if the
 // object's ETag matches the given value. This is useful for getting updates
 // only after the object has changed since the last request.
-func (c *OrganizationsLocationsOperationsListOperationsCall) IfNoneMatch(entityTag string) *OrganizationsLocationsOperationsListOperationsCall {
+func (c *OrganizationsLocationsOperationsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsOperationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *OrganizationsLocationsOperationsListOperationsCall) Context(ctx context.Context) *OrganizationsLocationsOperationsListOperationsCall {
+func (c *OrganizationsLocationsOperationsListCall) Context(ctx context.Context) *OrganizationsLocationsOperationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *OrganizationsLocationsOperationsListOperationsCall) Header() http.Header {
+func (c *OrganizationsLocationsOperationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OrganizationsLocationsOperationsListOperationsCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/operations")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
@@ -10452,17 +10461,17 @@ func (c *OrganizationsLocationsOperationsListOperationsCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.organizations.locations.operations.listOperations", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.organizations.locations.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "dataplex.organizations.locations.operations.listOperations" call.
+// Do executes the "dataplex.organizations.locations.operations.list" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *OrganizationsLocationsOperationsListOperationsCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+func (c *OrganizationsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -10492,14 +10501,14 @@ func (c *OrganizationsLocationsOperationsListOperationsCall) Do(opts ...googleap
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.organizations.locations.operations.listOperations", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.organizations.locations.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *OrganizationsLocationsOperationsListOperationsCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+func (c *OrganizationsLocationsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -13092,7 +13101,8 @@ type ProjectsLocationsDataScansCreateCall struct {
 //
 //   - parent: The resource name of the parent location:
 //     projects/{project}/locations/{location_id} where project refers to a
-//     project_id or project_number and location_id refers to a GCP region.
+//     project_id or project_number and location_id refers to a Google Cloud
+//     region.
 func (r *ProjectsLocationsDataScansService) Create(parent string, googleclouddataplexv1datascan *GoogleCloudDataplexV1DataScan) *ProjectsLocationsDataScansCreateCall {
 	c := &ProjectsLocationsDataScansCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13214,7 +13224,7 @@ type ProjectsLocationsDataScansDeleteCall struct {
 //   - name: The resource name of the dataScan:
 //     projects/{project}/locations/{location_id}/dataScans/{data_scan_id} where
 //     project refers to a project_id or project_number and location_id refers to
-//     a GCP region.
+//     a Google Cloud region.
 func (r *ProjectsLocationsDataScansService) Delete(name string) *ProjectsLocationsDataScansDeleteCall {
 	c := &ProjectsLocationsDataScansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13433,7 +13443,7 @@ type ProjectsLocationsDataScansGetCall struct {
 //   - name: The resource name of the dataScan:
 //     projects/{project}/locations/{location_id}/dataScans/{data_scan_id} where
 //     project refers to a project_id or project_number and location_id refers to
-//     a GCP region.
+//     a Google Cloud region.
 func (r *ProjectsLocationsDataScansService) Get(name string) *ProjectsLocationsDataScansGetCall {
 	c := &ProjectsLocationsDataScansGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13688,7 +13698,8 @@ type ProjectsLocationsDataScansListCall struct {
 //
 //   - parent: The resource name of the parent location:
 //     projects/{project}/locations/{location_id} where project refers to a
-//     project_id or project_number and location_id refers to a GCP region.
+//     project_id or project_number and location_id refers to a Google Cloud
+//     region.
 func (r *ProjectsLocationsDataScansService) List(parent string) *ProjectsLocationsDataScansListCall {
 	c := &ProjectsLocationsDataScansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13854,7 +13865,7 @@ type ProjectsLocationsDataScansPatchCall struct {
 //     the form:
 //     projects/{project}/locations/{location_id}/dataScans/{datascan_id}, where
 //     project refers to a project_id or project_number and location_id refers to
-//     a GCP region.
+//     a Google Cloud region.
 func (r *ProjectsLocationsDataScansService) Patch(name string, googleclouddataplexv1datascan *GoogleCloudDataplexV1DataScan) *ProjectsLocationsDataScansPatchCall {
 	c := &ProjectsLocationsDataScansPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13975,7 +13986,7 @@ type ProjectsLocationsDataScansRunCall struct {
 //   - name: The resource name of the DataScan:
 //     projects/{project}/locations/{location_id}/dataScans/{data_scan_id}. where
 //     project refers to a project_id or project_number and location_id refers to
-//     a GCP region.Only OnDemand data scans are allowed.
+//     a Google Cloud region.Only OnDemand data scans are allowed.
 func (r *ProjectsLocationsDataScansService) Run(name string, googleclouddataplexv1rundatascanrequest *GoogleCloudDataplexV1RunDataScanRequest) *ProjectsLocationsDataScansRunCall {
 	c := &ProjectsLocationsDataScansRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14410,7 +14421,7 @@ type ProjectsLocationsDataScansJobsGetCall struct {
 //   - name: The resource name of the DataScanJob:
 //     projects/{project}/locations/{location_id}/dataScans/{data_scan_id}/jobs/{d
 //     ata_scan_job_id} where project refers to a project_id or project_number
-//     and location_id refers to a GCP region.
+//     and location_id refers to a Google Cloud region.
 func (r *ProjectsLocationsDataScansJobsService) Get(name string) *ProjectsLocationsDataScansJobsGetCall {
 	c := &ProjectsLocationsDataScansJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14536,7 +14547,7 @@ type ProjectsLocationsDataScansJobsListCall struct {
 //   - parent: The resource name of the parent environment:
 //     projects/{project}/locations/{location_id}/dataScans/{data_scan_id} where
 //     project refers to a project_id or project_number and location_id refers to
-//     a GCP region.
+//     a Google Cloud region.
 func (r *ProjectsLocationsDataScansJobsService) List(parent string) *ProjectsLocationsDataScansJobsListCall {
 	c := &ProjectsLocationsDataScansJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15170,7 +15181,7 @@ type ProjectsLocationsDataTaxonomiesListCall struct {
 //
 //   - parent: The resource name of the DataTaxonomy location, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsDataTaxonomiesService) List(parent string) *ProjectsLocationsDataTaxonomiesListCall {
 	c := &ProjectsLocationsDataTaxonomiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16651,7 +16662,7 @@ type ProjectsLocationsEntryGroupsCreateCall struct {
 //
 //   - parent: The resource name of the entryGroup, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsEntryGroupsService) Create(parent string, googleclouddataplexv1entrygroup *GoogleCloudDataplexV1EntryGroup) *ProjectsLocationsEntryGroupsCreateCall {
 	c := &ProjectsLocationsEntryGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19966,7 +19977,7 @@ type ProjectsLocationsGlossariesCreateCall struct {
 //
 //   - parent: The parent resource where this Glossary will be created. Format:
 //     projects/{project_id_or_number}/locations/{location_id} where location_id
-//     refers to a GCP region.
+//     refers to a Google Cloud region.
 func (r *ProjectsLocationsGlossariesService) Create(parent string, googleclouddataplexv1glossary *GoogleCloudDataplexV1Glossary) *ProjectsLocationsGlossariesCreateCall {
 	c := &ProjectsLocationsGlossariesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20438,7 +20449,7 @@ type ProjectsLocationsGlossariesListCall struct {
 //
 //   - parent: The parent, which has this collection of Glossaries. Format:
 //     projects/{project_id_or_number}/locations/{location_id} where location_id
-//     refers to a GCP region.
+//     refers to a Google Cloud region.
 func (r *ProjectsLocationsGlossariesService) List(parent string) *ProjectsLocationsGlossariesListCall {
 	c := &ProjectsLocationsGlossariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20946,7 +20957,7 @@ type ProjectsLocationsGlossariesCategoriesCreateCall struct {
 //   - parent: The parent resource where this GlossaryCategory will be created.
 //     Format:
 //     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
-//     y_id} where locationId refers to a GCP region.
+//     y_id} where locationId refers to a Google Cloud region.
 func (r *ProjectsLocationsGlossariesCategoriesService) Create(parent string, googleclouddataplexv1glossarycategory *GoogleCloudDataplexV1GlossaryCategory) *ProjectsLocationsGlossariesCategoriesCreateCall {
 	c := &ProjectsLocationsGlossariesCategoriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21403,7 +21414,7 @@ type ProjectsLocationsGlossariesCategoriesListCall struct {
 //   - parent: The parent, which has this collection of GlossaryCategories.
 //     Format:
 //     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
-//     y_id} Location is the GCP region.
+//     y_id} Location is the Google Cloud region.
 func (r *ProjectsLocationsGlossariesCategoriesService) List(parent string) *ProjectsLocationsGlossariesCategoriesListCall {
 	c := &ProjectsLocationsGlossariesCategoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21909,7 +21920,7 @@ type ProjectsLocationsGlossariesTermsCreateCall struct {
 //   - parent: The parent resource where the GlossaryTerm will be created.
 //     Format:
 //     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
-//     y_id} where location_id refers to a GCP region.
+//     y_id} where location_id refers to a Google Cloud region.
 func (r *ProjectsLocationsGlossariesTermsService) Create(parent string, googleclouddataplexv1glossaryterm *GoogleCloudDataplexV1GlossaryTerm) *ProjectsLocationsGlossariesTermsCreateCall {
 	c := &ProjectsLocationsGlossariesTermsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22363,7 +22374,7 @@ type ProjectsLocationsGlossariesTermsListCall struct {
 //
 //   - parent: The parent, which has this collection of GlossaryTerms. Format:
 //     projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossar
-//     y_id} where location_id refers to a GCP region.
+//     y_id} where location_id refers to a Google Cloud region.
 func (r *ProjectsLocationsGlossariesTermsService) List(parent string) *ProjectsLocationsGlossariesTermsListCall {
 	c := &ProjectsLocationsGlossariesTermsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23217,7 +23228,7 @@ type ProjectsLocationsLakesCreateCall struct {
 //
 //   - parent: The resource name of the lake location, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsLakesService) Create(parent string, googleclouddataplexv1lake *GoogleCloudDataplexV1Lake) *ProjectsLocationsLakesCreateCall {
 	c := &ProjectsLocationsLakesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23682,7 +23693,7 @@ type ProjectsLocationsLakesListCall struct {
 //
 //   - parent: The resource name of the lake location, of the form:
 //     projects/{project_number}/locations/{location_id} where location_id refers
-//     to a GCP region.
+//     to a Google Cloud region.
 func (r *ProjectsLocationsLakesService) List(parent string) *ProjectsLocationsLakesListCall {
 	c := &ProjectsLocationsLakesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

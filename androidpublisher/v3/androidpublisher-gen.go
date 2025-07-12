@@ -4478,8 +4478,17 @@ func (s OneTimeExternalTransaction) MarshalJSON() ([]byte, error) {
 type OneTimePurchaseDetails struct {
 	// OfferId: The offer ID of the one-time purchase offer.
 	OfferId string `json:"offerId,omitempty"`
+	// PurchaseOptionId: ID of the purchase option. This field is set for both
+	// purchase options and variant offers. For purchase options, this ID
+	// identifies the purchase option itself. For variant offers, this ID refers to
+	// the associated purchase option, and in conjunction with offer_id it
+	// identifies the variant offer.
+	PurchaseOptionId string `json:"purchaseOptionId,omitempty"`
 	// Quantity: The number of items purchased (for multi-quantity item purchases).
 	Quantity int64 `json:"quantity,omitempty"`
+	// RentalDetails: The details of a rent purchase. Only set if it is a rent
+	// purchase.
+	RentalDetails *RentalDetails `json:"rentalDetails,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "OfferId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -5821,6 +5830,10 @@ func (s RemoteInAppUpdateDataPerBundle) MarshalJSON() ([]byte, error) {
 
 // RentOfferDetails: Offer details information related to a rental line item.
 type RentOfferDetails struct {
+}
+
+// RentalDetails: Details of a rental purchase.
+type RentalDetails struct {
 }
 
 // ReplacementCancellation: Information specific to cancellations caused by

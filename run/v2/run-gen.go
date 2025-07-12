@@ -3023,6 +3023,9 @@ type GoogleCloudRunV2TaskTemplate struct {
 	//   "EXECUTION_ENVIRONMENT_GEN1" - Uses the First Generation environment.
 	//   "EXECUTION_ENVIRONMENT_GEN2" - Uses Second Generation environment.
 	ExecutionEnvironment string `json:"executionEnvironment,omitempty"`
+	// GpuZonalRedundancyDisabled: Optional. True if GPU zonal redundancy is
+	// disabled on this task template.
+	GpuZonalRedundancyDisabled bool `json:"gpuZonalRedundancyDisabled,omitempty"`
 	// MaxRetries: Number of retries allowed per Task, before marking this Task
 	// failed. Defaults to 3.
 	MaxRetries int64 `json:"maxRetries,omitempty"`

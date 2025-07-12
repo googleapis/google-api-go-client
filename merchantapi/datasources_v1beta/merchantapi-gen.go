@@ -624,7 +624,9 @@ func (s ListDataSourcesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// LocalInventoryDataSource: The local inventory data source.
+// LocalInventoryDataSource: The local inventory data source type is only
+// available for file inputs and can't be used to create API local inventory
+// data sources.
 type LocalInventoryDataSource struct {
 	// ContentLanguage: Required. Immutable. The two-letter ISO 639-1 language of
 	// the items to which the local inventory is provided.
@@ -886,7 +888,6 @@ func (s PromotionDataSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RegionalInventoryDataSource: The regional inventory data source.
 type RegionalInventoryDataSource struct {
 	// ContentLanguage: Required. Immutable. The two-letter ISO 639-1 language of
 	// the items to which the regional inventory is provided.

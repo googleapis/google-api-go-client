@@ -2210,6 +2210,8 @@ type GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData s
 	// projects/{project}/locations/{location}/conversationModels/{conversation_mode
 	// l}
 	ConversationModel string `json:"conversationModel,omitempty"`
+	// GeneratorId: Agent Assist generator ID.
+	GeneratorId string `json:"generatorId,omitempty"`
 	// Metadata: A map that contains metadata about the summarization and the
 	// document from which it originates.
 	Metadata map[string]string `json:"metadata,omitempty"`
@@ -5214,8 +5216,22 @@ type GoogleCloudContactcenterinsightsV1QaQuestion struct {
 	// Order: Defines the order of the question within its parent scorecard
 	// revision.
 	Order int64 `json:"order,omitempty"`
+	// PredefinedQuestionConfig: The configuration of the predefined question. This
+	// field will only be set if the Question Type is predefined.
+	PredefinedQuestionConfig *GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig `json:"predefinedQuestionConfig,omitempty"`
 	// QuestionBody: Question text. E.g., "Did the agent greet the customer?"
 	QuestionBody string `json:"questionBody,omitempty"`
+	// QuestionType: The type of question.
+	//
+	// Possible values:
+	//   "QA_QUESTION_TYPE_UNSPECIFIED" - The type of the question is unspecified.
+	//   "CUSTOMIZABLE" - The default question type. The question is fully
+	// customizable by the user.
+	//   "PREDEFINED" - The question type is using a predefined model provided by
+	// CCAI teams. Users are not allowed to edit the question_body, answer_choices,
+	// upload feedback labels for the question nor fine-tune the question. However,
+	// users may edit other fields like question tags, question order, etc.
+	QuestionType string `json:"questionType,omitempty"`
 	// Tags: Questions are tagged for categorization and scoring. Tags can either
 	// be: - Default Tags: These are predefined categories. They are identified by
 	// their string value (e.g., "BUSINESS", "COMPLIANCE", and "CUSTOMER"). -
@@ -5344,6 +5360,40 @@ func (s *GoogleCloudContactcenterinsightsV1QaQuestionMetrics) UnmarshalJSON(data
 	return nil
 }
 
+// GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig:
+// Configuration for a predefined question. This field will only be set if the
+// Question Type is predefined.
+type GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig struct {
+	// Type: The type of the predefined question.
+	//
+	// Possible values:
+	//   "PREDEFINED_QUESTION_TYPE_UNSPECIFIED" - The type of the predefined
+	// question is unspecified.
+	//   "CONVERSATION_OUTCOME" - A prebuilt classifier classfying the outcome of
+	// the conversation. For example, if the customer issue mentioned in a
+	// conversation has been resolved or not.
+	//   "CONVERSATION_OUTCOME_ESCALATION_INITIATOR_ROLE" - A prebuilt classifier
+	// classfying the initiator of the conversation escalation. For example, if it
+	// was initiated by the customer or the agent.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1QaQuestionTag: A tag is a resource which
 // aims to categorize a set of questions across multiple scorecards, e.g.,
 // "Customer Satisfaction","Billing", etc.
@@ -5438,6 +5488,10 @@ type GoogleCloudContactcenterinsightsV1QaScorecard struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: The user-specified display name of the scorecard.
 	DisplayName string `json:"displayName,omitempty"`
+	// IsDefault: Whether the scorecard is the default one for the project. A
+	// default scorecard cannot be deleted and will always appear first in
+	// scorecard selector.
+	IsDefault bool `json:"isDefault,omitempty"`
 	// Name: Identifier. The scorecard name. Format:
 	// projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}
 	Name string `json:"name,omitempty"`
@@ -7984,6 +8038,8 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSuggestion
 	// projects/{project}/locations/{location}/conversationModels/{conversation_mode
 	// l}
 	ConversationModel string `json:"conversationModel,omitempty"`
+	// GeneratorId: Agent Assist generator ID.
+	GeneratorId string `json:"generatorId,omitempty"`
 	// Metadata: A map that contains metadata about the summarization and the
 	// document from which it originates.
 	Metadata map[string]string `json:"metadata,omitempty"`

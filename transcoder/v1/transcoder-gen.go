@@ -1320,6 +1320,9 @@ type Job struct {
 	// Error: Output only. An error object that describes the reason for the
 	// failure. This property is always present when ProcessingState is `FAILED`.
 	Error *Status `json:"error,omitempty"`
+	// FillContentGaps: Optional. Insert silence and duplicate frames when
+	// timestamp gaps are detected in a given stream.
+	FillContentGaps bool `json:"fillContentGaps,omitempty"`
 	// InputUri: Input only. Specify the `input_uri` to populate empty `uri` fields
 	// in each element of `Job.config.inputs` or `JobTemplate.config.inputs` when
 	// using template. URI of the media. Input files must be at least 5 seconds in

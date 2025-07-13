@@ -192,22 +192,10 @@ type ProjectsLocationsService struct {
 
 func NewProjectsLocationsDiscoveredprofilesService(s *Service) *ProjectsLocationsDiscoveredprofilesService {
 	rs := &ProjectsLocationsDiscoveredprofilesService{s: s}
-	rs.Healthes = NewProjectsLocationsDiscoveredprofilesHealthesService(s)
 	return rs
 }
 
 type ProjectsLocationsDiscoveredprofilesService struct {
-	s *Service
-
-	Healthes *ProjectsLocationsDiscoveredprofilesHealthesService
-}
-
-func NewProjectsLocationsDiscoveredprofilesHealthesService(s *Service) *ProjectsLocationsDiscoveredprofilesHealthesService {
-	rs := &ProjectsLocationsDiscoveredprofilesHealthesService{s: s}
-	return rs
-}
-
-type ProjectsLocationsDiscoveredprofilesHealthesService struct {
 	s *Service
 }
 
@@ -669,53 +657,6 @@ func (s Command) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ComponentHealth: HealthCondition contains the detailed health check of each
-// component.
-type ComponentHealth struct {
-	// Component: The component of a workload.
-	Component string `json:"component,omitempty"`
-	// ComponentHealthChecks: The detailed health checks of the component.
-	ComponentHealthChecks []*HealthCheck `json:"componentHealthChecks,omitempty"`
-	// ComponentHealthType: Output only. The type of the component health.
-	//
-	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Unspecified
-	//   "TYPE_REQUIRED" - required
-	//   "TYPE_OPTIONAL" - optional
-	//   "TYPE_SPECIAL" - special
-	ComponentHealthType string `json:"componentHealthType,omitempty"`
-	// IsRequired: Output only. The requirement of the component.
-	IsRequired bool `json:"isRequired,omitempty"`
-	// State: Output only. The health state of the component.
-	//
-	// Possible values:
-	//   "HEALTH_STATE_UNSPECIFIED" - Unspecified
-	//   "HEALTHY" - healthy workload
-	//   "UNHEALTHY" - unhealthy workload
-	//   "CRITICAL" - has critical issues
-	//   "UNSUPPORTED" - unsupported
-	State                string             `json:"state,omitempty"`
-	SubComponentHealthes []*ComponentHealth `json:"subComponentHealthes,omitempty"`
-	// SubComponentsHealth: Sub component health.
-	SubComponentsHealth []*ComponentHealth `json:"subComponentsHealth,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Component") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Component") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ComponentHealth) MarshalJSON() ([]byte, error) {
-	type NoMethod ComponentHealth
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // DatabaseProperties: Database Properties.
 type DatabaseProperties struct {
 	// BackupProperties: Output only. Backup properties.
@@ -775,7 +716,7 @@ type Evaluation struct {
 	//   "SAP" - SAP best practices
 	//   "SQL_SERVER" - SQL best practices
 	//   "OTHER" - Customized best practices
-	//   "SCC_IAC" - SCC IaC (Infra as Code) best practices
+	//   "SCC_IAC" - SCC IaC (Infra as Code) best practices.
 	EvaluationType string `json:"evaluationType,omitempty"`
 	// Labels: Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
@@ -975,45 +916,6 @@ type GceInstanceFilter struct {
 
 func (s GceInstanceFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GceInstanceFilter
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// HealthCheck: HealthCheck contains the detailed health check of a component
-// based on asource.
-type HealthCheck struct {
-	// Message: Output only. The message of the health check.
-	Message string `json:"message,omitempty"`
-	// Metric: Output only. The health check source metric name.
-	Metric string `json:"metric,omitempty"`
-	// Resource: Output only. The resource the check performs on.
-	Resource *CloudResource `json:"resource,omitempty"`
-	// Source: Output only. The source of the health check.
-	Source string `json:"source,omitempty"`
-	// State: Output only. The state of the health check.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Unspecified
-	//   "PASSED" - passed
-	//   "FAILED" - failed
-	//   "DEGRADED" - degraded
-	//   "SKIPPED" - skipped
-	//   "UNSUPPORTED" - unsupported
-	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Message") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s HealthCheck) MarshalJSON() ([]byte, error) {
-	type NoMethod HealthCheck
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2747,9 +2649,6 @@ type WorkloadProfile struct {
 	//   "WORKLOAD_TYPE_UNSPECIFIED" - unspecified workload type
 	//   "S4_HANA" - running sap workload s4/hana
 	WorkloadType string `json:"workloadType,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2765,44 +2664,6 @@ type WorkloadProfile struct {
 
 func (s WorkloadProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadProfile
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// WorkloadProfileHealth: WorkloadProfileHealth contains the detailed health
-// check of workload.
-type WorkloadProfileHealth struct {
-	// CheckTime: The time when the health check was performed.
-	CheckTime         string             `json:"checkTime,omitempty"`
-	ComponentHealthes []*ComponentHealth `json:"componentHealthes,omitempty"`
-	// ComponentsHealth: The detailed condition reports of each component.
-	ComponentsHealth []*ComponentHealth `json:"componentsHealth,omitempty"`
-	// State: Output only. The health state of the workload.
-	//
-	// Possible values:
-	//   "HEALTH_STATE_UNSPECIFIED" - Unspecified
-	//   "HEALTHY" - healthy workload
-	//   "UNHEALTHY" - unhealthy workload
-	//   "CRITICAL" - has critical issues
-	//   "UNSUPPORTED" - unsupported
-	State string `json:"state,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CheckTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CheckTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s WorkloadProfileHealth) MarshalJSON() ([]byte, error) {
-	type NoMethod WorkloadProfileHealth
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3120,116 +2981,6 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
-type ProjectsLocationsDiscoveredprofilesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets details of a discovered workload profile.
-//
-// - name: Name of the resource.
-func (r *ProjectsLocationsDiscoveredprofilesService) Get(name string) *ProjectsLocationsDiscoveredprofilesGetCall {
-	c := &ProjectsLocationsDiscoveredprofilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsDiscoveredprofilesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveredprofilesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsDiscoveredprofilesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDiscoveredprofilesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsDiscoveredprofilesGetCall) Context(ctx context.Context) *ProjectsLocationsDiscoveredprofilesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsDiscoveredprofilesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsDiscoveredprofilesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "workloadmanager.projects.locations.discoveredprofiles.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "workloadmanager.projects.locations.discoveredprofiles.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *WorkloadProfile.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsDiscoveredprofilesGetCall) Do(opts ...googleapi.CallOption) (*WorkloadProfile, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &WorkloadProfile{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "workloadmanager.projects.locations.discoveredprofiles.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
 type ProjectsLocationsDiscoveredprofilesListCall struct {
 	s            *Service
 	parent       string
@@ -3380,116 +3131,6 @@ func (c *ProjectsLocationsDiscoveredprofilesListCall) Pages(ctx context.Context,
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-type ProjectsLocationsDiscoveredprofilesHealthesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Get the health of a discovered workload profile.
-//
-// - name: The resource name.
-func (r *ProjectsLocationsDiscoveredprofilesHealthesService) Get(name string) *ProjectsLocationsDiscoveredprofilesHealthesGetCall {
-	c := &ProjectsLocationsDiscoveredprofilesHealthesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsDiscoveredprofilesHealthesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveredprofilesHealthesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsDiscoveredprofilesHealthesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDiscoveredprofilesHealthesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsDiscoveredprofilesHealthesGetCall) Context(ctx context.Context) *ProjectsLocationsDiscoveredprofilesHealthesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsDiscoveredprofilesHealthesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsDiscoveredprofilesHealthesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "workloadmanager.projects.locations.discoveredprofiles.healthes.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "workloadmanager.projects.locations.discoveredprofiles.healthes.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *WorkloadProfileHealth.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsDiscoveredprofilesHealthesGetCall) Do(opts ...googleapi.CallOption) (*WorkloadProfileHealth, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &WorkloadProfileHealth{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "workloadmanager.projects.locations.discoveredprofiles.healthes.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
 }
 
 type ProjectsLocationsEvaluationsCreateCall struct {
@@ -5543,7 +5184,7 @@ func (c *ProjectsLocationsRulesListCall) CustomRulesBucket(customRulesBucket str
 //	"SAP" - SAP best practices
 //	"SQL_SERVER" - SQL best practices
 //	"OTHER" - Customized best practices
-//	"SCC_IAC" - SCC IaC (Infra as Code) best practices
+//	"SCC_IAC" - SCC IaC (Infra as Code) best practices.
 func (c *ProjectsLocationsRulesListCall) EvaluationType(evaluationType string) *ProjectsLocationsRulesListCall {
 	c.urlParams_.Set("evaluationType", evaluationType)
 	return c

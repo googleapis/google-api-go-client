@@ -1450,6 +1450,33 @@ func (s GitRemoteSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// IamPolicyOverrideView: Contains metadata about the IAM policy override for a
+// given Dataform resource. If is_active is true, this the policy encoded in
+// iam_policy_name is the source of truth for this resource. Will be provided
+// in internal ESV2 views for: Workspaces, Repositories, Folders, TeamFolders.
+type IamPolicyOverrideView struct {
+	// IamPolicyName: The IAM policy name for the resource.
+	IamPolicyName *PolicyName `json:"iamPolicyName,omitempty"`
+	// IsActive: Whether the IAM policy encoded in this view is active.
+	IsActive bool `json:"isActive,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IamPolicyName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IamPolicyName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IamPolicyOverrideView) MarshalJSON() ([]byte, error) {
+	type NoMethod IamPolicyOverrideView
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // IncrementalLoadMode: Load definition for incremental load modes
 type IncrementalLoadMode struct {
 	// Column: Column name for incremental load modes
@@ -2209,6 +2236,43 @@ type Policy struct {
 
 func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyName: An internal name for an IAM policy, based on the resource to
+// which the policy applies. Not to be confused with a resource's external full
+// resource name. For more information on this distinction, see
+// go/iam-full-resource-names.
+type PolicyName struct {
+	// Id: Identifies an instance of the type. ID format varies by type. The ID
+	// format is defined in the IAM .service file that defines the type, either in
+	// path_mapping or in a comment.
+	Id string `json:"id,omitempty"`
+	// Region: For Cloud IAM: The location of the Policy. Must be empty or "global"
+	// for Policies owned by global IAM. Must name a region from
+	// prodspec/cloud-iam-cloudspec for Regional IAM Policies, see
+	// go/iam-faq#where-is-iam-currently-deployed. For Local IAM: This field should
+	// be set to "local".
+	Region string `json:"region,omitempty"`
+	// Type: Resource type. Types are defined in IAM's .service files. Valid values
+	// for type might be 'storage_buckets', 'compute_instances',
+	// 'resourcemanager_customers', 'billing_accounts', etc.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyName) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyName
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

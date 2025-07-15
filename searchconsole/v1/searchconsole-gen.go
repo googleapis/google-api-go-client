@@ -731,6 +731,27 @@ func (s Item) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type Metadata struct {
+	FirstIncompleteDate string `json:"firstIncompleteDate,omitempty"`
+	FirstIncompleteHour string `json:"firstIncompleteHour,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FirstIncompleteDate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FirstIncompleteDate") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Metadata) MarshalJSON() ([]byte, error) {
+	type NoMethod Metadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MobileFriendlyIssue: Mobile-friendly issue.
 type MobileFriendlyIssue struct {
 	// Rule: Rule violated.
@@ -1123,6 +1144,7 @@ func (s SearchAnalyticsQueryRequest) MarshalJSON() ([]byte, error) {
 // key. Metrics in each row are aggregated for all data grouped by that key
 // either by page or property, as specified by the aggregation type parameter.
 type SearchAnalyticsQueryResponse struct {
+	Metadata *Metadata `json:"metadata,omitempty"`
 	// ResponseAggregationType: How the results were aggregated.
 	//
 	// Possible values:
@@ -1137,15 +1159,15 @@ type SearchAnalyticsQueryResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ResponseAggregationType") to
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ResponseAggregationType") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

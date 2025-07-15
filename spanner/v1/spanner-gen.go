@@ -1013,17 +1013,10 @@ func (s BatchCreateSessionsResponse) MarshalJSON() ([]byte, error) {
 
 // BatchWriteRequest: The request for BatchWrite.
 type BatchWriteRequest struct {
-	// ExcludeTxnFromChangeStreams: Optional. When
-	// `exclude_txn_from_change_streams` is set to `true`: * Modifications from all
-	// transactions in this batch write operation are not be recorded in change
-	// streams with DDL option `allow_txn_exclusion=true` that are tracking columns
-	// modified by these transactions. * Modifications from all transactions in
-	// this batch write operation are recorded in change streams with DDL option
-	// `allow_txn_exclusion=false or not set` that are tracking columns modified by
-	// these transactions. When `exclude_txn_from_change_streams` is set to `false`
-	// or not set, Modifications from all transactions in this batch write
-	// operation are recorded in all change streams that are tracking columns
-	// modified by these transactions.
+	// ExcludeTxnFromChangeStreams: Optional. If you don't set the
+	// `exclude_txn_from_change_streams` option or if it's set to `false`, then any
+	// change streams monitoring columns modified by transactions will capture the
+	// updates made within that transaction.
 	ExcludeTxnFromChangeStreams bool `json:"excludeTxnFromChangeStreams,omitempty"`
 	// MutationGroups: Required. The groups of mutations to be applied.
 	MutationGroups []*MutationGroup `json:"mutationGroups,omitempty"`
@@ -2290,18 +2283,20 @@ func (s Database) MarshalJSON() ([]byte, error) {
 // instance configuration.
 type DatabaseMoveConfig struct {
 	// DatabaseId: Required. The unique identifier of the database resource in the
-	// Instance. For example if the database uri is
-	// projects/foo/instances/bar/databases/baz, the id to supply here is baz.
+	// Instance. For example, if the database uri is
+	// `projects/foo/instances/bar/databases/baz`, then the id to supply here is
+	// baz.
 	DatabaseId string `json:"databaseId,omitempty"`
 	// EncryptionConfig: Optional. Encryption configuration to be used for the
-	// database in target configuration. Should be specified for every database
-	// which currently uses CMEK encryption. If a database currently uses
-	// GOOGLE_MANAGED encryption and a target encryption config is not specified,
-	// it defaults to GOOGLE_MANAGED. If a database currently uses Google-managed
-	// encryption and a target encryption config is specified, the request is
-	// rejected. If a database currently uses CMEK encryption, a target encryption
-	// config must be specified. You cannot move a CMEK database to a
-	// Google-managed encryption database by MoveInstance.
+	// database in the target configuration. The encryption configuration must be
+	// specified for every database which currently uses CMEK encryption. If a
+	// database currently uses Google-managed encryption and a target encryption
+	// configuration is not specified, then the database defaults to Google-managed
+	// encryption. If a database currently uses Google-managed encryption and a
+	// target CMEK encryption is specified, the request is rejected. If a database
+	// currently uses CMEK encryption, then a target encryption configuration must
+	// be specified. You can't move a CMEK database to a Google-managed encryption
+	// database using the MoveInstance API.
 	EncryptionConfig *InstanceEncryptionConfig `json:"encryptionConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatabaseId") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -1620,6 +1620,33 @@ func (s GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1beta1GoogleMaps: Tool to retrieve public maps data
+// for grounding, powered by Google.
+type GoogleCloudAiplatformV1beta1GoogleMaps struct {
+	// ApiAuth: The authentication config to access the API. Deprecated. Please use
+	// auth_config instead.
+	ApiAuth *GoogleCloudAiplatformV1beta1ApiAuth `json:"apiAuth,omitempty"`
+	// AuthConfig: The authentication config to access the API. Only API key is
+	// supported.
+	AuthConfig *GoogleCloudAiplatformV1beta1AuthConfig `json:"authConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiAuth") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiAuth") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1GoogleMaps) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1GoogleMaps
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1beta1GoogleSearchRetrieval: Tool to retrieve public
 // web data for grounding, powered by Google.
 type GoogleCloudAiplatformV1beta1GoogleSearchRetrieval struct {
@@ -1646,26 +1673,57 @@ func (s GoogleCloudAiplatformV1beta1GoogleSearchRetrieval) MarshalJSON() ([]byte
 
 // GoogleCloudAiplatformV1beta1GroundingChunk: Grounding chunk.
 type GoogleCloudAiplatformV1beta1GroundingChunk struct {
+	// Maps: Grounding chunk from Google Maps.
+	Maps *GoogleCloudAiplatformV1beta1GroundingChunkMaps `json:"maps,omitempty"`
 	// RetrievedContext: Grounding chunk from context retrieved by the retrieval
 	// tools.
 	RetrievedContext *GoogleCloudAiplatformV1beta1GroundingChunkRetrievedContext `json:"retrievedContext,omitempty"`
 	// Web: Grounding chunk from the web.
 	Web *GoogleCloudAiplatformV1beta1GroundingChunkWeb `json:"web,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RetrievedContext") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Maps") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RetrievedContext") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Maps") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudAiplatformV1beta1GroundingChunk) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1GroundingChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1GroundingChunkMaps: Chunk from Google Maps.
+type GoogleCloudAiplatformV1beta1GroundingChunkMaps struct {
+	// PlaceId: This Place's resource name, in `places/{place_id}` format. Can be
+	// used to look up the Place.
+	PlaceId string `json:"placeId,omitempty"`
+	// Text: Text of the chunk.
+	Text string `json:"text,omitempty"`
+	// Title: Title of the chunk.
+	Title string `json:"title,omitempty"`
+	// Uri: URI reference of the chunk.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PlaceId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PlaceId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1GroundingChunkMaps) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1GroundingChunkMaps
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1728,6 +1786,11 @@ func (s GoogleCloudAiplatformV1beta1GroundingChunkWeb) MarshalJSON() ([]byte, er
 // GoogleCloudAiplatformV1beta1GroundingMetadata: Metadata returned to client
 // when grounding is enabled.
 type GoogleCloudAiplatformV1beta1GroundingMetadata struct {
+	// GoogleMapsWidgetContextToken: Optional. Output only. Resource name of the
+	// Google Maps widget context token to be used with the PlacesContextElement
+	// widget to render contextual data. This is populated only for Google Maps
+	// grounding.
+	GoogleMapsWidgetContextToken string `json:"googleMapsWidgetContextToken,omitempty"`
 	// GroundingChunks: List of supporting references retrieved from specified
 	// grounding source.
 	GroundingChunks []*GoogleCloudAiplatformV1beta1GroundingChunk `json:"groundingChunks,omitempty"`
@@ -1743,15 +1806,15 @@ type GoogleCloudAiplatformV1beta1GroundingMetadata struct {
 	// WebSearchQueries: Optional. Web search queries for the following-up web
 	// search.
 	WebSearchQueries []string `json:"webSearchQueries,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GroundingChunks") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "GoogleMapsWidgetContextToken") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GroundingChunks") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "GoogleMapsWidgetContextToken") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2723,6 +2786,9 @@ type GoogleCloudAiplatformV1beta1Tool struct {
 	// will generate the final response back to the user. Maximum 128 function
 	// declarations can be provided.
 	FunctionDeclarations []*GoogleCloudAiplatformV1beta1FunctionDeclaration `json:"functionDeclarations,omitempty"`
+	// GoogleMaps: Optional. GoogleMaps tool type. Tool to support Google Maps in
+	// Model.
+	GoogleMaps *GoogleCloudAiplatformV1beta1GoogleMaps `json:"googleMaps,omitempty"`
 	// GoogleSearch: Optional. GoogleSearch tool type. Tool to support Google
 	// Search in Model. Powered by Google.
 	GoogleSearch *GoogleCloudAiplatformV1beta1ToolGoogleSearch `json:"googleSearch,omitempty"`

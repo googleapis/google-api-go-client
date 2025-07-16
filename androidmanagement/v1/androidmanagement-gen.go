@@ -6036,8 +6036,18 @@ type Policy struct {
 	// disabled. On Android 9 and above, this is equivalent to LOCATION_DISABLED.
 	//   "LOCATION_USER_CHOICE" - Location setting is not restricted on the device.
 	// No specific behavior is set or enforced.
-	//   "LOCATION_ENFORCED" - Enable location setting on the device.
-	//   "LOCATION_DISABLED" - Disable location setting on the device.
+	//   "LOCATION_ENFORCED" - Enable location setting on the device. Important: On
+	// Android 11 and above, work profiles on company-owned devices cannot directly
+	// enforce enabling of location services. When LOCATION_ENFORCED is set, then a
+	// NonComplianceDetail with USER_ACTION is reported. Compliance can only be
+	// restored once the user manually turns on location services through the
+	// device's Settings application.
+	//   "LOCATION_DISABLED" - Disable location setting on the device. Important:
+	// On Android 11 and above, work profiles on company-owned devices cannot
+	// directly enforce disabling of location services. When LOCATION_DISABLED is
+	// set, then a nonComplianceDetail with USER_ACTION is reported. Compliance can
+	// only be restored once the user manually turns off location services through
+	// the device's Settings application.
 	LocationMode string `json:"locationMode,omitempty"`
 	// LongSupportMessage: A message displayed to the user in the device
 	// administators settings screen.

@@ -675,8 +675,8 @@ func (s GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails) Mars
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest:
-// [Preview only] Request to generate a user session.
+// GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest: Request
+// to generate a user session.
 type GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest struct {
 	// IntentPayload: The user intent to generate the user session.
 	IntentPayload *GoogleCloudPaymentsResellerSubscriptionV1IntentPayload `json:"intentPayload,omitempty"`
@@ -699,8 +699,7 @@ func (s GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest) Mar
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse:
-// [Preview only] Response that contains the details for generated user
-// session.
+// Response that contains the details for generated user session.
 type GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse struct {
 	// UserSession: The generated user session. The token size is proportional to
 	// the size of the intent payload.

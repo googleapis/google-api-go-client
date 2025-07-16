@@ -4287,6 +4287,8 @@ type MachineArchitectureDetails struct {
 	// CpuArchitecture: CPU architecture, e.g., "x64-based PC", "x86_64", "i686"
 	// etc.
 	CpuArchitecture string `json:"cpuArchitecture,omitempty"`
+	// CpuManufacturer: Optional. CPU manufacturer, e.g., "Intel", "AMD".
+	CpuManufacturer string `json:"cpuManufacturer,omitempty"`
 	// CpuName: CPU name, e.g., "Intel Xeon E5-2690", "AMD EPYC 7571" etc.
 	CpuName string `json:"cpuName,omitempty"`
 	// CpuSocketCount: Number of processor sockets allocated to the machine.

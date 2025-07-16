@@ -5327,9 +5327,6 @@ func (s GoogleCloudRetailV2betaLocalInventory) MarshalJSON() ([]byte, error) {
 type GoogleCloudRetailV2betaMerchantCenterFeedFilter struct {
 	// DataSourceId: AFM data source ID.
 	DataSourceId int64 `json:"dataSourceId,omitempty,string"`
-	// PrimaryFeedId: Merchant Center primary feed ID. Deprecated: use
-	// data_source_id instead.
-	PrimaryFeedId int64 `json:"primaryFeedId,omitempty,string"`
 	// PrimaryFeedName: Merchant Center primary feed name. The name is used for the
 	// display purposes only.
 	PrimaryFeedName string `json:"primaryFeedName,omitempty"`

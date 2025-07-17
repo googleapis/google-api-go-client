@@ -4451,6 +4451,9 @@ type User struct {
 	//   "ADMIN" - Admin access rights.
 	//   "PERFORMANCE_REPORTING" - Users with this right have access to performance
 	// and insights.
+	//   "API_DEVELOPER" - Users with this right have access to Merchant API and
+	// its notifications. This role is only accessible to accounts that has a
+	// developer registration.
 	AccessRights []string `json:"accessRights,omitempty"`
 	// Name: Identifier. The resource name of the user. Format:
 	// `accounts/{account}/user/{email}` Use `me` to refer to your own email

@@ -3415,7 +3415,7 @@ type GoogleCloudRunV2WorkerPool struct {
 	// Name: The fully qualified name of this WorkerPool. In
 	// CreateWorkerPoolRequest, this field is ignored, and instead composed from
 	// CreateWorkerPoolRequest.parent and CreateWorkerPoolRequest.worker_id.
-	// Format: projects/{project}/locations/{location}/workerPools/{worker_id}
+	// Format: `projects/{project}/locations/{location}/workerPools/{worker_id}`
 	Name string `json:"name,omitempty"`
 	// ObservedGeneration: Output only. The generation of this WorkerPool currently
 	// serving traffic. See comments in `reconciling` for additional information on
@@ -3514,6 +3514,9 @@ type GoogleCloudRunV2WorkerPoolRevisionTemplate struct {
 	// is SHUTDOWN, the duration before shutting down all instances. The minimum
 	// increment is 1 hour.
 	EncryptionKeyShutdownDuration string `json:"encryptionKeyShutdownDuration,omitempty"`
+	// GpuZonalRedundancyDisabled: Optional. True if GPU zonal redundancy is
+	// disabled on this worker pool.
+	GpuZonalRedundancyDisabled bool `json:"gpuZonalRedundancyDisabled,omitempty"`
 	// Labels: Optional. Unstructured key value map that can be used to organize
 	// and categorize objects. User-provided labels are shared with Google's
 	// billing system, so they can be used to filter, or break down billing charges
@@ -10365,9 +10368,9 @@ type ProjectsLocationsWorkerPoolsCreateCall struct {
 // Create: Creates a new WorkerPool in a given project and location.
 //
 //   - parent: The location and project in which this worker pool should be
-//     created. Format: projects/{project}/locations/{location}, where {project}
-//     can be project id or number. Only lowercase characters, digits, and
-//     hyphens.
+//     created. Format: `projects/{project}/locations/{location}`, where
+//     `{project}` can be project id or number. Only lowercase characters,
+//     digits, and hyphens.
 func (r *ProjectsLocationsWorkerPoolsService) Create(parent string, googlecloudrunv2workerpool *GoogleCloudRunV2WorkerPool) *ProjectsLocationsWorkerPoolsCreateCall {
 	c := &ProjectsLocationsWorkerPoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10386,7 +10389,7 @@ func (c *ProjectsLocationsWorkerPoolsCreateCall) ValidateOnly(validateOnly bool)
 // WorkerPoolId sets the optional parameter "workerPoolId": Required. The
 // unique identifier for the WorkerPool. It must begin with letter, and cannot
 // end with hyphen; must contain fewer than 50 characters. The name of the
-// worker pool becomes {parent}/workerPools/{worker_pool_id}.
+// worker pool becomes `{parent}/workerPools/{worker_pool_id}`.
 func (c *ProjectsLocationsWorkerPoolsCreateCall) WorkerPoolId(workerPoolId string) *ProjectsLocationsWorkerPoolsCreateCall {
 	c.urlParams_.Set("workerPoolId", workerPoolId)
 	return c
@@ -10488,8 +10491,8 @@ type ProjectsLocationsWorkerPoolsDeleteCall struct {
 // Delete: Deletes a WorkerPool.
 //
 //   - name: The full name of the WorkerPool. Format:
-//     projects/{project}/locations/{location}/workerPools/{worker_pool}, where
-//     {project} can be project id or number.
+//     `projects/{project}/locations/{location}/workerPools/{worker_pool}`, where
+//     `{project}` can be project id or number.
 func (r *ProjectsLocationsWorkerPoolsService) Delete(name string) *ProjectsLocationsWorkerPoolsDeleteCall {
 	c := &ProjectsLocationsWorkerPoolsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10604,8 +10607,8 @@ type ProjectsLocationsWorkerPoolsGetCall struct {
 // Get: Gets information about a WorkerPool.
 //
 //   - name: The full name of the WorkerPool. Format:
-//     projects/{project}/locations/{location}/workerPools/{worker_pool}, where
-//     {project} can be project id or number.
+//     `projects/{project}/locations/{location}/workerPools/{worker_pool}`, where
+//     `{project}` can be project id or number.
 func (r *ProjectsLocationsWorkerPoolsService) Get(name string) *ProjectsLocationsWorkerPoolsGetCall {
 	c := &ProjectsLocationsWorkerPoolsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10848,8 +10851,8 @@ type ProjectsLocationsWorkerPoolsListCall struct {
 //
 //   - parent: The location and project to list resources on. Location must be a
 //     valid Google Cloud region, and cannot be the "-" wildcard. Format:
-//     projects/{project}/locations/{location}, where {project} can be project id
-//     or number.
+//     `projects/{project}/locations/{location}`, where `{project}` can be
+//     project id or number.
 func (r *ProjectsLocationsWorkerPoolsService) List(parent string) *ProjectsLocationsWorkerPoolsListCall {
 	c := &ProjectsLocationsWorkerPoolsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11004,7 +11007,7 @@ type ProjectsLocationsWorkerPoolsPatchCall struct {
 //   - name: The fully qualified name of this WorkerPool. In
 //     CreateWorkerPoolRequest, this field is ignored, and instead composed from
 //     CreateWorkerPoolRequest.parent and CreateWorkerPoolRequest.worker_id.
-//     Format: projects/{project}/locations/{location}/workerPools/{worker_id}.
+//     Format: `projects/{project}/locations/{location}/workerPools/{worker_id}`.
 func (r *ProjectsLocationsWorkerPoolsService) Patch(name string, googlecloudrunv2workerpool *GoogleCloudRunV2WorkerPool) *ProjectsLocationsWorkerPoolsPatchCall {
 	c := &ProjectsLocationsWorkerPoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

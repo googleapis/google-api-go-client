@@ -190,7 +190,7 @@ type AccountsProductsService struct {
 type Attributes struct {
 	// AdditionalImageLinks: Additional URLs of images of the item.
 	AdditionalImageLinks []string `json:"additionalImageLinks,omitempty"`
-	// AdsGrouping: Used to group items in an arbitrary way. Only for CPA%,
+	// AdsGrouping: Used to group items in an arbitrary way. Only for CPA,
 	// discouraged otherwise. For more information, see Display ads attribute
 	// (https://support.google.com/merchants/answer/6069387).
 	AdsGrouping string `json:"adsGrouping,omitempty"`
@@ -205,8 +205,8 @@ type Attributes struct {
 	// (https://support.google.com/merchants/answer/6324463) of the item.
 	AgeGroup string `json:"ageGroup,omitempty"`
 	// AutoPricingMinPrice: A safeguard in the [automated discounts]
-	// (https://support.google.com/merchants/answer/10295759) and "Dynamic
-	// Promotions" (https://support.google.com/merchants/answer/13949249) projects,
+	// (https://support.google.com/merchants/answer/10295759) and "dynamic
+	// promotions" (https://support.google.com/merchants/answer/13949249) projects,
 	// ensuring that discounts on business offers do not fall below this value,
 	// thereby preserving the offer's value and profitability.
 	AutoPricingMinPrice *Price `json:"autoPricingMinPrice,omitempty"`
@@ -317,7 +317,7 @@ type Attributes struct {
 	// (https://support.google.com/merchants/answer/188494#gtin)) of the item. You
 	// can provide up to 10 GTINs. Deprecated: Use `gtins` instead.
 	Gtin []string `json:"gtin,omitempty"`
-	// Gtins: Global Trade Item Numbers (GTIN
+	// Gtins: A list of Global Trade Item Numbers (GTIN
 	// (https://support.google.com/merchants/answer/188494#gtin)) of the item. You
 	// can provide up to 10 GTINs.
 	Gtins []string `json:"gtins,omitempty"`
@@ -1359,7 +1359,7 @@ type ProductInput struct {
 	// attributes can be set per product, with total size of 102.4kB. Underscores
 	// in custom attribute names are replaced by spaces upon insertion.
 	CustomAttributes []*CustomAttribute `json:"customAttributes,omitempty"`
-	// FeedLabel: Required. Immutable. The label that lets you categorize and
+	// FeedLabel: Required. Immutable. The feed label that lets you categorize and
 	// identify your products. The maximum allowed characters are 20, and the
 	// supported characters are `A-Z`, `0-9`, hyphen, and underscore. The feed
 	// label must not include any spaces. For more information, see Using feed
@@ -2064,12 +2064,13 @@ type AccountsProductInputsInsertCall struct {
 
 // Insert: Uploads a product input to your Merchant Center account
 // (/merchant/api/guides/products/overview#upload-product-input). You must have
-// a products data source to be able to insert a product. The unique identifier
-// of the data source is passed as a query parameter in the request URL. If an
-// input with the same contentLanguage, offerId, and dataSource already exists,
-// this method replaces that entry. After inserting, updating, or deleting a
-// product input, it may take several minutes before the processed product can
-// be retrieved.
+// a products data source (/merchant/api/guides/data-sources/overview) to be
+// able to insert a product. The unique identifier of the data source is passed
+// as a query parameter in the request URL. If a product input with the same
+// contentLanguage, offerId, and dataSource already exists, then the product
+// input inserted by this method replaces that entry. After inserting,
+// updating, or deleting a product input, it may take several minutes before
+// the processed product can be retrieved.
 //
 //   - parent: The account where this product will be inserted. Format:
 //     `accounts/{account}`.
@@ -2449,7 +2450,7 @@ func (r *AccountsProductsService) List(parent string) *AccountsProductsListCall 
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // products to return. The service may return fewer than this value. The
 // maximum value is 1000; values above 1000 will be coerced to 1000. If
-// unspecified, the maximum number of products will be returned.
+// unspecified, the default page size of 25 products will be returned.
 func (c *AccountsProductsListCall) PageSize(pageSize int64) *AccountsProductsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

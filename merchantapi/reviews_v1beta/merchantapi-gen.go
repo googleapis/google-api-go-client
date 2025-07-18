@@ -285,8 +285,6 @@ func (s ListProductReviewsResponse) MarshalJSON() ([]byte, error) {
 // Introduction to Merchant Review Feeds
 // (https://developers.google.com/merchant-review-feeds)
 type MerchantReview struct {
-	// Attributes: Optional. A list of merchant review attributes.
-	Attributes *MerchantReviewAttributes `json:"attributes,omitempty"`
 	// CustomAttributes: Optional. A list of custom (merchant-provided) attributes.
 	// It can also be used for submitting any attribute of the data specification
 	// in its generic form (for example, `{ "name": "size type", "value": "regular"
@@ -299,6 +297,8 @@ type MerchantReview struct {
 	CustomAttributes []*CustomAttribute `json:"customAttributes,omitempty"`
 	// DataSource: Output only. The primary data source of the merchant review.
 	DataSource string `json:"dataSource,omitempty"`
+	// MerchantReviewAttributes: Optional. A list of merchant review attributes.
+	MerchantReviewAttributes *MerchantReviewAttributes `json:"merchantReviewAttributes,omitempty"`
 	// MerchantReviewId: Required. The user provided merchant review ID to uniquely
 	// identify the merchant review.
 	MerchantReviewId string `json:"merchantReviewId,omitempty"`
@@ -312,15 +312,15 @@ type MerchantReview struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// ForceSendFields is a list of field names (e.g. "CustomAttributes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Attributes") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CustomAttributes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -678,8 +678,6 @@ func (s ProductChange) MarshalJSON() ([]byte, error) {
 // Introduction to Product Review Feeds
 // (https://developers.google.com/product-review-feeds)
 type ProductReview struct {
-	// Attributes: Optional. A list of product review attributes.
-	Attributes *ProductReviewAttributes `json:"attributes,omitempty"`
 	// CustomAttributes: Optional. A list of custom (merchant-provided) attributes.
 	CustomAttributes []*CustomAttribute `json:"customAttributes,omitempty"`
 	// DataSource: Output only. The primary data source of the product review.
@@ -687,6 +685,8 @@ type ProductReview struct {
 	// Name: Identifier. The name of the product review. Format:
 	// "{productreview.name=accounts/{account}/productReviews/{productReview}}"
 	Name string `json:"name,omitempty"`
+	// ProductReviewAttributes: Optional. A list of product review attributes.
+	ProductReviewAttributes *ProductReviewAttributes `json:"productReviewAttributes,omitempty"`
 	// ProductReviewId: Required. The permanent, unique identifier for the product
 	// review in the publisher’s system.
 	ProductReviewId string `json:"productReviewId,omitempty"`
@@ -697,15 +697,15 @@ type ProductReview struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// ForceSendFields is a list of field names (e.g. "CustomAttributes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Attributes") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CustomAttributes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

@@ -2783,7 +2783,7 @@ type GoogleCloudAiplatformV1beta1Tool struct {
 	// Model may decide to call a subset of these functions by populating
 	// FunctionCall in the response. User should provide a FunctionResponse for
 	// each function call in the next turn. Based on the function responses, Model
-	// will generate the final response back to the user. Maximum 128 function
+	// will generate the final response back to the user. Maximum 512 function
 	// declarations can be provided.
 	FunctionDeclarations []*GoogleCloudAiplatformV1beta1FunctionDeclaration `json:"functionDeclarations,omitempty"`
 	// GoogleMaps: Optional. GoogleMaps tool type. Tool to support Google Maps in

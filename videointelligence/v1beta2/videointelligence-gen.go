@@ -388,36 +388,6 @@ func (s GoogleCloudVideointelligenceV1ExplicitContentFrame) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVideointelligenceV1ExportToOutputUriStatus: Status of exporting
-// annotation response to user specified `output_uri`.
-type GoogleCloudVideointelligenceV1ExportToOutputUriStatus struct {
-	// State: Output only. State of the `output_uri` export.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Default value.
-	//   "SUCCEEDED" - Export succeeded.
-	//   "FAILED" - Export failed.
-	State string `json:"state,omitempty"`
-	// Status: Output only. Only set if state is FAILED.
-	Status *GoogleRpcStatus `json:"status,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "State") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudVideointelligenceV1ExportToOutputUriStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVideointelligenceV1ExportToOutputUriStatus
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudVideointelligenceV1FaceAnnotation: Deprecated. No effect.
 type GoogleCloudVideointelligenceV1FaceAnnotation struct {
 	// Frames: All video frames where a face was detected.
@@ -1145,9 +1115,6 @@ func (s *GoogleCloudVideointelligenceV1Track) UnmarshalJSON(data []byte) error {
 // GoogleCloudVideointelligenceV1VideoAnnotationProgress: Annotation progress
 // for a single video.
 type GoogleCloudVideointelligenceV1VideoAnnotationProgress struct {
-	// ExportStatus: Status of exporting annotation response to user specified
-	// `output_uri`. Only set if `output_uri` is set in the request.
-	ExportStatus *GoogleCloudVideointelligenceV1ExportToOutputUriStatus `json:"exportStatus,omitempty"`
 	// Feature: Specifies which feature is being tracked if the request contains
 	// more than one feature.
 	//
@@ -1177,13 +1144,13 @@ type GoogleCloudVideointelligenceV1VideoAnnotationProgress struct {
 	StartTime string `json:"startTime,omitempty"`
 	// UpdateTime: Time of the most recent update.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExportStatus") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Feature") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExportStatus") to include in API
+	// NullFields is a list of field names (e.g. "Feature") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1668,36 +1635,6 @@ type GoogleCloudVideointelligenceV1beta2ExplicitContentFrame struct {
 
 func (s GoogleCloudVideointelligenceV1beta2ExplicitContentFrame) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudVideointelligenceV1beta2ExplicitContentFrame
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudVideointelligenceV1beta2ExportToOutputUriStatus: Status of
-// exporting annotation response to user specified `output_uri`.
-type GoogleCloudVideointelligenceV1beta2ExportToOutputUriStatus struct {
-	// State: Output only. State of the `output_uri` export.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Default value.
-	//   "SUCCEEDED" - Export succeeded.
-	//   "FAILED" - Export failed.
-	State string `json:"state,omitempty"`
-	// Status: Output only. Only set if state is FAILED.
-	Status *GoogleRpcStatus `json:"status,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "State") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudVideointelligenceV1beta2ExportToOutputUriStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVideointelligenceV1beta2ExportToOutputUriStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2732,9 +2669,6 @@ func (s *GoogleCloudVideointelligenceV1beta2Track) UnmarshalJSON(data []byte) er
 // GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress: Annotation
 // progress for a single video.
 type GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress struct {
-	// ExportStatus: Status of exporting annotation response to user specified
-	// `output_uri`. Only set if `output_uri` is set in the request.
-	ExportStatus *GoogleCloudVideointelligenceV1beta2ExportToOutputUriStatus `json:"exportStatus,omitempty"`
 	// Feature: Specifies which feature is being tracked if the request contains
 	// more than one feature.
 	//
@@ -2764,13 +2698,13 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress struct {
 	StartTime string `json:"startTime,omitempty"`
 	// UpdateTime: Time of the most recent update.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExportStatus") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Feature") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExportStatus") to include in API
+	// NullFields is a list of field names (e.g. "Feature") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3210,36 +3144,6 @@ type GoogleCloudVideointelligenceV1p1beta1ExplicitContentFrame struct {
 
 func (s GoogleCloudVideointelligenceV1p1beta1ExplicitContentFrame) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudVideointelligenceV1p1beta1ExplicitContentFrame
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudVideointelligenceV1p1beta1ExportToOutputUriStatus: Status of
-// exporting annotation response to user specified `output_uri`.
-type GoogleCloudVideointelligenceV1p1beta1ExportToOutputUriStatus struct {
-	// State: Output only. State of the `output_uri` export.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Default value.
-	//   "SUCCEEDED" - Export succeeded.
-	//   "FAILED" - Export failed.
-	State string `json:"state,omitempty"`
-	// Status: Output only. Only set if state is FAILED.
-	Status *GoogleRpcStatus `json:"status,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "State") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudVideointelligenceV1p1beta1ExportToOutputUriStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVideointelligenceV1p1beta1ExportToOutputUriStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3970,9 +3874,6 @@ func (s *GoogleCloudVideointelligenceV1p1beta1Track) UnmarshalJSON(data []byte) 
 // GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress: Annotation
 // progress for a single video.
 type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress struct {
-	// ExportStatus: Status of exporting annotation response to user specified
-	// `output_uri`. Only set if `output_uri` is set in the request.
-	ExportStatus *GoogleCloudVideointelligenceV1p1beta1ExportToOutputUriStatus `json:"exportStatus,omitempty"`
 	// Feature: Specifies which feature is being tracked if the request contains
 	// more than one feature.
 	//
@@ -4002,13 +3903,13 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress struct {
 	StartTime string `json:"startTime,omitempty"`
 	// UpdateTime: Time of the most recent update.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExportStatus") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Feature") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExportStatus") to include in API
+	// NullFields is a list of field names (e.g. "Feature") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4406,36 +4307,6 @@ type GoogleCloudVideointelligenceV1p2beta1ExplicitContentFrame struct {
 
 func (s GoogleCloudVideointelligenceV1p2beta1ExplicitContentFrame) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudVideointelligenceV1p2beta1ExplicitContentFrame
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudVideointelligenceV1p2beta1ExportToOutputUriStatus: Status of
-// exporting annotation response to user specified `output_uri`.
-type GoogleCloudVideointelligenceV1p2beta1ExportToOutputUriStatus struct {
-	// State: Output only. State of the `output_uri` export.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Default value.
-	//   "SUCCEEDED" - Export succeeded.
-	//   "FAILED" - Export failed.
-	State string `json:"state,omitempty"`
-	// Status: Output only. Only set if state is FAILED.
-	Status *GoogleRpcStatus `json:"status,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "State") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudVideointelligenceV1p2beta1ExportToOutputUriStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVideointelligenceV1p2beta1ExportToOutputUriStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5166,9 +5037,6 @@ func (s *GoogleCloudVideointelligenceV1p2beta1Track) UnmarshalJSON(data []byte) 
 // GoogleCloudVideointelligenceV1p2beta1VideoAnnotationProgress: Annotation
 // progress for a single video.
 type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationProgress struct {
-	// ExportStatus: Status of exporting annotation response to user specified
-	// `output_uri`. Only set if `output_uri` is set in the request.
-	ExportStatus *GoogleCloudVideointelligenceV1p2beta1ExportToOutputUriStatus `json:"exportStatus,omitempty"`
 	// Feature: Specifies which feature is being tracked if the request contains
 	// more than one feature.
 	//
@@ -5198,13 +5066,13 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationProgress struct {
 	StartTime string `json:"startTime,omitempty"`
 	// UpdateTime: Time of the most recent update.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExportStatus") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Feature") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExportStatus") to include in API
+	// NullFields is a list of field names (e.g. "Feature") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5684,36 +5552,6 @@ type GoogleCloudVideointelligenceV1p3beta1ExplicitContentFrame struct {
 
 func (s GoogleCloudVideointelligenceV1p3beta1ExplicitContentFrame) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudVideointelligenceV1p3beta1ExplicitContentFrame
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudVideointelligenceV1p3beta1ExportToOutputUriStatus: Status of
-// exporting annotation response to user specified `output_uri`.
-type GoogleCloudVideointelligenceV1p3beta1ExportToOutputUriStatus struct {
-	// State: Output only. State of the `output_uri` export.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Default value.
-	//   "SUCCEEDED" - Export succeeded.
-	//   "FAILED" - Export failed.
-	State string `json:"state,omitempty"`
-	// Status: Output only. Only set if state is FAILED.
-	Status *GoogleRpcStatus `json:"status,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "State") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudVideointelligenceV1p3beta1ExportToOutputUriStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVideointelligenceV1p3beta1ExportToOutputUriStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6550,9 +6388,6 @@ func (s *GoogleCloudVideointelligenceV1p3beta1Track) UnmarshalJSON(data []byte) 
 // GoogleCloudVideointelligenceV1p3beta1VideoAnnotationProgress: Annotation
 // progress for a single video.
 type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationProgress struct {
-	// ExportStatus: Status of exporting annotation response to user specified
-	// `output_uri`. Only set if `output_uri` is set in the request.
-	ExportStatus *GoogleCloudVideointelligenceV1p3beta1ExportToOutputUriStatus `json:"exportStatus,omitempty"`
 	// Feature: Specifies which feature is being tracked if the request contains
 	// more than one feature.
 	//
@@ -6583,13 +6418,13 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationProgress struct {
 	StartTime string `json:"startTime,omitempty"`
 	// UpdateTime: Time of the most recent update.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExportStatus") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Feature") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExportStatus") to include in API
+	// NullFields is a list of field names (e.g. "Feature") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

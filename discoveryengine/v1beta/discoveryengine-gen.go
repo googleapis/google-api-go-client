@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	discoveryengineService, err := discoveryengine.NewService(ctx, option.WithScopes(discoveryengine.CloudSearchQueryScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -101,12 +106,16 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// Search your organization's data in the Cloud Search index
+	CloudSearchQueryScope = "https://www.googleapis.com/auth/cloud_search.query"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/cloud_search.query",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -552,6 +561,7 @@ type ProjectsLocationsCollectionsDataStoresUserEventsService struct {
 
 func NewProjectsLocationsCollectionsEnginesService(s *Service) *ProjectsLocationsCollectionsEnginesService {
 	rs := &ProjectsLocationsCollectionsEnginesService{s: s}
+	rs.Assistants = NewProjectsLocationsCollectionsEnginesAssistantsService(s)
 	rs.CompletionConfig = NewProjectsLocationsCollectionsEnginesCompletionConfigService(s)
 	rs.Controls = NewProjectsLocationsCollectionsEnginesControlsService(s)
 	rs.Conversations = NewProjectsLocationsCollectionsEnginesConversationsService(s)
@@ -564,6 +574,8 @@ func NewProjectsLocationsCollectionsEnginesService(s *Service) *ProjectsLocation
 type ProjectsLocationsCollectionsEnginesService struct {
 	s *Service
 
+	Assistants *ProjectsLocationsCollectionsEnginesAssistantsService
+
 	CompletionConfig *ProjectsLocationsCollectionsEnginesCompletionConfigService
 
 	Controls *ProjectsLocationsCollectionsEnginesControlsService
@@ -575,6 +587,15 @@ type ProjectsLocationsCollectionsEnginesService struct {
 	ServingConfigs *ProjectsLocationsCollectionsEnginesServingConfigsService
 
 	Sessions *ProjectsLocationsCollectionsEnginesSessionsService
+}
+
+func NewProjectsLocationsCollectionsEnginesAssistantsService(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsService {
+	rs := &ProjectsLocationsCollectionsEnginesAssistantsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsCollectionsEnginesCompletionConfigService(s *Service) *ProjectsLocationsCollectionsEnginesCompletionConfigService {
@@ -3146,6 +3167,9 @@ type GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigDigitalPar
 // GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigLayoutParsin
 // gConfig: The layout parsing configurations for documents.
 type GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigLayoutParsingConfig struct {
+	// EnableGetProcessedDocument: Optional. If true, the processed document will
+	// be made available for the GetProcessedDocument API.
+	EnableGetProcessedDocument bool `json:"enableGetProcessedDocument,omitempty"`
 	// EnableImageAnnotation: Optional. If true, the LLM based annotation is added
 	// to the image during parsing.
 	EnableImageAnnotation bool `json:"enableImageAnnotation,omitempty"`
@@ -3164,13 +3188,13 @@ type GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigLayoutPars
 	// StructuredContentTypes: Optional. Contains the required structure types to
 	// extract from the document. Supported values: * `shareholder-structure`
 	StructuredContentTypes []string `json:"structuredContentTypes,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnableImageAnnotation") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "EnableGetProcessedDocument")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnableImageAnnotation") to
+	// NullFields is a list of field names (e.g. "EnableGetProcessedDocument") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3274,7 +3298,9 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// feature state settings are ignored. * `agent-gallery` *
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
-	// `bi-directional-audio` * `feedback` * `session-sharing`
+	// `bi-directional-audio` * `feedback` * `session-sharing` *
+	// `personalization-memory` - Enables personalization based on user
+	// preferences.
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -5249,6 +5275,7 @@ type GoogleCloudDiscoveryengineV1UserLicense struct {
 	// attempt but cannot get license assigned. Users already logged in but cannot
 	// get license assigned will be assigned NO_LICENSE state(License could be
 	// unassigned by admin).
+	//   "BLOCKED" - User is blocked from assigning a license.
 	LicenseAssignmentState string `json:"licenseAssignmentState,omitempty"`
 	// LicenseConfig: Optional. The full resource name of the
 	// Subscription(LicenseConfig) assigned to the user.
@@ -7506,8 +7533,6 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// or indicate a one-time sync.
 	//   "STREAMING" - The data will be synced in real time.
 	//   "UNSPECIFIED" - Connector that doesn't ingest data will have this value
-	//   "SCALA_SYNC" - The data will be synced with Scala Sync, a data ingestion
-	// solution.
 	SyncMode string `json:"syncMode,omitempty"`
 	// UpdateTime: Output only. Timestamp the DataConnector was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -8359,6 +8384,9 @@ type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigDigit
 // GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigLayoutP
 // arsingConfig: The layout parsing configurations for documents.
 type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigLayoutParsingConfig struct {
+	// EnableGetProcessedDocument: Optional. If true, the processed document will
+	// be made available for the GetProcessedDocument API.
+	EnableGetProcessedDocument bool `json:"enableGetProcessedDocument,omitempty"`
 	// EnableImageAnnotation: Optional. If true, the LLM based annotation is added
 	// to the image during parsing.
 	EnableImageAnnotation bool `json:"enableImageAnnotation,omitempty"`
@@ -8377,13 +8405,13 @@ type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigLayou
 	// StructuredContentTypes: Optional. Contains the required structure types to
 	// extract from the document. Supported values: * `shareholder-structure`
 	StructuredContentTypes []string `json:"structuredContentTypes,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnableImageAnnotation") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "EnableGetProcessedDocument")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnableImageAnnotation") to
+	// NullFields is a list of field names (e.g. "EnableGetProcessedDocument") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -8487,7 +8515,9 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// feature state settings are ignored. * `agent-gallery` *
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
-	// `bi-directional-audio` * `feedback` * `session-sharing`
+	// `bi-directional-audio` * `feedback` * `session-sharing` *
+	// `personalization-memory` - Enables personalization based on user
+	// preferences.
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -11108,22 +11138,17 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	ServingConfig string `json:"servingConfig,omitempty"`
 	// Session: The session resource name. Optional. Session allows users to do
 	// multi-turn /search API calls or coordination between /search API calls and
-	// /answer API calls. Example #1 (multi-turn /search API calls): 1. Call
-	// /search API with the auto-session mode (see below). 2. Call /search API with
-	// the session ID generated in the first call. Here, the previous search query
-	// gets considered in query standing. I.e., if the first query is "How did
-	// Alphabet do in 2022?" and the current query is "How about 2023?", the
-	// current query will be interpreted as "How did Alphabet do in 2023?". Example
-	// #2 (coordination between /search API calls and /answer API calls): 1. Call
-	// /search API with the auto-session mode (see below). 2. Call /answer API with
-	// the session ID generated in the first call. Here, the answer generation
-	// happens in the context of the search results from the first search call.
-	// Auto-session mode: when `projects/.../sessions/-` is used, a new session
-	// gets automatically created. Otherwise, users can use the create-session API
-	// to create a session manually. Multi-turn Search feature is currently at
-	// private GA stage. Please use v1alpha or v1beta version instead before we
-	// launch this feature to public GA. Or ask for allowlisting through Google
-	// Support team.
+	// /answer API calls. Example #1 (multi-turn /search API calls): Call /search
+	// API with the session ID generated in the first call. Here, the previous
+	// search query gets considered in query standing. I.e., if the first query is
+	// "How did Alphabet do in 2022?" and the current query is "How about 2023?",
+	// the current query will be interpreted as "How did Alphabet do in 2023?".
+	// Example #2 (coordination between /search API calls and /answer API calls):
+	// Call /answer API with the session ID generated in the first call. Here, the
+	// answer generation happens in the context of the search results from the
+	// first search call. Multi-turn Search feature is currently at private GA
+	// stage. Please use v1alpha or v1beta version instead before we launch this
+	// feature to public GA. Or ask for allowlisting through Google Support team.
 	Session string `json:"session,omitempty"`
 	// SessionSpec: Session specification. Can be used only when `session` is set.
 	SessionSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestSessionSpec `json:"sessionSpec,omitempty"`
@@ -12932,6 +12957,7 @@ type GoogleCloudDiscoveryengineV1alphaUserLicense struct {
 	// attempt but cannot get license assigned. Users already logged in but cannot
 	// get license assigned will be assigned NO_LICENSE state(License could be
 	// unassigned by admin).
+	//   "BLOCKED" - User is blocked from assigning a license.
 	LicenseAssignmentState string `json:"licenseAssignmentState,omitempty"`
 	// LicenseConfig: Optional. The full resource name of the
 	// Subscription(LicenseConfig) assigned to the user.
@@ -15235,6 +15261,398 @@ type GoogleCloudDiscoveryengineV1betaAnswerStepActionSearchAction struct {
 func (s GoogleCloudDiscoveryengineV1betaAnswerStepActionSearchAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaAnswerStepActionSearchAction
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAssistAnswer: AssistAnswer resource, main
+// part of AssistResponse.
+type GoogleCloudDiscoveryengineV1betaAssistAnswer struct {
+	// AssistSkippedReasons: Reasons for not answering the assist call.
+	//
+	// Possible values:
+	//   "ASSIST_SKIPPED_REASON_UNSPECIFIED" - Default value. Skip reason is not
+	// specified.
+	//   "NON_ASSIST_SEEKING_QUERY_IGNORED" - The assistant ignored the query,
+	// because it did not appear to be answer-seeking.
+	//   "CUSTOMER_POLICY_VIOLATION" - The assistant ignored the query or refused
+	// to answer because of a customer policy violation (e.g., the query or the
+	// answer contained a banned phrase).
+	AssistSkippedReasons []string `json:"assistSkippedReasons,omitempty"`
+	// Replies: Replies of the assistant.
+	Replies []*GoogleCloudDiscoveryengineV1betaAssistAnswerReply `json:"replies,omitempty"`
+	// State: State of the answer generation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unknown.
+	//   "IN_PROGRESS" - Assist operation is currently in progress.
+	//   "FAILED" - Assist operation has failed.
+	//   "SUCCEEDED" - Assist operation has succeeded.
+	//   "SKIPPED" - Assist operation has been skipped.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssistSkippedReasons") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssistSkippedReasons") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAssistAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAssistAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAssistAnswerReply: One part of the
+// multi-part response of the assist call.
+type GoogleCloudDiscoveryengineV1betaAssistAnswerReply struct {
+	// GroundedContent: Possibly grounded response text or media from the
+	// assistant.
+	GroundedContent *GoogleCloudDiscoveryengineV1betaAssistantGroundedContent `json:"groundedContent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroundedContent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroundedContent") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAssistAnswerReply) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAssistAnswerReply
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAssistUserMetadata: User metadata of the
+// request.
+type GoogleCloudDiscoveryengineV1betaAssistUserMetadata struct {
+	// PreferredLanguageCode: Optional. Preferred language to be used for answering
+	// if language detection fails. Also used as the language of error messages
+	// created by actions, regardless of language detection results.
+	PreferredLanguageCode string `json:"preferredLanguageCode,omitempty"`
+	// TimeZone: Optional. IANA time zone, e.g. Europe/Budapest.
+	TimeZone string `json:"timeZone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PreferredLanguageCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PreferredLanguageCode") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAssistUserMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAssistUserMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAssistantContent: Multi-modal content.
+type GoogleCloudDiscoveryengineV1betaAssistantContent struct {
+	// CodeExecutionResult: Result of executing an ExecutableCode.
+	CodeExecutionResult *GoogleCloudDiscoveryengineV1betaAssistantContentCodeExecutionResult `json:"codeExecutionResult,omitempty"`
+	// ExecutableCode: Code generated by the model that is meant to be executed.
+	ExecutableCode *GoogleCloudDiscoveryengineV1betaAssistantContentExecutableCode `json:"executableCode,omitempty"`
+	// File: A file, e.g., an audio summary.
+	File *GoogleCloudDiscoveryengineV1betaAssistantContentFile `json:"file,omitempty"`
+	// InlineData: Inline binary data.
+	InlineData *GoogleCloudDiscoveryengineV1betaAssistantContentBlob `json:"inlineData,omitempty"`
+	// Role: The producer of the content. Can be "model" or "user".
+	Role string `json:"role,omitempty"`
+	// Text: Inline text.
+	Text string `json:"text,omitempty"`
+	// Thought: Optional. Indicates if the part is thought from the model.
+	Thought bool `json:"thought,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CodeExecutionResult") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CodeExecutionResult") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAssistantContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAssistantContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAssistantContentBlob: Inline blob.
+type GoogleCloudDiscoveryengineV1betaAssistantContentBlob struct {
+	// Data: Required. Raw bytes.
+	Data string `json:"data,omitempty"`
+	// MimeType: Required. The media type (MIME type) of the generated data.
+	MimeType string `json:"mimeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAssistantContentBlob) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAssistantContentBlob
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAssistantContentCodeExecutionResult: Result
+// of executing ExecutableCode.
+type GoogleCloudDiscoveryengineV1betaAssistantContentCodeExecutionResult struct {
+	// Outcome: Required. Outcome of the code execution.
+	//
+	// Possible values:
+	//   "OUTCOME_UNSPECIFIED" - Unspecified status. This value should not be used.
+	//   "OUTCOME_OK" - Code execution completed successfully.
+	//   "OUTCOME_FAILED" - Code execution finished but with a failure. `stderr`
+	// should contain the reason.
+	//   "OUTCOME_DEADLINE_EXCEEDED" - Code execution ran for too long, and was
+	// cancelled. There may or may not be a partial output present.
+	Outcome string `json:"outcome,omitempty"`
+	// Output: Optional. Contains stdout when code execution is successful, stderr
+	// or other description otherwise.
+	Output string `json:"output,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Outcome") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Outcome") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAssistantContentCodeExecutionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAssistantContentCodeExecutionResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAssistantContentExecutableCode: Code
+// generated by the model that is meant to be executed by the model.
+type GoogleCloudDiscoveryengineV1betaAssistantContentExecutableCode struct {
+	// Code: Required. The code content. Currently only supports Python.
+	Code string `json:"code,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAssistantContentExecutableCode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAssistantContentExecutableCode
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAssistantContentFile: A file, e.g., an audio
+// summary.
+type GoogleCloudDiscoveryengineV1betaAssistantContentFile struct {
+	// FileId: Required. The file ID.
+	FileId string `json:"fileId,omitempty"`
+	// MimeType: Required. The media type (MIME type) of the file.
+	MimeType string `json:"mimeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAssistantContentFile) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAssistantContentFile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAssistantGroundedContent: A piece of content
+// and possibly its grounding information. Not all content needs grounding.
+// Phrases like "Of course, I will gladly search it for you." do not need
+// grounding.
+type GoogleCloudDiscoveryengineV1betaAssistantGroundedContent struct {
+	// Content: The content.
+	Content *GoogleCloudDiscoveryengineV1betaAssistantContent `json:"content,omitempty"`
+	// TextGroundingMetadata: Metadata for grounding based on text sources.
+	TextGroundingMetadata *GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadata `json:"textGroundingMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAssistantGroundedContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAssistantGroundedContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadata
+// : Grounding details for text sources.
+type GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadata struct {
+	// References: References for the grounded text.
+	References []*GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataReference `json:"references,omitempty"`
+	// Segments: Grounding information for parts of the text.
+	Segments []*GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataSegment `json:"segments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "References") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "References") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadata
+// Reference: Referenced content and related document metadata.
+type GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataReference struct {
+	// Content: Referenced text content.
+	Content string `json:"content,omitempty"`
+	// DocumentMetadata: Document metadata.
+	DocumentMetadata *GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataReferenceDocumentMetadata `json:"documentMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadata
+// ReferenceDocumentMetadata: Document metadata.
+type GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataReferenceDocumentMetadata struct {
+	// Document: Document resource name.
+	Document string `json:"document,omitempty"`
+	// Domain: Domain name from the document URI. Note that the `uri` field may
+	// contain a URL that redirects to the actual website, in which case this will
+	// contain the domain name of the target site.
+	Domain string `json:"domain,omitempty"`
+	// PageIdentifier: Page identifier.
+	PageIdentifier string `json:"pageIdentifier,omitempty"`
+	// Title: Title.
+	Title string `json:"title,omitempty"`
+	// Uri: URI for the document. It may contain a URL that redirects to the actual
+	// website.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Document") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Document") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataReferenceDocumentMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataReferenceDocumentMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadata
+// Segment: Grounding information for a segment of the text.
+type GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataSegment struct {
+	// EndIndex: End of the segment, exclusive.
+	EndIndex int64 `json:"endIndex,omitempty,string"`
+	// GroundingScore: Score for the segment.
+	GroundingScore float64 `json:"groundingScore,omitempty"`
+	// ReferenceIndices: References for the segment.
+	ReferenceIndices []int64 `json:"referenceIndices,omitempty"`
+	// StartIndex: Zero-based index indicating the start of the segment, measured
+	// in bytes of a UTF-8 string (i.e. characters encoded on multiple bytes have a
+	// length of more than one).
+	StartIndex int64 `json:"startIndex,omitempty,string"`
+	// Text: The text segment itself.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndIndex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndIndex") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataSegment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataSegment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataSegment) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataSegment
+	var s1 struct {
+		GroundingScore gensupport.JSONFloat64 `json:"groundingScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.GroundingScore = float64(s1.GroundingScore)
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1betaBatchCreateTargetSiteMetadata: Metadata
@@ -18162,6 +18580,9 @@ type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigDigita
 // GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigLayoutPa
 // rsingConfig: The layout parsing configurations for documents.
 type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigLayoutParsingConfig struct {
+	// EnableGetProcessedDocument: Optional. If true, the processed document will
+	// be made available for the GetProcessedDocument API.
+	EnableGetProcessedDocument bool `json:"enableGetProcessedDocument,omitempty"`
 	// EnableImageAnnotation: Optional. If true, the LLM based annotation is added
 	// to the image during parsing.
 	EnableImageAnnotation bool `json:"enableImageAnnotation,omitempty"`
@@ -18180,13 +18601,13 @@ type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigLayout
 	// StructuredContentTypes: Optional. Contains the required structure types to
 	// extract from the document. Supported values: * `shareholder-structure`
 	StructuredContentTypes []string `json:"structuredContentTypes,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnableImageAnnotation") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "EnableGetProcessedDocument")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnableImageAnnotation") to
+	// NullFields is a list of field names (e.g. "EnableGetProcessedDocument") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -18357,7 +18778,9 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// feature state settings are ignored. * `agent-gallery` *
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
-	// `bi-directional-audio` * `feedback` * `session-sharing`
+	// `bi-directional-audio` * `feedback` * `session-sharing` *
+	// `personalization-memory` - Enables personalization based on user
+	// preferences.
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -19475,7 +19898,7 @@ type GoogleCloudDiscoveryengineV1betaImportDocumentsRequest struct {
 	// or `csv`. Otherwise, an INVALID_ARGUMENT error is thrown. * BigQuerySource.
 	// BigQuerySource.data_schema must be `custom` or `csv`. Otherwise, an
 	// INVALID_ARGUMENT error is thrown. * SpannerSource. * CloudSqlSource. *
-	// FirestoreSource. * BigtableSource.
+	// BigtableSource.
 	IdField string `json:"idField,omitempty"`
 	// InlineSource: The Inline source for the input content for documents.
 	InlineSource *GoogleCloudDiscoveryengineV1betaImportDocumentsRequestInlineSource `json:"inlineSource,omitempty"`
@@ -22544,22 +22967,17 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	ServingConfig string `json:"servingConfig,omitempty"`
 	// Session: The session resource name. Optional. Session allows users to do
 	// multi-turn /search API calls or coordination between /search API calls and
-	// /answer API calls. Example #1 (multi-turn /search API calls): 1. Call
-	// /search API with the auto-session mode (see below). 2. Call /search API with
-	// the session ID generated in the first call. Here, the previous search query
-	// gets considered in query standing. I.e., if the first query is "How did
-	// Alphabet do in 2022?" and the current query is "How about 2023?", the
-	// current query will be interpreted as "How did Alphabet do in 2023?". Example
-	// #2 (coordination between /search API calls and /answer API calls): 1. Call
-	// /search API with the auto-session mode (see below). 2. Call /answer API with
-	// the session ID generated in the first call. Here, the answer generation
-	// happens in the context of the search results from the first search call.
-	// Auto-session mode: when `projects/.../sessions/-` is used, a new session
-	// gets automatically created. Otherwise, users can use the create-session API
-	// to create a session manually. Multi-turn Search feature is currently at
-	// private GA stage. Please use v1alpha or v1beta version instead before we
-	// launch this feature to public GA. Or ask for allowlisting through Google
-	// Support team.
+	// /answer API calls. Example #1 (multi-turn /search API calls): Call /search
+	// API with the session ID generated in the first call. Here, the previous
+	// search query gets considered in query standing. I.e., if the first query is
+	// "How did Alphabet do in 2022?" and the current query is "How about 2023?",
+	// the current query will be interpreted as "How did Alphabet do in 2023?".
+	// Example #2 (coordination between /search API calls and /answer API calls):
+	// Call /answer API with the session ID generated in the first call. Here, the
+	// answer generation happens in the context of the search results from the
+	// first search call. Multi-turn Search feature is currently at private GA
+	// stage. Please use v1alpha or v1beta version instead before we launch this
+	// feature to public GA. Or ask for allowlisting through Google Support team.
 	Session string `json:"session,omitempty"`
 	// SessionSpec: Session specification. Can be used only when `session` is set.
 	SessionSpec *GoogleCloudDiscoveryengineV1betaSearchRequestSessionSpec `json:"sessionSpec,omitempty"`
@@ -25171,6 +25589,247 @@ func (s GoogleCloudDiscoveryengineV1betaSpannerSource) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaStreamAssistRequest: Request for the
+// AssistantService.StreamAssist method.
+type GoogleCloudDiscoveryengineV1betaStreamAssistRequest struct {
+	// GenerationSpec: Optional. Specification of the generation configuration for
+	// the request.
+	GenerationSpec *GoogleCloudDiscoveryengineV1betaStreamAssistRequestGenerationSpec `json:"generationSpec,omitempty"`
+	// Query: Optional. Current user query. Empty query is only supported if
+	// `file_ids` are provided. In this case, the answer will be generated based on
+	// those context files.
+	Query *GoogleCloudDiscoveryengineV1betaQuery `json:"query,omitempty"`
+	// Session: Optional. The session to use for the request. If specified, the
+	// assistant has access to the session history, and the query and the answer
+	// are stored there. If `-` is specified as the session ID, or it is left
+	// empty, then a new session is created with an automatically generated ID.
+	// Format:
+	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
+	// gine}/sessions/{session}`
+	Session string `json:"session,omitempty"`
+	// ToolsSpec: Optional. Specification of tools that are used to serve the
+	// request.
+	ToolsSpec *GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpec `json:"toolsSpec,omitempty"`
+	// UserMetadata: Optional. Information about the user initiating the query.
+	UserMetadata *GoogleCloudDiscoveryengineV1betaAssistUserMetadata `json:"userMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GenerationSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GenerationSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaStreamAssistRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaStreamAssistRequestGenerationSpec: Assistant
+// generation specification for the request. This allows to override the
+// default generation configuration at the engine level.
+type GoogleCloudDiscoveryengineV1betaStreamAssistRequestGenerationSpec struct {
+	// ModelId: Optional. The Vertex AI model_id used for the generative model. If
+	// not set, the default Assistant model will be used.
+	ModelId string `json:"modelId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ModelId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ModelId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaStreamAssistRequestGenerationSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistRequestGenerationSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpec: Specification
+// of tools that are used to serve the request.
+type GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpec struct {
+	// ImageGenerationSpec: Optional. Specification of the image generation tool.
+	ImageGenerationSpec *GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecImageGenerationSpec `json:"imageGenerationSpec,omitempty"`
+	// ToolRegistry: Optional. The name of the tool registry to use. Format:
+	// `projects/{project}/locations/{location}/toolRegistries/{tool_registry}`
+	ToolRegistry string `json:"toolRegistry,omitempty"`
+	// VertexAiSearchSpec: Optional. Specification of the Vertex AI Search tool.
+	VertexAiSearchSpec *GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecVertexAiSearchSpec `json:"vertexAiSearchSpec,omitempty"`
+	// VideoGenerationSpec: Optional. Specification of the video generation tool.
+	VideoGenerationSpec *GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecVideoGenerationSpec `json:"videoGenerationSpec,omitempty"`
+	// WebGroundingSpec: Optional. Specification of the web grounding tool. If
+	// field is present, enables grounding with web search. Works only if
+	// Assistant.web_grounding_type is WEB_GROUNDING_TYPE_GOOGLE_SEARCH or
+	// WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH.
+	WebGroundingSpec *GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecWebGroundingSpec `json:"webGroundingSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageGenerationSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageGenerationSpec") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecImageGenerationSp
+// ec: Specification of the image generation tool.
+type GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecImageGenerationSpec struct {
+}
+
+// GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecVertexAiSearchSpe
+// c: Specification of the Vertex AI Search tool.
+type GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecVertexAiSearchSpec struct {
+	// DataStoreSpecs: Optional. Specs defining DataStores to filter on in a search
+	// call and configurations for those data stores. This is only considered for
+	// Engines with multiple data stores.
+	DataStoreSpecs []*GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
+	// Disabled: Optional. Deprecated. Please refrain from using this field.
+	// Whether the Vertex AI Search tool is disabled. Default value is false, the
+	// tool is enabled by default.
+	Disabled bool `json:"disabled,omitempty"`
+	// Filter: Optional. The filter syntax consists of an expression language for
+	// constructing a predicate from one or more fields of the documents being
+	// filtered. Filter expression is case-sensitive. If this field is
+	// unrecognizable, an `INVALID_ARGUMENT` is returned. Filtering in Vertex AI
+	// Search is done by mapping the LHS filter key to a key property defined in
+	// the Vertex AI Search backend -- this mapping is defined by the customer in
+	// their schema. For example a media customer might have a field 'name' in
+	// their schema. In this case the filter would look like this: filter -->
+	// name:'ANY("king kong")' For more information about filtering including
+	// syntax and filter operators, see Filter
+	// (https://cloud.google.com/generative-ai-app-builder/docs/filter-search-metadata)
+	Filter string `json:"filter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStoreSpecs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStoreSpecs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecVertexAiSearchSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecVertexAiSearchSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecVideoGenerationSp
+// ec: Specification of the video generation tool.
+type GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecVideoGenerationSpec struct {
+}
+
+// GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecWebGroundingSpec:
+//
+//	Specification of the web grounding tool.
+type GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecWebGroundingSpec struct {
+	// Enabled: Optional. Deprecated. Please refrain from using this field. Whether
+	// the web grounding tool is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecWebGroundingSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecWebGroundingSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaStreamAssistResponse: Response for the
+// AssistantService.StreamAssist method.
+type GoogleCloudDiscoveryengineV1betaStreamAssistResponse struct {
+	// Answer: Assist answer resource object containing parts of the assistant's
+	// final answer for the user's query. Not present if the current response
+	// doesn't add anything to previously sent AssistAnswer.replies. Observe
+	// AssistAnswer.state to see if more parts are to be expected. While the state
+	// is `IN_PROGRESS`, the AssistAnswer.replies field in each response will
+	// contain replies (reply fragments) to be appended to the ones received in
+	// previous responses. AssistAnswer.name won't be filled. If the state is
+	// `SUCCEEDED`, `FAILED` or `SKIPPED`, the response is the last response and
+	// AssistAnswer.name will have a value.
+	Answer *GoogleCloudDiscoveryengineV1betaAssistAnswer `json:"answer,omitempty"`
+	// AssistToken: A global unique ID that identifies the current pair of request
+	// and stream of responses. Used for feedback and support.
+	AssistToken string `json:"assistToken,omitempty"`
+	// SessionInfo: Session information.
+	SessionInfo *GoogleCloudDiscoveryengineV1betaStreamAssistResponseSessionInfo `json:"sessionInfo,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Answer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaStreamAssistResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaStreamAssistResponseSessionInfo: Information
+// about the session.
+type GoogleCloudDiscoveryengineV1betaStreamAssistResponseSessionInfo struct {
+	// Session: Name of the newly generated or continued session. Format:
+	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
+	// gine}/sessions/{session}`.
+	Session string `json:"session,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Session") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Session") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaStreamAssistResponseSessionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistResponseSessionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaSuggestionDenyListEntry: Suggestion deny
 // list entry identifying the phrase to block from suggestions and the applied
 // operation for the phrase.
@@ -25875,6 +26534,7 @@ type GoogleCloudDiscoveryengineV1betaUserLicense struct {
 	// attempt but cannot get license assigned. Users already logged in but cannot
 	// get license assigned will be assigned NO_LICENSE state(License could be
 	// unassigned by admin).
+	//   "BLOCKED" - User is blocked from assigning a license.
 	LicenseAssignmentState string `json:"licenseAssignmentState,omitempty"`
 	// LicenseConfig: Optional. The full resource name of the
 	// Subscription(LicenseConfig) assigned to the user.
@@ -38711,6 +39371,112 @@ func (c *ProjectsLocationsCollectionsEnginesTuneCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.tune", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsStreamAssistCall struct {
+	s                                                   *Service
+	name                                                string
+	googleclouddiscoveryenginev1betastreamassistrequest *GoogleCloudDiscoveryengineV1betaStreamAssistRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// StreamAssist: Assists the user with a query in a streaming fashion.
+//
+//   - name: The resource name of the Assistant. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}/assistants/{assistant}`.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsService) StreamAssist(name string, googleclouddiscoveryenginev1betastreamassistrequest *GoogleCloudDiscoveryengineV1betaStreamAssistRequest) *ProjectsLocationsCollectionsEnginesAssistantsStreamAssistCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsStreamAssistCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1betastreamassistrequest = googleclouddiscoveryenginev1betastreamassistrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsStreamAssistCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsStreamAssistCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsStreamAssistCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsStreamAssistCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsStreamAssistCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsStreamAssistCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1betastreamassistrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:streamAssist")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.streamAssist", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.streamAssist" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaStreamAssistResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsStreamAssistCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaStreamAssistResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaStreamAssistResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.streamAssist", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

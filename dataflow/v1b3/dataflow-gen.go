@@ -9022,114 +9022,6 @@ func (c *ProjectsJobsDebugGetConfigCall) Do(opts ...googleapi.CallOption) (*GetD
 	return ret, nil
 }
 
-type ProjectsJobsDebugGetWorkerStacktracesCall struct {
-	s                           *Service
-	projectId                   string
-	jobId                       string
-	getworkerstacktracesrequest *GetWorkerStacktracesRequest
-	urlParams_                  gensupport.URLParams
-	ctx_                        context.Context
-	header_                     http.Header
-}
-
-// GetWorkerStacktraces: Get worker stacktraces from debug capture.
-//
-// - jobId: The job for which to get stacktraces.
-// - projectId: The project id.
-func (r *ProjectsJobsDebugService) GetWorkerStacktraces(projectId string, jobId string, getworkerstacktracesrequest *GetWorkerStacktracesRequest) *ProjectsJobsDebugGetWorkerStacktracesCall {
-	c := &ProjectsJobsDebugGetWorkerStacktracesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.jobId = jobId
-	c.getworkerstacktracesrequest = getworkerstacktracesrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsJobsDebugGetWorkerStacktracesCall) Fields(s ...googleapi.Field) *ProjectsJobsDebugGetWorkerStacktracesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsJobsDebugGetWorkerStacktracesCall) Context(ctx context.Context) *ProjectsJobsDebugGetWorkerStacktracesCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsJobsDebugGetWorkerStacktracesCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsJobsDebugGetWorkerStacktracesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.getworkerstacktracesrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/jobs/{jobId}/debug/getWorkerStacktraces")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId": c.projectId,
-		"jobId":     c.jobId,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.projects.jobs.debug.getWorkerStacktraces", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dataflow.projects.jobs.debug.getWorkerStacktraces" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GetWorkerStacktracesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsJobsDebugGetWorkerStacktracesCall) Do(opts ...googleapi.CallOption) (*GetWorkerStacktracesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GetWorkerStacktracesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.projects.jobs.debug.getWorkerStacktraces", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
 type ProjectsJobsDebugSendCaptureCall struct {
 	s                       *Service
 	projectId               string
@@ -11075,6 +10967,120 @@ func (c *ProjectsLocationsJobsDebugGetConfigCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.projects.locations.jobs.debug.getConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsJobsDebugGetWorkerStacktracesCall struct {
+	s                           *Service
+	projectId                   string
+	location                    string
+	jobId                       string
+	getworkerstacktracesrequest *GetWorkerStacktracesRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// GetWorkerStacktraces: Get worker stacktraces from debug capture.
+//
+//   - jobId: The job for which to get stacktraces.
+//   - location: The [regional endpoint]
+//     (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that
+//     contains the job specified by job_id.
+//   - projectId: The project id.
+func (r *ProjectsLocationsJobsDebugService) GetWorkerStacktraces(projectId string, location string, jobId string, getworkerstacktracesrequest *GetWorkerStacktracesRequest) *ProjectsLocationsJobsDebugGetWorkerStacktracesCall {
+	c := &ProjectsLocationsJobsDebugGetWorkerStacktracesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.location = location
+	c.jobId = jobId
+	c.getworkerstacktracesrequest = getworkerstacktracesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsJobsDebugGetWorkerStacktracesCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsDebugGetWorkerStacktracesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsJobsDebugGetWorkerStacktracesCall) Context(ctx context.Context) *ProjectsLocationsJobsDebugGetWorkerStacktracesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsJobsDebugGetWorkerStacktracesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsDebugGetWorkerStacktracesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.getworkerstacktracesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/debug/getWorkerStacktraces")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"location":  c.location,
+		"jobId":     c.jobId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.projects.locations.jobs.debug.getWorkerStacktraces", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.projects.locations.jobs.debug.getWorkerStacktraces" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GetWorkerStacktracesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsDebugGetWorkerStacktracesCall) Do(opts ...googleapi.CallOption) (*GetWorkerStacktracesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GetWorkerStacktracesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.projects.locations.jobs.debug.getWorkerStacktraces", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

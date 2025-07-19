@@ -1917,7 +1917,8 @@ type ComputeInstanceRestoreProperties struct {
 	// this property when you create the resource.
 	Description string `json:"description,omitempty"`
 	// Disks: Optional. Array of disks associated with this instance. Persistent
-	// disks must be created before you can assign them.
+	// disks must be created before you can assign them. Source regional persistent
+	// disks will be restored with default replica zones if not specified.
 	Disks []*AttachedDisk `json:"disks,omitempty"`
 	// DisplayDevice: Optional. Enables display device for the instance.
 	DisplayDevice *DisplayDevice `json:"displayDevice,omitempty"`
@@ -1955,7 +1956,8 @@ type ComputeInstanceRestoreProperties struct {
 	// NetworkInterfaces: Optional. An array of network configurations for this
 	// instance. These specify how interfaces are configured to interact with other
 	// network services, such as connecting to the internet. Multiple interfaces
-	// are supported per instance.
+	// are supported per instance. Required to restore in different project or
+	// region.
 	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty"`
 	// NetworkPerformanceConfig: Optional. Configure network performance such as
 	// egress bandwidth tier.
@@ -1983,7 +1985,8 @@ type ComputeInstanceRestoreProperties struct {
 	// ReservationAffinity: Optional. Specifies the reservations that this instance
 	// can consume from.
 	ReservationAffinity *AllocationAffinity `json:"reservationAffinity,omitempty"`
-	// ResourcePolicies: Optional. Resource policies applied to this instance.
+	// ResourcePolicies: Optional. Resource policies applied to this instance. By
+	// default, no resource policies will be applied.
 	ResourcePolicies []string `json:"resourcePolicies,omitempty"`
 	// Scheduling: Optional. Sets the scheduling options for this instance.
 	Scheduling *Scheduling `json:"scheduling,omitempty"`
@@ -2783,6 +2786,57 @@ type FetchDataSourceReferencesForResourceTypeResponse struct {
 
 func (s FetchDataSourceReferencesForResourceTypeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchDataSourceReferencesForResourceTypeResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchMsComplianceMetadataRequest: Request message for
+// GetMsComplianceMetadata
+type FetchMsComplianceMetadataRequest struct {
+	// ProjectId: Required. The project id of the target project
+	ProjectId string `json:"projectId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProjectId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProjectId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchMsComplianceMetadataRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchMsComplianceMetadataRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchMsComplianceMetadataResponse: Response message for
+// GetMsComplianceMetadata
+type FetchMsComplianceMetadataResponse struct {
+	// IsAssuredWorkload: The ms compliance metadata of the target project, if the
+	// project is an assured workloads project, values will be true, otherwise
+	// false.
+	IsAssuredWorkload bool `json:"isAssuredWorkload,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "IsAssuredWorkload") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsAssuredWorkload") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchMsComplianceMetadataResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchMsComplianceMetadataResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10670,6 +10724,114 @@ func (c *ProjectsLocationsManagementServersListCall) Pages(ctx context.Context, 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsManagementServersMsComplianceMetadataCall struct {
+	s                                *Service
+	parent                           string
+	fetchmscompliancemetadatarequest *FetchMsComplianceMetadataRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// MsComplianceMetadata: Returns the Assured Workloads compliance metadata for
+// a given project.
+//
+//   - parent: The project and location to be used to check CSS metadata for
+//     target project information, in the format
+//     'projects/{project_id}/locations/{location}'. In Cloud BackupDR, locations
+//     map to Google Cloud regions, for example **us-central1**.
+func (r *ProjectsLocationsManagementServersService) MsComplianceMetadata(parent string, fetchmscompliancemetadatarequest *FetchMsComplianceMetadataRequest) *ProjectsLocationsManagementServersMsComplianceMetadataCall {
+	c := &ProjectsLocationsManagementServersMsComplianceMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.fetchmscompliancemetadatarequest = fetchmscompliancemetadatarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsManagementServersMsComplianceMetadataCall) Fields(s ...googleapi.Field) *ProjectsLocationsManagementServersMsComplianceMetadataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsManagementServersMsComplianceMetadataCall) Context(ctx context.Context) *ProjectsLocationsManagementServersMsComplianceMetadataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsManagementServersMsComplianceMetadataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsManagementServersMsComplianceMetadataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.fetchmscompliancemetadatarequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:msComplianceMetadata")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.managementServers.msComplianceMetadata", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.managementServers.msComplianceMetadata" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchMsComplianceMetadataResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsManagementServersMsComplianceMetadataCall) Do(opts ...googleapi.CallOption) (*FetchMsComplianceMetadataResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchMsComplianceMetadataResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.managementServers.msComplianceMetadata", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsManagementServersSetIamPolicyCall struct {

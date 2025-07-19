@@ -177,6 +177,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.DbSystemShapes = NewProjectsLocationsDbSystemShapesService(s)
 	rs.Entitlements = NewProjectsLocationsEntitlementsService(s)
 	rs.GiVersions = NewProjectsLocationsGiVersionsService(s)
+	rs.OdbNetworks = NewProjectsLocationsOdbNetworksService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	return rs
 }
@@ -201,6 +202,8 @@ type ProjectsLocationsService struct {
 	Entitlements *ProjectsLocationsEntitlementsService
 
 	GiVersions *ProjectsLocationsGiVersionsService
+
+	OdbNetworks *ProjectsLocationsOdbNetworksService
 
 	Operations *ProjectsLocationsOperationsService
 }
@@ -310,6 +313,27 @@ type ProjectsLocationsGiVersionsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsOdbNetworksService(s *Service) *ProjectsLocationsOdbNetworksService {
+	rs := &ProjectsLocationsOdbNetworksService{s: s}
+	rs.OdbSubnets = NewProjectsLocationsOdbNetworksOdbSubnetsService(s)
+	return rs
+}
+
+type ProjectsLocationsOdbNetworksService struct {
+	s *Service
+
+	OdbSubnets *ProjectsLocationsOdbNetworksOdbSubnetsService
+}
+
+func NewProjectsLocationsOdbNetworksOdbSubnetsService(s *Service) *ProjectsLocationsOdbNetworksOdbSubnetsService {
+	rs := &ProjectsLocationsOdbNetworksOdbSubnetsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsOdbNetworksOdbSubnetsService struct {
+	s *Service
+}
+
 func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
 	rs := &ProjectsLocationsOperationsService{s: s}
 	return rs
@@ -385,6 +409,17 @@ type AutonomousDatabase struct {
 	// Database in the following format:
 	// projects/{project}/global/networks/{network}
 	Network string `json:"network,omitempty"`
+	// OdbNetwork: Optional. The name of the OdbNetwork associated with the
+	// Autonomous Database. Format:
+	// projects/{project}/locations/{location}/odbNetworks/{odb_network} It is
+	// optional but if specified, this should match the parent ODBNetwork of the
+	// OdbSubnet.
+	OdbNetwork string `json:"odbNetwork,omitempty"`
+	// OdbSubnet: Optional. The name of the OdbSubnet associated with the
+	// Autonomous Database. Format:
+	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/
+	// {odb_subnet}
+	OdbSubnet string `json:"odbSubnet,omitempty"`
 	// PeerAutonomousDatabases: Output only. The peer Autonomous Database names of
 	// the given Autonomous Database.
 	PeerAutonomousDatabases []string `json:"peerAutonomousDatabases,omitempty"`
@@ -1385,6 +1420,11 @@ func (s *CloudExadataInfrastructureProperties) UnmarshalJSON(data []byte) error 
 // CloudVmCluster: Details of the Cloud VM Cluster resource.
 // https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/CloudVmCluster/
 type CloudVmCluster struct {
+	// BackupOdbSubnet: Optional. The name of the backup OdbSubnet associated with
+	// the VM Cluster. Format:
+	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/
+	// {odb_subnet}
+	BackupOdbSubnet string `json:"backupOdbSubnet,omitempty"`
 	// BackupSubnetCidr: Optional. CIDR range of the backup subnet.
 	BackupSubnetCidr string `json:"backupSubnetCidr,omitempty"`
 	// Cidr: Optional. Network settings. CIDR to use for cluster IP allocation.
@@ -1410,18 +1450,29 @@ type CloudVmCluster struct {
 	// Network: Optional. The name of the VPC network. Format:
 	// projects/{project}/global/networks/{network}
 	Network string `json:"network,omitempty"`
+	// OdbNetwork: Optional. The name of the OdbNetwork associated with the VM
+	// Cluster. Format:
+	// projects/{project}/locations/{location}/odbNetworks/{odb_network} It is
+	// optional but if specified, this should match the parent ODBNetwork of the
+	// odb_subnet and backup_odb_subnet.
+	OdbNetwork string `json:"odbNetwork,omitempty"`
+	// OdbSubnet: Optional. The name of the OdbSubnet associated with the VM
+	// Cluster for IP allocation. Format:
+	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/
+	// {odb_subnet}
+	OdbSubnet string `json:"odbSubnet,omitempty"`
 	// Properties: Optional. Various properties of the VM Cluster.
 	Properties *CloudVmClusterProperties `json:"properties,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "BackupSubnetCidr") to
+	// ForceSendFields is a list of field names (e.g. "BackupOdbSubnet") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackupSubnetCidr") to include in
+	// NullFields is a list of field names (e.g. "BackupOdbSubnet") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1733,6 +1784,9 @@ func (s DbNode) MarshalJSON() ([]byte, error) {
 
 // DbNodeProperties: Various properties and settings associated with Db node.
 type DbNodeProperties struct {
+	// CreateTime: Output only. The date and time that the database node was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
 	// DbNodeStorageSizeGb: Optional. Local storage per database node.
 	DbNodeStorageSizeGb int64 `json:"dbNodeStorageSizeGb,omitempty"`
 	// DbServerOcid: Optional. Database server OCID.
@@ -1761,15 +1815,15 @@ type DbNodeProperties struct {
 	State string `json:"state,omitempty"`
 	// TotalCpuCoreCount: Total CPU core count of the database node.
 	TotalCpuCoreCount int64 `json:"totalCpuCoreCount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DbNodeStorageSizeGb") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DbNodeStorageSizeGb") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2382,6 +2436,68 @@ func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListOdbNetworksResponse: The response for `OdbNetwork.List`.
+type ListOdbNetworksResponse struct {
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// OdbNetworks: The list of ODB Networks.
+	OdbNetworks []*OdbNetwork `json:"odbNetworks,omitempty"`
+	// Unreachable: Unreachable locations when listing resources across all
+	// locations using wildcard location '-'.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListOdbNetworksResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListOdbNetworksResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListOdbSubnetsResponse: The response for `OdbSubnet.List`.
+type ListOdbSubnetsResponse struct {
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// OdbSubnets: The list of ODB Subnets.
+	OdbSubnets []*OdbSubnet `json:"odbSubnets,omitempty"`
+	// Unreachable: Unreachable locations when listing resources across all
+	// locations using wildcard location '-'.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListOdbSubnetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListOdbSubnetsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListOperationsResponse: The response message for Operations.ListOperations.
 type ListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
@@ -2563,6 +2679,101 @@ type MaintenanceWindow struct {
 
 func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OdbNetwork: Represents OdbNetwork resource.
+type OdbNetwork struct {
+	// CreateTime: Output only. The date and time that the OdbNetwork was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EntitlementId: Output only. The ID of the subscription entitlement
+	// associated with the OdbNetwork.
+	EntitlementId string `json:"entitlementId,omitempty"`
+	// Labels: Optional. Labels or tags associated with the resource.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The name of the OdbNetwork resource in the following
+	// format: projects/{project}/locations/{region}/odbNetworks/{odb_network}
+	Name string `json:"name,omitempty"`
+	// Network: Required. The name of the VPC network in the following format:
+	// projects/{project}/global/networks/{network}
+	Network string `json:"network,omitempty"`
+	// State: Output only. State of the ODB Network.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default unspecified value.
+	//   "PROVISIONING" - Indicates that the resource is in provisioning state.
+	//   "AVAILABLE" - Indicates that the resource is in available state.
+	//   "TERMINATING" - Indicates that the resource is in terminating state.
+	//   "FAILED" - Indicates that the resource is in failed state.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OdbNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod OdbNetwork
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OdbSubnet: Represents OdbSubnet resource.
+type OdbSubnet struct {
+	// CidrRange: Required. The CIDR range of the subnet.
+	CidrRange string `json:"cidrRange,omitempty"`
+	// CreateTime: Output only. The date and time that the OdbNetwork was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Labels: Optional. Labels or tags associated with the resource.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The name of the OdbSubnet resource in the following
+	// format:
+	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/
+	// {odb_subnet}
+	Name string `json:"name,omitempty"`
+	// Purpose: Required. Purpose of the subnet.
+	//
+	// Possible values:
+	//   "PURPOSE_UNSPECIFIED" - Default unspecified value.
+	//   "CLIENT_SUBNET" - Subnet to be used for client connections.
+	//   "BACKUP_SUBNET" - Subnet to be used for backup.
+	Purpose string `json:"purpose,omitempty"`
+	// State: Output only. State of the ODB Subnet.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default unspecified value.
+	//   "PROVISIONING" - Indicates that the resource is in provisioning state.
+	//   "AVAILABLE" - Indicates that the resource is in available state.
+	//   "TERMINATING" - Indicates that the resource is in terminating state.
+	//   "FAILED" - Indicates that the resource is in failed state.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CidrRange") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CidrRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OdbSubnet) MarshalJSON() ([]byte, error) {
+	type NoMethod OdbSubnet
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6518,6 +6729,1022 @@ func (c *ProjectsLocationsGiVersionsListCall) Do(opts ...googleapi.CallOption) (
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsGiVersionsListCall) Pages(ctx context.Context, f func(*ListGiVersionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsOdbNetworksCreateCall struct {
+	s          *Service
+	parent     string
+	odbnetwork *OdbNetwork
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new ODB Network in a given project and location.
+//
+//   - parent: The parent value for the OdbNetwork in the following format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsOdbNetworksService) Create(parent string, odbnetwork *OdbNetwork) *ProjectsLocationsOdbNetworksCreateCall {
+	c := &ProjectsLocationsOdbNetworksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.odbnetwork = odbnetwork
+	return c
+}
+
+// OdbNetworkId sets the optional parameter "odbNetworkId": Required. The ID of
+// the OdbNetwork to create. This value is restricted to (^a-z
+// ([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of 63 characters in
+// length. The value must start with a letter and end with a letter or a
+// number.
+func (c *ProjectsLocationsOdbNetworksCreateCall) OdbNetworkId(odbNetworkId string) *ProjectsLocationsOdbNetworksCreateCall {
+	c.urlParams_.Set("odbNetworkId", odbNetworkId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsOdbNetworksCreateCall) RequestId(requestId string) *ProjectsLocationsOdbNetworksCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOdbNetworksCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsOdbNetworksCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOdbNetworksCreateCall) Context(ctx context.Context) *ProjectsLocationsOdbNetworksCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOdbNetworksCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOdbNetworksCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.odbnetwork)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/odbNetworks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.odbNetworks.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOdbNetworksCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsOdbNetworksDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single ODB Network.
+//
+//   - name: The name of the resource in the following format:
+//     projects/{project}/locations/{location}/odbNetworks/{odb_network}.
+func (r *ProjectsLocationsOdbNetworksService) Delete(name string) *ProjectsLocationsOdbNetworksDeleteCall {
+	c := &ProjectsLocationsOdbNetworksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsOdbNetworksDeleteCall) RequestId(requestId string) *ProjectsLocationsOdbNetworksDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOdbNetworksDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsOdbNetworksDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOdbNetworksDeleteCall) Context(ctx context.Context) *ProjectsLocationsOdbNetworksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOdbNetworksDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOdbNetworksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.odbNetworks.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOdbNetworksDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsOdbNetworksGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single ODB Network.
+//
+//   - name: The name of the OdbNetwork in the following format:
+//     projects/{project}/locations/{location}/odbNetworks/{odb_network}.
+func (r *ProjectsLocationsOdbNetworksService) Get(name string) *ProjectsLocationsOdbNetworksGetCall {
+	c := &ProjectsLocationsOdbNetworksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOdbNetworksGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOdbNetworksGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsOdbNetworksGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOdbNetworksGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOdbNetworksGetCall) Context(ctx context.Context) *ProjectsLocationsOdbNetworksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOdbNetworksGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOdbNetworksGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.odbNetworks.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *OdbNetwork.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOdbNetworksGetCall) Do(opts ...googleapi.CallOption) (*OdbNetwork, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &OdbNetwork{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsOdbNetworksListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the ODB Networks in a given project and location.
+//
+//   - parent: The parent value for the ODB Network in the following format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsOdbNetworksService) List(parent string) *ProjectsLocationsOdbNetworksListCall {
+	c := &ProjectsLocationsOdbNetworksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request.
+func (c *ProjectsLocationsOdbNetworksListCall) Filter(filter string) *ProjectsLocationsOdbNetworksListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An expression for ordering
+// the results of the request.
+func (c *ProjectsLocationsOdbNetworksListCall) OrderBy(orderBy string) *ProjectsLocationsOdbNetworksListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If unspecified, at most 50 ODB Networks will be returned. The
+// maximum value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsOdbNetworksListCall) PageSize(pageSize int64) *ProjectsLocationsOdbNetworksListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsOdbNetworksListCall) PageToken(pageToken string) *ProjectsLocationsOdbNetworksListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOdbNetworksListCall) Fields(s ...googleapi.Field) *ProjectsLocationsOdbNetworksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsOdbNetworksListCall) IfNoneMatch(entityTag string) *ProjectsLocationsOdbNetworksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOdbNetworksListCall) Context(ctx context.Context) *ProjectsLocationsOdbNetworksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOdbNetworksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOdbNetworksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/odbNetworks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.odbNetworks.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListOdbNetworksResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsOdbNetworksListCall) Do(opts ...googleapi.CallOption) (*ListOdbNetworksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListOdbNetworksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsOdbNetworksListCall) Pages(ctx context.Context, f func(*ListOdbNetworksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsOdbNetworksOdbSubnetsCreateCall struct {
+	s          *Service
+	parent     string
+	odbsubnet  *OdbSubnet
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new ODB Subnet in a given ODB Network.
+//
+//   - parent: The parent value for the OdbSubnet in the following format:
+//     projects/{project}/locations/{location}/odbNetworks/{odb_network}.
+func (r *ProjectsLocationsOdbNetworksOdbSubnetsService) Create(parent string, odbsubnet *OdbSubnet) *ProjectsLocationsOdbNetworksOdbSubnetsCreateCall {
+	c := &ProjectsLocationsOdbNetworksOdbSubnetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.odbsubnet = odbsubnet
+	return c
+}
+
+// OdbSubnetId sets the optional parameter "odbSubnetId": Required. The ID of
+// the OdbSubnet to create. This value is restricted to (^a-z
+// ([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of 63 characters in
+// length. The value must start with a letter and end with a letter or a
+// number.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsCreateCall) OdbSubnetId(odbSubnetId string) *ProjectsLocationsOdbNetworksOdbSubnetsCreateCall {
+	c.urlParams_.Set("odbSubnetId", odbSubnetId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsCreateCall) RequestId(requestId string) *ProjectsLocationsOdbNetworksOdbSubnetsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsOdbNetworksOdbSubnetsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsCreateCall) Context(ctx context.Context) *ProjectsLocationsOdbNetworksOdbSubnetsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.odbsubnet)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/odbSubnets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbSubnets.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.odbNetworks.odbSubnets.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbSubnets.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsOdbNetworksOdbSubnetsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single ODB Subnet.
+//
+//   - name: The name of the resource in the following format:
+//     projects/{project}/locations/{region}/odbNetworks/{odb_network}/odbSubnets/
+//     {odb_subnet}.
+func (r *ProjectsLocationsOdbNetworksOdbSubnetsService) Delete(name string) *ProjectsLocationsOdbNetworksOdbSubnetsDeleteCall {
+	c := &ProjectsLocationsOdbNetworksOdbSubnetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsDeleteCall) RequestId(requestId string) *ProjectsLocationsOdbNetworksOdbSubnetsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsOdbNetworksOdbSubnetsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsDeleteCall) Context(ctx context.Context) *ProjectsLocationsOdbNetworksOdbSubnetsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbSubnets.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.odbNetworks.odbSubnets.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbSubnets.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsOdbNetworksOdbSubnetsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single ODB Subnet.
+//
+//   - name: The name of the OdbSubnet in the following format:
+//     projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnet
+//     s/{odb_subnet}.
+func (r *ProjectsLocationsOdbNetworksOdbSubnetsService) Get(name string) *ProjectsLocationsOdbNetworksOdbSubnetsGetCall {
+	c := &ProjectsLocationsOdbNetworksOdbSubnetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOdbNetworksOdbSubnetsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOdbNetworksOdbSubnetsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsGetCall) Context(ctx context.Context) *ProjectsLocationsOdbNetworksOdbSubnetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbSubnets.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.odbNetworks.odbSubnets.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *OdbSubnet.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsGetCall) Do(opts ...googleapi.CallOption) (*OdbSubnet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &OdbSubnet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbSubnets.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsOdbNetworksOdbSubnetsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the ODB Subnets in a given ODB Network.
+//
+//   - parent: The parent value for the OdbSubnet in the following format:
+//     projects/{project}/locations/{location}/odbNetworks/{odb_network}.
+func (r *ProjectsLocationsOdbNetworksOdbSubnetsService) List(parent string) *ProjectsLocationsOdbNetworksOdbSubnetsListCall {
+	c := &ProjectsLocationsOdbNetworksOdbSubnetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsListCall) Filter(filter string) *ProjectsLocationsOdbNetworksOdbSubnetsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An expression for ordering
+// the results of the request.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsListCall) OrderBy(orderBy string) *ProjectsLocationsOdbNetworksOdbSubnetsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If unspecified, at most 50 ODB Networks will be returned. The
+// maximum value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsListCall) PageSize(pageSize int64) *ProjectsLocationsOdbNetworksOdbSubnetsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsListCall) PageToken(pageToken string) *ProjectsLocationsOdbNetworksOdbSubnetsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsOdbNetworksOdbSubnetsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsOdbNetworksOdbSubnetsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsListCall) Context(ctx context.Context) *ProjectsLocationsOdbNetworksOdbSubnetsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/odbSubnets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbSubnets.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.odbNetworks.odbSubnets.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListOdbSubnetsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsListCall) Do(opts ...googleapi.CallOption) (*ListOdbSubnetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListOdbSubnetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbSubnets.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsListCall) Pages(ctx context.Context, f func(*ListOdbSubnetsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

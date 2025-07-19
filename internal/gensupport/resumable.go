@@ -183,25 +183,8 @@ func (rx *ResumableUpload) uploadChunk(ctx context.Context, chunk io.Reader, off
 	// Retry loop for a single chunk.
 	for {
 		// Wait for the backoff period, unless the context is canceled or the
-		// retry deadline is hit.
-		pauseTimer := time.NewTimer(pause)
-		select {
-		case <-ctx.Done():
-			pauseTimer.Stop()
-			if err == nil {
-				err = ctx.Err()
-			}
-			return resp, err
-		case <-pauseTimer.C:
-		case <-quitAfterTimer.C:
-			pauseTimer.Stop()
-			return resp, err
-		}
-		pauseTimer.Stop()
-
-		// Check for context cancellation or timeout once more. If more than one
-		// case in the select statement above was satisfied at the same time, Go
-		// will choose one arbitrarily.
+		// retry deadline is hit. If more than one case in the select statement
+		// is satisfied at the same time, Go will choose one arbitrarily.
 		// That can cause an operation to go through even if the context was
 		// canceled before or the timeout was reached.
 		select {
@@ -212,7 +195,7 @@ func (rx *ResumableUpload) uploadChunk(ctx context.Context, chunk io.Reader, off
 			return resp, err
 		case <-quitAfterTimer.C:
 			return resp, err
-		default:
+		case <-time.After(pause):
 		}
 
 		// We close the response's body here, since we definitely will not

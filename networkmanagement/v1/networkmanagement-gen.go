@@ -396,6 +396,8 @@ type AbortInfo struct {
 	//   "NO_SERVERLESS_IP_RANGES" - Aborted because the source endpoint is a Cloud
 	// Run revision with direct VPC access enabled, but there are no reserved
 	// serverless IP ranges.
+	//   "IP_VERSION_PROTOCOL_MISMATCH" - Aborted because the used protocol is not
+	// supported for the used IP version.
 	Cause string `json:"cause,omitempty"`
 	// IpAddress: IP address that caused the abort.
 	IpAddress string `json:"ipAddress,omitempty"`

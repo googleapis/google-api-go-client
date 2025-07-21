@@ -2328,6 +2328,58 @@ func (s DicomFilterConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DicomNotificationConfig: Contains the configuration for DICOM notifications.
+type DicomNotificationConfig struct {
+	// PubsubTopic: Required. The Pub/Sub (https://cloud.google.com/pubsub/docs/)
+	// topic that notifications of changes are published on. Supplied by the
+	// client. The notification is a `PubsubMessage` with the following fields: *
+	// `PubsubMessage.Data` contains the resource name. * `PubsubMessage.MessageId`
+	// is the ID of this notification. It is guaranteed to be unique within the
+	// topic. * `PubsubMessage.PublishTime` is the time when the message was
+	// published. * `PubsubMessage.Attributes` contains the following attributes: *
+	// `action`: The name of the endpoint that generated the notification. Possible
+	// values are `StoreInstances`, `SetBlobSettings`, `ImportDicomData`, etc. *
+	// `lastUpdatedTime`: The latest timestamp when the DICOM instance was updated.
+	// * `storeName`: The resource name of the DICOM store, of the form
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomSto
+	// res/{dicom_store_id}`. * `studyInstanceUID`: The study UID of the DICOM
+	// instance that was changed. * `seriesInstanceUID`: The series UID of the
+	// DICOM instance that was changed. * `sopInstanceUID`: The instance UID of the
+	// DICOM instance that was changed. * `versionId`: The version ID of the DICOM
+	// instance that was changed. * `modality`: The modality tag of the DICOM
+	// instance that was changed. * `previousStorageClass`: The storage class where
+	// the DICOM instance was previously stored if the storage class was changed. *
+	// `storageClass`: The storage class where the DICOM instance is currently
+	// stored. Note that notifications are only sent if the topic is non-empty.
+	// Topic names (https://cloud.google.com/pubsub/docs/overview#names) must be
+	// scoped to a project. The Cloud Healthcare API service account,
+	// service-@gcp-sa-healthcare.iam.gserviceaccount.com, must have the
+	// `pubsub.topics.publish` permission (which is typically included in
+	// `roles/pubsub.publisher` role) on the given Pub/Sub topic. Not having
+	// adequate permissions causes the calls that send notifications to fail
+	// (https://cloud.google.com/healthcare-api/docs/permissions-healthcare-api-gcp-products#dicom_fhir_and_hl7v2_store_cloud_pubsub_permissions).
+	// If a notification can't be published to Pub/Sub, errors are logged to Cloud
+	// Logging. For more information, see Viewing error logs in Cloud Logging
+	// (https://cloud.google.com/healthcare-api/docs/how-tos/logging).
+	PubsubTopic string `json:"pubsubTopic,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PubsubTopic") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PubsubTopic") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DicomNotificationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DicomNotificationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DicomStore: Represents a DICOM store.
 type DicomStore struct {
 	// Labels: User-supplied key-value pairs used to organize DICOM stores. Label
@@ -2346,6 +2398,9 @@ type DicomStore struct {
 	// NotificationConfig: Notification destination for new DICOM instances.
 	// Supplied by the client.
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
+	// NotificationConfigs: Optional. Specifies where and whether to send
+	// notifications upon changes to a DICOM store.
+	NotificationConfigs []*DicomNotificationConfig `json:"notificationConfigs,omitempty"`
 	// StreamConfigs: Optional. A list of streaming configs used to configure the
 	// destination of streaming exports for every DICOM instance insertion in this
 	// DICOM store. After a new config is added to `stream_configs`, DICOM instance
@@ -22943,9 +22998,10 @@ type ProjectsLocationsDatasetsFhirStoresFhirUpdateCall struct {
 // by the FHIR store contain a JSON-encoded `OperationOutcome` resource
 // describing the reason for the error. If the request cannot be mapped to a
 // valid API method on a FHIR store, a generic GCP error might be returned
-// instead. In R5, the conditional update interaction If-None-Match is
-// supported, including the wildcard behaviour. For samples that show how to
-// call `update`, see Updating a FHIR resource
+// instead. The conditional update interaction If-None-Match is supported,
+// including the wildcard behaviour, as defined by the R5 spec. This
+// functionality is supported in R4 and R5. For samples that show how to call
+// `update`, see Updating a FHIR resource
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#updating_a_fhir_resource).
 //
 // - name: The name of the resource to update.

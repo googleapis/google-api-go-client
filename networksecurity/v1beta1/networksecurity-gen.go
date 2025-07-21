@@ -848,9 +848,17 @@ func (s AuthzPolicyAuthzRuleFrom) MarshalJSON() ([]byte, error) {
 // AuthzPolicyAuthzRuleFromRequestSource: Describes the properties of a single
 // source.
 type AuthzPolicyAuthzRuleFromRequestSource struct {
-	// IpBlocks: Optional. A list of IPs or CIDRs to match against the source IP of
-	// a request. Limited to 5 ip_blocks.
+	// IpBlocks: Optional. A list of IP addresses or IP address ranges to match
+	// against the source IP address of the request. Limited to 5 ip_blocks.
 	IpBlocks []*AuthzPolicyAuthzRuleIpBlock `json:"ipBlocks,omitempty"`
+	// Principals: Optional. A list of identities derived from the client's
+	// certificate. This field will not match on a request unless frontend mutual
+	// TLS is enabled for the forwarding rule or Gateway and the client certificate
+	// has been successfully validated by mTLS. Each identity is a string whose
+	// value is matched against a list of URI SANs, DNS Name SANs, or the common
+	// name in the client's certificate. A match happens when any principal matches
+	// with the rule. Limited to 5 principals.
+	Principals []*AuthzPolicyAuthzRulePrincipal `json:"principals,omitempty"`
 	// Resources: Optional. A list of resources to match against the resource of
 	// the source VM of a request. Limited to 5 resources.
 	Resources []*AuthzPolicyAuthzRuleRequestResource `json:"resources,omitempty"`
@@ -918,6 +926,55 @@ type AuthzPolicyAuthzRuleIpBlock struct {
 
 func (s AuthzPolicyAuthzRuleIpBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthzPolicyAuthzRuleIpBlock
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyAuthzRulePrincipal: Describes the properties of a principal to be
+// matched against.
+type AuthzPolicyAuthzRulePrincipal struct {
+	// Principal: Required. A non-empty string whose value is matched against the
+	// principal value based on the principal_selector. Only exact match can be
+	// applied for CLIENT_CERT_URI_SAN, CLIENT_CERT_DNS_NAME_SAN,
+	// CLIENT_CERT_COMMON_NAME selectors.
+	Principal *AuthzPolicyAuthzRuleStringMatch `json:"principal,omitempty"`
+	// PrincipalSelector: Optional. An enum to decide what principal value the
+	// principal rule will match against. If not specified, the PrincipalSelector
+	// is CLIENT_CERT_URI_SAN.
+	//
+	// Possible values:
+	//   "PRINCIPAL_SELECTOR_UNSPECIFIED" - Unspecified principal selector. It will
+	// be treated as CLIENT_CERT_URI_SAN by default.
+	//   "CLIENT_CERT_URI_SAN" - The principal rule is matched against a list of
+	// URI SANs in the validated client’s certificate. A match happens when there
+	// is any exact URI SAN value match. This is the default principal selector.
+	//   "CLIENT_CERT_DNS_NAME_SAN" - The principal rule is matched against a list
+	// of DNS Name SANs in the validated client’s certificate. A match happens
+	// when there is any exact DNS Name SAN value match.
+	//   "CLIENT_CERT_COMMON_NAME" - The principal rule is matched against the
+	// common name in the client’s certificate. Authorization against multiple
+	// common names in the client certificate is not supported. Requests with
+	// multiple common names in the client certificate will be rejected if
+	// CLIENT_CERT_COMMON_NAME is set as the principal selector. A match happens
+	// when there is an exact common name value match. This is only applicable for
+	// Application Load Balancers except for classic Global External Application
+	// load balancer. CLIENT_CERT_COMMON_NAME is not supported for
+	// INTERNAL_SELF_MANAGED load balancing scheme.
+	PrincipalSelector string `json:"principalSelector,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Principal") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Principal") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyAuthzRulePrincipal) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyAuthzRulePrincipal
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1227,8 +1284,8 @@ func (s AuthzPolicyTarget) MarshalJSON() ([]byte, error) {
 // TrustConfig. * `clientCertificate` is a client certificate that the load
 // balancer uses to express its identity to the backend, if the connection to
 // the backend uses mTLS. You can attach the BackendAuthenticationConfig to the
-// load balancer’s BackendService directly determining how that
-// BackendService negotiates TLS.
+// load balancer's BackendService directly determining how that BackendService
+// negotiates TLS.
 type BackendAuthenticationConfig struct {
 	// ClientCertificate: Optional. A reference to a
 	// certificatemanager.googleapis.com.Certificate resource. This is a relative
@@ -1344,7 +1401,8 @@ type ClientTlsPolicy struct {
 	// Labels: Optional. Set of label tags associated with the resource.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Required. Name of the ClientTlsPolicy resource. It matches the pattern
-	// `projects/*/locations/{location}/clientTlsPolicies/{client_tls_policy}`
+	// `projects/{project}/locations/{location}/clientTlsPolicies/{client_tls_policy
+	// }`
 	Name string `json:"name,omitempty"`
 	// ServerValidationCa: Optional. Defines the mechanism to obtain the
 	// Certificate Authority certificate to validate the server certificate. If
@@ -13409,7 +13467,8 @@ type ProjectsLocationsClientTlsPoliciesPatchCall struct {
 // Patch: Updates the parameters of a single ClientTlsPolicy.
 //
 //   - name: Name of the ClientTlsPolicy resource. It matches the pattern
-//     `projects/*/locations/{location}/clientTlsPolicies/{client_tls_policy}`.
+//     `projects/{project}/locations/{location}/clientTlsPolicies/{client_tls_poli
+//     cy}`.
 func (r *ProjectsLocationsClientTlsPoliciesService) Patch(name string, clienttlspolicy *ClientTlsPolicy) *ProjectsLocationsClientTlsPoliciesPatchCall {
 	c := &ProjectsLocationsClientTlsPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

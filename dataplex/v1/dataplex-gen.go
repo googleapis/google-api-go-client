@@ -34,11 +34,6 @@
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate.
-// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
-//
-//	dataplexService, err := dataplex.NewService(ctx, option.WithScopes(dataplex.CloudPlatformReadOnlyScope))
-//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -106,17 +101,12 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
-
-	// View your data across Google Cloud services and see the email address of
-	// your Google Account
-	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
-		"https://www.googleapis.com/auth/cloud-platform.read-only",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -4800,9 +4790,13 @@ type GoogleCloudDataplexV1EntryLink struct {
 	// CreateTime: Output only. The time when the Entry Link was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// EntryLinkType: Required. Immutable. Relative resource name of the Entry Link
-	// Type used to create this Entry Link, of the form:
-	// `projects/{project_id_or_number}/locations/{location_id}/entryLinkTypes/{entr
-	// y_link_type_id}.
+	// Type used to create this Entry Link. For example: Entry link between synonym
+	// terms in a glossary:
+	// projects/dataplex-types/locations/global/entryLinkTypes/synonym Entry link
+	// between related terms in a glossary:
+	// projects/dataplex-types/locations/global/entryLinkTypes/related Entry link
+	// between glossary terms and data assets:
+	// projects/dataplex-types/locations/global/entryLinkTypes/definition
 	EntryLinkType string `json:"entryLinkType,omitempty"`
 	// EntryReferences: Required. Specifies the Entries referenced in the Entry
 	// Link. There should be exactly two entry references.

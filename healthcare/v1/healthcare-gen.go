@@ -369,6 +369,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesService struct {
 
 func NewProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService(s *Service) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService {
 	rs := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService{s: s}
+	rs.Bulkdata = NewProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataService(s)
 	rs.Frames = NewProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService(s)
 	return rs
 }
@@ -376,7 +377,18 @@ func NewProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService(s *Ser
 type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService struct {
 	s *Service
 
+	Bulkdata *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataService
+
 	Frames *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService
+}
+
+func NewProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataService(s *Service) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataService {
+	rs := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataService struct {
+	s *Service
 }
 
 func NewProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService(s *Service) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService {
@@ -2109,6 +2121,58 @@ func (s DicomFilterConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DicomNotificationConfig: Contains the configuration for DICOM notifications.
+type DicomNotificationConfig struct {
+	// PubsubTopic: Required. The Pub/Sub (https://cloud.google.com/pubsub/docs/)
+	// topic that notifications of changes are published on. Supplied by the
+	// client. The notification is a `PubsubMessage` with the following fields: *
+	// `PubsubMessage.Data` contains the resource name. * `PubsubMessage.MessageId`
+	// is the ID of this notification. It is guaranteed to be unique within the
+	// topic. * `PubsubMessage.PublishTime` is the time when the message was
+	// published. * `PubsubMessage.Attributes` contains the following attributes: *
+	// `action`: The name of the endpoint that generated the notification. Possible
+	// values are `StoreInstances`, `SetBlobSettings`, `ImportDicomData`, etc. *
+	// `lastUpdatedTime`: The latest timestamp when the DICOM instance was updated.
+	// * `storeName`: The resource name of the DICOM store, of the form
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomSto
+	// res/{dicom_store_id}`. * `studyInstanceUID`: The study UID of the DICOM
+	// instance that was changed. * `seriesInstanceUID`: The series UID of the
+	// DICOM instance that was changed. * `sopInstanceUID`: The instance UID of the
+	// DICOM instance that was changed. * `versionId`: The version ID of the DICOM
+	// instance that was changed. * `modality`: The modality tag of the DICOM
+	// instance that was changed. * `previousStorageClass`: The storage class where
+	// the DICOM instance was previously stored if the storage class was changed. *
+	// `storageClass`: The storage class where the DICOM instance is currently
+	// stored. Note that notifications are only sent if the topic is non-empty.
+	// Topic names (https://cloud.google.com/pubsub/docs/overview#names) must be
+	// scoped to a project. The Cloud Healthcare API service account,
+	// service-@gcp-sa-healthcare.iam.gserviceaccount.com, must have the
+	// `pubsub.topics.publish` permission (which is typically included in
+	// `roles/pubsub.publisher` role) on the given Pub/Sub topic. Not having
+	// adequate permissions causes the calls that send notifications to fail
+	// (https://cloud.google.com/healthcare-api/docs/permissions-healthcare-api-gcp-products#dicom_fhir_and_hl7v2_store_cloud_pubsub_permissions).
+	// If a notification can't be published to Pub/Sub, errors are logged to Cloud
+	// Logging. For more information, see Viewing error logs in Cloud Logging
+	// (https://cloud.google.com/healthcare-api/docs/how-tos/logging).
+	PubsubTopic string `json:"pubsubTopic,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PubsubTopic") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PubsubTopic") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DicomNotificationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DicomNotificationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DicomStore: Represents a DICOM store.
 type DicomStore struct {
 	// Labels: User-supplied key-value pairs used to organize DICOM stores. Label
@@ -2127,6 +2191,9 @@ type DicomStore struct {
 	// NotificationConfig: Optional. Notification destination for new DICOM
 	// instances. Supplied by the client.
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
+	// NotificationConfigs: Optional. Specifies where and whether to send
+	// notifications upon changes to a DICOM store.
+	NotificationConfigs []*DicomNotificationConfig `json:"notificationConfigs,omitempty"`
 	// StreamConfigs: Optional. A list of streaming configs used to configure the
 	// destination of streaming exports for every DICOM instance insertion in this
 	// DICOM store. After a new config is added to `stream_configs`, DICOM instance
@@ -16106,6 +16173,99 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 	return c.doRequest("")
 }
 
+type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall struct {
+	s            *Service
+	parent       string
+	dicomWebPath string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrieveBulkdata: Returns uncompressed, unencoded bytes representing the
+// referenced bulkdata tag from an instance. See [Retrieve Transaction]
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4){:
+// .external}. For details on the implementation of RetrieveBulkdata, see
+// Bulkdata resources
+// (https://cloud.google.com/healthcare/docs/dicom#bulkdata-resources) in the
+// Cloud Healthcare API conformance statement. For samples that show how to
+// call RetrieveBulkdata, see Retrieve bulkdata
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-bulkdata).
+//
+//   - dicomWebPath: The path for the `RetrieveBulkdata` DICOMweb request. For
+//     example,
+//     `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/bukdata/{
+//     bulkdata_uri}`.
+//   - parent: The name of the DICOM store that is being accessed. For example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomS
+//     tores/{dicom_store_id}`.
+func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataService) RetrieveBulkdata(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall {
+	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.dicomWebPath = dicomWebPath
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dicomWeb/{+dicomWebPath}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent":       c.parent,
+		"dicomWebPath": c.dicomWebPath,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.bulkdata.retrieveBulkdata", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.bulkdata.retrieveBulkdata" call.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
 type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFramesCall struct {
 	s            *Service
 	parent       string
@@ -20724,9 +20884,10 @@ type ProjectsLocationsDatasetsFhirStoresFhirUpdateCall struct {
 // by the FHIR store contain a JSON-encoded `OperationOutcome` resource
 // describing the reason for the error. If the request cannot be mapped to a
 // valid API method on a FHIR store, a generic GCP error might be returned
-// instead. In R5, the conditional update interaction If-None-Match is
-// supported, including the wildcard behaviour. For samples that show how to
-// call `update`, see Updating a FHIR resource
+// instead. The conditional update interaction If-None-Match is supported,
+// including the wildcard behaviour, as defined by the R5 spec. This
+// functionality is supported in R4 and R5. For samples that show how to call
+// `update`, see Updating a FHIR resource
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#updating_a_fhir_resource).
 //
 // - name: The name of the resource to update.

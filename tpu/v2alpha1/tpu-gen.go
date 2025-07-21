@@ -429,11 +429,11 @@ type CreatingData struct {
 type CustomerEncryptionKey struct {
 	// KmsKeyName: The name of the encryption key that is stored in Google Cloud
 	// KMS. For example: "kmsKeyName":
-	// "projects/kms_project_id/locations/region/keyRings/
-	// key_region/cryptoKeys/key The fully-qualifed key name may be returned for
-	// resource GET requests. For example: "kmsKeyName":
-	// "projects/kms_project_id/locations/region/keyRings/
-	// key_region/cryptoKeys/key /cryptoKeyVersions/1
+	// "projects/KMS_PROJECT_ID/locations/REGION/keyRings/KEY_REGION/cryptoKeys/KEY
+	// The fully-qualifed key name may be returned for resource GET requests. For
+	// example: "kmsKeyName":
+	// "projects/KMS_PROJECT_ID/locations/REGION/keyRings/KEY_REGION/cryptoKeys/KEY/
+	// cryptoKeyVersions/1
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
 	// unconditionally include in API requests. By default, fields with empty or

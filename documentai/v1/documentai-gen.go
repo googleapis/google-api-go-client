@@ -4928,7 +4928,7 @@ func (s GoogleCloudDocumentaiV1ProcessResponse) MarshalJSON() ([]byte, error) {
 // Each processor defines how to extract structural information from a
 // document.
 type GoogleCloudDocumentaiV1Processor struct {
-	// CreateTime: The time the processor was created.
+	// CreateTime: Output only. The time the processor was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DefaultProcessorVersion: The default processor version.
 	DefaultProcessorVersion string `json:"defaultProcessorVersion,omitempty"`
@@ -5101,14 +5101,15 @@ func (s GoogleCloudDocumentaiV1ProcessorTypeLocationInfo) MarshalJSON() ([]byte,
 // can only have one default version at a time. Its document-processing
 // behavior is defined by that version.
 type GoogleCloudDocumentaiV1ProcessorVersion struct {
-	// CreateTime: The time the processor version was created.
+	// CreateTime: Output only. The time the processor version was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DeprecationInfo: If set, information about the eventual deprecation of this
-	// version.
+	// DeprecationInfo: Output only. If set, information about the eventual
+	// deprecation of this version.
 	DeprecationInfo *GoogleCloudDocumentaiV1ProcessorVersionDeprecationInfo `json:"deprecationInfo,omitempty"`
 	// DisplayName: The display name of the processor version.
 	DisplayName string `json:"displayName,omitempty"`
-	// DocumentSchema: The schema of the processor version. Describes the output.
+	// DocumentSchema: Output only. The schema of the processor version. Describes
+	// the output.
 	DocumentSchema *GoogleCloudDocumentaiV1DocumentSchema `json:"documentSchema,omitempty"`
 	// GenAiModelInfo: Output only. Information about Generative AI model-based
 	// processor versions.
@@ -5116,12 +5117,13 @@ type GoogleCloudDocumentaiV1ProcessorVersion struct {
 	// GoogleManaged: Output only. Denotes that this `ProcessorVersion` is managed
 	// by Google.
 	GoogleManaged bool `json:"googleManaged,omitempty"`
-	// KmsKeyName: The KMS key name used for encryption.
+	// KmsKeyName: Output only. The KMS key name used for encryption.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
-	// KmsKeyVersionName: The KMS key version with which data is encrypted.
+	// KmsKeyVersionName: Output only. The KMS key version with which data is
+	// encrypted.
 	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
-	// LatestEvaluation: The most recently invoked evaluation for the processor
-	// version.
+	// LatestEvaluation: Output only. The most recently invoked evaluation for the
+	// processor version.
 	LatestEvaluation *GoogleCloudDocumentaiV1EvaluationReference `json:"latestEvaluation,omitempty"`
 	// ModelType: Output only. The model type of this processor version.
 	//

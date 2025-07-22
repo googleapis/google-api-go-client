@@ -5027,6 +5027,33 @@ func (s GooglePrivacyDlpV2DlpJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2DocumentFallbackLocation: Configure document processing to
+// fall back to the configured processing option below if document processing
+// is unavailable in the original request location.
+type GooglePrivacyDlpV2DocumentFallbackLocation struct {
+	// GlobalProcessing: Processing will happen in the global region.
+	GlobalProcessing *GooglePrivacyDlpV2GlobalProcessing `json:"globalProcessing,omitempty"`
+	// MultiRegionProcessing: Processing will happen in a multi-region that
+	// contains the current region if available.
+	MultiRegionProcessing *GooglePrivacyDlpV2MultiRegionProcessing `json:"multiRegionProcessing,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GlobalProcessing") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GlobalProcessing") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2DocumentFallbackLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DocumentFallbackLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2DocumentLocation: Location of a finding within a document.
 type GooglePrivacyDlpV2DocumentLocation struct {
 	// FileOffset: Offset of the line, from the beginning of the file, where the
@@ -8546,16 +8573,19 @@ func (s GooglePrivacyDlpV2PrivacyMetric) MarshalJSON() ([]byte, error) {
 // regions but configuring ProcessingLocation will redirect OCR to a location
 // where OCR is provided.
 type GooglePrivacyDlpV2ProcessingLocation struct {
+	// DocumentFallbackLocation: Document processing will fall back using this
+	// configuration.
+	DocumentFallbackLocation *GooglePrivacyDlpV2DocumentFallbackLocation `json:"documentFallbackLocation,omitempty"`
 	// ImageFallbackLocation: Image processing will fall back using this
 	// configuration.
 	ImageFallbackLocation *GooglePrivacyDlpV2ImageFallbackLocation `json:"imageFallbackLocation,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ImageFallbackLocation") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "DocumentFallbackLocation")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ImageFallbackLocation") to
+	// NullFields is a list of field names (e.g. "DocumentFallbackLocation") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

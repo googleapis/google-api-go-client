@@ -944,6 +944,13 @@ type Membership struct {
 	// use GKE Connect, or that have never connected successfully, this field will
 	// be unset.
 	LastConnectionTime string `json:"lastConnectionTime,omitempty"`
+	// MembershipType: Output only. The type of the membership.
+	//
+	// Possible values:
+	//   "MEMBERSHIP_TYPE_UNSPECIFIED" - The MembershipType is not set.
+	//   "LIGHTWEIGHT" - The membership supports only lightweight compatible
+	// features.
+	MembershipType string `json:"membershipType,omitempty"`
 	// MonitoringConfig: Optional. The monitoring config information for this
 	// membership.
 	MonitoringConfig *MonitoringConfig `json:"monitoringConfig,omitempty"`

@@ -396,8 +396,8 @@ func TestChunkTransferTimeout(t *testing.T) {
 	}{
 		{
 			name:                 "media-read-delay-chunk-upload-succeeds",
-			mediaReadDelay:       640 * time.Millisecond,
-			chunkTransferTimeout: 100 * time.Millisecond,
+			mediaReadDelay:       120 * time.Millisecond,
+			chunkTransferTimeout: 30 * time.Millisecond,
 			events: []event{
 				// When media size is a multiple of chunk size, a non-final
 				// chunk is sent, followed by a final, zero-byte chunk.
@@ -410,14 +410,14 @@ func TestChunkTransferTimeout(t *testing.T) {
 		{
 			name:                 "network-delay-chunk-upload-fails",
 			mediaReadDelay:       0,
-			chunkTransferTimeout: 100 * time.Millisecond,
+			chunkTransferTimeout: 30 * time.Millisecond,
 			events: []event{
 				// The first attempt will be a non-final chunk. It should be answered
 				// with a 308 to keep the upload retry process going, which allows the ChunkRetryDeadline timeout to fire.
-				{byteRange: "bytes 0-14/*", responseStatus: 308, delay: 150 * time.Millisecond},
-				{byteRange: "bytes 0-14/*", responseStatus: 308, delay: 150 * time.Millisecond},
-				{byteRange: "bytes 0-14/*", responseStatus: 308, delay: 150 * time.Millisecond},
-				{byteRange: "bytes 0-14/*", responseStatus: 308, delay: 150 * time.Millisecond},
+				{byteRange: "bytes 0-14/*", responseStatus: 308, delay: 50 * time.Millisecond},
+				{byteRange: "bytes 0-14/*", responseStatus: 308, delay: 50 * time.Millisecond},
+				{byteRange: "bytes 0-14/*", responseStatus: 308, delay: 50 * time.Millisecond},
+				{byteRange: "bytes 0-14/*", responseStatus: 308, delay: 50 * time.Millisecond},
 			},
 			shouldFail: true,
 			wantError:  context.DeadlineExceeded,
@@ -443,7 +443,7 @@ func TestChunkTransferTimeout(t *testing.T) {
 				Media:                NewMediaBuffer(media, len(data)), // Chunk size is the whole payload
 				MediaType:            "text/plain",
 				ChunkTransferTimeout: tc.chunkTransferTimeout,
-				ChunkRetryDeadline:   320 * time.Millisecond,
+				ChunkRetryDeadline:   100 * time.Millisecond,
 			}
 
 			// Use a backoff with no pause to speed up retries.
@@ -600,15 +600,10 @@ func TestOverallUploadTimeout(t *testing.T) {
 		buf: make([]byte, 0, mediaSize),
 		events: []event{
 			{byteRange: "bytes 0-89/*", responseStatus: 308},
-			{byteRange: "bytes 90-179/*", responseStatus: 308, delay: 200 * time.Millisecond}, // This will cause a timeout
+			{byteRange: "bytes 90-179/*", responseStatus: 308, delay: 100 * time.Millisecond}, // This will cause a timeout
 		},
 		bodies: bodyTracker{},
 	}
-
-	// Create a cancellable context.
-	ctx, cancel := context.WithCancel(context.Background())
-	// Schedule the context to be canceled after 100ms.
-	time.AfterFunc(100*time.Millisecond, cancel)
 
 	rx := &ResumableUpload{
 		Client:    &http.Client{Transport: tr},
@@ -620,10 +615,13 @@ func TestOverallUploadTimeout(t *testing.T) {
 	backoff = func() Backoff { return new(NoPauseBackoff) }
 	defer func() { backoff = oldBackoff }()
 
-	// The second event has a 200ms delay, so the upload is guaranteed to be
-	// canceled by our AfterFunc before it completes.
+	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
+	defer cancel()
+	// The second event has a 100ms delay, so the upload is guaranteed to be
+	// timed out by before it completes.
 	_, err := rx.Upload(ctx)
-	if !errors.Is(err, context.Canceled) {
-		t.Fatalf("Upload err: got: %v; want: context.Canceled", err)
+
+	if !errors.Is(err, context.DeadlineExceeded) {
+		t.Fatalf("Upload err: got: %v; want: context.DeadlineExceeded", err)
 	}
 }

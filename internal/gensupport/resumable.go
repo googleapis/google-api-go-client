@@ -157,9 +157,9 @@ func (rx *ResumableUpload) transferChunk(ctx context.Context, chunk io.Reader, o
 	return res, nil
 }
 
-// uploadChunk attempts to upload a single chunk, with retries
+// uploadChunkWithRetries attempts to upload a single chunk, with retries
 // within ChunkRetryDeadline if ChunkTransferTimeout is non-zero.
-func (rx *ResumableUpload) uploadChunk(ctx context.Context, chunk io.Reader, off, size int64, done bool) (*http.Response, error) {
+func (rx *ResumableUpload) uploadChunkWithRetries(ctx context.Context, chunk io.Reader, off, size int64, done bool) (*http.Response, error) {
 	// Configure error retryable criteria.
 	shouldRetry := rx.Retry.errorFunc()
 
@@ -261,7 +261,7 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (*http.Response, error) {
 			return nil, err
 		}
 
-		resp, err := rx.uploadChunk(ctx, chunk, off, int64(size), done)
+		resp, err := rx.uploadChunkWithRetries(ctx, chunk, off, int64(size), done)
 		// There are a couple of cases where it's possible for err and resp to both
 		// be non-nil. However, we expose a simpler contract to our callers: exactly
 		// one of resp and err will be non-nil. This means that any response body

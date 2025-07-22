@@ -28,6 +28,8 @@ type event struct {
 	byteRange string
 	// the http status code to send in response.
 	responseStatus int
+	// delay to simulate network latency for this specific event.
+	delay time.Duration
 }
 
 // interruptibleTransport is configured with a canned set of requests/responses.
@@ -70,6 +72,9 @@ func (t *interruptibleTransport) RoundTrip(req *http.Request) (*http.Response, e
 	}
 	ev := t.events[0]
 	t.events = t.events[1:]
+	if ev.delay > 0 {
+		time.Sleep(ev.delay)
+	}
 	if got, want := req.Header.Get("Content-Range"), ev.byteRange; got != want {
 		return nil, fmt.Errorf("byte range: got %s; want %s", got, want)
 	}
@@ -129,12 +134,12 @@ func TestInterruptedTransferChunks(t *testing.T) {
 			data:      strings.Repeat("a", 300),
 			chunkSize: 90,
 			events: []event{
-				{"bytes 0-89/*", http.StatusServiceUnavailable},
-				{"bytes 0-89/*", 308},
-				{"bytes 90-179/*", 308},
-				{"bytes 180-269/*", http.StatusServiceUnavailable},
-				{"bytes 180-269/*", 308},
-				{"bytes 270-299/300", 200},
+				{byteRange: "bytes 0-89/*", responseStatus: http.StatusServiceUnavailable},
+				{byteRange: "bytes 0-89/*", responseStatus: 308},
+				{byteRange: "bytes 90-179/*", responseStatus: 308},
+				{byteRange: "bytes 180-269/*", responseStatus: http.StatusServiceUnavailable},
+				{byteRange: "bytes 180-269/*", responseStatus: 308},
+				{byteRange: "bytes 270-299/300", responseStatus: 200},
 			},
 			wantProgress: []int64{90, 180, 270, 300},
 		},
@@ -143,13 +148,13 @@ func TestInterruptedTransferChunks(t *testing.T) {
 			data:      strings.Repeat("a", 20),
 			chunkSize: 10,
 			events: []event{
-				{"bytes 0-9/*", http.StatusServiceUnavailable},
-				{"bytes 0-9/*", 308},
-				{"bytes 10-19/*", http.StatusServiceUnavailable},
-				{"bytes 10-19/*", 308},
+				{byteRange: "bytes 0-9/*", responseStatus: http.StatusServiceUnavailable},
+				{byteRange: "bytes 0-9/*", responseStatus: 308},
+				{byteRange: "bytes 10-19/*", responseStatus: http.StatusServiceUnavailable},
+				{byteRange: "bytes 10-19/*", responseStatus: 308},
 				// 0 byte final request demands a byte range with leading asterix.
-				{"bytes */20", http.StatusServiceUnavailable},
-				{"bytes */20", 200},
+				{byteRange: "bytes */20", responseStatus: http.StatusServiceUnavailable},
+				{byteRange: "bytes */20", responseStatus: 200},
 			},
 			wantProgress: []int64{10, 20},
 		},
@@ -251,10 +256,10 @@ func TestCancelUploadBasic(t *testing.T) {
 	tr := &interruptibleTransport{
 		buf: make([]byte, 0, mediaSize),
 		events: []event{
-			{"bytes 0-89/*", http.StatusServiceUnavailable},
-			{"bytes 0-89/*", 308},
-			{"bytes 90-179/*", 308},
-			{"bytes 180-269/*", 308}, // Upload should be cancelled before this event.
+			{byteRange: "bytes 0-89/*", responseStatus: http.StatusServiceUnavailable},
+			{byteRange: "bytes 0-89/*", responseStatus: 308},
+			{byteRange: "bytes 90-179/*", responseStatus: 308},
+			{byteRange: "bytes 180-269/*", responseStatus: 308}, // Upload should be cancelled before this event.
 		},
 		bodies: bodyTracker{},
 	}
@@ -311,25 +316,25 @@ func TestRetry_EachChunkHasItsOwnRetryDeadline(t *testing.T) {
 	tr := &interruptibleTransport{
 		buf: make([]byte, 0, mediaSize),
 		events: []event{
-			{"bytes 0-89/*", http.StatusServiceUnavailable},
+			{byteRange: "bytes 0-89/*", responseStatus: http.StatusServiceUnavailable},
 			// cum: 1s sleep
-			{"bytes 0-89/*", http.StatusServiceUnavailable},
+			{byteRange: "bytes 0-89/*", responseStatus: http.StatusServiceUnavailable},
 			// cum: 2s sleep
-			{"bytes 0-89/*", http.StatusServiceUnavailable},
+			{byteRange: "bytes 0-89/*", responseStatus: http.StatusServiceUnavailable},
 			// cum: 3s sleep
-			{"bytes 0-89/*", http.StatusServiceUnavailable},
+			{byteRange: "bytes 0-89/*", responseStatus: http.StatusServiceUnavailable},
 			// cum: 4s sleep
-			{"bytes 0-89/*", 308},
+			{byteRange: "bytes 0-89/*", responseStatus: 308},
 			// cum: 1s sleep <-- resets because it's a new chunk
-			{"bytes 90-179/*", 308},
+			{byteRange: "bytes 90-179/*", responseStatus: 308},
 			// cum: 1s sleep <-- resets because it's a new chunk
-			{"bytes 180-269/*", http.StatusServiceUnavailable},
+			{byteRange: "bytes 180-269/*", responseStatus: http.StatusServiceUnavailable},
 			// cum: 1s sleep on later chunk
-			{"bytes 180-269/*", http.StatusServiceUnavailable},
+			{byteRange: "bytes 180-269/*", responseStatus: http.StatusServiceUnavailable},
 			// cum: 2s sleep on later chunk
-			{"bytes 180-269/*", 308},
+			{byteRange: "bytes 180-269/*", responseStatus: 308},
 			// cum: 3s sleep <-- resets because it's a new chunk
-			{"bytes 270-299/300", 200},
+			{byteRange: "bytes 270-299/300", responseStatus: 200},
 		},
 		bodies: bodyTracker{},
 	}
@@ -363,5 +368,260 @@ func TestRetry_EachChunkHasItsOwnRetryDeadline(t *testing.T) {
 		if want := http.StatusOK; got != want {
 			t.Fatalf("want %d, got %d", want, got)
 		}
+	}
+}
+
+// slowMediaReader wraps an io.Reader, introducing a delay on each Read call.
+type slowMediaReader struct {
+	r     io.Reader
+	delay time.Duration
+}
+
+func (s *slowMediaReader) Read(p []byte) (n int, err error) {
+	time.Sleep(s.delay)
+	return s.r.Read(p)
+}
+
+func TestChunkTransferTimeout(t *testing.T) {
+	const (
+		data = "some media data" // length is 15
+	)
+	tests := []struct {
+		name                 string
+		mediaReadDelay       time.Duration
+		chunkTransferTimeout time.Duration
+		events               []event
+		shouldFail           bool
+		wantError            error
+	}{
+		{
+			name:                 "media-read-delay-chunk-upload-succeeds",
+			mediaReadDelay:       120 * time.Millisecond,
+			chunkTransferTimeout: 30 * time.Millisecond,
+			events: []event{
+				// When media size is a multiple of chunk size, a non-final
+				// chunk is sent, followed by a final, zero-byte chunk.
+				{byteRange: "bytes 0-14/*", responseStatus: 308},
+				{byteRange: "bytes */15", responseStatus: http.StatusOK},
+			},
+			shouldFail: false,
+			wantError:  nil,
+		},
+		{
+			name:                 "network-delay-chunk-upload-fails",
+			mediaReadDelay:       0,
+			chunkTransferTimeout: 30 * time.Millisecond,
+			events: []event{
+				// The first attempt will be a non-final chunk. It should be answered
+				// with a 308 to keep the upload retry process going, which allows the ChunkRetryDeadline timeout to fire.
+				{byteRange: "bytes 0-14/*", responseStatus: 308, delay: 50 * time.Millisecond},
+				{byteRange: "bytes 0-14/*", responseStatus: 308, delay: 50 * time.Millisecond},
+				{byteRange: "bytes 0-14/*", responseStatus: 308, delay: 50 * time.Millisecond},
+				{byteRange: "bytes 0-14/*", responseStatus: 308, delay: 50 * time.Millisecond},
+			},
+			shouldFail: true,
+			wantError:  context.DeadlineExceeded,
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			// A media source that is slow to provide its data.
+			media := &slowMediaReader{
+				r:     strings.NewReader(data),
+				delay: tc.mediaReadDelay,
+			}
+
+			// A transport that is slow to respond.
+			transport := &interruptibleTransport{
+				events: tc.events,
+				bodies: bodyTracker{},
+			}
+
+			rx := &ResumableUpload{
+				Client:               &http.Client{Transport: transport},
+				Media:                NewMediaBuffer(media, len(data)), // Chunk size is the whole payload
+				MediaType:            "text/plain",
+				ChunkTransferTimeout: tc.chunkTransferTimeout,
+				ChunkRetryDeadline:   100 * time.Millisecond,
+			}
+
+			// Use a backoff with no pause to speed up retries.
+			oldBackoff := backoff
+			backoff = func() Backoff { return new(NoPauseBackoff) }
+			defer func() { backoff = oldBackoff }()
+
+			res, err := rx.Upload(context.Background())
+			if res != nil {
+				res.Body.Close()
+			}
+
+			if tc.shouldFail {
+				if err == nil {
+					t.Fatalf("expected upload to fail, but it succeeded")
+				}
+				if !errors.Is(err, tc.wantError) {
+					t.Fatalf("got error: %v, want error of type: %v", err, tc.wantError)
+				}
+			} else {
+				if err != nil {
+					t.Fatalf("expected upload to succeed, but it failed with: %v", err)
+				}
+				if res.StatusCode != http.StatusOK {
+					t.Fatalf("got status code: %d, want: %d", res.StatusCode, http.StatusOK)
+				}
+			}
+		})
+	}
+}
+
+// failingReader returns an I/O error after a configurable number of bytes.
+type failingReader struct {
+	r         io.Reader
+	failAfter int64
+	read      int64
+	err       error
+}
+
+func (r *failingReader) Read(p []byte) (n int, err error) {
+	if r.read >= r.failAfter {
+		return 0, r.err
+	}
+	n, err = r.r.Read(p)
+	r.read += int64(n)
+	if err != nil {
+		return n, err
+	}
+	return n, nil
+}
+
+// TestMediaError verifies that an I/O error from the media source during an
+// upload correctly terminates the process and propagates the error.
+func TestMediaError(t *testing.T) {
+	const (
+		chunkSize = 100
+		mediaSize = 300
+		failAfter = int64(100)
+	)
+	baseReader := strings.NewReader(strings.Repeat("b", mediaSize))
+	failErr := errors.New("simulated media I/O error")
+	media := &failingReader{
+		r:         baseReader,
+		failAfter: failAfter,
+		err:       failErr,
+	}
+
+	tr := &interruptibleTransport{
+		events: []event{
+			{byteRange: "bytes 0-99/*", responseStatus: 308},
+		},
+		bodies: bodyTracker{},
+	}
+
+	rx := &ResumableUpload{
+		Client:    &http.Client{Transport: tr},
+		Media:     NewMediaBuffer(media, chunkSize),
+		MediaType: "text/plain",
+	}
+
+	// Use a backoff with no pause to speed up retries.
+	oldBackoff := backoff
+	backoff = func() Backoff { return new(NoPauseBackoff) }
+	defer func() { backoff = oldBackoff }()
+
+	_, err := rx.Upload(context.Background())
+	if !errors.Is(err, failErr) {
+		t.Fatalf("Upload err: got %v; want %v", err, failErr)
+	}
+
+	// Verify that only the first chunk was transferred.
+	if got, want := len(tr.buf), 100; got != want {
+		t.Errorf("transferred bytes: got %d, want %d", got, want)
+	}
+}
+
+// TestNonRetryableError verifies that the upload fails immediately without
+// retrying when a non-retryable HTTP status code is received.
+func TestNonRetryableError(t *testing.T) {
+	const (
+		chunkSize = 100
+		mediaSize = 300
+	)
+	media := strings.NewReader(strings.Repeat("c", mediaSize))
+
+	tr := &interruptibleTransport{
+		events: []event{
+			// The first request receives a 404, which is not retryable.
+			{byteRange: "bytes 0-99/*", responseStatus: http.StatusNotFound},
+		},
+		bodies: bodyTracker{},
+	}
+
+	rx := &ResumableUpload{
+		Client:    &http.Client{Transport: tr},
+		Media:     NewMediaBuffer(media, chunkSize),
+		MediaType: "text/plain",
+	}
+
+	// Use a backoff with no pause to speed up retries.
+	oldBackoff := backoff
+	backoff = func() Backoff { return new(NoPauseBackoff) }
+	defer func() { backoff = oldBackoff }()
+
+	res, err := rx.Upload(context.Background())
+	if res != nil {
+		res.Body.Close()
+	}
+
+	if err == nil && res.StatusCode == http.StatusOK {
+		t.Fatalf("expected upload to fail, but it succeeded")
+	}
+	// Check that no retries were attempted.
+	if rx.attempts > 1 {
+		t.Errorf("expected 1 attempt, but got %d", rx.attempts)
+	}
+	// Check that the transport has no leftover events, proving we stopped immediately.
+	if len(tr.events) > 0 {
+		t.Errorf("did not expect leftover events, but found %d", len(tr.events))
+	}
+	if len(tr.bodies) > 0 {
+		t.Errorf("unclosed request bodies: %v", tr.bodies)
+	}
+}
+
+func TestOverallUploadTimeout(t *testing.T) {
+	const (
+		chunkSize = 90
+		mediaSize = 300
+	)
+	media := strings.NewReader(strings.Repeat("a", mediaSize))
+
+	tr := &interruptibleTransport{
+		buf: make([]byte, 0, mediaSize),
+		events: []event{
+			{byteRange: "bytes 0-89/*", responseStatus: 308},
+			{byteRange: "bytes 90-179/*", responseStatus: 308, delay: 100 * time.Millisecond}, // This will cause a timeout
+		},
+		bodies: bodyTracker{},
+	}
+
+	rx := &ResumableUpload{
+		Client:    &http.Client{Transport: tr},
+		Media:     NewMediaBuffer(media, chunkSize),
+		MediaType: "text/plain",
+	}
+
+	oldBackoff := backoff
+	backoff = func() Backoff { return new(NoPauseBackoff) }
+	defer func() { backoff = oldBackoff }()
+
+	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
+	defer cancel()
+	// The second event has a 100ms delay, so the upload is guaranteed to be
+	// timed out by before it completes.
+	_, err := rx.Upload(ctx)
+
+	if !errors.Is(err, context.DeadlineExceeded) {
+		t.Fatalf("Upload err: got: %v; want: context.DeadlineExceeded", err)
 	}
 }

@@ -13865,6 +13865,33 @@ func (s UserRewardedContentTargetingOptionDetails) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// VideoAdInventoryControl: The video ad inventory control used in certain
+// YouTube line item types.
+type VideoAdInventoryControl struct {
+	// AllowInFeed: Optional. Whether ads can serve as in-feed format.
+	AllowInFeed bool `json:"allowInFeed,omitempty"`
+	// AllowInStream: Optional. Whether ads can serve as in-stream format.
+	AllowInStream bool `json:"allowInStream,omitempty"`
+	// AllowShorts: Optional. Whether ads can serve as shorts format.
+	AllowShorts bool `json:"allowShorts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowInFeed") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowInFeed") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VideoAdInventoryControl) MarshalJSON() ([]byte, error) {
+	type NoMethod VideoAdInventoryControl
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // VideoAdSequenceSettings: Settings related to VideoAdSequence.
 type VideoAdSequenceSettings struct {
 	// MinimumDuration: The minimum time interval before the same user sees this
@@ -14559,6 +14586,9 @@ type YoutubeAndPartnersSettings struct {
 	// ThirdPartyMeasurementSettings: Optional. The third-party measurement
 	// settings of the line item.
 	ThirdPartyMeasurementSettings *YoutubeAndPartnersThirdPartyMeasurementSettings `json:"thirdPartyMeasurementSettings,omitempty"`
+	// VideoAdInventoryControl: Optional. The settings to control which inventory
+	// is allowed for this line item.
+	VideoAdInventoryControl *VideoAdInventoryControl `json:"videoAdInventoryControl,omitempty"`
 	// VideoAdSequenceSettings: Optional. The settings related to VideoAdSequence.
 	VideoAdSequenceSettings *VideoAdSequenceSettings `json:"videoAdSequenceSettings,omitempty"`
 	// ViewFrequencyCap: The view frequency cap settings of the line item. The

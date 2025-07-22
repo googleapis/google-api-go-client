@@ -2135,6 +2135,12 @@ type OracleSslConfig struct {
 	// CaCertificateSet: Output only. Indicates whether the ca_certificate field
 	// has been set for this Connection-Profile.
 	CaCertificateSet bool `json:"caCertificateSet,omitempty"`
+	// ServerCertificateDistinguishedName: Optional. The distinguished name (DN)
+	// mentioned in the server certificate. This corresponds to SSL_SERVER_CERT_DN
+	// sqlnet parameter. Refer
+	// https://docs.oracle.com/en/database/oracle/oracle-database/19/netrf/local-naming-parameters-in-tns-ora-file.html#GUID-70AB0695-A9AA-4A94-B141-4C605236EEB7
+	// If this field is not provided, the DN matching is not enforced.
+	ServerCertificateDistinguishedName string `json:"serverCertificateDistinguishedName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2748,6 +2754,10 @@ type ServerAndClientVerification struct {
 	// allowing the PostgreSQL server to authenticate the client's identity, i.e.
 	// identity of the Datastream.
 	ClientKey string `json:"clientKey,omitempty"`
+	// ServerCertificateHostname: Optional. The hostname mentioned in the Subject
+	// or SAN extension of the server certificate. If this field is not provided,
+	// the hostname in the server certificate is not validated.
+	ServerCertificateHostname string `json:"serverCertificateHostname,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2772,6 +2782,10 @@ func (s ServerAndClientVerification) MarshalJSON() ([]byte, error) {
 type ServerVerification struct {
 	// CaCertificate: Required. Input only. PEM-encoded server root CA certificate.
 	CaCertificate string `json:"caCertificate,omitempty"`
+	// ServerCertificateHostname: Optional. The hostname mentioned in the Subject
+	// or SAN extension of the server certificate. If this field is not provided,
+	// the hostname in the server certificate is not validated.
+	ServerCertificateHostname string `json:"serverCertificateHostname,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2855,6 +2869,9 @@ func (s SourceConfig) MarshalJSON() ([]byte, error) {
 type SourceHierarchyDatasets struct {
 	// DatasetTemplate: The dataset template to use for dynamic dataset creation.
 	DatasetTemplate *DatasetTemplate `json:"datasetTemplate,omitempty"`
+	// ProjectId: Optional. The project id of the BigQuery dataset. If not
+	// specified, the project will be inferred from the stream resource.
+	ProjectId string `json:"projectId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatasetTemplate") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

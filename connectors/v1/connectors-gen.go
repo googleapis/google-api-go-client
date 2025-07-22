@@ -1450,6 +1450,8 @@ type ConnectorVersion struct {
 	UnsupportedConnectionTypes []string `json:"unsupportedConnectionTypes,omitempty"`
 	// UpdateTime: Output only. Updated time.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// VpcscConfig: Output only. VPCSC config for the connector.
+	VpcscConfig *VpcscConfig `json:"vpcscConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -6546,6 +6548,30 @@ type ValidateCustomConnectorSpecResponse struct {
 
 func (s ValidateCustomConnectorSpecResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidateCustomConnectorSpecResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VpcscConfig: This configuration provides VPCSC config for a connector.
+type VpcscConfig struct {
+	// DefaultAllowlistedHost: The list of allowlisted FQDNs for VPCSC.
+	DefaultAllowlistedHost []string `json:"defaultAllowlistedHost,omitempty"`
+	// DisableFirewallVpcscFlow: Whether to disable firewall VPCSC flow.
+	DisableFirewallVpcscFlow bool `json:"disableFirewallVpcscFlow,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultAllowlistedHost") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultAllowlistedHost") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VpcscConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod VpcscConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

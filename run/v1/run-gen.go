@@ -932,8 +932,7 @@ type Container struct {
 	// chosen and passed to the container through the PORT environment variable for
 	// the container to listen on.
 	Ports []*ContainerPort `json:"ports,omitempty"`
-	// ReadinessProbe: Readiness probe to be used for health checks. Not supported
-	// by Cloud Run.
+	// ReadinessProbe: Readiness probe to be used for health checks.
 	ReadinessProbe *Probe `json:"readinessProbe,omitempty"`
 	// Resources: Compute Resources required by this container.
 	Resources *ResourceRequirements `json:"resources,omitempty"`

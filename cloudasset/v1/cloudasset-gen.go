@@ -572,6 +572,8 @@ type Asset struct {
 	// itself. Example: `["projects/123456789", "folders/5432",
 	// "organizations/1234"]`
 	Ancestors []string `json:"ancestors,omitempty"`
+	// AssetExceptions: The exceptions of a resource.
+	AssetExceptions []*AssetException `json:"assetExceptions,omitempty"`
 	// AssetType: The type of the asset. Example: `compute.googleapis.com/Disk` See
 	// Supported asset types
 	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types) for
@@ -657,6 +659,35 @@ type AssetEnrichment struct {
 
 func (s AssetEnrichment) MarshalJSON() ([]byte, error) {
 	type NoMethod AssetEnrichment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssetException: An exception of an asset.
+type AssetException struct {
+	// Details: The details of the exception.
+	Details string `json:"details,omitempty"`
+	// ExceptionType: The type of exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_TYPE_UNSPECIFIED" - exception_type is not applicable for the
+	// current asset.
+	//   "TRUNCATION" - The asset content is truncated.
+	ExceptionType string `json:"exceptionType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Details") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssetException) MarshalJSON() ([]byte, error) {
+	type NoMethod AssetException
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

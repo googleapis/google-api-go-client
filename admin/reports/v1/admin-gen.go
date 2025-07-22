@@ -271,6 +271,8 @@ type Activity struct {
 	// Kind: The type of API resource. For an activity report, the value is
 	// `audit#activity`.
 	Kind string `json:"kind,omitempty"`
+	// NetworkInfo: Network information of the user doing the action.
+	NetworkInfo *ActivityNetworkInfo `json:"networkInfo,omitempty"`
 	// OwnerDomain: This is the domain that is affected by the report's event. For
 	// example domain of Admin console or the Drive application's document owner.
 	OwnerDomain string `json:"ownerDomain,omitempty"`
@@ -509,6 +511,33 @@ type ActivityId struct {
 
 func (s ActivityId) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityId
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ActivityNetworkInfo: Network information of the user doing the action.
+type ActivityNetworkInfo struct {
+	// IpAsn: IP Address of the user doing the action.
+	IpAsn []int64 `json:"ipAsn,omitempty"`
+	// RegionCode: ISO 3166-1 alpha-2 region code of the user doing the action.
+	RegionCode string `json:"regionCode,omitempty"`
+	// SubdivisionCode: ISO 3166-2 region code (states and provinces) for countries
+	// of the user doing the action.
+	SubdivisionCode string `json:"subdivisionCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IpAsn") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IpAsn") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActivityNetworkInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivityNetworkInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -902,7 +931,7 @@ type UsageReport struct {
 	// Parameters: Output only. Parameter value pairs for various applications. For
 	// the Entity Usage Report parameters and values, see the Entity Usage
 	// parameters reference
-	// (/admin-sdk/reports/v1/reference/usage-ref-appendix-a/entities).
+	// (https://developers.google.com/workspace/admin/reports/v1/reference/usage-ref-appendix-a/entities).
 	Parameters []*UsageReportParameters `json:"parameters,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Date") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1481,13 +1510,14 @@ func (c *ActivitiesWatchCall) Filters(filters string) *ActivitiesWatchCall {
 	return c
 }
 
-// GroupIdFilter sets the optional parameter "groupIdFilter": Comma separated
-// group ids (obfuscated) on which user activities are filtered, i.e. the
-// response will contain activities for only those users that are a part of at
-// least one of the group ids mentioned here. Format: "id:abc123,id:xyz456"
-// *Important:* To filter by groups, you must explicitly add the groups to your
-// filtering groups allowlist. For more information about adding groups to
-// filtering groups allowlist, see Filter results by Google Group
+// GroupIdFilter sets the optional parameter "groupIdFilter": `Deprecated`.
+// This field is deprecated and is no longer supported. Comma separated group
+// ids (obfuscated) on which user activities are filtered, i.e. the response
+// will contain activities for only those users that are a part of at least one
+// of the group ids mentioned here. Format: "id:abc123,id:xyz456" *Important:*
+// To filter by groups, you must explicitly add the groups to your filtering
+// groups allowlist. For more information about adding groups to filtering
+// groups allowlist, see Filter results by Google Group
 // (https://support.google.com/a/answer/11482175)
 func (c *ActivitiesWatchCall) GroupIdFilter(groupIdFilter string) *ActivitiesWatchCall {
 	c.urlParams_.Set("groupIdFilter", groupIdFilter)

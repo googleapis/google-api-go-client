@@ -246,10 +246,22 @@ type CustomersAppsWebService struct {
 
 func NewCustomersProfilesService(s *Service) *CustomersProfilesService {
 	rs := &CustomersProfilesService{s: s}
+	rs.Commands = NewCustomersProfilesCommandsService(s)
 	return rs
 }
 
 type CustomersProfilesService struct {
+	s *Service
+
+	Commands *CustomersProfilesCommandsService
+}
+
+func NewCustomersProfilesCommandsService(s *Service) *CustomersProfilesCommandsService {
+	rs := &CustomersProfilesCommandsService{s: s}
+	return rs
+}
+
+type CustomersProfilesCommandsService struct {
 	s *Service
 }
 
@@ -831,6 +843,8 @@ type GoogleChromeManagementV1ChromeAppInfo struct {
 	// KioskEnabled: Output only. Whether this app is enabled for Kiosk mode on
 	// ChromeOS devices
 	KioskEnabled bool `json:"kioskEnabled,omitempty"`
+	// ManifestVersion: Output only. The version of this extension's manifest.
+	ManifestVersion int64 `json:"manifestVersion,omitempty,string"`
 	// MinUserCount: Output only. The minimum number of users using this app.
 	MinUserCount int64 `json:"minUserCount,omitempty"`
 	// Permissions: Output only. Every custom permission requested by the app.
@@ -1650,6 +1664,8 @@ type GoogleChromeManagementV1DisplayDevice struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// DisplayWidthMm: Output only. Display width in millimeters.
 	DisplayWidthMm int64 `json:"displayWidthMm,omitempty"`
+	// EdidVersion: Output only. EDID version.
+	EdidVersion string `json:"edidVersion,omitempty"`
 	// Internal: Output only. Is display internal or not.
 	Internal bool `json:"internal,omitempty"`
 	// ManufactureYear: Output only. Year of manufacture.
@@ -1658,6 +1674,8 @@ type GoogleChromeManagementV1DisplayDevice struct {
 	ManufacturerId string `json:"manufacturerId,omitempty"`
 	// ModelId: Output only. Manufacturer product code.
 	ModelId int64 `json:"modelId,omitempty"`
+	// SerialNumber: Output only. Serial number.
+	SerialNumber int64 `json:"serialNumber,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayHeightMm") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1682,6 +1700,8 @@ type GoogleChromeManagementV1DisplayInfo struct {
 	DeviceId int64 `json:"deviceId,omitempty,string"`
 	// DisplayName: Output only. Display device name.
 	DisplayName string `json:"displayName,omitempty"`
+	// EdidVersion: Output only. EDID version.
+	EdidVersion string `json:"edidVersion,omitempty"`
 	// IsInternal: Output only. Indicates if display is internal or not.
 	IsInternal bool `json:"isInternal,omitempty"`
 	// RefreshRate: Output only. Refresh rate in Hz.
@@ -1690,6 +1710,8 @@ type GoogleChromeManagementV1DisplayInfo struct {
 	ResolutionHeight int64 `json:"resolutionHeight,omitempty"`
 	// ResolutionWidth: Output only. Resolution width in pixels.
 	ResolutionWidth int64 `json:"resolutionWidth,omitempty"`
+	// SerialNumber: Output only. Serial number.
+	SerialNumber int64 `json:"serialNumber,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4304,6 +4326,91 @@ func (s GoogleChromeManagementVersionsV1ChromeBrowserProfile) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand: A
+// representation of a remote command for a Chrome browser profile.
+type GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand struct {
+	// CommandResult: Output only. Result of the remote command.
+	CommandResult *GoogleChromeManagementVersionsV1ChromeBrowserProfileCommandCommandResult `json:"commandResult,omitempty"`
+	// CommandState: Output only. State of the remote command.
+	//
+	// Possible values:
+	//   "COMMAND_STATE_UNSPECIFIED" - Represents an unspecified command state.
+	//   "PENDING" - Represents a command in a pending state.
+	//   "EXPIRED" - Represents a command that has expired.
+	//   "EXECUTED_BY_CLIENT" - Represents a command that has been executed by the
+	// client.
+	CommandState string `json:"commandState,omitempty"`
+	// CommandType: Required. Type of the remote command. The only supported
+	// command_type is "clearBrowsingData".
+	CommandType string `json:"commandType,omitempty"`
+	// IssueTime: Output only. Timestamp of the issurance of the remote command.
+	IssueTime string `json:"issueTime,omitempty"`
+	// Name: Identifier. Format:
+	// customers/{customer_id}/profiles/{profile_permanent_id}/commands/{command_id}
+	Name string `json:"name,omitempty"`
+	// Payload: Required. Payload of the remote command. The payload for
+	// "clearBrowsingData" command supports: - fields "clearCache" and
+	// "clearCookies" - values of boolean type.
+	Payload googleapi.RawMessage `json:"payload,omitempty"`
+	// ValidDuration: Output only. Valid duration of the remote command.
+	ValidDuration string `json:"validDuration,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CommandResult") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommandResult") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1ChromeBrowserProfileCommandCommandResult:
+// Result of the execution of a command.
+type GoogleChromeManagementVersionsV1ChromeBrowserProfileCommandCommandResult struct {
+	// ClientExecutionTime: Output only. Timestamp of the client execution of the
+	// remote command.
+	ClientExecutionTime string `json:"clientExecutionTime,omitempty"`
+	// ResultCode: Output only. Result code that indicates the type of error or
+	// success of the command.
+	ResultCode string `json:"resultCode,omitempty"`
+	// ResultType: Output only. Result type of the remote command.
+	//
+	// Possible values:
+	//   "COMMAND_RESULT_TYPE_UNSPECIFIED" - Represents an unspecified command
+	// result.
+	//   "IGNORED" - Represents a command with an ignored result.
+	//   "FAILURE" - Represents a failed command.
+	//   "SUCCESS" - Represents a succeeded command.
+	ResultType string `json:"resultType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientExecutionTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientExecutionTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1ChromeBrowserProfileCommandCommandResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1ChromeBrowserProfileCommandCommandResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementVersionsV1ChromeOsDevice: Describes the ChromeOS
 // device that a `CertificateProvisioningProcess` belongs to.
 type GoogleChromeManagementVersionsV1ChromeOsDevice struct {
@@ -4450,6 +4557,36 @@ type GoogleChromeManagementVersionsV1GenericProfile struct {
 
 func (s GoogleChromeManagementVersionsV1GenericProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementVersionsV1GenericProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1ListChromeBrowserProfileCommandsResponse:
+// Response to ListChromeBrowserProfileCommands method.
+type GoogleChromeManagementVersionsV1ListChromeBrowserProfileCommandsResponse struct {
+	// ChromeBrowserProfileCommands: The list of commands returned.
+	ChromeBrowserProfileCommands []*GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand `json:"chromeBrowserProfileCommands,omitempty"`
+	// NextPageToken: The pagination token that can be used to list the next page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// TotalSize: Total size represents an estimated number of resources returned.
+	TotalSize int64 `json:"totalSize,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ChromeBrowserProfileCommands") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChromeBrowserProfileCommands") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1ListChromeBrowserProfileCommandsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1ListChromeBrowserProfileCommandsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6022,6 +6159,368 @@ func (c *CustomersProfilesListCall) Do(opts ...googleapi.CallOption) (*GoogleChr
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *CustomersProfilesListCall) Pages(ctx context.Context, f func(*GoogleChromeManagementVersionsV1ListChromeBrowserProfilesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type CustomersProfilesCommandsCreateCall struct {
+	s                                                           *Service
+	parent                                                      string
+	googlechromemanagementversionsv1chromebrowserprofilecommand *GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// Create: Creates a Chrome browser profile remote command.
+//
+// - parent: Format: customers/{customer_id}/profiles/{profile_permanent_id}.
+func (r *CustomersProfilesCommandsService) Create(parent string, googlechromemanagementversionsv1chromebrowserprofilecommand *GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand) *CustomersProfilesCommandsCreateCall {
+	c := &CustomersProfilesCommandsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlechromemanagementversionsv1chromebrowserprofilecommand = googlechromemanagementversionsv1chromebrowserprofilecommand
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersProfilesCommandsCreateCall) Fields(s ...googleapi.Field) *CustomersProfilesCommandsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersProfilesCommandsCreateCall) Context(ctx context.Context) *CustomersProfilesCommandsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersProfilesCommandsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersProfilesCommandsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromemanagementversionsv1chromebrowserprofilecommand)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/commands")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.profiles.commands.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.profiles.commands.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersProfilesCommandsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.profiles.commands.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersProfilesCommandsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a Chrome browser profile remote command.
+//
+//   - name: Format:
+//     customers/{customer_id}/profiles/{profile_permanent_id}/commands/{command_i
+//     d}.
+func (r *CustomersProfilesCommandsService) Get(name string) *CustomersProfilesCommandsGetCall {
+	c := &CustomersProfilesCommandsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersProfilesCommandsGetCall) Fields(s ...googleapi.Field) *CustomersProfilesCommandsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersProfilesCommandsGetCall) IfNoneMatch(entityTag string) *CustomersProfilesCommandsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersProfilesCommandsGetCall) Context(ctx context.Context) *CustomersProfilesCommandsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersProfilesCommandsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersProfilesCommandsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.profiles.commands.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.profiles.commands.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersProfilesCommandsGetCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.profiles.commands.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersProfilesCommandsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists remote commands of a Chrome browser profile.
+//
+// - parent: Format: customers/{customer_id}/profiles/{profile_permanent_id}.
+func (r *CustomersProfilesCommandsService) List(parent string) *CustomersProfilesCommandsListCall {
+	c := &CustomersProfilesCommandsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// commands to return. The default page size is 100 if page_size is
+// unspecified, and the maximum page size allowed is 100.
+func (c *CustomersProfilesCommandsListCall) PageSize(pageSize int64) *CustomersProfilesCommandsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The page token used to
+// retrieve a specific page of the listing request.
+func (c *CustomersProfilesCommandsListCall) PageToken(pageToken string) *CustomersProfilesCommandsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersProfilesCommandsListCall) Fields(s ...googleapi.Field) *CustomersProfilesCommandsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersProfilesCommandsListCall) IfNoneMatch(entityTag string) *CustomersProfilesCommandsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersProfilesCommandsListCall) Context(ctx context.Context) *CustomersProfilesCommandsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersProfilesCommandsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersProfilesCommandsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/commands")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.profiles.commands.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.profiles.commands.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1ListChromeBrowserProfileCommandsResponse.Ser
+// verResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersProfilesCommandsListCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1ListChromeBrowserProfileCommandsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1ListChromeBrowserProfileCommandsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.profiles.commands.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersProfilesCommandsListCall) Pages(ctx context.Context, f func(*GoogleChromeManagementVersionsV1ListChromeBrowserProfileCommandsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

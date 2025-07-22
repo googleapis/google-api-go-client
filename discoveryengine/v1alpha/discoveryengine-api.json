@@ -38,6 +38,11 @@
       "description": "Regional Endpoint",
       "endpointUrl": "https://discoveryengine.eu.rep.googleapis.com/",
       "location": "eu"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://discoveryengine.in.rep.googleapis.com/",
+      "location": "in"
     }
   ],
   "fullyEncodeReservedExpansion": true,
@@ -816,6 +821,34 @@
               "resources": {
                 "dataConnector": {
                   "methods": {
+                    "acquireAccessToken": {
+                      "description": "Uses the per-user refresh token minted with AcquireAndStoreRefreshToken to generate and return a new access token and its details. Takes the access token from cache if available. Rotates the stored refresh token if needed. Uses the end user identity to return the user specific access token. Does *not* return the credentials configured by the administrator. Used by Agentspace action execution and Agentspace UI.",
+                      "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataConnector:acquireAccessToken",
+                      "httpMethod": "POST",
+                      "id": "discoveryengine.projects.locations.collections.dataConnector.acquireAccessToken",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The resource name of the connector for which a token is queried.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataConnector$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1alpha/{+name}:acquireAccessToken",
+                      "request": {
+                        "$ref": "GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "getConnectorSecret": {
                       "description": "Get the secret for the associated connector.",
                       "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataConnector:getConnectorSecret",
@@ -2990,7 +3023,7 @@
                           ],
                           "parameters": {
                             "filter": {
-                              "description": "A filter to apply on the list results. The supported features are: user_pseudo_id, state. Example: \"user_pseudo_id = some_id\"",
+                              "description": "A filter to apply on the list results. The supported features are: user_pseudo_id, state, starred. Examples: \"user_pseudo_id = some_id\" \"starred = true\"",
                               "location": "query",
                               "type": "string"
                             },
@@ -3914,6 +3947,11 @@
                               "location": "query",
                               "type": "boolean"
                             },
+                            "getWidgetConfigRequestOption.turnOffCollectionComponents": {
+                              "description": "Optional. Whether to turn off collection_components in WidgetConfig to reduce latency and data transmission.",
+                              "location": "query",
+                              "type": "boolean"
+                            },
                             "name": {
                               "description": "Required. Full WidgetConfig resource name. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}/widgetConfigs/{widget_config_id}`",
                               "location": "path",
@@ -4180,6 +4218,38 @@
                     }
                   },
                   "resources": {
+                    "assistants": {
+                      "methods": {
+                        "streamAssist": {
+                          "description": "Assists the user with a query in a streaming fashion.",
+                          "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/assistants/{assistantsId}:streamAssist",
+                          "httpMethod": "POST",
+                          "id": "discoveryengine.projects.locations.collections.engines.assistants.streamAssist",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. The resource name of the Assistant. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}`",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/assistants/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1alpha/{+name}:streamAssist",
+                          "request": {
+                            "$ref": "GoogleCloudDiscoveryengineV1alphaStreamAssistRequest"
+                          },
+                          "response": {
+                            "$ref": "GoogleCloudDiscoveryengineV1alphaStreamAssistResponse"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        }
+                      }
+                    },
                     "completionConfig": {
                       "methods": {
                         "completeQuery": {
@@ -4997,7 +5067,7 @@
                           ],
                           "parameters": {
                             "filter": {
-                              "description": "A filter to apply on the list results. The supported features are: user_pseudo_id, state. Example: \"user_pseudo_id = some_id\"",
+                              "description": "A filter to apply on the list results. The supported features are: user_pseudo_id, state, starred. Examples: \"user_pseudo_id = some_id\" \"starred = true\"",
                               "location": "query",
                               "type": "string"
                             },
@@ -5113,6 +5183,11 @@
                           "parameters": {
                             "acceptCache": {
                               "description": "Optional. Whether it's acceptable to load the widget config from cache. If set to true, recent changes on widget configs may take a few minutes to reflect on the end user's view. It's recommended to set to true for maturely developed widgets, as it improves widget performance. Set to false to see changes reflected in prod right away, if your widget is under development.",
+                              "location": "query",
+                              "type": "boolean"
+                            },
+                            "getWidgetConfigRequestOption.turnOffCollectionComponents": {
+                              "description": "Optional. Whether to turn off collection_components in WidgetConfig to reduce latency and data transmission.",
                               "location": "query",
                               "type": "boolean"
                             },
@@ -7086,7 +7161,7 @@
                       ],
                       "parameters": {
                         "filter": {
-                          "description": "A filter to apply on the list results. The supported features are: user_pseudo_id, state. Example: \"user_pseudo_id = some_id\"",
+                          "description": "A filter to apply on the list results. The supported features are: user_pseudo_id, state, starred. Examples: \"user_pseudo_id = some_id\" \"starred = true\"",
                           "location": "query",
                           "type": "string"
                         },
@@ -7748,6 +7823,11 @@
                       "parameters": {
                         "acceptCache": {
                           "description": "Optional. Whether it's acceptable to load the widget config from cache. If set to true, recent changes on widget configs may take a few minutes to reflect on the end user's view. It's recommended to set to true for maturely developed widgets, as it improves widget performance. Set to false to see changes reflected in prod right away, if your widget is under development.",
+                          "location": "query",
+                          "type": "boolean"
+                        },
+                        "getWidgetConfigRequestOption.turnOffCollectionComponents": {
+                          "description": "Optional. Whether to turn off collection_components in WidgetConfig to reduce latency and data transmission.",
                           "location": "query",
                           "type": "boolean"
                         },
@@ -9173,7 +9253,7 @@
       }
     }
   },
-  "revision": "20250701",
+  "revision": "20250716",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "ApiservingMediaRequestInfo": {
@@ -11185,6 +11265,10 @@
       "description": "The layout parsing configurations for documents.",
       "id": "GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigLayoutParsingConfig",
       "properties": {
+        "enableGetProcessedDocument": {
+          "description": "Optional. If true, the processed document will be made available for the GetProcessedDocument API.",
+          "type": "boolean"
+        },
         "enableImageAnnotation": {
           "description": "Optional. If true, the LLM based annotation is added to the image during parsing.",
           "type": "boolean"
@@ -11318,7 +11402,7 @@
             ],
             "type": "string"
           },
-          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing`",
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` - Enables personalization based on user preferences.",
           "type": "object"
         },
         "industryVertical": {
@@ -12718,14 +12802,16 @@
             "ASSIGNED",
             "UNASSIGNED",
             "NO_LICENSE",
-            "NO_LICENSE_ATTEMPTED_LOGIN"
+            "NO_LICENSE_ATTEMPTED_LOGIN",
+            "BLOCKED"
           ],
           "enumDescriptions": [
             "Default value.",
             "License assigned to the user.",
             "No license assigned to the user. Deprecated, translated to NO_LICENSE.",
             "No license assigned to the user.",
-            "User attempted to login but no license assigned to the user. This state is only used for no user first time login attempt but cannot get license assigned. Users already logged in but cannot get license assigned will be assigned NO_LICENSE state(License could be unassigned by admin)."
+            "User attempted to login but no license assigned to the user. This state is only used for no user first time login attempt but cannot get license assigned. Users already logged in but cannot get license assigned will be assigned NO_LICENSE state(License could be unassigned by admin).",
+            "User is blocked from assigning a license."
           ],
           "readOnly": true,
           "type": "string"
@@ -12807,6 +12893,27 @@
         "name": {
           "description": "Immutable. The full resource name of the acl configuration. Format: `projects/{project}/locations/{location}/aclConfig`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenRequest": {
+      "description": "Request message for the DataConnectorService.AcquireAccessToken method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenResponse": {
+      "description": "Response message for the DataConnectorService.AcquireAccessToken method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAcquireAccessTokenResponse",
+      "properties": {
+        "accessToken": {
+          "description": "The created access token.",
+          "type": "string"
+        },
+        "refreshTokenInfo": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaRefreshTokenInfo",
+          "description": "Info about the stored refresh token used to create the access token."
         }
       },
       "type": "object"
@@ -14534,6 +14641,297 @@
       "properties": {
         "query": {
           "description": "The query to search.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAssistAnswer": {
+      "description": "AssistAnswer resource, main part of AssistResponse.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAssistAnswer",
+      "properties": {
+        "assistSkippedReasons": {
+          "description": "Reasons for not answering the assist call.",
+          "items": {
+            "enum": [
+              "ASSIST_SKIPPED_REASON_UNSPECIFIED",
+              "NON_ASSIST_SEEKING_QUERY_IGNORED",
+              "CUSTOMER_POLICY_VIOLATION"
+            ],
+            "enumDescriptions": [
+              "Default value. Skip reason is not specified.",
+              "The assistant ignored the query, because it did not appear to be answer-seeking.",
+              "The assistant ignored the query or refused to answer because of a customer policy violation (e.g., the query or the answer contained a banned phrase)."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "replies": {
+          "description": "Replies of the assistant.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaAssistAnswerReply"
+          },
+          "type": "array"
+        },
+        "state": {
+          "description": "State of the answer generation.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "IN_PROGRESS",
+            "FAILED",
+            "SUCCEEDED",
+            "SKIPPED"
+          ],
+          "enumDescriptions": [
+            "Unknown.",
+            "Assist operation is currently in progress.",
+            "Assist operation has failed.",
+            "Assist operation has succeeded.",
+            "Assist operation has been skipped."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAssistAnswerReply": {
+      "description": "One part of the multi-part response of the assist call.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAssistAnswerReply",
+      "properties": {
+        "groundedContent": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAssistantGroundedContent",
+          "description": "Possibly grounded response text or media from the assistant."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAssistUserMetadata": {
+      "description": "User metadata of the request.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAssistUserMetadata",
+      "properties": {
+        "preferredLanguageCode": {
+          "description": "Optional. Preferred language to be used for answering if language detection fails. Also used as the language of error messages created by actions, regardless of language detection results.",
+          "type": "string"
+        },
+        "timeZone": {
+          "description": "Optional. IANA time zone, e.g. Europe/Budapest.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAssistantContent": {
+      "description": "Multi-modal content.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAssistantContent",
+      "properties": {
+        "codeExecutionResult": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAssistantContentCodeExecutionResult",
+          "description": "Result of executing an ExecutableCode."
+        },
+        "executableCode": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAssistantContentExecutableCode",
+          "description": "Code generated by the model that is meant to be executed."
+        },
+        "file": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAssistantContentFile",
+          "description": "A file, e.g., an audio summary."
+        },
+        "inlineData": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAssistantContentBlob",
+          "description": "Inline binary data."
+        },
+        "role": {
+          "description": "The producer of the content. Can be \"model\" or \"user\".",
+          "type": "string"
+        },
+        "text": {
+          "description": "Inline text.",
+          "type": "string"
+        },
+        "thought": {
+          "description": "Optional. Indicates if the part is thought from the model.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAssistantContentBlob": {
+      "description": "Inline blob.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAssistantContentBlob",
+      "properties": {
+        "data": {
+          "description": "Required. Raw bytes.",
+          "format": "byte",
+          "type": "string"
+        },
+        "mimeType": {
+          "description": "Required. The media type (MIME type) of the generated data.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAssistantContentCodeExecutionResult": {
+      "description": "Result of executing ExecutableCode.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAssistantContentCodeExecutionResult",
+      "properties": {
+        "outcome": {
+          "description": "Required. Outcome of the code execution.",
+          "enum": [
+            "OUTCOME_UNSPECIFIED",
+            "OUTCOME_OK",
+            "OUTCOME_FAILED",
+            "OUTCOME_DEADLINE_EXCEEDED"
+          ],
+          "enumDescriptions": [
+            "Unspecified status. This value should not be used.",
+            "Code execution completed successfully.",
+            "Code execution finished but with a failure. `stderr` should contain the reason.",
+            "Code execution ran for too long, and was cancelled. There may or may not be a partial output present."
+          ],
+          "type": "string"
+        },
+        "output": {
+          "description": "Optional. Contains stdout when code execution is successful, stderr or other description otherwise.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAssistantContentExecutableCode": {
+      "description": "Code generated by the model that is meant to be executed by the model.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAssistantContentExecutableCode",
+      "properties": {
+        "code": {
+          "description": "Required. The code content. Currently only supports Python.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAssistantContentFile": {
+      "description": "A file, e.g., an audio summary.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAssistantContentFile",
+      "properties": {
+        "fileId": {
+          "description": "Required. The file ID.",
+          "type": "string"
+        },
+        "mimeType": {
+          "description": "Required. The media type (MIME type) of the file.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAssistantGroundedContent": {
+      "description": "A piece of content and possibly its grounding information. Not all content needs grounding. Phrases like \"Of course, I will gladly search it for you.\" do not need grounding.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAssistantGroundedContent",
+      "properties": {
+        "content": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAssistantContent",
+          "description": "The content."
+        },
+        "textGroundingMetadata": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadata",
+          "description": "Metadata for grounding based on text sources."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadata": {
+      "description": "Grounding details for text sources.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadata",
+      "properties": {
+        "references": {
+          "description": "References for the grounded text.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataReference"
+          },
+          "type": "array"
+        },
+        "segments": {
+          "description": "Grounding information for parts of the text.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataSegment"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataReference": {
+      "description": "Referenced content and related document metadata.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataReference",
+      "properties": {
+        "content": {
+          "description": "Referenced text content.",
+          "type": "string"
+        },
+        "documentMetadata": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataReferenceDocumentMetadata",
+          "description": "Document metadata."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataReferenceDocumentMetadata": {
+      "description": "Document metadata.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataReferenceDocumentMetadata",
+      "properties": {
+        "document": {
+          "description": "Document resource name.",
+          "type": "string"
+        },
+        "domain": {
+          "description": "Domain name from the document URI. Note that the `uri` field may contain a URL that redirects to the actual website, in which case this will contain the domain name of the target site.",
+          "type": "string"
+        },
+        "pageIdentifier": {
+          "description": "Page identifier.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Title.",
+          "type": "string"
+        },
+        "uri": {
+          "description": "URI for the document. It may contain a URL that redirects to the actual website.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataSegment": {
+      "description": "Grounding information for a segment of the text.",
+      "id": "GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataSegment",
+      "properties": {
+        "endIndex": {
+          "description": "End of the segment, exclusive.",
+          "format": "int64",
+          "type": "string"
+        },
+        "groundingScore": {
+          "description": "Score for the segment.",
+          "format": "float",
+          "type": "number"
+        },
+        "referenceIndices": {
+          "description": "References for the segment.",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "startIndex": {
+          "description": "Zero-based index indicating the start of the segment, measured in bytes of a UTF-8 string (i.e. characters encoded on multiple bytes have a length of more than one).",
+          "format": "int64",
+          "type": "string"
+        },
+        "text": {
+          "description": "The text segment itself.",
           "type": "string"
         }
       },
@@ -16743,14 +17141,12 @@
           "enum": [
             "PERIODIC",
             "STREAMING",
-            "UNSPECIFIED",
-            "SCALA_SYNC"
+            "UNSPECIFIED"
           ],
           "enumDescriptions": [
             "The connector will sync data periodically based on the refresh_interval. Use it with auto_run_disabled to pause the periodic sync, or indicate a one-time sync.",
             "The data will be synced in real time.",
-            "Connector that doesn't ingest data will have this value",
-            "The data will be synced with Scala Sync, a data ingestion solution."
+            "Connector that doesn't ingest data will have this value"
           ],
           "type": "string"
         },
@@ -16798,8 +17194,39 @@
           "description": "Optional. The ID of the Secret Manager secret used for webhook secret.",
           "type": "string"
         },
+        "streamingError": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingError",
+          "description": "Optional. Streaming error details."
+        },
         "webhookUri": {
           "description": "Optional. Webhook url for the connector to specify additional params for realtime sync.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingError": {
+      "description": "Streaming error details.",
+      "id": "GoogleCloudDiscoveryengineV1alphaDataConnectorRealtimeSyncConfigStreamingError",
+      "properties": {
+        "error": {
+          "$ref": "GoogleRpcStatus",
+          "description": "Optional. Error details."
+        },
+        "streamingErrorReason": {
+          "description": "Optional. Streaming error.",
+          "enum": [
+            "STREAMING_ERROR_REASON_UNSPECIFIED",
+            "STREAMING_SETUP_ERROR",
+            "STREAMING_SYNC_ERROR",
+            "INGRESS_ENDPOINT_REQUIRED"
+          ],
+          "enumDescriptions": [
+            "Streaming error reason unspecified.",
+            "Some error occurred while setting up resources for realtime sync.",
+            "Some error was encountered while running realtime sync for the connector.",
+            "Ingress endpoint is required when setting up realtime sync in private connectivity."
+          ],
           "type": "string"
         }
       },
@@ -17538,6 +17965,10 @@
       "description": "The layout parsing configurations for documents.",
       "id": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigLayoutParsingConfig",
       "properties": {
+        "enableGetProcessedDocument": {
+          "description": "Optional. If true, the processed document will be made available for the GetProcessedDocument API.",
+          "type": "boolean"
+        },
         "enableImageAnnotation": {
           "description": "Optional. If true, the LLM based annotation is added to the image during parsing.",
           "type": "boolean"
@@ -17703,7 +18134,7 @@
             ],
             "type": "string"
           },
-          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing`",
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` - Enables personalization based on user preferences.",
           "type": "object"
         },
         "industryVertical": {
@@ -18910,7 +19341,7 @@
           "description": "Cloud Storage location for the input content."
         },
         "idField": {
-          "description": "The field indicates the ID field or column to be used as unique IDs of the documents. For GcsSource it is the key of the JSON field. For instance, `my_id` for JSON `{\"my_id\": \"some_uuid\"}`. For others, it may be the column name of the table where the unique ids are stored. The values of the JSON field or the table column are used as the Document.ids. The JSON field or the table column must be of string type, and the values must be set as valid strings conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) with 1-63 characters. Otherwise, documents without valid IDs fail to be imported. Only set this field when auto_generate_ids is unset or set as `false`. Otherwise, an INVALID_ARGUMENT error is thrown. If it is unset, a default value `_id` is used when importing from the allowed data sources. Supported data sources: * GcsSource. GcsSource.data_schema must be `custom` or `csv`. Otherwise, an INVALID_ARGUMENT error is thrown. * BigQuerySource. BigQuerySource.data_schema must be `custom` or `csv`. Otherwise, an INVALID_ARGUMENT error is thrown. * SpannerSource. * CloudSqlSource. * FirestoreSource. * BigtableSource.",
+          "description": "The field indicates the ID field or column to be used as unique IDs of the documents. For GcsSource it is the key of the JSON field. For instance, `my_id` for JSON `{\"my_id\": \"some_uuid\"}`. For others, it may be the column name of the table where the unique ids are stored. The values of the JSON field or the table column are used as the Document.ids. The JSON field or the table column must be of string type, and the values must be set as valid strings conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) with 1-63 characters. Otherwise, documents without valid IDs fail to be imported. Only set this field when auto_generate_ids is unset or set as `false`. Otherwise, an INVALID_ARGUMENT error is thrown. If it is unset, a default value `_id` is used when importing from the allowed data sources. Supported data sources: * GcsSource. GcsSource.data_schema must be `custom` or `csv`. Otherwise, an INVALID_ARGUMENT error is thrown. * BigQuerySource. BigQuerySource.data_schema must be `custom` or `csv`. Otherwise, an INVALID_ARGUMENT error is thrown. * SpannerSource. * CloudSqlSource. * BigtableSource.",
           "type": "string"
         },
         "inlineSource": {
@@ -19665,7 +20096,7 @@
       "id": "GoogleCloudDiscoveryengineV1alphaListSessionsRequest",
       "properties": {
         "filter": {
-          "description": "A filter to apply on the list results. The supported features are: user_pseudo_id, state. Example: \"user_pseudo_id = some_id\"",
+          "description": "A filter to apply on the list results. The supported features are: user_pseudo_id, state, starred. Examples: \"user_pseudo_id = some_id\" \"starred = true\"",
           "type": "string"
         },
         "orderBy": {
@@ -20697,6 +21128,24 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaRefreshTokenInfo": {
+      "description": "Describes a refresh token.",
+      "id": "GoogleCloudDiscoveryengineV1alphaRefreshTokenInfo",
+      "properties": {
+        "name": {
+          "description": "Required. The connection for which this token applies.",
+          "type": "string"
+        },
+        "scopes": {
+          "description": "The list of scopes for this token.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaRemoveDedicatedCrawlRateMetadata": {
       "description": "Metadata related to the progress of the CrawlRateManagementService.RemoveDedicatedCrawlRate operation. This will be returned by the google.longrunning.Operation.metadata field.",
       "id": "GoogleCloudDiscoveryengineV1alphaRemoveDedicatedCrawlRateMetadata",
@@ -21361,7 +21810,7 @@
           "description": "The query expansion specification that specifies the conditions under which query expansion occurs."
         },
         "rankingExpression": {
-          "description": "Optional. The ranking expression controls the customized ranking on retrieval documents. This overrides ServingConfig.ranking_expression. The syntax and supported features depend on the `ranking_expression_backend` value. If `ranking_expression_backend` is not provided, it defaults to `RANK_BY_EMBEDDING`. If ranking_expression_backend is not provided or set to `RANK_BY_EMBEDDING`, it should be a single function or multiple functions that are joined by \"+\". * ranking_expression = function, { \" + \", function }; Supported functions: * double * relevance_score * double * dotProduct(embedding_field_path) Function variables: * `relevance_score`: pre-defined keywords, used for measure relevance between query and document. * `embedding_field_path`: the document embedding field used with query embedding vector. * `dotProduct`: embedding function between `embedding_field_path` and query embedding vector. Example ranking expression: If document has an embedding field doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3 * dotProduct(doc_embedding)`. If ranking_expression_backend is set to `RANK_BY_FORMULA`, the following expression types (and combinations of those chained using + or * operators) are supported: * `double` * `signal` * `log(signal)` * `exp(signal)` * `rr(signal, double \u003e 0)` -- reciprocal rank transformation with second argument being a denominator constant. * `is_nan(signal)` -- returns 0 if signal is NaN, 1 otherwise. * `fill_nan(signal1, signal2 | double)` -- if signal1 is NaN, returns signal2 | double, else returns signal1. Here are a few examples of ranking formulas that use the supported ranking expression types: - `0.2 * semantic_similarity_score + 0.8 * log(keyword_similarity_score)` -- mostly rank by the logarithm of `keyword_similarity_score` with slight `semantic_smilarity_score` adjustment. - `0.2 * exp(fill_nan(semantic_similarity_score, 0)) + 0.3 * is_nan(keyword_similarity_score)` -- rank by the exponent of `semantic_similarity_score` filling the value with 0 if it's NaN, also add constant 0.3 adjustment to the final score if `semantic_similarity_score` is NaN. - `0.2 * rr(semantic_similarity_score, 16) + 0.8 * rr(keyword_similarity_score, 16)` -- mostly rank by the reciprocal rank of `keyword_similarity_score` with slight adjustment of reciprocal rank of `semantic_smilarity_score`. The following signals are supported: * `semantic_similarity_score`: semantic similarity adjustment that is calculated using the embeddings generated by a proprietary Google model. This score determines how semantically similar a search query is to a document. * `keyword_similarity_score`: keyword match adjustment uses the Best Match 25 (BM25) ranking function. This score is calculated using a probabilistic model to estimate the probability that a document is relevant to a given query. * `relevance_score`: semantic relevance adjustment that uses a proprietary Google model to determine the meaning and intent behind a user's query in context with the content in the documents. * `pctr_rank`: predicted conversion rate adjustment as a rank use predicted Click-through rate (pCTR) to gauge the relevance and attractiveness of a search result from a user's perspective. A higher pCTR suggests that the result is more likely to satisfy the user's query and intent, making it a valuable signal for ranking. * `freshness_rank`: freshness adjustment as a rank * `topicality_rank`: topicality adjustment as a rank. Uses proprietary Google model to determine the keyword-based overlap between the query and the document. * `base_rank`: the default rank of the result",
+          "description": "Optional. The ranking expression controls the customized ranking on retrieval documents. This overrides ServingConfig.ranking_expression. The syntax and supported features depend on the `ranking_expression_backend` value. If `ranking_expression_backend` is not provided, it defaults to `RANK_BY_EMBEDDING`. If ranking_expression_backend is not provided or set to `RANK_BY_EMBEDDING`, it should be a single function or multiple functions that are joined by \"+\". * ranking_expression = function, { \" + \", function }; Supported functions: * double * relevance_score * double * dotProduct(embedding_field_path) Function variables: * `relevance_score`: pre-defined keywords, used for measure relevance between query and document. * `embedding_field_path`: the document embedding field used with query embedding vector. * `dotProduct`: embedding function between `embedding_field_path` and query embedding vector. Example ranking expression: If document has an embedding field doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3 * dotProduct(doc_embedding)`. If ranking_expression_backend is set to `RANK_BY_FORMULA`, the following expression types (and combinations of those chained using + or * operators) are supported: * `double` * `signal` * `log(signal)` * `exp(signal)` * `rr(signal, double \u003e 0)` -- reciprocal rank transformation with second argument being a denominator constant. * `is_nan(signal)` -- returns 0 if signal is NaN, 1 otherwise. * `fill_nan(signal1, signal2 | double)` -- if signal1 is NaN, returns signal2 | double, else returns signal1. Here are a few examples of ranking formulas that use the supported ranking expression types: - `0.2 * semantic_similarity_score + 0.8 * log(keyword_similarity_score)` -- mostly rank by the logarithm of `keyword_similarity_score` with slight `semantic_smilarity_score` adjustment. - `0.2 * exp(fill_nan(semantic_similarity_score, 0)) + 0.3 * is_nan(keyword_similarity_score)` -- rank by the exponent of `semantic_similarity_score` filling the value with 0 if it's NaN, also add constant 0.3 adjustment to the final score if `semantic_similarity_score` is NaN. - `0.2 * rr(semantic_similarity_score, 16) + 0.8 * rr(keyword_similarity_score, 16)` -- mostly rank by the reciprocal rank of `keyword_similarity_score` with slight adjustment of reciprocal rank of `semantic_smilarity_score`. The following signals are supported: * `semantic_similarity_score`: semantic similarity adjustment that is calculated using the embeddings generated by a proprietary Google model. This score determines how semantically similar a search query is to a document. * `keyword_similarity_score`: keyword match adjustment uses the Best Match 25 (BM25) ranking function. This score is calculated using a probabilistic model to estimate the probability that a document is relevant to a given query. * `relevance_score`: semantic relevance adjustment that uses a proprietary Google model to determine the meaning and intent behind a user's query in context with the content in the documents. * `pctr_rank`: predicted conversion rate adjustment as a rank use predicted Click-through rate (pCTR) to gauge the relevance and attractiveness of a search result from a user's perspective. A higher pCTR suggests that the result is more likely to satisfy the user's query and intent, making it a valuable signal for ranking. * `freshness_rank`: freshness adjustment as a rank * `document_age`: The time in hours elapsed since the document was last updated, a floating-point number (e.g., 0.25 means 15 minutes). * `topicality_rank`: topicality adjustment as a rank. Uses proprietary Google model to determine the keyword-based overlap between the query and the document. * `base_rank`: the default rank of the result",
           "type": "string"
         },
         "rankingExpressionBackend": {
@@ -21428,7 +21877,7 @@
           "type": "string"
         },
         "session": {
-          "description": "The session resource name. Optional. Session allows users to do multi-turn /search API calls or coordination between /search API calls and /answer API calls. Example #1 (multi-turn /search API calls): 1. Call /search API with the auto-session mode (see below). 2. Call /search API with the session ID generated in the first call. Here, the previous search query gets considered in query standing. I.e., if the first query is \"How did Alphabet do in 2022?\" and the current query is \"How about 2023?\", the current query will be interpreted as \"How did Alphabet do in 2023?\". Example #2 (coordination between /search API calls and /answer API calls): 1. Call /search API with the auto-session mode (see below). 2. Call /answer API with the session ID generated in the first call. Here, the answer generation happens in the context of the search results from the first search call. Auto-session mode: when `projects/.../sessions/-` is used, a new session gets automatically created. Otherwise, users can use the create-session API to create a session manually. Multi-turn Search feature is currently at private GA stage. Please use v1alpha or v1beta version instead before we launch this feature to public GA. Or ask for allowlisting through Google Support team.",
+          "description": "The session resource name. Optional. Session allows users to do multi-turn /search API calls or coordination between /search API calls and /answer API calls. Example #1 (multi-turn /search API calls): Call /search API with the session ID generated in the first call. Here, the previous search query gets considered in query standing. I.e., if the first query is \"How did Alphabet do in 2022?\" and the current query is \"How about 2023?\", the current query will be interpreted as \"How did Alphabet do in 2023?\". Example #2 (coordination between /search API calls and /answer API calls): Call /answer API with the session ID generated in the first call. Here, the answer generation happens in the context of the search results from the first search call. Multi-turn Search feature is currently at private GA stage. Please use v1alpha or v1beta version instead before we launch this feature to public GA. Or ask for allowlisting through Google Support team.",
           "type": "string"
         },
         "sessionSpec": {
@@ -23344,6 +23793,148 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaStreamAssistRequest": {
+      "description": "Request for the AssistantService.StreamAssist method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaStreamAssistRequest",
+      "properties": {
+        "generationSpec": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestGenerationSpec",
+          "description": "Optional. Specification of the generation configuration for the request."
+        },
+        "query": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaQuery",
+          "description": "Optional. Current user query. Empty query is only supported if `file_ids` are provided. In this case, the answer will be generated based on those context files."
+        },
+        "session": {
+          "description": "Optional. The session to use for the request. If specified, the assistant has access to the session history, and the query and the answer are stored there. If `-` is specified as the session ID, or it is left empty, then a new session is created with an automatically generated ID. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/sessions/{session}`",
+          "type": "string"
+        },
+        "toolsSpec": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpec",
+          "description": "Optional. Specification of tools that are used to serve the request."
+        },
+        "userMetadata": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAssistUserMetadata",
+          "description": "Optional. Information about the user initiating the query."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestGenerationSpec": {
+      "description": "Assistant generation specification for the request. This allows to override the default generation configuration at the engine level.",
+      "id": "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestGenerationSpec",
+      "properties": {
+        "modelId": {
+          "description": "Optional. The Vertex AI model_id used for the generative model. If not set, the default Assistant model will be used.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpec": {
+      "description": "Specification of tools that are used to serve the request.",
+      "id": "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpec",
+      "properties": {
+        "imageGenerationSpec": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecImageGenerationSpec",
+          "description": "Optional. Specification of the image generation tool."
+        },
+        "toolRegistry": {
+          "description": "Optional. The name of the tool registry to use. Format: `projects/{project}/locations/{location}/toolRegistries/{tool_registry}`",
+          "type": "string"
+        },
+        "vertexAiSearchSpec": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecVertexAiSearchSpec",
+          "description": "Optional. Specification of the Vertex AI Search tool."
+        },
+        "videoGenerationSpec": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecVideoGenerationSpec",
+          "description": "Optional. Specification of the video generation tool."
+        },
+        "webGroundingSpec": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecWebGroundingSpec",
+          "description": "Optional. Specification of the web grounding tool. If field is present, enables grounding with web search. Works only if Assistant.web_grounding_type is WEB_GROUNDING_TYPE_GOOGLE_SEARCH or WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecImageGenerationSpec": {
+      "description": "Specification of the image generation tool.",
+      "id": "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecImageGenerationSpec",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecVertexAiSearchSpec": {
+      "description": "Specification of the Vertex AI Search tool.",
+      "id": "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecVertexAiSearchSpec",
+      "properties": {
+        "dataStoreSpecs": {
+          "description": "Optional. Specs defining DataStores to filter on in a search call and configurations for those data stores. This is only considered for Engines with multiple data stores.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaSearchRequestDataStoreSpec"
+          },
+          "type": "array"
+        },
+        "disabled": {
+          "deprecated": true,
+          "description": "Optional. Deprecated. Please refrain from using this field. Whether the Vertex AI Search tool is disabled. Default value is false, the tool is enabled by default.",
+          "type": "boolean"
+        },
+        "filter": {
+          "description": "Optional. The filter syntax consists of an expression language for constructing a predicate from one or more fields of the documents being filtered. Filter expression is case-sensitive. If this field is unrecognizable, an `INVALID_ARGUMENT` is returned. Filtering in Vertex AI Search is done by mapping the LHS filter key to a key property defined in the Vertex AI Search backend -- this mapping is defined by the customer in their schema. For example a media customer might have a field 'name' in their schema. In this case the filter would look like this: filter --\u003e name:'ANY(\"king kong\")' For more information about filtering including syntax and filter operators, see [Filter](https://cloud.google.com/generative-ai-app-builder/docs/filter-search-metadata)",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecVideoGenerationSpec": {
+      "description": "Specification of the video generation tool.",
+      "id": "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecVideoGenerationSpec",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecWebGroundingSpec": {
+      "description": "Specification of the web grounding tool.",
+      "id": "GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecWebGroundingSpec",
+      "properties": {
+        "enabled": {
+          "deprecated": true,
+          "description": "Optional. Deprecated. Please refrain from using this field. Whether the web grounding tool is enabled.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaStreamAssistResponse": {
+      "description": "Response for the AssistantService.StreamAssist method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaStreamAssistResponse",
+      "properties": {
+        "answer": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAssistAnswer",
+          "description": "Assist answer resource object containing parts of the assistant's final answer for the user's query. Not present if the current response doesn't add anything to previously sent AssistAnswer.replies. Observe AssistAnswer.state to see if more parts are to be expected. While the state is `IN_PROGRESS`, the AssistAnswer.replies field in each response will contain replies (reply fragments) to be appended to the ones received in previous responses. AssistAnswer.name won't be filled. If the state is `SUCCEEDED`, `FAILED` or `SKIPPED`, the response is the last response and AssistAnswer.name will have a value."
+        },
+        "assistToken": {
+          "description": "A global unique ID that identifies the current pair of request and stream of responses. Used for feedback and support.",
+          "type": "string"
+        },
+        "sessionInfo": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaStreamAssistResponseSessionInfo",
+          "description": "Session information."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaStreamAssistResponseSessionInfo": {
+      "description": "Information about the session.",
+      "id": "GoogleCloudDiscoveryengineV1alphaStreamAssistResponseSessionInfo",
+      "properties": {
+        "session": {
+          "description": "Name of the newly generated or continued session. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/sessions/{session}`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaSuggestionDenyListEntry": {
       "description": "Suggestion deny list entry identifying the phrase to block from suggestions and the applied operation for the phrase.",
       "id": "GoogleCloudDiscoveryengineV1alphaSuggestionDenyListEntry",
@@ -23901,14 +24492,16 @@
             "ASSIGNED",
             "UNASSIGNED",
             "NO_LICENSE",
-            "NO_LICENSE_ATTEMPTED_LOGIN"
+            "NO_LICENSE_ATTEMPTED_LOGIN",
+            "BLOCKED"
           ],
           "enumDescriptions": [
             "Default value.",
             "License assigned to the user.",
             "No license assigned to the user. Deprecated, translated to NO_LICENSE.",
             "No license assigned to the user.",
-            "User attempted to login but no license assigned to the user. This state is only used for no user first time login attempt but cannot get license assigned. Users already logged in but cannot get license assigned will be assigned NO_LICENSE state(License could be unassigned by admin)."
+            "User attempted to login but no license assigned to the user. This state is only used for no user first time login attempt but cannot get license assigned. Users already logged in but cannot get license assigned will be assigned NO_LICENSE state(License could be unassigned by admin).",
+            "User is blocked from assigning a license."
           ],
           "readOnly": true,
           "type": "string"
@@ -24559,7 +25152,7 @@
             ],
             "type": "string"
           },
-          "description": "Output only. Feature config for the engine to opt in or opt out of features. Supported keys: * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing`",
+          "description": "Output only. Feature config for the engine to opt in or opt out of features. Supported keys: * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` - Enables personalization based on user preferences.",
           "readOnly": true,
           "type": "object"
         },
@@ -25687,6 +26280,10 @@
       "description": "The layout parsing configurations for documents.",
       "id": "GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigLayoutParsingConfig",
       "properties": {
+        "enableGetProcessedDocument": {
+          "description": "Optional. If true, the processed document will be made available for the GetProcessedDocument API.",
+          "type": "boolean"
+        },
         "enableImageAnnotation": {
           "description": "Optional. If true, the LLM based annotation is added to the image during parsing.",
           "type": "boolean"
@@ -25820,7 +26417,7 @@
             ],
             "type": "string"
           },
-          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing`",
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` - Enables personalization based on user preferences.",
           "type": "object"
         },
         "industryVertical": {
@@ -27003,7 +27600,7 @@
           "description": "The query expansion specification that specifies the conditions under which query expansion occurs."
         },
         "rankingExpression": {
-          "description": "Optional. The ranking expression controls the customized ranking on retrieval documents. This overrides ServingConfig.ranking_expression. The syntax and supported features depend on the `ranking_expression_backend` value. If `ranking_expression_backend` is not provided, it defaults to `RANK_BY_EMBEDDING`. If ranking_expression_backend is not provided or set to `RANK_BY_EMBEDDING`, it should be a single function or multiple functions that are joined by \"+\". * ranking_expression = function, { \" + \", function }; Supported functions: * double * relevance_score * double * dotProduct(embedding_field_path) Function variables: * `relevance_score`: pre-defined keywords, used for measure relevance between query and document. * `embedding_field_path`: the document embedding field used with query embedding vector. * `dotProduct`: embedding function between `embedding_field_path` and query embedding vector. Example ranking expression: If document has an embedding field doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3 * dotProduct(doc_embedding)`. If ranking_expression_backend is set to `RANK_BY_FORMULA`, the following expression types (and combinations of those chained using + or * operators) are supported: * `double` * `signal` * `log(signal)` * `exp(signal)` * `rr(signal, double \u003e 0)` -- reciprocal rank transformation with second argument being a denominator constant. * `is_nan(signal)` -- returns 0 if signal is NaN, 1 otherwise. * `fill_nan(signal1, signal2 | double)` -- if signal1 is NaN, returns signal2 | double, else returns signal1. Here are a few examples of ranking formulas that use the supported ranking expression types: - `0.2 * semantic_similarity_score + 0.8 * log(keyword_similarity_score)` -- mostly rank by the logarithm of `keyword_similarity_score` with slight `semantic_smilarity_score` adjustment. - `0.2 * exp(fill_nan(semantic_similarity_score, 0)) + 0.3 * is_nan(keyword_similarity_score)` -- rank by the exponent of `semantic_similarity_score` filling the value with 0 if it's NaN, also add constant 0.3 adjustment to the final score if `semantic_similarity_score` is NaN. - `0.2 * rr(semantic_similarity_score, 16) + 0.8 * rr(keyword_similarity_score, 16)` -- mostly rank by the reciprocal rank of `keyword_similarity_score` with slight adjustment of reciprocal rank of `semantic_smilarity_score`. The following signals are supported: * `semantic_similarity_score`: semantic similarity adjustment that is calculated using the embeddings generated by a proprietary Google model. This score determines how semantically similar a search query is to a document. * `keyword_similarity_score`: keyword match adjustment uses the Best Match 25 (BM25) ranking function. This score is calculated using a probabilistic model to estimate the probability that a document is relevant to a given query. * `relevance_score`: semantic relevance adjustment that uses a proprietary Google model to determine the meaning and intent behind a user's query in context with the content in the documents. * `pctr_rank`: predicted conversion rate adjustment as a rank use predicted Click-through rate (pCTR) to gauge the relevance and attractiveness of a search result from a user's perspective. A higher pCTR suggests that the result is more likely to satisfy the user's query and intent, making it a valuable signal for ranking. * `freshness_rank`: freshness adjustment as a rank * `topicality_rank`: topicality adjustment as a rank. Uses proprietary Google model to determine the keyword-based overlap between the query and the document. * `base_rank`: the default rank of the result",
+          "description": "Optional. The ranking expression controls the customized ranking on retrieval documents. This overrides ServingConfig.ranking_expression. The syntax and supported features depend on the `ranking_expression_backend` value. If `ranking_expression_backend` is not provided, it defaults to `RANK_BY_EMBEDDING`. If ranking_expression_backend is not provided or set to `RANK_BY_EMBEDDING`, it should be a single function or multiple functions that are joined by \"+\". * ranking_expression = function, { \" + \", function }; Supported functions: * double * relevance_score * double * dotProduct(embedding_field_path) Function variables: * `relevance_score`: pre-defined keywords, used for measure relevance between query and document. * `embedding_field_path`: the document embedding field used with query embedding vector. * `dotProduct`: embedding function between `embedding_field_path` and query embedding vector. Example ranking expression: If document has an embedding field doc_embedding, the ranking expression could be `0.5 * relevance_score + 0.3 * dotProduct(doc_embedding)`. If ranking_expression_backend is set to `RANK_BY_FORMULA`, the following expression types (and combinations of those chained using + or * operators) are supported: * `double` * `signal` * `log(signal)` * `exp(signal)` * `rr(signal, double \u003e 0)` -- reciprocal rank transformation with second argument being a denominator constant. * `is_nan(signal)` -- returns 0 if signal is NaN, 1 otherwise. * `fill_nan(signal1, signal2 | double)` -- if signal1 is NaN, returns signal2 | double, else returns signal1. Here are a few examples of ranking formulas that use the supported ranking expression types: - `0.2 * semantic_similarity_score + 0.8 * log(keyword_similarity_score)` -- mostly rank by the logarithm of `keyword_similarity_score` with slight `semantic_smilarity_score` adjustment. - `0.2 * exp(fill_nan(semantic_similarity_score, 0)) + 0.3 * is_nan(keyword_similarity_score)` -- rank by the exponent of `semantic_similarity_score` filling the value with 0 if it's NaN, also add constant 0.3 adjustment to the final score if `semantic_similarity_score` is NaN. - `0.2 * rr(semantic_similarity_score, 16) + 0.8 * rr(keyword_similarity_score, 16)` -- mostly rank by the reciprocal rank of `keyword_similarity_score` with slight adjustment of reciprocal rank of `semantic_smilarity_score`. The following signals are supported: * `semantic_similarity_score`: semantic similarity adjustment that is calculated using the embeddings generated by a proprietary Google model. This score determines how semantically similar a search query is to a document. * `keyword_similarity_score`: keyword match adjustment uses the Best Match 25 (BM25) ranking function. This score is calculated using a probabilistic model to estimate the probability that a document is relevant to a given query. * `relevance_score`: semantic relevance adjustment that uses a proprietary Google model to determine the meaning and intent behind a user's query in context with the content in the documents. * `pctr_rank`: predicted conversion rate adjustment as a rank use predicted Click-through rate (pCTR) to gauge the relevance and attractiveness of a search result from a user's perspective. A higher pCTR suggests that the result is more likely to satisfy the user's query and intent, making it a valuable signal for ranking. * `freshness_rank`: freshness adjustment as a rank * `document_age`: The time in hours elapsed since the document was last updated, a floating-point number (e.g., 0.25 means 15 minutes). * `topicality_rank`: topicality adjustment as a rank. Uses proprietary Google model to determine the keyword-based overlap between the query and the document. * `base_rank`: the default rank of the result",
           "type": "string"
         },
         "rankingExpressionBackend": {
@@ -27070,7 +27667,7 @@
           "type": "string"
         },
         "session": {
-          "description": "The session resource name. Optional. Session allows users to do multi-turn /search API calls or coordination between /search API calls and /answer API calls. Example #1 (multi-turn /search API calls): 1. Call /search API with the auto-session mode (see below). 2. Call /search API with the session ID generated in the first call. Here, the previous search query gets considered in query standing. I.e., if the first query is \"How did Alphabet do in 2022?\" and the current query is \"How about 2023?\", the current query will be interpreted as \"How did Alphabet do in 2023?\". Example #2 (coordination between /search API calls and /answer API calls): 1. Call /search API with the auto-session mode (see below). 2. Call /answer API with the session ID generated in the first call. Here, the answer generation happens in the context of the search results from the first search call. Auto-session mode: when `projects/.../sessions/-` is used, a new session gets automatically created. Otherwise, users can use the create-session API to create a session manually. Multi-turn Search feature is currently at private GA stage. Please use v1alpha or v1beta version instead before we launch this feature to public GA. Or ask for allowlisting through Google Support team.",
+          "description": "The session resource name. Optional. Session allows users to do multi-turn /search API calls or coordination between /search API calls and /answer API calls. Example #1 (multi-turn /search API calls): Call /search API with the session ID generated in the first call. Here, the previous search query gets considered in query standing. I.e., if the first query is \"How did Alphabet do in 2022?\" and the current query is \"How about 2023?\", the current query will be interpreted as \"How did Alphabet do in 2023?\". Example #2 (coordination between /search API calls and /answer API calls): Call /answer API with the session ID generated in the first call. Here, the answer generation happens in the context of the search results from the first search call. Multi-turn Search feature is currently at private GA stage. Please use v1alpha or v1beta version instead before we launch this feature to public GA. Or ask for allowlisting through Google Support team.",
           "type": "string"
         },
         "sessionSpec": {
@@ -28058,14 +28655,16 @@
             "ASSIGNED",
             "UNASSIGNED",
             "NO_LICENSE",
-            "NO_LICENSE_ATTEMPTED_LOGIN"
+            "NO_LICENSE_ATTEMPTED_LOGIN",
+            "BLOCKED"
           ],
           "enumDescriptions": [
             "Default value.",
             "License assigned to the user.",
             "No license assigned to the user. Deprecated, translated to NO_LICENSE.",
             "No license assigned to the user.",
-            "User attempted to login but no license assigned to the user. This state is only used for no user first time login attempt but cannot get license assigned. Users already logged in but cannot get license assigned will be assigned NO_LICENSE state(License could be unassigned by admin)."
+            "User attempted to login but no license assigned to the user. This state is only used for no user first time login attempt but cannot get license assigned. Users already logged in but cannot get license assigned will be assigned NO_LICENSE state(License could be unassigned by admin).",
+            "User is blocked from assigning a license."
           ],
           "readOnly": true,
           "type": "string"

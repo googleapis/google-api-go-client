@@ -5308,7 +5308,7 @@ type GoogleCloudRetailV2SearchRequest struct {
 	// UserAttributes: Optional. The user attributes that could be used for
 	// personalization of search results. * Populate at most 100 key-value pairs
 	// per query. * Only supports string keys and repeated string values. *
-	// Duplcate keys are not allowed within a single query. Example:
+	// Duplicate keys are not allowed within a single query. Example:
 	// user_attributes: [ { key: "pets" value { values: "dog" values: "cat" } }, {
 	// key: "state" value { values: "CA" } } ]
 	UserAttributes map[string]GoogleCloudRetailV2StringList `json:"userAttributes,omitempty"`

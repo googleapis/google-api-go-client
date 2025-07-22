@@ -1073,7 +1073,7 @@
       }
     }
   },
-  "revision": "20250617",
+  "revision": "20250701",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "AOFConfig": {
@@ -1457,6 +1457,10 @@
       "description": "A cluster instance.",
       "id": "Cluster",
       "properties": {
+        "allowFewerZonesDeployment": {
+          "description": "Optional. Immutable. Allows customers to specify if they are okay with deploying a multi-zone cluster in less than 3 zones. Once set, if there is a zonal outage during the cluster creation, the cluster will only be deployed in 2 zones, and stay within the 2 zones for its lifecycle.",
+          "type": "boolean"
+        },
         "asyncClusterEndpointsDeletionEnabled": {
           "description": "Optional. If true, cluster endpoints that are created and registered by customers can be deleted asynchronously. That is, such a cluster endpoint can be de-registered before the forwarding rules in the cluster endpoint are deleted.",
           "type": "boolean"
@@ -1771,7 +1775,7 @@
       "id": "ClusterWeeklyMaintenanceWindow",
       "properties": {
         "day": {
-          "description": "Allows to define schedule that runs specified day of the week.",
+          "description": "Optional. Allows to define schedule that runs specified day of the week.",
           "enum": [
             "DAY_OF_WEEK_UNSPECIFIED",
             "MONDAY",
@@ -1796,7 +1800,7 @@
         },
         "startTime": {
           "$ref": "TimeOfDay",
-          "description": "Start time of the window in UTC."
+          "description": "Optional. Start time of the window in UTC."
         }
       },
       "type": "object"
@@ -1811,6 +1815,50 @@
         },
         "version": {
           "description": "Version of the standard or benchmark, for example, 1.1",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ConfigBasedSignalData": {
+      "description": "Config based signal data. This is used to send signals to Condor which are based on the DB level configurations. These will be used to send signals for self managed databases.",
+      "id": "ConfigBasedSignalData",
+      "properties": {
+        "fullResourceName": {
+          "description": "Required. Full Resource name of the source resource.",
+          "type": "string"
+        },
+        "lastRefreshTime": {
+          "description": "Required. Last time signal was refreshed",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "resourceId": {
+          "$ref": "DatabaseResourceId",
+          "description": "Database resource id."
+        },
+        "signalBoolValue": {
+          "description": "Signal data for boolean signals.",
+          "type": "boolean"
+        },
+        "signalType": {
+          "description": "Required. Signal type of the signal",
+          "enum": [
+            "SIGNAL_TYPE_UNSPECIFIED",
+            "SIGNAL_TYPE_OUTDATED_MINOR_VERSION",
+            "SIGNAL_TYPE_DATABASE_AUDITING_DISABLED",
+            "SIGNAL_TYPE_NO_ROOT_PASSWORD",
+            "SIGNAL_TYPE_EXPOSED_TO_PUBLIC_ACCESS",
+            "SIGNAL_TYPE_UNENCRYPTED_CONNECTIONS"
+          ],
+          "enumDescriptions": [
+            "Unspecified signal type.",
+            "Outdated Minor Version",
+            "Represents database auditing is disabled.",
+            "Represents if a database has a password configured for the root account or not.",
+            "Represents if a resource is exposed to public access.",
+            "Represents if a resources requires all incoming connections to use SSL or not."
+          ],
           "type": "string"
         }
       },
@@ -1836,7 +1884,7 @@
       "id": "CrossClusterReplicationConfig",
       "properties": {
         "clusterRole": {
-          "description": "The role of the cluster in cross cluster replication.",
+          "description": "Output only. The role of the cluster in cross cluster replication.",
           "enum": [
             "CLUSTER_ROLE_UNSPECIFIED",
             "NONE",
@@ -1849,6 +1897,7 @@
             "A cluster that allows both reads and writes. Any data written to this cluster is also replicated to the attached secondary clusters.",
             "A cluster that allows only reads and replicates data from a primary cluster."
           ],
+          "readOnly": true,
           "type": "string"
         },
         "membership": {
@@ -1891,9 +1940,13 @@
       "type": "object"
     },
     "DatabaseResourceFeed": {
-      "description": "DatabaseResourceFeed is the top level proto to be used to ingest different database resource level events into Condor platform. Next ID: 8",
+      "description": "DatabaseResourceFeed is the top level proto to be used to ingest different database resource level events into Condor platform. Next ID: 9",
       "id": "DatabaseResourceFeed",
       "properties": {
+        "configBasedSignalData": {
+          "$ref": "ConfigBasedSignalData",
+          "description": "Config based signal data is used to ingest signals that are generated based on the configuration of the database resource."
+        },
         "feedTimestamp": {
           "description": "Required. Timestamp when feed is generated.",
           "format": "google-datetime",
@@ -1906,14 +1959,16 @@
             "RESOURCE_METADATA",
             "OBSERVABILITY_DATA",
             "SECURITY_FINDING_DATA",
-            "RECOMMENDATION_SIGNAL_DATA"
+            "RECOMMENDATION_SIGNAL_DATA",
+            "CONFIG_BASED_SIGNAL_DATA"
           ],
           "enumDescriptions": [
             "",
             "Database resource metadata feed from control plane",
             "Database resource monitoring data",
             "Database resource security health signal data",
-            "Database resource recommendation signal data"
+            "Database resource recommendation signal data",
+            "Database config based signal data"
           ],
           "type": "string"
         },
@@ -2147,7 +2202,8 @@
             "SIGNAL_TYPE_HIGH_WRITE_PRESSURE",
             "SIGNAL_TYPE_HIGH_READ_PRESSURE",
             "SIGNAL_TYPE_ENCRYPTION_ORG_POLICY_NOT_SATISFIED",
-            "SIGNAL_TYPE_LOCATION_ORG_POLICY_NOT_SATISFIED"
+            "SIGNAL_TYPE_LOCATION_ORG_POLICY_NOT_SATISFIED",
+            "SIGNAL_TYPE_OUTDATED_MINOR_VERSION"
           ],
           "enumDeprecated": [
             false,
@@ -2156,6 +2212,7 @@
             true,
             true,
             true,
+            false,
             false,
             false,
             false,
@@ -2343,7 +2400,8 @@
             "Heavy write pressure on the database rows.",
             "Heavy read pressure on the database rows.",
             "Encryption org policy not satisfied.",
-            "Location org policy not satisfied."
+            "Location org policy not satisfied.",
+            "Outdated DB minor version."
           ],
           "type": "string"
         },
@@ -2760,7 +2818,8 @@
             "SIGNAL_TYPE_HIGH_WRITE_PRESSURE",
             "SIGNAL_TYPE_HIGH_READ_PRESSURE",
             "SIGNAL_TYPE_ENCRYPTION_ORG_POLICY_NOT_SATISFIED",
-            "SIGNAL_TYPE_LOCATION_ORG_POLICY_NOT_SATISFIED"
+            "SIGNAL_TYPE_LOCATION_ORG_POLICY_NOT_SATISFIED",
+            "SIGNAL_TYPE_OUTDATED_MINOR_VERSION"
           ],
           "enumDeprecated": [
             false,
@@ -2769,6 +2828,7 @@
             true,
             true,
             true,
+            false,
             false,
             false,
             false,
@@ -2956,7 +3016,8 @@
             "Heavy write pressure on the database rows.",
             "Heavy read pressure on the database rows.",
             "Encryption org policy not satisfied.",
-            "Location org policy not satisfied."
+            "Location org policy not satisfied.",
+            "Outdated DB minor version."
           ],
           "type": "string"
         }
@@ -4221,6 +4282,10 @@
           ],
           "type": "string"
         },
+        "minorVersion": {
+          "description": "Minor version of the underlying database engine. Example values: For MySQL, it could be \"8.0.32\", \"5.7.32\" etc.. For Postgres, it could be \"14.3\", \"15.3\" etc..",
+          "type": "string"
+        },
         "type": {
           "description": "Type of specific database product. It could be CloudSQL, AlloyDB etc..",
           "enum": [
@@ -4521,7 +4586,8 @@
       "id": "RemoteCluster",
       "properties": {
         "cluster": {
-          "description": "The full resource path of the remote cluster in the format: projects//locations//clusters/",
+          "description": "Output only. The full resource path of the remote cluster in the format: projects//locations//clusters/",
+          "readOnly": true,
           "type": "string"
         },
         "uid": {

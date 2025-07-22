@@ -422,6 +422,64 @@ func (s BootDisk) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
+// CheckAuthorizationRequest: Request message for checking authorization for
+// the instance owner.
+type CheckAuthorizationRequest struct {
+	// AuthorizationDetails: Optional. The details of the OAuth authorization
+	// response. This may include additional params such as dry_run, version_info,
+	// origin, propagate, etc.
+	AuthorizationDetails map[string]string `json:"authorizationDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthorizationDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthorizationDetails") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CheckAuthorizationRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckAuthorizationRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CheckAuthorizationResponse: Response message for checking authorization for
+// the instance owner.
+type CheckAuthorizationResponse struct {
+	// CreateTime: Output only. Timestamp when this Authorization request was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// OauthUri: If the user has not completed OAuth consent, then the oauth_url is
+	// returned. Otherwise, this field is not set.
+	OauthUri string `json:"oauth_uri,omitempty"`
+	// Success: Success indicates that the user completed OAuth consent and access
+	// tokens can be generated.
+	Success bool `json:"success,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CheckAuthorizationResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckAuthorizationResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CheckInstanceUpgradabilityResponse: Response for checking if a notebook
 // instance is upgradeable.
 type CheckInstanceUpgradabilityResponse struct {
@@ -884,6 +942,67 @@ func (s GceSetup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GenerateAccessTokenRequest: Request message for generating an EUC for the
+// instance owner.
+type GenerateAccessTokenRequest struct {
+	// VmToken: Required. The VM identity token (a JWT) for authenticating the VM.
+	// https://cloud.google.com/compute/docs/instances/verifying-instance-identity
+	VmToken string `json:"vmToken,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "VmToken") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "VmToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateAccessTokenRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateAccessTokenRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateAccessTokenResponse: Response message for generating an EUC for the
+// instance owner.
+type GenerateAccessTokenResponse struct {
+	// AccessToken: Short-lived access token string which may be used to access
+	// Google APIs.
+	AccessToken string `json:"access_token,omitempty"`
+	// ExpiresIn: The time in seconds when the access token expires. Typically
+	// that's 3600.
+	ExpiresIn int64 `json:"expires_in,omitempty"`
+	// Scope: Space-separated list of scopes contained in the returned token.
+	// https://cloud.google.com/docs/authentication/token-types#access-contents
+	Scope string `json:"scope,omitempty"`
+	// TokenType: Type of the returned access token (e.g. "Bearer"). It specifies
+	// how the token must be used. Bearer tokens may be used by any entity without
+	// proof of identity.
+	TokenType string `json:"token_type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AccessToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateAccessTokenResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateAccessTokenResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ImageRelease: ConfigImage represents an image release available to create a
 // WbI
 type ImageRelease struct {
@@ -924,6 +1043,9 @@ type Instance struct {
 	// enabled for this Workbench Instance. If false, deletion protection will be
 	// disabled for this Workbench Instance.
 	EnableDeletionProtection bool `json:"enableDeletionProtection,omitempty"`
+	// EnableManagedEuc: Optional. Flag to enable managed end user credentials for
+	// the instance.
+	EnableManagedEuc bool `json:"enableManagedEuc,omitempty"`
 	// EnableThirdPartyIdentity: Optional. Flag that specifies that a notebook can
 	// be accessed with third party identity provider.
 	EnableThirdPartyIdentity bool `json:"enableThirdPartyIdentity,omitempty"`
@@ -2114,6 +2236,113 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
+type ProjectsLocationsInstancesCheckAuthorizationCall struct {
+	s                         *Service
+	name                      string
+	checkauthorizationrequest *CheckAuthorizationRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// CheckAuthorization: Initiated by Cloud Console for Oauth consent flow for
+// Workbench Instances. Do not use this method directly. Design doc:
+// go/wbi-euc:auth-dd
+//
+//   - name: The name of the Notebook Instance resource. Format:
+//     `projects/{project}/locations/{location}/instances/{instance}`.
+func (r *ProjectsLocationsInstancesService) CheckAuthorization(name string, checkauthorizationrequest *CheckAuthorizationRequest) *ProjectsLocationsInstancesCheckAuthorizationCall {
+	c := &ProjectsLocationsInstancesCheckAuthorizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.checkauthorizationrequest = checkauthorizationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInstancesCheckAuthorizationCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesCheckAuthorizationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInstancesCheckAuthorizationCall) Context(ctx context.Context) *ProjectsLocationsInstancesCheckAuthorizationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInstancesCheckAuthorizationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesCheckAuthorizationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.checkauthorizationrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:checkAuthorization")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "notebooks.projects.locations.instances.checkAuthorization", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "notebooks.projects.locations.instances.checkAuthorization" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CheckAuthorizationResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesCheckAuthorizationCall) Do(opts ...googleapi.CallOption) (*CheckAuthorizationResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CheckAuthorizationResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "notebooks.projects.locations.instances.checkAuthorization", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsInstancesCheckUpgradabilityCall struct {
 	s                *Service
 	notebookInstance string
@@ -2547,6 +2776,112 @@ func (c *ProjectsLocationsInstancesDiagnoseCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "notebooks.projects.locations.instances.diagnose", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInstancesGenerateAccessTokenCall struct {
+	s                          *Service
+	name                       string
+	generateaccesstokenrequest *GenerateAccessTokenRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// GenerateAccessToken: Called by VM to return an EUC for the instance owner.
+// Do not use this method directly. Design doc: go/wbi-euc:dd
+//
+//   - name: Format:
+//     `projects/{project}/locations/{location}/instances/{instance_id}`.
+func (r *ProjectsLocationsInstancesService) GenerateAccessToken(name string, generateaccesstokenrequest *GenerateAccessTokenRequest) *ProjectsLocationsInstancesGenerateAccessTokenCall {
+	c := &ProjectsLocationsInstancesGenerateAccessTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.generateaccesstokenrequest = generateaccesstokenrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInstancesGenerateAccessTokenCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesGenerateAccessTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInstancesGenerateAccessTokenCall) Context(ctx context.Context) *ProjectsLocationsInstancesGenerateAccessTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInstancesGenerateAccessTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesGenerateAccessTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.generateaccesstokenrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:generateAccessToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "notebooks.projects.locations.instances.generateAccessToken", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "notebooks.projects.locations.instances.generateAccessToken" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateAccessTokenResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesGenerateAccessTokenCall) Do(opts ...googleapi.CallOption) (*GenerateAccessTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateAccessTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "notebooks.projects.locations.instances.generateAccessToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

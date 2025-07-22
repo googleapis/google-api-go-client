@@ -598,9 +598,13 @@ type GraphqlErrorExtensions struct {
 	//   "DATA_LOSS" - Unrecoverable data loss or corruption. HTTP Mapping: 500
 	// Internal Server Error
 	Code string `json:"code,omitempty"`
-	// DebugDetails: More detailed error message to assist debugging. In the
-	// backend, only include it in admin authenticated API like ExecuteGraphql. In
-	// the emulator, always include it to assist debugging.
+	// DebugDetails: More detailed error message to assist debugging. It contains
+	// application business logic that are inappropriate to leak publicly. In the
+	// emulator, Data Connect API always includes it to assist local development
+	// and debugging. In the backend, ConnectorService always hides it.
+	// GraphqlService without impersonation always include it. GraphqlService with
+	// impersonation includes it only if explicitly opted-in with
+	// `include_debug_details` in `GraphqlRequestExtensions`.
 	DebugDetails string `json:"debugDetails,omitempty"`
 	// File: The source file name where the error occurred. Included only for
 	// `UpdateSchema` and `UpdateConnector`, it corresponds to `File.path` of the
@@ -731,6 +735,9 @@ type Impersonation struct {
 	// https://firebase.google.com/docs/rules/rules-and-auth For example: a
 	// verified user may have auth_claims of {"sub": , "email_verified": true}
 	AuthClaims googleapi.RawMessage `json:"authClaims,omitempty"`
+	// IncludeDebugDetails: Optional. If set, include debug details in GraphQL
+	// error extensions.
+	IncludeDebugDetails bool `json:"includeDebugDetails,omitempty"`
 	// Unauthenticated: Evaluate the auth policy as an unauthenticated request. Can
 	// only be set to true.
 	Unauthenticated bool `json:"unauthenticated,omitempty"`

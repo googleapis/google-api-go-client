@@ -162,6 +162,7 @@ func NewAccountsService(s *APIService) *AccountsService {
 	rs.AutomaticImprovements = NewAccountsAutomaticImprovementsService(s)
 	rs.BusinessIdentity = NewAccountsBusinessIdentityService(s)
 	rs.BusinessInfo = NewAccountsBusinessInfoService(s)
+	rs.DeveloperRegistration = NewAccountsDeveloperRegistrationService(s)
 	rs.EmailPreferences = NewAccountsEmailPreferencesService(s)
 	rs.GbpAccounts = NewAccountsGbpAccountsService(s)
 	rs.Homepage = NewAccountsHomepageService(s)
@@ -188,6 +189,8 @@ type AccountsService struct {
 	BusinessIdentity *AccountsBusinessIdentityService
 
 	BusinessInfo *AccountsBusinessInfoService
+
+	DeveloperRegistration *AccountsDeveloperRegistrationService
 
 	EmailPreferences *AccountsEmailPreferencesService
 
@@ -249,6 +252,15 @@ func NewAccountsBusinessInfoService(s *APIService) *AccountsBusinessInfoService 
 }
 
 type AccountsBusinessInfoService struct {
+	s *APIService
+}
+
+func NewAccountsDeveloperRegistrationService(s *APIService) *AccountsDeveloperRegistrationService {
+	rs := &AccountsDeveloperRegistrationService{s: s}
+	return rs
+}
+
+type AccountsDeveloperRegistrationService struct {
 	s *APIService
 }
 
@@ -1647,6 +1659,37 @@ func (s DeliveryTime) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeveloperRegistration: Represents a developer registration owned by a
+// Merchant account.
+type DeveloperRegistration struct {
+	// GcpIds: Output only. The GCP ids attached to this developer registration
+	GcpIds []string `json:"gcpIds,omitempty"`
+	// Name: Identifier. The `name` (ID) of the developer registration. Generated
+	// by the Content API upon creation of a new `DeveloperRegistration`. The
+	// `account` represents the merchant ID of the merchant that owns the
+	// registration.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "GcpIds") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcpIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeveloperRegistration) MarshalJSON() ([]byte, error) {
+	type NoMethod DeveloperRegistration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DisableProgramRequest: Request message for the DisableProgram method.
 type DisableProgramRequest struct {
 }
@@ -2956,11 +2999,12 @@ type OnlineReturnPolicy struct {
 	//   "NEW" - New.
 	//   "USED" - Used.
 	ItemConditions []string `json:"itemConditions,omitempty"`
-	// Label: Required. Immutable. This field represents the unique user-defined
-	// label of the return policy. It is important to note that the same label
-	// cannot be used in different return policies for the same country. Unless a
-	// product specifies a specific label attribute, policies will be automatically
-	// labeled as 'default'. To assign a custom return policy to certain product
+	// Label: Optional. Immutable. This field represents the unique user-defined
+	// label of the return policy for the given country. It is important to note
+	// that the same label cannot be used in different return policies for the same
+	// country. If not given, policies will be automatically treated as the
+	// 'default' for the country. When using label, you are creating an exception
+	// policy in that country to assign a custom return policy to certain product
 	// groups, follow the instructions provided in the [Return policy label]
 	// (https://support.google.com/merchants/answer/9445425). The label can contain
 	// up to 50 characters.
@@ -3637,6 +3681,34 @@ type Region struct {
 
 func (s Region) MarshalJSON() ([]byte, error) {
 	type NoMethod Region
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RegisterGCPRequest: Request message for the RegisterGCP method.
+type RegisterGCPRequest struct {
+	// DeveloperEmail: Immutable. If the developer email provided is associated
+	// with a user in the merchant account provided, the user will be updated to
+	// have "API developer" access type and the email preference corresponding to
+	// that user will be updated to have the new "API notifications" preference. If
+	// the developer email provided is not associated with any user we will just
+	// add it as a contact. The email preference corresponding to that contact will
+	// have the new "API notifications" preference
+	DeveloperEmail string `json:"developerEmail,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeveloperEmail") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeveloperEmail") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RegisterGCPRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RegisterGCPRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4328,6 +4400,10 @@ func (s TransitTimeValue) MarshalJSON() ([]byte, error) {
 type UnclaimHomepageRequest struct {
 }
 
+// UnregisterGCPRequest: Request message for the UnregisterGCP method.
+type UnregisterGCPRequest struct {
+}
+
 // UriSettings: URL settings for cart or checkout URL.
 type UriSettings struct {
 	// CartUriTemplate: Cart URL template. When the placeholders are expanded will
@@ -4375,6 +4451,9 @@ type User struct {
 	//   "ADMIN" - Admin access rights.
 	//   "PERFORMANCE_REPORTING" - Users with this right have access to performance
 	// and insights.
+	//   "API_DEVELOPER" - Users with this right have access to Merchant API and
+	// its notifications. This role is only accessible to accounts that has a
+	// developer registration.
 	AccessRights []string `json:"accessRights,omitempty"`
 	// Name: Identifier. The resource name of the user. Format:
 	// `accounts/{account}/user/{email}` Use `me` to refer to your own email
@@ -4892,6 +4971,116 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountsGetDeveloperRegistrationCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetDeveloperRegistration: Retrieves a developer registration for a merchant.
+//
+// - name: The `name` (ID) of the developer registration.
+func (r *AccountsService) GetDeveloperRegistration(name string) *AccountsGetDeveloperRegistrationCall {
+	c := &AccountsGetDeveloperRegistrationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsGetDeveloperRegistrationCall) Fields(s ...googleapi.Field) *AccountsGetDeveloperRegistrationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsGetDeveloperRegistrationCall) IfNoneMatch(entityTag string) *AccountsGetDeveloperRegistrationCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsGetDeveloperRegistrationCall) Context(ctx context.Context) *AccountsGetDeveloperRegistrationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsGetDeveloperRegistrationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsGetDeveloperRegistrationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.getDeveloperRegistration", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.getDeveloperRegistration" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DeveloperRegistration.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsGetDeveloperRegistrationCall) Do(opts ...googleapi.CallOption) (*DeveloperRegistration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DeveloperRegistration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.getDeveloperRegistration", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6219,6 +6408,222 @@ func (c *AccountsBusinessInfoUpdateBusinessInfoCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.businessInfo.updateBusinessInfo", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountsDeveloperRegistrationRegisterGcpCall struct {
+	s                  *APIService
+	name               string
+	registergcprequest *RegisterGCPRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// RegisterGcp: Registers the GCP used for the API call to the shopping account
+// passed in the request. Will create a user with an "API developer" and add
+// the "developer_email" as a contact with "API notifications" email preference
+// on.
+//
+//   - name: The name of the developer registration to be created for the
+//     merchant account that the GCP will be registered with. Format:
+//     `accounts/{account}/developerRegistration`.
+func (r *AccountsDeveloperRegistrationService) RegisterGcp(name string, registergcprequest *RegisterGCPRequest) *AccountsDeveloperRegistrationRegisterGcpCall {
+	c := &AccountsDeveloperRegistrationRegisterGcpCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.registergcprequest = registergcprequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsDeveloperRegistrationRegisterGcpCall) Fields(s ...googleapi.Field) *AccountsDeveloperRegistrationRegisterGcpCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsDeveloperRegistrationRegisterGcpCall) Context(ctx context.Context) *AccountsDeveloperRegistrationRegisterGcpCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsDeveloperRegistrationRegisterGcpCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsDeveloperRegistrationRegisterGcpCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.registergcprequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}:registerGcp")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.developerRegistration.registerGcp", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.developerRegistration.registerGcp" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DeveloperRegistration.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsDeveloperRegistrationRegisterGcpCall) Do(opts ...googleapi.CallOption) (*DeveloperRegistration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DeveloperRegistration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.developerRegistration.registerGcp", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountsDeveloperRegistrationUnregisterGcpCall struct {
+	s                    *APIService
+	name                 string
+	unregistergcprequest *UnregisterGCPRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// UnregisterGcp: Unregister the calling GCP from the calling shopping account.
+// Note that the GCP will still be able to access the API for at most 1 day
+// from the unregister succussful call.
+//
+//   - name: The name of the developer registration to be created for the
+//     merchant account that the GCP will be registered with. Format:
+//     `accounts/{account}/developerRegistration`.
+func (r *AccountsDeveloperRegistrationService) UnregisterGcp(name string, unregistergcprequest *UnregisterGCPRequest) *AccountsDeveloperRegistrationUnregisterGcpCall {
+	c := &AccountsDeveloperRegistrationUnregisterGcpCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.unregistergcprequest = unregistergcprequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsDeveloperRegistrationUnregisterGcpCall) Fields(s ...googleapi.Field) *AccountsDeveloperRegistrationUnregisterGcpCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsDeveloperRegistrationUnregisterGcpCall) Context(ctx context.Context) *AccountsDeveloperRegistrationUnregisterGcpCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsDeveloperRegistrationUnregisterGcpCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsDeveloperRegistrationUnregisterGcpCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.unregistergcprequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}:unregisterGcp")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.developerRegistration.unregisterGcp", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.developerRegistration.unregisterGcp" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountsDeveloperRegistrationUnregisterGcpCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.developerRegistration.unregisterGcp", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8665,11 +9070,8 @@ func (r *AccountsOnlineReturnPoliciesService) Patch(name string, onlinereturnpol
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": List of fields being
-// updated. The following fields are supported (in both `snake_case` and
-// `lowerCamelCase`): - `accept_defective_only` - `accept_exchange` -
-// `item_conditions` - `policy` - `process_refund_days` - `restocking_fee` -
-// `return_methods` - `return_policy_uri` - `return_shipping_fee`
+// UpdateMask sets the optional parameter "updateMask": Only support updating
+// the entire OnlineReturnPolicy message. For update_mask, always use `*`.
 func (c *AccountsOnlineReturnPoliciesPatchCall) UpdateMask(updateMask string) *AccountsOnlineReturnPoliciesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

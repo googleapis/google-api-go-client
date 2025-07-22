@@ -2859,7 +2859,7 @@
       }
     }
   },
-  "revision": "20250626",
+  "revision": "20250710",
   "rootUrl": "https://retail.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -5975,12 +5975,6 @@
           "format": "int64",
           "type": "string"
         },
-        "primaryFeedId": {
-          "deprecated": true,
-          "description": "Merchant Center primary feed ID. Deprecated: use data_source_id instead.",
-          "format": "int64",
-          "type": "string"
-        },
         "primaryFeedName": {
           "description": "Merchant Center primary feed name. The name is used for the display purposes only.",
           "type": "string"
@@ -7608,7 +7602,7 @@
           "additionalProperties": {
             "$ref": "GoogleCloudRetailV2alphaStringList"
           },
-          "description": "Optional. The user attributes that could be used for personalization of search results. * Populate at most 100 key-value pairs per query. * Only supports string keys and repeated string values. * Duplcate keys are not allowed within a single query. Example: user_attributes: [ { key: \"pets\" value { values: \"dog\" values: \"cat\" } }, { key: \"state\" value { values: \"CA\" } } ]",
+          "description": "Optional. The user attributes that could be used for personalization of search results. * Populate at most 100 key-value pairs per query. * Only supports string keys and repeated string values. * Duplicate keys are not allowed within a single query. Example: user_attributes: [ { key: \"pets\" value { values: \"dog\" values: \"cat\" } }, { key: \"state\" value { values: \"CA\" } } ]",
           "type": "object"
         },
         "userInfo": {

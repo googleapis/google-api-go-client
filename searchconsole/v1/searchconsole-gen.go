@@ -731,6 +731,48 @@ func (s Item) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Metadata: An object that may be returned with your query results, providing
+// context about the state of the data. When you request recent data (using
+// `all` or `hourly_all` for `dataState`), some of the rows returned may
+// represent data that is incomplete, which means that the data is still being
+// collected and processed. This metadata object helps you identify exactly
+// when this starts and ends. All dates and times provided in this object are
+// in the `America/Los_Angeles` time zone. The specific field returned within
+// this object depends on how you've grouped your data in the request. See
+// details in inner fields.
+type Metadata struct {
+	// FirstIncompleteDate: The first date for which the data is still being
+	// collected and processed, presented in `YYYY-MM-DD` format (ISO-8601 extended
+	// local date format). This field is populated only when the request's
+	// `dataState` is "all", data is grouped by "DATE", and the requested date
+	// range contains incomplete data points. All values after the
+	// `first_incomplete_date` may still change noticeably.
+	FirstIncompleteDate string `json:"firstIncompleteDate,omitempty"`
+	// FirstIncompleteHour: The first hour for which the data is still being
+	// collected and processed, presented in `YYYY-MM-DDThh:mm:ss[+|-]hh:mm` format
+	// (ISO-8601 extended offset date-time format). This field is populated only
+	// when the request's `dataState` is "hourly_all", data is grouped by
+	// "HOUR" and the requested date range contains incomplete data points. All
+	// values after the `first_incomplete_hour` may still change noticeably.
+	FirstIncompleteHour string `json:"firstIncompleteHour,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FirstIncompleteDate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FirstIncompleteDate") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Metadata) MarshalJSON() ([]byte, error) {
+	type NoMethod Metadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MobileFriendlyIssue: Mobile-friendly issue.
 type MobileFriendlyIssue struct {
 	// Rule: Rule violated.
@@ -1123,6 +1165,10 @@ func (s SearchAnalyticsQueryRequest) MarshalJSON() ([]byte, error) {
 // key. Metrics in each row are aggregated for all data grouped by that key
 // either by page or property, as specified by the aggregation type parameter.
 type SearchAnalyticsQueryResponse struct {
+	// Metadata: An object that may be returned with your query results, providing
+	// context about the state of the data. See details in Metadata object
+	// documentation.
+	Metadata *Metadata `json:"metadata,omitempty"`
 	// ResponseAggregationType: How the results were aggregated.
 	//
 	// Possible values:
@@ -1137,15 +1183,15 @@ type SearchAnalyticsQueryResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ResponseAggregationType") to
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ResponseAggregationType") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

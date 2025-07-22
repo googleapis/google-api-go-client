@@ -5327,9 +5327,6 @@ func (s GoogleCloudRetailV2betaLocalInventory) MarshalJSON() ([]byte, error) {
 type GoogleCloudRetailV2betaMerchantCenterFeedFilter struct {
 	// DataSourceId: AFM data source ID.
 	DataSourceId int64 `json:"dataSourceId,omitempty,string"`
-	// PrimaryFeedId: Merchant Center primary feed ID. Deprecated: use
-	// data_source_id instead.
-	PrimaryFeedId int64 `json:"primaryFeedId,omitempty,string"`
 	// PrimaryFeedName: Merchant Center primary feed name. The name is used for the
 	// display purposes only.
 	PrimaryFeedName string `json:"primaryFeedName,omitempty"`
@@ -7720,7 +7717,7 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 	// UserAttributes: Optional. The user attributes that could be used for
 	// personalization of search results. * Populate at most 100 key-value pairs
 	// per query. * Only supports string keys and repeated string values. *
-	// Duplcate keys are not allowed within a single query. Example:
+	// Duplicate keys are not allowed within a single query. Example:
 	// user_attributes: [ { key: "pets" value { values: "dog" values: "cat" } }, {
 	// key: "state" value { values: "CA" } } ]
 	UserAttributes map[string]GoogleCloudRetailV2betaStringList `json:"userAttributes,omitempty"`

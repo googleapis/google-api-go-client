@@ -106,10 +106,6 @@ const (
 	// Move a copy of the Google Alerts subscriptions you created
 	DataportabilityAlertsSubscriptionsScope = "https://www.googleapis.com/auth/dataportability.alerts.subscriptions"
 
-	// Move a copy of messages between you and the businesses you have
-	// conversations with across Google services
-	DataportabilityBusinessmessagingConversationsScope = "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations"
-
 	// Move a copy of the information you entered into online forms in Chrome
 	DataportabilityChromeAutofillScope = "https://www.googleapis.com/auth/dataportability.chrome.autofill"
 
@@ -319,7 +315,6 @@ const (
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
-		"https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 		"https://www.googleapis.com/auth/dataportability.chrome.autofill",
 		"https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
 		"https://www.googleapis.com/auth/dataportability.chrome.dictionary",

@@ -331,7 +331,7 @@ type ArtifactConfig struct {
 	// Artifact analysis.
 	GoogleArtifactAnalysis *GoogleArtifactAnalysis `json:"googleArtifactAnalysis,omitempty"`
 	// GoogleArtifactRegistry: Optional. Set if the artifact is stored in Artifact
-	// regsitry.
+	// registry.
 	GoogleArtifactRegistry *GoogleArtifactRegistry `json:"googleArtifactRegistry,omitempty"`
 	// Uri: Required. Immutable. The URI of the artifact that is deployed. e.g.
 	// `us-docker.pkg.dev/my-project/my-repo/image`. The URI does not include the

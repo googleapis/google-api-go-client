@@ -592,6 +592,9 @@ func (s AddSubnetworkRequest) MarshalJSON() ([]byte, error) {
 // of this message itself. See https://cloud.google.com/apis/design/glossary
 // for detailed terminology.
 type Api struct {
+	// Edition: The source edition string, only valid when syntax is
+	// SYNTAX_EDITIONS.
+	Edition string `json:"edition,omitempty"`
 	// Methods: The methods of this interface, in unspecified order.
 	Methods []*Method `json:"methods,omitempty"`
 	// Mixins: Included interfaces. See Mixin.
@@ -626,13 +629,13 @@ type Api struct {
 	// be omitted. Zero major versions must only be used for experimental, non-GA
 	// interfaces.
 	Version string `json:"version,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Methods") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Edition") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Methods") to include in API
+	// NullFields is a list of field names (e.g. "Edition") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -901,6 +904,8 @@ type BackendRule struct {
 	// OverridesByRequestProtocol: The map between request protocol and the backend
 	// address.
 	OverridesByRequestProtocol map[string]BackendRule `json:"overridesByRequestProtocol,omitempty"`
+	// PathTranslation: no-lint
+	//
 	// Possible values:
 	//   "PATH_TRANSLATION_UNSPECIFIED"
 	//   "CONSTANT_ADDRESS" - Use the backend address as-is, with no modification
@@ -2290,8 +2295,8 @@ type GoSettings struct {
 	Common *CommonLanguageSettings `json:"common,omitempty"`
 	// RenamedServices: Map of service names to renamed services. Keys are the
 	// package relative service names and values are the name to be used for the
-	// service client and call options. publishing: go_settings: renamed_services:
-	// Publisher: TopicAdmin
+	// service client and call options. Example: publishing: go_settings:
+	// renamed_services: Publisher: TopicAdmin
 	RenamedServices map[string]string `json:"renamedServices,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Common") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3025,6 +3030,9 @@ func (s *LongRunning) UnmarshalJSON(data []byte) error {
 
 // Method: Method represents a method of an API interface.
 type Method struct {
+	// Edition: The source edition string, only valid when syntax is
+	// SYNTAX_EDITIONS.
+	Edition string `json:"edition,omitempty"`
 	// Name: The simple name of this method.
 	Name string `json:"name,omitempty"`
 	// Options: Any metadata attached to the method.
@@ -3044,15 +3052,15 @@ type Method struct {
 	//   "SYNTAX_PROTO3" - Syntax `proto3`.
 	//   "SYNTAX_EDITIONS" - Syntax `editions`.
 	Syntax string `json:"syntax,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Edition") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "Edition") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4987,7 +4995,7 @@ type ValidateConsumerConfigRequest struct {
 	// NETWORK_NOT_IN_CONSUMERS_HOST_PROJECT, and HOST_PROJECT_NOT_FOUND are done
 	// when consumer_project is provided.
 	ConsumerProject *ConsumerProject `json:"consumerProject,omitempty"`
-	// RangeReservation: RANGES_EXHAUSTED, RANGES_EXHAUSTED, and
+	// RangeReservation: RANGES_EXHAUSTED, RANGES_NOT_RESERVED, and
 	// RANGES_DELETED_LATER are done when range_reservation is provided.
 	RangeReservation *RangeReservation `json:"rangeReservation,omitempty"`
 	// ValidateNetwork: The validations will be performed in the order listed in

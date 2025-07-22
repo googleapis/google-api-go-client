@@ -320,6 +320,10 @@ type Backend struct {
 	// Reconciling: Output only. A field that, if true, indicates that the system
 	// is working to make adjustments to the backend during a LRO.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// RequestLogsDisabled: Optional. A field that, if true, indicates that
+	// incoming request logs are disabled for this backend. Incoming request logs
+	// are enabled by default.
+	RequestLogsDisabled bool `json:"requestLogsDisabled,omitempty"`
 	// ServiceAccount: Required. The name of the service account used for Cloud
 	// Build and Cloud Run. Should have the role
 	// roles/firebaseapphosting.computeRunner or equivalent permissions.

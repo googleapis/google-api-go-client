@@ -290,7 +290,7 @@ type NotificationEndpoint struct {
 	// PubsubTopic: Immutable. The Pub/Sub topic that receives events for the
 	// subscription. Format: `projects/{project}/topics/{topic}` You must create
 	// the topic in the same Google Cloud project where you create this
-	// subscription. Note: The Workspace Events API uses ordering keys
+	// subscription. Note: The Google Workspace Events API uses ordering keys
 	// (https://cloud.google.com/pubsub/docs/ordering) for the benefit of
 	// sequential events. If the Cloud Pub/Sub topic has a message storage policy
 	// (https://cloud.google.com/pubsub/docs/resource-location-restriction#exceptions)
@@ -366,7 +366,7 @@ func (s Operation) MarshalJSON() ([]byte, error) {
 }
 
 // PayloadOptions: Options about what data to include in the event payload.
-// Only supported for Google Chat events.
+// Only supported for Google Chat and Google Drive events.
 type PayloadOptions struct {
 	// FieldMask: Optional. If `include_resource` is set to `true`, the list of
 	// fields to include in the event payload. Separate fields with a comma. For
@@ -477,7 +477,7 @@ type Subscription struct {
 	// subscription delivers events, such as a Pub/Sub topic.
 	NotificationEndpoint *NotificationEndpoint `json:"notificationEndpoint,omitempty"`
 	// PayloadOptions: Optional. Options about what data to include in the event
-	// payload. Only supported for Google Chat events.
+	// payload. Only supported for Google Chat and Google Drive events.
 	PayloadOptions *PayloadOptions `json:"payloadOptions,omitempty"`
 	// Reconciling: Output only. If `true`, the subscription is in the process of
 	// being updated.

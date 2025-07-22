@@ -685,11 +685,11 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
-                "listOperations": {
+                "list": {
                   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.",
-                  "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/operations/{operationsId}",
+                  "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/operations",
                   "httpMethod": "GET",
-                  "id": "dataplex.organizations.locations.operations.listOperations",
+                  "id": "dataplex.organizations.locations.operations.list",
                   "parameterOrder": [
                     "name"
                   ],
@@ -702,7 +702,7 @@
                     "name": {
                       "description": "The name of the operation's parent resource.",
                       "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+/operations/[^/]+$",
+                      "pattern": "^organizations/[^/]+/locations/[^/]+$",
                       "required": true,
                       "type": "string"
                     },
@@ -718,7 +718,7 @@
                       "type": "string"
                     }
                   },
-                  "path": "v1/{+name}",
+                  "path": "v1/{+name}/operations",
                   "response": {
                     "$ref": "GoogleLongrunningListOperationsResponse"
                   },
@@ -1487,7 +1487,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The resource name of the parent location: projects/{project}/locations/{location_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
+                      "description": "Required. The resource name of the parent location: projects/{project}/locations/{location_id} where project refers to a project_id or project_number and location_id refers to a Google Cloud region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -1525,7 +1525,7 @@
                       "type": "boolean"
                     },
                     "name": {
-                      "description": "Required. The resource name of the dataScan: projects/{project}/locations/{location_id}/dataScans/{data_scan_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
+                      "description": "Required. The resource name of the dataScan: projects/{project}/locations/{location_id}/dataScans/{data_scan_id} where project refers to a project_id or project_number and location_id refers to a Google Cloud region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/dataScans/[^/]+$",
                       "required": true,
@@ -1578,7 +1578,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The resource name of the dataScan: projects/{project}/locations/{location_id}/dataScans/{data_scan_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
+                      "description": "Required. The resource name of the dataScan: projects/{project}/locations/{location_id}/dataScans/{data_scan_id} where project refers to a project_id or project_number and location_id refers to a Google Cloud region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/dataScans/[^/]+$",
                       "required": true,
@@ -1670,7 +1670,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The resource name of the parent location: projects/{project}/locations/{location_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
+                      "description": "Required. The resource name of the parent location: projects/{project}/locations/{location_id} where project refers to a project_id or project_number and location_id refers to a Google Cloud region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -1695,7 +1695,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Output only. Identifier. The relative resource name of the scan, of the form: projects/{project}/locations/{location_id}/dataScans/{datascan_id}, where project refers to a project_id or project_number and location_id refers to a GCP region.",
+                      "description": "Output only. Identifier. The relative resource name of the scan, of the form: projects/{project}/locations/{location_id}/dataScans/{datascan_id}, where project refers to a project_id or project_number and location_id refers to a Google Cloud region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/dataScans/[^/]+$",
                       "required": true,
@@ -1734,7 +1734,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The resource name of the DataScan: projects/{project}/locations/{location_id}/dataScans/{data_scan_id}. where project refers to a project_id or project_number and location_id refers to a GCP region.Only OnDemand data scans are allowed.",
+                      "description": "Required. The resource name of the DataScan: projects/{project}/locations/{location_id}/dataScans/{data_scan_id}. where project refers to a project_id or project_number and location_id refers to a Google Cloud region.Only OnDemand data scans are allowed.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/dataScans/[^/]+$",
                       "required": true,
@@ -1850,7 +1850,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The resource name of the DataScanJob: projects/{project}/locations/{location_id}/dataScans/{data_scan_id}/jobs/{data_scan_job_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
+                          "description": "Required. The resource name of the DataScanJob: projects/{project}/locations/{location_id}/dataScans/{data_scan_id}/jobs/{data_scan_job_id} where project refers to a project_id or project_number and location_id refers to a Google Cloud region.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/dataScans/[^/]+/jobs/[^/]+$",
                           "required": true,
@@ -1906,7 +1906,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Required. The resource name of the parent environment: projects/{project}/locations/{location_id}/dataScans/{data_scan_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
+                          "description": "Required. The resource name of the parent environment: projects/{project}/locations/{location_id}/dataScans/{data_scan_id} where project refers to a project_id or project_number and location_id refers to a Google Cloud region.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/dataScans/[^/]+$",
                           "required": true,
@@ -2084,7 +2084,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The resource name of the DataTaxonomy location, of the form: projects/{project_number}/locations/{location_id} where location_id refers to a GCP region.",
+                      "description": "Required. The resource name of the DataTaxonomy location, of the form: projects/{project_number}/locations/{location_id} where location_id refers to a Google Cloud region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -2490,7 +2490,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The resource name of the entryGroup, of the form: projects/{project_number}/locations/{location_id} where location_id refers to a GCP region.",
+                      "description": "Required. The resource name of the entryGroup, of the form: projects/{project_number}/locations/{location_id} where location_id refers to a Google Cloud region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -3417,7 +3417,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The parent resource where this Glossary will be created. Format: projects/{project_id_or_number}/locations/{location_id} where location_id refers to a GCP region.",
+                      "description": "Required. The parent resource where this Glossary will be created. Format: projects/{project_id_or_number}/locations/{location_id} where location_id refers to a Google Cloud region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -3557,7 +3557,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The parent, which has this collection of Glossaries. Format: projects/{project_id_or_number}/locations/{location_id} where location_id refers to a GCP region.",
+                      "description": "Required. The parent, which has this collection of Glossaries. Format: projects/{project_id_or_number}/locations/{location_id} where location_id refers to a Google Cloud region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -3686,7 +3686,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Required. The parent resource where this GlossaryCategory will be created. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} where locationId refers to a GCP region.",
+                          "description": "Required. The parent resource where this GlossaryCategory will be created. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} where locationId refers to a Google Cloud region.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/glossaries/[^/]+$",
                           "required": true,
@@ -3816,7 +3816,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Required. The parent, which has this collection of GlossaryCategories. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} Location is the GCP region.",
+                          "description": "Required. The parent, which has this collection of GlossaryCategories. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} Location is the Google Cloud region.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/glossaries/[^/]+$",
                           "required": true,
@@ -3935,7 +3935,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The parent resource where the GlossaryTerm will be created. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} where location_id refers to a GCP region.",
+                          "description": "Required. The parent resource where the GlossaryTerm will be created. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} where location_id refers to a Google Cloud region.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/glossaries/[^/]+$",
                           "required": true,
@@ -4070,7 +4070,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Required. The parent, which has this collection of GlossaryTerms. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} where location_id refers to a GCP region.",
+                          "description": "Required. The parent, which has this collection of GlossaryTerms. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} where location_id refers to a Google Cloud region.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/glossaries/[^/]+$",
                           "required": true,
@@ -4287,7 +4287,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The resource name of the lake location, of the form: projects/{project_number}/locations/{location_id} where location_id refers to a GCP region.",
+                      "description": "Required. The resource name of the lake location, of the form: projects/{project_number}/locations/{location_id} where location_id refers to a Google Cloud region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -4422,7 +4422,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The resource name of the lake location, of the form: projects/{project_number}/locations/{location_id} where location_id refers to a GCP region.",
+                      "description": "Required. The resource name of the lake location, of the form: projects/{project_number}/locations/{location_id} where location_id refers to a Google Cloud region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -7027,7 +7027,7 @@
       }
     }
   },
-  "revision": "20250618",
+  "revision": "20250714",
   "rootUrl": "https://dataplex.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -9367,7 +9367,7 @@
       "type": "object"
     },
     "GoogleCloudDataplexV1DataScan": {
-      "description": "Represents a user-visible job which provides the insights for the related data source.For example: Data quality: generates queries based on the rules and runs against the data to get data quality check results. For more information, see Auto data quality overview (https://cloud.google.com/dataplex/docs/auto-data-quality-overview). Data profile: analyzes the data in tables and generates insights about the structure, content and relationships (such as null percent, cardinality, min/max/mean, etc). For more information, see About data profiling (https://cloud.google.com/dataplex/docs/data-profiling-overview). Data discovery: scans data in Cloud Storage buckets to extract and then catalog metadata. For more information, see Discover and catalog Cloud Storage data (https://cloud.google.com/bigquery/docs/automatic-discovery). LINT.IfChange",
+      "description": "Represents a user-visible job which provides the insights for the related data source.For example: Data quality: generates queries based on the rules and runs against the data to get data quality check results. For more information, see Auto data quality overview (https://cloud.google.com/dataplex/docs/auto-data-quality-overview). Data profile: analyzes the data in tables and generates insights about the structure, content and relationships (such as null percent, cardinality, min/max/mean, etc). For more information, see About data profiling (https://cloud.google.com/dataplex/docs/data-profiling-overview). Data discovery: scans data in Cloud Storage buckets to extract and then catalog metadata. For more information, see Discover and catalog Cloud Storage data (https://cloud.google.com/bigquery/docs/automatic-discovery).",
       "id": "GoogleCloudDataplexV1DataScan",
       "properties": {
         "createTime": {
@@ -9432,7 +9432,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Output only. Identifier. The relative resource name of the scan, of the form: projects/{project}/locations/{location_id}/dataScans/{datascan_id}, where project refers to a project_id or project_number and location_id refers to a GCP region.",
+          "description": "Output only. Identifier. The relative resource name of the scan, of the form: projects/{project}/locations/{location_id}/dataScans/{datascan_id}, where project refers to a project_id or project_number and location_id refers to a Google Cloud region.",
           "readOnly": true,
           "type": "string"
         },
@@ -9853,7 +9853,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Output only. Identifier. The relative resource name of the DataScanJob, of the form: projects/{project}/locations/{location_id}/dataScans/{datascan_id}/jobs/{job_id}, where project refers to a project_id or project_number and location_id refers to a GCP region.",
+          "description": "Output only. Identifier. The relative resource name of the DataScanJob, of the form: projects/{project}/locations/{location_id}/dataScans/{datascan_id}/jobs/{job_id}, where project refers to a project_id or project_number and location_id refers to a Google Cloud region.",
           "readOnly": true,
           "type": "string"
         },
@@ -9920,7 +9920,7 @@
           "type": "string"
         },
         "resource": {
-          "description": "Immutable. The service-qualified full resource name of the cloud resource for a DataScan job to scan against. The field could eitherbe: Cloud Storage bucket for DataDiscoveryScan Format: //storage.googleapis.com/projects/PROJECT_ID/buckets/BUCKET_ID or BigQuery table of type \"TABLE\" for DataProfileScan/DataQualityScan Format: //bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tables/TABLE_ID",
+          "description": "Immutable. The service-qualified full resource name of the cloud resource for a DataScan job to scan against. The field could either be: Cloud Storage bucket for DataDiscoveryScan Format: //storage.googleapis.com/projects/PROJECT_ID/buckets/BUCKET_ID or BigQuery table of type \"TABLE\" for DataProfileScan/DataQualityScan Format: //bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tables/TABLE_ID",
           "type": "string"
         }
       },
@@ -10529,7 +10529,7 @@
           "type": "string"
         },
         "entryLinkType": {
-          "description": "Required. Immutable. Relative resource name of the Entry Link Type used to create this Entry Link, of the form: `projects/{project_id_or_number}/locations/{location_id}/entryLinkTypes/{entry_link_type_id}.",
+          "description": "Required. Immutable. Relative resource name of the Entry Link Type used to create this Entry Link. For example: Entry link between synonym terms in a glossary: projects/dataplex-types/locations/global/entryLinkTypes/synonym Entry link between related terms in a glossary: projects/dataplex-types/locations/global/entryLinkTypes/related Entry link between glossary terms and data assets: projects/dataplex-types/locations/global/entryLinkTypes/definition",
           "type": "string"
         },
         "entryReferences": {
@@ -10993,7 +10993,7 @@
       "type": "object"
     },
     "GoogleCloudDataplexV1Glossary": {
-      "description": "A Glossary represents a collection of GlossaryCategories and GlossaryTerms defined by the user. Glossary is a top level resource and is the GCP parent resource of all the GlossaryCategories and GlossaryTerms within it.",
+      "description": "A Glossary represents a collection of GlossaryCategories and GlossaryTerms defined by the user. Glossary is a top level resource and is the Google Cloud parent resource of all the GlossaryCategories and GlossaryTerms within it.",
       "id": "GoogleCloudDataplexV1Glossary",
       "properties": {
         "categoryCount": {

@@ -372,6 +372,8 @@ type AbortInfo struct {
 	//   "NO_SERVERLESS_IP_RANGES" - Aborted because the source endpoint is a Cloud
 	// Run revision with direct VPC access enabled, but there are no reserved
 	// serverless IP ranges.
+	//   "IP_VERSION_PROTOCOL_MISMATCH" - Aborted because the used protocol is not
+	// supported for the used IP version.
 	Cause string `json:"cause,omitempty"`
 	// IpAddress: IP address that caused the abort.
 	IpAddress string `json:"ipAddress,omitempty"`
@@ -1210,6 +1212,8 @@ type DropInfo struct {
 	//   "NO_KNOWN_ROUTE_FROM_NCC_NETWORK_TO_DESTINATION" - Packet from the unknown
 	// NCC network is dropped due to no known route from the source network to the
 	// destination IP address.
+	//   "CLOUD_NAT_PROTOCOL_UNSUPPORTED" - Packet is dropped by Cloud NAT due to
+	// using an unsupported protocol.
 	Cause string `json:"cause,omitempty"`
 	// DestinationIp: Destination IP address of the dropped packet (if relevant).
 	DestinationIp string `json:"destinationIp,omitempty"`
@@ -3382,9 +3386,10 @@ type VpcFlowLogsConfig struct {
 	// VPC flow logs. Can only be specified if "metadata" was set to
 	// CUSTOM_METADATA.
 	MetadataFields []string `json:"metadataFields,omitempty"`
-	// Name: Identifier. Unique name of the configuration using one of the forms:
+	// Name: Identifier. Unique name of the configuration. The name can have one of
+	// the following forms: - For project-level configurations:
 	// `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_con
-	// fig_id}`
+	// fig_id}` - For organization-level configurations:
 	// `organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_flo
 	// w_logs_config_id}`
 	Name string `json:"name,omitempty"`
@@ -3404,8 +3409,8 @@ type VpcFlowLogsConfig struct {
 	// Subnet: Traffic will be logged from VMs within the subnetwork. Format:
 	// projects/{project_id}/regions/{region}/subnetworks/{name}
 	Subnet string `json:"subnet,omitempty"`
-	// TargetResourceState: Output only. A diagnostic bit - describes the state of
-	// the configured target resource for diagnostic purposes.
+	// TargetResourceState: Output only. Describes the state of the configured
+	// target resource for diagnostic purposes.
 	//
 	// Possible values:
 	//   "TARGET_RESOURCE_STATE_UNSPECIFIED" - Unspecified target resource state.
@@ -4292,15 +4297,16 @@ type OrganizationsLocationsVpcFlowLogsConfigsCreateCall struct {
 
 // Create: Creates a new `VpcFlowLogsConfig`. If a configuration with the exact
 // same settings already exists (even if the ID is different), the creation
-// fails. Notes: 1. Creating a configuration with state=DISABLED will fail 2.
-// The following fields are not considered as `settings` for the purpose of the
+// fails. Notes: 1. Creating a configuration with `state=DISABLED` will fail 2.
+// The following fields are not considered as settings for the purpose of the
 // check mentioned above, therefore - creating another configuration with the
 // same fields but different values for the following fields will fail as well:
 // * name * create_time * update_time * labels * description
 //
-//   - parent: The parent resource of the VPC Flow Logs configuration to create:
-//     `projects/{project_id}/locations/global`
-//     `organizations/{organization_id}/locations/global`.
+//   - parent: The parent resource of the VpcFlowLogsConfig to create, in one of
+//     the following formats: - For project-level resources:
+//     `projects/{project_id}/locations/global` - For organization-level
+//     resources: `organizations/{organization_id}/locations/global`.
 func (r *OrganizationsLocationsVpcFlowLogsConfigsService) Create(parent string, vpcflowlogsconfig *VpcFlowLogsConfig) *OrganizationsLocationsVpcFlowLogsConfigsCreateCall {
 	c := &OrganizationsLocationsVpcFlowLogsConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4409,11 +4415,12 @@ type OrganizationsLocationsVpcFlowLogsConfigsDeleteCall struct {
 
 // Delete: Deletes a specific `VpcFlowLogsConfig`.
 //
-//   - name: `VpcFlowLogsConfig` resource name using one of the form:
+//   - name: The resource name of the VpcFlowLogsConfig, in one of the following
+//     formats: - For a project-level resource:
 //     `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_c
-//     onfig}`
+//     onfig_id}` - For an organization-level resource:
 //     `organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_f
-//     low_logs_config}`.
+//     low_logs_config_id}`.
 func (r *OrganizationsLocationsVpcFlowLogsConfigsService) Delete(name string) *OrganizationsLocationsVpcFlowLogsConfigsDeleteCall {
 	c := &OrganizationsLocationsVpcFlowLogsConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4511,11 +4518,12 @@ type OrganizationsLocationsVpcFlowLogsConfigsGetCall struct {
 
 // Get: Gets the details of a specific `VpcFlowLogsConfig`.
 //
-//   - name: `VpcFlowLogsConfig` resource name using the form:
+//   - name: The resource name of the VpcFlowLogsConfig, in one of the following
+//     formats: - For project-level resources:
 //     `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_c
-//     onfig}`
+//     onfig_id}` - For organization-level resources:
 //     `organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_f
-//     low_logs_config}`.
+//     low_logs_config_id}`.
 func (r *OrganizationsLocationsVpcFlowLogsConfigsService) Get(name string) *OrganizationsLocationsVpcFlowLogsConfigsGetCall {
 	c := &OrganizationsLocationsVpcFlowLogsConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4625,9 +4633,10 @@ type OrganizationsLocationsVpcFlowLogsConfigsListCall struct {
 
 // List: Lists all `VpcFlowLogsConfigs` in a given organization.
 //
-//   - parent: The parent resource of the VpcFlowLogsConfig:
-//     `projects/{project_id}/locations/global`
-//     `organizations/{organization_id}/locations/global`.
+//   - parent: The parent resource of the VpcFlowLogsConfig, in one of the
+//     following formats: - For project-level resourcs:
+//     `projects/{project_id}/locations/global` - For organization-level
+//     resources: `organizations/{organization_id}/locations/global`.
 func (r *OrganizationsLocationsVpcFlowLogsConfigsService) List(parent string) *OrganizationsLocationsVpcFlowLogsConfigsListCall {
 	c := &OrganizationsLocationsVpcFlowLogsConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4788,16 +4797,17 @@ type OrganizationsLocationsVpcFlowLogsConfigsPatchCall struct {
 
 // Patch: Updates an existing `VpcFlowLogsConfig`. If a configuration with the
 // exact same settings already exists (even if the ID is different), the
-// creation fails. Notes: 1. Updating a configuration with state=DISABLED will
-// fail 2. The following fields are not considered as `settings` for the
+// creation fails. Notes: 1. Updating a configuration with `state=DISABLED`
+// will fail 2. The following fields are not considered as settings for the
 // purpose of the check mentioned above, therefore - updating another
 // configuration with the same fields but different values for the following
 // fields will fail as well: * name * create_time * update_time * labels *
 // description
 //
-//   - name: Identifier. Unique name of the configuration using one of the forms:
+//   - name: Identifier. Unique name of the configuration. The name can have one
+//     of the following forms: - For project-level configurations:
 //     `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_c
-//     onfig_id}`
+//     onfig_id}` - For organization-level configurations:
 //     `organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_f
 //     low_logs_config_id}`.
 func (r *OrganizationsLocationsVpcFlowLogsConfigsService) Patch(name string, vpcflowlogsconfig *VpcFlowLogsConfig) *OrganizationsLocationsVpcFlowLogsConfigsPatchCall {
@@ -4808,7 +4818,12 @@ func (r *OrganizationsLocationsVpcFlowLogsConfigsService) Patch(name string, vpc
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Mask of
-// fields to update. At least one path must be supplied in this field.
+// fields to update. At least one path must be supplied in this field. For
+// example, to change the state of the configuration to ENABLED, specify
+// `update_mask` = "state", and the `vpc_flow_logs_config` would be:
+// `vpc_flow_logs_config = { name =
+// "projects/my-project/locations/global/vpcFlowLogsConfigs/my-config" state =
+// "ENABLED" }`
 func (c *OrganizationsLocationsVpcFlowLogsConfigsPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsVpcFlowLogsConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6734,15 +6749,16 @@ type ProjectsLocationsVpcFlowLogsConfigsCreateCall struct {
 
 // Create: Creates a new `VpcFlowLogsConfig`. If a configuration with the exact
 // same settings already exists (even if the ID is different), the creation
-// fails. Notes: 1. Creating a configuration with state=DISABLED will fail 2.
-// The following fields are not considered as `settings` for the purpose of the
+// fails. Notes: 1. Creating a configuration with `state=DISABLED` will fail 2.
+// The following fields are not considered as settings for the purpose of the
 // check mentioned above, therefore - creating another configuration with the
 // same fields but different values for the following fields will fail as well:
 // * name * create_time * update_time * labels * description
 //
-//   - parent: The parent resource of the VPC Flow Logs configuration to create:
-//     `projects/{project_id}/locations/global`
-//     `organizations/{organization_id}/locations/global`.
+//   - parent: The parent resource of the VpcFlowLogsConfig to create, in one of
+//     the following formats: - For project-level resources:
+//     `projects/{project_id}/locations/global` - For organization-level
+//     resources: `organizations/{organization_id}/locations/global`.
 func (r *ProjectsLocationsVpcFlowLogsConfigsService) Create(parent string, vpcflowlogsconfig *VpcFlowLogsConfig) *ProjectsLocationsVpcFlowLogsConfigsCreateCall {
 	c := &ProjectsLocationsVpcFlowLogsConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6851,11 +6867,12 @@ type ProjectsLocationsVpcFlowLogsConfigsDeleteCall struct {
 
 // Delete: Deletes a specific `VpcFlowLogsConfig`.
 //
-//   - name: `VpcFlowLogsConfig` resource name using one of the form:
+//   - name: The resource name of the VpcFlowLogsConfig, in one of the following
+//     formats: - For a project-level resource:
 //     `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_c
-//     onfig}`
+//     onfig_id}` - For an organization-level resource:
 //     `organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_f
-//     low_logs_config}`.
+//     low_logs_config_id}`.
 func (r *ProjectsLocationsVpcFlowLogsConfigsService) Delete(name string) *ProjectsLocationsVpcFlowLogsConfigsDeleteCall {
 	c := &ProjectsLocationsVpcFlowLogsConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6953,11 +6970,12 @@ type ProjectsLocationsVpcFlowLogsConfigsGetCall struct {
 
 // Get: Gets the details of a specific `VpcFlowLogsConfig`.
 //
-//   - name: `VpcFlowLogsConfig` resource name using the form:
+//   - name: The resource name of the VpcFlowLogsConfig, in one of the following
+//     formats: - For project-level resources:
 //     `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_c
-//     onfig}`
+//     onfig_id}` - For organization-level resources:
 //     `organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_f
-//     low_logs_config}`.
+//     low_logs_config_id}`.
 func (r *ProjectsLocationsVpcFlowLogsConfigsService) Get(name string) *ProjectsLocationsVpcFlowLogsConfigsGetCall {
 	c := &ProjectsLocationsVpcFlowLogsConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7067,9 +7085,10 @@ type ProjectsLocationsVpcFlowLogsConfigsListCall struct {
 
 // List: Lists all `VpcFlowLogsConfigs` in a given project.
 //
-//   - parent: The parent resource of the VpcFlowLogsConfig:
-//     `projects/{project_id}/locations/global`
-//     `organizations/{organization_id}/locations/global`.
+//   - parent: The parent resource of the VpcFlowLogsConfig, in one of the
+//     following formats: - For project-level resourcs:
+//     `projects/{project_id}/locations/global` - For organization-level
+//     resources: `organizations/{organization_id}/locations/global`.
 func (r *ProjectsLocationsVpcFlowLogsConfigsService) List(parent string) *ProjectsLocationsVpcFlowLogsConfigsListCall {
 	c := &ProjectsLocationsVpcFlowLogsConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7230,16 +7249,17 @@ type ProjectsLocationsVpcFlowLogsConfigsPatchCall struct {
 
 // Patch: Updates an existing `VpcFlowLogsConfig`. If a configuration with the
 // exact same settings already exists (even if the ID is different), the
-// creation fails. Notes: 1. Updating a configuration with state=DISABLED will
-// fail 2. The following fields are not considered as `settings` for the
+// creation fails. Notes: 1. Updating a configuration with `state=DISABLED`
+// will fail 2. The following fields are not considered as settings for the
 // purpose of the check mentioned above, therefore - updating another
 // configuration with the same fields but different values for the following
 // fields will fail as well: * name * create_time * update_time * labels *
 // description
 //
-//   - name: Identifier. Unique name of the configuration using one of the forms:
+//   - name: Identifier. Unique name of the configuration. The name can have one
+//     of the following forms: - For project-level configurations:
 //     `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_c
-//     onfig_id}`
+//     onfig_id}` - For organization-level configurations:
 //     `organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_f
 //     low_logs_config_id}`.
 func (r *ProjectsLocationsVpcFlowLogsConfigsService) Patch(name string, vpcflowlogsconfig *VpcFlowLogsConfig) *ProjectsLocationsVpcFlowLogsConfigsPatchCall {
@@ -7250,7 +7270,12 @@ func (r *ProjectsLocationsVpcFlowLogsConfigsService) Patch(name string, vpcflowl
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Mask of
-// fields to update. At least one path must be supplied in this field.
+// fields to update. At least one path must be supplied in this field. For
+// example, to change the state of the configuration to ENABLED, specify
+// `update_mask` = "state", and the `vpc_flow_logs_config` would be:
+// `vpc_flow_logs_config = { name =
+// "projects/my-project/locations/global/vpcFlowLogsConfigs/my-config" state =
+// "ENABLED" }`
 func (c *ProjectsLocationsVpcFlowLogsConfigsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsVpcFlowLogsConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7349,11 +7374,12 @@ type ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall struct {
 	header_      http.Header
 }
 
-// QueryOrgVpcFlowLogsConfigs: QueryOrgVpcFlowLogsConfigs lists Organization
-// resources for a given project.
+// QueryOrgVpcFlowLogsConfigs: QueryOrgVpcFlowLogsConfigs returns a list of all
+// organization-level VPC Flow Logs configurations applicable to the specified
+// project.
 //
-//   - parent: The parent resource of the VpcFlowLogsConfig:
-//     `projects/{project_id}/locations/global`.
+//   - parent: The parent resource of the VpcFlowLogsConfig, specified in the
+//     following format: `projects/{project_id}/locations/global`.
 func (r *ProjectsLocationsVpcFlowLogsConfigsService) QueryOrgVpcFlowLogsConfigs(parent string) *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall {
 	c := &ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

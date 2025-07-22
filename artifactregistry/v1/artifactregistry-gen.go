@@ -816,8 +816,8 @@ type DockerImage struct {
 	// returned as the 'metadata.mediaType' field in the Version resource.
 	MediaType string `json:"mediaType,omitempty"`
 	// Name: Required. registry_location, project_id, repository_name and image id
-	// forms a unique image name:`projects//locations//repository//dockerImages/`.
-	// For example,
+	// forms a unique image
+	// name:`projects//locations//repositories//dockerImages/`. For example,
 	// "projects/test-project/locations/us-west4/repositories/test-repo/dockerImages
 	// /
 	// nginx@sha256:e9954c1fc875017be1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf

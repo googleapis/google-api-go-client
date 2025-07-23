@@ -401,6 +401,7 @@ type GoogleAdsSearchads360V0Common__AssetUsage struct {
 	//   "AD_IMAGE" - This asset is used as an image.
 	//   "LEAD_FORM" - The asset is used as a lead form.
 	//   "BUSINESS_LOGO" - The asset is used as a business logo.
+	//   "DESCRIPTION_PREFIX" - The asset is used as a description prefix.
 	ServedAssetFieldType string `json:"servedAssetFieldType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Asset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3060,6 +3061,31 @@ type GoogleAdsSearchads360V0Errors__ErrorCode struct {
 	//   "METRIC_ACCESS_DENIED" - The developer does not have access to the metrics
 	// queried.
 	AuthorizationError string `json:"authorizationError,omitempty"`
+	// ConversionCustomVariableError: The reasons for the conversion custom
+	// variable error
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Enum unspecified.
+	//   "UNKNOWN" - The received error code is not known in this version.
+	//   "DUPLICATE_NAME" - A conversion custom variable with the specified name
+	// already exists.
+	//   "DUPLICATE_TAG" - A conversion custom variable with the specified tag
+	// already exists.
+	//   "RESERVED_TAG" - A conversion custom variable with the specified tag is
+	// reserved for other uses.
+	//   "NOT_FOUND" - The conversion custom variable is not found.
+	//   "NOT_AVAILABLE" - The conversion custom variable is not available for use.
+	//   "INCOMPATIBLE_TYPE" - The conversion custom variable requested is
+	// incompatible with the current request.
+	//   "INVALID_METRIC" - The conversion custom variable requested is not of type
+	// METRIC.
+	//   "EXCEEDS_CARDINALITY_LIMIT" - The conversion custom variable's cardinality
+	// exceeds the segmentation limit.
+	//   "INVALID_DIMENSION" - The conversion custom variable requested is not of
+	// type DIMENSION.
+	//   "INCOMPATIBLE_WITH_SELECTED_RESOURCE" - The conversion custom variable
+	// requested is incompatible with the selected resource.
+	ConversionCustomVariableError string `json:"conversionCustomVariableError,omitempty"`
 	// CustomColumnError: The reasons for the custom column error
 	//
 	// Possible values:
@@ -4505,8 +4531,7 @@ type GoogleAdsSearchads360V0Resources__Ad struct {
 	Id int64 `json:"id,omitempty,string"`
 	// Name: Immutable. The name of the ad. This is only used to be able to
 	// identify the ad. It does not need to be unique and does not affect the
-	// served ad. The name field is currently only supported for DisplayUploadAd,
-	// ImageAd, ShoppingComparisonListingAd and VideoAd.
+	// served ad.
 	Name string `json:"name,omitempty"`
 	// ProductAd: Immutable. Details pertaining to a product ad.
 	ProductAd *GoogleAdsSearchads360V0Common__SearchAds360ProductAdInfo `json:"productAd,omitempty"`

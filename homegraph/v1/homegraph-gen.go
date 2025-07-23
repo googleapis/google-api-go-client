@@ -314,7 +314,9 @@ type DeviceNames struct {
 	// DefaultNames: List of names provided by the manufacturer rather than the
 	// user, such as serial numbers, SKUs, etc.
 	DefaultNames []string `json:"defaultNames,omitempty"`
-	// Name: Primary name of the device, generally provided by the user.
+	// Name: Primary name of the device, generally provided by the user. Names will
+	// be truncated if over the 60 Unicode code point (character) limit and no
+	// errors will be thrown. Developers are responsible for handling long names.
 	Name string `json:"name,omitempty"`
 	// Nicknames: Additional names provided by the user for the device.
 	Nicknames []string `json:"nicknames,omitempty"`

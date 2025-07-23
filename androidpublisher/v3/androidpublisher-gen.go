@@ -398,6 +398,7 @@ type InternalappsharingartifactsService struct {
 
 func NewMonetizationService(s *Service) *MonetizationService {
 	rs := &MonetizationService{s: s}
+	rs.Onetimeproducts = NewMonetizationOnetimeproductsService(s)
 	rs.Subscriptions = NewMonetizationSubscriptionsService(s)
 	return rs
 }
@@ -405,7 +406,42 @@ func NewMonetizationService(s *Service) *MonetizationService {
 type MonetizationService struct {
 	s *Service
 
+	Onetimeproducts *MonetizationOnetimeproductsService
+
 	Subscriptions *MonetizationSubscriptionsService
+}
+
+func NewMonetizationOnetimeproductsService(s *Service) *MonetizationOnetimeproductsService {
+	rs := &MonetizationOnetimeproductsService{s: s}
+	rs.PurchaseOptions = NewMonetizationOnetimeproductsPurchaseOptionsService(s)
+	return rs
+}
+
+type MonetizationOnetimeproductsService struct {
+	s *Service
+
+	PurchaseOptions *MonetizationOnetimeproductsPurchaseOptionsService
+}
+
+func NewMonetizationOnetimeproductsPurchaseOptionsService(s *Service) *MonetizationOnetimeproductsPurchaseOptionsService {
+	rs := &MonetizationOnetimeproductsPurchaseOptionsService{s: s}
+	rs.Offers = NewMonetizationOnetimeproductsPurchaseOptionsOffersService(s)
+	return rs
+}
+
+type MonetizationOnetimeproductsPurchaseOptionsService struct {
+	s *Service
+
+	Offers *MonetizationOnetimeproductsPurchaseOptionsOffersService
+}
+
+func NewMonetizationOnetimeproductsPurchaseOptionsOffersService(s *Service) *MonetizationOnetimeproductsPurchaseOptionsOffersService {
+	rs := &MonetizationOnetimeproductsPurchaseOptionsOffersService{s: s}
+	return rs
+}
+
+type MonetizationOnetimeproductsPurchaseOptionsOffersService struct {
+	s *Service
 }
 
 func NewMonetizationSubscriptionsService(s *Service) *MonetizationSubscriptionsService {
@@ -676,6 +712,94 @@ type ActivateBasePlanRequest struct {
 
 func (s ActivateBasePlanRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivateBasePlanRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ActivateOneTimeProductOfferRequest: Request message for
+// ActivateOneTimeProductOffer.
+type ActivateOneTimeProductOfferRequest struct {
+	// LatencyTolerance: Optional. The latency tolerance for the propagation of
+	// this update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update will
+	// propagate to clients within several minutes on average and up to a few hours
+	// in rare cases. Throughput is limited to 7,200 updates per app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update will
+	// propagate to clients within 24 hours. Supports high throughput of up to
+	// 720,000 updates per app per hour using batch modification methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+	// OfferId: Required. The offer ID of the offer to activate.
+	OfferId string `json:"offerId,omitempty"`
+	// PackageName: Required. The parent app (package name) of the offer to
+	// activate.
+	PackageName string `json:"packageName,omitempty"`
+	// ProductId: Required. The parent one-time product (ID) of the offer to
+	// activate.
+	ProductId string `json:"productId,omitempty"`
+	// PurchaseOptionId: Required. The parent purchase option (ID) of the offer to
+	// activate.
+	PurchaseOptionId string `json:"purchaseOptionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LatencyTolerance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LatencyTolerance") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActivateOneTimeProductOfferRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivateOneTimeProductOfferRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ActivatePurchaseOptionRequest: Request message for
+// UpdatePurchaseOptionState.
+type ActivatePurchaseOptionRequest struct {
+	// LatencyTolerance: Optional. The latency tolerance for the propagation of
+	// this product update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update will
+	// propagate to clients within several minutes on average and up to a few hours
+	// in rare cases. Throughput is limited to 7,200 updates per app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update will
+	// propagate to clients within 24 hours. Supports high throughput of up to
+	// 720,000 updates per app per hour using batch modification methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+	// PackageName: Required. The parent app (package name) of the purchase option
+	// to activate.
+	PackageName string `json:"packageName,omitempty"`
+	// ProductId: Required. The parent one-time product (ID) of the purchase option
+	// to activate.
+	ProductId string `json:"productId,omitempty"`
+	// PurchaseOptionId: Required. The purchase option ID of the purchase option to
+	// activate.
+	PurchaseOptionId string `json:"purchaseOptionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LatencyTolerance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LatencyTolerance") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActivatePurchaseOptionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivatePurchaseOptionRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1410,6 +1534,156 @@ func (s BasePlan) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BatchDeleteOneTimeProductOffersRequest: Request message for
+// BatchDeleteOneTimeProductOffers.
+type BatchDeleteOneTimeProductOffersRequest struct {
+	// Requests: Required. A list of update requests of up to 100 elements. All
+	// requests must correspond to different offers.
+	Requests []*DeleteOneTimeProductOfferRequest `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchDeleteOneTimeProductOffersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeleteOneTimeProductOffersRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchDeleteOneTimeProductsRequest: Request message for
+// BatchDeleteOneTimeProduct.
+type BatchDeleteOneTimeProductsRequest struct {
+	// Requests: Required. A list of delete requests of up to 100 elements. All
+	// requests must delete different one-time products.
+	Requests []*DeleteOneTimeProductRequest `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchDeleteOneTimeProductsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeleteOneTimeProductsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchDeletePurchaseOptionsRequest: Request message for
+// BatchDeletePurchaseOption.
+type BatchDeletePurchaseOptionsRequest struct {
+	// Requests: Required. A list of delete requests of up to 100 elements. All
+	// requests must delete purchase options from different one-time products.
+	Requests []*DeletePurchaseOptionRequest `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchDeletePurchaseOptionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeletePurchaseOptionsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchGetOneTimeProductOffersRequest: Request message for the
+// BatchGetOneTimeProductOffers endpoint.
+type BatchGetOneTimeProductOffersRequest struct {
+	// Requests: Required. A list of get requests of up to 100 elements. All
+	// requests must retrieve different offers.
+	Requests []*GetOneTimeProductOfferRequest `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchGetOneTimeProductOffersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchGetOneTimeProductOffersRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchGetOneTimeProductOffersResponse: Response message for the
+// BatchGetOneTimeProductOffers endpoint.
+type BatchGetOneTimeProductOffersResponse struct {
+	// OneTimeProductOffers: The list of updated one-time product offers, in the
+	// same order as the request.
+	OneTimeProductOffers []*OneTimeProductOffer `json:"oneTimeProductOffers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "OneTimeProductOffers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OneTimeProductOffers") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchGetOneTimeProductOffersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchGetOneTimeProductOffersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchGetOneTimeProductsResponse: Response message for the
+// BatchGetOneTimeProducts endpoint.
+type BatchGetOneTimeProductsResponse struct {
+	// OneTimeProducts: The list of requested one-time products, in the same order
+	// as the request.
+	OneTimeProducts []*OneTimeProduct `json:"oneTimeProducts,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "OneTimeProducts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OneTimeProducts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchGetOneTimeProductsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchGetOneTimeProductsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BatchGetOrdersResponse: Response for the orders.batchGet API.
 type BatchGetOrdersResponse struct {
 	// Orders: Details for the requested order IDs.
@@ -1610,6 +1884,210 @@ type BatchUpdateBasePlanStatesResponse struct {
 
 func (s BatchUpdateBasePlanStatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateBasePlanStatesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateOneTimeProductOfferStatesRequest: Request message for
+// BatchUpdateOneTimeProductOfferStates.
+type BatchUpdateOneTimeProductOfferStatesRequest struct {
+	// Requests: Required. The update request list of up to 100 elements. All
+	// requests must update different offers.
+	Requests []*UpdateOneTimeProductOfferStateRequest `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchUpdateOneTimeProductOfferStatesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateOneTimeProductOfferStatesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateOneTimeProductOfferStatesResponse: Response message for
+// BatchUpdateOneTimeProductOfferStates.
+type BatchUpdateOneTimeProductOfferStatesResponse struct {
+	// OneTimeProductOffers: The updated one-time product offers list, in the same
+	// order as the request.
+	OneTimeProductOffers []*OneTimeProductOffer `json:"oneTimeProductOffers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "OneTimeProductOffers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OneTimeProductOffers") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchUpdateOneTimeProductOfferStatesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateOneTimeProductOfferStatesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateOneTimeProductOffersRequest: Request message for
+// BatchUpdateOneTimeProductOffers.
+type BatchUpdateOneTimeProductOffersRequest struct {
+	// Requests: Required. A list of update requests of up to 100 elements. All
+	// requests must update different offers.
+	Requests []*UpdateOneTimeProductOfferRequest `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchUpdateOneTimeProductOffersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateOneTimeProductOffersRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateOneTimeProductOffersResponse: Response message for
+// BatchUpdateOneTimeProductOffers.
+type BatchUpdateOneTimeProductOffersResponse struct {
+	// OneTimeProductOffers: The list of updated one-time product offers, in the
+	// same order as the request.
+	OneTimeProductOffers []*OneTimeProductOffer `json:"oneTimeProductOffers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "OneTimeProductOffers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OneTimeProductOffers") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchUpdateOneTimeProductOffersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateOneTimeProductOffersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateOneTimeProductsRequest: Request message for
+// BatchUpdateOneTimeProduct.
+type BatchUpdateOneTimeProductsRequest struct {
+	// Requests: Required. A list of update requests of up to 100 elements. All
+	// requests must update different one-time products.
+	Requests []*UpdateOneTimeProductRequest `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchUpdateOneTimeProductsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateOneTimeProductsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateOneTimeProductsResponse: Response message for
+// BatchUpdateOneTimeProduct.
+type BatchUpdateOneTimeProductsResponse struct {
+	// OneTimeProducts: The list of updated one-time products list, in the same
+	// order as the request.
+	OneTimeProducts []*OneTimeProduct `json:"oneTimeProducts,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "OneTimeProducts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OneTimeProducts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchUpdateOneTimeProductsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateOneTimeProductsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdatePurchaseOptionStatesRequest: Request message for
+// BatchUpdatePurchaseOptionStates.
+type BatchUpdatePurchaseOptionStatesRequest struct {
+	// Requests: Required. The update request list of up to 100 elements. All
+	// requests must update different purchase options.
+	Requests []*UpdatePurchaseOptionStateRequest `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchUpdatePurchaseOptionStatesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdatePurchaseOptionStatesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdatePurchaseOptionStatesResponse: Response message for
+// BatchUpdatePurchaseOptionStates.
+type BatchUpdatePurchaseOptionStatesResponse struct {
+	// OneTimeProducts: The list of updated one-time products. This list will match
+	// the requests one to one, in the same order.
+	OneTimeProducts []*OneTimeProduct `json:"oneTimeProducts,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "OneTimeProducts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OneTimeProducts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchUpdatePurchaseOptionStatesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdatePurchaseOptionStatesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1861,6 +2339,50 @@ type CancelAppRecoveryRequest struct {
 type CancelAppRecoveryResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// CancelOneTimeProductOfferRequest: Request message for
+// CancelOneTimeProductOffer.
+type CancelOneTimeProductOfferRequest struct {
+	// LatencyTolerance: Optional. The latency tolerance for the propagation of
+	// this update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update will
+	// propagate to clients within several minutes on average and up to a few hours
+	// in rare cases. Throughput is limited to 7,200 updates per app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update will
+	// propagate to clients within 24 hours. Supports high throughput of up to
+	// 720,000 updates per app per hour using batch modification methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+	// OfferId: Required. The offer ID of the offer to cancel.
+	OfferId string `json:"offerId,omitempty"`
+	// PackageName: Required. The parent app (package name) of the offer to cancel.
+	PackageName string `json:"packageName,omitempty"`
+	// ProductId: Required. The parent one-time product (ID) of the offer to
+	// cancel.
+	ProductId string `json:"productId,omitempty"`
+	// PurchaseOptionId: Required. The parent purchase option (ID) of the offer to
+	// cancel.
+	PurchaseOptionId string `json:"purchaseOptionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LatencyTolerance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LatencyTolerance") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CancelOneTimeProductOfferRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelOneTimeProductOfferRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelSurveyResult: Result of the cancel survey when the subscription was
@@ -2175,6 +2697,94 @@ func (s DeactivateBasePlanRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeactivateOneTimeProductOfferRequest: Request message for
+// DeactivateOneTimeProductOffer.
+type DeactivateOneTimeProductOfferRequest struct {
+	// LatencyTolerance: Optional. The latency tolerance for the propagation of
+	// this update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update will
+	// propagate to clients within several minutes on average and up to a few hours
+	// in rare cases. Throughput is limited to 7,200 updates per app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update will
+	// propagate to clients within 24 hours. Supports high throughput of up to
+	// 720,000 updates per app per hour using batch modification methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+	// OfferId: Required. The offer ID of the offer to deactivate.
+	OfferId string `json:"offerId,omitempty"`
+	// PackageName: Required. The parent app (package name) of the offer to
+	// deactivate.
+	PackageName string `json:"packageName,omitempty"`
+	// ProductId: Required. The parent one-time product (ID) of the offer to
+	// deactivate.
+	ProductId string `json:"productId,omitempty"`
+	// PurchaseOptionId: Required. The parent purchase option (ID) of the offer to
+	// deactivate.
+	PurchaseOptionId string `json:"purchaseOptionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LatencyTolerance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LatencyTolerance") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeactivateOneTimeProductOfferRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeactivateOneTimeProductOfferRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeactivatePurchaseOptionRequest: Request message for
+// UpdatePurchaseOptionState.
+type DeactivatePurchaseOptionRequest struct {
+	// LatencyTolerance: Optional. The latency tolerance for the propagation of
+	// this product update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update will
+	// propagate to clients within several minutes on average and up to a few hours
+	// in rare cases. Throughput is limited to 7,200 updates per app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update will
+	// propagate to clients within 24 hours. Supports high throughput of up to
+	// 720,000 updates per app per hour using batch modification methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+	// PackageName: Required. The parent app (package name) of the purchase option
+	// to deactivate.
+	PackageName string `json:"packageName,omitempty"`
+	// ProductId: Required. The parent one-time product (ID) of the purchase option
+	// to deactivate.
+	ProductId string `json:"productId,omitempty"`
+	// PurchaseOptionId: Required. The purchase option ID of the purchase option to
+	// deactivate.
+	PurchaseOptionId string `json:"purchaseOptionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LatencyTolerance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LatencyTolerance") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeactivatePurchaseOptionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeactivatePurchaseOptionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeactivateSubscriptionOfferRequest: Request message for
 // DeactivateSubscriptionOffer.
 type DeactivateSubscriptionOfferRequest struct {
@@ -2238,6 +2848,137 @@ type DeferredItemReplacement struct {
 
 func (s DeferredItemReplacement) MarshalJSON() ([]byte, error) {
 	type NoMethod DeferredItemReplacement
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeleteOneTimeProductOfferRequest: Request message for deleting an one-time
+// product offer.
+type DeleteOneTimeProductOfferRequest struct {
+	// LatencyTolerance: Optional. The latency tolerance for the propagation of
+	// this product update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update will
+	// propagate to clients within several minutes on average and up to a few hours
+	// in rare cases. Throughput is limited to 7,200 updates per app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update will
+	// propagate to clients within 24 hours. Supports high throughput of up to
+	// 720,000 updates per app per hour using batch modification methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+	// OfferId: Required. The unique offer ID of the offer to delete.
+	OfferId string `json:"offerId,omitempty"`
+	// PackageName: Required. The parent app (package name) of the offer to delete.
+	PackageName string `json:"packageName,omitempty"`
+	// ProductId: Required. The parent one-time product (ID) of the offer to
+	// delete.
+	ProductId string `json:"productId,omitempty"`
+	// PurchaseOptionId: Required. The parent purchase option (ID) of the offer to
+	// delete.
+	PurchaseOptionId string `json:"purchaseOptionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LatencyTolerance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LatencyTolerance") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteOneTimeProductOfferRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteOneTimeProductOfferRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeleteOneTimeProductRequest: Request message for deleting a one-time
+// product.
+type DeleteOneTimeProductRequest struct {
+	// LatencyTolerance: Optional. The latency tolerance for the propagation of
+	// this product update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update will
+	// propagate to clients within several minutes on average and up to a few hours
+	// in rare cases. Throughput is limited to 7,200 updates per app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update will
+	// propagate to clients within 24 hours. Supports high throughput of up to
+	// 720,000 updates per app per hour using batch modification methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+	// PackageName: Required. The parent app (package name) of the one-time product
+	// to delete.
+	PackageName string `json:"packageName,omitempty"`
+	// ProductId: Required. The one-time product ID of the one-time product to
+	// delete.
+	ProductId string `json:"productId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LatencyTolerance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LatencyTolerance") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteOneTimeProductRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteOneTimeProductRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeletePurchaseOptionRequest: Request message for deleting a purchase option.
+type DeletePurchaseOptionRequest struct {
+	// Force: Optional. This field has no effect for purchase options with no
+	// offers under them. For purchase options with associated offers: * If `force`
+	// is set to false (default), an error will be returned. * If `force` is set to
+	// true, any associated offers under the purchase option will be deleted.
+	Force bool `json:"force,omitempty"`
+	// LatencyTolerance: Optional. The latency tolerance for the propagation of
+	// this product update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update will
+	// propagate to clients within several minutes on average and up to a few hours
+	// in rare cases. Throughput is limited to 7,200 updates per app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update will
+	// propagate to clients within 24 hours. Supports high throughput of up to
+	// 720,000 updates per app per hour using batch modification methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+	// PackageName: Required. The parent app (package name) of the purchase option
+	// to delete.
+	PackageName string `json:"packageName,omitempty"`
+	// ProductId: Required. The parent one-time product (ID) of the purchase option
+	// to delete.
+	ProductId string `json:"productId,omitempty"`
+	// PurchaseOptionId: Required. The purchase option ID of the purchase option to
+	// delete.
+	PurchaseOptionId string `json:"purchaseOptionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Force") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Force") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeletePurchaseOptionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeletePurchaseOptionRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3180,6 +3921,35 @@ func (s GeneratedUniversalApk) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GetOneTimeProductOfferRequest: Request message for GetOneTimeProductOffers.
+type GetOneTimeProductOfferRequest struct {
+	// OfferId: Required. The unique offer ID of the offer to get.
+	OfferId string `json:"offerId,omitempty"`
+	// PackageName: Required. The parent app (package name) of the offer to get.
+	PackageName string `json:"packageName,omitempty"`
+	// ProductId: Required. The parent one-time product (ID) of the offer to get.
+	ProductId string `json:"productId,omitempty"`
+	// PurchaseOptionId: Required. The parent purchase option (ID) of the offer to
+	// get.
+	PurchaseOptionId string `json:"purchaseOptionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OfferId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OfferId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetOneTimeProductOfferRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GetOneTimeProductOfferRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GetSubscriptionOfferRequest: Request message for GetSubscriptionOffer.
 type GetSubscriptionOfferRequest struct {
 	// BasePlanId: Required. The parent base plan (ID) of the offer to get.
@@ -3982,6 +4752,64 @@ func (s ListDeviceTierConfigsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListOneTimeProductOffersResponse: Response message for
+// ListOneTimeProductOffers.
+type ListOneTimeProductOffersResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// OneTimeProductOffers: The one_time_product offers from the specified
+	// request.
+	OneTimeProductOffers []*OneTimeProductOffer `json:"oneTimeProductOffers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListOneTimeProductOffersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListOneTimeProductOffersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListOneTimeProductsResponse: Response message for ListOneTimeProducts.
+type ListOneTimeProductsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// OneTimeProducts: The one-time products from the specified app.
+	OneTimeProducts []*OneTimeProduct `json:"oneTimeProducts,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListOneTimeProductsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListOneTimeProductsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListSubscriptionOffersResponse: Response message for ListSubscriptionOffers.
 type ListSubscriptionOffersResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
@@ -4471,6 +5299,503 @@ type OneTimeExternalTransaction struct {
 
 func (s OneTimeExternalTransaction) MarshalJSON() ([]byte, error) {
 	type NoMethod OneTimeExternalTransaction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OneTimeProduct: A single one-time product for an app.
+type OneTimeProduct struct {
+	// Listings: Required. Set of localized title and description data. Must not
+	// have duplicate entries with the same language_code.
+	Listings []*OneTimeProductListing `json:"listings,omitempty"`
+	// OfferTags: Optional. List of up to 20 custom tags specified for this
+	// one-time product, and returned to the app through the billing library.
+	// Purchase options and offers for this product will also receive these tags in
+	// the billing library.
+	OfferTags []*OfferTag `json:"offerTags,omitempty"`
+	// PackageName: Required. Immutable. Package name of the parent app.
+	PackageName string `json:"packageName,omitempty"`
+	// ProductId: Required. Immutable. Unique product ID of the product. Unique
+	// within the parent app. Product IDs must start with a number or lowercase
+	// letter, and can contain numbers (0-9), lowercase letters (a-z), underscores
+	// (_), and periods (.).
+	ProductId string `json:"productId,omitempty"`
+	// PurchaseOptions: Required. The set of purchase options for this one-time
+	// product.
+	PurchaseOptions []*OneTimeProductPurchaseOption `json:"purchaseOptions,omitempty"`
+	// RegionsVersion: Output only. The version of the regions configuration that
+	// was used to generate the one-time product.
+	RegionsVersion *RegionsVersion `json:"regionsVersion,omitempty"`
+	// RestrictedPaymentCountries: Optional. Countries where the purchase of this
+	// one-time product is restricted to payment methods registered in the same
+	// country. If empty, no payment location restrictions are imposed.
+	RestrictedPaymentCountries *RestrictedPaymentCountries `json:"restrictedPaymentCountries,omitempty"`
+	// TaxAndComplianceSettings: Details about taxes and legal compliance.
+	TaxAndComplianceSettings *OneTimeProductTaxAndComplianceSettings `json:"taxAndComplianceSettings,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Listings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Listings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OneTimeProduct) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeProduct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OneTimeProductBuyPurchaseOption: A purchase option that can be bought.
+type OneTimeProductBuyPurchaseOption struct {
+	// LegacyCompatible: Optional. Whether this purchase option will be available
+	// in legacy PBL flows that do not support one-time products model. Up to one
+	// "buy" purchase option can be marked as backwards compatible.
+	LegacyCompatible bool `json:"legacyCompatible,omitempty"`
+	// MultiQuantityEnabled: Optional. Whether this purchase option allows
+	// multi-quantity. Multi-quantity allows buyer to purchase more than one item
+	// in a single checkout.
+	MultiQuantityEnabled bool `json:"multiQuantityEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LegacyCompatible") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LegacyCompatible") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OneTimeProductBuyPurchaseOption) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeProductBuyPurchaseOption
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OneTimeProductDiscountedOffer: Configuration specific to discounted offers.
+type OneTimeProductDiscountedOffer struct {
+	// EndTime: Time when the offer will stop being available.
+	EndTime string `json:"endTime,omitempty"`
+	// RedemptionLimit: Optional. The number of times this offer can be redeemed.
+	// If unset or set to 0, allows for unlimited offer redemptions. Otherwise must
+	// be a number between 1 and 50 inclusive.
+	RedemptionLimit int64 `json:"redemptionLimit,omitempty,string"`
+	// StartTime: Time when the offer will start being available.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OneTimeProductDiscountedOffer) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeProductDiscountedOffer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OneTimeProductListing: Regional store listing for a one-time product.
+type OneTimeProductListing struct {
+	// Description: Required. The description of this product in the language of
+	// this listing. The maximum length is 200 characters.
+	Description string `json:"description,omitempty"`
+	// LanguageCode: Required. The language of this listing, as defined by BCP-47,
+	// e.g., "en-US".
+	LanguageCode string `json:"languageCode,omitempty"`
+	// Title: Required. The title of this product in the language of this listing.
+	// The maximum length is 55 characters.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OneTimeProductListing) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeProductListing
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OneTimeProductOffer: A single offer for a one-time product.
+type OneTimeProductOffer struct {
+	// DiscountedOffer: A discounted offer.
+	DiscountedOffer *OneTimeProductDiscountedOffer `json:"discountedOffer,omitempty"`
+	// OfferId: Required. Immutable. The ID of this product offer. Must be unique
+	// within the purchase option. It must start with a number or lower-case
+	// letter, and can only contain lower-case letters (a-z), numbers (0-9), and
+	// hyphens (-). The maximum length is 63 characters.
+	OfferId string `json:"offerId,omitempty"`
+	// OfferTags: Optional. List of up to 20 custom tags specified for this offer,
+	// and returned to the app through the billing library.
+	OfferTags []*OfferTag `json:"offerTags,omitempty"`
+	// PackageName: Required. Immutable. The package name of the app the parent
+	// product belongs to.
+	PackageName string `json:"packageName,omitempty"`
+	// PreOrderOffer: A pre-order offer.
+	PreOrderOffer *OneTimeProductPreOrderOffer `json:"preOrderOffer,omitempty"`
+	// ProductId: Required. Immutable. The ID of the parent product this offer
+	// belongs to.
+	ProductId string `json:"productId,omitempty"`
+	// PurchaseOptionId: Required. Immutable. The ID of the purchase option to
+	// which this offer is an extension.
+	PurchaseOptionId string `json:"purchaseOptionId,omitempty"`
+	// RegionalPricingAndAvailabilityConfigs: Set of regional pricing and
+	// availability information for this offer. Must not have duplicate entries
+	// with the same region_code.
+	RegionalPricingAndAvailabilityConfigs []*OneTimeProductOfferRegionalPricingAndAvailabilityConfig `json:"regionalPricingAndAvailabilityConfigs,omitempty"`
+	// RegionsVersion: Output only. The version of the regions configuration that
+	// was used to generate the one-time product offer.
+	RegionsVersion *RegionsVersion `json:"regionsVersion,omitempty"`
+	// State: Output only. The current state of this offer. This field cannot be
+	// changed by updating the resource. Use the dedicated endpoints instead.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value, should never be used.
+	//   "DRAFT" - The offer is not and has never been available to users.
+	//   "ACTIVE" - The offer is available to users, as long as its conditions are
+	// met.
+	//   "CANCELLED" - This state is specific to pre-orders. The offer is cancelled
+	// and not available to users. All pending orders related to this offer were
+	// cancelled.
+	//   "INACTIVE" - This state is specific to discounted offers. The offer is no
+	// longer available to users.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DiscountedOffer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiscountedOffer") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OneTimeProductOffer) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeProductOffer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OneTimeProductOfferNoPriceOverrideOptions: Options for one-time product
+// offers without a regional price override.
+type OneTimeProductOfferNoPriceOverrideOptions struct {
+}
+
+// OneTimeProductOfferRegionalPricingAndAvailabilityConfig: Regional pricing
+// and availability configuration for a one-time product offer.
+type OneTimeProductOfferRegionalPricingAndAvailabilityConfig struct {
+	// AbsoluteDiscount: The absolute value of the discount that is subtracted from
+	// the purchase option price. It should be between 0 and the purchase option
+	// price.
+	AbsoluteDiscount *Money `json:"absoluteDiscount,omitempty"`
+	// Availability: Required. The availability for this region.
+	//
+	// Possible values:
+	//   "AVAILABILITY_UNSPECIFIED" - Unspecified availability. Must not be used.
+	//   "AVAILABLE" - The offer is available to users.
+	//   "NO_LONGER_AVAILABLE" - The offer is no longer available to users. This
+	// value can only be used if the availability was previously set as AVAILABLE.
+	Availability string `json:"availability,omitempty"`
+	// NoOverride: The price defined in the purchase option for this region will be
+	// used.
+	NoOverride *OneTimeProductOfferNoPriceOverrideOptions `json:"noOverride,omitempty"`
+	// RegionCode: Required. Region code this configuration applies to, as defined
+	// by ISO 3166-2, e.g., "US".
+	RegionCode string `json:"regionCode,omitempty"`
+	// RelativeDiscount: The fraction of the purchase option price that the user
+	// pays for this offer. For example, if the purchase option price for this
+	// region is $12, then a 50% discount would correspond to a price of $6. The
+	// discount must be specified as a fraction strictly larger than 0 and strictly
+	// smaller than 1. The resulting price will be rounded to the nearest billable
+	// unit (e.g. cents for USD). The relative discount is considered invalid if
+	// the discounted price ends up being smaller than the minimum price allowed in
+	// this region.
+	RelativeDiscount float64 `json:"relativeDiscount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AbsoluteDiscount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AbsoluteDiscount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OneTimeProductOfferRegionalPricingAndAvailabilityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeProductOfferRegionalPricingAndAvailabilityConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *OneTimeProductOfferRegionalPricingAndAvailabilityConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod OneTimeProductOfferRegionalPricingAndAvailabilityConfig
+	var s1 struct {
+		RelativeDiscount gensupport.JSONFloat64 `json:"relativeDiscount"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.RelativeDiscount = float64(s1.RelativeDiscount)
+	return nil
+}
+
+// OneTimeProductPreOrderOffer: Configuration specific to pre-order offers.
+type OneTimeProductPreOrderOffer struct {
+	// EndTime: Required. Time when the pre-order will stop being available.
+	EndTime string `json:"endTime,omitempty"`
+	// PriceChangeBehavior: Required. Immutable. Specifies how price changes affect
+	// pre-existing pre-orders.
+	//
+	// Possible values:
+	//   "PRE_ORDER_PRICE_CHANGE_BEHAVIOR_UNSPECIFIED" - Unspecified price change
+	// behavior. Must not be used.
+	//   "PRE_ORDER_PRICE_CHANGE_BEHAVIOR_TWO_POINT_LOWEST" - The buyer gets
+	// charged the minimum between the initial price at the time of pre-order and
+	// the final offer price on the release date.
+	//   "PRE_ORDER_PRICE_CHANGE_BEHAVIOR_NEW_ORDERS_ONLY" - The buyer gets the
+	// same price as the one they pre-ordered, regardless of any price changes that
+	// may have happened after the pre-order.
+	PriceChangeBehavior string `json:"priceChangeBehavior,omitempty"`
+	// ReleaseTime: Required. Time on which the product associated with the
+	// pre-order will be released and the pre-order orders fulfilled.
+	ReleaseTime string `json:"releaseTime,omitempty"`
+	// StartTime: Required. Time when the pre-order will start being available.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OneTimeProductPreOrderOffer) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeProductPreOrderOffer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OneTimeProductPurchaseOption: A single purchase option for a one-time
+// product.
+type OneTimeProductPurchaseOption struct {
+	// BuyOption: A purchase option that can be bought.
+	BuyOption *OneTimeProductBuyPurchaseOption `json:"buyOption,omitempty"`
+	// NewRegionsConfig: Pricing information for any new locations Play may launch
+	// in the future. If omitted, the purchase option will not be automatically
+	// available in any new locations Play may launch in the future.
+	NewRegionsConfig *OneTimeProductPurchaseOptionNewRegionsConfig `json:"newRegionsConfig,omitempty"`
+	// OfferTags: Optional. List of up to 20 custom tags specified for this
+	// purchase option, and returned to the app through the billing library. Offers
+	// for this purchase option will also receive these tags in the billing
+	// library.
+	OfferTags []*OfferTag `json:"offerTags,omitempty"`
+	// PurchaseOptionId: Required. Immutable. The unique identifier of this
+	// purchase option. Must be unique within the one-time product. It must start
+	// with a number or lower-case letter, and can only contain lower-case letters
+	// (a-z), numbers (0-9), and hyphens (-). The maximum length is 63 characters.
+	PurchaseOptionId string `json:"purchaseOptionId,omitempty"`
+	// RegionalPricingAndAvailabilityConfigs: Regional pricing and availability
+	// information for this purchase option.
+	RegionalPricingAndAvailabilityConfigs []*OneTimeProductPurchaseOptionRegionalPricingAndAvailabilityConfig `json:"regionalPricingAndAvailabilityConfigs,omitempty"`
+	// RentOption: A purchase option that can be rented.
+	RentOption *OneTimeProductRentPurchaseOption `json:"rentOption,omitempty"`
+	// State: Output only. The state of the purchase option, i.e., whether it's
+	// active. This field cannot be changed by updating the resource. Use the
+	// dedicated endpoints instead.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value, should never be used.
+	//   "DRAFT" - The purchase option is not and has never been available to
+	// users.
+	//   "ACTIVE" - The purchase option is available to users.
+	//   "INACTIVE" - The purchase option is not available to users anymore.
+	//   "INACTIVE_PUBLISHED" - The purchase option is not available for purchase
+	// anymore, but we continue to expose its offer via the Play Billing Library
+	// for backwards compatibility. Only automatically migrated purchase options
+	// can be in this state.
+	State string `json:"state,omitempty"`
+	// TaxAndComplianceSettings: Optional. Details about taxes and legal
+	// compliance.
+	TaxAndComplianceSettings *PurchaseOptionTaxAndComplianceSettings `json:"taxAndComplianceSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BuyOption") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BuyOption") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OneTimeProductPurchaseOption) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeProductPurchaseOption
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OneTimeProductPurchaseOptionNewRegionsConfig: Pricing information for any
+// new regions Play may launch in the future.
+type OneTimeProductPurchaseOptionNewRegionsConfig struct {
+	// Availability: Required. The regional availability for the new regions
+	// config. When set to AVAILABLE, the pricing information will be used for any
+	// new regions Play may launch in the future.
+	//
+	// Possible values:
+	//   "AVAILABILITY_UNSPECIFIED" - Unspecified availability. Must not be used.
+	//   "AVAILABLE" - The config will be used for any new regions Play may launch
+	// in the future.
+	//   "NO_LONGER_AVAILABLE" - The config is not available anymore and will not
+	// be used for any new regions Play may launch in the future. This value can
+	// only be used if the availability was previously set as AVAILABLE.
+	Availability string `json:"availability,omitempty"`
+	// EurPrice: Required. Price in EUR to use for any new regions Play may launch
+	// in.
+	EurPrice *Money `json:"eurPrice,omitempty"`
+	// UsdPrice: Required. Price in USD to use for any new regions Play may launch
+	// in.
+	UsdPrice *Money `json:"usdPrice,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Availability") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Availability") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OneTimeProductPurchaseOptionNewRegionsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeProductPurchaseOptionNewRegionsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OneTimeProductPurchaseOptionRegionalPricingAndAvailabilityConfig: Regional
+// pricing and availability configuration for a purchase option.
+type OneTimeProductPurchaseOptionRegionalPricingAndAvailabilityConfig struct {
+	// Availability: The availability of the purchase option.
+	//
+	// Possible values:
+	//   "AVAILABILITY_UNSPECIFIED" - Unspecified availability. Must not be used.
+	//   "AVAILABLE" - The purchase option is available to users.
+	//   "NO_LONGER_AVAILABLE" - The purchase option is no longer available to
+	// users. This value can only be used if the availability was previously set as
+	// AVAILABLE.
+	//   "AVAILABLE_IF_RELEASED" - The purchase option is initially unavailable,
+	// but made available via a released pre-order offer.
+	Availability string `json:"availability,omitempty"`
+	// Price: The price of the purchase option in the specified region. Must be set
+	// in the currency that is linked to the specified region.
+	Price *Money `json:"price,omitempty"`
+	// RegionCode: Required. Region code this configuration applies to, as defined
+	// by ISO 3166-2, e.g., "US".
+	RegionCode string `json:"regionCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Availability") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Availability") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OneTimeProductPurchaseOptionRegionalPricingAndAvailabilityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeProductPurchaseOptionRegionalPricingAndAvailabilityConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OneTimeProductRentPurchaseOption: A purchase option that can be rented.
+type OneTimeProductRentPurchaseOption struct {
+	// ExpirationPeriod: Optional. The amount of time the user has after starting
+	// consuming the entitlement before it is revoked. Specified in ISO 8601
+	// format.
+	ExpirationPeriod string `json:"expirationPeriod,omitempty"`
+	// RentalPeriod: Required. The amount of time a user has the entitlement for.
+	// Starts at purchase flow completion. Specified in ISO 8601 format.
+	RentalPeriod string `json:"rentalPeriod,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpirationPeriod") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpirationPeriod") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OneTimeProductRentPurchaseOption) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeProductRentPurchaseOption
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OneTimeProductTaxAndComplianceSettings: Details about taxation, Google Play
+// policy and legal compliance for one-time products.
+type OneTimeProductTaxAndComplianceSettings struct {
+	// IsTokenizedDigitalAsset: Whether this one-time product is declared as a
+	// product representing a tokenized digital asset.
+	IsTokenizedDigitalAsset bool `json:"isTokenizedDigitalAsset,omitempty"`
+	// RegionalTaxConfigs: Regional tax configuration.
+	RegionalTaxConfigs []*RegionalTaxConfig `json:"regionalTaxConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsTokenizedDigitalAsset") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsTokenizedDigitalAsset") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OneTimeProductTaxAndComplianceSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeProductTaxAndComplianceSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5303,6 +6628,38 @@ func (s ProductPurchasesAcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PurchaseOptionTaxAndComplianceSettings: Details about taxation, Google Play
+// policy and legal compliance for one-time product purchase options.
+type PurchaseOptionTaxAndComplianceSettings struct {
+	// WithdrawalRightType: Optional. Digital content or service classification for
+	// products distributed to users in eligible regions. If unset, it defaults to
+	// `WITHDRAWAL_RIGHT_DIGITAL_CONTENT`. Refer to the Help Center article
+	// (https://support.google.com/googleplay/android-developer/answer/10463498)
+	// for more information.
+	//
+	// Possible values:
+	//   "WITHDRAWAL_RIGHT_TYPE_UNSPECIFIED"
+	//   "WITHDRAWAL_RIGHT_DIGITAL_CONTENT"
+	//   "WITHDRAWAL_RIGHT_SERVICE"
+	WithdrawalRightType string `json:"withdrawalRightType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WithdrawalRightType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WithdrawalRightType") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PurchaseOptionTaxAndComplianceSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod PurchaseOptionTaxAndComplianceSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PurchaseStateContext: Context about the purchase state.
 type PurchaseStateContext struct {
 	// PurchaseState: Output only. The purchase state of the purchase.
@@ -5633,6 +6990,69 @@ func (s *RegionalSubscriptionOfferPhaseConfig) UnmarshalJSON(data []byte) error 
 // RegionalSubscriptionOfferPhaseFreePriceOverride: Represents the free price
 // override configuration for a single phase of a subscription offer
 type RegionalSubscriptionOfferPhaseFreePriceOverride struct {
+}
+
+// RegionalTaxConfig: Details about taxation in a given geographical region.
+type RegionalTaxConfig struct {
+	// EligibleForStreamingServiceTaxRate: You must tell us if your app contains
+	// streaming products to correctly charge US state and local sales tax. Field
+	// only supported in the United States.
+	EligibleForStreamingServiceTaxRate bool `json:"eligibleForStreamingServiceTaxRate,omitempty"`
+	// RegionCode: Required. Region code this configuration applies to, as defined
+	// by ISO 3166-2, e.g. "US".
+	RegionCode string `json:"regionCode,omitempty"`
+	// StreamingTaxType: To collect communications or amusement taxes in the United
+	// States, choose the appropriate tax category. Learn more
+	// (https://support.google.com/googleplay/android-developer/answer/10463498#streaming_tax).
+	//
+	// Possible values:
+	//   "STREAMING_TAX_TYPE_UNSPECIFIED" - No telecommunications tax collected.
+	//   "STREAMING_TAX_TYPE_TELCO_VIDEO_RENTAL" - US-specific telecommunications
+	// tax tier for video streaming, on demand, rentals / subscriptions /
+	// pay-per-view.
+	//   "STREAMING_TAX_TYPE_TELCO_VIDEO_SALES" - US-specific telecommunications
+	// tax tier for video streaming of pre-recorded content like movies, tv shows.
+	//   "STREAMING_TAX_TYPE_TELCO_VIDEO_MULTI_CHANNEL" - US-specific
+	// telecommunications tax tier for video streaming of multi-channel
+	// programming.
+	//   "STREAMING_TAX_TYPE_TELCO_AUDIO_RENTAL" - US-specific telecommunications
+	// tax tier for audio streaming, rental / subscription.
+	//   "STREAMING_TAX_TYPE_TELCO_AUDIO_SALES" - US-specific telecommunications
+	// tax tier for audio streaming, sale / permanent download.
+	//   "STREAMING_TAX_TYPE_TELCO_AUDIO_MULTI_CHANNEL" - US-specific
+	// telecommunications tax tier for multi channel audio streaming like radio.
+	StreamingTaxType string `json:"streamingTaxType,omitempty"`
+	// TaxTier: Tax tier to specify reduced tax rate. Developers who sell digital
+	// news, magazines, newspapers, books, or audiobooks in various regions may be
+	// eligible for reduced tax rates. Learn more
+	// (https://support.google.com/googleplay/android-developer/answer/10463498).
+	//
+	// Possible values:
+	//   "TAX_TIER_UNSPECIFIED"
+	//   "TAX_TIER_BOOKS_1"
+	//   "TAX_TIER_NEWS_1"
+	//   "TAX_TIER_NEWS_2"
+	//   "TAX_TIER_MUSIC_OR_AUDIO_1"
+	//   "TAX_TIER_LIVE_OR_BROADCAST_1"
+	TaxTier string `json:"taxTier,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EligibleForStreamingServiceTaxRate") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "EligibleForStreamingServiceTaxRate") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RegionalTaxConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RegionalTaxConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegionalTaxRateInfo: Specified details about taxation in a given
@@ -7828,6 +9248,157 @@ type UpdateBasePlanStateRequest struct {
 
 func (s UpdateBasePlanStateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateBasePlanStateRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateOneTimeProductOfferRequest: Request message for
+// UpdateOneTimeProductOffer.
+type UpdateOneTimeProductOfferRequest struct {
+	// AllowMissing: Optional. If set to true, and the offer with the given
+	// package_name, product_id, purchase_option_id and offer_id doesn't exist, an
+	// offer will be created. If a new offer is created, the update_mask is
+	// ignored.
+	AllowMissing bool `json:"allowMissing,omitempty"`
+	// LatencyTolerance: Optional. The latency tolerance for the propagation of
+	// this offer update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update will
+	// propagate to clients within several minutes on average and up to a few hours
+	// in rare cases. Throughput is limited to 7,200 updates per app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update will
+	// propagate to clients within 24 hours. Supports high throughput of up to
+	// 720,000 updates per app per hour using batch modification methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+	// OneTimeProductOffer: Required. The one-time product offer to update.
+	OneTimeProductOffer *OneTimeProductOffer `json:"oneTimeProductOffer,omitempty"`
+	// RegionsVersion: Required. The version of the available regions being used
+	// for the offer.
+	RegionsVersion *RegionsVersion `json:"regionsVersion,omitempty"`
+	// UpdateMask: Required. The list of fields to be updated.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowMissing") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowMissing") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateOneTimeProductOfferRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateOneTimeProductOfferRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateOneTimeProductOfferStateRequest: Request message to update the state
+// of a one-time product offer.
+type UpdateOneTimeProductOfferStateRequest struct {
+	// ActivateOneTimeProductOfferRequest: Activates an offer. Once activated, the
+	// offer is available to users, as long as its conditions are met.
+	ActivateOneTimeProductOfferRequest *ActivateOneTimeProductOfferRequest `json:"activateOneTimeProductOfferRequest,omitempty"`
+	// CancelOneTimeProductOfferRequest: Cancels an offer. Once cancelled, the
+	// offer is not available to users. Any pending orders related to this offer
+	// will be cancelled. This state transition is specific to pre-orders.
+	CancelOneTimeProductOfferRequest *CancelOneTimeProductOfferRequest `json:"cancelOneTimeProductOfferRequest,omitempty"`
+	// DeactivateOneTimeProductOfferRequest: Deactivates an offer. Once
+	// deactivated, the offer is no longer available to users. This state
+	// transition is specific to discounted offers.
+	DeactivateOneTimeProductOfferRequest *DeactivateOneTimeProductOfferRequest `json:"deactivateOneTimeProductOfferRequest,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ActivateOneTimeProductOfferRequest") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "ActivateOneTimeProductOfferRequest") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateOneTimeProductOfferStateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateOneTimeProductOfferStateRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateOneTimeProductRequest: Request message for UpdateOneTimeProduct.
+type UpdateOneTimeProductRequest struct {
+	// AllowMissing: Optional. If set to true, and the one-time product with the
+	// given package_name and product_id doesn't exist, the one-time product will
+	// be created. If a new one-time product is created, update_mask is ignored.
+	AllowMissing bool `json:"allowMissing,omitempty"`
+	// LatencyTolerance: Optional. The latency tolerance for the propagation of
+	// this product upsert. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update will
+	// propagate to clients within several minutes on average and up to a few hours
+	// in rare cases. Throughput is limited to 7,200 updates per app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update will
+	// propagate to clients within 24 hours. Supports high throughput of up to
+	// 720,000 updates per app per hour using batch modification methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+	// OneTimeProduct: Required. The one-time product to upsert.
+	OneTimeProduct *OneTimeProduct `json:"oneTimeProduct,omitempty"`
+	// RegionsVersion: Required. The version of the available regions being used
+	// for the one-time product.
+	RegionsVersion *RegionsVersion `json:"regionsVersion,omitempty"`
+	// UpdateMask: Required. The list of fields to be updated.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowMissing") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowMissing") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateOneTimeProductRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateOneTimeProductRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdatePurchaseOptionStateRequest: Request message to update the state of a
+// one-time product purchase option.
+type UpdatePurchaseOptionStateRequest struct {
+	// ActivatePurchaseOptionRequest: Activates a purchase option. Once activated,
+	// the purchase option will be available.
+	ActivatePurchaseOptionRequest *ActivatePurchaseOptionRequest `json:"activatePurchaseOptionRequest,omitempty"`
+	// DeactivatePurchaseOptionRequest: Deactivates a purchase option. Once
+	// deactivated, the purchase option will become unavailable.
+	DeactivatePurchaseOptionRequest *DeactivatePurchaseOptionRequest `json:"deactivatePurchaseOptionRequest,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ActivatePurchaseOptionRequest") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActivatePurchaseOptionRequest")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdatePurchaseOptionStateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdatePurchaseOptionStateRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -16171,6 +17742,2001 @@ func (c *MonetizationConvertRegionPricesCall) Do(opts ...googleapi.CallOption) (
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.convertRegionPrices", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type MonetizationOnetimeproductsBatchDeleteCall struct {
+	s                                 *Service
+	packageName                       string
+	batchdeleteonetimeproductsrequest *BatchDeleteOneTimeProductsRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// BatchDelete: Deletes one or more one-time products.
+//
+//   - packageName: The parent app (package name) for which the one-time products
+//     should be deleted. Must be equal to the package_name field on all the
+//     OneTimeProduct resources.
+func (r *MonetizationOnetimeproductsService) BatchDelete(packageName string, batchdeleteonetimeproductsrequest *BatchDeleteOneTimeProductsRequest) *MonetizationOnetimeproductsBatchDeleteCall {
+	c := &MonetizationOnetimeproductsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.batchdeleteonetimeproductsrequest = batchdeleteonetimeproductsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsBatchDeleteCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsBatchDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsBatchDeleteCall) Context(ctx context.Context) *MonetizationOnetimeproductsBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsBatchDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchdeleteonetimeproductsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts:batchDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.batchDelete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.batchDelete" call.
+func (c *MonetizationOnetimeproductsBatchDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.batchDelete", "response", internallog.HTTPResponse(res, nil))
+	return nil
+}
+
+type MonetizationOnetimeproductsBatchGetCall struct {
+	s            *Service
+	packageName  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BatchGet: Reads one or more one-time products.
+//
+//   - packageName: The parent app (package name) for which the products should
+//     be retrieved. Must be equal to the package_name field on all requests.
+func (r *MonetizationOnetimeproductsService) BatchGet(packageName string) *MonetizationOnetimeproductsBatchGetCall {
+	c := &MonetizationOnetimeproductsBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	return c
+}
+
+// ProductIds sets the optional parameter "productIds": Required. A list of up
+// to 100 product IDs to retrieve. All IDs must be different.
+func (c *MonetizationOnetimeproductsBatchGetCall) ProductIds(productIds ...string) *MonetizationOnetimeproductsBatchGetCall {
+	c.urlParams_.SetMulti("productIds", append([]string{}, productIds...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsBatchGetCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsBatchGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MonetizationOnetimeproductsBatchGetCall) IfNoneMatch(entityTag string) *MonetizationOnetimeproductsBatchGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsBatchGetCall) Context(ctx context.Context) *MonetizationOnetimeproductsBatchGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsBatchGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsBatchGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts:batchGet")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.batchGet", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.batchGet" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchGetOneTimeProductsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *MonetizationOnetimeproductsBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetOneTimeProductsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchGetOneTimeProductsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.batchGet", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type MonetizationOnetimeproductsBatchUpdateCall struct {
+	s                                 *Service
+	packageName                       string
+	batchupdateonetimeproductsrequest *BatchUpdateOneTimeProductsRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// BatchUpdate: Creates or updates one or more one-time products.
+//
+//   - packageName: The parent app (package name) for which the one-time products
+//     should be updated. Must be equal to the package_name field on all the
+//     OneTimeProduct resources.
+func (r *MonetizationOnetimeproductsService) BatchUpdate(packageName string, batchupdateonetimeproductsrequest *BatchUpdateOneTimeProductsRequest) *MonetizationOnetimeproductsBatchUpdateCall {
+	c := &MonetizationOnetimeproductsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.batchupdateonetimeproductsrequest = batchupdateonetimeproductsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsBatchUpdateCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsBatchUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsBatchUpdateCall) Context(ctx context.Context) *MonetizationOnetimeproductsBatchUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsBatchUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchupdateonetimeproductsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts:batchUpdate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.batchUpdate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.batchUpdate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchUpdateOneTimeProductsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *MonetizationOnetimeproductsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchUpdateOneTimeProductsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchUpdateOneTimeProductsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.batchUpdate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type MonetizationOnetimeproductsDeleteCall struct {
+	s           *Service
+	packageName string
+	productId   string
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Delete: Deletes a one-time product.
+//
+//   - packageName: The parent app (package name) of the one-time product to
+//     delete.
+//   - productId: The one-time product ID of the one-time product to delete.
+func (r *MonetizationOnetimeproductsService) Delete(packageName string, productId string) *MonetizationOnetimeproductsDeleteCall {
+	c := &MonetizationOnetimeproductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	return c
+}
+
+// LatencyTolerance sets the optional parameter "latencyTolerance": The latency
+// tolerance for the propagation of this product update. Defaults to
+// latency-sensitive.
+//
+// Possible values:
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+//
+// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update will
+//
+// propagate to clients within several minutes on average and up to a few hours
+// in rare cases. Throughput is limited to 7,200 updates per app per hour.
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update will
+//
+// propagate to clients within 24 hours. Supports high throughput of up to
+// 720,000 updates per app per hour using batch modification methods.
+func (c *MonetizationOnetimeproductsDeleteCall) LatencyTolerance(latencyTolerance string) *MonetizationOnetimeproductsDeleteCall {
+	c.urlParams_.Set("latencyTolerance", latencyTolerance)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsDeleteCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsDeleteCall) Context(ctx context.Context) *MonetizationOnetimeproductsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts/{productId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"productId":   c.productId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.delete" call.
+func (c *MonetizationOnetimeproductsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.delete", "response", internallog.HTTPResponse(res, nil))
+	return nil
+}
+
+type MonetizationOnetimeproductsGetCall struct {
+	s            *Service
+	packageName  string
+	productId    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Reads a single one-time product.
+//
+// - packageName: The parent app (package name) of the product to retrieve.
+// - productId: The product ID of the product to retrieve.
+func (r *MonetizationOnetimeproductsService) Get(packageName string, productId string) *MonetizationOnetimeproductsGetCall {
+	c := &MonetizationOnetimeproductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsGetCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MonetizationOnetimeproductsGetCall) IfNoneMatch(entityTag string) *MonetizationOnetimeproductsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsGetCall) Context(ctx context.Context) *MonetizationOnetimeproductsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts/{productId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"productId":   c.productId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *OneTimeProduct.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *MonetizationOnetimeproductsGetCall) Do(opts ...googleapi.CallOption) (*OneTimeProduct, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &OneTimeProduct{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type MonetizationOnetimeproductsListCall struct {
+	s            *Service
+	packageName  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all one-time products under a given app.
+//
+//   - packageName: The parent app (package name) for which the one-time product
+//     should be read.
+func (r *MonetizationOnetimeproductsService) List(packageName string) *MonetizationOnetimeproductsListCall {
+	c := &MonetizationOnetimeproductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// one-time product to return. The service may return fewer than this value. If
+// unspecified, at most 50 one-time products will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *MonetizationOnetimeproductsListCall) PageSize(pageSize int64) *MonetizationOnetimeproductsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListOneTimeProducts` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListOneTimeProducts` must match the call that provided the page token.
+func (c *MonetizationOnetimeproductsListCall) PageToken(pageToken string) *MonetizationOnetimeproductsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsListCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MonetizationOnetimeproductsListCall) IfNoneMatch(entityTag string) *MonetizationOnetimeproductsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsListCall) Context(ctx context.Context) *MonetizationOnetimeproductsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListOneTimeProductsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *MonetizationOnetimeproductsListCall) Do(opts ...googleapi.CallOption) (*ListOneTimeProductsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListOneTimeProductsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *MonetizationOnetimeproductsListCall) Pages(ctx context.Context, f func(*ListOneTimeProductsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type MonetizationOnetimeproductsPatchCall struct {
+	s              *Service
+	packageName    string
+	productId      string
+	onetimeproduct *OneTimeProduct
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Patch: Creates or updates a one-time product.
+//
+//   - packageName: Immutable. Package name of the parent app.
+//   - productId: Immutable. Unique product ID of the product. Unique within the
+//     parent app. Product IDs must start with a number or lowercase letter, and
+//     can contain numbers (0-9), lowercase letters (a-z), underscores (_), and
+//     periods (.).
+func (r *MonetizationOnetimeproductsService) Patch(packageName string, productId string, onetimeproduct *OneTimeProduct) *MonetizationOnetimeproductsPatchCall {
+	c := &MonetizationOnetimeproductsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.onetimeproduct = onetimeproduct
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to true, and
+// the one-time product with the given package_name and product_id doesn't
+// exist, the one-time product will be created. If a new one-time product is
+// created, update_mask is ignored.
+func (c *MonetizationOnetimeproductsPatchCall) AllowMissing(allowMissing bool) *MonetizationOnetimeproductsPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// LatencyTolerance sets the optional parameter "latencyTolerance": The latency
+// tolerance for the propagation of this product upsert. Defaults to
+// latency-sensitive.
+//
+// Possible values:
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+//
+// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update will
+//
+// propagate to clients within several minutes on average and up to a few hours
+// in rare cases. Throughput is limited to 7,200 updates per app per hour.
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update will
+//
+// propagate to clients within 24 hours. Supports high throughput of up to
+// 720,000 updates per app per hour using batch modification methods.
+func (c *MonetizationOnetimeproductsPatchCall) LatencyTolerance(latencyTolerance string) *MonetizationOnetimeproductsPatchCall {
+	c.urlParams_.Set("latencyTolerance", latencyTolerance)
+	return c
+}
+
+// RegionsVersionVersion sets the optional parameter "regionsVersion.version":
+// Required. A string representing the version of available regions being used
+// for the specified resource. Regional prices and latest supported version for
+// the resource have to be specified according to the information published in
+// this article
+// (https://support.google.com/googleplay/android-developer/answer/10532353).
+// Each time the supported locations substantially change, the version will be
+// incremented. Using this field will ensure that creating and updating the
+// resource with an older region's version and set of regional prices and
+// currencies will succeed even though a new version is available.
+func (c *MonetizationOnetimeproductsPatchCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationOnetimeproductsPatchCall {
+	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to be updated.
+func (c *MonetizationOnetimeproductsPatchCall) UpdateMask(updateMask string) *MonetizationOnetimeproductsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsPatchCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsPatchCall) Context(ctx context.Context) *MonetizationOnetimeproductsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.onetimeproduct)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/onetimeproducts/{productId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"productId":   c.productId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *OneTimeProduct.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *MonetizationOnetimeproductsPatchCall) Do(opts ...googleapi.CallOption) (*OneTimeProduct, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &OneTimeProduct{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type MonetizationOnetimeproductsPurchaseOptionsBatchDeleteCall struct {
+	s                                 *Service
+	packageName                       string
+	productId                         string
+	batchdeletepurchaseoptionsrequest *BatchDeletePurchaseOptionsRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// BatchDelete: Deletes purchase options across one or multiple one-time
+// products. By default this operation will fail if there are any existing
+// offers under the deleted purchase options. Use the force parameter to
+// override the default behavior.
+//
+//   - packageName: The parent app (package name) of the purchase options to
+//     delete.
+//   - productId: The product ID of the parent one-time product, if all purchase
+//     options to delete belong to the same one-time product. If this batch
+//     delete spans multiple one-time products, set this field to "-".
+func (r *MonetizationOnetimeproductsPurchaseOptionsService) BatchDelete(packageName string, productId string, batchdeletepurchaseoptionsrequest *BatchDeletePurchaseOptionsRequest) *MonetizationOnetimeproductsPurchaseOptionsBatchDeleteCall {
+	c := &MonetizationOnetimeproductsPurchaseOptionsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.batchdeletepurchaseoptionsrequest = batchdeletepurchaseoptionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsPurchaseOptionsBatchDeleteCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsPurchaseOptionsBatchDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsPurchaseOptionsBatchDeleteCall) Context(ctx context.Context) *MonetizationOnetimeproductsPurchaseOptionsBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsPurchaseOptionsBatchDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsPurchaseOptionsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchdeletepurchaseoptionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts/{productId}/purchaseOptions:batchDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"productId":   c.productId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.batchDelete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.purchaseOptions.batchDelete" call.
+func (c *MonetizationOnetimeproductsPurchaseOptionsBatchDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.batchDelete", "response", internallog.HTTPResponse(res, nil))
+	return nil
+}
+
+type MonetizationOnetimeproductsPurchaseOptionsBatchUpdateStatesCall struct {
+	s                                      *Service
+	packageName                            string
+	productId                              string
+	batchupdatepurchaseoptionstatesrequest *BatchUpdatePurchaseOptionStatesRequest
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// BatchUpdateStates: Activates or deactivates purchase options across one or
+// multiple one-time products.
+//
+//   - packageName: The parent app (package name) of the updated purchase
+//     options.
+//   - productId: The product ID of the parent one-time product, if all updated
+//     purchase options belong to the same one-time product. If this batch update
+//     spans multiple one-time products, set this field to "-".
+func (r *MonetizationOnetimeproductsPurchaseOptionsService) BatchUpdateStates(packageName string, productId string, batchupdatepurchaseoptionstatesrequest *BatchUpdatePurchaseOptionStatesRequest) *MonetizationOnetimeproductsPurchaseOptionsBatchUpdateStatesCall {
+	c := &MonetizationOnetimeproductsPurchaseOptionsBatchUpdateStatesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.batchupdatepurchaseoptionstatesrequest = batchupdatepurchaseoptionstatesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsPurchaseOptionsBatchUpdateStatesCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsPurchaseOptionsBatchUpdateStatesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsPurchaseOptionsBatchUpdateStatesCall) Context(ctx context.Context) *MonetizationOnetimeproductsPurchaseOptionsBatchUpdateStatesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsPurchaseOptionsBatchUpdateStatesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsPurchaseOptionsBatchUpdateStatesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchupdatepurchaseoptionstatesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts/{productId}/purchaseOptions:batchUpdateStates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"productId":   c.productId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.batchUpdateStates", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.purchaseOptions.batchUpdateStates" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchUpdatePurchaseOptionStatesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *MonetizationOnetimeproductsPurchaseOptionsBatchUpdateStatesCall) Do(opts ...googleapi.CallOption) (*BatchUpdatePurchaseOptionStatesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchUpdatePurchaseOptionStatesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.batchUpdateStates", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type MonetizationOnetimeproductsPurchaseOptionsOffersActivateCall struct {
+	s                                  *Service
+	packageName                        string
+	productId                          string
+	purchaseOptionId                   string
+	offerId                            string
+	activateonetimeproductofferrequest *ActivateOneTimeProductOfferRequest
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// Activate: Activates a one-time product offer.
+//
+//   - offerId: The offer ID of the offer to activate.
+//   - packageName: The parent app (package name) of the offer to activate.
+//   - productId: The parent one-time product (ID) of the offer to activate.
+//   - purchaseOptionId: The parent purchase option (ID) of the offer to
+//     activate.
+func (r *MonetizationOnetimeproductsPurchaseOptionsOffersService) Activate(packageName string, productId string, purchaseOptionId string, offerId string, activateonetimeproductofferrequest *ActivateOneTimeProductOfferRequest) *MonetizationOnetimeproductsPurchaseOptionsOffersActivateCall {
+	c := &MonetizationOnetimeproductsPurchaseOptionsOffersActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.purchaseOptionId = purchaseOptionId
+	c.offerId = offerId
+	c.activateonetimeproductofferrequest = activateonetimeproductofferrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersActivateCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsPurchaseOptionsOffersActivateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersActivateCall) Context(ctx context.Context) *MonetizationOnetimeproductsPurchaseOptionsOffersActivateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersActivateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersActivateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.activateonetimeproductofferrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts/{productId}/purchaseOptions/{purchaseOptionId}/offers/{offerId}:activate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":      c.packageName,
+		"productId":        c.productId,
+		"purchaseOptionId": c.purchaseOptionId,
+		"offerId":          c.offerId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.activate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.activate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *OneTimeProductOffer.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersActivateCall) Do(opts ...googleapi.CallOption) (*OneTimeProductOffer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &OneTimeProductOffer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.activate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type MonetizationOnetimeproductsPurchaseOptionsOffersBatchDeleteCall struct {
+	s                                      *Service
+	packageName                            string
+	productId                              string
+	purchaseOptionId                       string
+	batchdeleteonetimeproductoffersrequest *BatchDeleteOneTimeProductOffersRequest
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// BatchDelete: Deletes one or more one-time product offers.
+//
+//   - packageName: The parent app (package name) of the offers to delete. Must
+//     be equal to the package_name field on all the OneTimeProductOffer
+//     resources.
+//   - productId: The product ID of the parent one-time product, if all offers to
+//     delete belong to the same product. If this request spans multiple one-time
+//     products, set this field to "-".
+//   - purchaseOptionId: The parent purchase option (ID) for which the offers
+//     should be deleted. May be specified as '-' to update offers from multiple
+//     purchase options.
+func (r *MonetizationOnetimeproductsPurchaseOptionsOffersService) BatchDelete(packageName string, productId string, purchaseOptionId string, batchdeleteonetimeproductoffersrequest *BatchDeleteOneTimeProductOffersRequest) *MonetizationOnetimeproductsPurchaseOptionsOffersBatchDeleteCall {
+	c := &MonetizationOnetimeproductsPurchaseOptionsOffersBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.purchaseOptionId = purchaseOptionId
+	c.batchdeleteonetimeproductoffersrequest = batchdeleteonetimeproductoffersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchDeleteCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsPurchaseOptionsOffersBatchDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchDeleteCall) Context(ctx context.Context) *MonetizationOnetimeproductsPurchaseOptionsOffersBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchdeleteonetimeproductoffersrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts/{productId}/purchaseOptions/{purchaseOptionId}/offers:batchDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":      c.packageName,
+		"productId":        c.productId,
+		"purchaseOptionId": c.purchaseOptionId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.batchDelete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.batchDelete" call.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.batchDelete", "response", internallog.HTTPResponse(res, nil))
+	return nil
+}
+
+type MonetizationOnetimeproductsPurchaseOptionsOffersBatchGetCall struct {
+	s                                   *Service
+	packageName                         string
+	productId                           string
+	purchaseOptionId                    string
+	batchgetonetimeproductoffersrequest *BatchGetOneTimeProductOffersRequest
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// BatchGet: Reads one or more one-time product offers.
+//
+//   - packageName: The parent app (package name) of the updated offers. Must be
+//     equal to the package_name field on all the updated OneTimeProductOffer
+//     resources.
+//   - productId: The product ID of the parent one-time product, if all updated
+//     offers belong to the same product. If this request spans multiple one-time
+//     products, set this field to "-".
+//   - purchaseOptionId: The parent purchase option (ID) for which the offers
+//     should be updated. May be specified as '-' to update offers from multiple
+//     purchase options.
+func (r *MonetizationOnetimeproductsPurchaseOptionsOffersService) BatchGet(packageName string, productId string, purchaseOptionId string, batchgetonetimeproductoffersrequest *BatchGetOneTimeProductOffersRequest) *MonetizationOnetimeproductsPurchaseOptionsOffersBatchGetCall {
+	c := &MonetizationOnetimeproductsPurchaseOptionsOffersBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.purchaseOptionId = purchaseOptionId
+	c.batchgetonetimeproductoffersrequest = batchgetonetimeproductoffersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchGetCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsPurchaseOptionsOffersBatchGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchGetCall) Context(ctx context.Context) *MonetizationOnetimeproductsPurchaseOptionsOffersBatchGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchgetonetimeproductoffersrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts/{productId}/purchaseOptions/{purchaseOptionId}/offers:batchGet")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":      c.packageName,
+		"productId":        c.productId,
+		"purchaseOptionId": c.purchaseOptionId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.batchGet", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.batchGet" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchGetOneTimeProductOffersResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetOneTimeProductOffersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchGetOneTimeProductOffersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.batchGet", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateCall struct {
+	s                                      *Service
+	packageName                            string
+	productId                              string
+	purchaseOptionId                       string
+	batchupdateonetimeproductoffersrequest *BatchUpdateOneTimeProductOffersRequest
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// BatchUpdate: Creates or updates one or more one-time product offers.
+//
+//   - packageName: The parent app (package name) of the updated offers. Must be
+//     equal to the package_name field on all the updated OneTimeProductOffer
+//     resources.
+//   - productId: The product ID of the parent one-time product, if all updated
+//     offers belong to the same product. If this request spans multiple one-time
+//     products, set this field to "-".
+//   - purchaseOptionId: The parent purchase option (ID) for which the offers
+//     should be updated. May be specified as '-' to update offers from multiple
+//     purchase options.
+func (r *MonetizationOnetimeproductsPurchaseOptionsOffersService) BatchUpdate(packageName string, productId string, purchaseOptionId string, batchupdateonetimeproductoffersrequest *BatchUpdateOneTimeProductOffersRequest) *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateCall {
+	c := &MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.purchaseOptionId = purchaseOptionId
+	c.batchupdateonetimeproductoffersrequest = batchupdateonetimeproductoffersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateCall) Context(ctx context.Context) *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchupdateonetimeproductoffersrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts/{productId}/purchaseOptions/{purchaseOptionId}/offers:batchUpdate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":      c.packageName,
+		"productId":        c.productId,
+		"purchaseOptionId": c.purchaseOptionId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.batchUpdate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.batchUpdate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchUpdateOneTimeProductOffersResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchUpdateOneTimeProductOffersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchUpdateOneTimeProductOffersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.batchUpdate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateStatesCall struct {
+	s                                           *Service
+	packageName                                 string
+	productId                                   string
+	purchaseOptionId                            string
+	batchupdateonetimeproductofferstatesrequest *BatchUpdateOneTimeProductOfferStatesRequest
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// BatchUpdateStates: Updates a batch of one-time product offer states.
+//
+//   - packageName: The parent app (package name) of the updated one-time product
+//     offers.
+//   - productId: The product ID of the parent one-time product, if all updated
+//     offers belong to the same one-time product. If this batch update spans
+//     multiple one-time products, set this field to "-".
+//   - purchaseOptionId: The purchase option ID of the parent purchase option, if
+//     all updated offers belong to the same purchase option. If this batch
+//     update spans multiple purchase options, set this field to "-".
+func (r *MonetizationOnetimeproductsPurchaseOptionsOffersService) BatchUpdateStates(packageName string, productId string, purchaseOptionId string, batchupdateonetimeproductofferstatesrequest *BatchUpdateOneTimeProductOfferStatesRequest) *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateStatesCall {
+	c := &MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateStatesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.purchaseOptionId = purchaseOptionId
+	c.batchupdateonetimeproductofferstatesrequest = batchupdateonetimeproductofferstatesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateStatesCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateStatesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateStatesCall) Context(ctx context.Context) *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateStatesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateStatesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateStatesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchupdateonetimeproductofferstatesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts/{productId}/purchaseOptions/{purchaseOptionId}/offers:batchUpdateStates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":      c.packageName,
+		"productId":        c.productId,
+		"purchaseOptionId": c.purchaseOptionId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.batchUpdateStates", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.batchUpdateStates" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchUpdateOneTimeProductOfferStatesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersBatchUpdateStatesCall) Do(opts ...googleapi.CallOption) (*BatchUpdateOneTimeProductOfferStatesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchUpdateOneTimeProductOfferStatesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.batchUpdateStates", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type MonetizationOnetimeproductsPurchaseOptionsOffersCancelCall struct {
+	s                                *Service
+	packageName                      string
+	productId                        string
+	purchaseOptionId                 string
+	offerId                          string
+	cancelonetimeproductofferrequest *CancelOneTimeProductOfferRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Cancel: Cancels a one-time product offer.
+//
+// - offerId: The offer ID of the offer to cancel.
+// - packageName: The parent app (package name) of the offer to cancel.
+// - productId: The parent one-time product (ID) of the offer to cancel.
+// - purchaseOptionId: The parent purchase option (ID) of the offer to cancel.
+func (r *MonetizationOnetimeproductsPurchaseOptionsOffersService) Cancel(packageName string, productId string, purchaseOptionId string, offerId string, cancelonetimeproductofferrequest *CancelOneTimeProductOfferRequest) *MonetizationOnetimeproductsPurchaseOptionsOffersCancelCall {
+	c := &MonetizationOnetimeproductsPurchaseOptionsOffersCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.purchaseOptionId = purchaseOptionId
+	c.offerId = offerId
+	c.cancelonetimeproductofferrequest = cancelonetimeproductofferrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersCancelCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsPurchaseOptionsOffersCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersCancelCall) Context(ctx context.Context) *MonetizationOnetimeproductsPurchaseOptionsOffersCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cancelonetimeproductofferrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts/{productId}/purchaseOptions/{purchaseOptionId}/offers/{offerId}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":      c.packageName,
+		"productId":        c.productId,
+		"purchaseOptionId": c.purchaseOptionId,
+		"offerId":          c.offerId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *OneTimeProductOffer.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersCancelCall) Do(opts ...googleapi.CallOption) (*OneTimeProductOffer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &OneTimeProductOffer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.cancel", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type MonetizationOnetimeproductsPurchaseOptionsOffersDeactivateCall struct {
+	s                                    *Service
+	packageName                          string
+	productId                            string
+	purchaseOptionId                     string
+	offerId                              string
+	deactivateonetimeproductofferrequest *DeactivateOneTimeProductOfferRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Deactivate: Deactivates a one-time product offer.
+//
+//   - offerId: The offer ID of the offer to deactivate.
+//   - packageName: The parent app (package name) of the offer to deactivate.
+//   - productId: The parent one-time product (ID) of the offer to deactivate.
+//   - purchaseOptionId: The parent purchase option (ID) of the offer to
+//     deactivate.
+func (r *MonetizationOnetimeproductsPurchaseOptionsOffersService) Deactivate(packageName string, productId string, purchaseOptionId string, offerId string, deactivateonetimeproductofferrequest *DeactivateOneTimeProductOfferRequest) *MonetizationOnetimeproductsPurchaseOptionsOffersDeactivateCall {
+	c := &MonetizationOnetimeproductsPurchaseOptionsOffersDeactivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.purchaseOptionId = purchaseOptionId
+	c.offerId = offerId
+	c.deactivateonetimeproductofferrequest = deactivateonetimeproductofferrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersDeactivateCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsPurchaseOptionsOffersDeactivateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersDeactivateCall) Context(ctx context.Context) *MonetizationOnetimeproductsPurchaseOptionsOffersDeactivateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersDeactivateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersDeactivateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.deactivateonetimeproductofferrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts/{productId}/purchaseOptions/{purchaseOptionId}/offers/{offerId}:deactivate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":      c.packageName,
+		"productId":        c.productId,
+		"purchaseOptionId": c.purchaseOptionId,
+		"offerId":          c.offerId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.deactivate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.deactivate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *OneTimeProductOffer.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersDeactivateCall) Do(opts ...googleapi.CallOption) (*OneTimeProductOffer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &OneTimeProductOffer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.deactivate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type MonetizationOnetimeproductsPurchaseOptionsOffersListCall struct {
+	s                *Service
+	packageName      string
+	productId        string
+	purchaseOptionId string
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// List: Lists all offers under a given app, product, or purchase option.
+//
+//   - packageName: The parent app (package name) for which the offers should be
+//     read.
+//   - productId: The parent one-time product (ID) for which the offers should be
+//     read. May be specified as '-' to read all offers under an app.
+//   - purchaseOptionId: The parent purchase option (ID) for which the offers
+//     should be read. May be specified as '-' to read all offers under a
+//     one-time product or an app. Must be specified as '-' if product_id is
+//     specified as '-'.
+func (r *MonetizationOnetimeproductsPurchaseOptionsOffersService) List(packageName string, productId string, purchaseOptionId string) *MonetizationOnetimeproductsPurchaseOptionsOffersListCall {
+	c := &MonetizationOnetimeproductsPurchaseOptionsOffersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.purchaseOptionId = purchaseOptionId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// offers to return. The service may return fewer than this value. If
+// unspecified, at most 50 offers will be returned. The maximum value is 1000;
+// values above 1000 will be coerced to 1000.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersListCall) PageSize(pageSize int64) *MonetizationOnetimeproductsPurchaseOptionsOffersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListOneTimeProductsOffers` call. Provide this to retrieve
+// the subsequent page. When paginating, product_id, package_name and
+// purchase_option_id provided to `ListOneTimeProductsOffersRequest` must match
+// the call that provided the page token.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersListCall) PageToken(pageToken string) *MonetizationOnetimeproductsPurchaseOptionsOffersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersListCall) Fields(s ...googleapi.Field) *MonetizationOnetimeproductsPurchaseOptionsOffersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersListCall) IfNoneMatch(entityTag string) *MonetizationOnetimeproductsPurchaseOptionsOffersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersListCall) Context(ctx context.Context) *MonetizationOnetimeproductsPurchaseOptionsOffersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/oneTimeProducts/{productId}/purchaseOptions/{purchaseOptionId}/offers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":      c.packageName,
+		"productId":        c.productId,
+		"purchaseOptionId": c.purchaseOptionId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListOneTimeProductOffersResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersListCall) Do(opts ...googleapi.CallOption) (*ListOneTimeProductOffersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListOneTimeProductOffersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.monetization.onetimeproducts.purchaseOptions.offers.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *MonetizationOnetimeproductsPurchaseOptionsOffersListCall) Pages(ctx context.Context, f func(*ListOneTimeProductOffersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type MonetizationSubscriptionsArchiveCall struct {

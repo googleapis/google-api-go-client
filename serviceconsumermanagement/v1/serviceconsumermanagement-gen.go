@@ -3024,6 +3024,13 @@ func (s Page) MarshalJSON() ([]byte, error) {
 type PhpSettings struct {
 	// Common: Some settings.
 	Common *CommonLanguageSettings `json:"common,omitempty"`
+	// LibraryPackage: The package name to use in Php. Clobbers the php_namespace
+	// option set in the protobuf. This should be used **only** by APIs who have
+	// already set the language_settings.php.package_name" field in gapic.yaml. API
+	// teams should use the protobuf php_namespace option where possible. Example
+	// of a YAML configuration:: publishing: library_settings: php_settings:
+	// library_package: Google\Cloud\PubSub\V1
+	LibraryPackage string `json:"libraryPackage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Common") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

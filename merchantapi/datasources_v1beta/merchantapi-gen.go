@@ -475,7 +475,10 @@ type FileInput struct {
 	// manually in the Merchant Center.
 	//   "FETCH" - The file is fetched from the configured fetch_uri.
 	//   "GOOGLE_SHEETS" - The file is fetched from Google Sheets specified in the
-	// fetch_uri.
+	// fetch_uri. However, you can't set up `GOOGLE_SHEETS` as a data source
+	// through the API. To add `GOOGLE_SHEETS` as a data source through the
+	// Merchant Center, see [Add products to Merchant
+	// Center](https://support.google.com/merchants/answer/12158053).
 	FileInputType string `json:"fileInputType,omitempty"`
 	// FileName: Optional. The file name of the data source. Required for `UPLOAD`
 	// file input type.

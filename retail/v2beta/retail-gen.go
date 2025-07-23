@@ -5327,6 +5327,9 @@ func (s GoogleCloudRetailV2betaLocalInventory) MarshalJSON() ([]byte, error) {
 type GoogleCloudRetailV2betaMerchantCenterFeedFilter struct {
 	// DataSourceId: AFM data source ID.
 	DataSourceId int64 `json:"dataSourceId,omitempty,string"`
+	// PrimaryFeedId: Merchant Center primary feed ID. Deprecated: use
+	// data_source_id instead.
+	PrimaryFeedId int64 `json:"primaryFeedId,omitempty,string"`
 	// PrimaryFeedName: Merchant Center primary feed name. The name is used for the
 	// display purposes only.
 	PrimaryFeedName string `json:"primaryFeedName,omitempty"`
@@ -5755,6 +5758,41 @@ type GoogleCloudRetailV2betaOutputResult struct {
 
 func (s GoogleCloudRetailV2betaOutputResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaOutputResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaPanelInfo: Detailed panel information associated with
+// a user event.
+type GoogleCloudRetailV2betaPanelInfo struct {
+	// AttributionToken: Optional. The attribution token of the panel.
+	AttributionToken string `json:"attributionToken,omitempty"`
+	// DisplayName: Optional. The display name of the panel.
+	DisplayName string `json:"displayName,omitempty"`
+	// PanelId: Required. The panel ID.
+	PanelId string `json:"panelId,omitempty"`
+	// PanelPosition: Optional. The ordered position of the panel, if shown to the
+	// user with other panels. If set, then total_panels must also be set.
+	PanelPosition int64 `json:"panelPosition,omitempty"`
+	// ProductDetails: Optional. The product details associated with the panel.
+	ProductDetails []*GoogleCloudRetailV2betaProductDetail `json:"productDetails,omitempty"`
+	// TotalPanels: Optional. The total number of panels, including this one, shown
+	// to the user. Must be set if panel_position is set.
+	TotalPanels int64 `json:"totalPanels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttributionToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttributionToken") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaPanelInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaPanelInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9115,6 +9153,9 @@ type GoogleCloudRetailV2betaUserEvent struct {
 	// event reporting with JavaScript pixel and Google Tag Manager, this value is
 	// filled in automatically.
 	PageViewId string `json:"pageViewId,omitempty"`
+	// Panels: Optional. List of panels associated with this event. Used for
+	// panel-level impression data.
+	Panels []*GoogleCloudRetailV2betaPanelInfo `json:"panels,omitempty"`
 	// ProductDetails: The main product details related to the event. This field is
 	// optional except for the following event types: * `add-to-cart` *
 	// `detail-page-view` * `purchase-complete` In a `search` event, this field

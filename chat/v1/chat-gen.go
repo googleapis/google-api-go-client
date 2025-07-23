@@ -5491,6 +5491,18 @@ type Space struct {
 	// the original creation time. Only populated in the output when `spaceType` is
 	// `GROUP_CHAT` or `SPACE`.
 	CreateTime string `json:"createTime,omitempty"`
+	// Customer: Optional. Immutable. The customer id of the domain of the space.
+	// Required only when creating a space with app authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+	// and `SpaceType` is `SPACE`, otherwise should not be set. In the format
+	// `customers/{customer}`, where `customer` is the `id` from the Admin SDK
+	// customer resource (
+	// https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers).
+	// Private apps can also use the `customers/my_customer` alias to create the
+	// space in the same Google Workspace organization as the app. For DMs, this
+	// field isn't populated. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	Customer string `json:"customer,omitempty"`
 	// DisplayName: Optional. The space's display name. Required when creating a
 	// space
 	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces/create)
@@ -8863,7 +8875,10 @@ type SpacesMembersGetCall struct {
 // (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// with the authorization scope: - `https://www.googleapis.com/auth/chat.bot` -
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.bot` -
+// `https://www.googleapis.com/auth/chat.app.memberships` (requires
+// administrator approval (https://support.google.com/a?p=chat-app-auth)) -
 // User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // with one of the following authorization scopes: -
@@ -9016,7 +9031,10 @@ type SpacesMembersListCall struct {
 // (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// with the authorization scope: - `https://www.googleapis.com/auth/chat.bot` -
+// with one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.bot` -
+// `https://www.googleapis.com/auth/chat.app.memberships` (requires
+// administrator approval (https://support.google.com/a?p=chat-app-auth)) -
 // User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // with one of the following authorization scopes: -

@@ -3024,6 +3024,9 @@ type GoogleCloudRetailV2alphaConversationalSearchRequest struct {
 	// Query: Optional. Raw search query to be searched for. If this field is
 	// empty, the request is considered a category browsing request.
 	Query string `json:"query,omitempty"`
+	// SafetySettings: Optional. The safety settings to be applied to the generated
+	// content.
+	SafetySettings []*GoogleCloudRetailV2alphaSafetySetting `json:"safetySettings,omitempty"`
 	// SearchParams: Optional. Search parameters.
 	SearchParams *GoogleCloudRetailV2alphaConversationalSearchRequestSearchParams `json:"searchParams,omitempty"`
 	// UserInfo: Optional. User information.
@@ -5162,6 +5165,9 @@ func (s GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilte
 type GoogleCloudRetailV2alphaMerchantCenterFeedFilter struct {
 	// DataSourceId: AFM data source ID.
 	DataSourceId int64 `json:"dataSourceId,omitempty,string"`
+	// PrimaryFeedId: Merchant Center primary feed ID. Deprecated: use
+	// data_source_id instead.
+	PrimaryFeedId int64 `json:"primaryFeedId,omitempty,string"`
 	// PrimaryFeedName: Merchant Center primary feed name. The name is used for the
 	// display purposes only.
 	PrimaryFeedName string `json:"primaryFeedName,omitempty"`
@@ -5738,6 +5744,41 @@ type GoogleCloudRetailV2alphaOutputResult struct {
 
 func (s GoogleCloudRetailV2alphaOutputResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaOutputResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaPanelInfo: Detailed panel information associated
+// with a user event.
+type GoogleCloudRetailV2alphaPanelInfo struct {
+	// AttributionToken: Optional. The attribution token of the panel.
+	AttributionToken string `json:"attributionToken,omitempty"`
+	// DisplayName: Optional. The display name of the panel.
+	DisplayName string `json:"displayName,omitempty"`
+	// PanelId: Required. The panel ID.
+	PanelId string `json:"panelId,omitempty"`
+	// PanelPosition: Optional. The ordered position of the panel, if shown to the
+	// user with other panels. If set, then total_panels must also be set.
+	PanelPosition int64 `json:"panelPosition,omitempty"`
+	// ProductDetails: Optional. The product details associated with the panel.
+	ProductDetails []*GoogleCloudRetailV2alphaProductDetail `json:"productDetails,omitempty"`
+	// TotalPanels: Optional. The total number of panels, including this one, shown
+	// to the user. Must be set if panel_position is set.
+	TotalPanels int64 `json:"totalPanels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttributionToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttributionToken") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaPanelInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaPanelInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7585,6 +7626,58 @@ func (s GoogleCloudRetailV2alphaRuleTwowaySynonymsAction) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2alphaSafetySetting: Safety settings.
+type GoogleCloudRetailV2alphaSafetySetting struct {
+	// Category: Harm category.
+	//
+	// Possible values:
+	//   "HARM_CATEGORY_UNSPECIFIED" - The harm category is unspecified.
+	//   "HARM_CATEGORY_HATE_SPEECH" - The harm category is hate speech.
+	//   "HARM_CATEGORY_DANGEROUS_CONTENT" - The harm category is dangerous
+	// content.
+	//   "HARM_CATEGORY_HARASSMENT" - The harm category is harassment.
+	//   "HARM_CATEGORY_SEXUALLY_EXPLICIT" - The harm category is sexually explicit
+	// content.
+	//   "HARM_CATEGORY_CIVIC_INTEGRITY" - The harm category is civic integrity.
+	Category string `json:"category,omitempty"`
+	// Method: Optional. Specify if the threshold is used for probability or
+	// severity score. If not specified, the threshold is used for probability
+	// score.
+	//
+	// Possible values:
+	//   "HARM_BLOCK_METHOD_UNSPECIFIED" - The harm block method is unspecified.
+	//   "SEVERITY" - The harm block method uses both probability and severity
+	// scores.
+	//   "PROBABILITY" - The harm block method uses the probability score.
+	Method string `json:"method,omitempty"`
+	// Threshold: The harm block threshold.
+	//
+	// Possible values:
+	//   "HARM_BLOCK_THRESHOLD_UNSPECIFIED" - Unspecified harm block threshold.
+	//   "BLOCK_LOW_AND_ABOVE" - Block low threshold and above (i.e. block more).
+	//   "BLOCK_MEDIUM_AND_ABOVE" - Block medium threshold and above.
+	//   "BLOCK_ONLY_HIGH" - Block only high threshold (i.e. block less).
+	//   "BLOCK_NONE" - Block none.
+	//   "OFF" - Turn off the safety filter.
+	Threshold string `json:"threshold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaSafetySetting) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaSafetySetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2alphaSearchRequest: Request message for
 // SearchService.Search method.
 type GoogleCloudRetailV2alphaSearchRequest struct {
@@ -9180,6 +9273,9 @@ type GoogleCloudRetailV2alphaUserEvent struct {
 	// event reporting with JavaScript pixel and Google Tag Manager, this value is
 	// filled in automatically.
 	PageViewId string `json:"pageViewId,omitempty"`
+	// Panels: Optional. List of panels associated with this event. Used for
+	// panel-level impression data.
+	Panels []*GoogleCloudRetailV2alphaPanelInfo `json:"panels,omitempty"`
 	// ProductDetails: The main product details related to the event. This field is
 	// optional except for the following event types: * `add-to-cart` *
 	// `detail-page-view` * `purchase-complete` In a `search` event, this field

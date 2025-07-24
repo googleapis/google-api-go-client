@@ -1904,6 +1904,31 @@ func (s *GoogleCloudDiscoveryengineV1AnswerGenerationSpecUserDefinedClassifierSp
 	return nil
 }
 
+// GoogleCloudDiscoveryengineV1Assistant: Discovery Engine Assistant resource.
+type GoogleCloudDiscoveryengineV1Assistant struct {
+	// Name: Immutable. Resource name of the assistant. Format:
+	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
+	// gine}/assistants/{assistant}` It must be a UTF-8 encoded string with a
+	// length limit of 1024 characters.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1Assistant) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1Assistant
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1BatchCreateTargetSiteMetadata: Metadata related
 // to the progress of the SiteSearchEngineService.BatchCreateTargetSites
 // operation. This will be returned by the
@@ -2017,12 +2042,13 @@ func (s GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesResponse) MarshalJSON
 type GoogleCloudDiscoveryengineV1CmekConfig struct {
 	// IsDefault: Output only. The default CmekConfig for the Customer.
 	IsDefault bool `json:"isDefault,omitempty"`
-	// KmsKey: KMS key resource name which will be used to encrypt resources
+	// KmsKey: Required. KMS key resource name which will be used to encrypt
+	// resources
 	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
 	// }`.
 	KmsKey string `json:"kmsKey,omitempty"`
-	// KmsKeyVersion: KMS key version resource name which will be used to encrypt
-	// resources `/cryptoKeyVersions/{keyVersion}`.
+	// KmsKeyVersion: Output only. KMS key version resource name which will be used
+	// to encrypt resources `/cryptoKeyVersions/{keyVersion}`.
 	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
 	// LastRotationTimestampMicros: Output only. The timestamp of the last key
 	// rotation.
@@ -6392,12 +6418,13 @@ func (s GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesResponse) Marsha
 type GoogleCloudDiscoveryengineV1alphaCmekConfig struct {
 	// IsDefault: Output only. The default CmekConfig for the Customer.
 	IsDefault bool `json:"isDefault,omitempty"`
-	// KmsKey: KMS key resource name which will be used to encrypt resources
+	// KmsKey: Required. KMS key resource name which will be used to encrypt
+	// resources
 	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
 	// }`.
 	KmsKey string `json:"kmsKey,omitempty"`
-	// KmsKeyVersion: KMS key version resource name which will be used to encrypt
-	// resources `/cryptoKeyVersions/{keyVersion}`.
+	// KmsKeyVersion: Output only. KMS key version resource name which will be used
+	// to encrypt resources `/cryptoKeyVersions/{keyVersion}`.
 	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
 	// LastRotationTimestampMicros: Output only. The timestamp of the last key
 	// rotation.
@@ -9960,9 +9987,12 @@ func (s GoogleCloudDiscoveryengineV1alphaLanguageInfo) MarshalJSON() ([]byte, er
 // GoogleCloudDiscoveryengineV1alphaListSessionsRequest: Request for
 // ListSessions method.
 type GoogleCloudDiscoveryengineV1alphaListSessionsRequest struct {
-	// Filter: A filter to apply on the list results. The supported features are:
-	// user_pseudo_id, state, starred. Examples: "user_pseudo_id = some_id"
-	// "starred = true"
+	// Filter: A comma-separated list of fields to filter by, in EBNF grammar. The
+	// supported fields are: * `user_pseudo_id` * `state` * `display_name` *
+	// `starred` * `is_pinned` * `labels` * `create_time` * `update_time` Examples:
+	// "user_pseudo_id = some_id" "display_name = \"some_name\"" "starred = true"
+	// "is_pinned=true AND (NOT labels:hidden)" "create_time >
+	// \"1970-01-01T12:00:00Z\""
 	Filter string `json:"filter,omitempty"`
 	// OrderBy: A comma-separated list of fields to order by, sorted in ascending
 	// order. Use "desc" after a field name for descending. Supported fields: *
@@ -15277,6 +15307,11 @@ type GoogleCloudDiscoveryengineV1betaAssistAnswer struct {
 	// to answer because of a customer policy violation (e.g., the query or the
 	// answer contained a banned phrase).
 	AssistSkippedReasons []string `json:"assistSkippedReasons,omitempty"`
+	// Name: Immutable. Identifier. Resource name of the `AssistAnswer`. Format:
+	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
+	// gine}/sessions/{session}/assistAnswers/{assist_answer}` This field must be a
+	// UTF-8 encoded string with a length limit of 1024 characters.
+	Name string `json:"name,omitempty"`
 	// Replies: Replies of the assistant.
 	Replies []*GoogleCloudDiscoveryengineV1betaAssistAnswerReply `json:"replies,omitempty"`
 	// State: State of the answer generation.
@@ -16644,12 +16679,13 @@ func (s GoogleCloudDiscoveryengineV1betaCloudSqlSource) MarshalJSON() ([]byte, e
 type GoogleCloudDiscoveryengineV1betaCmekConfig struct {
 	// IsDefault: Output only. The default CmekConfig for the Customer.
 	IsDefault bool `json:"isDefault,omitempty"`
-	// KmsKey: KMS key resource name which will be used to encrypt resources
+	// KmsKey: Required. KMS key resource name which will be used to encrypt
+	// resources
 	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
 	// }`.
 	KmsKey string `json:"kmsKey,omitempty"`
-	// KmsKeyVersion: KMS key version resource name which will be used to encrypt
-	// resources `/cryptoKeyVersions/{keyVersion}`.
+	// KmsKeyVersion: Output only. KMS key version resource name which will be used
+	// to encrypt resources `/cryptoKeyVersions/{keyVersion}`.
 	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
 	// LastRotationTimestampMicros: Output only. The timestamp of the last key
 	// rotation.
@@ -21449,6 +21485,8 @@ type GoogleCloudDiscoveryengineV1betaProvisionProjectRequest struct {
 	// would like to give consent to. Acceptable version is `2022-11-23`, and this
 	// may change over time.
 	DataUseTermsVersion string `json:"dataUseTermsVersion,omitempty"`
+	// SaasParams: Optional. Parameters for Agentspace.
+	SaasParams *GoogleCloudDiscoveryengineV1betaProvisionProjectRequestSaasParams `json:"saasParams,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AcceptDataUseTerms") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -21464,6 +21502,31 @@ type GoogleCloudDiscoveryengineV1betaProvisionProjectRequest struct {
 
 func (s GoogleCloudDiscoveryengineV1betaProvisionProjectRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaProvisionProjectRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaProvisionProjectRequestSaasParams:
+// Parameters for Agentspace.
+type GoogleCloudDiscoveryengineV1betaProvisionProjectRequestSaasParams struct {
+	// AcceptBizQos: Optional. Set to `true` to specify that caller has read and
+	// would like to give consent to the [Terms for Agent Space quality of
+	// service].
+	AcceptBizQos bool `json:"acceptBizQos,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AcceptBizQos") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcceptBizQos") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaProvisionProjectRequestSaasParams) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaProvisionProjectRequestSaasParams
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -21927,7 +21990,7 @@ type GoogleCloudDiscoveryengineV1betaRankRequest struct {
 	Model string `json:"model,omitempty"`
 	// Query: The query to use.
 	Query string `json:"query,omitempty"`
-	// Records: Required. A list of records to rank. At most 200 records to rank.
+	// Records: Required. A list of records to rank.
 	Records []*GoogleCloudDiscoveryengineV1betaRankingRecord `json:"records,omitempty"`
 	// TopN: The number of results to return. If this is unset or no bigger than
 	// zero, returns all results.
@@ -25660,9 +25723,6 @@ func (s GoogleCloudDiscoveryengineV1betaStreamAssistRequestGenerationSpec) Marsh
 type GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpec struct {
 	// ImageGenerationSpec: Optional. Specification of the image generation tool.
 	ImageGenerationSpec *GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecImageGenerationSpec `json:"imageGenerationSpec,omitempty"`
-	// ToolRegistry: Optional. The name of the tool registry to use. Format:
-	// `projects/{project}/locations/{location}/toolRegistries/{tool_registry}`
-	ToolRegistry string `json:"toolRegistry,omitempty"`
 	// VertexAiSearchSpec: Optional. Specification of the Vertex AI Search tool.
 	VertexAiSearchSpec *GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecVertexAiSearchSpec `json:"vertexAiSearchSpec,omitempty"`
 	// VideoGenerationSpec: Optional. Specification of the video generation tool.
@@ -25702,10 +25762,6 @@ type GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecVertexAiSearchS
 	// call and configurations for those data stores. This is only considered for
 	// Engines with multiple data stores.
 	DataStoreSpecs []*GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
-	// Disabled: Optional. Deprecated. Please refrain from using this field.
-	// Whether the Vertex AI Search tool is disabled. Default value is false, the
-	// tool is enabled by default.
-	Disabled bool `json:"disabled,omitempty"`
 	// Filter: Optional. The filter syntax consists of an expression language for
 	// constructing a predicate from one or more fields of the documents being
 	// filtered. Filter expression is case-sensitive. If this field is
@@ -25745,25 +25801,6 @@ type GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecVideoGeneration
 //
 //	Specification of the web grounding tool.
 type GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecWebGroundingSpec struct {
-	// Enabled: Optional. Deprecated. Please refrain from using this field. Whether
-	// the web grounding tool is enabled.
-	Enabled bool `json:"enabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Enabled") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecWebGroundingSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpecWebGroundingSpec
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1betaStreamAssistResponse: Response for the
@@ -35262,9 +35299,12 @@ func (r *ProjectsLocationsCollectionsDataStoresSessionsService) List(parent stri
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter to apply on the list
-// results. The supported features are: user_pseudo_id, state, starred.
-// Examples: "user_pseudo_id = some_id" "starred = true"
+// Filter sets the optional parameter "filter": A comma-separated list of
+// fields to filter by, in EBNF grammar. The supported fields are: *
+// `user_pseudo_id` * `state` * `display_name` * `starred` * `is_pinned` *
+// `labels` * `create_time` * `update_time` Examples: "user_pseudo_id =
+// some_id" "display_name = \"some_name\"" "starred = true" "is_pinned=true AND
+// (NOT labels:hidden)" "create_time > \"1970-01-01T12:00:00Z\""
 func (c *ProjectsLocationsCollectionsDataStoresSessionsListCall) Filter(filter string) *ProjectsLocationsCollectionsDataStoresSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -42606,9 +42646,12 @@ func (r *ProjectsLocationsCollectionsEnginesSessionsService) List(parent string)
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter to apply on the list
-// results. The supported features are: user_pseudo_id, state, starred.
-// Examples: "user_pseudo_id = some_id" "starred = true"
+// Filter sets the optional parameter "filter": A comma-separated list of
+// fields to filter by, in EBNF grammar. The supported fields are: *
+// `user_pseudo_id` * `state` * `display_name` * `starred` * `is_pinned` *
+// `labels` * `create_time` * `update_time` Examples: "user_pseudo_id =
+// some_id" "display_name = \"some_name\"" "starred = true" "is_pinned=true AND
+// (NOT labels:hidden)" "create_time > \"1970-01-01T12:00:00Z\""
 func (c *ProjectsLocationsCollectionsEnginesSessionsListCall) Filter(filter string) *ProjectsLocationsCollectionsEnginesSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -49595,9 +49638,12 @@ func (r *ProjectsLocationsDataStoresSessionsService) List(parent string) *Projec
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter to apply on the list
-// results. The supported features are: user_pseudo_id, state, starred.
-// Examples: "user_pseudo_id = some_id" "starred = true"
+// Filter sets the optional parameter "filter": A comma-separated list of
+// fields to filter by, in EBNF grammar. The supported fields are: *
+// `user_pseudo_id` * `state` * `display_name` * `starred` * `is_pinned` *
+// `labels` * `create_time` * `update_time` Examples: "user_pseudo_id =
+// some_id" "display_name = \"some_name\"" "starred = true" "is_pinned=true AND
+// (NOT labels:hidden)" "create_time > \"1970-01-01T12:00:00Z\""
 func (c *ProjectsLocationsDataStoresSessionsListCall) Filter(filter string) *ProjectsLocationsDataStoresSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

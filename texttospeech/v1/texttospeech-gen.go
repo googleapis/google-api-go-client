@@ -253,7 +253,8 @@ type AudioConfig struct {
 	// AudioEncoding: Required. The format of the audio byte stream.
 	//
 	// Possible values:
-	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified. Will return result
+	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified. Only used by
+	// GenerateVoiceCloningKey. Otherwise, will return result
 	// google.rpc.Code.INVALID_ARGUMENT.
 	//   "LINEAR16" - Uncompressed 16-bit signed little-endian samples (Linear
 	// PCM). Audio content returned as LINEAR16 also contains a WAV header.

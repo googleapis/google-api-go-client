@@ -688,10 +688,12 @@ func (s ActionStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Annotation: Output only. Annotations associated with the plain-text body of
-// the message. To add basic formatting to a text message, see Format text
-// messages (https://developers.google.com/workspace/chat/format-messages).
-// Example plain-text message body: ``` Hello @FooBot how are you!" ``` The
+// Annotation: Annotations can be associated with the plain-text body of the
+// message or with chips that link to Google Workspace resources like Google
+// Docs or Sheets with a `start_index` and `length` of 0. To add basic
+// formatting to a text message, see Format text messages
+// (https://developers.google.com/workspace/chat/format-messages). Example
+// plain-text message body: ``` Hello @FooBot how are you!" ``` The
 // corresponding annotations metadata: ``` "annotations":[{
 // "type":"USER_MENTION", "startIndex":6, "length":7, "userMention": { "user":
 // { "name":"users/{user}", "displayName":"FooBot",
@@ -701,7 +703,7 @@ type Annotation struct {
 	// CustomEmojiMetadata: The metadata for a custom emoji.
 	CustomEmojiMetadata *CustomEmojiMetadata `json:"customEmojiMetadata,omitempty"`
 	// Length: Length of the substring in the plain-text message body this
-	// annotation corresponds to.
+	// annotation corresponds to. If not present, indicates a length of 0.
 	Length int64 `json:"length,omitempty"`
 	// RichLinkMetadata: The metadata for a rich link.
 	RichLinkMetadata *RichLinkMetadata `json:"richLinkMetadata,omitempty"`
@@ -895,6 +897,34 @@ type Button struct {
 
 func (s Button) MarshalJSON() ([]byte, error) {
 	type NoMethod Button
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CalendarEventLinkData: Data for Calendar event links.
+type CalendarEventLinkData struct {
+	// CalendarId: The Calendar identifier
+	// (https://developers.google.com/workspace/calendar/api/v3/reference/calendars)
+	// of the linked Calendar.
+	CalendarId string `json:"calendarId,omitempty"`
+	// EventId: The Event identifier
+	// (https://developers.google.com/workspace/calendar/api/v3/reference/events)
+	// of the linked Calendar event.
+	EventId string `json:"eventId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CalendarId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CalendarId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CalendarEventLinkData) MarshalJSON() ([]byte, error) {
+	type NoMethod CalendarEventLinkData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4425,6 +4455,46 @@ func (s Media) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MeetSpaceLinkData: Data for Meet space links.
+type MeetSpaceLinkData struct {
+	// HuddleStatus: Optional. Output only. If the Meet is a Huddle, indicates the
+	// status of the huddle. Otherwise, this is unset.
+	//
+	// Possible values:
+	//   "HUDDLE_STATUS_UNSPECIFIED" - Default value for the enum. Don't use.
+	//   "STARTED" - The huddle has started.
+	//   "ENDED" - The huddle has ended. In this case the meet space URI and
+	// identifiers will no longer be valid.
+	//   "MISSED" - The huddle has been missed. In this case the meet space URI and
+	// identifiers will no longer be valid.
+	HuddleStatus string `json:"huddleStatus,omitempty"`
+	// MeetingCode: Meeting code of the linked Meet space.
+	MeetingCode string `json:"meetingCode,omitempty"`
+	// Type: Indicates the type of the Meet space.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value for the enum. Don't use.
+	//   "MEETING" - The meet space is a meeting.
+	//   "HUDDLE" - The meet space is a huddle.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HuddleStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HuddleStatus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MeetSpaceLinkData) MarshalJSON() ([]byte, error) {
+	type NoMethod MeetSpaceLinkData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Membership: Represents a membership relation in Google Chat, such as whether
 // a user or Chat app is invited to, part of, or absent from a space.
 type Membership struct {
@@ -4680,8 +4750,9 @@ type Message struct {
 	// ActionResponse: Input only. Parameters that a Chat app can use to configure
 	// how its response is posted.
 	ActionResponse *ActionResponse `json:"actionResponse,omitempty"`
-	// Annotations: Output only. Annotations associated with the `text` in this
-	// message.
+	// Annotations: Output only. Annotations can be associated with the plain-text
+	// body of the message or with chips that link to Google Workspace resources
+	// like Google Docs or Sheets with a `start_index` and `length` of 0.
 	Annotations []*Annotation `json:"annotations,omitempty"`
 	// ArgumentText: Output only. Plain-text body of the message with all Chat app
 	// mentions stripped out.
@@ -5233,12 +5304,19 @@ func (s ReactionDeletedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RichLinkMetadata: A rich link to a resource.
+// RichLinkMetadata: A rich link to a resource. Rich links can be associated
+// with the plain-text body of the message or represent chips that link to
+// Google Workspace resources like Google Docs or Sheets with a with
+// `start_index` and `length` of 0.
 type RichLinkMetadata struct {
+	// CalendarEventLinkData: Data for a calendar event link.
+	CalendarEventLinkData *CalendarEventLinkData `json:"calendarEventLinkData,omitempty"`
 	// ChatSpaceLinkData: Data for a chat space link.
 	ChatSpaceLinkData *ChatSpaceLinkData `json:"chatSpaceLinkData,omitempty"`
 	// DriveLinkData: Data for a drive link.
 	DriveLinkData *DriveLinkData `json:"driveLinkData,omitempty"`
+	// MeetSpaceLinkData: Data for a meet space link.
+	MeetSpaceLinkData *MeetSpaceLinkData `json:"meetSpaceLinkData,omitempty"`
 	// RichLinkType: The rich link type.
 	//
 	// Possible values:
@@ -5246,18 +5324,21 @@ type RichLinkMetadata struct {
 	//   "DRIVE_FILE" - A Google Drive rich link type.
 	//   "CHAT_SPACE" - A Chat space rich link type. For example, a space smart
 	// chip.
+	//   "MEET_SPACE" - A Meet message rich link type. For example, a Meet chip.
+	//   "CALENDAR_EVENT" - A Calendar message rich link type. For example, a
+	// Calendar chip.
 	RichLinkType string `json:"richLinkType,omitempty"`
 	// Uri: The URI of this link.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChatSpaceLinkData") to
+	// ForceSendFields is a list of field names (e.g. "CalendarEventLinkData") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChatSpaceLinkData") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CalendarEventLinkData") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

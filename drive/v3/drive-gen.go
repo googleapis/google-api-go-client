@@ -1034,8 +1034,9 @@ func (s DownloadRestriction) MarshalJSON() ([]byte, error) {
 
 // DownloadRestrictionsMetadata: Download restrictions applied to the file.
 type DownloadRestrictionsMetadata struct {
-	// EffectiveDownloadRestrictionWithContext: The effective download restriction
-	// applied to this file. This considers all restriction settings and DLP rules.
+	// EffectiveDownloadRestrictionWithContext: Output only. The effective download
+	// restriction applied to this file. This considers all restriction settings
+	// and DLP rules.
 	EffectiveDownloadRestrictionWithContext *DownloadRestriction `json:"effectiveDownloadRestrictionWithContext,omitempty"`
 	// ItemDownloadRestriction: The download restriction of the file applied
 	// directly by the owner or organizer. This does not take into account shared
@@ -1628,7 +1629,7 @@ type FileCapabilities struct {
 	// can change the `copyRequiresWriterPermission` restriction of this file.
 	CanChangeCopyRequiresWriterPermission bool `json:"canChangeCopyRequiresWriterPermission,omitempty"`
 	// CanChangeItemDownloadRestriction: Output only. Whether the current user can
-	// change the owner-applied download restrictions of the file.
+	// change the owner or organizer-applied download restrictions of the file.
 	CanChangeItemDownloadRestriction bool `json:"canChangeItemDownloadRestriction,omitempty"`
 	// CanChangeSecurityUpdateEnabled: Output only. Whether the current user can
 	// change the securityUpdateEnabled field on link share metadata.

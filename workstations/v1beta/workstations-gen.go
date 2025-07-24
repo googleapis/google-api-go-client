@@ -1944,6 +1944,9 @@ func (s Workstation) MarshalJSON() ([]byte, error) {
 type WorkstationBoostConfig struct {
 	// Id: Output only. Boost configuration ID.
 	Id string `json:"id,omitempty"`
+	// Running: Output only. Whether or not the current workstation is actively
+	// boosted with this id.
+	Running bool `json:"running,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

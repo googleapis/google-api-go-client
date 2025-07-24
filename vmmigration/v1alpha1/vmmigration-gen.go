@@ -1264,7 +1264,7 @@ type ComputeEngineTargetDefaults struct {
 	// SecureBoot: Defines whether the instance has Secure Boot enabled. This can
 	// be set to true only if the VM boot option is EFI.
 	SecureBoot bool `json:"secureBoot,omitempty"`
-	// ServiceAccount: The service account to associate the VM with.
+	// ServiceAccount: Optional. The service account to associate the VM with.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// TargetProject: The full path of the resource of type TargetProject which
 	// represents the Compute Engine project in which to create this VM.

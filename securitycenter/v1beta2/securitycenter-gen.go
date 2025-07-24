@@ -1205,6 +1205,39 @@ func (s CloudArmor) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CloudControl: CloudControl associated with the finding.
+type CloudControl struct {
+	// CloudControlName: Name of the CloudControl associated with the finding.
+	CloudControlName string `json:"cloudControlName,omitempty"`
+	// PolicyType: Policy type of the CloudControl
+	PolicyType string `json:"policyType,omitempty"`
+	// Type: Type of cloud control.
+	//
+	// Possible values:
+	//   "CLOUD_CONTROL_TYPE_UNSPECIFIED" - Unspecified.
+	//   "BUILT_IN" - Built in Cloud Control.
+	//   "CUSTOM" - Custom Cloud Control.
+	Type string `json:"type,omitempty"`
+	// Version: Version of the Cloud Control
+	Version int64 `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudControlName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudControlName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudControl) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudControl
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CloudDlpDataProfile: The data profile
 // (https://cloud.google.com/dlp/docs/data-profiles) associated with the
 // finding.
@@ -1331,6 +1364,35 @@ type Compliance struct {
 
 func (s Compliance) MarshalJSON() ([]byte, error) {
 	type NoMethod Compliance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ComplianceDetails: Compliance Details associated with the finding.
+type ComplianceDetails struct {
+	// CloudControl: CloudControl associated with the finding
+	CloudControl *CloudControl `json:"cloudControl,omitempty"`
+	// CloudControlDeploymentNames: Cloud Control Deployments associated with the
+	// finding. For example,
+	// organizations/123/locations/global/cloudControlDeployments/deploymentIdentifi
+	// er
+	CloudControlDeploymentNames []string `json:"cloudControlDeploymentNames,omitempty"`
+	// Frameworks: Details of Frameworks associated with the finding
+	Frameworks []*Framework `json:"frameworks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudControl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudControl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComplianceDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ComplianceDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1532,6 +1594,30 @@ type ContainerThreatDetectionSettings struct {
 
 func (s ContainerThreatDetectionSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerThreatDetectionSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Control: Compliance control associated with the finding.
+type Control struct {
+	// ControlName: Name of the Control
+	ControlName string `json:"controlName,omitempty"`
+	// DisplayName: Display name of the control. For example, AU-02.
+	DisplayName string `json:"displayName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ControlName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ControlName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Control) MarshalJSON() ([]byte, error) {
+	type NoMethod Control
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2469,6 +2555,8 @@ type Finding struct {
 	// CloudDlpInspection: Cloud Data Loss Prevention (Cloud DLP) inspection
 	// results that are associated with the finding.
 	CloudDlpInspection *CloudDlpInspection `json:"cloudDlpInspection,omitempty"`
+	// ComplianceDetails: Details about the compliance implications of the finding.
+	ComplianceDetails *ComplianceDetails `json:"complianceDetails,omitempty"`
 	// Compliances: Contains compliance information for security standards
 	// associated to the finding.
 	Compliances []*Compliance `json:"compliances,omitempty"`
@@ -2742,6 +2830,55 @@ type Folder struct {
 
 func (s Folder) MarshalJSON() ([]byte, error) {
 	type NoMethod Folder
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Framework: Compliance framework associated with the finding.
+type Framework struct {
+	// Category: Category of the framework associated with the finding. E.g.
+	// Security Benchmark, or Assured Workloads
+	//
+	// Possible values:
+	//   "FRAMEWORK_CATEGORY_UNSPECIFIED" - Default value. This value is unused.
+	//   "SECURITY_BENCHMARKS" - Security Benchmarks framework
+	//   "ASSURED_WORKLOADS" - Assured Workloads framework
+	//   "DATA_SECURITY" - Data Security framework
+	//   "GOOGLE_BEST_PRACTICES" - Google Best Practices framework
+	Category []string `json:"category,omitempty"`
+	// Controls: The controls associated with the framework.
+	Controls []*Control `json:"controls,omitempty"`
+	// DisplayName: Display name of the framework. For a standard framework, this
+	// will look like e.g. PCI DSS 3.2.1, whereas for a custom framework it can be
+	// a user defined string like MyFramework
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Name of the framework associated with the finding
+	Name string `json:"name,omitempty"`
+	// Type: Type of the framework associated with the finding, to specify whether
+	// the framework is built-in (pre-defined and immutable) or a custom framework
+	// defined by the customer (equivalent to security posture)
+	//
+	// Possible values:
+	//   "FRAMEWORK_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "FRAMEWORK_TYPE_BUILT_IN" - The framework is a built-in framework if it is
+	// created and managed by GCP.
+	//   "FRAMEWORK_TYPE_CUSTOM" - The framework is a custom framework if it is
+	// created and managed by the user.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Framework) MarshalJSON() ([]byte, error) {
+	type NoMethod Framework
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4688,6 +4825,40 @@ func (s GoogleCloudSecuritycenterV2CloudArmor) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2CloudControl: CloudControl associated with the
+// finding.
+type GoogleCloudSecuritycenterV2CloudControl struct {
+	// CloudControlName: Name of the CloudControl associated with the finding.
+	CloudControlName string `json:"cloudControlName,omitempty"`
+	// PolicyType: Policy type of the CloudControl
+	PolicyType string `json:"policyType,omitempty"`
+	// Type: Type of cloud control.
+	//
+	// Possible values:
+	//   "CLOUD_CONTROL_TYPE_UNSPECIFIED" - Unspecified.
+	//   "BUILT_IN" - Built in Cloud Control.
+	//   "CUSTOM" - Custom Cloud Control.
+	Type string `json:"type,omitempty"`
+	// Version: Version of the Cloud Control
+	Version int64 `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudControlName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudControlName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2CloudControl) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2CloudControl
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2CloudDlpDataProfile: The data profile
 // (https://cloud.google.com/dlp/docs/data-profiles) associated with the
 // finding.
@@ -4819,6 +4990,36 @@ func (s GoogleCloudSecuritycenterV2Compliance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2ComplianceDetails: Compliance Details associated
+// with the finding.
+type GoogleCloudSecuritycenterV2ComplianceDetails struct {
+	// CloudControl: CloudControl associated with the finding
+	CloudControl *GoogleCloudSecuritycenterV2CloudControl `json:"cloudControl,omitempty"`
+	// CloudControlDeploymentNames: Cloud Control Deployments associated with the
+	// finding. For example,
+	// organizations/123/locations/global/cloudControlDeployments/deploymentIdentifi
+	// er
+	CloudControlDeploymentNames []string `json:"cloudControlDeploymentNames,omitempty"`
+	// Frameworks: Details of Frameworks associated with the finding
+	Frameworks []*GoogleCloudSecuritycenterV2Framework `json:"frameworks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudControl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudControl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2ComplianceDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2ComplianceDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2Connection: Contains information about the IP
 // connection associated with the finding.
 type GoogleCloudSecuritycenterV2Connection struct {
@@ -4934,6 +5135,31 @@ type GoogleCloudSecuritycenterV2Container struct {
 
 func (s GoogleCloudSecuritycenterV2Container) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Container
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2Control: Compliance control associated with the
+// finding.
+type GoogleCloudSecuritycenterV2Control struct {
+	// ControlName: Name of the Control
+	ControlName string `json:"controlName,omitempty"`
+	// DisplayName: Display name of the control. For example, AU-02.
+	DisplayName string `json:"displayName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ControlName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ControlName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2Control) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2Control
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5792,6 +6018,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// CloudDlpInspection: Cloud Data Loss Prevention (Cloud DLP) inspection
 	// results that are associated with the finding.
 	CloudDlpInspection *GoogleCloudSecuritycenterV2CloudDlpInspection `json:"cloudDlpInspection,omitempty"`
+	// ComplianceDetails: Details about the compliance implications of the finding.
+	ComplianceDetails *GoogleCloudSecuritycenterV2ComplianceDetails `json:"complianceDetails,omitempty"`
 	// Compliances: Contains compliance information for security standards
 	// associated to the finding.
 	Compliances []*GoogleCloudSecuritycenterV2Compliance `json:"compliances,omitempty"`
@@ -6075,6 +6303,56 @@ type GoogleCloudSecuritycenterV2Folder struct {
 
 func (s GoogleCloudSecuritycenterV2Folder) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Folder
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2Framework: Compliance framework associated with
+// the finding.
+type GoogleCloudSecuritycenterV2Framework struct {
+	// Category: Category of the framework associated with the finding. E.g.
+	// Security Benchmark, or Assured Workloads
+	//
+	// Possible values:
+	//   "FRAMEWORK_CATEGORY_UNSPECIFIED" - Default value. This value is unused.
+	//   "SECURITY_BENCHMARKS" - Security Benchmarks framework
+	//   "ASSURED_WORKLOADS" - Assured Workloads framework
+	//   "DATA_SECURITY" - Data Security framework
+	//   "GOOGLE_BEST_PRACTICES" - Google Best Practices framework
+	Category []string `json:"category,omitempty"`
+	// Controls: The controls associated with the framework.
+	Controls []*GoogleCloudSecuritycenterV2Control `json:"controls,omitempty"`
+	// DisplayName: Display name of the framework. For a standard framework, this
+	// will look like e.g. PCI DSS 3.2.1, whereas for a custom framework it can be
+	// a user defined string like MyFramework
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Name of the framework associated with the finding
+	Name string `json:"name,omitempty"`
+	// Type: Type of the framework associated with the finding, to specify whether
+	// the framework is built-in (pre-defined and immutable) or a custom framework
+	// defined by the customer (equivalent to security posture)
+	//
+	// Possible values:
+	//   "FRAMEWORK_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "FRAMEWORK_TYPE_BUILT_IN" - The framework is a built-in framework if it is
+	// created and managed by GCP.
+	//   "FRAMEWORK_TYPE_CUSTOM" - The framework is a custom framework if it is
+	// created and managed by the user.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2Framework) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2Framework
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7925,7 +8203,7 @@ type GoogleCloudSecuritycenterV2Resource struct {
 	CloudProvider string `json:"cloudProvider,omitempty"`
 	// DisplayName: The human readable name of the resource.
 	DisplayName string `json:"displayName,omitempty"`
-	// GcpMetadata: The GCP metadata associated with the finding.
+	// GcpMetadata: The Google Cloud metadata associated with the finding.
 	GcpMetadata *GcpMetadata `json:"gcpMetadata,omitempty"`
 	// Location: The region or location of the service (if applicable).
 	Location string `json:"location,omitempty"`

@@ -1641,6 +1641,8 @@ type ReplicaConfig struct {
 	//   "PEER_INSTANCE_UNREACHABLE" - The peer instance is unreachable.
 	//   "REMOVE_FAILED" - The remove replica peer instance operation failed.
 	StateReasons []string `json:"stateReasons,omitempty"`
+	// StateUpdateTime: Output only. The time when the replica state was updated.
+	StateUpdateTime string `json:"stateUpdateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastActiveSyncTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

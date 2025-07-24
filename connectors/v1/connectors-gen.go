@@ -7391,6 +7391,15 @@ func (r *ProjectsLocationsConnectionsService) Delete(name string) *ProjectsLocat
 	return c
 }
 
+// Force sets the optional parameter "force": If set to true, any child
+// EndUserAuthentication/EventSubscription resources will also be deleted.
+// Otherwise, the request will fail if the connection has any children.
+// Followed the best practice from https://aip.dev/135#cascading-delete
+func (c *ProjectsLocationsConnectionsDeleteCall) Force(force bool) *ProjectsLocationsConnectionsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.

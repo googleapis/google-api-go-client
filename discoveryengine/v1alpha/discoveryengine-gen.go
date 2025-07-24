@@ -703,6 +703,7 @@ type ProjectsLocationsCollectionsEnginesServingConfigsService struct {
 func NewProjectsLocationsCollectionsEnginesSessionsService(s *Service) *ProjectsLocationsCollectionsEnginesSessionsService {
 	rs := &ProjectsLocationsCollectionsEnginesSessionsService{s: s}
 	rs.Answers = NewProjectsLocationsCollectionsEnginesSessionsAnswersService(s)
+	rs.Files = NewProjectsLocationsCollectionsEnginesSessionsFilesService(s)
 	return rs
 }
 
@@ -710,6 +711,8 @@ type ProjectsLocationsCollectionsEnginesSessionsService struct {
 	s *Service
 
 	Answers *ProjectsLocationsCollectionsEnginesSessionsAnswersService
+
+	Files *ProjectsLocationsCollectionsEnginesSessionsFilesService
 }
 
 func NewProjectsLocationsCollectionsEnginesSessionsAnswersService(s *Service) *ProjectsLocationsCollectionsEnginesSessionsAnswersService {
@@ -718,6 +721,15 @@ func NewProjectsLocationsCollectionsEnginesSessionsAnswersService(s *Service) *P
 }
 
 type ProjectsLocationsCollectionsEnginesSessionsAnswersService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCollectionsEnginesSessionsFilesService(s *Service) *ProjectsLocationsCollectionsEnginesSessionsFilesService {
+	rs := &ProjectsLocationsCollectionsEnginesSessionsFilesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesSessionsFilesService struct {
 	s *Service
 }
 
@@ -2722,6 +2734,31 @@ func (s *GoogleCloudDiscoveryengineV1AnswerGenerationSpecUserDefinedClassifierSp
 	return nil
 }
 
+// GoogleCloudDiscoveryengineV1Assistant: Discovery Engine Assistant resource.
+type GoogleCloudDiscoveryengineV1Assistant struct {
+	// Name: Immutable. Resource name of the assistant. Format:
+	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
+	// gine}/assistants/{assistant}` It must be a UTF-8 encoded string with a
+	// length limit of 1024 characters.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1Assistant) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1Assistant
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1BatchCreateTargetSiteMetadata: Metadata related
 // to the progress of the SiteSearchEngineService.BatchCreateTargetSites
 // operation. This will be returned by the
@@ -2835,12 +2872,13 @@ func (s GoogleCloudDiscoveryengineV1BatchUpdateUserLicensesResponse) MarshalJSON
 type GoogleCloudDiscoveryengineV1CmekConfig struct {
 	// IsDefault: Output only. The default CmekConfig for the Customer.
 	IsDefault bool `json:"isDefault,omitempty"`
-	// KmsKey: KMS key resource name which will be used to encrypt resources
+	// KmsKey: Required. KMS key resource name which will be used to encrypt
+	// resources
 	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
 	// }`.
 	KmsKey string `json:"kmsKey,omitempty"`
-	// KmsKeyVersion: KMS key version resource name which will be used to encrypt
-	// resources `/cryptoKeyVersions/{keyVersion}`.
+	// KmsKeyVersion: Output only. KMS key version resource name which will be used
+	// to encrypt resources `/cryptoKeyVersions/{keyVersion}`.
 	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
 	// LastRotationTimestampMicros: Output only. The timestamp of the last key
 	// rotation.
@@ -8572,6 +8610,11 @@ type GoogleCloudDiscoveryengineV1alphaAssistAnswer struct {
 	// to answer because of a customer policy violation (e.g., the query or the
 	// answer contained a banned phrase).
 	AssistSkippedReasons []string `json:"assistSkippedReasons,omitempty"`
+	// Name: Immutable. Identifier. Resource name of the `AssistAnswer`. Format:
+	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
+	// gine}/sessions/{session}/assistAnswers/{assist_answer}` This field must be a
+	// UTF-8 encoded string with a length limit of 1024 characters.
+	Name string `json:"name,omitempty"`
 	// Replies: Replies of the assistant.
 	Replies []*GoogleCloudDiscoveryengineV1alphaAssistAnswerReply `json:"replies,omitempty"`
 	// State: State of the answer generation.
@@ -10084,12 +10127,13 @@ func (s GoogleCloudDiscoveryengineV1alphaCloudSqlSource) MarshalJSON() ([]byte, 
 type GoogleCloudDiscoveryengineV1alphaCmekConfig struct {
 	// IsDefault: Output only. The default CmekConfig for the Customer.
 	IsDefault bool `json:"isDefault,omitempty"`
-	// KmsKey: KMS key resource name which will be used to encrypt resources
+	// KmsKey: Required. KMS key resource name which will be used to encrypt
+	// resources
 	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
 	// }`.
 	KmsKey string `json:"kmsKey,omitempty"`
-	// KmsKeyVersion: KMS key version resource name which will be used to encrypt
-	// resources `/cryptoKeyVersions/{keyVersion}`.
+	// KmsKeyVersion: Output only. KMS key version resource name which will be used
+	// to encrypt resources `/cryptoKeyVersions/{keyVersion}`.
 	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
 	// LastRotationTimestampMicros: Output only. The timestamp of the last key
 	// rotation.
@@ -14114,6 +14158,148 @@ func (s GoogleCloudDiscoveryengineV1alphaFieldConfig) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaFileCharacteristics: Caracteristics of
+// other file types.
+type GoogleCloudDiscoveryengineV1alphaFileCharacteristics struct {
+	// Characteristics: Output only. Generic map of characteristics.
+	Characteristics map[string]string `json:"characteristics,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Characteristics") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Characteristics") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaFileCharacteristics) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaFileCharacteristics
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaFileMetadata: Represents a file attached to
+// a session (context file)
+type GoogleCloudDiscoveryengineV1alphaFileMetadata struct {
+	// ByteSize: Output only. The size of the context file in bytes.
+	ByteSize int64 `json:"byteSize,omitempty,string"`
+	// DownloadUri: Output only. The AssistantService.DownloadSessionFile URL to
+	// download the file. This URL will need the same credentials as
+	// AssistantService.ListSessionFileMetadata method and will provide the
+	// resource.
+	DownloadUri string `json:"downloadUri,omitempty"`
+	// FileId: Output only. The ID of the file.
+	FileId string `json:"fileId,omitempty"`
+	// FileOriginType: Optional. The origin of the file.
+	//
+	// Possible values:
+	//   "FILE_ORIGIN_TYPE_UNSPECIFIED" - Default value.
+	//   "USER_PROVIDED" - The file was provided by the user.
+	//   "AI_GENERATED" - The file was generated by an AI model.
+	//   "INTERNALLY_GENERATED" - The file was generated from other files by an
+	// internal process.
+	FileOriginType string `json:"fileOriginType,omitempty"`
+	// LastAddTime: Output only. The time the file was added to the session. Note
+	// that if a file was added, then modified externally, then added again, the
+	// add time will be updated.
+	LastAddTime string `json:"lastAddTime,omitempty"`
+	// Metadata: Optional. Represents metadata related to the file that can suit
+	// particular use cases. The prefix "google." is reserved for the key for use
+	// by Google, but other prefixes can be freely used.
+	Metadata map[string]string `json:"metadata,omitempty"`
+	// MimeType: The content type of the file, see
+	// https://www.iana.org/assignments/media-types/media-types.xhtml.
+	MimeType string `json:"mimeType,omitempty"`
+	// Name: Output only. The name of the file uploaded.
+	Name string `json:"name,omitempty"`
+	// OriginalSourceType: Optional. The type of the original source of the file.
+	//
+	// Possible values:
+	//   "FILE_SOURCE_UNSPECIFIED" - Default value. Unknown source.
+	//   "FILE_SOURCE_INLINE" - The data of the file was provided inline (e.g.
+	// pasted from the clipboard).
+	//   "FILE_SOURCE_LOCAL" - The file was uploaded from a local file.
+	//   "FILE_SOURCE_CLOUD_STORAGE" - The file was uploaded from Cloud Storage.
+	//   "FILE_SOURCE_CLOUD_DRIVE" - The file was uploaded from Drive.
+	//   "FILE_SOURCE_URL" - The file was retrieved from a URL (e.g. public web).
+	OriginalSourceType string `json:"originalSourceType,omitempty"`
+	// OriginalUri: Optional. The original location of the file. It may be a local
+	// file path, or any other URI that allows accessing the file in an external
+	// system. There are two scenarios in which this url may be empty: 1. If the
+	// file was sent as inline data (e.g. pasted from the clipboard). 2. If the
+	// original location is not available. Note that there's no guarantee that the
+	// URI will be pointing to a valid or actually existing file. For example, a
+	// file might have been uploaded to the session, and then deleted from the
+	// original source.
+	OriginalUri string `json:"originalUri,omitempty"`
+	// UploadTime: Output only. The time the file was uploaded (If this is a file
+	// generated by an internal process and then made available to the session,
+	// this indicates the moment it happened).
+	UploadTime string `json:"uploadTime,omitempty"`
+	// Views: Output only. Alternate views of this file object. Each file view is
+	// attached to a specific role. Possible example keys: - "thumbnail" -
+	// "mobile_thumbnail" - "clip" - "summary" - "translation"
+	Views map[string]GoogleCloudDiscoveryengineV1alphaFileView `json:"views,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ByteSize") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ByteSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaFileMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaFileMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaFileView: Represents a specific alternate
+// version or "view" of a file object, such as a summary, a thumbnail, a
+// translated version, etc.
+type GoogleCloudDiscoveryengineV1alphaFileView struct {
+	// ByteSize: Output only. The size of the view in bytes.
+	ByteSize int64 `json:"byteSize,omitempty,string"`
+	// CreateTime: Output only. The time the view was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// FileCharacteristics: Output only. Characteristics of other file types.
+	FileCharacteristics *GoogleCloudDiscoveryengineV1alphaFileCharacteristics `json:"fileCharacteristics,omitempty"`
+	// ImageCharacteristics: Output only. Characteristics of an image media view.
+	ImageCharacteristics *GoogleCloudDiscoveryengineV1alphaImageCharacteristics `json:"imageCharacteristics,omitempty"`
+	// MimeType: Output only. MIME type (e.g., "image/jpeg", "image/png",
+	// "text/plain", "video/mp4")
+	MimeType string `json:"mimeType,omitempty"`
+	// Uri: Output only. The URI to access this media view.
+	Uri string `json:"uri,omitempty"`
+	// VideoCharacteristics: Output only. Characteristics of a video media view.
+	VideoCharacteristics *GoogleCloudDiscoveryengineV1alphaVideoCharacteristics `json:"videoCharacteristics,omitempty"`
+	// ViewId: Output only. Globally Unique id for this specific view.
+	ViewId string `json:"viewId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ByteSize") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ByteSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaFileView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaFileView
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaFirestoreSource: Firestore source import
 // data from.
 type GoogleCloudDiscoveryengineV1alphaFirestoreSource struct {
@@ -14560,6 +14746,44 @@ type GoogleCloudDiscoveryengineV1alphaIdpConfigExternalIdpConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaIdpConfigExternalIdpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaIdpConfigExternalIdpConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaImageCharacteristics: Standard
+// characteristics of an image media view.
+type GoogleCloudDiscoveryengineV1alphaImageCharacteristics struct {
+	// BitDepth: Output only. Bit depth of the image (e.g., 8-bit, 16-bit).
+	BitDepth int64 `json:"bitDepth,omitempty"`
+	// ColorSpace: Output only. Color space of the image (e.g., "RGB", "CMYK",
+	// "Grayscale").
+	//
+	// Possible values:
+	//   "COLOR_SPACE_UNSPECIFIED" - Default value. Unknown color space.
+	//   "RGB" - Red, green, blue colorspace.
+	//   "CMYK" - Cyan, magenta, yellow, and black colorspace.
+	//   "GRAYSCALE" - Grayscale colorspace.
+	//   "YUV" - YUV colorspace.
+	//   "OTHER_COLOR_SPACE" - Other colorspace.
+	ColorSpace string `json:"colorSpace,omitempty"`
+	// Height: Output only. Image height in pixels.
+	Height int64 `json:"height,omitempty"`
+	// Width: Output only. Image width in pixels.
+	Width int64 `json:"width,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BitDepth") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BitDepth") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaImageCharacteristics) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaImageCharacteristics
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15741,6 +15965,36 @@ func (s GoogleCloudDiscoveryengineV1alphaListEvaluationsResponse) MarshalJSON() 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaListFilesResponse: Response message for
+// SessionService.ListFiles method.
+type GoogleCloudDiscoveryengineV1alphaListFilesResponse struct {
+	// Files: The FileMetadatas.
+	Files []*GoogleCloudDiscoveryengineV1alphaFileMetadata `json:"files,omitempty"`
+	// NextPageToken: A token to retrieve next page of results. Pass this value in
+	// the ListFilesRequest.page_token field in the subsequent call to `ListFiles`
+	// method to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Files") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Files") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaListFilesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaListFilesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaListIdentityMappingStoresResponse: Response
 // message for IdentityMappingStoreService.ListIdentityMappingStores
 type GoogleCloudDiscoveryengineV1alphaListIdentityMappingStoresResponse struct {
@@ -15920,9 +16174,12 @@ func (s GoogleCloudDiscoveryengineV1alphaListServingConfigsResponse) MarshalJSON
 // GoogleCloudDiscoveryengineV1alphaListSessionsRequest: Request for
 // ListSessions method.
 type GoogleCloudDiscoveryengineV1alphaListSessionsRequest struct {
-	// Filter: A filter to apply on the list results. The supported features are:
-	// user_pseudo_id, state, starred. Examples: "user_pseudo_id = some_id"
-	// "starred = true"
+	// Filter: A comma-separated list of fields to filter by, in EBNF grammar. The
+	// supported fields are: * `user_pseudo_id` * `state` * `display_name` *
+	// `starred` * `is_pinned` * `labels` * `create_time` * `update_time` Examples:
+	// "user_pseudo_id = some_id" "display_name = \"some_name\"" "starred = true"
+	// "is_pinned=true AND (NOT labels:hidden)" "create_time >
+	// \"1970-01-01T12:00:00Z\""
 	Filter string `json:"filter,omitempty"`
 	// OrderBy: A comma-separated list of fields to order by, sorted in ascending
 	// order. Use "desc" after a field name for descending. Supported fields: *
@@ -16473,6 +16730,8 @@ type GoogleCloudDiscoveryengineV1alphaProvisionProjectRequest struct {
 	// would like to give consent to. Acceptable version is `2022-11-23`, and this
 	// may change over time.
 	DataUseTermsVersion string `json:"dataUseTermsVersion,omitempty"`
+	// SaasParams: Optional. Parameters for Agentspace.
+	SaasParams *GoogleCloudDiscoveryengineV1alphaProvisionProjectRequestSaasParams `json:"saasParams,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AcceptDataUseTerms") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -16488,6 +16747,31 @@ type GoogleCloudDiscoveryengineV1alphaProvisionProjectRequest struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaProvisionProjectRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaProvisionProjectRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaProvisionProjectRequestSaasParams:
+// Parameters for Agentspace.
+type GoogleCloudDiscoveryengineV1alphaProvisionProjectRequestSaasParams struct {
+	// AcceptBizQos: Optional. Set to `true` to specify that caller has read and
+	// would like to give consent to the [Terms for Agent Space quality of
+	// service].
+	AcceptBizQos bool `json:"acceptBizQos,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AcceptBizQos") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcceptBizQos") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaProvisionProjectRequestSaasParams) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaProvisionProjectRequestSaasParams
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17060,7 +17344,7 @@ type GoogleCloudDiscoveryengineV1alphaRankRequest struct {
 	Model string `json:"model,omitempty"`
 	// Query: The query to use.
 	Query string `json:"query,omitempty"`
-	// Records: Required. A list of records to rank. At most 200 records to rank.
+	// Records: Required. A list of records to rank.
 	Records []*GoogleCloudDiscoveryengineV1alphaRankingRecord `json:"records,omitempty"`
 	// TopN: The number of results to return. If this is unset or no bigger than
 	// zero, returns all results.
@@ -21345,9 +21629,6 @@ func (s GoogleCloudDiscoveryengineV1alphaStreamAssistRequestGenerationSpec) Mars
 type GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpec struct {
 	// ImageGenerationSpec: Optional. Specification of the image generation tool.
 	ImageGenerationSpec *GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecImageGenerationSpec `json:"imageGenerationSpec,omitempty"`
-	// ToolRegistry: Optional. The name of the tool registry to use. Format:
-	// `projects/{project}/locations/{location}/toolRegistries/{tool_registry}`
-	ToolRegistry string `json:"toolRegistry,omitempty"`
 	// VertexAiSearchSpec: Optional. Specification of the Vertex AI Search tool.
 	VertexAiSearchSpec *GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecVertexAiSearchSpec `json:"vertexAiSearchSpec,omitempty"`
 	// VideoGenerationSpec: Optional. Specification of the video generation tool.
@@ -21387,10 +21668,6 @@ type GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecVertexAiSearch
 	// call and configurations for those data stores. This is only considered for
 	// Engines with multiple data stores.
 	DataStoreSpecs []*GoogleCloudDiscoveryengineV1alphaSearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
-	// Disabled: Optional. Deprecated. Please refrain from using this field.
-	// Whether the Vertex AI Search tool is disabled. Default value is false, the
-	// tool is enabled by default.
-	Disabled bool `json:"disabled,omitempty"`
 	// Filter: Optional. The filter syntax consists of an expression language for
 	// constructing a predicate from one or more fields of the documents being
 	// filtered. Filter expression is case-sensitive. If this field is
@@ -21429,25 +21706,6 @@ type GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecVideoGeneratio
 // GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecWebGroundingSpec
 // : Specification of the web grounding tool.
 type GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecWebGroundingSpec struct {
-	// Enabled: Optional. Deprecated. Please refrain from using this field. Whether
-	// the web grounding tool is enabled.
-	Enabled bool `json:"enabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Enabled") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecWebGroundingSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1alphaStreamAssistRequestToolsSpecWebGroundingSpec
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1alphaStreamAssistResponse: Response for the
@@ -22363,6 +22621,57 @@ func (s GoogleCloudDiscoveryengineV1alphaUserLicense) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaVideoCharacteristics: Standard
+// characteristics of a video media view.
+type GoogleCloudDiscoveryengineV1alphaVideoCharacteristics struct {
+	// AudioBitrateKbps: Output only. Bitrate of the audio in kbps.
+	AudioBitrateKbps int64 `json:"audioBitrateKbps,omitempty"`
+	// AudioCodecs: Output only. Audio codecs used in the video.
+	AudioCodecs []string `json:"audioCodecs,omitempty"`
+	// Duration: Output only. Video duration.
+	Duration string `json:"duration,omitempty"`
+	// FrameRate: Output only. Frame rate (frames per second).
+	FrameRate float64 `json:"frameRate,omitempty"`
+	// Height: Output only. Video height in pixels.
+	Height int64 `json:"height,omitempty"`
+	// VideoBitrateKbps: Output only. Bitrate of the video in kbps.
+	VideoBitrateKbps int64 `json:"videoBitrateKbps,omitempty"`
+	// VideoCodecs: Output only. Video codecs used in the video.
+	VideoCodecs []string `json:"videoCodecs,omitempty"`
+	// Width: Output only. Video width in pixels.
+	Width int64 `json:"width,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AudioBitrateKbps") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AudioBitrateKbps") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaVideoCharacteristics) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaVideoCharacteristics
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaVideoCharacteristics) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaVideoCharacteristics
+	var s1 struct {
+		FrameRate gensupport.JSONFloat64 `json:"frameRate"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FrameRate = float64(s1.FrameRate)
+	return nil
+}
+
 // GoogleCloudDiscoveryengineV1alphaWidgetConfig: WidgetConfig captures configs
 // at the Widget level.
 type GoogleCloudDiscoveryengineV1alphaWidgetConfig struct {
@@ -23257,12 +23566,13 @@ func (s GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesResponse) Marshal
 type GoogleCloudDiscoveryengineV1betaCmekConfig struct {
 	// IsDefault: Output only. The default CmekConfig for the Customer.
 	IsDefault bool `json:"isDefault,omitempty"`
-	// KmsKey: KMS key resource name which will be used to encrypt resources
+	// KmsKey: Required. KMS key resource name which will be used to encrypt
+	// resources
 	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
 	// }`.
 	KmsKey string `json:"kmsKey,omitempty"`
-	// KmsKeyVersion: KMS key version resource name which will be used to encrypt
-	// resources `/cryptoKeyVersions/{keyVersion}`.
+	// KmsKeyVersion: Output only. KMS key version resource name which will be used
+	// to encrypt resources `/cryptoKeyVersions/{keyVersion}`.
 	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
 	// LastRotationTimestampMicros: Output only. The timestamp of the last key
 	// rotation.
@@ -39476,9 +39786,12 @@ func (r *ProjectsLocationsCollectionsDataStoresSessionsService) List(parent stri
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter to apply on the list
-// results. The supported features are: user_pseudo_id, state, starred.
-// Examples: "user_pseudo_id = some_id" "starred = true"
+// Filter sets the optional parameter "filter": A comma-separated list of
+// fields to filter by, in EBNF grammar. The supported fields are: *
+// `user_pseudo_id` * `state` * `display_name` * `starred` * `is_pinned` *
+// `labels` * `create_time` * `update_time` Examples: "user_pseudo_id =
+// some_id" "display_name = \"some_name\"" "starred = true" "is_pinned=true AND
+// (NOT labels:hidden)" "create_time > \"1970-01-01T12:00:00Z\""
 func (c *ProjectsLocationsCollectionsDataStoresSessionsListCall) Filter(filter string) *ProjectsLocationsCollectionsDataStoresSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -47172,9 +47485,12 @@ func (r *ProjectsLocationsCollectionsEnginesSessionsService) List(parent string)
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter to apply on the list
-// results. The supported features are: user_pseudo_id, state, starred.
-// Examples: "user_pseudo_id = some_id" "starred = true"
+// Filter sets the optional parameter "filter": A comma-separated list of
+// fields to filter by, in EBNF grammar. The supported fields are: *
+// `user_pseudo_id` * `state` * `display_name` * `starred` * `is_pinned` *
+// `labels` * `create_time` * `update_time` Examples: "user_pseudo_id =
+// some_id" "display_name = \"some_name\"" "starred = true" "is_pinned=true AND
+// (NOT labels:hidden)" "create_time > \"1970-01-01T12:00:00Z\""
 func (c *ProjectsLocationsCollectionsEnginesSessionsListCall) Filter(filter string) *ProjectsLocationsCollectionsEnginesSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -47544,6 +47860,173 @@ func (c *ProjectsLocationsCollectionsEnginesSessionsAnswersGetCall) Do(opts ...g
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.sessions.answers.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesSessionsFilesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists metadata for all files in the current session.
+//
+//   - parent: The resource name of the Session. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}/sessions/{session}` Name of the session resource to which the file
+//     belong.
+func (r *ProjectsLocationsCollectionsEnginesSessionsFilesService) List(parent string) *ProjectsLocationsCollectionsEnginesSessionsFilesListCall {
+	c := &ProjectsLocationsCollectionsEnginesSessionsFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter syntax consists of
+// an expression language for constructing a predicate from one or more fields
+// of the files being filtered. Filter expression is case-sensitive. Currently
+// supported field names are: * upload_time * last_add_time * last_use_time *
+// file_name * mime_type Some examples of filters would be: * "file_name =
+// 'file_1'" * "file_name = 'file_1' AND mime_type = 'text/plain'" *
+// "last_use_time > '2025-06-14T12:00:00Z'" For a full description of the
+// filter format, please see https://google.aip.dev/160.
+func (c *ProjectsLocationsCollectionsEnginesSessionsFilesListCall) Filter(filter string) *ProjectsLocationsCollectionsEnginesSessionsFilesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of files
+// to return. The service may return fewer than this value. If unspecified, at
+// most 100 files will be returned. The maximum value is 1000; values above
+// 1000 will be coerced to 1000. If user specifies a value less than or equal
+// to 0 - the request will be rejected with an INVALID_ARGUMENT error.
+func (c *ProjectsLocationsCollectionsEnginesSessionsFilesListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsEnginesSessionsFilesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token received
+// from a previous `ListFiles` call. Provide this to retrieve the subsequent
+// page. When paginating, all other parameters provided to `ListFiles` must
+// match the call that provided the page token (except `page_size`, which may
+// differ).
+func (c *ProjectsLocationsCollectionsEnginesSessionsFilesListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsEnginesSessionsFilesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesSessionsFilesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesSessionsFilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsEnginesSessionsFilesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesSessionsFilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesSessionsFilesListCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesSessionsFilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesSessionsFilesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesSessionsFilesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/files")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.sessions.files.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.sessions.files.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaListFilesResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesSessionsFilesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaListFilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaListFilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.sessions.files.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsEnginesSessionsFilesListCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1alphaListFilesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsCollectionsEnginesWidgetConfigsGetCall struct {
@@ -54957,9 +55440,12 @@ func (r *ProjectsLocationsDataStoresSessionsService) List(parent string) *Projec
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter to apply on the list
-// results. The supported features are: user_pseudo_id, state, starred.
-// Examples: "user_pseudo_id = some_id" "starred = true"
+// Filter sets the optional parameter "filter": A comma-separated list of
+// fields to filter by, in EBNF grammar. The supported fields are: *
+// `user_pseudo_id` * `state` * `display_name` * `starred` * `is_pinned` *
+// `labels` * `create_time` * `update_time` Examples: "user_pseudo_id =
+// some_id" "display_name = \"some_name\"" "starred = true" "is_pinned=true AND
+// (NOT labels:hidden)" "create_time > \"1970-01-01T12:00:00Z\""
 func (c *ProjectsLocationsDataStoresSessionsListCall) Filter(filter string) *ProjectsLocationsDataStoresSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

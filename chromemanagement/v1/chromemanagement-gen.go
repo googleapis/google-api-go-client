@@ -3413,6 +3413,10 @@ type GoogleChromeManagementV1TelemetryEvent struct {
 	//   "APP_UNINSTALLED" - Triggered when an app is uninstalled.
 	//   "APP_LAUNCHED" - Triggered when an app is launched.
 	//   "OS_CRASH" - Triggered when a crash occurs.
+	//   "EXTERNAL_DISPLAY_CONNECTED" - Triggered when an external display is
+	// connected.
+	//   "EXTERNAL_DISPLAY_DISCONNECTED" - Triggered when an external display is
+	// disconnected.
 	EventType string `json:"eventType,omitempty"`
 	// HttpsLatencyChangeEvent: Output only. Payload for HTTPS latency change
 	// event. Present only when `event_type` is `NETWORK_HTTPS_LATENCY_CHANGE`.
@@ -3484,6 +3488,10 @@ type GoogleChromeManagementV1TelemetryEventNotificationFilter struct {
 	//   "APP_UNINSTALLED" - Triggered when an app is uninstalled.
 	//   "APP_LAUNCHED" - Triggered when an app is launched.
 	//   "OS_CRASH" - Triggered when a crash occurs.
+	//   "EXTERNAL_DISPLAY_CONNECTED" - Triggered when an external display is
+	// connected.
+	//   "EXTERNAL_DISPLAY_DISCONNECTED" - Triggered when an external display is
+	// disconnected.
 	EventTypes []string `json:"eventTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EventTypes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8597,6 +8605,7 @@ func (c *CustomersTelemetryEventsListCall) PageToken(pageToken string) *Customer
 // https_latency_change_event - network_state_change_event -
 // wifi_signal_strength_event - vpn_connection_state_change_event -
 // app_install_event - app_uninstall_event - app_launch_event - os_crash_event
+// - external_displays_event
 func (c *CustomersTelemetryEventsListCall) ReadMask(readMask string) *CustomersTelemetryEventsListCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c

@@ -3455,6 +3455,10 @@ func (s *ExternalRuntimeOptions) UnmarshalJSON(data []byte) error {
 // dollars. Services may not directly correlate to these metrics, but these are
 // the equivalents for billing purposes. Output only.
 type ExternalServiceCost struct {
+	// BillingMethod: The billing method used for the external job. This field is
+	// only used when billed on the services sku, set to "SERVICES_SKU". Otherwise,
+	// it is unspecified for backward compatibility.
+	BillingMethod string `json:"billingMethod,omitempty"`
 	// BytesBilled: External service cost in terms of bigquery bytes billed.
 	BytesBilled int64 `json:"bytesBilled,omitempty,string"`
 	// BytesProcessed: External service cost in terms of bigquery bytes processed.
@@ -3467,13 +3471,13 @@ type ExternalServiceCost struct {
 	ReservedSlotCount int64 `json:"reservedSlotCount,omitempty,string"`
 	// SlotMs: External service cost in terms of bigquery slot milliseconds.
 	SlotMs int64 `json:"slotMs,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "BytesBilled") to
+	// ForceSendFields is a list of field names (e.g. "BillingMethod") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BytesBilled") to include in API
+	// NullFields is a list of field names (e.g. "BillingMethod") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5551,6 +5555,11 @@ type JobStatistics2 struct {
 	// TotalPartitionsProcessed: Output only. Total number of partitions processed
 	// from all partitioned tables referenced in the job.
 	TotalPartitionsProcessed int64 `json:"totalPartitionsProcessed,omitempty,string"`
+	// TotalServicesSkuSlotMs: Output only. Total slot-milliseconds for the job
+	// that run on external services and billed on the service SKU. This field is
+	// only populated for jobs that have external service costs, and is the total
+	// of the usage for costs whose billing method is "SERVICES_SKU".
+	TotalServicesSkuSlotMs int64 `json:"totalServicesSkuSlotMs,omitempty,string"`
 	// TotalSlotMs: Output only. Slot-milliseconds for the job.
 	TotalSlotMs int64 `json:"totalSlotMs,omitempty,string"`
 	// TransferredBytes: Output only. Total bytes transferred for cross-cloud

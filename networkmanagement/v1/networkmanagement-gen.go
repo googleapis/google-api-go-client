@@ -1779,8 +1779,9 @@ type Host struct {
 	CloudProvider string `json:"cloudProvider,omitempty"`
 	// CloudRegion: Output only. The cloud region of the host.
 	CloudRegion string `json:"cloudRegion,omitempty"`
-	// CloudVpcId: Output only. The id of Virtual Private Cloud (VPC) of the host.
-	CloudVpcId string `json:"cloudVpcId,omitempty"`
+	// CloudVirtualNetworkIds: Output only. The ids of cloud virtual networks of
+	// the host.
+	CloudVirtualNetworkIds []string `json:"cloudVirtualNetworkIds,omitempty"`
 	// CloudZone: Output only. The cloud zone of the host.
 	CloudZone string `json:"cloudZone,omitempty"`
 	// Os: Output only. The operating system of the host.

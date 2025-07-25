@@ -5784,6 +5784,8 @@ type ServiceMeshControlPlaneManagement struct {
 	// migrate workloads to a new control plane revision.)
 	//   "DEGRADED" - DEGRADED means that the component is ready, but operating in
 	// a degraded state.
+	//   "DEPROVISIONING" - DEPROVISIONING means that deprovisioning is in
+	// progress.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5823,6 +5825,8 @@ type ServiceMeshDataPlaneManagement struct {
 	// migrate workloads to a new control plane revision.)
 	//   "DEGRADED" - DEGRADED means that the component is ready, but operating in
 	// a degraded state.
+	//   "DEPROVISIONING" - DEPROVISIONING means that deprovisioning is in
+	// progress.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5873,6 +5877,8 @@ type ServiceMeshMembershipSpec struct {
 	// cluster.
 	//   "MANAGEMENT_MANUAL" - User will manually configure their service mesh
 	// components.
+	//   "MANAGEMENT_NOT_INSTALLED" - Google should remove any managed Service Mesh
+	// components from this cluster and deprovision any resources.
 	Management string `json:"management,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConfigApi") to
 	// unconditionally include in API requests. By default, fields with empty or

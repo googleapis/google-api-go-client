@@ -1074,6 +1074,8 @@ type Metadata struct {
 	// locations.getVoiceOfMerchantState API to get details as to why they do not
 	// have Voice of Merchant.
 	HasVoiceOfMerchant bool `json:"hasVoiceOfMerchant,omitempty"`
+	// IsParticularlyPersonalPlace: Output only.
+	IsParticularlyPersonalPlace bool `json:"isParticularlyPersonalPlace,omitempty"`
 	// MapsUri: Output only. A link to the location on Maps.
 	MapsUri string `json:"mapsUri,omitempty"`
 	// NewReviewUri: Output only. A link to the page on Google Search where a

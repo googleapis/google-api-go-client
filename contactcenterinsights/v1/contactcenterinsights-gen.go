@@ -3776,15 +3776,15 @@ func (s GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversation
 // Configuration for Cloud Storage bucket sources.
 type GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource struct {
 	// AudioBucketUri: Optional. The Cloud Storage path to the conversation audio
-	// file if already transcribed. Note that: [1] Don't set this field if the
-	// audio is not transcribed. [2] Audio files and transcript files must be in
-	// separate buckets / folders. [3] A source file and its corresponding audio
-	// file must share the same name to be properly ingested, E.g.
-	// `gs://bucket/transcript/conversation1.json` and
+	// file. Note that: [1] Audio files will be transcribed if not already. [2]
+	// Audio files and transcript files must be in separate buckets / folders. [3]
+	// A source file and its corresponding audio file must share the same name to
+	// be properly ingested, E.g. `gs://bucket/transcript/conversation1.json` and
 	// `gs://bucket/audio/conversation1.mp3`.
 	AudioBucketUri string `json:"audioBucketUri,omitempty"`
 	// BucketObjectType: Optional. Specifies the type of the objects in
-	// `bucket_uri`.
+	// `bucket_uri`. Avoid passing this. This is inferred from the
+	// `transcript_bucket_uri`, `audio_bucket_uri`.
 	//
 	// Possible values:
 	//   "BUCKET_OBJECT_TYPE_UNSPECIFIED" - The object type is unspecified and will
@@ -3792,7 +3792,9 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource struc
 	//   "TRANSCRIPT" - The object is a transcript.
 	//   "AUDIO" - The object is an audio file.
 	BucketObjectType string `json:"bucketObjectType,omitempty"`
-	// BucketUri: Required. The Cloud Storage bucket containing source objects.
+	// BucketUri: Optional. The Cloud Storage bucket containing source objects.
+	// Avoid passing this. Pass this through one of `transcript_bucket_uri` or
+	// `audio_bucket_uri`.
 	BucketUri string `json:"bucketUri,omitempty"`
 	// CustomMetadataKeys: Optional. Custom keys to extract as conversation labels
 	// from metadata files in `metadata_bucket_uri`. Keys not included in this
@@ -3807,6 +3809,14 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource struc
 	// `gs://bucket/audio/conversation1.mp3` and
 	// `gs://bucket/metadata/conversation1.json`.
 	MetadataBucketUri string `json:"metadataBucketUri,omitempty"`
+	// TranscriptBucketUri: Optional. The Cloud Storage path to the conversation
+	// transcripts. Note that: [1] Transcript files are expected to be in JSON
+	// format. [2] Transcript, audio, metadata files must be in separate buckets /
+	// folders. [3] A source file and its corresponding metadata file must share
+	// the same name to be properly ingested, E.g.
+	// `gs://bucket/audio/conversation1.mp3` and
+	// `gs://bucket/metadata/conversation1.json`.
+	TranscriptBucketUri string `json:"transcriptBucketUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudioBucketUri") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9563,15 +9573,15 @@ func (s GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestConver
 // Configuration for Cloud Storage bucket sources.
 type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestGcsSource struct {
 	// AudioBucketUri: Optional. The Cloud Storage path to the conversation audio
-	// file if already transcribed. Note that: [1] Don't set this field if the
-	// audio is not transcribed. [2] Audio files and transcript files must be in
-	// separate buckets / folders. [3] A source file and its corresponding audio
-	// file must share the same name to be properly ingested, E.g.
-	// `gs://bucket/transcript/conversation1.json` and
+	// file. Note that: [1] Audio files will be transcribed if not already. [2]
+	// Audio files and transcript files must be in separate buckets / folders. [3]
+	// A source file and its corresponding audio file must share the same name to
+	// be properly ingested, E.g. `gs://bucket/transcript/conversation1.json` and
 	// `gs://bucket/audio/conversation1.mp3`.
 	AudioBucketUri string `json:"audioBucketUri,omitempty"`
 	// BucketObjectType: Optional. Specifies the type of the objects in
-	// `bucket_uri`.
+	// `bucket_uri`. Avoid passing this. This is inferred from the
+	// `transcript_bucket_uri`, `audio_bucket_uri`.
 	//
 	// Possible values:
 	//   "BUCKET_OBJECT_TYPE_UNSPECIFIED" - The object type is unspecified and will
@@ -9579,7 +9589,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestGcsSource
 	//   "TRANSCRIPT" - The object is a transcript.
 	//   "AUDIO" - The object is an audio file.
 	BucketObjectType string `json:"bucketObjectType,omitempty"`
-	// BucketUri: Required. The Cloud Storage bucket containing source objects.
+	// BucketUri: Optional. The Cloud Storage bucket containing source objects.
+	// Avoid passing this. Pass this through one of `transcript_bucket_uri` or
+	// `audio_bucket_uri`.
 	BucketUri string `json:"bucketUri,omitempty"`
 	// CustomMetadataKeys: Optional. Custom keys to extract as conversation labels
 	// from metadata files in `metadata_bucket_uri`. Keys not included in this
@@ -9594,6 +9606,14 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestGcsSource
 	// `gs://bucket/audio/conversation1.mp3` and
 	// `gs://bucket/metadata/conversation1.json`.
 	MetadataBucketUri string `json:"metadataBucketUri,omitempty"`
+	// TranscriptBucketUri: Optional. The Cloud Storage path to the conversation
+	// transcripts. Note that: [1] Transcript files are expected to be in JSON
+	// format. [2] Transcript, audio, metadata files must be in separate buckets /
+	// folders. [3] A source file and its corresponding metadata file must share
+	// the same name to be properly ingested, E.g.
+	// `gs://bucket/audio/conversation1.mp3` and
+	// `gs://bucket/metadata/conversation1.json`.
+	TranscriptBucketUri string `json:"transcriptBucketUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudioBucketUri") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -19602,6 +19622,14 @@ func (r *ProjectsLocationsConversationsService) Patch(name string, googlecloudco
 	c := &ProjectsLocationsConversationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.googlecloudcontactcenterinsightsv1conversation = googlecloudcontactcenterinsightsv1conversation
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": Defaults to false.
+// If set to true, and the conversation is not found, a new conversation will
+// be created. In this situation, `update_mask` is ignored.
+func (c *ProjectsLocationsConversationsPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsConversationsPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 

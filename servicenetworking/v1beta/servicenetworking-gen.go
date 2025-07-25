@@ -325,7 +325,11 @@ func (s AddSubnetworkRequest) MarshalJSON() ([]byte, error) {
 // opposed to simply a description of methods and bindings. They are also
 // sometimes simply referred to as "APIs" in other contexts, such as the name
 // of this message itself. See https://cloud.google.com/apis/design/glossary
-// for detailed terminology.
+// for detailed terminology. New usages of this message as an alternative to
+// ServiceDescriptorProto are strongly discouraged. This message does not
+// reliability preserve all information necessary to model the schema and
+// preserve semantics. Instead make use of FileDescriptorSet which preserves
+// the necessary information.
 type Api struct {
 	// Edition: The source edition string, only valid when syntax is
 	// SYNTAX_EDITIONS.
@@ -1636,7 +1640,11 @@ func (s Endpoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Enum: Enum type definition.
+// Enum: Enum type definition. New usages of this message as an alternative to
+// EnumDescriptorProto are strongly discouraged. This message does not
+// reliability preserve all information necessary to model the schema and
+// preserve semantics. Instead make use of FileDescriptorSet which preserves
+// the necessary information.
 type Enum struct {
 	// Edition: The source edition string, only valid when syntax is
 	// SYNTAX_EDITIONS.
@@ -1674,7 +1682,11 @@ func (s Enum) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// EnumValue: Enum value definition.
+// EnumValue: Enum value definition. New usages of this message as an
+// alternative to EnumValueDescriptorProto are strongly discouraged. This
+// message does not reliability preserve all information necessary to model the
+// schema and preserve semantics. Instead make use of FileDescriptorSet which
+// preserves the necessary information.
 type EnumValue struct {
 	// Name: Enum value name.
 	Name string `json:"name,omitempty"`
@@ -1737,7 +1749,11 @@ func (s ExperimentalFeatures) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Field: A single field of a message type.
+// Field: A single field of a message type. New usages of this message as an
+// alternative to FieldDescriptorProto are strongly discouraged. This message
+// does not reliability preserve all information necessary to model the schema
+// and preserve semantics. Instead make use of FileDescriptorSet which
+// preserves the necessary information.
 type Field struct {
 	// Cardinality: The field cardinality.
 	//
@@ -2481,10 +2497,15 @@ func (s *LongRunning) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Method: Method represents a method of an API interface.
+// Method: Method represents a method of an API interface. New usages of this
+// message as an alternative to MethodDescriptorProto are strongly discouraged.
+// This message does not reliability preserve all information necessary to
+// model the schema and preserve semantics. Instead make use of
+// FileDescriptorSet which preserves the necessary information.
 type Method struct {
 	// Edition: The source edition string, only valid when syntax is
-	// SYNTAX_EDITIONS.
+	// SYNTAX_EDITIONS. This field should be ignored, instead the edition should be
+	// inherited from Api. This is similar to Field and EnumValue.
 	Edition string `json:"edition,omitempty"`
 	// Name: The simple name of this method.
 	Name string `json:"name,omitempty"`
@@ -2498,7 +2519,9 @@ type Method struct {
 	ResponseStreaming bool `json:"responseStreaming,omitempty"`
 	// ResponseTypeUrl: The URL of the output message type.
 	ResponseTypeUrl string `json:"responseTypeUrl,omitempty"`
-	// Syntax: The source syntax of this method.
+	// Syntax: The source syntax of this method. This field should be ignored,
+	// instead the syntax should be inherited from Api. This is similar to Field
+	// and EnumValue.
 	//
 	// Possible values:
 	//   "SYNTAX_PROTO2" - Syntax `proto2`.
@@ -3203,7 +3226,9 @@ func (s Operation) MarshalJSON() ([]byte, error) {
 }
 
 // Option: A protocol buffer option, which can be attached to a message, field,
-// enumeration, etc.
+// enumeration, etc. New usages of this message as an alternative to
+// FileOptions, MessageOptions, FieldOptions, EnumOptions, EnumValueOptions,
+// ServiceOptions, or MethodOptions are strongly discouraged.
 type Option struct {
 	// Name: The option's name. For protobuf built-in options (options defined in
 	// descriptor.proto), this is the short name. For example, "map_entry". For
@@ -4110,7 +4135,11 @@ func (s SystemParameters) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Type: A protocol buffer message type.
+// Type: A protocol buffer message type. New usages of this message as an
+// alternative to DescriptorProto are strongly discouraged. This message does
+// not reliability preserve all information necessary to model the schema and
+// preserve semantics. Instead make use of FileDescriptorSet which preserves
+// the necessary information.
 type Type struct {
 	// Edition: The source edition string, only valid when syntax is
 	// SYNTAX_EDITIONS.

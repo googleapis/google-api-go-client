@@ -190,7 +190,8 @@ type ProjectsMessagesService struct {
 type AndroidConfig struct {
 	// BandwidthConstrainedOk: Optional. If set to true, messages will be allowed
 	// to be delivered to the app while the device is in bandwidth constrained
-	// mode.
+	// mode. This should only be enabled when the app has been tested to properly
+	// handle messages in bandwidth constrained mode.
 	BandwidthConstrainedOk bool `json:"bandwidthConstrainedOk,omitempty"`
 	// CollapseKey: An identifier of a group of messages that can be collapsed, so
 	// that only the last message gets sent when delivery can be resumed. A maximum
@@ -234,7 +235,7 @@ type AndroidConfig struct {
 	// be delivered to the app while the device is connected over a restricted
 	// satellite network. This should only be enabled for messages that can be
 	// handled over a restricted satellite network and only for apps that are
-	// allowed to work over a restricted satellite network. Note that the ability
+	// enabled to work over a restricted satellite network. Note that the ability
 	// of the app to connect to a restricted satellite network is dependent on the
 	// carrier's settings and the device model.
 	RestrictedSatelliteOk bool `json:"restrictedSatelliteOk,omitempty"`

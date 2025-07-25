@@ -32041,9 +32041,9 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall struct {
 //
 //   - name: The name of the debug session to retrieve. Must be of the form:
 //     `organizations/{organization}/environments/{environment}/apis/{api}/revisio
-//     ns/{revision}/debugsessions/{session}`. If the API proxy resource has the
-//     `space` attribute set, IAM permissions are checked differently . To learn
-//     more, read the Apigee Spaces Overview
+//     ns/{revision}/debugsessions/{debug_session}`. If the API proxy resource
+//     has the `space` attribute set, IAM permissions are checked differently .
+//     To learn more, read the Apigee Spaces Overview
 //     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsService) Get(name string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -32309,9 +32309,9 @@ type OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall struct {
 //
 //   - name: The name of the debug session transaction. Must be of the form:
 //     `organizations/{organization}/environments/{environment}/apis/{api}/revisio
-//     ns/{revision}/debugsessions/{session}/data/{transaction}`. If the API
-//     proxy resource has the `space` attribute set, IAM permissions are checked
-//     differently . To learn more, read the Apigee Spaces Overview
+//     ns/{revision}/debugsessions/{debug_session}/data/{transaction}`. If the
+//     API proxy resource has the `space` attribute set, IAM permissions are
+//     checked differently . To learn more, read the Apigee Spaces Overview
 //     (https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview).
 func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataService) Get(name string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall {
 	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -48101,8 +48101,7 @@ func (r *OrganizationsSecurityMonitoringConditionsService) Patch(name string, go
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of fields to
-// update. Valid fields to update are `profile`, `scope`,
-// `include_all_resources`, `include`, and `exclude`.
+// update. Valid fields to update are `include_all_resources` and `include`.
 func (c *OrganizationsSecurityMonitoringConditionsPatchCall) UpdateMask(updateMask string) *OrganizationsSecurityMonitoringConditionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

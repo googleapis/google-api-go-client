@@ -519,31 +519,6 @@ func (s BitbucketDataCenterConfig) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
-// Capabilities: Capabilities adds and removes POSIX capabilities from running
-// containers.
-type Capabilities struct {
-	// Add: Optional. Added capabilities +optional
-	Add []string `json:"add,omitempty"`
-	// Drop: Optional. Removed capabilities +optional
-	Drop []string `json:"drop,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Add") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Add") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Capabilities) MarshalJSON() ([]byte, error) {
-	type NoMethod Capabilities
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // ChildStatusReference: ChildStatusReference is used to point to the statuses
 // of individual TaskRuns and Runs within this PipelineRun.
 type ChildStatusReference struct {
@@ -2259,9 +2234,6 @@ type SecurityContext struct {
 	// run as Privileged 2) has CAP_SYS_ADMIN Note that this field cannot be set
 	// when spec.os.name is windows. +optional
 	AllowPrivilegeEscalation bool `json:"allowPrivilegeEscalation,omitempty"`
-	// Capabilities: Optional. Adds and removes POSIX capabilities from running
-	// containers.
-	Capabilities *Capabilities `json:"capabilities,omitempty"`
 	// Privileged: Run container in privileged mode.
 	Privileged bool `json:"privileged,omitempty"`
 	// RunAsGroup: Optional. The GID to run the entrypoint of the container

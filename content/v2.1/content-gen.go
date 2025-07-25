@@ -17504,7 +17504,8 @@ func (r *ConversionsourcesService) Patch(merchantId int64, conversionSourceId st
 }
 
 // UpdateMask sets the optional parameter "updateMask": List of fields being
-// updated.
+// updated. The following fields can be updated: `attribution_settings`,
+// `display_name`, `currency_code`.
 func (c *ConversionsourcesPatchCall) UpdateMask(updateMask string) *ConversionsourcesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

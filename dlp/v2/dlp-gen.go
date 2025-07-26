@@ -5028,13 +5028,13 @@ func (s GooglePrivacyDlpV2DlpJob) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2DocumentFallbackLocation: Configure document processing to
-// fall back to the configured processing option below if document processing
+// fall back to any of the following processing options if document processing
 // is unavailable in the original request location.
 type GooglePrivacyDlpV2DocumentFallbackLocation struct {
-	// GlobalProcessing: Processing will happen in the global region.
+	// GlobalProcessing: Processing occurs in the global region.
 	GlobalProcessing *GooglePrivacyDlpV2GlobalProcessing `json:"globalProcessing,omitempty"`
-	// MultiRegionProcessing: Processing will happen in a multi-region that
-	// contains the current region if available.
+	// MultiRegionProcessing: Processing occurs in a multi-region that contains the
+	// current region if available.
 	MultiRegionProcessing *GooglePrivacyDlpV2MultiRegionProcessing `json:"multiRegionProcessing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GlobalProcessing") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5965,8 +5965,7 @@ func (s *GooglePrivacyDlpV2FixedSizeBucketingConfig) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-// GooglePrivacyDlpV2GlobalProcessing: Processing will happen in the global
-// region.
+// GooglePrivacyDlpV2GlobalProcessing: Processing occurs in the global region.
 type GooglePrivacyDlpV2GlobalProcessing struct {
 }
 
@@ -6211,13 +6210,13 @@ func (s GooglePrivacyDlpV2HybridOptions) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2ImageFallbackLocation: Configure image processing to fall
-// back to the configured processing option below if unavailable in the request
-// location.
+// back to any of the following processing options if image processing is
+// unavailable in the original request location.
 type GooglePrivacyDlpV2ImageFallbackLocation struct {
-	// GlobalProcessing: Processing will happen in the global region.
+	// GlobalProcessing: Processing occurs in the global region.
 	GlobalProcessing *GooglePrivacyDlpV2GlobalProcessing `json:"globalProcessing,omitempty"`
-	// MultiRegionProcessing: Processing will happen in a multi-region that
-	// contains the current region if available.
+	// MultiRegionProcessing: Processing occurs in a multi-region that contains the
+	// current region if available.
 	MultiRegionProcessing *GooglePrivacyDlpV2MultiRegionProcessing `json:"multiRegionProcessing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GlobalProcessing") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6403,6 +6402,7 @@ type GooglePrivacyDlpV2InfoTypeCategory struct {
 	//   "ARGENTINA" - The infoType is typically used in Argentina.
 	//   "ARMENIA" - The infoType is typically used in Armenia.
 	//   "AUSTRALIA" - The infoType is typically used in Australia.
+	//   "AUSTRIA" - The infoType is typically used in Austria.
 	//   "AZERBAIJAN" - The infoType is typically used in Azerbaijan.
 	//   "BELARUS" - The infoType is typically used in Belarus.
 	//   "BELGIUM" - The infoType is typically used in Belgium.
@@ -8076,8 +8076,8 @@ func (s GooglePrivacyDlpV2MetadataLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2MultiRegionProcessing: Processing will happen in a
-// multi-region that contains the current region if available.
+// GooglePrivacyDlpV2MultiRegionProcessing: Processing occurs in a multi-region
+// that contains the current region if available.
 type GooglePrivacyDlpV2MultiRegionProcessing struct {
 }
 
@@ -8573,11 +8573,10 @@ func (s GooglePrivacyDlpV2PrivacyMetric) MarshalJSON() ([]byte, error) {
 // regions but configuring ProcessingLocation will redirect OCR to a location
 // where OCR is provided.
 type GooglePrivacyDlpV2ProcessingLocation struct {
-	// DocumentFallbackLocation: Document processing will fall back using this
+	// DocumentFallbackLocation: Document processing falls back using this
 	// configuration.
 	DocumentFallbackLocation *GooglePrivacyDlpV2DocumentFallbackLocation `json:"documentFallbackLocation,omitempty"`
-	// ImageFallbackLocation: Image processing will fall back using this
-	// configuration.
+	// ImageFallbackLocation: Image processing falls back using this configuration.
 	ImageFallbackLocation *GooglePrivacyDlpV2ImageFallbackLocation `json:"imageFallbackLocation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DocumentFallbackLocation")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -8920,7 +8919,7 @@ type GooglePrivacyDlpV2PublishToStackdriver struct {
 type GooglePrivacyDlpV2QuasiId struct {
 	// CustomTag: A column can be tagged with a custom tag. In this case, the user
 	// must indicate an auxiliary table that contains statistical information on
-	// the possible values of this column (below).
+	// the possible values of this column.
 	CustomTag string `json:"customTag,omitempty"`
 	// Field: Required. Identifies the column.
 	Field *GooglePrivacyDlpV2FieldId `json:"field,omitempty"`
@@ -8983,7 +8982,7 @@ func (s GooglePrivacyDlpV2QuasiIdField) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2QuasiIdentifierField struct {
 	// CustomTag: A column can be tagged with a custom tag. In this case, the user
 	// must indicate an auxiliary table that contains statistical information on
-	// the possible values of this column (below).
+	// the possible values of this column.
 	CustomTag string `json:"customTag,omitempty"`
 	// Field: Identifies the column.
 	Field *GooglePrivacyDlpV2FieldId `json:"field,omitempty"`
@@ -9544,8 +9543,8 @@ func (s GooglePrivacyDlpV2RequestedRiskAnalysisOptions) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2Result: All result fields mentioned below are updated
-// while the job is processing.
+// GooglePrivacyDlpV2Result: All Result fields are updated while the job is
+// processing.
 type GooglePrivacyDlpV2Result struct {
 	// HybridStats: Statistics related to the processing of hybrid inspect.
 	HybridStats *GooglePrivacyDlpV2HybridInspectStatistics `json:"hybridStats,omitempty"`
@@ -10544,7 +10543,7 @@ func (s GooglePrivacyDlpV2TagValue) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2TaggedField struct {
 	// CustomTag: A column can be tagged with a custom tag. In this case, the user
 	// must indicate an auxiliary table that contains statistical information on
-	// the possible values of this column (below).
+	// the possible values of this column.
 	CustomTag string `json:"customTag,omitempty"`
 	// Field: Required. Identifies the column.
 	Field *GooglePrivacyDlpV2FieldId `json:"field,omitempty"`

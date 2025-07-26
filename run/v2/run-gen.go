@@ -1420,7 +1420,7 @@ type GoogleCloudRunV2Job struct {
 	// DeleteTime: Output only. The deletion time. It is only populated as a
 	// response to a Delete request.
 	DeleteTime string `json:"deleteTime,omitempty"`
-	// Etag: Output only. A system-generated fingerprint for this version of the
+	// Etag: Optional. A system-generated fingerprint for this version of the
 	// resource. May be used to detect modification conflict during updates.
 	Etag string `json:"etag,omitempty"`
 	// ExecutionCount: Output only. Number of executions created for this job.
@@ -2464,7 +2464,7 @@ type GoogleCloudRunV2Service struct {
 	// Description: User-provided description of the Service. This field currently
 	// has a 512-character limit.
 	Description string `json:"description,omitempty"`
-	// Etag: Output only. A system-generated fingerprint for this version of the
+	// Etag: Optional. A system-generated fingerprint for this version of the
 	// resource. May be used to detect modification conflict during updates.
 	Etag string `json:"etag,omitempty"`
 	// ExpireTime: Output only. For a deleted resource, the time after which it
@@ -3330,7 +3330,7 @@ type GoogleCloudRunV2WorkerPool struct {
 	// Description: User-provided description of the WorkerPool. This field
 	// currently has a 512-character limit.
 	Description string `json:"description,omitempty"`
-	// Etag: Output only. A system-generated fingerprint for this version of the
+	// Etag: Optional. A system-generated fingerprint for this version of the
 	// resource. May be used to detect modification conflict during updates.
 	Etag string `json:"etag,omitempty"`
 	// ExpireTime: Output only. For a deleted resource, the time after which it

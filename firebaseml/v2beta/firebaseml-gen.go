@@ -2862,10 +2862,6 @@ type GoogleCloudAiplatformV1beta1Tool struct {
 	// CodeExecution: Optional. CodeExecution tool type. Enables the model to
 	// execute code as part of generation.
 	CodeExecution *GoogleCloudAiplatformV1beta1ToolCodeExecution `json:"codeExecution,omitempty"`
-	// ComputerUse: Optional. Tool to support the model interacting directly with
-	// the computer. If enabled, it automatically populates computer-use specific
-	// Function Declarations.
-	ComputerUse *GoogleCloudAiplatformV1beta1ToolComputerUse `json:"computerUse,omitempty"`
 	// EnterpriseWebSearch: Optional. Tool to support searching public web data,
 	// powered by Vertex AI Search and Sec4 compliance.
 	EnterpriseWebSearch *GoogleCloudAiplatformV1beta1EnterpriseWebSearch `json:"enterpriseWebSearch,omitempty"`
@@ -2915,32 +2911,6 @@ func (s GoogleCloudAiplatformV1beta1Tool) MarshalJSON() ([]byte, error) {
 // See also [ExecutableCode]and [CodeExecutionResult] which are input and
 // output to this tool.
 type GoogleCloudAiplatformV1beta1ToolCodeExecution struct {
-}
-
-// GoogleCloudAiplatformV1beta1ToolComputerUse: Tool to support computer use.
-type GoogleCloudAiplatformV1beta1ToolComputerUse struct {
-	// Environment: Required. The environment being operated.
-	//
-	// Possible values:
-	//   "ENVIRONMENT_UNSPECIFIED" - Defaults to browser.
-	//   "ENVIRONMENT_BROWSER" - Operates in a web browser.
-	Environment string `json:"environment,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Environment") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Environment") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudAiplatformV1beta1ToolComputerUse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1beta1ToolComputerUse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1beta1ToolConfig: Tool config. This config is shared
@@ -3192,6 +3162,9 @@ func (s GoogleCloudAiplatformV1beta1VertexRagStoreRagResource) MarshalJSON() ([]
 type GoogleCloudAiplatformV1beta1VideoMetadata struct {
 	// EndOffset: Optional. The end offset of the video.
 	EndOffset string `json:"endOffset,omitempty"`
+	// Fps: Optional. The frame rate of the video sent to the model. If not
+	// specified, the default value will be 1.0. The fps range is (0.0, 24.0].
+	Fps float64 `json:"fps,omitempty"`
 	// StartOffset: Optional. The start offset of the video.
 	StartOffset string `json:"startOffset,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndOffset") to
@@ -3210,6 +3183,20 @@ type GoogleCloudAiplatformV1beta1VideoMetadata struct {
 func (s GoogleCloudAiplatformV1beta1VideoMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1VideoMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1beta1VideoMetadata) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1beta1VideoMetadata
+	var s1 struct {
+		Fps gensupport.JSONFloat64 `json:"fps"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Fps = float64(s1.Fps)
+	return nil
 }
 
 // GoogleCloudAiplatformV1beta1VoiceConfig: The configuration for the voice to

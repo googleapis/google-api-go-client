@@ -339,6 +339,9 @@ type AgentStatus struct {
 	// InstalledVersion: Output only. The installed version of the agent on the
 	// host.
 	InstalledVersion string `json:"installedVersion,omitempty"`
+	// InstanceUri: Output only. The URI of the instance. Format:
+	// projects//zones//instances/
+	InstanceUri string `json:"instanceUri,omitempty"`
 	// KernelVersion: Output only. The kernel version of the system.
 	KernelVersion *SapDiscoveryResourceInstancePropertiesKernelVersion `json:"kernelVersion,omitempty"`
 	// References: Output only. Optional references to public documentation.

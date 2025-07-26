@@ -284,9 +284,10 @@ type Attributes struct {
 	// EnergyEfficiencyClass: The energy efficiency class as defined in EU
 	// directive 2010/30/EU.
 	EnergyEfficiencyClass string `json:"energyEfficiencyClass,omitempty"`
-	// ExcludedDestinations: The list of destinations to exclude for this target
-	// (corresponds to unchecked check boxes in Merchant Center). For more
-	// information, see Excluded destination
+	// ExcludedDestinations: Destinations also known as Marketing methods
+	// (https://support.google.com/merchants/answer/15130232) selections. The list
+	// of destinations to exclude for this target (corresponds to unchecked check
+	// boxes in Merchant Center). For more information, see Excluded destination
 	// (https://support.google.com/merchants/answer/6324486). Note: We recommend
 	// setting destinations on datasources level for most use cases. Use this field
 	// within products to only setup exceptions.
@@ -327,13 +328,14 @@ type Attributes struct {
 	IdentifierExists bool `json:"identifierExists,omitempty"`
 	// ImageLink: URL of an image of the item.
 	ImageLink string `json:"imageLink,omitempty"`
-	// IncludedDestinations: The list of destinations to include for this target
-	// (corresponds to checked check boxes in Merchant Center). Default
-	// destinations are always included unless provided in `excludedDestinations`.
-	// For more information, see Included destination
-	// (https://support.google.com/merchants/answer/7501026). Note: We recommend
-	// setting destinations on datasources level for most use cases. Use this field
-	// within products to only setup exceptions.
+	// IncludedDestinations: Destinations also known as Marketing methods
+	// (https://support.google.com/merchants/answer/15130232) selections. The list
+	// of destinations to include for this target (corresponds to checked check
+	// boxes in Merchant Center). Default destinations are always included unless
+	// provided in `excludedDestinations`. For more information, see Included
+	// destination (https://support.google.com/merchants/answer/7501026). Note: We
+	// recommend setting destinations on datasources level for most use cases. Use
+	// this field within products to only setup exceptions.
 	IncludedDestinations []string `json:"includedDestinations,omitempty"`
 	// Installment: Number and amount of installments to pay for an item.
 	Installment *Installment `json:"installment,omitempty"`

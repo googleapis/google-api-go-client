@@ -5986,6 +5986,71 @@ func (s GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsResponse) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaSubmitUserDeletionRequest: Request message for
+// SubmitUserDeletion RPC.
+type GoogleAnalyticsAdminV1alphaSubmitUserDeletionRequest struct {
+	// AppInstanceId: Firebase application instance ID
+	// (https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics.html#getAppInstanceId).
+	AppInstanceId string `json:"appInstanceId,omitempty"`
+	// ClientId: Google Analytics client ID
+	// (https://support.google.com/analytics/answer/11593727).
+	ClientId string `json:"clientId,omitempty"`
+	// UserId: Google Analytics user ID
+	// (https://firebase.google.com/docs/analytics/userid).
+	UserId string `json:"userId,omitempty"`
+	// UserProvidedData: User-provided data
+	// (https://support.google.com/analytics/answer/14077171). May contain either
+	// one email address or one phone number. Email addresses should be normalized
+	// as such: * lowercase * remove periods before @ for gmail.com/googlemail.com
+	// addresses * remove all spaces Phone numbers should be normalized as such: *
+	// remove all non digit characters * add + prefix
+	UserProvidedData string `json:"userProvidedData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppInstanceId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppInstanceId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAnalyticsAdminV1alphaSubmitUserDeletionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaSubmitUserDeletionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaSubmitUserDeletionResponse: Response message for
+// SubmitUserDeletion RPC.
+type GoogleAnalyticsAdminV1alphaSubmitUserDeletionResponse struct {
+	// DeletionRequestTime: Marks the moment for which all visitor data before this
+	// point should be deleted. This is set to the time at which the deletion
+	// request was received.
+	DeletionRequestTime string `json:"deletionRequestTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DeletionRequestTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeletionRequestTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAnalyticsAdminV1alphaSubmitUserDeletionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaSubmitUserDeletionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaSubpropertyEventFilter: A resource message
 // representing a Google Analytics subproperty event filter.
 type GoogleAnalyticsAdminV1alphaSubpropertyEventFilter struct {
@@ -9876,6 +9941,110 @@ func (c *PropertiesRunAccessReportCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsadmin.properties.runAccessReport", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type PropertiesSubmitUserDeletionCall struct {
+	s                                                    *Service
+	name                                                 string
+	googleanalyticsadminv1alphasubmituserdeletionrequest *GoogleAnalyticsAdminV1alphaSubmitUserDeletionRequest
+	urlParams_                                           gensupport.URLParams
+	ctx_                                                 context.Context
+	header_                                              http.Header
+}
+
+// SubmitUserDeletion: Submits a request for user deletion for a property.
+//
+// - name: The name of the property to submit user deletion for.
+func (r *PropertiesService) SubmitUserDeletion(name string, googleanalyticsadminv1alphasubmituserdeletionrequest *GoogleAnalyticsAdminV1alphaSubmitUserDeletionRequest) *PropertiesSubmitUserDeletionCall {
+	c := &PropertiesSubmitUserDeletionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1alphasubmituserdeletionrequest = googleanalyticsadminv1alphasubmituserdeletionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PropertiesSubmitUserDeletionCall) Fields(s ...googleapi.Field) *PropertiesSubmitUserDeletionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PropertiesSubmitUserDeletionCall) Context(ctx context.Context) *PropertiesSubmitUserDeletionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PropertiesSubmitUserDeletionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesSubmitUserDeletionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleanalyticsadminv1alphasubmituserdeletionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:submitUserDeletion")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticsadmin.properties.submitUserDeletion", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.submitUserDeletion" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAnalyticsAdminV1alphaSubmitUserDeletionResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PropertiesSubmitUserDeletionCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaSubmitUserDeletionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaSubmitUserDeletionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticsadmin.properties.submitUserDeletion", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

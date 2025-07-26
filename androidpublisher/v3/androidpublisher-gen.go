@@ -5721,6 +5721,8 @@ type OneTimeProductPurchaseOptionRegionalPricingAndAvailabilityConfig struct {
 	// AVAILABLE.
 	//   "AVAILABLE_IF_RELEASED" - The purchase option is initially unavailable,
 	// but made available via a released pre-order offer.
+	//   "AVAILABLE_FOR_OFFERS_ONLY" - The purchase option is unavailable but
+	// offers linked to it (i.e. Play Points offer) are available.
 	Availability string `json:"availability,omitempty"`
 	// Price: The price of the purchase option in the specified region. Must be set
 	// in the currency that is linked to the specified region.

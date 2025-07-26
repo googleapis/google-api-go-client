@@ -518,6 +518,29 @@ func (s BackupConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BackupDRConfiguration: BackupDRConfiguration to capture the backup and
+// disaster recovery details of database resource.
+type BackupDRConfiguration struct {
+	// BackupdrManaged: Indicates if the resource is managed by BackupDR.
+	BackupdrManaged bool `json:"backupdrManaged,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupdrManaged") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupdrManaged") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupDRConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupDRConfiguration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BackupFile: Backup is consisted of multiple backup files.
 type BackupFile struct {
 	// CreateTime: Output only. The time when the backup file was created.
@@ -728,6 +751,10 @@ type Cluster struct {
 	RedisConfigs map[string]string `json:"redisConfigs,omitempty"`
 	// ReplicaCount: Optional. The number of replica nodes per shard.
 	ReplicaCount int64 `json:"replicaCount,omitempty"`
+	// SatisfiesPzi: Optional. Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Optional. Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ShardCount: Optional. Number of shards for the Redis cluster.
 	ShardCount int64 `json:"shardCount,omitempty"`
 	// SimulateMaintenanceEvent: Optional. Input only. Simulate a maintenance
@@ -1478,6 +1505,8 @@ type DatabaseResourceHealthSignalData struct {
 	//   "SIGNAL_TYPE_LOCATION_ORG_POLICY_NOT_SATISFIED" - Location org policy not
 	// satisfied.
 	//   "SIGNAL_TYPE_OUTDATED_MINOR_VERSION" - Outdated DB minor version.
+	//   "SIGNAL_TYPE_SCHEMA_NOT_OPTIMIZED" - Schema not optimized.
+	//   "SIGNAL_TYPE_MANY_IDLE_CONNECTIONS" - High number of idle connections.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -1562,7 +1591,7 @@ func (s DatabaseResourceId) MarshalJSON() ([]byte, error) {
 }
 
 // DatabaseResourceMetadata: Common model for database resource instance
-// metadata. Next ID: 25
+// metadata. Next ID: 26
 type DatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *AvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -1570,6 +1599,8 @@ type DatabaseResourceMetadata struct {
 	BackupConfiguration *BackupConfiguration `json:"backupConfiguration,omitempty"`
 	// BackupRun: Latest backup run information for this instance
 	BackupRun *BackupRun `json:"backupRun,omitempty"`
+	// BackupdrConfiguration: Optional. BackupDR Configuration for the resource.
+	BackupdrConfiguration *BackupDRConfiguration `json:"backupdrConfiguration,omitempty"`
 	// CreationTime: The creation time of the resource, i.e. the time when resource
 	// is created and recorded in partner service.
 	CreationTime string `json:"creationTime,omitempty"`
@@ -1963,6 +1994,8 @@ type DatabaseResourceRecommendationSignalData struct {
 	//   "SIGNAL_TYPE_LOCATION_ORG_POLICY_NOT_SATISFIED" - Location org policy not
 	// satisfied.
 	//   "SIGNAL_TYPE_OUTDATED_MINOR_VERSION" - Outdated DB minor version.
+	//   "SIGNAL_TYPE_SCHEMA_NOT_OPTIMIZED" - Schema not optimized.
+	//   "SIGNAL_TYPE_MANY_IDLE_CONNECTIONS" - High number of idle connections.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3424,6 +3457,8 @@ type Product struct {
 	// be when engine is known, but it is not present in this enum.
 	//   "ENGINE_FIRESTORE_WITH_NATIVE_MODE" - Firestore with native mode.
 	//   "ENGINE_FIRESTORE_WITH_DATASTORE_MODE" - Firestore with datastore mode.
+	//   "ENGINE_FIRESTORE_WITH_MONGODB_COMPATIBILITY_MODE" - Firestore with
+	// MongoDB compatibility mode.
 	//   "ENGINE_EXADATA_ORACLE" - Oracle Exadata engine.
 	//   "ENGINE_ADB_SERVERLESS_ORACLE" - Oracle Autonomous DB Serverless engine.
 	Engine string `json:"engine,omitempty"`

@@ -1003,9 +1003,6 @@ type BackupConfigInfo struct {
 	// LastSuccessfulBackupConsistencyTime: Output only. If the last backup were
 	// successful, this field has the consistency date.
 	LastSuccessfulBackupConsistencyTime string `json:"lastSuccessfulBackupConsistencyTime,omitempty"`
-	// LastSuccessfulLogBackupConsistencyTime: Output only. If the last log backup
-	// were successful, this field has the consistency date.
-	LastSuccessfulLogBackupConsistencyTime string `json:"lastSuccessfulLogBackupConsistencyTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "BackupApplianceBackupConfig") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -1167,8 +1164,9 @@ func (s BackupLock) MarshalJSON() ([]byte, error) {
 // `BackupRule` has a retention policy and defines a schedule by which the
 // system is to perform backup workloads.
 type BackupPlan struct {
-	// BackupRules: Required. The backup rules for this `BackupPlan`. There must be
-	// at least one `BackupRule` message.
+	// BackupRules: Optional. The backup rules for this `BackupPlan`. There must be
+	// at least one `BackupRule` message if on_demand_retention_limit_days is not
+	// set.
 	BackupRules []*BackupRule `json:"backupRules,omitempty"`
 	// BackupVault: Required. Resource name of backup vault which will be used as
 	// storage location for backups. Format:

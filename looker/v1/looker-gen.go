@@ -525,6 +525,13 @@ func (s ImportInstanceRequest) MarshalJSON() ([]byte, error) {
 type Instance struct {
 	// AdminSettings: Looker Instance Admin settings.
 	AdminSettings *AdminSettings `json:"adminSettings,omitempty"`
+	// ClassType: Optional. Storage class of the instance.
+	//
+	// Possible values:
+	//   "CLASS_TYPE_UNSPECIFIED" - Unspecified storage class.
+	//   "R1" - Filestore.
+	//   "P1" - PD SSD.
+	ClassType string `json:"classType,omitempty"`
 	// ConsumerNetwork: Network name in the consumer project. Format:
 	// `projects/{project}/global/networks/{network}`. Note that the consumer
 	// network may be in a different GCP project than the consumer project that is

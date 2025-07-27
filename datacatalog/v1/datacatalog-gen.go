@@ -2548,9 +2548,6 @@ func (s GoogleCloudDatacatalogV1ReconcileTagsMetadata) MarshalJSON() ([]byte, er
 // GoogleCloudDatacatalogV1ReconcileTagsRequest: Request message for
 // ReconcileTags.
 type GoogleCloudDatacatalogV1ReconcileTagsRequest struct {
-	// ForceDeleteMissing: If set to `true`, deletes entry tags related to a tag
-	// template not listed in the tags source from an entry. If set to `false`,
-	// unlisted tags are retained.
 	ForceDeleteMissing bool `json:"forceDeleteMissing,omitempty"`
 	// TagTemplate: Required. The name of the tag template, which is used for
 	// reconciliation.

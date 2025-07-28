@@ -5231,7 +5231,7 @@ type OutputFile struct {
 	// CsvOutputFile: Output only. CSV output file.
 	CsvOutputFile *CsvOutputFile `json:"csvOutputFile,omitempty"`
 	// FileSizeBytes: Output only. File size in bytes.
-	FileSizeBytes int64 `json:"fileSizeBytes,omitempty"`
+	FileSizeBytes int64 `json:"fileSizeBytes,omitempty,string"`
 	// XlsxOutputFile: Output only. XLSX output file.
 	XlsxOutputFile *XlsxOutputFile `json:"xlsxOutputFile,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CsvOutputFile") to

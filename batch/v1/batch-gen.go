@@ -1216,6 +1216,8 @@ type InstancePolicy struct {
 	// model for preemptible VM instances: the old preemptible VM model (indicated
 	// by this field) is the older model, and has been migrated to use the SPOT
 	// model as the underlying technology. This old model will still be supported.
+	//   "RESERVATION_BOUND" - Bound to the lifecycle of the reservation in which
+	// it is provisioned.
 	ProvisioningModel string `json:"provisioningModel,omitempty"`
 	// Reservation: Optional. If not specified (default), VMs will consume any
 	// applicable reservation. If "NO_RESERVATION" is specified, VMs will not
@@ -1311,6 +1313,8 @@ type InstanceStatus struct {
 	// model for preemptible VM instances: the old preemptible VM model (indicated
 	// by this field) is the older model, and has been migrated to use the SPOT
 	// model as the underlying technology. This old model will still be supported.
+	//   "RESERVATION_BOUND" - Bound to the lifecycle of the reservation in which
+	// it is provisioned.
 	ProvisioningModel string `json:"provisioningModel,omitempty"`
 	// TaskPack: The max number of tasks can be assigned to this instance type.
 	TaskPack int64 `json:"taskPack,omitempty,string"`

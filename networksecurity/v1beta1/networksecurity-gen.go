@@ -257,6 +257,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.AuthzPolicies = NewProjectsLocationsAuthzPoliciesService(s)
 	rs.BackendAuthenticationConfigs = NewProjectsLocationsBackendAuthenticationConfigsService(s)
 	rs.ClientTlsPolicies = NewProjectsLocationsClientTlsPoliciesService(s)
+	rs.DnsThreatDetectors = NewProjectsLocationsDnsThreatDetectorsService(s)
 	rs.FirewallEndpointAssociations = NewProjectsLocationsFirewallEndpointAssociationsService(s)
 	rs.GatewaySecurityPolicies = NewProjectsLocationsGatewaySecurityPoliciesService(s)
 	rs.InterceptDeploymentGroups = NewProjectsLocationsInterceptDeploymentGroupsService(s)
@@ -288,6 +289,8 @@ type ProjectsLocationsService struct {
 	BackendAuthenticationConfigs *ProjectsLocationsBackendAuthenticationConfigsService
 
 	ClientTlsPolicies *ProjectsLocationsClientTlsPoliciesService
+
+	DnsThreatDetectors *ProjectsLocationsDnsThreatDetectorsService
 
 	FirewallEndpointAssociations *ProjectsLocationsFirewallEndpointAssociationsService
 
@@ -364,6 +367,15 @@ func NewProjectsLocationsClientTlsPoliciesService(s *Service) *ProjectsLocations
 }
 
 type ProjectsLocationsClientTlsPoliciesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDnsThreatDetectorsService(s *Service) *ProjectsLocationsDnsThreatDetectorsService {
+	rs := &ProjectsLocationsDnsThreatDetectorsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDnsThreatDetectorsService struct {
 	s *Service
 }
 
@@ -1555,6 +1567,47 @@ type Destination struct {
 
 func (s Destination) MarshalJSON() ([]byte, error) {
 	type NoMethod Destination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DnsThreatDetector: Message describing DnsThreatDetector object
+type DnsThreatDetector struct {
+	// CreateTime: Output only. [Output only] Create time stamp
+	CreateTime string `json:"createTime,omitempty"`
+	// ExcludedNetworks: Optional. A list of Network resource names which are
+	// exempt from the configuration in this DnsThreatDetector. Example:
+	// `projects/PROJECT_ID/global/networks/NETWORK_NAME`.
+	ExcludedNetworks []string `json:"excludedNetworks,omitempty"`
+	// Labels: Optional. Labels as key value pairs
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Immutable. Identifier. Name of the DnsThreatDetector resource.
+	Name string `json:"name,omitempty"`
+	// Provider: Required. The provider used for DNS threat analysis.
+	//
+	// Possible values:
+	//   "PROVIDER_UNSPECIFIED" - An unspecified provider.
+	//   "INFOBLOX" - The Infoblox DNS threat detecter.
+	Provider string `json:"provider,omitempty"`
+	// UpdateTime: Output only. [Output only] Update time stamp
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DnsThreatDetector) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsThreatDetector
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3024,6 +3077,37 @@ type ListClientTlsPoliciesResponse struct {
 
 func (s ListClientTlsPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListClientTlsPoliciesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListDnsThreatDetectorsResponse: Message for response to listing
+// DnsThreatDetectors
+type ListDnsThreatDetectorsResponse struct {
+	// DnsThreatDetectors: The list of DnsThreatDetector resources.
+	DnsThreatDetectors []*DnsThreatDetector `json:"dnsThreatDetectors,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Unreachable `DnsThreatDetector` resources.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DnsThreatDetectors") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DnsThreatDetectors") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListDnsThreatDetectorsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDnsThreatDetectorsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13787,6 +13871,587 @@ func (c *ProjectsLocationsClientTlsPoliciesTestIamPermissionsCall) Do(opts ...go
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.clientTlsPolicies.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDnsThreatDetectorsCreateCall struct {
+	s                 *Service
+	parent            string
+	dnsthreatdetector *DnsThreatDetector
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Create: Creates a new DnsThreatDetector in a given project and location.
+//
+// - parent: Value for parent of the DnsThreatDetector resource.
+func (r *ProjectsLocationsDnsThreatDetectorsService) Create(parent string, dnsthreatdetector *DnsThreatDetector) *ProjectsLocationsDnsThreatDetectorsCreateCall {
+	c := &ProjectsLocationsDnsThreatDetectorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.dnsthreatdetector = dnsthreatdetector
+	return c
+}
+
+// DnsThreatDetectorId sets the optional parameter "dnsThreatDetectorId": Id of
+// the requesting DnsThreatDetector object. If this field is not supplied, the
+// service will generate an identifier.
+func (c *ProjectsLocationsDnsThreatDetectorsCreateCall) DnsThreatDetectorId(dnsThreatDetectorId string) *ProjectsLocationsDnsThreatDetectorsCreateCall {
+	c.urlParams_.Set("dnsThreatDetectorId", dnsThreatDetectorId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDnsThreatDetectorsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDnsThreatDetectorsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDnsThreatDetectorsCreateCall) Context(ctx context.Context) *ProjectsLocationsDnsThreatDetectorsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDnsThreatDetectorsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDnsThreatDetectorsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.dnsthreatdetector)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/dnsThreatDetectors")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.dnsThreatDetectors.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.dnsThreatDetectors.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DnsThreatDetector.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDnsThreatDetectorsCreateCall) Do(opts ...googleapi.CallOption) (*DnsThreatDetector, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DnsThreatDetector{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.dnsThreatDetectors.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDnsThreatDetectorsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single DnsThreatDetector.
+//
+// - name: Name of the DnsThreatDetector resource.
+func (r *ProjectsLocationsDnsThreatDetectorsService) Delete(name string) *ProjectsLocationsDnsThreatDetectorsDeleteCall {
+	c := &ProjectsLocationsDnsThreatDetectorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDnsThreatDetectorsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDnsThreatDetectorsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDnsThreatDetectorsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDnsThreatDetectorsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDnsThreatDetectorsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDnsThreatDetectorsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.dnsThreatDetectors.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.dnsThreatDetectors.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDnsThreatDetectorsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.dnsThreatDetectors.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDnsThreatDetectorsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single DnsThreatDetector.
+//
+// - name: Name of the DnsThreatDetector resource.
+func (r *ProjectsLocationsDnsThreatDetectorsService) Get(name string) *ProjectsLocationsDnsThreatDetectorsGetCall {
+	c := &ProjectsLocationsDnsThreatDetectorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDnsThreatDetectorsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDnsThreatDetectorsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDnsThreatDetectorsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDnsThreatDetectorsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDnsThreatDetectorsGetCall) Context(ctx context.Context) *ProjectsLocationsDnsThreatDetectorsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDnsThreatDetectorsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDnsThreatDetectorsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.dnsThreatDetectors.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.dnsThreatDetectors.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DnsThreatDetector.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDnsThreatDetectorsGetCall) Do(opts ...googleapi.CallOption) (*DnsThreatDetector, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DnsThreatDetector{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.dnsThreatDetectors.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDnsThreatDetectorsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists DnsThreatDetectors in a given project and location.
+//
+// - parent: Parent value for ListDnsThreatDetectorsRequest.
+func (r *ProjectsLocationsDnsThreatDetectorsService) List(parent string) *ProjectsLocationsDnsThreatDetectorsListCall {
+	c := &ProjectsLocationsDnsThreatDetectorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsDnsThreatDetectorsListCall) PageSize(pageSize int64) *ProjectsLocationsDnsThreatDetectorsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListDnsThreatDetectorsRequest` call. Provide this to
+// retrieve the subsequent page.
+func (c *ProjectsLocationsDnsThreatDetectorsListCall) PageToken(pageToken string) *ProjectsLocationsDnsThreatDetectorsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDnsThreatDetectorsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDnsThreatDetectorsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDnsThreatDetectorsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDnsThreatDetectorsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDnsThreatDetectorsListCall) Context(ctx context.Context) *ProjectsLocationsDnsThreatDetectorsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDnsThreatDetectorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDnsThreatDetectorsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/dnsThreatDetectors")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.dnsThreatDetectors.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.dnsThreatDetectors.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDnsThreatDetectorsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDnsThreatDetectorsListCall) Do(opts ...googleapi.CallOption) (*ListDnsThreatDetectorsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDnsThreatDetectorsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.dnsThreatDetectors.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDnsThreatDetectorsListCall) Pages(ctx context.Context, f func(*ListDnsThreatDetectorsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsDnsThreatDetectorsPatchCall struct {
+	s                 *Service
+	name              string
+	dnsthreatdetector *DnsThreatDetector
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Patch: Updates the parameters of a single DnsThreatDetector.
+//
+// - name: Immutable. Identifier. Name of the DnsThreatDetector resource.
+func (r *ProjectsLocationsDnsThreatDetectorsService) Patch(name string, dnsthreatdetector *DnsThreatDetector) *ProjectsLocationsDnsThreatDetectorsPatchCall {
+	c := &ProjectsLocationsDnsThreatDetectorsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.dnsthreatdetector = dnsthreatdetector
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the DnsThreatDetector resource by
+// the update. The fields specified in the update_mask are relative to the
+// resource, not the full request. A field will be overwritten if it is in the
+// mask. If the mask is not provided then all fields present in the request
+// will be overwritten.
+func (c *ProjectsLocationsDnsThreatDetectorsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDnsThreatDetectorsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDnsThreatDetectorsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDnsThreatDetectorsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDnsThreatDetectorsPatchCall) Context(ctx context.Context) *ProjectsLocationsDnsThreatDetectorsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDnsThreatDetectorsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDnsThreatDetectorsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.dnsthreatdetector)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.dnsThreatDetectors.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.dnsThreatDetectors.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DnsThreatDetector.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDnsThreatDetectorsPatchCall) Do(opts ...googleapi.CallOption) (*DnsThreatDetector, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DnsThreatDetector{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.dnsThreatDetectors.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

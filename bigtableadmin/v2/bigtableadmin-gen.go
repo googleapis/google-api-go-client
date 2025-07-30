@@ -2199,6 +2199,32 @@ func (s GoogleBigtableAdminV2TypeBytesEncodingRaw) MarshalJSON() ([]byte, error)
 type GoogleBigtableAdminV2TypeDate struct {
 }
 
+// GoogleBigtableAdminV2TypeEnum: A protobuf enum type. Values of type `Enum`
+// are stored in `Value.int_value`.
+type GoogleBigtableAdminV2TypeEnum struct {
+	// EnumName: The fully qualified name of the protobuf enum message, including
+	// package. In the format of "foo.bar.EnumMessage".
+	EnumName string `json:"enumName,omitempty"`
+	// SchemaBundleId: The ID of the schema bundle that this enum is defined in.
+	SchemaBundleId string `json:"schemaBundleId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnumName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnumName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeEnum) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeEnum
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleBigtableAdminV2TypeFloat32: Float32 Values of type `Float32` are
 // stored in `Value.float_value`.
 type GoogleBigtableAdminV2TypeFloat32 struct {
@@ -2317,6 +2343,32 @@ type GoogleBigtableAdminV2TypeMap struct {
 
 func (s GoogleBigtableAdminV2TypeMap) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleBigtableAdminV2TypeMap
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeProto: A protobuf message type. Values of type
+// `Proto` are stored in `Value.bytes_value`.
+type GoogleBigtableAdminV2TypeProto struct {
+	// MessageName: The fully qualified name of the protobuf message, including
+	// package. In the format of "foo.bar.Message".
+	MessageName string `json:"messageName,omitempty"`
+	// SchemaBundleId: The ID of the schema bundle that this proto is defined in.
+	SchemaBundleId string `json:"schemaBundleId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MessageName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MessageName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2TypeProto) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeProto
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4245,6 +4297,8 @@ type Type struct {
 	BytesType *GoogleBigtableAdminV2TypeBytes `json:"bytesType,omitempty"`
 	// DateType: Date
 	DateType *GoogleBigtableAdminV2TypeDate `json:"dateType,omitempty"`
+	// EnumType: Enum
+	EnumType *GoogleBigtableAdminV2TypeEnum `json:"enumType,omitempty"`
 	// Float32Type: Float32
 	Float32Type *GoogleBigtableAdminV2TypeFloat32 `json:"float32Type,omitempty"`
 	// Float64Type: Float64
@@ -4253,6 +4307,8 @@ type Type struct {
 	Int64Type *GoogleBigtableAdminV2TypeInt64 `json:"int64Type,omitempty"`
 	// MapType: Map
 	MapType *GoogleBigtableAdminV2TypeMap `json:"mapType,omitempty"`
+	// ProtoType: Proto
+	ProtoType *GoogleBigtableAdminV2TypeProto `json:"protoType,omitempty"`
 	// StringType: String
 	StringType *GoogleBigtableAdminV2TypeString `json:"stringType,omitempty"`
 	// StructType: Struct
@@ -13477,6 +13533,26 @@ func (c *ProjectsInstancesTablesSchemaBundlesListCall) PageSize(pageSize int64) 
 // `ListSchemaBundles` must match the call that provided the page token.
 func (c *ProjectsInstancesTablesSchemaBundlesListCall) PageToken(pageToken string) *ProjectsInstancesTablesSchemaBundlesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": The resource_view to be applied to
+// the returned SchemaBundles' fields. Defaults to NAME_ONLY.
+//
+// Possible values:
+//
+//	"SCHEMA_BUNDLE_VIEW_UNSPECIFIED" - Uses the default view for each method
+//
+// as documented in the request.
+//
+//	"NAME_ONLY" - Only populates `name`.
+//	"BASIC" - Only populates the SchemaBundle's basic metadata. This includes:
+//
+// name, etag, create_time, update_time.
+//
+//	"FULL" - Populates every field.
+func (c *ProjectsInstancesTablesSchemaBundlesListCall) View(view string) *ProjectsInstancesTablesSchemaBundlesListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 

@@ -615,6 +615,7 @@ type ProjectsLocationsCollectionsDataStoresWidgetConfigsService struct {
 
 func NewProjectsLocationsCollectionsEnginesService(s *Service) *ProjectsLocationsCollectionsEnginesService {
 	rs := &ProjectsLocationsCollectionsEnginesService{s: s}
+	rs.Analytics = NewProjectsLocationsCollectionsEnginesAnalyticsService(s)
 	rs.Assistants = NewProjectsLocationsCollectionsEnginesAssistantsService(s)
 	rs.CompletionConfig = NewProjectsLocationsCollectionsEnginesCompletionConfigService(s)
 	rs.Controls = NewProjectsLocationsCollectionsEnginesControlsService(s)
@@ -628,6 +629,8 @@ func NewProjectsLocationsCollectionsEnginesService(s *Service) *ProjectsLocation
 
 type ProjectsLocationsCollectionsEnginesService struct {
 	s *Service
+
+	Analytics *ProjectsLocationsCollectionsEnginesAnalyticsService
 
 	Assistants *ProjectsLocationsCollectionsEnginesAssistantsService
 
@@ -644,6 +647,15 @@ type ProjectsLocationsCollectionsEnginesService struct {
 	Sessions *ProjectsLocationsCollectionsEnginesSessionsService
 
 	WidgetConfigs *ProjectsLocationsCollectionsEnginesWidgetConfigsService
+}
+
+func NewProjectsLocationsCollectionsEnginesAnalyticsService(s *Service) *ProjectsLocationsCollectionsEnginesAnalyticsService {
+	rs := &ProjectsLocationsCollectionsEnginesAnalyticsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesAnalyticsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsCollectionsEnginesAssistantsService(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsService {
@@ -9340,6 +9352,31 @@ func (s GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesResponse) Marsha
 type GoogleCloudDiscoveryengineV1alphaBatchVerifyTargetSitesRequest struct {
 }
 
+// GoogleCloudDiscoveryengineV1alphaBigQueryDestination: The BigQuery output
+// destination configuration.
+type GoogleCloudDiscoveryengineV1alphaBigQueryDestination struct {
+	// DatasetId: Required. The ID of a BigQuery Dataset.
+	DatasetId string `json:"datasetId,omitempty"`
+	// TableId: Required. The table_id of exported BigQuery table.
+	TableId string `json:"tableId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatasetId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaBigQueryDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaBigQueryDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaBigQuerySource: BigQuery source import data
 // from.
 type GoogleCloudDiscoveryengineV1alphaBigQuerySource struct {
@@ -13856,6 +13893,63 @@ func (s GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpecQuerySetSpec) M
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaExportMetricsMetadata: Metadata related to
+// the progress of the Export operation. This is returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaExportMetricsMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaExportMetricsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaExportMetricsMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaExportMetricsRequest: Request message for
+// the `ExportMetrics` method.
+type GoogleCloudDiscoveryengineV1alphaExportMetricsRequest struct {
+	// OutputConfig: Required. The output location of the data.
+	OutputConfig *GoogleCloudDiscoveryengineV1alphaOutputConfig `json:"outputConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OutputConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaExportMetricsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaExportMetricsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaExportMetricsResponse: Response of the
+// ExportMetricsRequest. If the long running operation was successful, then
+// this message is returned by the google.longrunning.Operations.response
+// field.
+type GoogleCloudDiscoveryengineV1alphaExportMetricsResponse struct {
+}
+
 // GoogleCloudDiscoveryengineV1alphaFactChunk: Fact Chunk.
 type GoogleCloudDiscoveryengineV1alphaFactChunk struct {
 	// ChunkText: Text content of the fact chunk. Can be at most 10K characters
@@ -16209,9 +16303,9 @@ type GoogleCloudDiscoveryengineV1alphaListSessionsRequest struct {
 	// Filter: A comma-separated list of fields to filter by, in EBNF grammar. The
 	// supported fields are: * `user_pseudo_id` * `state` * `display_name` *
 	// `starred` * `is_pinned` * `labels` * `create_time` * `update_time` Examples:
-	// "user_pseudo_id = some_id" "display_name = \"some_name\"" "starred = true"
-	// "is_pinned=true AND (NOT labels:hidden)" "create_time >
-	// \"1970-01-01T12:00:00Z\""
+	// * `user_pseudo_id = some_id` * `display_name = "some_name" * `starred =
+	// true` * `is_pinned=true AND (NOT labels:hidden)` * `create_time >
+	// "1970-01-01T12:00:00Z"
 	Filter string `json:"filter,omitempty"`
 	// OrderBy: A comma-separated list of fields to order by, sorted in ascending
 	// order. Use "desc" after a field name for descending. Supported fields: *
@@ -16509,6 +16603,30 @@ type GoogleCloudDiscoveryengineV1alphaOrganicCrawlRateTimeSeries struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaOrganicCrawlRateTimeSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaOrganicCrawlRateTimeSeries
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaOutputConfig: The output configuration
+// setting.
+type GoogleCloudDiscoveryengineV1alphaOutputConfig struct {
+	// BigqueryDestination: The BigQuery location where the output is to be written
+	// to.
+	BigqueryDestination *GoogleCloudDiscoveryengineV1alphaBigQueryDestination `json:"bigqueryDestination,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BigqueryDestination") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BigqueryDestination") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaOutputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaOutputConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -18645,9 +18763,12 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// better interpret the query. If a value isn't specified, the query language
 	// code is automatically detected, which may not be accurate.
 	LanguageCode string `json:"languageCode,omitempty"`
-	// NaturalLanguageQueryUnderstandingSpec: If
-	// `naturalLanguageQueryUnderstandingSpec` is not specified, no additional
-	// natural language query understanding will be done.
+	// NaturalLanguageQueryUnderstandingSpec: Config for natural language query
+	// understanding capabilities, such as extracting structured field filters from
+	// the query. Refer to this documentation
+	// (https://cloud.google.com/generative-ai-app-builder/docs/natural-language-queries)
+	// for more information. If `naturalLanguageQueryUnderstandingSpec` is not
+	// specified, no additional natural language query understanding will be done.
 	NaturalLanguageQueryUnderstandingSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestNaturalLanguageQueryUnderstandingSpec `json:"naturalLanguageQueryUnderstandingSpec,omitempty"`
 	// Offset: A 0-indexed integer that specifies the current offset (that is,
 	// starting result location, amongst the Documents deemed by the API as
@@ -19690,6 +19811,27 @@ func (s GoogleCloudDiscoveryengineV1alphaSearchRequestImageQuery) MarshalJSON() 
 // ngSpec: Specification to enable natural language understanding capabilities
 // for search requests.
 type GoogleCloudDiscoveryengineV1alphaSearchRequestNaturalLanguageQueryUnderstandingSpec struct {
+	// ExtractedFilterBehavior: Optional. Controls behavior of how extracted
+	// filters are applied to the search. The default behavior depends on the
+	// request. For single datastore structured search, the default is
+	// `HARD_FILTER`. For multi-datastore search, the default behavior is
+	// `SOFT_BOOST`. Location-based filters are always applied as hard filters, and
+	// the `SOFT_BOOST` setting will not affect them. This field is only used if
+	// SearchRequest.natural_language_query_understanding_spec.filter_extraction_con
+	// dition is set to FilterExtractionCondition.ENABLED.
+	//
+	// Possible values:
+	//   "EXTRACTED_FILTER_BEHAVIOR_UNSPECIFIED" -
+	// `EXTRACTED_FILTER_BEHAVIOR_UNSPECIFIED` will use the default behavior for
+	// extracted filters. For single datastore search, the default is to apply as
+	// hard filters. For multi-datastore search, the default is to apply as soft
+	// boosts.
+	//   "HARD_FILTER" - Applies all extracted filters as hard filters on the
+	// results. Results that do not pass the extracted filters will not be returned
+	// in the result set.
+	//   "SOFT_BOOST" - Applies all extracted filters as soft boosts. Results that
+	// pass the filters will be boosted up to higher ranks in the result set.
+	ExtractedFilterBehavior string `json:"extractedFilterBehavior,omitempty"`
 	// FilterExtractionCondition: The condition under which filter extraction
 	// should occur. Server behavior defaults to `DISABLED`.
 	//
@@ -19704,13 +19846,13 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestNaturalLanguageQueryUnderstan
 	// If this field is set, it overrides the field names set in
 	// ServingConfig.geo_search_query_detection_field_names.
 	GeoSearchQueryDetectionFieldNames []string `json:"geoSearchQueryDetectionFieldNames,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FilterExtractionCondition")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "ExtractedFilterBehavior") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FilterExtractionCondition") to
+	// NullFields is a list of field names (e.g. "ExtractedFilterBehavior") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -26585,9 +26727,12 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// better interpret the query. If a value isn't specified, the query language
 	// code is automatically detected, which may not be accurate.
 	LanguageCode string `json:"languageCode,omitempty"`
-	// NaturalLanguageQueryUnderstandingSpec: If
-	// `naturalLanguageQueryUnderstandingSpec` is not specified, no additional
-	// natural language query understanding will be done.
+	// NaturalLanguageQueryUnderstandingSpec: Config for natural language query
+	// understanding capabilities, such as extracting structured field filters from
+	// the query. Refer to this documentation
+	// (https://cloud.google.com/generative-ai-app-builder/docs/natural-language-queries)
+	// for more information. If `naturalLanguageQueryUnderstandingSpec` is not
+	// specified, no additional natural language query understanding will be done.
 	NaturalLanguageQueryUnderstandingSpec *GoogleCloudDiscoveryengineV1betaSearchRequestNaturalLanguageQueryUnderstandingSpec `json:"naturalLanguageQueryUnderstandingSpec,omitempty"`
 	// Offset: A 0-indexed integer that specifies the current offset (that is,
 	// starting result location, amongst the Documents deemed by the API as
@@ -27625,6 +27770,27 @@ func (s GoogleCloudDiscoveryengineV1betaSearchRequestImageQuery) MarshalJSON() (
 // gSpec: Specification to enable natural language understanding capabilities
 // for search requests.
 type GoogleCloudDiscoveryengineV1betaSearchRequestNaturalLanguageQueryUnderstandingSpec struct {
+	// ExtractedFilterBehavior: Optional. Controls behavior of how extracted
+	// filters are applied to the search. The default behavior depends on the
+	// request. For single datastore structured search, the default is
+	// `HARD_FILTER`. For multi-datastore search, the default behavior is
+	// `SOFT_BOOST`. Location-based filters are always applied as hard filters, and
+	// the `SOFT_BOOST` setting will not affect them. This field is only used if
+	// SearchRequest.natural_language_query_understanding_spec.filter_extraction_con
+	// dition is set to FilterExtractionCondition.ENABLED.
+	//
+	// Possible values:
+	//   "EXTRACTED_FILTER_BEHAVIOR_UNSPECIFIED" -
+	// `EXTRACTED_FILTER_BEHAVIOR_UNSPECIFIED` will use the default behavior for
+	// extracted filters. For single datastore search, the default is to apply as
+	// hard filters. For multi-datastore search, the default is to apply as soft
+	// boosts.
+	//   "HARD_FILTER" - Applies all extracted filters as hard filters on the
+	// results. Results that do not pass the extracted filters will not be returned
+	// in the result set.
+	//   "SOFT_BOOST" - Applies all extracted filters as soft boosts. Results that
+	// pass the filters will be boosted up to higher ranks in the result set.
+	ExtractedFilterBehavior string `json:"extractedFilterBehavior,omitempty"`
 	// FilterExtractionCondition: The condition under which filter extraction
 	// should occur. Server behavior defaults to `DISABLED`.
 	//
@@ -27639,13 +27805,13 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestNaturalLanguageQueryUnderstand
 	// If this field is set, it overrides the field names set in
 	// ServingConfig.geo_search_query_detection_field_names.
 	GeoSearchQueryDetectionFieldNames []string `json:"geoSearchQueryDetectionFieldNames,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FilterExtractionCondition")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "ExtractedFilterBehavior") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FilterExtractionCondition") to
+	// NullFields is a list of field names (e.g. "ExtractedFilterBehavior") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -40122,9 +40288,9 @@ func (r *ProjectsLocationsCollectionsDataStoresSessionsService) List(parent stri
 // Filter sets the optional parameter "filter": A comma-separated list of
 // fields to filter by, in EBNF grammar. The supported fields are: *
 // `user_pseudo_id` * `state` * `display_name` * `starred` * `is_pinned` *
-// `labels` * `create_time` * `update_time` Examples: "user_pseudo_id =
-// some_id" "display_name = \"some_name\"" "starred = true" "is_pinned=true AND
-// (NOT labels:hidden)" "create_time > \"1970-01-01T12:00:00Z\""
+// `labels` * `create_time` * `update_time` Examples: * `user_pseudo_id =
+// some_id` * `display_name = "some_name" * `starred = true` * `is_pinned=true
+// AND (NOT labels:hidden)` * `create_time > "1970-01-01T12:00:00Z"
 func (c *ProjectsLocationsCollectionsDataStoresSessionsListCall) Filter(filter string) *ProjectsLocationsCollectionsDataStoresSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -44586,6 +44752,113 @@ func (c *ProjectsLocationsCollectionsEnginesTuneCall) Do(opts ...googleapi.CallO
 	return ret, nil
 }
 
+type ProjectsLocationsCollectionsEnginesAnalyticsExportMetricsCall struct {
+	s                                                     *Service
+	analytics                                             string
+	googleclouddiscoveryenginev1alphaexportmetricsrequest *GoogleCloudDiscoveryengineV1alphaExportMetricsRequest
+	urlParams_                                            gensupport.URLParams
+	ctx_                                                  context.Context
+	header_                                               http.Header
+}
+
+// ExportMetrics: Exports metrics.
+//
+//   - analytics: The analytics resource name under the engine where the metrics
+//     are created. The format is
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}/analytics`.
+func (r *ProjectsLocationsCollectionsEnginesAnalyticsService) ExportMetrics(analytics string, googleclouddiscoveryenginev1alphaexportmetricsrequest *GoogleCloudDiscoveryengineV1alphaExportMetricsRequest) *ProjectsLocationsCollectionsEnginesAnalyticsExportMetricsCall {
+	c := &ProjectsLocationsCollectionsEnginesAnalyticsExportMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.analytics = analytics
+	c.googleclouddiscoveryenginev1alphaexportmetricsrequest = googleclouddiscoveryenginev1alphaexportmetricsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsExportMetricsCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAnalyticsExportMetricsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsExportMetricsCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAnalyticsExportMetricsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsExportMetricsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsExportMetricsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphaexportmetricsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+analytics}:exportMetrics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"analytics": c.analytics,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.analytics.exportMetrics", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.analytics.exportMetrics" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAnalyticsExportMetricsCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.analytics.exportMetrics", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsCollectionsEnginesAssistantsGetCall struct {
 	s            *Service
 	name         string
@@ -48047,9 +48320,9 @@ func (r *ProjectsLocationsCollectionsEnginesSessionsService) List(parent string)
 // Filter sets the optional parameter "filter": A comma-separated list of
 // fields to filter by, in EBNF grammar. The supported fields are: *
 // `user_pseudo_id` * `state` * `display_name` * `starred` * `is_pinned` *
-// `labels` * `create_time` * `update_time` Examples: "user_pseudo_id =
-// some_id" "display_name = \"some_name\"" "starred = true" "is_pinned=true AND
-// (NOT labels:hidden)" "create_time > \"1970-01-01T12:00:00Z\""
+// `labels` * `create_time` * `update_time` Examples: * `user_pseudo_id =
+// some_id` * `display_name = "some_name" * `starred = true` * `is_pinned=true
+// AND (NOT labels:hidden)` * `create_time > "1970-01-01T12:00:00Z"
 func (c *ProjectsLocationsCollectionsEnginesSessionsListCall) Filter(filter string) *ProjectsLocationsCollectionsEnginesSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -56002,9 +56275,9 @@ func (r *ProjectsLocationsDataStoresSessionsService) List(parent string) *Projec
 // Filter sets the optional parameter "filter": A comma-separated list of
 // fields to filter by, in EBNF grammar. The supported fields are: *
 // `user_pseudo_id` * `state` * `display_name` * `starred` * `is_pinned` *
-// `labels` * `create_time` * `update_time` Examples: "user_pseudo_id =
-// some_id" "display_name = \"some_name\"" "starred = true" "is_pinned=true AND
-// (NOT labels:hidden)" "create_time > \"1970-01-01T12:00:00Z\""
+// `labels` * `create_time` * `update_time` Examples: * `user_pseudo_id =
+// some_id` * `display_name = "some_name" * `starred = true` * `is_pinned=true
+// AND (NOT labels:hidden)` * `create_time > "1970-01-01T12:00:00Z"
 func (c *ProjectsLocationsDataStoresSessionsListCall) Filter(filter string) *ProjectsLocationsDataStoresSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

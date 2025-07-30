@@ -1136,8 +1136,12 @@ type Product struct {
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// Name: The name of the product. Format:
 	// `accounts/{account}/products/{product}` where the last section `product`
-	// consists of 4 parts: `channel~content_language~feed_label~offer_id` example
-	// for product name is `accounts/123/products/online~en~US~sku123`
+	// consists of: `content_language~feed_label~offer_id` example for product name
+	// is `accounts/123/products/en~US~sku123`. A legacy local product name would
+	// be `accounts/123/products/local~en~US~sku123`. Note: For calls to the v1beta
+	// version, the `product` section consists of:
+	// `channel~content_language~feed_label~offer_id`, for example:
+	// `accounts/123/products/online~en~US~sku123`.
 	Name string `json:"name,omitempty"`
 	// OfferId: Output only. Your unique identifier for the product. This is the
 	// same for the product input and processed product. Leading and trailing
@@ -1369,9 +1373,13 @@ type ProductInput struct {
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// Name: Identifier. The name of the product input. Format:
 	// `accounts/{account}/productInputs/{productinput}` where the last section
-	// `productinput` consists of 4 parts:
-	// `channel~content_language~feed_label~offer_id` example for product input
-	// name is `accounts/123/productInputs/online~en~US~sku123`
+	// `productinput` consists of: `content_language~feed_label~offer_id` example
+	// for product input name is `accounts/123/productInputs/en~US~sku123`. A
+	// legacy local product input name would be
+	// `accounts/123/productInputs/local~en~US~sku123`. Note: For calls to the
+	// v1beta version, the `productInput` section consists of:
+	// `channel~content_language~feed_label~offer_id`, for example:
+	// `accounts/123/productInputs/online~en~US~sku123`.
 	Name string `json:"name,omitempty"`
 	// OfferId: Required. Immutable. Your unique identifier for the product. This
 	// is the same for the product input and processed product. Leading and
@@ -1957,9 +1965,8 @@ type AccountsProductInputsDeleteCall struct {
 //
 //   - name: The name of the product input resource to delete. Format:
 //     `accounts/{account}/productInputs/{product}` where the last section
-//     `product` consists of 4 parts:
-//     `channel~content_language~feed_label~offer_id` example for product name is
-//     `accounts/123/productInputs/online~en~US~sku123`.
+//     `product` consists of: `content_language~feed_label~offer_id` example for
+//     product name is `accounts/123/productInputs/en~US~sku123`.
 func (r *AccountsProductInputsService) Delete(name string) *AccountsProductInputsDeleteCall {
 	c := &AccountsProductInputsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2194,9 +2201,13 @@ type AccountsProductInputsPatchCall struct {
 //
 //   - name: Identifier. The name of the product input. Format:
 //     `accounts/{account}/productInputs/{productinput}` where the last section
-//     `productinput` consists of 4 parts:
-//     `channel~content_language~feed_label~offer_id` example for product input
-//     name is `accounts/123/productInputs/online~en~US~sku123`.
+//     `productinput` consists of: `content_language~feed_label~offer_id` example
+//     for product input name is `accounts/123/productInputs/en~US~sku123`. A
+//     legacy local product input name would be
+//     `accounts/123/productInputs/local~en~US~sku123`. Note: For calls to the
+//     v1beta version, the `productInput` section consists of:
+//     `channel~content_language~feed_label~offer_id`, for example:
+//     `accounts/123/productInputs/online~en~US~sku123`.
 func (r *AccountsProductInputsService) Patch(name string, productinput *ProductInput) *AccountsProductInputsPatchCall {
 	c := &AccountsProductInputsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2327,8 +2338,12 @@ type AccountsProductsGetCall struct {
 //
 //   - name: The name of the product to retrieve. Format:
 //     `accounts/{account}/products/{product}` where the last section `product`
-//     consists of 4 parts: `channel~content_language~feed_label~offer_id`
-//     example for product name is `accounts/123/products/online~en~US~sku123`.
+//     consists of: `content_language~feed_label~offer_id` example for product
+//     name is `accounts/123/products/en~US~sku123`. A legacy local product name
+//     would be `accounts/123/products/local~en~US~sku123`. Note: For calls to
+//     the v1beta version, the `product` section consists of:
+//     `channel~content_language~feed_label~offer_id`, for example:
+//     `accounts/123/products/online~en~US~sku123`.
 func (r *AccountsProductsService) Get(name string) *AccountsProductsGetCall {
 	c := &AccountsProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

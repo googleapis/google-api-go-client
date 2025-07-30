@@ -1299,8 +1299,9 @@ type CheckoutSettings struct {
 	// be a copy of url settings. Otherwise, it will have the value of the parent
 	// account (for only marketplace sellers).
 	EffectiveUriSettings *UriSettings `json:"effectiveUriSettings,omitempty"`
-	// EligibleDestinations: Optional. The destinations to which the checkout
-	// program applies, valid destination values are `SHOPPING_ADS`,
+	// EligibleDestinations: Optional. The destinations (also known as Marketing
+	// methods (https://support.google.com/merchants/answer/15130232)) to which the
+	// checkout program applies, valid destination values are `SHOPPING_ADS`,
 	// `FREE_LISTINGS`
 	//
 	// Possible values:

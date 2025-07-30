@@ -2311,7 +2311,7 @@
       }
     }
   },
-  "revision": "20250721",
+  "revision": "20250727",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "About": {
@@ -2926,7 +2926,7 @@
           "readOnly": true
         },
         "eligibleDestinations": {
-          "description": "Optional. The destinations to which the checkout program applies, valid destination values are `SHOPPING_ADS`, `FREE_LISTINGS`",
+          "description": "Optional. The destinations (also known as [Marketing methods](https://support.google.com/merchants/answer/15130232)) to which the checkout program applies, valid destination values are `SHOPPING_ADS`, `FREE_LISTINGS`",
           "items": {
             "enum": [
               "DESTINATION_ENUM_UNSPECIFIED",

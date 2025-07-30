@@ -361,15 +361,16 @@ type LocalInventory struct {
 	// inventory data specification
 	// (https://support.google.com/merchants/answer/3061342)
 	PickupSla string `json:"pickupSla,omitempty"`
-	// Price: Price of the product at this store.
+	// Price: Optional. Price of the product at this store.
 	Price *Price `json:"price,omitempty"`
 	// Quantity: Quantity of the product available at this store. Must be greater
 	// than or equal to zero.
 	Quantity int64 `json:"quantity,omitempty,string"`
-	// SalePrice: Sale price of the product at this store. Mandatory if
+	// SalePrice: Optional. Sale price of the product at this store. Mandatory if
 	// `salePriceEffectiveDate` is defined.
 	SalePrice *Price `json:"salePrice,omitempty"`
-	// SalePriceEffectiveDate: The `TimePeriod` of the sale at this store.
+	// SalePriceEffectiveDate: Optional. The `TimePeriod` of the sale at this
+	// store.
 	SalePriceEffectiveDate *Interval `json:"salePriceEffectiveDate,omitempty"`
 	// StoreCode: Required. Immutable. Store code (the store ID from your Business
 	// Profile) of the physical store the product is sold in. See the Local product
@@ -576,16 +577,17 @@ type RegionalInventory struct {
 	// `{regional_inventory.name=accounts/{account}/products/{product}/regionalInven
 	// tories/{region}`
 	Name string `json:"name,omitempty"`
-	// Price: Price of the product in this region.
+	// Price: Optional. Price of the product in this region.
 	Price *Price `json:"price,omitempty"`
 	// Region: Required. Immutable. ID of the region for this `RegionalInventory`
 	// resource. See the Regional availability and pricing
 	// (https://support.google.com/merchants/answer/9698880) for more details.
 	Region string `json:"region,omitempty"`
-	// SalePrice: Sale price of the product in this region. Mandatory if
+	// SalePrice: Optional. Sale price of the product in this region. Mandatory if
 	// `salePriceEffectiveDate` is defined.
 	SalePrice *Price `json:"salePrice,omitempty"`
-	// SalePriceEffectiveDate: The `TimePeriod` of the sale price in this region.
+	// SalePriceEffectiveDate: Optional. The `TimePeriod` of the sale price in this
+	// region.
 	SalePriceEffectiveDate *Interval `json:"salePriceEffectiveDate,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

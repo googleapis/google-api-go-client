@@ -688,10 +688,10 @@ func (s ActionStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Annotation: Annotations can be associated with the plain-text body of the
-// message or with chips that link to Google Workspace resources like Google
-// Docs or Sheets with a `start_index` and `length` of 0. To add basic
-// formatting to a text message, see Format text messages
+// Annotation: Output only. Annotations can be associated with the plain-text
+// body of the message or with chips that link to Google Workspace resources
+// like Google Docs or Sheets with `start_index` and `length` of 0. To add
+// basic formatting to a text message, see Format text messages
 // (https://developers.google.com/workspace/chat/format-messages). Example
 // plain-text message body: ``` Hello @FooBot how are you!" ``` The
 // corresponding annotations metadata: ``` "annotations":[{
@@ -4463,9 +4463,9 @@ type MeetSpaceLinkData struct {
 	// Possible values:
 	//   "HUDDLE_STATUS_UNSPECIFIED" - Default value for the enum. Don't use.
 	//   "STARTED" - The huddle has started.
-	//   "ENDED" - The huddle has ended. In this case the meet space URI and
+	//   "ENDED" - The huddle has ended. In this case the Meet space URI and
 	// identifiers will no longer be valid.
-	//   "MISSED" - The huddle has been missed. In this case the meet space URI and
+	//   "MISSED" - The huddle has been missed. In this case the Meet space URI and
 	// identifiers will no longer be valid.
 	HuddleStatus string `json:"huddleStatus,omitempty"`
 	// MeetingCode: Meeting code of the linked Meet space.
@@ -4474,8 +4474,8 @@ type MeetSpaceLinkData struct {
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value for the enum. Don't use.
-	//   "MEETING" - The meet space is a meeting.
-	//   "HUDDLE" - The meet space is a huddle.
+	//   "MEETING" - The Meet space is a meeting.
+	//   "HUDDLE" - The Meet space is a huddle.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "HuddleStatus") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4752,7 +4752,7 @@ type Message struct {
 	ActionResponse *ActionResponse `json:"actionResponse,omitempty"`
 	// Annotations: Output only. Annotations can be associated with the plain-text
 	// body of the message or with chips that link to Google Workspace resources
-	// like Google Docs or Sheets with a `start_index` and `length` of 0.
+	// like Google Docs or Sheets with `start_index` and `length` of 0.
 	Annotations []*Annotation `json:"annotations,omitempty"`
 	// ArgumentText: Output only. Plain-text body of the message with all Chat app
 	// mentions stripped out.
@@ -5306,16 +5306,16 @@ func (s ReactionDeletedEventData) MarshalJSON() ([]byte, error) {
 
 // RichLinkMetadata: A rich link to a resource. Rich links can be associated
 // with the plain-text body of the message or represent chips that link to
-// Google Workspace resources like Google Docs or Sheets with a with
-// `start_index` and `length` of 0.
+// Google Workspace resources like Google Docs or Sheets with `start_index` and
+// `length` of 0.
 type RichLinkMetadata struct {
-	// CalendarEventLinkData: Data for a calendar event link.
+	// CalendarEventLinkData: Data for a Calendar event link.
 	CalendarEventLinkData *CalendarEventLinkData `json:"calendarEventLinkData,omitempty"`
 	// ChatSpaceLinkData: Data for a chat space link.
 	ChatSpaceLinkData *ChatSpaceLinkData `json:"chatSpaceLinkData,omitempty"`
 	// DriveLinkData: Data for a drive link.
 	DriveLinkData *DriveLinkData `json:"driveLinkData,omitempty"`
-	// MeetSpaceLinkData: Data for a meet space link.
+	// MeetSpaceLinkData: Data for a Meet space link.
 	MeetSpaceLinkData *MeetSpaceLinkData `json:"meetSpaceLinkData,omitempty"`
 	// RichLinkType: The rich link type.
 	//

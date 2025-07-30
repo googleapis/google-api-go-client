@@ -1528,7 +1528,7 @@
       }
     }
   },
-  "revision": "20250720",
+  "revision": "20250724",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessSettings": {
@@ -1678,7 +1678,7 @@
       "type": "object"
     },
     "Annotation": {
-      "description": "Annotations can be associated with the plain-text body of the message or with chips that link to Google Workspace resources like Google Docs or Sheets with a `start_index` and `length` of 0. To add basic formatting to a text message, see [Format text messages](https://developers.google.com/workspace/chat/format-messages). Example plain-text message body: ``` Hello @FooBot how are you!\" ``` The corresponding annotations metadata: ``` \"annotations\":[{ \"type\":\"USER_MENTION\", \"startIndex\":6, \"length\":7, \"userMention\": { \"user\": { \"name\":\"users/{user}\", \"displayName\":\"FooBot\", \"avatarUrl\":\"https://goo.gl/aeDtrS\", \"type\":\"BOT\" }, \"type\":\"MENTION\" } }] ```",
+      "description": "Output only. Annotations can be associated with the plain-text body of the message or with chips that link to Google Workspace resources like Google Docs or Sheets with `start_index` and `length` of 0. To add basic formatting to a text message, see [Format text messages](https://developers.google.com/workspace/chat/format-messages). Example plain-text message body: ``` Hello @FooBot how are you!\" ``` The corresponding annotations metadata: ``` \"annotations\":[{ \"type\":\"USER_MENTION\", \"startIndex\":6, \"length\":7, \"userMention\": { \"user\": { \"name\":\"users/{user}\", \"displayName\":\"FooBot\", \"avatarUrl\":\"https://goo.gl/aeDtrS\", \"type\":\"BOT\" }, \"type\":\"MENTION\" } }] ```",
       "id": "Annotation",
       "properties": {
         "customEmojiMetadata": {
@@ -4187,8 +4187,8 @@
           "enumDescriptions": [
             "Default value for the enum. Don't use.",
             "The huddle has started.",
-            "The huddle has ended. In this case the meet space URI and identifiers will no longer be valid.",
-            "The huddle has been missed. In this case the meet space URI and identifiers will no longer be valid."
+            "The huddle has ended. In this case the Meet space URI and identifiers will no longer be valid.",
+            "The huddle has been missed. In this case the Meet space URI and identifiers will no longer be valid."
           ],
           "readOnly": true,
           "type": "string"
@@ -4206,8 +4206,8 @@
           ],
           "enumDescriptions": [
             "Default value for the enum. Don't use.",
-            "The meet space is a meeting.",
-            "The meet space is a huddle."
+            "The Meet space is a meeting.",
+            "The Meet space is a huddle."
           ],
           "type": "string"
         }
@@ -4384,7 +4384,7 @@
           "description": "Input only. Parameters that a Chat app can use to configure how its response is posted."
         },
         "annotations": {
-          "description": "Output only. Annotations can be associated with the plain-text body of the message or with chips that link to Google Workspace resources like Google Docs or Sheets with a `start_index` and `length` of 0.",
+          "description": "Output only. Annotations can be associated with the plain-text body of the message or with chips that link to Google Workspace resources like Google Docs or Sheets with `start_index` and `length` of 0.",
           "items": {
             "$ref": "Annotation"
           },
@@ -4763,12 +4763,12 @@
       "type": "object"
     },
     "RichLinkMetadata": {
-      "description": "A rich link to a resource. Rich links can be associated with the plain-text body of the message or represent chips that link to Google Workspace resources like Google Docs or Sheets with a with `start_index` and `length` of 0.",
+      "description": "A rich link to a resource. Rich links can be associated with the plain-text body of the message or represent chips that link to Google Workspace resources like Google Docs or Sheets with `start_index` and `length` of 0.",
       "id": "RichLinkMetadata",
       "properties": {
         "calendarEventLinkData": {
           "$ref": "CalendarEventLinkData",
-          "description": "Data for a calendar event link."
+          "description": "Data for a Calendar event link."
         },
         "chatSpaceLinkData": {
           "$ref": "ChatSpaceLinkData",
@@ -4780,7 +4780,7 @@
         },
         "meetSpaceLinkData": {
           "$ref": "MeetSpaceLinkData",
-          "description": "Data for a meet space link."
+          "description": "Data for a Meet space link."
         },
         "richLinkType": {
           "description": "The rich link type.",

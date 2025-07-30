@@ -155,22 +155,22 @@ func (s *Service) userAgent() string {
 
 func NewAccountsService(s *Service) *AccountsService {
 	rs := &AccountsService{s: s}
-	rs.Ordertrackingsignals = NewAccountsOrdertrackingsignalsService(s)
+	rs.OrderTrackingSignals = NewAccountsOrderTrackingSignalsService(s)
 	return rs
 }
 
 type AccountsService struct {
 	s *Service
 
-	Ordertrackingsignals *AccountsOrdertrackingsignalsService
+	OrderTrackingSignals *AccountsOrderTrackingSignalsService
 }
 
-func NewAccountsOrdertrackingsignalsService(s *Service) *AccountsOrdertrackingsignalsService {
-	rs := &AccountsOrdertrackingsignalsService{s: s}
+func NewAccountsOrderTrackingSignalsService(s *Service) *AccountsOrderTrackingSignalsService {
+	rs := &AccountsOrderTrackingSignalsService{s: s}
 	return rs
 }
 
-type AccountsOrdertrackingsignalsService struct {
+type AccountsOrderTrackingSignalsService struct {
 	s *Service
 }
 
@@ -609,7 +609,7 @@ func (s TimeZone) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-type AccountsOrdertrackingsignalsCreateCall struct {
+type AccountsOrderTrackingSignalsCreateCall struct {
 	s                   *Service
 	parent              string
 	ordertrackingsignal *OrderTrackingSignal
@@ -622,8 +622,8 @@ type AccountsOrdertrackingsignalsCreateCall struct {
 //
 //   - parent: The account of the business for which the order signal is created.
 //     Format: accounts/{account}.
-func (r *AccountsOrdertrackingsignalsService) Create(parent string, ordertrackingsignal *OrderTrackingSignal) *AccountsOrdertrackingsignalsCreateCall {
-	c := &AccountsOrdertrackingsignalsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *AccountsOrderTrackingSignalsService) Create(parent string, ordertrackingsignal *OrderTrackingSignal) *AccountsOrderTrackingSignalsCreateCall {
+	c := &AccountsOrderTrackingSignalsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.ordertrackingsignal = ordertrackingsignal
 	return c
@@ -631,7 +631,7 @@ func (r *AccountsOrdertrackingsignalsService) Create(parent string, ordertrackin
 
 // OrderTrackingSignalId sets the optional parameter "orderTrackingSignalId":
 // Output only. The ID that uniquely identifies this order tracking signal.
-func (c *AccountsOrdertrackingsignalsCreateCall) OrderTrackingSignalId(orderTrackingSignalId string) *AccountsOrdertrackingsignalsCreateCall {
+func (c *AccountsOrderTrackingSignalsCreateCall) OrderTrackingSignalId(orderTrackingSignalId string) *AccountsOrderTrackingSignalsCreateCall {
 	c.urlParams_.Set("orderTrackingSignalId", orderTrackingSignalId)
 	return c
 }
@@ -639,27 +639,27 @@ func (c *AccountsOrdertrackingsignalsCreateCall) OrderTrackingSignalId(orderTrac
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *AccountsOrdertrackingsignalsCreateCall) Fields(s ...googleapi.Field) *AccountsOrdertrackingsignalsCreateCall {
+func (c *AccountsOrderTrackingSignalsCreateCall) Fields(s ...googleapi.Field) *AccountsOrderTrackingSignalsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *AccountsOrdertrackingsignalsCreateCall) Context(ctx context.Context) *AccountsOrdertrackingsignalsCreateCall {
+func (c *AccountsOrderTrackingSignalsCreateCall) Context(ctx context.Context) *AccountsOrderTrackingSignalsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *AccountsOrdertrackingsignalsCreateCall) Header() http.Header {
+func (c *AccountsOrderTrackingSignalsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *AccountsOrdertrackingsignalsCreateCall) doRequest(alt string) (*http.Response, error) {
+func (c *AccountsOrderTrackingSignalsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.ordertrackingsignal)
 	if err != nil {
@@ -667,7 +667,7 @@ func (c *AccountsOrdertrackingsignalsCreateCall) doRequest(alt string) (*http.Re
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "ordertracking/v1beta/{+parent}/ordertrackingsignals")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "ordertracking/v1beta/{+parent}/orderTrackingSignals")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -677,17 +677,17 @@ func (c *AccountsOrdertrackingsignalsCreateCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.ordertrackingsignals.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.orderTrackingSignals.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "merchantapi.accounts.ordertrackingsignals.create" call.
+// Do executes the "merchantapi.accounts.orderTrackingSignals.create" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *OrderTrackingSignal.ServerResponse.Header or (if a response was returned at
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *AccountsOrdertrackingsignalsCreateCall) Do(opts ...googleapi.CallOption) (*OrderTrackingSignal, error) {
+func (c *AccountsOrderTrackingSignalsCreateCall) Do(opts ...googleapi.CallOption) (*OrderTrackingSignal, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -717,6 +717,6 @@ func (c *AccountsOrdertrackingsignalsCreateCall) Do(opts ...googleapi.CallOption
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.ordertrackingsignals.create", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.orderTrackingSignals.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

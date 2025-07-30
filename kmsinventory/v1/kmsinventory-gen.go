@@ -456,6 +456,8 @@ type GoogleCloudKmsV1CryptoKey struct {
 	// interoperable symmetric encryption and does not support automatic CryptoKey
 	// rotation.
 	//   "MAC" - CryptoKeys with this purpose may be used with MacSign.
+	//   "KEY_ENCAPSULATION" - CryptoKeys with this purpose may be used with
+	// GetPublicKey and Decapsulate.
 	Purpose string `json:"purpose,omitempty"`
 	// RotationPeriod: next_rotation_time will be advanced by this period when the
 	// service automatically rotates a key. Must be at least 24 hours and at most
@@ -553,6 +555,10 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
+	//   "ML_KEM_768" - ML-KEM-768 (FIPS 203)
+	//   "ML_KEM_1024" - ML-KEM-1024 (FIPS 203)
+	//   "KEM_XWING" - X-Wing hybrid KEM combining ML-KEM-768 with X25519 following
+	// datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/.
 	//   "PQ_SIGN_ML_DSA_65" - The post-quantum Module-Lattice-Based Digital
 	// Signature Algorithm, at security level 3. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
@@ -739,6 +745,10 @@ type GoogleCloudKmsV1CryptoKeyVersionTemplate struct {
 	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
+	//   "ML_KEM_768" - ML-KEM-768 (FIPS 203)
+	//   "ML_KEM_1024" - ML-KEM-1024 (FIPS 203)
+	//   "KEM_XWING" - X-Wing hybrid KEM combining ML-KEM-768 with X25519 following
+	// datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/.
 	//   "PQ_SIGN_ML_DSA_65" - The post-quantum Module-Lattice-Based Digital
 	// Signature Algorithm, at security level 3. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based

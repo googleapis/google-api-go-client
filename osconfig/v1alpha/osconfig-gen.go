@@ -2777,6 +2777,24 @@ func (s StatusProto) MarshalJSON() ([]byte, error) {
 // point in time. For more information, see Vulnerability reports
 // (https://cloud.google.com/compute/docs/instances/os-inventory-management#vulnerability-reports).
 type VulnerabilityReport struct {
+	// HighestUpgradableCveSeverity: Output only. Highest level of severity among
+	// all the upgradable vulnerabilities with CVEs attached.
+	//
+	// Possible values:
+	//   "VULNERABILITY_SEVERITY_LEVEL_UNSPECIFIED" - Default SeverityLevel. This
+	// value is unused.
+	//   "NONE" - Vulnerability has no severity level.
+	//   "MINIMAL" - Vulnerability severity level is minimal. This is level below
+	// the low severity level.
+	//   "LOW" - Vulnerability severity level is low. This is level below the
+	// medium severity level.
+	//   "MEDIUM" - Vulnerability severity level is medium. This is level below the
+	// high severity level.
+	//   "HIGH" - Vulnerability severity level is high. This is level below the
+	// critical severity level.
+	//   "CRITICAL" - Vulnerability severity level is critical. This is the highest
+	// severity level.
+	HighestUpgradableCveSeverity string `json:"highestUpgradableCveSeverity,omitempty"`
 	// Name: Output only. The `vulnerabilityReport` API resource name. Format:
 	// `projects/{project_number}/locations/{location}/instances/{instance_id}/vulne
 	// rabilityReport`
@@ -2789,15 +2807,15 @@ type VulnerabilityReport struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "HighestUpgradableCveSeverity") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "HighestUpgradableCveSeverity") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

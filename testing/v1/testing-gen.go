@@ -460,6 +460,10 @@ type AndroidModel struct {
 	//   "PHONE" - This device has the shape of a phone.
 	//   "TABLET" - This device has the shape of a tablet.
 	//   "WEARABLE" - This device has the shape of a watch or other wearable.
+	//   "TV" - This device has a television form factor.
+	//   "AUTOMOTIVE" - This device has an automotive form factor.
+	//   "DESKTOP" - This device has a desktop form factor.
+	//   "XR" - This device has an Extended Reality form factor.
 	FormFactor string `json:"formFactor,omitempty"`
 	// Id: The unique opaque id for this model. Use this for invoking the
 	// TestExecutionService.
@@ -1519,6 +1523,10 @@ type IosModel struct {
 	//   "PHONE" - This device has the shape of a phone.
 	//   "TABLET" - This device has the shape of a tablet.
 	//   "WEARABLE" - This device has the shape of a watch or other wearable.
+	//   "TV" - This device has a television form factor.
+	//   "AUTOMOTIVE" - This device has an automotive form factor.
+	//   "DESKTOP" - This device has a desktop form factor.
+	//   "XR" - This device has an Extended Reality form factor.
 	FormFactor string `json:"formFactor,omitempty"`
 	// Id: The unique opaque id for this model. Use this for invoking the
 	// TestExecutionService.

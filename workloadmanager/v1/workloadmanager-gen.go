@@ -298,6 +298,31 @@ func (s AgentCommand) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AgentStates: Agent status.
+type AgentStates struct {
+	// AvailableVersion: Optional. The available version of the agent in artifact
+	// registry.
+	AvailableVersion string `json:"availableVersion,omitempty"`
+	// InstalledVersion: Optional. The installed version of the agent on the host.
+	InstalledVersion string `json:"installedVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AvailableVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AvailableVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentStates) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentStates
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AgentStatus: The schema of agent status data.
 type AgentStatus struct {
 	// AgentName: Output only. The name of the agent.
@@ -721,6 +746,9 @@ type Evaluation struct {
 	//   "OTHER" - Customized best practices
 	//   "SCC_IAC" - SCC IaC (Infra as Code) best practices.
 	EvaluationType string `json:"evaluationType,omitempty"`
+	// KmsKey: Optional. Immutable. Customer-managed encryption key name, in the
+	// format projects/*/locations/*/keyRings/*/cryptoKeys/*.
+	KmsKey string `json:"kmsKey,omitempty"`
 	// Labels: Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: name of resource names have the form
@@ -2190,15 +2218,17 @@ func (s SapDiscoveryWorkloadPropertiesSoftwareComponentProperties) MarshalJSON()
 
 // SapInstanceProperties: SAP instance properties.
 type SapInstanceProperties struct {
+	// AgentStates: Optional. Sap Instance Agent status.
+	AgentStates *AgentStates `json:"agentStates,omitempty"`
 	// Numbers: Optional. SAP Instance numbers. They are from '00' to '99'.
 	Numbers []string `json:"numbers,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Numbers") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AgentStates") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Numbers") to include in API
+	// NullFields is a list of field names (e.g. "AgentStates") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

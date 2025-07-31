@@ -45634,6 +45634,19 @@ func (r *SubnetworksService) Get(project string, region string, subnetwork strin
 	return c
 }
 
+// Views sets the optional parameter "views": Defines the extra views returned
+// back in the subnetwork resource. Supported values: - WITH_UTILIZATION:
+// Utilization data is included in the response.
+//
+// Possible values:
+//
+//	"DEFAULT"
+//	"WITH_UTILIZATION" - Utilization data is included in the response.
+func (c *SubnetworksGetCall) Views(views ...string) *SubnetworksGetCall {
+	c.urlParams_.SetMulti("views", append([]string{}, views...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -46071,6 +46084,19 @@ func (c *SubnetworksListCall) PageToken(pageToken string) *SubnetworksListCall {
 // all resources in the zone or no resources, with an error code.
 func (c *SubnetworksListCall) ReturnPartialSuccess(returnPartialSuccess bool) *SubnetworksListCall {
 	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
+// Views sets the optional parameter "views": Defines the extra views returned
+// back in the subnetwork resource. Supported values: - WITH_UTILIZATION:
+// Utilization data is included in the response.
+//
+// Possible values:
+//
+//	"DEFAULT"
+//	"WITH_UTILIZATION" - Utilization data is included in the response.
+func (c *SubnetworksListCall) Views(views ...string) *SubnetworksListCall {
+	c.urlParams_.SetMulti("views", append([]string{}, views...))
 	return c
 }
 

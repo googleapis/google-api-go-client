@@ -3061,7 +3061,7 @@ type NetworkInterface struct {
 	// accepted are: `ephemeral` \ ipv4 address \ a named address resource full
 	// path.
 	InternalIp string `json:"internalIp,omitempty"`
-	// Network: The network to connect the NIC to.
+	// Network: Optional. The network to connect the NIC to.
 	Network string `json:"network,omitempty"`
 	// NetworkTier: Optional. The networking tier used for optimizing connectivity
 	// between instances and systems on the internet. Applies only for external

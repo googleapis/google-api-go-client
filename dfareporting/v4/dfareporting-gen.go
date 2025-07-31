@@ -161,6 +161,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Creatives = NewCreativesService(s)
 	s.DimensionValues = NewDimensionValuesService(s)
 	s.DirectorySites = NewDirectorySitesService(s)
+	s.DynamicFeeds = NewDynamicFeedsService(s)
+	s.DynamicProfiles = NewDynamicProfilesService(s)
 	s.DynamicTargetingKeys = NewDynamicTargetingKeysService(s)
 	s.EventTags = NewEventTagsService(s)
 	s.Files = NewFilesService(s)
@@ -278,6 +280,10 @@ type Service struct {
 	DimensionValues *DimensionValuesService
 
 	DirectorySites *DirectorySitesService
+
+	DynamicFeeds *DynamicFeedsService
+
+	DynamicProfiles *DynamicProfilesService
 
 	DynamicTargetingKeys *DynamicTargetingKeysService
 
@@ -617,6 +623,24 @@ func NewDirectorySitesService(s *Service) *DirectorySitesService {
 }
 
 type DirectorySitesService struct {
+	s *Service
+}
+
+func NewDynamicFeedsService(s *Service) *DynamicFeedsService {
+	rs := &DynamicFeedsService{s: s}
+	return rs
+}
+
+type DynamicFeedsService struct {
+	s *Service
+}
+
+func NewDynamicProfilesService(s *Service) *DynamicProfilesService {
+	rs := &DynamicProfilesService{s: s}
+	return rs
+}
+
+type DynamicProfilesService struct {
 	s *Service
 }
 
@@ -3147,6 +3171,78 @@ func (s ContentCategory) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ContentSource: Contains the content source of the dynamic feed.
+type ContentSource struct {
+	// ContentSourceName: Optional. The name of the content source. It is defaulted
+	// to content source file name if not provided.
+	ContentSourceName string `json:"contentSourceName,omitempty"`
+	// CreateInfo: Output only. The creation timestamp of the content source. This
+	// is a read-only field.
+	CreateInfo *LastModifiedInfo `json:"createInfo,omitempty"`
+	// LastModifiedInfo: Output only. The last modified timestamp of the content
+	// source. This is a read-only field.
+	LastModifiedInfo *LastModifiedInfo `json:"lastModifiedInfo,omitempty"`
+	// MetaData: Output only. Metadata of the content source. It contains the
+	// number of rows and the column names from resource link. This is a read-only
+	// field.
+	MetaData *ContentSourceMetaData `json:"metaData,omitempty"`
+	// ResourceLink: Required. The link to the file of the content source.
+	ResourceLink string `json:"resourceLink,omitempty"`
+	// ResourceType: Required. The resource type of the content source.
+	//
+	// Possible values:
+	//   "RESOURCE_TYPE_UNSPECIFIED" - The resource type is unspecified.
+	//   "RESOURCE_TYPE_GOOGLE_SPREADSHEET" - The resource type is google
+	// spreadsheet.
+	//   "RESOURCE_TYPE_REMOTE_FILE" - The resource type is remote file.
+	ResourceType string `json:"resourceType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentSourceName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentSourceName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContentSource) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContentSourceMetaData: Contains the meta data of the content source. This is
+// a read-only field.
+type ContentSourceMetaData struct {
+	// Charset: Output only. The charset of the content source.
+	Charset string `json:"charset,omitempty"`
+	// FieldNames: Output only. The list of column names in the content source.
+	FieldNames []string `json:"fieldNames,omitempty"`
+	// RowNumber: Output only. The number of rows in the content source.
+	RowNumber int64 `json:"rowNumber,omitempty"`
+	// Separator: Output only. The separator of the content source.
+	Separator string `json:"separator,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Charset") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Charset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContentSourceMetaData) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentSourceMetaData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Conversion: A Conversion represents when a user successfully performs a
 // desired action after seeing an ad.
 type Conversion struct {
@@ -5398,6 +5494,56 @@ func (s CustomRichMediaEvents) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CustomRule: Contains custom rule information.
+type CustomRule struct {
+	// Name: Optional. Name of this custom rule.
+	Name string `json:"name,omitempty"`
+	// Priority: Optional. Priority of the custom rule.
+	Priority int64 `json:"priority,omitempty"`
+	// RuleBlocks: Optional. A list of field filter, the custom rule will apply.
+	RuleBlocks []*RuleBlock `json:"ruleBlocks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomRule) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomValueField: Contains custom value field information.
+type CustomValueField struct {
+	// FieldId: Optional. Field ID in the element.
+	FieldId int64 `json:"fieldId,omitempty"`
+	// RequestKey: Optional. Custom key used to match for auto filtering.
+	RequestKey string `json:"requestKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomValueField) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomValueField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CustomViewabilityMetric: Custom Viewability Metric
 type CustomViewabilityMetric struct {
 	// Configuration: Configuration of the custom viewability metric.
@@ -5661,6 +5807,31 @@ type DeliverySchedule struct {
 
 func (s DeliverySchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod DeliverySchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DependentFieldValue: Contains dependent field value information.
+type DependentFieldValue struct {
+	// ElementId: Optional. The ID of the element that value's field will match
+	// against.
+	ElementId int64 `json:"elementId,omitempty,string"`
+	// FieldId: Optional. The field id of the dependent field.
+	FieldId int64 `json:"fieldId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ElementId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ElementId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DependentFieldValue) MarshalJSON() ([]byte, error) {
+	type NoMethod DependentFieldValue
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5985,6 +6156,280 @@ func (s DirectorySitesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DynamicFeed: Contains dynamic feed information.
+type DynamicFeed struct {
+	// ContentSource: Required. The content source of the dynamic feed. This is a
+	// required field.
+	ContentSource *ContentSource `json:"contentSource,omitempty"`
+	// CreateInfo: Output only. The creation timestamp of the dynamic feed. This is
+	// a read-only field.
+	CreateInfo *LastModifiedInfo `json:"createInfo,omitempty"`
+	// DynamicFeedId: Output only. Unique ID of this dynamic feed. This is a
+	// read-only, auto-generated field.
+	DynamicFeedId int64 `json:"dynamicFeedId,omitempty,string"`
+	// DynamicFeedName: Optional. Name of this dynamic feed. It is defaulted to
+	// content source file name if not provided.
+	DynamicFeedName string `json:"dynamicFeedName,omitempty"`
+	// Element: Required. The element of the dynamic feed that is to specify the
+	// schema of the feed. This is a required field.
+	Element *Element `json:"element,omitempty"`
+	// FeedIngestionStatus: Output only. The ingestion status of the dynamic feed.
+	// This is a read-only field.
+	FeedIngestionStatus *FeedIngestionStatus `json:"feedIngestionStatus,omitempty"`
+	// FeedSchedule: Optional. The schedule of the dynamic feed. It can be set if
+	// the feed is published.
+	FeedSchedule *FeedSchedule `json:"feedSchedule,omitempty"`
+	// HasPublished: Output only. Indicates whether the dynamic feed has a
+	// published version. This is a read-only field.
+	HasPublished bool `json:"hasPublished,omitempty"`
+	// LastModifiedInfo: Output only. The last modified timestamp of the dynamic
+	// feed. This is a read-only field.
+	LastModifiedInfo *LastModifiedInfo `json:"lastModifiedInfo,omitempty"`
+	// Status: Output only. The status of the feed. It is a read-only field that
+	// depends on the the feed ingestion status. The default value is INACTIVE, and
+	// it will be updated to ACTIVE once the feed is ingested successfully.
+	//
+	// Possible values:
+	//   "STATUS_UNKNOWN" - The status is unknown.
+	//   "ACTIVE" - The feedstatus is active.
+	//   "INACTIVE" - The feed status is inactive.
+	//   "DELETED" - The feed status is deleted.
+	Status string `json:"status,omitempty"`
+	// StudioAdvertiserId: Required. Advertiser ID of this dynamic feed. This is a
+	// required field.
+	StudioAdvertiserId int64 `json:"studioAdvertiserId,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ContentSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentSource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DynamicFeed) MarshalJSON() ([]byte, error) {
+	type NoMethod DynamicFeed
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DynamicFeedsInsertRequest: Dynamic profile ID is required for dynamic feed
+// insert as the current GPA API only can create a dynamic feed under profile
+// context,even though the dynnamic feed itself don't need the dynamic profile
+// id. See go/cm3-dco-display-api-interface
+type DynamicFeedsInsertRequest struct {
+	// DynamicFeed: Required. Dynamic feed to insert.
+	DynamicFeed *DynamicFeed `json:"dynamicFeed,omitempty"`
+	// DynamicProfileId: Required. Dynamic profile ID of the inserted dynamic feed.
+	DynamicProfileId int64 `json:"dynamicProfileId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "DynamicFeed") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DynamicFeed") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DynamicFeedsInsertRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DynamicFeedsInsertRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DynamicProfile: Contains dynamic profile information.
+type DynamicProfile struct {
+	// Active: Optional. Active version of the dynamic profile.
+	Active *DynamicProfileVersion `json:"active,omitempty"`
+	// ArchiveStatus: Optional. Archive status of this dynamic profile.
+	//
+	// Possible values:
+	//   "ARCHIVE_STATUS_UNKNOWN" - The dynamic profile archive status is unknown.
+	// This value is unused.
+	//   "UNARCHIVED" - The dynamic profile archive status is unarchived.
+	//   "ARCHIVED" - The dynamic profile archive status is archived.
+	ArchiveStatus string `json:"archiveStatus,omitempty"`
+	// CreateInfo: Output only. The creation timestamp of the dynamic profile. This
+	// is a read-only field.
+	CreateInfo *LastModifiedInfo `json:"createInfo,omitempty"`
+	// Description: Optional. Description of this dynamic profile.
+	Description string `json:"description,omitempty"`
+	// Draft: Optional. Draft version of the dynamic profile.
+	Draft *DynamicProfileVersion `json:"draft,omitempty"`
+	// DynamicProfileId: Output only. Unique ID of this dynamic profile. This is a
+	// read-only, auto-generated field.
+	DynamicProfileId int64 `json:"dynamicProfileId,omitempty,string"`
+	// Kind: Output only. Identifies what kind of resource this is. Value: the
+	// fixed string "dfareporting#dynamicProfile".
+	Kind string `json:"kind,omitempty"`
+	// LastModifiedInfo: Output only. The last modified timestamp of the dynamic
+	// profile. This is a read-only field.
+	LastModifiedInfo *LastModifiedInfo `json:"lastModifiedInfo,omitempty"`
+	// Name: Required. Identifier. Name of this dynamic profile. This is a required
+	// field and must be less than 256 characters long.
+	Name string `json:"name,omitempty"`
+	// Status: Optional. Status of this dynamic profile.
+	//
+	// Possible values:
+	//   "STATUS_UNKNOWN" - The dynamic profile status is unknown. This value is
+	// unused.
+	//   "ACTIVE" - The dynamic profile is active.
+	//   "INACTIVE" - The dynamic profile is inactive.
+	//   "DELETED" - The dynamic profile is deleted.
+	Status string `json:"status,omitempty"`
+	// StudioAdvertiserId: Required. Advertiser ID of this dynamic profile. This is
+	// a required field on insertion.
+	StudioAdvertiserId int64 `json:"studioAdvertiserId,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Active") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Active") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DynamicProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod DynamicProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DynamicProfileFeedSettings: Contains dynamic profile specific settings for
+// an associated dynamic feed.
+type DynamicProfileFeedSettings struct {
+	// DynamicFeedId: Optional. Dynamic feed ID associated with dynamic profile
+	// version.
+	DynamicFeedId int64 `json:"dynamicFeedId,omitempty,string"`
+	// DynamicRules: Optional. Dynamic rules for row selection for the given
+	// dynamic feed in the given dynamic profile.
+	DynamicRules *DynamicRules `json:"dynamicRules,omitempty"`
+	// Quantity: Optional. The number of this dynamic feed rows needed by the
+	// dynamic profile, default value is 1. Acceptable values are between 1 to 99,
+	// inclusive.
+	Quantity int64 `json:"quantity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DynamicFeedId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DynamicFeedId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DynamicProfileFeedSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod DynamicProfileFeedSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DynamicProfileVersion: Contains dynamic profile version information.
+type DynamicProfileVersion struct {
+	// DynamicProfileFeedSettings: Optional. Associated dynamic feeds and their
+	// settings (including dynamic rules) for this dynamic profile version.
+	DynamicProfileFeedSettings []*DynamicProfileFeedSettings `json:"dynamicProfileFeedSettings,omitempty"`
+	// VersionId: Output only. Version ID of this dynamic profile version. This is
+	// a read-only, auto-generated field. -1 for draft version, 0+ for published
+	// versions.
+	VersionId int64 `json:"versionId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "DynamicProfileFeedSettings")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DynamicProfileFeedSettings") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DynamicProfileVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod DynamicProfileVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DynamicRules: Contains dynamic rules information.
+type DynamicRules struct {
+	// AutoTargetedFieldIds: Optional. List of field IDs in this element that
+	// should be auto-targeted. Applicable when rule type is AUTO.
+	AutoTargetedFieldIds []int64 `json:"autoTargetedFieldIds,omitempty"`
+	// CustomRules: Optional. The custom rules of the dynamic feed, only applicable
+	// when rule type is CUSTOM.
+	CustomRules []*CustomRule `json:"customRules,omitempty"`
+	// CustomValueFields: Optional. Mapping between field ID and custom key that
+	// are used to match for auto filtering.
+	CustomValueFields []*CustomValueField `json:"customValueFields,omitempty"`
+	// ProximityFilter: Optional. The proximity targeting rules of the dynamic
+	// feed, only applicable when rule type is PROXIMITY_TARGETING.
+	ProximityFilter *ProximityFilter `json:"proximityFilter,omitempty"`
+	// RemarketingValueAttributes: Optional. The link between an element field ID
+	// and a list of user attribute IDs.
+	RemarketingValueAttributes []*RemarketingValueAttribute `json:"remarketingValueAttributes,omitempty"`
+	// RotationType: Optional. The rotation type to select from eligible rows.
+	// Rotation type only apply when the filtering rule results in more than one
+	// eligible rows.
+	//
+	// Possible values:
+	//   "ROTATION_TYPE_UNKNOWN" - The rotation type is unknown. This value is
+	// unused.
+	//   "RANDOM" - The rotation type is random. It is the default value.
+	//   "OPTIMIZED" - The rotation type is optimized.
+	//   "WEIGHTED" - The rotation type is weighted.
+	RotationType string `json:"rotationType,omitempty"`
+	// RuleType: Optional. The type of the rule, the default value is OPEN.
+	//
+	// Possible values:
+	//   "RULE_SET_TYPE_UNKNOWN" - The rule type is unknown. This value is unused.
+	//   "OPEN" - The rule type is open, all feed rows are eligible for selection.
+	// This is the default value.
+	//   "AUTO" - The rule type is auto, the feed rows are eligible for selection
+	// based on the automatic rules.
+	//   "CUSTOM" - The rule type is custom, the feed rows are eligible for
+	// selection based on the custom rules.
+	//   "PROXIMITY_TARGETING" - The rule type is proximity targeting, the feed
+	// rows are eligible for selection based on the proximity targeting rules.
+	RuleType string `json:"ruleType,omitempty"`
+	// WeightFieldId: Optional. The field ID for the feed that will be used for
+	// weighted rotation, only applicable when rotation type is WEIGHTED.
+	WeightFieldId int64 `json:"weightFieldId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AutoTargetedFieldIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoTargetedFieldIds") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DynamicRules) MarshalJSON() ([]byte, error) {
+	type NoMethod DynamicRules
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DynamicTargetingKey: Contains properties of a dynamic targeting key. Dynamic
 // targeting keys are unique, user-friendly labels, created at the advertiser
 // level in DCM, that can be assigned to ads, creatives, and placements and
@@ -6057,6 +6502,65 @@ type DynamicTargetingKeysListResponse struct {
 
 func (s DynamicTargetingKeysListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicTargetingKeysListResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Element: Contains the element of the dynamic feed.
+type Element struct {
+	// ActiveFieldId: Optional. The field ID to specify the active field in the
+	// feed.
+	ActiveFieldId int64 `json:"activeFieldId,omitempty"`
+	// CreateInfo: Output only. The creation timestamp of the element. This is a
+	// read-only field.
+	CreateInfo *LastModifiedInfo `json:"createInfo,omitempty"`
+	// DefaultFieldId: Optional. The field ID to specify the field that represents
+	// the default field in the feed.
+	DefaultFieldId int64 `json:"defaultFieldId,omitempty"`
+	// ElementName: Optional. The name of the element. It is defaulted to resource
+	// file name if not provided.
+	ElementName string `json:"elementName,omitempty"`
+	// EndTimestampFieldId: Optional. The field ID to specify the field that
+	// represents the end timestamp. Only applicable if you're planning to use
+	// scheduling in your dynamic creative.
+	EndTimestampFieldId int64 `json:"endTimestampFieldId,omitempty"`
+	// ExternalIdFieldId: Required. The field ID to specify the field used for
+	// uniquely identifying the feed row. This is a required field.
+	ExternalIdFieldId int64 `json:"externalIdFieldId,omitempty"`
+	// FeedFields: Required. The list of fields of the element. The field order and
+	// name should match the meta data in the content source source.
+	FeedFields []*FeedField `json:"feedFields,omitempty"`
+	// IsLocalTimestamp: Optional. Whether the start and end timestamp is local
+	// timestamp. The default value is false which means start and end timestamp is
+	// in UTC.
+	IsLocalTimestamp bool `json:"isLocalTimestamp,omitempty"`
+	// LastModifiedInfo: Output only. The last modified timestamp of the element.
+	// This is a read-only field.
+	LastModifiedInfo *LastModifiedInfo `json:"lastModifiedInfo,omitempty"`
+	// ProximityTargetingFieldId: Optional. The field ID that specify field used
+	// for proximity targeting.
+	ProximityTargetingFieldId int64 `json:"proximityTargetingFieldId,omitempty"`
+	// ReportingLabelFieldId: Required. The field ID to specify the field used for
+	// dynamic reporting in Campaign Manager 360.
+	ReportingLabelFieldId int64 `json:"reportingLabelFieldId,omitempty"`
+	// StartTimestampFieldId: Optional. The field ID to specify the field that
+	// represents the start timestamp. Only applicable if you're planning to use
+	// scheduling in your dynamic creative.
+	StartTimestampFieldId int64 `json:"startTimestampFieldId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActiveFieldId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActiveFieldId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Element) MarshalJSON() ([]byte, error) {
+	type NoMethod Element
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6254,6 +6758,344 @@ type EventTagsListResponse struct {
 
 func (s EventTagsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EventTagsListResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FeedField: Each field of the element. This is a required field.
+type FeedField struct {
+	// DefaultValue: Optional. The default value of the field.
+	DefaultValue string `json:"defaultValue,omitempty"`
+	// Filterable: Optional. Whether the field is filterable. Could be set as true
+	// when the field type is any of the following and is not renderable: - STRING
+	// - BOOL - COUNTRY_CODE_ISO - CM360_SITE_ID - CM360_KEYWORD -
+	// CM360_CREATIVE_ID - CM360_PLACEMENT_ID - CM360_AD_ID - CM360_ADVERTISER_ID -
+	// CM360_CAMPAIGN_ID - CITY - REGION - POSTAL_CODE - METRO - CUSTOM_VALUE -
+	// REMARKETING_VALUE - GEO_CANONICAL - STRING_LIST - CREATIVE_DIMENSION -
+	// USERLIST_ID - CM360_DYNAMIC_TARGETING_KEY - DV360_LINE_ITEM_ID
+	Filterable bool `json:"filterable,omitempty"`
+	// Id: Required. The ID of the field. The ID is based on the column index
+	// starting from 0, and it should match the column index in the resource link.
+	Id int64 `json:"id,omitempty"`
+	// Name: Required. The name of the field.
+	Name string `json:"name,omitempty"`
+	// Renderable: Optional. Whether the field is able to display. Could be set as
+	// true when the field type is not in any of the following and the field is not
+	// filterable: - COUNTRY_CODE_ISO - CITY - REGION - POSTAL_CODE - METRO -
+	// GEO_CANONICAL - USERLIST_ID - CONTEXTUAL_KEYWORD -
+	// CM360_DYNAMIC_TARGETING_KEY - WEIGHT
+	Renderable bool `json:"renderable,omitempty"`
+	// Required: Optional. Whether the field is required and should not be empty in
+	// the feed. Could be set as true when the field type is any of the following:
+	// - GPA_SERVED_IMAGE_URL - GPA_SERVED_ASSET_URL - ASSET_LIBRARY_HANDLE -
+	// ASSET_LIBRARY_VIDEO_HANDLE - ASSET_LIBRARY_DIRECTORY_HANDLE
+	Required bool `json:"required,omitempty"`
+	// Type: Required. The type of the field.
+	//
+	// Possible values:
+	//   "TYPE_UNKNOWN" - The type is unspecified. This is an unused value.
+	//   "STRING" - The field type is text.
+	//   "LONG" - The field type is whole number.
+	//   "GPA_SERVED_IMAGE_URL" - The field type is image url
+	//   "GPA_SERVED_ASSET_URL" - The field type is asset url.
+	//   "COUNTRY_CODE_ISO" - The field type is the ISO 3166-2 alpha-2 codes. It is
+	// two-letter country codes defined in ISO 3166-1 published by the
+	// International Organization for Standardization.
+	//   "FLOAT" - The field type is decimal.
+	//   "CM360_KEYWORD" - The field type is custom CM360 ad tag parameter.
+	//   "CM360_SITE_ID" - The field type is CM360 site ID.
+	//   "BOOL" - The field type is boolean.
+	//   "EXIT_URL" - The field type is exit url.
+	//   "DATETIME" - The field type is datetime.
+	//   "CM360_CREATIVE_ID" - The field type is CM360 creative ID.
+	//   "CM360_PLACEMENT_ID" - The field type is CM360 placement ID.
+	//   "CM360_AD_ID" - The field type is CM360 ad ID.
+	//   "CM360_ADVERTISER_ID" - The field type is CM360 advertiser ID.
+	//   "CM360_CAMPAIGN_ID" - The field type is CM360 campaign ID.
+	//   "CITY" - The field type is cities.
+	//   "REGION" - The field type is region.
+	//   "POSTAL_CODE" - The field type is postal code.
+	//   "METRO" - The field type is metro code.
+	//   "CUSTOM_VALUE" - The field type is custom value.
+	//   "REMARKETING_VALUE" - The field type is remarketing value.
+	//   "GEO_CANONICAL" - The field type is accurate geographic type.
+	//   "WEIGHT" - The field type is weight.
+	//   "STRING_LIST" - The field type is a list of values.
+	//   "CREATIVE_DIMENSION" - The field type is creative dimension.
+	//   "USERLIST_ID" - The field type is CM/DV360 Audience ID.
+	//   "ASSET_LIBRARY_DIRECTORY_HANDLE" - The field type is AssetLibrary
+	// directory path.
+	//   "ASSET_LIBRARY_VIDEO_HANDLE" - The field type is AssetLibrary video file
+	// path.
+	//   "ASSET_LIBRARY_HANDLE" - The field type is AssetLibrary path.
+	//   "THIRD_PARTY_SERVED_URL" - The field type is third party served url.
+	//   "CM360_DYNAMIC_TARGETING_KEY" - The field type is CM dynamic targeting
+	// key.
+	//   "DV360_LINE_ITEM_ID" - The field type is DV360 line item ID.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FeedField) MarshalJSON() ([]byte, error) {
+	type NoMethod FeedField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FeedIngestionStatus: Contains the ingestion status of the dynamic feed. Feed
+// ingestion is an asynchronous process. If the feed create request is
+// successful, feed ingestion will be processed in the background, including
+// validation, assets retrieval, and saving the data from the resource link.
+// The processing time is dependent on the data size in the resource link. This
+// read-only status field contains the current stage of that processing and its
+// ingestion state.
+type FeedIngestionStatus struct {
+	// IngestionErrorRecords: Output only. The ingestion error records of the feed.
+	IngestionErrorRecords []*IngestionErrorRecord `json:"ingestionErrorRecords,omitempty"`
+	// IngestionStatus: Output only. The ingestion status of the feed.
+	IngestionStatus *IngestionStatus `json:"ingestionStatus,omitempty"`
+	// State: Output only. The processing state of the feed.
+	//
+	// Possible values:
+	//   "FEED_PROCESSING_STATE_UNKNOWN" - The feed processing state is unknown.
+	//   "CANCELLED" - The feed processing state is cancelled.
+	//   "INGESTING_QUEUED" - The feed processing state is ingesting queued.
+	//   "INGESTING" - The feed processing state is ingesting.
+	//   "INGESTED_SUCCESS" - The feed processing state is ingested successfully.
+	//   "INGESTED_FAILURE" - The feed processing state is ingested with failure.
+	//   "REQUEST_TO_PUBLISH" - The feed processing state is request to publish.
+	//   "PUBLISHING" - The feed processing state is publishing.
+	//   "PUBLISHED_SUCCESS" - The feed processing state is published successfully.
+	//   "PUBLISHED_FAILURE" - The feed processing state is published with failure.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IngestionErrorRecords") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IngestionErrorRecords") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FeedIngestionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod FeedIngestionStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FeedSchedule: Contains the schedule of the dynamic feed.
+type FeedSchedule struct {
+	// RepeatValue: Optional. The number of times the feed retransforms within one
+	// day. This is a required field if the schedule is enabled. Acceptable values
+	// are between 1 to 6, inclusive.
+	RepeatValue int64 `json:"repeatValue,omitempty,string"`
+	// ScheduleEnabled: Optional. Whether the schedule is enabled.
+	ScheduleEnabled bool `json:"scheduleEnabled,omitempty"`
+	// StartHour: Optional. The hour of the day to start the feed. It is applicable
+	// if the repeat value is equal to 1. Default value is 0.
+	StartHour string `json:"startHour,omitempty"`
+	// StartMinute: Optional. The minute of the hour to start the feed. It is
+	// applicable if the repeat value is equal to 1. Default value is 0.
+	StartMinute string `json:"startMinute,omitempty"`
+	// TimeZone: Optional. The time zone to schedule the feed. It is applicable if
+	// the repeat value is equal to 1. Default value is "America/Los_Angeles".
+	TimeZone string `json:"timeZone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RepeatValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RepeatValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FeedSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod FeedSchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FieldError: Contains the field error of the dynamic feed.
+type FieldError struct {
+	// FieldId: Output only. The ID of the field.
+	FieldId int64 `json:"fieldId,omitempty"`
+	// FieldName: Output only. The name of the field.
+	FieldName string `json:"fieldName,omitempty"`
+	// FieldValues: Output only. The list of values of the field.
+	FieldValues []string `json:"fieldValues,omitempty"`
+	// IngestionError: Output only. The ingestion error of the field.
+	//
+	// Possible values:
+	//   "UNKNOWN_PARSING_ERROR" - The ingestion error is unknown.
+	//   "MISSING_ID" - The ingestion error when the ID value is missing.
+	//   "MISSING_REPORTING_LABEL" - The ingestion error when the element value
+	// name used for reporting is missing.
+	//   "EMPTY_VALUE" - The ingestion error when a required value is empty
+	//   "ASSET_DOWNLOAD_ERROR" - The ingestion error when asset retrieval fails
+	// for a particular image or asset.
+	//   "ID_TOO_LONG" - The ingestion error when the ID value exceeds the string
+	// length limit.
+	//   "DUPLICATE_ID" - The ingestion error when the ID value is duplicate.
+	//   "PARSING_ERROR" - The ingestion error when parsing the field fails.
+	//   "COUNTRY_PARSING_ERROR" - The ingestion error when parsing the country
+	// code fails.
+	//   "LONG_PARSING_ERROR" - The ingestion error when parsing the long value
+	// fails.
+	//   "BOOL_PARSING_ERROR" - The ingestion error when parsing the boolean value
+	// fails.
+	//   "EXPANDED_URL_PARSING_ERROR" - The ingestion error when parsing the
+	// expanded url fails.
+	//   "FLOAT_PARSING_ERROR" - The ingestion error when parsing the float value
+	// fails.
+	//   "DATETIME_PARSING_ERROR" - The ingestion error when parsing the datetime
+	// value fails.
+	//   "INVALID_PREFERENCE_VALUE" - The ingestion error when the preference value
+	// is not a positive float.
+	//   "GEO_NOT_FOUND_ERROR" - The ingestion error when a geo location is not
+	// found.
+	//   "GEO_PARSING_ERROR" - The ingestion error when parsing the geo field
+	// fails.
+	//   "GEO_PROXIMITY_TARGETING_MULTIPLE_LOCATION_ERROR" - The ingestion error
+	// when a feed row has multiple geotargets with proximity targeting enabled.
+	//   "POSTAL_CODE_PARSING_ERROR" - The ingestion error when parsing the postal
+	// code value fails.
+	//   "METRO_CODE_PARSING_ERROR" - The ingestion error when parsing the metro
+	// code value fails.
+	//   "DATETIME_WITHOUT_TIMEZONE_PARSING_ERROR" - The ingestion error when
+	// parsing the datetime value fails.
+	//   "WEIGHT_PARSING_ERROR" - The ingestion error when parsing the weight value
+	// fails.
+	//   "CREATIVE_DIMENSION_PARSING_ERROR" - The ingestion error when parsing the
+	// creative dimension value fails.
+	//   "MULTIVALUE_ID" - The ingestion error when a STRING_LIST type ID has
+	// multiple values.
+	//   "ENDTIME_BEFORE_STARTTIME" - The ingestion error when the end time is
+	// before the start time.
+	//   "INVALID_ASSET_LIBRARY_HANDLE" - The ingestion error when the asset
+	// library handle is invalid.
+	//   "INVALID_ASSET_LIBRARY_VIDEO_HANDLE" - The ingestion error when the asset
+	// library video handle is invalid.
+	//   "INVALID_ASSET_LIBRARY_DIRECTORY_HANDLE" - The ingestion error when the
+	// asset library directory handle is invalid.
+	//   "DYNAMIC_TARGETING_KEY_NOT_DEFINED_FOR_ADVERTISER" - The ingestion error
+	// when a targeting key used but not defined for the CM360 Advertiser.
+	//   "USERLIST_ID_NOT_ACCESSIBLE_FOR_ADVERTISER" - The ingestion error when the
+	// userlist ID is not accessible for the CM360 Advertiser.
+	//   "ENDTIME_PASSED" - The ingestion error when the end time is passed.
+	//   "ENDTIME_TOO_SOON" - The ingestion error when the end time is in the near
+	// future (i.e., <7 days).
+	//   "TEXT_ASSET_REFERENCE" - The ingestion error when a text field specifies a
+	// reference to an asset.
+	//   "IMAGE_ASSET_SCS_REFERENCE" - The ingestion error when Image field
+	// specifies a reference to an asset hosted on SCS (s0.2mdn.net/s0qa.2mdn.net).
+	//   "AIRPORT_GEO_TARGET" - The ingestion error when a geo target is an
+	// airport.
+	//   "CANONICAL_NAME_QUERY_MISMATCH" - The ingestion error when the geo
+	// target's canonical name does not match the query string used to obtain it.
+	//   "NO_DEFAULT_ROW" - The ingestion error or warning when the default row is
+	// not set.
+	//   "NO_ACTIVE_DEFAULT_ROW" - The ingestion error or warning when the default
+	// row is not active.
+	//   "NO_DEFAULT_ROW_IN_DATE_RANGE" - The ingestion error or warning when the
+	// default row is not in the date range.
+	//   "NO_ACTIVE_DEFAULT_ROW_IN_DATE_RANGE" - The ingestion error or warning
+	// when the default row is not in the date range.
+	//   "PAYLOAD_LIMIT_EXCEEDED" - The ingestion error when when the payload of
+	// the record is above a threshold.
+	//   "SSL_NOT_COMPLIANT" - The ingestion error or warning when the field is not
+	// SSL compliant.
+	IngestionError string `json:"ingestionError,omitempty"`
+	// IsError: Output only. Incidcates whether the field has error or warning.
+	IsError bool `json:"isError,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FieldError) MarshalJSON() ([]byte, error) {
+	type NoMethod FieldError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FieldFilter: Contains field filter information.
+type FieldFilter struct {
+	// BoolValue: Optional. The boolean values, only applicable when rhs_value_type
+	// is BOOL.
+	BoolValue bool `json:"boolValue,omitempty"`
+	// DependentFieldValue: Optional. The dependent values, only applicable when
+	// rhs_value_type is DEPENDENT.
+	DependentFieldValue *DependentFieldValue `json:"dependentFieldValue,omitempty"`
+	// FieldId: Optional. The field ID on the left hand side of the expression.
+	FieldId int64 `json:"fieldId,omitempty"`
+	// MatchType: Optional. Left hand side of the expression match type.
+	//
+	// Possible values:
+	//   "LHS_MATCH_TYPE_UNKNOWN" - The left hand side of the expression is
+	// unknown. This value is unused.
+	//   "EQUALS_OR_UNRESTRICTED" - The left hand side of the expression is equals
+	// or unrestricted. It is the default value.
+	//   "EQUALS" - The left hand side of the expression is equals.
+	//   "UNRESTRICTED" - The left hand side of the expression is unrestricted.
+	// Unrestricted is used to target fields with no restrictions. For example,
+	// country targeting fields hold a list of countries. If the list is empty, we
+	// consider the element value to have no restrictions.
+	//   "NOT_EQUALS" - Left hand side of the expression is not equals. Not equals
+	// specifies which fields should not be targeted.
+	MatchType string `json:"matchType,omitempty"`
+	// RequestValue: Optional. The request value, only applicable when
+	// rhs_value_type is REQUEST.
+	RequestValue *RequestValue `json:"requestValue,omitempty"`
+	// StringValue: Optional. The string value, only applicable when rhs_value_type
+	// is STRING.
+	StringValue string `json:"stringValue,omitempty"`
+	// ValueType: Optional. Right hand side of the expression.
+	//
+	// Possible values:
+	//   "RHS_VALUE_TYPE_UNKNOWN" - The right hand side of the expression is
+	// unknown. This value is unused.
+	//   "STRING" - The right hand side of the expression is a string.
+	//   "REQUEST" - The right hand side of the expression is a request value.
+	//   "BOOL" - The right hand side of the expression is a boolean.
+	//   "DEPENDENT" - The right hand side of the expression is a dependent field
+	// value.
+	ValueType string `json:"valueType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FieldFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod FieldFilter
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7134,6 +7976,61 @@ type GeoTargeting struct {
 
 func (s GeoTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod GeoTargeting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IngestionErrorRecord: Contains the ingestion error record of the dynamic
+// feed. limited to 100 records.
+type IngestionErrorRecord struct {
+	// Errors: Output only. The list of field errors of the ingestion error record.
+	Errors []*FieldError `json:"errors,omitempty"`
+	// RecordId: Output only. The record ID of the ingestion error record.
+	RecordId string `json:"recordId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Errors") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngestionErrorRecord) MarshalJSON() ([]byte, error) {
+	type NoMethod IngestionErrorRecord
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IngestionStatus: Contains the ingestion status of the dynamic feed.
+type IngestionStatus struct {
+	// NumActiveRows: Output only. The number of active rows in the feed.
+	NumActiveRows int64 `json:"numActiveRows,omitempty,string"`
+	// NumRowsProcessed: Output only. The number of rows processed in the feed.
+	NumRowsProcessed int64 `json:"numRowsProcessed,omitempty,string"`
+	// NumRowsTotal: Output only. The total number of rows in the feed.
+	NumRowsTotal int64 `json:"numRowsTotal,omitempty,string"`
+	// NumRowsWithErrors: Output only. The number of rows with errors in the feed.
+	NumRowsWithErrors int64 `json:"numRowsWithErrors,omitempty,string"`
+	// NumWarningsTotal: Output only. The total number of warnings in the feed.
+	NumWarningsTotal int64 `json:"numWarningsTotal,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "NumActiveRows") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NumActiveRows") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngestionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod IngestionStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9572,6 +10469,48 @@ func (s ProjectsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ProximityFilter: Contains proximity filter information.
+type ProximityFilter struct {
+	// FieldId: Optional. Field ID in the element.
+	FieldId int64 `json:"fieldId,omitempty"`
+	// RadiusBucketType: Optional. The radius bucket type of the proximity filter
+	//
+	// Possible values:
+	//   "RADIUS_BUCKET_TYPE_UNKNOWN" - The radius bucket type is unknown.
+	//   "SMALL" - The radius bucket type is small.
+	//   "MEDIUM" - The radius bucket type is medium.
+	//   "LARGE" - The radius bucket type is large.
+	//   "MULTI_REGIONAL" - The radius bucket type is multi-regional.
+	//   "NATIONAL" - The radius bucket type is national.
+	RadiusBucketType string `json:"radiusBucketType,omitempty"`
+	// RadiusUnitType: Optional. The units of the radius value
+	//
+	// Possible values:
+	//   "RADIUS_UNIT_TYPE_UNKNOWN" - The units of the radius value are unknown.
+	// This value is unused.
+	//   "KILOMETERS" - The units of the radius value are kilometers.
+	//   "MILES" - The units of the radius value are miles.
+	RadiusUnitType string `json:"radiusUnitType,omitempty"`
+	// RadiusValue: Optional. Radius length in units defined by radius_units.
+	RadiusValue int64 `json:"radiusValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProximityFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod ProximityFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ReachReportCompatibleFields: Represents fields that are compatible to be
 // selected for a report of type "REACH".
 type ReachReportCompatibleFields struct {
@@ -9841,6 +10780,31 @@ type RemarketingListsListResponse struct {
 
 func (s RemarketingListsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RemarketingListsListResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemarketingValueAttribute: Contains remarketing value attribute information.
+type RemarketingValueAttribute struct {
+	// FieldId: Optional. Field ID in the element.
+	FieldId int64 `json:"fieldId,omitempty"`
+	// UserAttributeIds: Optional. Remarketing user attribute IDs for auto
+	// filtering.
+	UserAttributeIds googleapi.Int64s `json:"userAttributeIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemarketingValueAttribute) MarshalJSON() ([]byte, error) {
+	type NoMethod RemarketingValueAttribute
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10458,6 +11422,36 @@ func (s ReportsConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RequestValue: Contains request value information.
+type RequestValue struct {
+	// ExcludeFromUserAttributeIds: Optional. User attribute IDs in the request
+	// that should be excluded. Used only when the field type is REMARKETING_VALUE
+	// or USER_ATTRIBUTE_ID.
+	ExcludeFromUserAttributeIds googleapi.Int64s `json:"excludeFromUserAttributeIds,omitempty"`
+	// Key: Optional. Custom key in the request. Used only when the field type is
+	// CUSTOM_VALUE.
+	Key string `json:"key,omitempty"`
+	// UserAttributeIds: Optional. User attribute IDs in the request. Used only
+	// when the field type is REMARKETING_VALUE or USER_ATTRIBUTE_ID.
+	UserAttributeIds googleapi.Int64s `json:"userAttributeIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ExcludeFromUserAttributeIds") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExcludeFromUserAttributeIds") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RequestValue) MarshalJSON() ([]byte, error) {
+	type NoMethod RequestValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RichMediaExitOverride: Rich Media Exit Override.
 type RichMediaExitOverride struct {
 	// ClickThroughUrl: Click-through URL of this rich media exit override.
@@ -10513,6 +11507,29 @@ type Rule struct {
 
 func (s Rule) MarshalJSON() ([]byte, error) {
 	type NoMethod Rule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RuleBlock: Contains a list of field filters that the given custom rule will
+// apply.
+type RuleBlock struct {
+	// FieldFilter: Optional. A list of non-auto field filters
+	FieldFilter []*FieldFilter `json:"fieldFilter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldFilter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldFilter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RuleBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod RuleBlock
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -24368,6 +25385,512 @@ func (c *DirectorySitesListCall) Pages(ctx context.Context, f func(*DirectorySit
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type DynamicFeedsGetCall struct {
+	s             *Service
+	dynamicFeedId int64
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Get: Gets a dynamic feed by ID.
+//
+// - dynamicFeedId: Dynamic feed ID.
+func (r *DynamicFeedsService) Get(dynamicFeedId int64) *DynamicFeedsGetCall {
+	c := &DynamicFeedsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dynamicFeedId = dynamicFeedId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DynamicFeedsGetCall) Fields(s ...googleapi.Field) *DynamicFeedsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DynamicFeedsGetCall) IfNoneMatch(entityTag string) *DynamicFeedsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DynamicFeedsGetCall) Context(ctx context.Context) *DynamicFeedsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DynamicFeedsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DynamicFeedsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "studio/dynamicFeeds/{+dynamicFeedId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dynamicFeedId": strconv.FormatInt(c.dynamicFeedId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dfareporting.dynamicFeeds.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.dynamicFeeds.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DynamicFeed.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *DynamicFeedsGetCall) Do(opts ...googleapi.CallOption) (*DynamicFeed, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DynamicFeed{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.dynamicFeeds.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type DynamicFeedsInsertCall struct {
+	s                         *Service
+	dynamicfeedsinsertrequest *DynamicFeedsInsertRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Insert: Inserts a new dynamic feed.
+func (r *DynamicFeedsService) Insert(dynamicfeedsinsertrequest *DynamicFeedsInsertRequest) *DynamicFeedsInsertCall {
+	c := &DynamicFeedsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dynamicfeedsinsertrequest = dynamicfeedsinsertrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DynamicFeedsInsertCall) Fields(s ...googleapi.Field) *DynamicFeedsInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DynamicFeedsInsertCall) Context(ctx context.Context) *DynamicFeedsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DynamicFeedsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DynamicFeedsInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.dynamicfeedsinsertrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "studio/dynamicFeeds")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dfareporting.dynamicFeeds.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.dynamicFeeds.insert" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DynamicFeed.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *DynamicFeedsInsertCall) Do(opts ...googleapi.CallOption) (*DynamicFeed, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DynamicFeed{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.dynamicFeeds.insert", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type DynamicProfilesGetCall struct {
+	s                *Service
+	dynamicProfileId int64
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Get: Gets a dynamic profile by ID.
+//
+// - dynamicProfileId: Dynamic profile ID.
+func (r *DynamicProfilesService) Get(dynamicProfileId int64) *DynamicProfilesGetCall {
+	c := &DynamicProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dynamicProfileId = dynamicProfileId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DynamicProfilesGetCall) Fields(s ...googleapi.Field) *DynamicProfilesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DynamicProfilesGetCall) IfNoneMatch(entityTag string) *DynamicProfilesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DynamicProfilesGetCall) Context(ctx context.Context) *DynamicProfilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DynamicProfilesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DynamicProfilesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "studio/dynamicProfiles/{+dynamicProfileId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dynamicProfileId": strconv.FormatInt(c.dynamicProfileId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dfareporting.dynamicProfiles.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.dynamicProfiles.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DynamicProfile.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *DynamicProfilesGetCall) Do(opts ...googleapi.CallOption) (*DynamicProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DynamicProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.dynamicProfiles.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type DynamicProfilesInsertCall struct {
+	s              *Service
+	dynamicprofile *DynamicProfile
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Insert: Inserts a new dynamic profile.
+func (r *DynamicProfilesService) Insert(dynamicprofile *DynamicProfile) *DynamicProfilesInsertCall {
+	c := &DynamicProfilesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dynamicprofile = dynamicprofile
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DynamicProfilesInsertCall) Fields(s ...googleapi.Field) *DynamicProfilesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DynamicProfilesInsertCall) Context(ctx context.Context) *DynamicProfilesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DynamicProfilesInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DynamicProfilesInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.dynamicprofile)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "studio/dynamicProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dfareporting.dynamicProfiles.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.dynamicProfiles.insert" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DynamicProfile.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *DynamicProfilesInsertCall) Do(opts ...googleapi.CallOption) (*DynamicProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DynamicProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.dynamicProfiles.insert", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type DynamicProfilesUpdateCall struct {
+	s              *Service
+	dynamicprofile *DynamicProfile
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Update: Updates an existing dynamic profile.
+func (r *DynamicProfilesService) Update(dynamicprofile *DynamicProfile) *DynamicProfilesUpdateCall {
+	c := &DynamicProfilesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dynamicprofile = dynamicprofile
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DynamicProfilesUpdateCall) Fields(s ...googleapi.Field) *DynamicProfilesUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DynamicProfilesUpdateCall) Context(ctx context.Context) *DynamicProfilesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DynamicProfilesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DynamicProfilesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.dynamicprofile)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "studio/dynamicProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dfareporting.dynamicProfiles.update", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.dynamicProfiles.update" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DynamicProfile.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *DynamicProfilesUpdateCall) Do(opts ...googleapi.CallOption) (*DynamicProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DynamicProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.dynamicProfiles.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type DynamicTargetingKeysDeleteCall struct {

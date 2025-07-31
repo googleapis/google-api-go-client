@@ -458,9 +458,8 @@ type AccessSettings struct {
 	// - App authentication
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 	// with administrator approval (https://support.google.com/a?p=chat-app-auth)
-	// with the `chat.app.spaces` scope in Developer Preview
-	// (https://developers.google.com/workspace/preview). This field is not
-	// populated when using the `chat.bot` scope with app authentication
+	// with the `chat.app.spaces` scope. This field is not populated when using the
+	// `chat.bot` scope with app authentication
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
 	// Setting the target audience requires user authentication
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
@@ -4848,9 +4847,9 @@ type Message struct {
 	// For details, see Send a message privately
 	// (https://developers.google.com/workspace/chat/create-messages#private).
 	PrivateMessageViewer *User `json:"privateMessageViewer,omitempty"`
-	// QuotedMessageMetadata: Output only. Information about a message that's
-	// quoted by a Google Chat user in a space. Google Chat users can quote a
-	// message to reply to it.
+	// QuotedMessageMetadata: Optional. Information about a message that's quoted
+	// by a Google Chat user in a space. Google Chat users can quote a message to
+	// reply to it.
 	QuotedMessageMetadata *QuotedMessageMetadata `json:"quotedMessageMetadata,omitempty"`
 	// Sender: Output only. The user who created the message. If your Chat app
 	// authenticates as a user
@@ -5158,10 +5157,10 @@ func (s PermissionSettings) MarshalJSON() ([]byte, error) {
 
 // QuotedMessageMetadata: Information about a quoted message.
 type QuotedMessageMetadata struct {
-	// LastUpdateTime: Output only. The timestamp when the quoted message was
-	// created or when the quoted message was last updated.
+	// LastUpdateTime: Required. The timestamp when the quoted message was created
+	// or when the quoted message was last updated.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
-	// Name: Output only. Resource name of the quoted message. Format:
+	// Name: Required. Resource name of the message that is quoted. Format:
 	// `spaces/{space}/messages/{message}`
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastUpdateTime") to
@@ -5581,8 +5580,7 @@ type Space struct {
 	// https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers).
 	// Private apps can also use the `customers/my_customer` alias to create the
 	// space in the same Google Workspace organization as the app. For DMs, this
-	// field isn't populated. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// field isn't populated.
 	Customer string `json:"customer,omitempty"`
 	// DisplayName: Optional. The space's display name. Required when creating a
 	// space
@@ -5630,8 +5628,7 @@ type Space struct {
 	// PermissionSettings: Optional. Space permission settings for existing spaces.
 	// Input for updating exact space permission settings, where existing
 	// permission settings are replaced. Output lists current permission settings.
-	// Reading and updating permission settings supports: - In Developer Preview
-	// (https://developers.google.com/workspace/preview), App authentication
+	// Reading and updating permission settings supports: - App authentication
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 	// with administrator approval (https://support.google.com/a?p=chat-app-auth)
 	// with the `chat.app.spaces` scope. Only populated and settable when the Chat
@@ -5642,8 +5639,7 @@ type Space struct {
 	// permission settings, input only when creating a space. If the field is not
 	// set, a collaboration space is created. After you create the space, settings
 	// are populated in the `PermissionSettings` field. Setting predefined
-	// permission settings supports: - In Developer Preview
-	// (https://developers.google.com/workspace/preview), App authentication
+	// permission settings supports: - App authentication
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 	// with administrator approval (https://support.google.com/a?p=chat-app-auth)
 	// with the `chat.app.spaces` or `chat.app.spaces.create` scopes. - User
@@ -7384,8 +7380,7 @@ type SpacesCreateCall struct {
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 // with administrator approval (https://support.google.com/a?p=chat-app-auth)
-// in Developer Preview (https://developers.google.com/workspace/preview) and
-// one of the following authorization scopes: -
+// and one of the following authorization scopes: -
 // `https://www.googleapis.com/auth/chat.app.spaces.create` -
 // `https://www.googleapis.com/auth/chat.app.spaces` - User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
@@ -7520,9 +7515,9 @@ type SpacesDeleteCall struct {
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 // with administrator approval (https://support.google.com/a?p=chat-app-auth)
-// in Developer Preview (https://developers.google.com/workspace/preview) and
-// the authorization scope: - `https://www.googleapis.com/auth/chat.app.delete`
-// (only in spaces the app created) - User authentication
+// and the authorization scope: -
+// `https://www.googleapis.com/auth/chat.app.delete` (only in spaces the app
+// created) - User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // with one of the following authorization scopes: -
 // `https://www.googleapis.com/auth/chat.delete` -
@@ -8105,8 +8100,7 @@ type SpacesPatchCall struct {
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 // with administrator approval (https://support.google.com/a?p=chat-app-auth)
-// in Developer Preview (https://developers.google.com/workspace/preview) and
-// one of the following authorization scopes: -
+// and one of the following authorization scopes: -
 // `https://www.googleapis.com/auth/chat.app.spaces` - User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // with one of the following authorization scopes: -
@@ -8662,8 +8656,7 @@ type SpacesMembersCreateCall struct {
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 // with administrator approval (https://support.google.com/a?p=chat-app-auth)
-// in Developer Preview (https://developers.google.com/workspace/preview) and
-// the authorization scope: -
+// and the authorization scope: -
 // `https://www.googleapis.com/auth/chat.app.memberships` - User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // with one of the following authorization scopes: -
@@ -8808,8 +8801,7 @@ type SpacesMembersDeleteCall struct {
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 // with administrator approval (https://support.google.com/a?p=chat-app-auth)
-// in Developer Preview (https://developers.google.com/workspace/preview) and
-// the authorization scope: -
+// and the authorization scope: -
 // `https://www.googleapis.com/auth/chat.app.memberships` - User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // with one of the following authorization scopes: -
@@ -9341,8 +9333,7 @@ type SpacesMembersPatchCall struct {
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 // with administrator approval (https://support.google.com/a?p=chat-app-auth)
-// in Developer Preview (https://developers.google.com/workspace/preview) and
-// the authorization scope: -
+// and the authorization scope: -
 // `https://www.googleapis.com/auth/chat.app.memberships` (only in spaces the
 // app created) - User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)

@@ -86,7 +86,8 @@ func Dial(ctx context.Context, opts ...option.ClientOption) (*grpc.ClientConn, e
 		return o.GRPCConnPool.Conn(), nil
 	}
 	if o.IsNewAuthLibraryEnabled() {
-		pool, err := dialPoolNewAuth(ctx, true, 1, o)
+		poolSize := 1
+		pool, err := dialPoolNewAuth(ctx, true, &poolSize, opts)
 		if err != nil {
 			return nil, err
 		}
@@ -108,7 +109,8 @@ func DialInsecure(ctx context.Context, opts ...option.ClientOption) (*grpc.Clien
 		return nil, err
 	}
 	if o.IsNewAuthLibraryEnabled() {
-		pool, err := dialPoolNewAuth(ctx, false, 1, o)
+		poolSize := 1
+		pool, err := dialPoolNewAuth(ctx, false, &poolSize, opts)
 		if err != nil {
 			return nil, err
 		}
@@ -137,7 +139,7 @@ func DialPool(ctx context.Context, opts ...option.ClientOption) (ConnPool, error
 		if o.GRPCConn != nil {
 			return &singleConnPool{o.GRPCConn}, nil
 		}
-		pool, err := dialPoolNewAuth(ctx, true, o.GRPCConnPoolSize, o)
+		pool, err := dialPoolNewAuth(ctx, true, nil, opts)
 		if err != nil {
 			return nil, err
 		}
@@ -174,7 +176,23 @@ func DialPool(ctx context.Context, opts ...option.ClientOption) (ConnPool, error
 }
 
 // dialPoolNewAuth is an adapter to call new auth library.
-func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *internal.DialSettings) (grpctransport.GRPCClientConnPool, error) {
+func dialPoolNewAuth(ctx context.Context, secure bool, poolSize *int, opts []option.ClientOption) (grpctransport.GRPCClientConnPool, error) {
+	authGRPCOpts, err := AuthGRPCOptions(opts, poolSize)
+	if err != nil {
+		return nil, err
+	}
+	return dialContextNewAuth(ctx, secure, authGRPCOpts)
+}
+
+// AuthGRPCOptions is an adapter converting []option.ClientOption to
+// cloud.google.com/go/auth/grpctransport.Options. If a non-nil
+// poolSizeOverride pointer is provided, it will be used instead of the
+// option.WithGRPCConnectionPool value in opts.
+func AuthGRPCOptions(opts []option.ClientOption, poolSizeOverride *int) (*grpctransport.Options, error) {
+	ds, err := processAndValidateOpts(opts)
+	if err != nil {
+		return nil, err
+	}
 	// honor options if set
 	var creds *auth.Credentials
 	if ds.InternalCredentials != nil {
@@ -220,13 +238,16 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 		defaultEndpointTemplate = ds.DefaultEndpoint
 	}
 
-	pool, err := dialContextNewAuth(ctx, secure, &grpctransport.Options{
+	if poolSizeOverride == nil {
+		poolSizeOverride = &ds.GRPCConnPoolSize
+	}
+	return &grpctransport.Options{
 		DisableTelemetry:      ds.TelemetryDisabled,
 		DisableAuthentication: ds.NoAuth,
 		Endpoint:              ds.Endpoint,
 		Metadata:              metadata,
 		GRPCDialOpts:          prepareDialOptsNewAuth(ds),
-		PoolSize:              poolSize,
+		PoolSize:              *poolSizeOverride,
 		Credentials:           creds,
 		ClientCertProvider:    ds.ClientCertSource,
 		APIKey:                ds.APIKey,
@@ -251,8 +272,7 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 		},
 		UniverseDomain: ds.UniverseDomain,
 		Logger:         ds.Logger,
-	})
-	return pool, err
+	}, nil
 }
 
 func prepareDialOptsNewAuth(ds *internal.DialSettings) []grpc.DialOption {

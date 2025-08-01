@@ -1164,9 +1164,7 @@ func (s BackupLock) MarshalJSON() ([]byte, error) {
 // `BackupRule` has a retention policy and defines a schedule by which the
 // system is to perform backup workloads.
 type BackupPlan struct {
-	// BackupRules: Optional. The backup rules for this `BackupPlan`. There must be
-	// at least one `BackupRule` message if on_demand_retention_limit_days is not
-	// set.
+	// BackupRules: Optional. The backup rules for this `BackupPlan`.
 	BackupRules []*BackupRule `json:"backupRules,omitempty"`
 	// BackupVault: Required. Resource name of backup vault which will be used as
 	// storage location for backups. Format:
@@ -1191,15 +1189,18 @@ type BackupPlan struct {
 	// Labels: Optional. This collection of key/value pairs allows for custom
 	// labels to be supplied by the user. Example, {"tag": "Weekly"}.
 	Labels map[string]string `json:"labels,omitempty"`
-	// LogRetentionDays: Optional. Required for CloudSQL resource_type Configures
-	// how long logs will be stored. It is defined in “days”. This value should
-	// be greater than or equal to minimum enforced log retention duration of the
-	// backup vault.
+	// LogRetentionDays: Optional. Applicable only for CloudSQL resource_type.
+	// Configures how long logs will be stored. It is defined in “days”. This
+	// value should be greater than or equal to minimum enforced log retention
+	// duration of the backup vault.
 	LogRetentionDays int64 `json:"logRetentionDays,omitempty,string"`
 	// Name: Output only. Identifier. The resource name of the `BackupPlan`.
 	// Format: `projects/{project}/locations/{location}/backupPlans/{backup_plan}`
 	Name string `json:"name,omitempty"`
-	// ResourceType: Required.
+	// ResourceType: Required. The resource type to which the `BackupPlan` will be
+	// applied. Examples include, "compute.googleapis.com/Instance",
+	// "sqladmin.googleapis.com/Instance", "alloydb.googleapis.com/Cluster",
+	// "compute.googleapis.com/Disk".
 	ResourceType string `json:"resourceType,omitempty"`
 	// RevisionId: Output only. The user friendly revision ID of the
 	// `BackupPlanRevision`. Example: v0, v1, v2, etc.
@@ -1282,7 +1283,8 @@ type BackupPlanAssociation struct {
 	// "https://www.googleapis.com/compute/v1/projects/my-project/zones/us-central1-
 	// a/instances/my-instance").
 	Resource string `json:"resource,omitempty"`
-	// ResourceType: Required. Immutable.
+	// ResourceType: Required. Immutable. Resource type of workload on which
+	// backupplan is applied
 	ResourceType string `json:"resourceType,omitempty"`
 	// RulesConfigInfo: Output only. The config info related to backup rules.
 	RulesConfigInfo []*RuleConfigInfo `json:"rulesConfigInfo,omitempty"`
@@ -1652,7 +1654,7 @@ func (s CloudSqlInstanceBackupPlanAssociationProperties) MarshalJSON() ([]byte, 
 }
 
 // CloudSqlInstanceBackupProperties: CloudSqlInstanceBackupProperties
-// represents Cloud SQL Instance Backup properties. .
+// represents Cloud SQL Instance Backup properties.
 type CloudSqlInstanceBackupProperties struct {
 	// DatabaseInstalledVersion: Output only. The installed database version of the
 	// Cloud SQL instance when the backup was taken.
@@ -1685,7 +1687,7 @@ func (s CloudSqlInstanceBackupProperties) MarshalJSON() ([]byte, error) {
 
 // CloudSqlInstanceDataSourceProperties: CloudSqlInstanceDataSourceProperties
 // represents the properties of a Cloud SQL resource that are stored in the
-// DataSource. .
+// DataSource.
 type CloudSqlInstanceDataSourceProperties struct {
 	// DatabaseInstalledVersion: Output only. The installed database version of the
 	// Cloud SQL instance.
@@ -1718,7 +1720,7 @@ func (s CloudSqlInstanceDataSourceProperties) MarshalJSON() ([]byte, error) {
 
 // CloudSqlInstanceDataSourceReferenceProperties:
 // CloudSqlInstanceDataSourceReferenceProperties represents the properties of a
-// Cloud SQL resource that are stored in the DataSourceReference. .
+// Cloud SQL resource that are stored in the DataSourceReference.
 type CloudSqlInstanceDataSourceReferenceProperties struct {
 	// DatabaseInstalledVersion: Output only. The installed database version of the
 	// Cloud SQL instance.
@@ -2498,7 +2500,7 @@ type DiskRestoreProperties struct {
 	// applicable to this backup. This is applicable if the original image had
 	// licenses attached, e.g. Windows image
 	Licenses []string `json:"licenses,omitempty"`
-	// Name: Required. Name of the disk..
+	// Name: Required. Name of the disk.
 	Name string `json:"name,omitempty"`
 	// PhysicalBlockSizeBytes: Optional. Physical block size of the persistent
 	// disk, in bytes. If not present in a request, a default value is used.
@@ -4803,7 +4805,8 @@ type TriggerBackupRequest struct {
 	// exception that zero UUID is not supported
 	// (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
-	// RuleId: Required. backup rule_id for which a backup needs to be triggered.
+	// RuleId: Optional. backup rule_id for which a backup needs to be triggered.
+	// If not specified, on-demand backup with custom retention will be triggered.
 	RuleId string `json:"ruleId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RequestId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5890,7 +5893,7 @@ type ProjectsLocationsBackupPlanAssociationsPatchCall struct {
 	header_               http.Header
 }
 
-// Patch: Update a BackupPlanAssociation
+// Patch: Update a BackupPlanAssociation.
 //
 //   - name: Output only. Identifier. The resource name of BackupPlanAssociation
 //     in below format Format :
@@ -6652,7 +6655,7 @@ type ProjectsLocationsBackupPlansPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Update a BackupPlan
+// Patch: Update a BackupPlan.
 //
 //   - name: Output only. Identifier. The resource name of the `BackupPlan`.
 //     Format:

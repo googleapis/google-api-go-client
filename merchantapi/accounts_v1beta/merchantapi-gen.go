@@ -475,8 +475,7 @@ func (s AcceptTermsOfServiceResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Accepted: Describes the accepted terms of service
-// (/merchant/api/guides/accounts/create-and-configure#accept_the_merchant_cente
-// r_terms_of_service).
+// (https://developers.google.com/merchant/api/guides/accounts/create-and-configure#accept_the_merchant_center_terms_of_service).
 type Accepted struct {
 	// AcceptedBy: Required. The account where the acceptance was recorded. This
 	// can be the account itself or, in the case of subaccounts, the advanced
@@ -4572,9 +4571,7 @@ type WarehouseBasedDeliveryTime struct {
 	// CarrierService: Required. Carrier service, such as "ground" or "2 days".
 	// The name of the service must be in the eddSupportedServices list.
 	CarrierService string `json:"carrierService,omitempty"`
-	// Warehouse: Required. Warehouse name. This should match warehouse
-	// (/merchant/api/reference/rest/accounts_v1beta/accounts.shippingSettings#wareh
-	// ouse)
+	// Warehouse: Required. Warehouse name. This should match warehouse.
 	Warehouse string `json:"warehouse,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Carrier") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

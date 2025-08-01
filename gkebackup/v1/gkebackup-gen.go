@@ -498,6 +498,9 @@ type Backup struct {
 	// should not be used programmatically as this field is not guaranteed to be
 	// consistent.
 	StateReason string `json:"stateReason,omitempty"`
+	// TroubleshootingInfo: Output only. Information about the troubleshooting
+	// steps which will provide debugging information to the end users.
+	TroubleshootingInfo *TroubleshootingInfo `json:"troubleshootingInfo,omitempty"`
 	// Uid: Output only. Server generated global unique identifier of UUID4
 	// (https://en.wikipedia.org/wiki/Universally_unique_identifier)
 	Uid string `json:"uid,omitempty"`
@@ -2282,6 +2285,9 @@ type Restore struct {
 	// should not be used programmatically as this field is not guaranteed to be
 	// consistent.
 	StateReason string `json:"stateReason,omitempty"`
+	// TroubleshootingInfo: Output only. Information about the troubleshooting
+	// steps which will provide debugging information to the end users.
+	TroubleshootingInfo *TroubleshootingInfo `json:"troubleshootingInfo,omitempty"`
 	// Uid: Output only. Server generated global unique identifier of UUID
 	// (https://en.wikipedia.org/wiki/Universally_unique_identifier) format.
 	Uid string `json:"uid,omitempty"`
@@ -3094,6 +3100,35 @@ type TransformationRuleAction struct {
 
 func (s TransformationRuleAction) MarshalJSON() ([]byte, error) {
 	type NoMethod TransformationRuleAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TroubleshootingInfo: Stores information about troubleshooting doc for
+// debugging a particular state of an operation (eg - backup/restore). This
+// will be used by the end user to debug their operation failure scenario
+// easily.
+type TroubleshootingInfo struct {
+	// StateReasonCode: Output only. Unique code for each backup/restore operation
+	// failure message which helps user identify the failure.
+	StateReasonCode string `json:"stateReasonCode,omitempty"`
+	// StateReasonUri: Output only. URL for the troubleshooting doc which will help
+	// the user fix the failing backup/restore operation.
+	StateReasonUri string `json:"stateReasonUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StateReasonCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StateReasonCode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TroubleshootingInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod TroubleshootingInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

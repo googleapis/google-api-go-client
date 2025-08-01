@@ -1276,6 +1276,8 @@ func (s *Image) UnmarshalJSON(data []byte) error {
 
 // Input: Input asset.
 type Input struct {
+	// Attributes: Optional. Input Attributes.
+	Attributes *InputAttributes `json:"attributes,omitempty"`
 	// Key: A unique key for this input. Must be specified when using advanced
 	// mapping and edit lists.
 	Key string `json:"key,omitempty"`
@@ -1287,21 +1289,44 @@ type Input struct {
 	// output formats
 	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Key") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s Input) MarshalJSON() ([]byte, error) {
 	type NoMethod Input
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InputAttributes: Input attributes that provide additional information about
+// the input asset.
+type InputAttributes struct {
+	// TrackDefinitions: Optional. A list of track definitions for the input asset.
+	TrackDefinitions []*TrackDefinition `json:"trackDefinitions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TrackDefinitions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TrackDefinitions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InputAttributes) MarshalJSON() ([]byte, error) {
+	type NoMethod InputAttributes
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2050,6 +2075,43 @@ type TextStream struct {
 
 func (s TextStream) MarshalJSON() ([]byte, error) {
 	type NoMethod TextStream
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TrackDefinition: Track definition for the input asset.
+type TrackDefinition struct {
+	// DetectLanguages: Optional. Whether to automatically detect the languages
+	// present in the track. If true, the system will attempt to identify all the
+	// languages present in the track and populate the languages field.
+	DetectLanguages bool `json:"detectLanguages,omitempty"`
+	// DetectedLanguages: Output only. A list of languages detected in the input
+	// asset, represented by a BCP 47 language code, such as "en-US" or "sr-Latn".
+	// For more information, see
+	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier. This field
+	// is only populated if the detect_languages field is set to true.
+	DetectedLanguages []string `json:"detectedLanguages,omitempty"`
+	// InputTrack: The input track.
+	InputTrack int64 `json:"inputTrack,omitempty"`
+	// Languages: Optional. A list of languages spoken in the input asset,
+	// represented by a BCP 47 language code, such as "en-US" or "sr-Latn". For
+	// more information, see
+	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	Languages []string `json:"languages,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DetectLanguages") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DetectLanguages") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TrackDefinition) MarshalJSON() ([]byte, error) {
+	type NoMethod TrackDefinition
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

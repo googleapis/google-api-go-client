@@ -346,6 +346,12 @@ func (s BackfillJob) MarshalJSON() ([]byte, error) {
 type BackfillNoneStrategy struct {
 }
 
+// BasicEncryption: Message to represent the option where Datastream will
+// enforce encryption without authenticating server identity. Server
+// certificates will be trusted by default.
+type BasicEncryption struct {
+}
+
 // BigQueryDestinationConfig: BigQuery destination configuration
 type BigQueryDestinationConfig struct {
 	// AppendOnly: Append only mode
@@ -704,6 +710,44 @@ type DropLargeObjects struct {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EncryptionAndServerValidation: Message to represent the option where
+// Datastream will enforce encryption and authenticate server identity.
+// ca_certificate must be set if user selects this option.
+type EncryptionAndServerValidation struct {
+	// CaCertificate: Optional. Input only. PEM-encoded certificate of the CA that
+	// signed the source database server's certificate.
+	CaCertificate string `json:"caCertificate,omitempty"`
+	// ServerCertificateHostname: Optional. The hostname mentioned in the Subject
+	// or SAN extension of the server certificate. This field is used for bypassing
+	// the hostname validation while verifying server certificate. This is required
+	// for scenarios where the host name that datastream connects to is different
+	// from the certificate's subject. This specifically happens for private
+	// connectivity. It could also happen when the customer provides a public IP in
+	// connection profile but the same is not present in the server certificate.
+	ServerCertificateHostname string `json:"serverCertificateHostname,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CaCertificate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EncryptionAndServerValidation) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionAndServerValidation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EncryptionNotEnforced: Message to represent the option where encryption is
+// not enforced. An empty message right now to allow future extensibility.
+type EncryptionNotEnforced struct {
 }
 
 // Error: Represent a user-facing Error.
@@ -3053,6 +3097,8 @@ type SqlServerProfile struct {
 	// resource name storing the SQLServer connection password. Mutually exclusive
 	// with the `password` field.
 	SecretManagerStoredPassword string `json:"secretManagerStoredPassword,omitempty"`
+	// SslConfig: Optional. SSL configuration for the SQLServer connection.
+	SslConfig *SqlServerSslConfig `json:"sslConfig,omitempty"`
 	// Username: Required. Username for the SQLServer connection.
 	Username string `json:"username,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Database") to
@@ -3148,6 +3194,37 @@ type SqlServerSourceConfig struct {
 
 func (s SqlServerSourceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlServerSourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerSslConfig: SQL Server SSL configuration information.
+type SqlServerSslConfig struct {
+	// BasicEncryption: If set, Datastream will enforce encryption without
+	// authenticating server identity. Server certificates will be trusted by
+	// default.
+	BasicEncryption *BasicEncryption `json:"basicEncryption,omitempty"`
+	// EncryptionAndServerValidation: If set, Datastream will enforce encryption
+	// and authenticate server identity.
+	EncryptionAndServerValidation *EncryptionAndServerValidation `json:"encryptionAndServerValidation,omitempty"`
+	// EncryptionNotEnforced: If set, Datastream will not enforce encryption. If
+	// the DB server mandates encryption, then connection will be encrypted but
+	// server identity will not be authenticated.
+	EncryptionNotEnforced *EncryptionNotEnforced `json:"encryptionNotEnforced,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BasicEncryption") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BasicEncryption") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlServerSslConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerSslConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

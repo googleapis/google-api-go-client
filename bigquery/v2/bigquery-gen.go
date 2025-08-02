@@ -1902,18 +1902,30 @@ func (s CsvOptions) MarshalJSON() ([]byte, error) {
 
 // DataFormatOptions: Options for data format adjustments.
 type DataFormatOptions struct {
+	// TimestampOutputFormat: Optional. The API output format for a timestamp. This
+	// offers more explicit control over the timestamp output format as compared to
+	// the existing `use_int64_timestamp` option.
+	//
+	// Possible values:
+	//   "TIMESTAMP_OUTPUT_FORMAT_UNSPECIFIED" - Corresponds to default API output
+	// behavior, which is FLOAT64.
+	//   "FLOAT64" - Timestamp is output as float64 seconds since Unix epoch.
+	//   "INT64" - Timestamp is output as int64 microseconds since Unix epoch.
+	//   "ISO8601_STRING" - Timestamp is output as ISO 8601 String
+	// ("YYYY-MM-DDTHH:MM:SS.FFFFFFFFFFFFZ").
+	TimestampOutputFormat string `json:"timestampOutputFormat,omitempty"`
 	// UseInt64Timestamp: Optional. Output timestamp as usec int64. Default is
 	// false.
 	UseInt64Timestamp bool `json:"useInt64Timestamp,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "UseInt64Timestamp") to
+	// ForceSendFields is a list of field names (e.g. "TimestampOutputFormat") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "UseInt64Timestamp") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "TimestampOutputFormat") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3394,12 +3406,16 @@ func (s ExternalDatasetReference) MarshalJSON() ([]byte, error) {
 
 // ExternalRuntimeOptions: Options for the runtime of the external system.
 type ExternalRuntimeOptions struct {
-	// ContainerCpu: Optional. Amount of CPU provisioned for the container
-	// instance. If not specified, the default value is 0.33 vCPUs.
+	// ContainerCpu: Optional. Amount of CPU provisioned for a Python UDF container
+	// instance. For more information, see Configure container limits for Python
+	// UDFs
+	// (https://cloud.google.com/bigquery/docs/user-defined-functions-python#configure-container-limits)
 	ContainerCpu float64 `json:"containerCpu,omitempty"`
-	// ContainerMemory: Optional. Amount of memory provisioned for the container
-	// instance. Format: {number}{unit} where unit is one of "M", "G", "Mi" and
-	// "Gi" (e.g. 1G, 512Mi). If not specified, the default value is 512Mi.
+	// ContainerMemory: Optional. Amount of memory provisioned for a Python UDF
+	// container instance. Format: {number}{unit} where unit is one of "M", "G",
+	// "Mi" and "Gi" (e.g. 1G, 512Mi). If not specified, the default value is
+	// 512Mi. For more information, see Configure container limits for Python UDFs
+	// (https://cloud.google.com/bigquery/docs/user-defined-functions-python#configure-container-limits)
 	ContainerMemory string `json:"containerMemory,omitempty"`
 	// MaxBatchingRows: Optional. Maximum number of rows in each batch sent to the
 	// external runtime. If absent or if 0, BigQuery dynamically decides the number
@@ -3410,7 +3426,7 @@ type ExternalRuntimeOptions struct {
 	// ``"projects/{project_id}/locations/{location_id}/connections/{connection_id}
 	// "``
 	RuntimeConnection string `json:"runtimeConnection,omitempty"`
-	// RuntimeVersion: Optional. Language runtime version (e.g. python-3.11).
+	// RuntimeVersion: Optional. Language runtime version. Example: `python-3.11`.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContainerCpu") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6930,11 +6946,13 @@ func (s ProjectReference) MarshalJSON() ([]byte, error) {
 
 // PythonOptions: Options for a user-defined Python function.
 type PythonOptions struct {
-	// EntryPoint: Required. The entry point function in the user's Python code.
+	// EntryPoint: Required. The name of the function defined in Python code as the
+	// entry point when the Python UDF is invoked.
 	EntryPoint string `json:"entryPoint,omitempty"`
-	// Packages: Optional. A list of package names along with versions to be
-	// installed. Follows requirements.txt syntax (e.g. numpy==2.0, permutation,
-	// urllib3<2.2.1)
+	// Packages: Optional. A list of Python package names along with versions to be
+	// installed. Example: ["pandas>=2.1", "google-cloud-translate==3.11"]. For
+	// more information, see Use third-party packages
+	// (https://cloud.google.com/bigquery/docs/user-defined-functions-python#third-party-packages).
 	Packages []string `json:"packages,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EntryPoint") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7013,6 +7031,13 @@ type QueryParameterType struct {
 	// StructTypes: Optional. The types of the fields of this struct, in order, if
 	// this is a struct.
 	StructTypes []*QueryParameterTypeStructTypes `json:"structTypes,omitempty"`
+	// TimestampPrecision: Optional. Precision (maximum number of total digits in
+	// base 10) for seconds of TIMESTAMP type. Possible values include: * 6
+	// (Default, for TIMESTAMP type with microsecond precision) * 12 (For TIMESTAMP
+	// type with picosecond precision)
+	//
+	// Default: 6
+	TimestampPrecision *int64 `json:"timestampPrecision,omitempty,string"`
 	// Type: Required. The top level type of this field.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArrayType") to
@@ -7776,7 +7801,7 @@ type Routine struct {
 	// LastModifiedTime: Output only. The time when this routine was last modified,
 	// in milliseconds since the epoch.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
-	// PythonOptions: Optional. Options for Python UDF. Preview
+	// PythonOptions: Optional. Options for the Python UDF. Preview
 	// (https://cloud.google.com/products/#product-launch-stages)
 	PythonOptions *PythonOptions `json:"pythonOptions,omitempty"`
 	// RemoteFunctionOptions: Optional. Remote function specific options.
@@ -12036,6 +12061,27 @@ func (r *JobsService) GetQueryResults(projectId string, jobId string) *JobsGetQu
 	return c
 }
 
+// FormatOptionsTimestampOutputFormat sets the optional parameter
+// "formatOptions.timestampOutputFormat": The API output format for a
+// timestamp. This offers more explicit control over the timestamp output
+// format as compared to the existing `use_int64_timestamp` option.
+//
+// Possible values:
+//
+//	"TIMESTAMP_OUTPUT_FORMAT_UNSPECIFIED" - Corresponds to default API output
+//
+// behavior, which is FLOAT64.
+//
+//	"FLOAT64" - Timestamp is output as float64 seconds since Unix epoch.
+//	"INT64" - Timestamp is output as int64 microseconds since Unix epoch.
+//	"ISO8601_STRING" - Timestamp is output as ISO 8601 String
+//
+// ("YYYY-MM-DDTHH:MM:SS.FFFFFFFFFFFFZ").
+func (c *JobsGetQueryResultsCall) FormatOptionsTimestampOutputFormat(formatOptionsTimestampOutputFormat string) *JobsGetQueryResultsCall {
+	c.urlParams_.Set("formatOptions.timestampOutputFormat", formatOptionsTimestampOutputFormat)
+	return c
+}
+
 // FormatOptionsUseInt64Timestamp sets the optional parameter
 // "formatOptions.useInt64Timestamp": Output timestamp as usec int64. Default
 // is false.
@@ -15354,6 +15400,27 @@ func (r *TabledataService) List(projectId string, datasetId string, tableId stri
 	c.projectId = projectId
 	c.datasetId = datasetId
 	c.tableId = tableId
+	return c
+}
+
+// FormatOptionsTimestampOutputFormat sets the optional parameter
+// "formatOptions.timestampOutputFormat": The API output format for a
+// timestamp. This offers more explicit control over the timestamp output
+// format as compared to the existing `use_int64_timestamp` option.
+//
+// Possible values:
+//
+//	"TIMESTAMP_OUTPUT_FORMAT_UNSPECIFIED" - Corresponds to default API output
+//
+// behavior, which is FLOAT64.
+//
+//	"FLOAT64" - Timestamp is output as float64 seconds since Unix epoch.
+//	"INT64" - Timestamp is output as int64 microseconds since Unix epoch.
+//	"ISO8601_STRING" - Timestamp is output as ISO 8601 String
+//
+// ("YYYY-MM-DDTHH:MM:SS.FFFFFFFFFFFFZ").
+func (c *TabledataListCall) FormatOptionsTimestampOutputFormat(formatOptionsTimestampOutputFormat string) *TabledataListCall {
+	c.urlParams_.Set("formatOptions.timestampOutputFormat", formatOptionsTimestampOutputFormat)
 	return c
 }
 

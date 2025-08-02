@@ -184,6 +184,7 @@ func NewCustomersService(s *Service) *CustomersService {
 	rs.Profiles = NewCustomersProfilesService(s)
 	rs.Reports = NewCustomersReportsService(s)
 	rs.Telemetry = NewCustomersTelemetryService(s)
+	rs.ThirdPartyProfileUsers = NewCustomersThirdPartyProfileUsersService(s)
 	return rs
 }
 
@@ -197,6 +198,8 @@ type CustomersService struct {
 	Reports *CustomersReportsService
 
 	Telemetry *CustomersTelemetryService
+
+	ThirdPartyProfileUsers *CustomersThirdPartyProfileUsersService
 }
 
 func NewCustomersAppsService(s *Service) *CustomersAppsService {
@@ -328,6 +331,15 @@ func NewCustomersTelemetryUsersService(s *Service) *CustomersTelemetryUsersServi
 }
 
 type CustomersTelemetryUsersService struct {
+	s *Service
+}
+
+func NewCustomersThirdPartyProfileUsersService(s *Service) *CustomersThirdPartyProfileUsersService {
+	rs := &CustomersThirdPartyProfileUsersService{s: s}
+	return rs
+}
+
+type CustomersThirdPartyProfileUsersService struct {
 	s *Service
 }
 
@@ -4629,6 +4641,56 @@ func (s GoogleChromeManagementVersionsV1ListChromeBrowserProfilesResponse) Marsh
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserRequest: Request to
+// MoveThirdPartyProfileUser method.
+type GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserRequest struct {
+	// DestinationOrgUnit: Required. Destination organizational unit where the
+	// third party chrome profile user will be moved to.
+	DestinationOrgUnit string `json:"destinationOrgUnit,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestinationOrgUnit") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestinationOrgUnit") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserResponse: Response
+// for MoveThirdPartyProfileUser method.
+type GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserResponse struct {
+	// ThirdPartyProfileUser: Output only. The moved third party profile user.
+	ThirdPartyProfileUser *GoogleChromeManagementVersionsV1ThirdPartyProfileUser `json:"thirdPartyProfileUser,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ThirdPartyProfileUser") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ThirdPartyProfileUser") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementVersionsV1ReportingData: Reporting data of a Chrome
 // browser profile.
 type GoogleChromeManagementVersionsV1ReportingData struct {
@@ -4875,6 +4937,34 @@ type GoogleChromeManagementVersionsV1SignDataResponse struct {
 
 func (s GoogleChromeManagementVersionsV1SignDataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementVersionsV1SignDataResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1ThirdPartyProfileUser: A representation of
+// non-Google (third party) user that is associated with a managed Chrome
+// profile.
+type GoogleChromeManagementVersionsV1ThirdPartyProfileUser struct {
+	// Name: Identifier. Format:
+	// customers/{customer_id}/thirdPartyProfileUsers/{third_party_profile_user_id}
+	Name string `json:"name,omitempty"`
+	// OrgUnitId: Output only. The ID of the organizational unit assigned to the
+	// user.
+	OrgUnitId string `json:"orgUnitId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1ThirdPartyProfileUser) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1ThirdPartyProfileUser
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9361,4 +9451,111 @@ func (c *CustomersTelemetryUsersListCall) Pages(ctx context.Context, f func(*Goo
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type CustomersThirdPartyProfileUsersMoveCall struct {
+	s                                                                *Service
+	name                                                             string
+	googlechromemanagementversionsv1movethirdpartyprofileuserrequest *GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserRequest
+	urlParams_                                                       gensupport.URLParams
+	ctx_                                                             context.Context
+	header_                                                          http.Header
+}
+
+// Move: Moves a third party chrome profile user to a destination OU. All
+// profiles associated to that user will be moved to the destination OU.
+//
+//   - name: Format:
+//     customers/{customer_id}/thirdPartyProfileUsers/{third_party_profile_user_id
+//     }.
+func (r *CustomersThirdPartyProfileUsersService) Move(name string, googlechromemanagementversionsv1movethirdpartyprofileuserrequest *GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserRequest) *CustomersThirdPartyProfileUsersMoveCall {
+	c := &CustomersThirdPartyProfileUsersMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlechromemanagementversionsv1movethirdpartyprofileuserrequest = googlechromemanagementversionsv1movethirdpartyprofileuserrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersThirdPartyProfileUsersMoveCall) Fields(s ...googleapi.Field) *CustomersThirdPartyProfileUsersMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersThirdPartyProfileUsersMoveCall) Context(ctx context.Context) *CustomersThirdPartyProfileUsersMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersThirdPartyProfileUsersMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersThirdPartyProfileUsersMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromemanagementversionsv1movethirdpartyprofileuserrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:move")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.thirdPartyProfileUsers.move", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.thirdPartyProfileUsers.move" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersThirdPartyProfileUsersMoveCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.thirdPartyProfileUsers.move", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }

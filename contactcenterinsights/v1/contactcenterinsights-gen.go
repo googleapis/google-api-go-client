@@ -13740,7 +13740,7 @@ func (r *ProjectsLocationsAuthorizedViewSetsService) Create(parent string, googl
 // component of the AuthorizedViewSet's resource name. If no ID is specified, a
 // server-generated ID will be used. This value should be 4-64 characters and
 // must match the regular expression `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`. See
-// go/aip/122#resource-id-segments
+// aip.dev/122#resource-id-segments
 func (c *ProjectsLocationsAuthorizedViewSetsCreateCall) AuthorizedViewSetId(authorizedViewSetId string) *ProjectsLocationsAuthorizedViewSetsCreateCall {
 	c.urlParams_.Set("authorizedViewSetId", authorizedViewSetId)
 	return c
@@ -14349,7 +14349,7 @@ func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsService) Create(paren
 // AuthorizedView's resource name. If no ID is specified, a server-generated ID
 // will be used. This value should be 4-64 characters and must match the
 // regular expression `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`. See
-// go/aip/122#resource-id-segments
+// aip.dev/122#resource-id-segments
 func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCreateCall) AuthorizedViewId(authorizedViewId string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCreateCall {
 	c.urlParams_.Set("authorizedViewId", authorizedViewId)
 	return c

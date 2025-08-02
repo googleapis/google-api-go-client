@@ -655,6 +655,24 @@ func (s AuthenticatorGroupsConfig) MarshalJSON() ([]byte, error) {
 
 // AutoIpamConfig: AutoIpamConfig contains all information related to Auto IPAM
 type AutoIpamConfig struct {
+	// Enabled: The flag that enables Auto IPAM on this cluster
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutoIpamConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoIpamConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutoMonitoringConfig: AutoMonitoringConfig defines the configuration for GKE
@@ -720,6 +738,9 @@ type Autopilot struct {
 	ConversionStatus *AutopilotConversionStatus `json:"conversionStatus,omitempty"`
 	// Enabled: Enable Autopilot
 	Enabled bool `json:"enabled,omitempty"`
+	// PrivilegedAdmissionConfig: PrivilegedAdmissionConfig is the configuration
+	// related to privileged admission control.
+	PrivilegedAdmissionConfig *PrivilegedAdmissionConfig `json:"privilegedAdmissionConfig,omitempty"`
 	// WorkloadPolicyConfig: WorkloadPolicyConfig is the configuration related to
 	// GCW workload policy
 	WorkloadPolicyConfig *WorkloadPolicyConfig `json:"workloadPolicyConfig,omitempty"`
@@ -912,11 +933,6 @@ func (s AutoprovisioningNodePoolDefaults) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AutoscaledRolloutPolicy: Autoscaled rollout policy uses cluster autoscaler
-// during blue-green upgrades to scale both the green and blue pools.
-type AutoscaledRolloutPolicy struct {
-}
-
 // AvailableVersion: Deprecated.
 type AvailableVersion struct {
 	// Reason: Reason for availability.
@@ -1084,23 +1100,20 @@ func (s BlueGreenInfo) MarshalJSON() ([]byte, error) {
 
 // BlueGreenSettings: Settings for blue-green upgrade.
 type BlueGreenSettings struct {
-	// AutoscaledRolloutPolicy: Autoscaled policy for cluster autoscaler enabled
-	// blue-green upgrade.
-	AutoscaledRolloutPolicy *AutoscaledRolloutPolicy `json:"autoscaledRolloutPolicy,omitempty"`
 	// NodePoolSoakDuration: Time needed after draining entire blue pool. After
 	// this period, blue pool will be cleaned up.
 	NodePoolSoakDuration string `json:"nodePoolSoakDuration,omitempty"`
 	// StandardRolloutPolicy: Standard policy for the blue-green upgrade.
 	StandardRolloutPolicy *StandardRolloutPolicy `json:"standardRolloutPolicy,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AutoscaledRolloutPolicy") to
+	// ForceSendFields is a list of field names (e.g. "NodePoolSoakDuration") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AutoscaledRolloutPolicy") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "NodePoolSoakDuration") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1692,6 +1705,9 @@ type ClusterAutoscaling struct {
 	//   "OPTIMIZE_UTILIZATION" - Prioritize optimizing utilization of resources.
 	//   "BALANCED" - Use default (balanced) autoscaling configuration.
 	AutoscalingProfile string `json:"autoscalingProfile,omitempty"`
+	// DefaultComputeClassConfig: Default compute class is a configuration for
+	// default compute class.
+	DefaultComputeClassConfig *DefaultComputeClassConfig `json:"defaultComputeClassConfig,omitempty"`
 	// EnableNodeAutoprovisioning: Enables automatic node pool creation and
 	// deletion.
 	EnableNodeAutoprovisioning bool `json:"enableNodeAutoprovisioning,omitempty"`
@@ -2677,6 +2693,29 @@ func (s Date) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DefaultComputeClassConfig: DefaultComputeClassConfig defines default compute
+// class configuration.
+type DefaultComputeClassConfig struct {
+	// Enabled: Enables default compute class.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DefaultComputeClassConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DefaultComputeClassConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DefaultSnatStatus: DefaultSnatStatus contains the desired state of whether
 // default sNAT should be disabled on the cluster.
 type DefaultSnatStatus struct {
@@ -3115,6 +3154,13 @@ type Fleet struct {
 	// membership of the cluster, in the format
 	// `//gkehub.googleapis.com/projects/*/locations/*/memberships/*`.
 	Membership string `json:"membership,omitempty"`
+	// MembershipType: The type of the cluster's fleet membership.
+	//
+	// Possible values:
+	//   "MEMBERSHIP_TYPE_UNSPECIFIED" - The MembershipType is not set.
+	//   "LIGHTWEIGHT" - The membership supports only lightweight compatible
+	// features.
+	MembershipType string `json:"membershipType,omitempty"`
 	// PreRegistered: Output only. Whether the cluster has been registered through
 	// the fleet API.
 	PreRegistered bool `json:"preRegistered,omitempty"`
@@ -6642,6 +6688,35 @@ type PrivateRegistryAccessConfig struct {
 
 func (s PrivateRegistryAccessConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivateRegistryAccessConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PrivilegedAdmissionConfig: PrivilegedAdmissionConfig stores the list of
+// authorized allowlist paths for the cluster.
+type PrivilegedAdmissionConfig struct {
+	// AllowlistPaths: The customer allowlist Cloud Storage paths for the cluster.
+	// These paths are used with the `--autopilot-privileged-admission` flag to
+	// authorize privileged workloads in Autopilot clusters. Paths can be
+	// GKE-owned, in the format `gke:////`, or customer-owned, in the format
+	// `gs:///`. Wildcards (`*`) are supported to authorize all allowlists under
+	// specific paths or directories. Example: `gs://my-bucket/*` will authorize
+	// all allowlists under the `my-bucket` bucket.
+	AllowlistPaths []string `json:"allowlistPaths,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowlistPaths") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowlistPaths") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PrivilegedAdmissionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivilegedAdmissionConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

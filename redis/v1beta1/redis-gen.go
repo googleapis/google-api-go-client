@@ -541,6 +541,39 @@ func (s BackupDRConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BackupDRMetadata: BackupDRMetadata contains information about the backup and
+// disaster recovery metadata of a database resource.
+type BackupDRMetadata struct {
+	// BackupConfiguration: Backup configuration for this instance.
+	BackupConfiguration *BackupConfiguration `json:"backupConfiguration,omitempty"`
+	// BackupRun: Latest backup run information for this instance.
+	BackupRun *BackupRun `json:"backupRun,omitempty"`
+	// BackupdrConfiguration: BackupDR configuration for this instance.
+	BackupdrConfiguration *BackupDRConfiguration `json:"backupdrConfiguration,omitempty"`
+	// FullResourceName: Required. Full resource name of this instance.
+	FullResourceName string `json:"fullResourceName,omitempty"`
+	// LastRefreshTime: Required. Last time backup configuration was refreshed.
+	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
+	// ResourceId: Required. Database resource id.
+	ResourceId *DatabaseResourceId `json:"resourceId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupConfiguration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupConfiguration") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupDRMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupDRMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BackupFile: Backup is consisted of multiple backup files.
 type BackupFile struct {
 	// CreateTime: Output only. The time when the backup file was created.
@@ -1156,8 +1189,11 @@ func (s CustomMetadataData) MarshalJSON() ([]byte, error) {
 
 // DatabaseResourceFeed: DatabaseResourceFeed is the top level proto to be used
 // to ingest different database resource level events into Condor platform.
-// Next ID: 9
+// Next ID: 10
 type DatabaseResourceFeed struct {
+	// BackupdrMetadata: BackupDR metadata is used to ingest metadata from
+	// BackupDR.
+	BackupdrMetadata *BackupDRMetadata `json:"backupdrMetadata,omitempty"`
 	// ConfigBasedSignalData: Config based signal data is used to ingest signals
 	// that are generated based on the configuration of the database resource.
 	ConfigBasedSignalData *ConfigBasedSignalData `json:"configBasedSignalData,omitempty"`
@@ -1173,6 +1209,7 @@ type DatabaseResourceFeed struct {
 	//   "RECOMMENDATION_SIGNAL_DATA" - Database resource recommendation signal
 	// data
 	//   "CONFIG_BASED_SIGNAL_DATA" - Database config based signal data
+	//   "BACKUPDR_METADATA" - Database resource metadata from BackupDR
 	FeedType                 string                                    `json:"feedType,omitempty"`
 	ObservabilityMetricData  *ObservabilityMetricData                  `json:"observabilityMetricData,omitempty"`
 	RecommendationSignalData *DatabaseResourceRecommendationSignalData `json:"recommendationSignalData,omitempty"`
@@ -1181,15 +1218,15 @@ type DatabaseResourceFeed struct {
 	// available in individual feed level as well.
 	ResourceId       *DatabaseResourceId       `json:"resourceId,omitempty"`
 	ResourceMetadata *DatabaseResourceMetadata `json:"resourceMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ConfigBasedSignalData") to
+	// ForceSendFields is a list of field names (e.g. "BackupdrMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ConfigBasedSignalData") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BackupdrMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1507,6 +1544,8 @@ type DatabaseResourceHealthSignalData struct {
 	//   "SIGNAL_TYPE_OUTDATED_MINOR_VERSION" - Outdated DB minor version.
 	//   "SIGNAL_TYPE_SCHEMA_NOT_OPTIMIZED" - Schema not optimized.
 	//   "SIGNAL_TYPE_MANY_IDLE_CONNECTIONS" - High number of idle connections.
+	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
+	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -1996,6 +2035,8 @@ type DatabaseResourceRecommendationSignalData struct {
 	//   "SIGNAL_TYPE_OUTDATED_MINOR_VERSION" - Outdated DB minor version.
 	//   "SIGNAL_TYPE_SCHEMA_NOT_OPTIMIZED" - Schema not optimized.
 	//   "SIGNAL_TYPE_MANY_IDLE_CONNECTIONS" - High number of idle connections.
+	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
+	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or

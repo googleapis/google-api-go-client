@@ -129,6 +129,13 @@ func (rx *ResumableUpload) reportProgress(old, updated int64) {
 // transferChunk performs a single HTTP request to upload a single chunk.
 // It uses a goroutine to perform the upload and a timer to enforce ChunkTransferTimeout or ChunkRetryDeadline.
 func (rx *ResumableUpload) transferChunk(ctx context.Context, chunkRetryDeadline time.Duration, chunk io.Reader, off, size int64, done bool) (*http.Response, error) {
+	if rx.ChunkTransferTimeout != 0 {
+		chunkRetryDeadline = rx.ChunkTransferTimeout
+	}
+
+	// Start a timer for the configured duration.
+	timer := time.NewTimer(chunkRetryDeadline)
+
 	// A struct to hold the result from the goroutine.
 	type uploadResult struct {
 		res *http.Response
@@ -150,13 +157,6 @@ func (rx *ResumableUpload) transferChunk(ctx context.Context, chunkRetryDeadline
 		res, err := rx.doUploadRequest(rCtx, chunk, off, size, done)
 		resultCh <- uploadResult{res: res, err: err}
 	}()
-
-	if rx.ChunkTransferTimeout != 0 {
-		chunkRetryDeadline = rx.ChunkTransferTimeout
-	}
-
-	// Start a timer for the configured duration.
-	timer := time.NewTimer(chunkRetryDeadline)
 
 	// Wait for timer to fire or result channel to have the uploadResult or ctx to be cancelled.
 	select {

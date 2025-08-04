@@ -789,12 +789,12 @@ type GceInstance struct {
 	PooledInstances int64 `json:"pooledInstances,omitempty"`
 	// ReservationAffinity: Optional. ReservationAffinity
 	// (https://cloud.google.com/compute/docs/instances/reserving-zonal-resources)
-	// specifies a reservation that can be consumed to create boost VM instances.
-	// If SPECIFIC_RESERVATION is specified, Cloud Workstations will only create
-	// VMs in the zone where the reservation is located. This would affect
-	// availability since the service will no longer be resilient to zonal outages.
-	// If ANY_RESERVATION is specified, creating reservations in both zones that
-	// the config creates VMs in will ensure higher availability. **Important
+	// specifies a reservation that can be consumed to create VM instances. If
+	// SPECIFIC_RESERVATION is specified, Cloud Workstations will only create VMs
+	// in the zone where the reservation is located. This would affect availability
+	// since the service will no longer be resilient to zonal outages. If
+	// ANY_RESERVATION is specified, creating reservations in both zones that the
+	// config creates VMs in will ensure higher availability. **Important
 	// Considerations for Reservation Affinity:** * This feature is intended for
 	// advanced users and requires familiarity with Google Compute Engine
 	// reservations. * Using reservations incurs charges, regardless of
@@ -1626,7 +1626,7 @@ type ReservationAffinity struct {
 	// Key: Optional. Corresponds to the label key of reservation resource.
 	Key string `json:"key,omitempty"`
 	// Values: Optional. Corresponds to the label values of reservation resources.
-	// Valid values are either a name to a reservation in the same project or
+	// Valid values are either the name of a reservation in the same project or
 	// "projects/{project}/reservations/{reservation}" to target a shared
 	// reservation in the same zone but in a different project.
 	Values []string `json:"values,omitempty"`

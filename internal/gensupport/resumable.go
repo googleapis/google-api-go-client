@@ -183,7 +183,8 @@ func (rx *ResumableUpload) transferChunk(ctx context.Context, chunkRetryDeadline
 			return result.res, result.err
 		}
 
-		// We sent "X-GUploader-No-308: yes", so we don't expect to get a 308.
+		// We sent "X-GUploader-No-308: yes" (see comment elsewhere in
+		// this file), so we don't expect to get a 308.
 		if result.res.StatusCode == 308 {
 			return nil, errors.New("unexpected 308 response status code")
 		}

@@ -174,6 +174,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Curations = NewProjectsLocationsCurationsService(s)
 	rs.Dependencies = NewProjectsLocationsDependenciesService(s)
 	rs.Deployments = NewProjectsLocationsDeploymentsService(s)
+	rs.DiscoveredApiObservations = NewProjectsLocationsDiscoveredApiObservationsService(s)
 	rs.ExternalApis = NewProjectsLocationsExternalApisService(s)
 	rs.HostProjectRegistrations = NewProjectsLocationsHostProjectRegistrationsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
@@ -196,6 +197,8 @@ type ProjectsLocationsService struct {
 	Dependencies *ProjectsLocationsDependenciesService
 
 	Deployments *ProjectsLocationsDeploymentsService
+
+	DiscoveredApiObservations *ProjectsLocationsDiscoveredApiObservationsService
 
 	ExternalApis *ProjectsLocationsExternalApisService
 
@@ -307,6 +310,27 @@ func NewProjectsLocationsDeploymentsService(s *Service) *ProjectsLocationsDeploy
 }
 
 type ProjectsLocationsDeploymentsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDiscoveredApiObservationsService(s *Service) *ProjectsLocationsDiscoveredApiObservationsService {
+	rs := &ProjectsLocationsDiscoveredApiObservationsService{s: s}
+	rs.DiscoveredApiOperations = NewProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsService(s)
+	return rs
+}
+
+type ProjectsLocationsDiscoveredApiObservationsService struct {
+	s *Service
+
+	DiscoveredApiOperations *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsService
+}
+
+func NewProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsService(s *Service) *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsService {
+	rs := &ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsService struct {
 	s *Service
 }
 
@@ -1663,15 +1687,18 @@ type GoogleCloudApihubV1Deployment struct {
 	// attribute:
 	// `projects/{project}/locations/{location}/attributes/system-management-url`
 	// The number of values for this attribute will be based on the cardinality of
-	// the attribute. The same can be retrieved via GetAttribute API.
+	// the attribute. The same can be retrieved via GetAttribute API. The value of
+	// the attribute should be a valid URL.
 	ManagementUrl *GoogleCloudApihubV1AttributeValues `json:"managementUrl,omitempty"`
 	// Name: Identifier. The name of the deployment. Format:
 	// `projects/{project}/locations/{location}/deployments/{deployment}`
 	Name string `json:"name,omitempty"`
-	// ResourceUri: Required. A uri that uniquely identfies the deployment within a
-	// particular gateway. For example, if the runtime resource is of type
-	// APIGEE_PROXY, then this field will be a combination of org, proxy name and
-	// environment.
+	// ResourceUri: Required. The resource URI identifies the deployment within its
+	// gateway. For Apigee gateways, its recommended to use the format:
+	// organizations/{org}/environments/{env}/apis/{api}. For ex: if a proxy with
+	// name `orders` is deployed in `staging` environment of `cymbal` organization,
+	// the resource URI would be:
+	// `organizations/cymbal/environments/staging/apis/orders`.
 	ResourceUri string `json:"resourceUri,omitempty"`
 	// Slo: Optional. The SLO for this deployment. This maps to the following
 	// system defined attribute:
@@ -1695,7 +1722,9 @@ type GoogleCloudApihubV1Deployment struct {
 	// attribute:
 	// `projects/{project}/locations/{location}/attributes/system-source-uri` The
 	// number of values for this attribute will be based on the cardinality of the
-	// attribute. The same can be retrieved via GetAttribute API.
+	// attribute. The same can be retrieved via GetAttribute API. The value of the
+	// attribute should be a valid URI, and in case of Cloud Storage URI, it should
+	// point to a Cloud Storage object, not a directory.
 	SourceUri *GoogleCloudApihubV1AttributeValues `json:"sourceUri,omitempty"`
 	// UpdateTime: Output only. The time at which the deployment was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1778,6 +1807,135 @@ func (s GoogleCloudApihubV1DisablePluginInstanceActionRequest) MarshalJSON() ([]
 
 // GoogleCloudApihubV1DisablePluginRequest: The DisablePlugin method's request.
 type GoogleCloudApihubV1DisablePluginRequest struct {
+}
+
+// GoogleCloudApihubV1DiscoveredApiObservation: Respresents an API Observation
+// observed in one of the sources.
+type GoogleCloudApihubV1DiscoveredApiObservation struct {
+	// ApiOperationCount: Optional. The number of observed API Operations.
+	ApiOperationCount int64 `json:"apiOperationCount,omitempty,string"`
+	// CreateTime: Output only. Create time stamp of the observation in API Hub.
+	CreateTime string `json:"createTime,omitempty"`
+	// Hostname: Optional. The hostname of requests processed for this Observation.
+	Hostname string `json:"hostname,omitempty"`
+	// KnownOperationsCount: Output only. The number of known API Operations.
+	KnownOperationsCount int64 `json:"knownOperationsCount,omitempty,string"`
+	// LastEventDetectedTime: Optional. Last event detected time stamp
+	LastEventDetectedTime string `json:"lastEventDetectedTime,omitempty"`
+	// Name: Identifier. The name of the discovered API Observation. Format:
+	// `projects/{project}/locations/{location}/discoveredApiObservations/{discovere
+	// d_api_observation}`
+	Name string `json:"name,omitempty"`
+	// Origin: Optional. For an observation pushed from a gcp resource, this would
+	// be the gcp project id.
+	Origin string `json:"origin,omitempty"`
+	// ServerIps: Optional. The IP address (IPv4 or IPv6) of the origin server that
+	// the request was sent to. This field can include port information. Examples:
+	// "192.168.1.1", "10.0.0.1:80", "FE80::0202:B3FF:FE1E:8329".
+	ServerIps []string `json:"serverIps,omitempty"`
+	// SourceLocations: Optional. The location of the observation source.
+	SourceLocations []string `json:"sourceLocations,omitempty"`
+	// SourceMetadata: Output only. The metadata of the source from which the
+	// observation was collected.
+	SourceMetadata *GoogleCloudApihubV1SourceMetadata `json:"sourceMetadata,omitempty"`
+	// SourceTypes: Optional. The type of the source from which the observation was
+	// collected.
+	//
+	// Possible values:
+	//   "SOURCE_TYPE_UNSPECIFIED" - Source type not specified.
+	//   "GCP_XLB" - GCP external load balancer.
+	//   "GCP_ILB" - GCP internal load balancer.
+	SourceTypes []string `json:"sourceTypes,omitempty"`
+	// Style: Optional. Style of ApiObservation
+	//
+	// Possible values:
+	//   "STYLE_UNSPECIFIED" - Unknown style
+	//   "REST" - Style is Rest API
+	//   "GRPC" - Style is Grpc API
+	//   "GRAPHQL" - Style is GraphQL API
+	Style string `json:"style,omitempty"`
+	// UnknownOperationsCount: Output only. The number of unknown API Operations.
+	UnknownOperationsCount int64 `json:"unknownOperationsCount,omitempty,string"`
+	// UpdateTime: Output only. Update time stamp of the observation in API Hub.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ApiOperationCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiOperationCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1DiscoveredApiObservation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1DiscoveredApiObservation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1DiscoveredApiOperation: DiscoveredApiOperation represents
+// an API Operation observed in one of the sources.
+type GoogleCloudApihubV1DiscoveredApiOperation struct {
+	// Classification: Output only. The classification of the discovered API
+	// operation.
+	//
+	// Possible values:
+	//   "CLASSIFICATION_UNSPECIFIED" - Operation is not classified as known or
+	// unknown.
+	//   "KNOWN" - Operation has a matched catalog operation.
+	//   "UNKNOWN" - Operation does not have a matched catalog operation.
+	Classification string `json:"classification,omitempty"`
+	// Count: Optional. The number of occurrences of this API Operation.
+	Count int64 `json:"count,omitempty,string"`
+	// CreateTime: Output only. Create time stamp of the discovered API operation
+	// in API Hub.
+	CreateTime string `json:"createTime,omitempty"`
+	// FirstSeenTime: Optional. First seen time stamp
+	FirstSeenTime string `json:"firstSeenTime,omitempty"`
+	// HttpOperation: Optional. An HTTP Operation.
+	HttpOperation *GoogleCloudApihubV1HttpOperationDetails `json:"httpOperation,omitempty"`
+	// LastSeenTime: Optional. Last seen time stamp
+	LastSeenTime string `json:"lastSeenTime,omitempty"`
+	// MatchResults: Output only. The list of matched results for the discovered
+	// API operation. This will be populated only if the classification is known.
+	// The current usecase is for a single match. Keeping it repeated to support
+	// multiple matches in future.
+	MatchResults []*GoogleCloudApihubV1MatchResult `json:"matchResults,omitempty"`
+	// Name: Identifier. The name of the discovered API Operation. Format:
+	// `projects/{project}/locations/{location}/discoveredApiObservations/{discovere
+	// d_api_observation}/discoveredApiOperations/{discovered_api_operation}`
+	Name string `json:"name,omitempty"`
+	// SourceMetadata: Output only. The metadata of the source from which the api
+	// operation was collected.
+	SourceMetadata *GoogleCloudApihubV1SourceMetadata `json:"sourceMetadata,omitempty"`
+	// UpdateTime: Output only. Update time stamp of the discovered API operation
+	// in API Hub.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Classification") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Classification") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1DiscoveredApiOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1DiscoveredApiOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApihubV1Documentation: Documentation details.
@@ -2008,6 +2166,40 @@ func (s GoogleCloudApihubV1GoogleServiceAccountConfig) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApihubV1Header: An aggregation of HTTP header occurrences.
+type GoogleCloudApihubV1Header struct {
+	// Count: The number of occurrences of this Header across transactions.
+	Count int64 `json:"count,omitempty,string"`
+	// DataType: Data type of header
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Unspecified data type
+	//   "BOOL" - Boolean data type
+	//   "INTEGER" - Integer data type
+	//   "FLOAT" - Float data type
+	//   "STRING" - String data type
+	//   "UUID" - UUID data type
+	DataType string `json:"dataType,omitempty"`
+	// Name: Header name.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1Header) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1Header
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApihubV1HostProjectRegistration: Host project registration refers
 // to the registration of a Google cloud project with Api Hub as a host
 // project. This is the project where Api Hub is provisioned. It acts as the
@@ -2110,6 +2302,83 @@ type GoogleCloudApihubV1HttpOperation struct {
 
 func (s GoogleCloudApihubV1HttpOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApihubV1HttpOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1HttpOperationDetails: An HTTP-based API Operation,
+// sometimes called a "REST" Operation.
+type GoogleCloudApihubV1HttpOperationDetails struct {
+	// HttpOperation: Required. An HTTP Operation.
+	HttpOperation *GoogleCloudApihubV1HttpOperation `json:"httpOperation,omitempty"`
+	// PathParams: Optional. Path params of HttpOperation
+	PathParams []*GoogleCloudApihubV1PathParam `json:"pathParams,omitempty"`
+	// QueryParams: Optional. Query params of HttpOperation
+	QueryParams map[string]GoogleCloudApihubV1QueryParam `json:"queryParams,omitempty"`
+	// Request: Optional. Request metadata.
+	Request *GoogleCloudApihubV1HttpRequest `json:"request,omitempty"`
+	// Response: Optional. Response metadata.
+	Response *GoogleCloudApihubV1HttpResponse `json:"response,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HttpOperation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HttpOperation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1HttpOperationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1HttpOperationDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1HttpRequest: An aggregation of HTTP requests.
+type GoogleCloudApihubV1HttpRequest struct {
+	// Headers: Optional. Unordered map from header name to header metadata
+	Headers map[string]GoogleCloudApihubV1Header `json:"headers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Headers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1HttpRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1HttpRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1HttpResponse: An aggregation of HTTP responses.
+type GoogleCloudApihubV1HttpResponse struct {
+	// Headers: Optional. Unordered map from header name to header metadata
+	Headers map[string]GoogleCloudApihubV1Header `json:"headers,omitempty"`
+	// ResponseCodes: Optional. Map of status code to observed count
+	ResponseCodes map[string]string `json:"responseCodes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Headers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1HttpResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1HttpResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2411,6 +2680,66 @@ func (s GoogleCloudApihubV1ListDeploymentsResponse) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApihubV1ListDiscoveredApiObservationsResponse: Message for
+// response to listing DiscoveredApiObservations
+type GoogleCloudApihubV1ListDiscoveredApiObservationsResponse struct {
+	// DiscoveredApiObservations: The DiscoveredApiObservation from the specified
+	// project and location.
+	DiscoveredApiObservations []*GoogleCloudApihubV1DiscoveredApiObservation `json:"discoveredApiObservations,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DiscoveredApiObservations")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiscoveredApiObservations") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1ListDiscoveredApiObservationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1ListDiscoveredApiObservationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1ListDiscoveredApiOperationsResponse: Message for response
+// to listing DiscoveredApiOperations
+type GoogleCloudApihubV1ListDiscoveredApiOperationsResponse struct {
+	// DiscoveredApiOperations: The DiscoveredApiOperations from the specified
+	// project, location and DiscoveredApiObservation.
+	DiscoveredApiOperations []*GoogleCloudApihubV1DiscoveredApiOperation `json:"discoveredApiOperations,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DiscoveredApiOperations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiscoveredApiOperations") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1ListDiscoveredApiOperationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1ListDiscoveredApiOperationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApihubV1ListExternalApisResponse: The ListExternalApis method's
 // response.
 type GoogleCloudApihubV1ListExternalApisResponse struct {
@@ -2662,6 +2991,31 @@ type GoogleCloudApihubV1LookupRuntimeProjectAttachmentResponse struct {
 
 func (s GoogleCloudApihubV1LookupRuntimeProjectAttachmentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApihubV1LookupRuntimeProjectAttachmentResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1MatchResult: MatchResult represents the result of
+// matching a discovered API operation with a catalog API operation.
+type GoogleCloudApihubV1MatchResult struct {
+	// Name: Output only. The name of the matched API Operation. Format:
+	// `projects/{project}/locations/{location}/apis/{api}/versions/{version}/operat
+	// ions/{operation}`
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1MatchResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1MatchResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2922,9 +3276,41 @@ func (s GoogleCloudApihubV1Path) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApihubV1PathParam: HTTP Path parameter.
+type GoogleCloudApihubV1PathParam struct {
+	// DataType: Optional. Data type of path param
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Unspecified data type
+	//   "BOOL" - Boolean data type
+	//   "INTEGER" - Integer data type
+	//   "FLOAT" - Float data type
+	//   "STRING" - String data type
+	//   "UUID" - UUID data type
+	DataType string `json:"dataType,omitempty"`
+	// Position: Optional. Segment location in the path, 1-indexed
+	Position int64 `json:"position,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1PathParam) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1PathParam
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApihubV1Plugin: A plugin resource in the API Hub.
 type GoogleCloudApihubV1Plugin struct {
-	// ActionsConfig: Optional. The configuration of actions supported by the
+	// ActionsConfig: Required. The configuration of actions supported by the
 	// plugin.
 	ActionsConfig []*GoogleCloudApihubV1PluginActionConfig `json:"actionsConfig,omitempty"`
 	// ConfigTemplate: Optional. The configuration template for the plugin.
@@ -3110,7 +3496,8 @@ type GoogleCloudApihubV1PluginInstance struct {
 	Name string `json:"name,omitempty"`
 	// SourceProjectId: Optional. The source project id of the plugin instance.
 	// This will be the id of runtime project in case of gcp based plugins and org
-	// id in case of non gcp based plugins. This is a required field.
+	// id in case of non gcp based plugins. This field will be a required field for
+	// Google provided on-ramp plugins.
 	SourceProjectId string `json:"sourceProjectId,omitempty"`
 	// State: Output only. The current state of the plugin instance (e.g., enabled,
 	// disabled, provisioning).
@@ -3300,6 +3687,42 @@ type GoogleCloudApihubV1Point struct {
 
 func (s GoogleCloudApihubV1Point) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApihubV1Point
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1QueryParam: An aggregation of HTTP query parameter
+// occurrences.
+type GoogleCloudApihubV1QueryParam struct {
+	// Count: Optional. The number of occurrences of this query parameter across
+	// transactions.
+	Count int64 `json:"count,omitempty,string"`
+	// DataType: Optional. Data type of path param
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Unspecified data type
+	//   "BOOL" - Boolean data type
+	//   "INTEGER" - Integer data type
+	//   "FLOAT" - Float data type
+	//   "STRING" - String data type
+	//   "UUID" - UUID data type
+	DataType string `json:"dataType,omitempty"`
+	// Name: Required. Name of query param
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1QueryParam) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1QueryParam
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10606,6 +11029,9 @@ func (r *ProjectsLocationsDeploymentsService) List(parent string) *ProjectsLocat
 // operators: `>` and `<`. * `resource_uri` - A URI to the deployment resource.
 // Allowed comparison operators: `=`. * `api_versions` - The API versions
 // linked to this deployment. Allowed comparison operators: `:`. *
+// `source_project` - The project/organization at source for the deployment.
+// Allowed comparison operators: `=`. * `source_environment` - The environment
+// at source for the deployment. Allowed comparison operators: `=`. *
 // `deployment_type.enum_values.values.id` - The allowed value id of the
 // deployment_type attribute associated with the Deployment. Allowed comparison
 // operators: `:`. * `deployment_type.enum_values.values.display_name` - The
@@ -10922,6 +11348,538 @@ func (c *ProjectsLocationsDeploymentsPatchCall) Do(opts ...googleapi.CallOption)
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.deployments.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsDiscoveredApiObservationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a DiscoveredAPIObservation in a given project, location and
+// ApiObservation.
+//
+//   - name: The name of the DiscoveredApiObservation to retrieve. Format:
+//     projects/{project}/locations/{location}/discoveredApiObservations/{discover
+//     ed_api_observation}.
+func (r *ProjectsLocationsDiscoveredApiObservationsService) Get(name string) *ProjectsLocationsDiscoveredApiObservationsGetCall {
+	c := &ProjectsLocationsDiscoveredApiObservationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDiscoveredApiObservationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveredApiObservationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDiscoveredApiObservationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDiscoveredApiObservationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDiscoveredApiObservationsGetCall) Context(ctx context.Context) *ProjectsLocationsDiscoveredApiObservationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDiscoveredApiObservationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDiscoveredApiObservationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apihub.projects.locations.discoveredApiObservations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apihub.projects.locations.discoveredApiObservations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApihubV1DiscoveredApiObservation.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDiscoveredApiObservationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApihubV1DiscoveredApiObservation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApihubV1DiscoveredApiObservation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.discoveredApiObservations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDiscoveredApiObservationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the DiscoveredAPIObservations in a given project and
+// location.
+//
+//   - parent: The parent, which owns this collection of ApiObservations. Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsDiscoveredApiObservationsService) List(parent string) *ProjectsLocationsDiscoveredApiObservationsListCall {
+	c := &ProjectsLocationsDiscoveredApiObservationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// ApiObservations to return. The service may return fewer than this value. If
+// unspecified, at most 10 ApiObservations will be returned. The maximum value
+// is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsDiscoveredApiObservationsListCall) PageSize(pageSize int64) *ProjectsLocationsDiscoveredApiObservationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListApiObservations` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListApiObservations` must match the call that provided the page token.
+func (c *ProjectsLocationsDiscoveredApiObservationsListCall) PageToken(pageToken string) *ProjectsLocationsDiscoveredApiObservationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDiscoveredApiObservationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveredApiObservationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDiscoveredApiObservationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDiscoveredApiObservationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDiscoveredApiObservationsListCall) Context(ctx context.Context) *ProjectsLocationsDiscoveredApiObservationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDiscoveredApiObservationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDiscoveredApiObservationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/discoveredApiObservations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apihub.projects.locations.discoveredApiObservations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apihub.projects.locations.discoveredApiObservations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApihubV1ListDiscoveredApiObservationsResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDiscoveredApiObservationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApihubV1ListDiscoveredApiObservationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApihubV1ListDiscoveredApiObservationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.discoveredApiObservations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDiscoveredApiObservationsListCall) Pages(ctx context.Context, f func(*GoogleCloudApihubV1ListDiscoveredApiObservationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a DiscoveredAPIOperation in a given project, location,
+// ApiObservation and ApiOperation.
+//
+//   - name: The name of the DiscoveredApiOperation to retrieve. Format:
+//     projects/{project}/locations/{location}/discoveredApiObservations/{discover
+//     ed_api_observation}/discoveredApiOperations/{discovered_api_operation}.
+func (r *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsService) Get(name string) *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsGetCall {
+	c := &ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apihub.projects.locations.discoveredApiObservations.discoveredApiOperations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apihub.projects.locations.discoveredApiObservations.discoveredApiOperations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApihubV1DiscoveredApiOperation.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApihubV1DiscoveredApiOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApihubV1DiscoveredApiOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.discoveredApiObservations.discoveredApiOperations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the DiscoveredAPIOperations in a given project, location and
+// ApiObservation.
+//
+//   - parent: The parent, which owns this collection of DiscoveredApiOperations.
+//     Format:
+//     projects/{project}/locations/{location}/discoveredApiObservations/{discover
+//     ed_api_observation}.
+func (r *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsService) List(parent string) *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall {
+	c := &ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": DiscoveredApiOperations
+// will be returned. The maximum value is 1000; values above 1000 will be
+// coerced to 1000.
+func (c *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListDiscoveredApiApiOperations` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to `ListDiscoveredApiApiOperations` must match the call that provided the
+// page token.
+func (c *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall) PageToken(pageToken string) *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall) Context(ctx context.Context) *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/discoveredApiOperations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apihub.projects.locations.discoveredApiObservations.discoveredApiOperations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apihub.projects.locations.discoveredApiObservations.discoveredApiOperations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApihubV1ListDiscoveredApiOperationsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApihubV1ListDiscoveredApiOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApihubV1ListDiscoveredApiOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.discoveredApiObservations.discoveredApiOperations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDiscoveredApiObservationsDiscoveredApiOperationsListCall) Pages(ctx context.Context, f func(*GoogleCloudApihubV1ListDiscoveredApiOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsExternalApisCreateCall struct {

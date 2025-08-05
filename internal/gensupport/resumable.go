@@ -165,28 +165,21 @@ func (rx *ResumableUpload) transferChunk(ctx context.Context, chunk io.Reader, o
 
 	// Wait for timer to fire or result channel to have the uploadResult or ctx to be cancelled.
 	select {
+	// Note: Calling cancel() will guarantee that the goroutine finishes,
+	// so these two cases will never block forever on draining the resultCh.
 	case <-ctx.Done():
 		// Context is cancelled for the overall upload.
 		cancel()
-		// Drain the resultCh to ensure go routine is finished.
+		// Drain resultCh.
 		<-resultCh
 		return nil, ctx.Err()
 	case <-timer.C:
-		// timer fired first so we cancel the chunk upload and return
-		// deadline exceeded for this chunk upload.
+		// Chunk Transfer timer fired before resultCh so we return context.DeadlineExceeded.
 		cancel()
-		// Drain the resultCh to ensure go routine is finished.
+		// Drain resultCh.
 		<-resultCh
 		return nil, context.DeadlineExceeded
-
 	case result := <-resultCh:
-		// The upload finished before the timer fired. Stop the timer to prevent a resource leak.
-		if !timer.Stop() {
-			// If Stop returns false, the timer has already fired and its value
-			// has been sent on the channel. We drain the channel to avoid a memory leak.
-			<-timer.C
-		}
-
 		// Handle the result from the upload.
 		if result.err != nil {
 			return result.res, result.err

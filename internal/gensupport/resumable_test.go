@@ -455,7 +455,6 @@ func TestChunkTransferTimeout(t *testing.T) {
 			defer func() { backoff = oldBackoff }()
 
 			res, err := rx.Upload(context.Background())
-			time.Sleep(1000 * time.Millisecond)
 			if res != nil {
 				res.Body.Close()
 			}

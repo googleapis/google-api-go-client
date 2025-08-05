@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"reflect"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 )
@@ -36,6 +37,7 @@ type event struct {
 // It records the incoming data, unless the corresponding event is configured to return
 // http.StatusServiceUnavailable.
 type interruptibleTransport struct {
+	mu     sync.Mutex
 	events []event
 	buf    []byte
 	bodies bodyTracker
@@ -67,6 +69,8 @@ func (tc *trackingCloser) Open() {
 }
 
 func (t *interruptibleTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	t.mu.Lock()
+	defer t.mu.Unlock()
 	if len(t.events) == 0 {
 		panic("ran out of events, but got a request")
 	}

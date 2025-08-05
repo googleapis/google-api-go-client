@@ -397,19 +397,19 @@ func TestChunkTransferTimeout(t *testing.T) {
 		shouldFail           bool
 		wantError            error
 	}{
-		// {
-		// 	name:                 "media-read-delay-chunk-upload-succeeds",
-		// 	mediaReadDelay:       120 * time.Millisecond,
-		// 	chunkTransferTimeout: 30 * time.Millisecond,
-		// 	events: []event{
-		// 		// When media size is a multiple of chunk size, a non-final
-		// 		// chunk is sent, followed by a final, zero-byte chunk.
-		// 		{byteRange: "bytes 0-14/*", responseStatus: 308},
-		// 		{byteRange: "bytes */15", responseStatus: http.StatusOK},
-		// 	},
-		// 	shouldFail: false,
-		// 	wantError:  nil,
-		// },
+		{
+			name:                 "media-read-delay-chunk-upload-succeeds",
+			mediaReadDelay:       120 * time.Millisecond,
+			chunkTransferTimeout: 30 * time.Millisecond,
+			events: []event{
+				// When media size is a multiple of chunk size, a non-final
+				// chunk is sent, followed by a final, zero-byte chunk.
+				{byteRange: "bytes 0-14/*", responseStatus: 308},
+				{byteRange: "bytes */15", responseStatus: http.StatusOK},
+			},
+			shouldFail: false,
+			wantError:  nil,
+		},
 		{
 			name:                 "network-delay-chunk-upload-fails",
 			mediaReadDelay:       0,

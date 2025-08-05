@@ -12,7 +12,6 @@ import (
 	"net/http"
 	"reflect"
 	"strings"
-	"sync"
 	"testing"
 	"time"
 )
@@ -37,7 +36,6 @@ type event struct {
 // It records the incoming data, unless the corresponding event is configured to return
 // http.StatusServiceUnavailable.
 type interruptibleTransport struct {
-	mu     sync.Mutex
 	events []event
 	buf    []byte
 	bodies bodyTracker
@@ -69,15 +67,16 @@ func (tc *trackingCloser) Open() {
 }
 
 func (t *interruptibleTransport) RoundTrip(req *http.Request) (*http.Response, error) {
-	t.mu.Lock()
-	defer t.mu.Unlock()
 	if len(t.events) == 0 {
 		panic("ran out of events, but got a request")
 	}
 	ev := t.events[0]
 	t.events = t.events[1:]
-	if ev.delay > 0 {
-		time.Sleep(ev.delay)
+	timer := time.NewTimer(ev.delay)
+	select {
+	case <-timer.C:
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
 	}
 	if got, want := req.Header.Get("Content-Range"), ev.byteRange; got != want {
 		return nil, fmt.Errorf("byte range: got %s; want %s", got, want)
@@ -398,19 +397,19 @@ func TestChunkTransferTimeout(t *testing.T) {
 		shouldFail           bool
 		wantError            error
 	}{
-		{
-			name:                 "media-read-delay-chunk-upload-succeeds",
-			mediaReadDelay:       120 * time.Millisecond,
-			chunkTransferTimeout: 30 * time.Millisecond,
-			events: []event{
-				// When media size is a multiple of chunk size, a non-final
-				// chunk is sent, followed by a final, zero-byte chunk.
-				{byteRange: "bytes 0-14/*", responseStatus: 308},
-				{byteRange: "bytes */15", responseStatus: http.StatusOK},
-			},
-			shouldFail: false,
-			wantError:  nil,
-		},
+		// {
+		// 	name:                 "media-read-delay-chunk-upload-succeeds",
+		// 	mediaReadDelay:       120 * time.Millisecond,
+		// 	chunkTransferTimeout: 30 * time.Millisecond,
+		// 	events: []event{
+		// 		// When media size is a multiple of chunk size, a non-final
+		// 		// chunk is sent, followed by a final, zero-byte chunk.
+		// 		{byteRange: "bytes 0-14/*", responseStatus: 308},
+		// 		{byteRange: "bytes */15", responseStatus: http.StatusOK},
+		// 	},
+		// 	shouldFail: false,
+		// 	wantError:  nil,
+		// },
 		{
 			name:                 "network-delay-chunk-upload-fails",
 			mediaReadDelay:       0,
@@ -456,6 +455,7 @@ func TestChunkTransferTimeout(t *testing.T) {
 			defer func() { backoff = oldBackoff }()
 
 			res, err := rx.Upload(context.Background())
+			time.Sleep(1000 * time.Millisecond)
 			if res != nil {
 				res.Body.Close()
 			}

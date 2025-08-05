@@ -64,7 +64,7 @@ func (rx *ResumableUpload) Progress() int64 {
 // off specifies the offset in rx.Media from which data is drawn.
 // size is the number of bytes in data.
 // final specifies whether data is the final chunk to be uploaded.
-func (rx *ResumableUpload) doUploadRequest(ctx context.Context, invocationID string, attempts int, data io.Reader, off, size int64, final bool) (*http.Response, error) {
+func (rx *ResumableUpload) doUploadRequest(ctx context.Context, data io.Reader, off, size int64, final bool) (*http.Response, error) {
 	req, err := http.NewRequest("POST", rx.URI, data)
 	if err != nil {
 		return nil, err
@@ -88,11 +88,11 @@ func (rx *ResumableUpload) doUploadRequest(ctx context.Context, invocationID str
 	// TODO(b/274504690): Consider dropping gccl-invocation-id key since it
 	// duplicates the X-Goog-Gcs-Idempotency-Token header (added in v0.115.0).
 	baseXGoogHeader := "gl-go/" + GoVersion() + " gdcl/" + internal.Version
-	invocationHeader := fmt.Sprintf("gccl-invocation-id/%s gccl-attempt-count/%d", invocationID, attempts)
+	invocationHeader := fmt.Sprintf("gccl-invocation-id/%s gccl-attempt-count/%d", rx.invocationID, rx.attempts)
 	req.Header.Set("X-Goog-Api-Client", strings.Join([]string{baseXGoogHeader, invocationHeader}, " "))
 
 	// Set idempotency token header which is used by GCS uploads.
-	req.Header.Set("X-Goog-Gcs-Idempotency-Token", invocationID)
+	req.Header.Set("X-Goog-Gcs-Idempotency-Token", rx.invocationID)
 
 	// Google's upload endpoint uses status code 308 for a
 	// different purpose than the "308 Permanent Redirect"
@@ -128,10 +128,10 @@ func (rx *ResumableUpload) reportProgress(old, updated int64) {
 
 // transferChunk performs a single HTTP request to upload a single chunk.
 // It uses a goroutine to perform the upload and a timer to enforce ChunkTransferTimeout.
-func (rx *ResumableUpload) transferChunk(ctx context.Context, invocationID string, attempts int, chunk io.Reader, off, size int64, done bool) (*http.Response, error) {
+func (rx *ResumableUpload) transferChunk(ctx context.Context, chunk io.Reader, off, size int64, done bool) (*http.Response, error) {
 	// If no timeout is specified, perform the request synchronously without a timer.
 	if rx.ChunkTransferTimeout == 0 {
-		res, err := rx.doUploadRequest(ctx, invocationID, attempts, chunk, off, size, done)
+		res, err := rx.doUploadRequest(ctx, chunk, off, size, done)
 		if err != nil {
 			return res, err
 		}
@@ -167,7 +167,7 @@ func (rx *ResumableUpload) transferChunk(ctx context.Context, invocationID strin
 
 	// Starting the chunk upload in parallel.
 	go func() {
-		res, err := rx.doUploadRequest(rCtx, invocationID, attempts, chunk, off, size, done)
+		res, err := rx.doUploadRequest(rCtx, chunk, off, size, done)
 		resultCh <- uploadResult{res: res, err: err}
 	}()
 
@@ -176,11 +176,15 @@ func (rx *ResumableUpload) transferChunk(ctx context.Context, invocationID strin
 	case <-ctx.Done():
 		// Context is cancelled for the overall upload.
 		cancel()
+		// drain the resultCh to ensure go routine is finished.
+		<-resultCh
 		return nil, ctx.Err()
 	case <-timer.C:
 		// timer fired first so we cancel the chunk upload and return
 		// deadline exceeded for this chunk upload.
 		cancel()
+		// drain the resultCh to ensure go routine is finished.
+		<-resultCh
 		return nil, context.DeadlineExceeded
 
 	case result := <-resultCh:
@@ -280,7 +284,7 @@ func (rx *ResumableUpload) uploadChunkWithRetries(ctx context.Context, chunk io.
 			io.Copy(io.Discard, resp.Body)
 			resp.Body.Close()
 		}
-		resp, err = rx.transferChunk(ctx, rx.invocationID, rx.attempts, chunk, off, size, done)
+		resp, err = rx.transferChunk(ctx, chunk, off, size, done)
 		status := 0
 		if resp != nil {
 			status = resp.StatusCode

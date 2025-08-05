@@ -72,9 +72,9 @@ func (t *interruptibleTransport) RoundTrip(req *http.Request) (*http.Response, e
 	}
 	ev := t.events[0]
 	t.events = t.events[1:]
-	timer := time.NewTimer(ev.delay)
+	stallTimer := time.NewTimer(ev.delay)
 	select {
-	case <-timer.C:
+	case <-stallTimer.C:
 	case <-req.Context().Done():
 		return nil, req.Context().Err()
 	}

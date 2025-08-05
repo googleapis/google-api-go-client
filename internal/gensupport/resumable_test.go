@@ -72,8 +72,11 @@ func (t *interruptibleTransport) RoundTrip(req *http.Request) (*http.Response, e
 	}
 	ev := t.events[0]
 	t.events = t.events[1:]
-	if ev.delay > 0 {
-		time.Sleep(ev.delay)
+	stallTimer := time.NewTimer(ev.delay)
+	select {
+	case <-stallTimer.C:
+	case <-req.Context().Done():
+		return nil, req.Context().Err()
 	}
 	if got, want := req.Header.Get("Content-Range"), ev.byteRange; got != want {
 		return nil, fmt.Errorf("byte range: got %s; want %s", got, want)

@@ -2751,26 +2751,217 @@ func (s *GoogleCloudDiscoveryengineV1AnswerGenerationSpecUserDefinedClassifierSp
 
 // GoogleCloudDiscoveryengineV1Assistant: Discovery Engine Assistant resource.
 type GoogleCloudDiscoveryengineV1Assistant struct {
+	// CustomerPolicy: Optional. Customer policy for the assistant.
+	CustomerPolicy *GoogleCloudDiscoveryengineV1AssistantCustomerPolicy `json:"customerPolicy,omitempty"`
+	// EnabledTools: Optional. Note: not implemented yet. Use enabled_actions
+	// instead. The enabled tools on this assistant. The keys are connector name,
+	// for example
+	// "projects/{projectId}/locations/{locationId}/collections/{collectionId}/datac
+	// onnector The values consist of admin enabled tools towards the connector
+	// instance. Admin can selectively enable multiple tools on any of the
+	// connector instances that they created in the project. For example
+	// {"jira1ConnectorName": [(toolId1, "createTicket"), (toolId2,
+	// "transferTicket")], "gmail1ConnectorName": [(toolId3, "sendEmail"),..] }
+	EnabledTools map[string]GoogleCloudDiscoveryengineV1AssistantToolList `json:"enabledTools,omitempty"`
+	// GenerationConfig: Optional. Configuration for the generation of the
+	// assistant response.
+	GenerationConfig *GoogleCloudDiscoveryengineV1AssistantGenerationConfig `json:"generationConfig,omitempty"`
 	// Name: Immutable. Resource name of the assistant. Format:
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}/assistants/{assistant}` It must be a UTF-8 encoded string with a
 	// length limit of 1024 characters.
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// WebGroundingType: Optional. The type of web grounding to use.
+	//
+	// Possible values:
+	//   "WEB_GROUNDING_TYPE_UNSPECIFIED" - Default, unspecified setting. This is
+	// the same as disabled.
+	//   "WEB_GROUNDING_TYPE_DISABLED" - Web grounding is disabled.
+	//   "WEB_GROUNDING_TYPE_GOOGLE_SEARCH" - Grounding with Google Search is
+	// enabled.
+	//   "WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH" - Grounding with Enterprise Web
+	// Search is enabled.
+	WebGroundingType string `json:"webGroundingType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomerPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "CustomerPolicy") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1Assistant) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1Assistant
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1AssistantCustomerPolicy: Customer-defined policy
+// for the assistant.
+type GoogleCloudDiscoveryengineV1AssistantCustomerPolicy struct {
+	// BannedPhrases: Optional. List of banned phrases.
+	BannedPhrases []*GoogleCloudDiscoveryengineV1AssistantCustomerPolicyBannedPhrase `json:"bannedPhrases,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BannedPhrases") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BannedPhrases") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AssistantCustomerPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AssistantCustomerPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1AssistantCustomerPolicyBannedPhrase: Definition
+// of a customer-defined banned phrase. A banned phrase is not allowed to
+// appear in the user query or the LLM response, or else the answer will be
+// refused.
+type GoogleCloudDiscoveryengineV1AssistantCustomerPolicyBannedPhrase struct {
+	// IgnoreDiacritics: Optional. If true, diacritical marks (e.g., accents,
+	// umlauts) are ignored when matching banned phrases. For example, "cafe" would
+	// match "café".
+	IgnoreDiacritics bool `json:"ignoreDiacritics,omitempty"`
+	// MatchType: Optional. Match type for the banned phrase.
+	//
+	// Possible values:
+	//   "BANNED_PHRASE_MATCH_TYPE_UNSPECIFIED" - Defaults to SIMPLE_STRING_MATCH.
+	//   "SIMPLE_STRING_MATCH" - The banned phrase matches if it is found anywhere
+	// in the text as an exact substring.
+	//   "WORD_BOUNDARY_STRING_MATCH" - Banned phrase only matches if the pattern
+	// found in the text is surrounded by word delimiters. The phrase itself may
+	// still contain word delimiters.
+	MatchType string `json:"matchType,omitempty"`
+	// Phrase: Required. The raw string content to be banned.
+	Phrase string `json:"phrase,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IgnoreDiacritics") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IgnoreDiacritics") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AssistantCustomerPolicyBannedPhrase) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AssistantCustomerPolicyBannedPhrase
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1AssistantGenerationConfig: Configuration for the
+// generation of the assistant response.
+type GoogleCloudDiscoveryengineV1AssistantGenerationConfig struct {
+	// DefaultLanguage: The default language to use for the generation of the
+	// assistant response. Use an ISO 639-1 language code such as `en`. If not
+	// specified, the language will be automatically detected.
+	DefaultLanguage string `json:"defaultLanguage,omitempty"`
+	// SystemInstruction: System instruction, also known as the prompt preamble for
+	// LLM calls. See also
+	// https://cloud.google.com/vertex-ai/generative-ai/docs/learn/prompts/system-instructions
+	SystemInstruction *GoogleCloudDiscoveryengineV1AssistantGenerationConfigSystemInstruction `json:"systemInstruction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultLanguage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultLanguage") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AssistantGenerationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AssistantGenerationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1AssistantGenerationConfigSystemInstruction:
+// System instruction, also known as the prompt preamble for LLM calls.
+type GoogleCloudDiscoveryengineV1AssistantGenerationConfigSystemInstruction struct {
+	// AdditionalSystemInstruction: Optional. Additional system instruction that
+	// will be added to the default system instruction.
+	AdditionalSystemInstruction string `json:"additionalSystemInstruction,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalSystemInstruction") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalSystemInstruction") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AssistantGenerationConfigSystemInstruction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AssistantGenerationConfigSystemInstruction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1AssistantToolInfo: Information to identify a
+// tool.
+type GoogleCloudDiscoveryengineV1AssistantToolInfo struct {
+	// ToolDisplayName: The display name of the tool.
+	ToolDisplayName string `json:"toolDisplayName,omitempty"`
+	// ToolName: The name of the tool as defined by
+	// DataConnectorService.QueryAvailableActions. Note: it's using `action` in the
+	// DataConnectorService apis, but they are the same as the `tool` here.
+	ToolName string `json:"toolName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ToolDisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ToolDisplayName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AssistantToolInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AssistantToolInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1AssistantToolList: The enabled tools on a
+// connector
+type GoogleCloudDiscoveryengineV1AssistantToolList struct {
+	// ToolInfo: The list of tools with corresponding tool information.
+	ToolInfo []*GoogleCloudDiscoveryengineV1AssistantToolInfo `json:"toolInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ToolInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ToolInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AssistantToolList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AssistantToolList
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8713,23 +8904,49 @@ func (s GoogleCloudDiscoveryengineV1alphaAssistUserMetadata) MarshalJSON() ([]by
 // GoogleCloudDiscoveryengineV1alphaAssistant: Discovery Engine Assistant
 // resource.
 type GoogleCloudDiscoveryengineV1alphaAssistant struct {
+	// CustomerPolicy: Optional. Customer policy for the assistant.
+	CustomerPolicy *GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicy `json:"customerPolicy,omitempty"`
+	// EnabledTools: Optional. Note: not implemented yet. Use enabled_actions
+	// instead. The enabled tools on this assistant. The keys are connector name,
+	// for example
+	// "projects/{projectId}/locations/{locationId}/collections/{collectionId}/datac
+	// onnector The values consist of admin enabled tools towards the connector
+	// instance. Admin can selectively enable multiple tools on any of the
+	// connector instances that they created in the project. For example
+	// {"jira1ConnectorName": [(toolId1, "createTicket"), (toolId2,
+	// "transferTicket")], "gmail1ConnectorName": [(toolId3, "sendEmail"),..] }
+	EnabledTools map[string]GoogleCloudDiscoveryengineV1alphaAssistantToolList `json:"enabledTools,omitempty"`
+	// GenerationConfig: Optional. Configuration for the generation of the
+	// assistant response.
+	GenerationConfig *GoogleCloudDiscoveryengineV1alphaAssistantGenerationConfig `json:"generationConfig,omitempty"`
 	// Name: Immutable. Resource name of the assistant. Format:
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}/assistants/{assistant}` It must be a UTF-8 encoded string with a
 	// length limit of 1024 characters.
 	Name string `json:"name,omitempty"`
+	// WebGroundingType: Optional. The type of web grounding to use.
+	//
+	// Possible values:
+	//   "WEB_GROUNDING_TYPE_UNSPECIFIED" - Default, unspecified setting. This is
+	// the same as disabled.
+	//   "WEB_GROUNDING_TYPE_DISABLED" - Web grounding is disabled.
+	//   "WEB_GROUNDING_TYPE_GOOGLE_SEARCH" - Grounding with Google Search is
+	// enabled.
+	//   "WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH" - Grounding with Enterprise Web
+	// Search is enabled.
+	WebGroundingType string `json:"webGroundingType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CustomerPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "CustomerPolicy") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -8876,6 +9093,121 @@ type GoogleCloudDiscoveryengineV1alphaAssistantContentFile struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaAssistantContentFile) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaAssistantContentFile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicy: Customer-defined
+// policy for the assistant.
+type GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicy struct {
+	// BannedPhrases: Optional. List of banned phrases.
+	BannedPhrases []*GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicyBannedPhrase `json:"bannedPhrases,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BannedPhrases") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BannedPhrases") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicyBannedPhrase:
+// Definition of a customer-defined banned phrase. A banned phrase is not
+// allowed to appear in the user query or the LLM response, or else the answer
+// will be refused.
+type GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicyBannedPhrase struct {
+	// IgnoreDiacritics: Optional. If true, diacritical marks (e.g., accents,
+	// umlauts) are ignored when matching banned phrases. For example, "cafe" would
+	// match "café".
+	IgnoreDiacritics bool `json:"ignoreDiacritics,omitempty"`
+	// MatchType: Optional. Match type for the banned phrase.
+	//
+	// Possible values:
+	//   "BANNED_PHRASE_MATCH_TYPE_UNSPECIFIED" - Defaults to SIMPLE_STRING_MATCH.
+	//   "SIMPLE_STRING_MATCH" - The banned phrase matches if it is found anywhere
+	// in the text as an exact substring.
+	//   "WORD_BOUNDARY_STRING_MATCH" - Banned phrase only matches if the pattern
+	// found in the text is surrounded by word delimiters. The phrase itself may
+	// still contain word delimiters.
+	MatchType string `json:"matchType,omitempty"`
+	// Phrase: Required. The raw string content to be banned.
+	Phrase string `json:"phrase,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IgnoreDiacritics") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IgnoreDiacritics") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicyBannedPhrase) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicyBannedPhrase
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAssistantGenerationConfig: Configuration
+// for the generation of the assistant response.
+type GoogleCloudDiscoveryengineV1alphaAssistantGenerationConfig struct {
+	// DefaultLanguage: The default language to use for the generation of the
+	// assistant response. Use an ISO 639-1 language code such as `en`. If not
+	// specified, the language will be automatically detected.
+	DefaultLanguage string `json:"defaultLanguage,omitempty"`
+	// SystemInstruction: System instruction, also known as the prompt preamble for
+	// LLM calls. See also
+	// https://cloud.google.com/vertex-ai/generative-ai/docs/learn/prompts/system-instructions
+	SystemInstruction *GoogleCloudDiscoveryengineV1alphaAssistantGenerationConfigSystemInstruction `json:"systemInstruction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultLanguage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultLanguage") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAssistantGenerationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAssistantGenerationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAssistantGenerationConfigSystemInstruction:
+// System instruction, also known as the prompt preamble for LLM calls.
+type GoogleCloudDiscoveryengineV1alphaAssistantGenerationConfigSystemInstruction struct {
+	// AdditionalSystemInstruction: Optional. Additional system instruction that
+	// will be added to the default system instruction.
+	AdditionalSystemInstruction string `json:"additionalSystemInstruction,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalSystemInstruction") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalSystemInstruction") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAssistantGenerationConfigSystemInstruction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAssistantGenerationConfigSystemInstruction
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9035,6 +9367,56 @@ func (s *GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingM
 	}
 	s.GroundingScore = float64(s1.GroundingScore)
 	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaAssistantToolInfo: Information to identify
+// a tool.
+type GoogleCloudDiscoveryengineV1alphaAssistantToolInfo struct {
+	// ToolDisplayName: The display name of the tool.
+	ToolDisplayName string `json:"toolDisplayName,omitempty"`
+	// ToolName: The name of the tool as defined by
+	// DataConnectorService.QueryAvailableActions. Note: it's using `action` in the
+	// DataConnectorService apis, but they are the same as the `tool` here.
+	ToolName string `json:"toolName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ToolDisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ToolDisplayName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAssistantToolInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAssistantToolInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAssistantToolList: The enabled tools on a
+// connector
+type GoogleCloudDiscoveryengineV1alphaAssistantToolList struct {
+	// ToolInfo: The list of tools with corresponding tool information.
+	ToolInfo []*GoogleCloudDiscoveryengineV1alphaAssistantToolInfo `json:"toolInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ToolInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ToolInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAssistantToolList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAssistantToolList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1alphaBAPConfig: The configuration for the BAP
@@ -10066,6 +10448,9 @@ func (s GoogleCloudDiscoveryengineV1alphaChunkChunkMetadata) MarshalJSON() ([]by
 // GoogleCloudDiscoveryengineV1alphaChunkDocumentMetadata: Document metadata
 // contains the information of the document of the current chunk.
 type GoogleCloudDiscoveryengineV1alphaChunkDocumentMetadata struct {
+	// MimeType: The mime type of the document.
+	// https://www.iana.org/assignments/media-types/media-types.xhtml.
+	MimeType string `json:"mimeType,omitempty"`
 	// StructData: Data representation. The structured JSON data for the document.
 	// It should conform to the registered Schema or an `INVALID_ARGUMENT` error is
 	// thrown.
@@ -10074,13 +10459,13 @@ type GoogleCloudDiscoveryengineV1alphaChunkDocumentMetadata struct {
 	Title string `json:"title,omitempty"`
 	// Uri: Uri of the document.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "StructData") to
+	// ForceSendFields is a list of field names (e.g. "MimeType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "StructData") to include in API
+	// NullFields is a list of field names (e.g. "MimeType") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

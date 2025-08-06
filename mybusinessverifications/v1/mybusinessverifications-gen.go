@@ -654,6 +654,7 @@ type Verification struct {
 	//   "AUTO" - Verify the location without additional user action. This option
 	// may not be available for all locations.
 	//   "VETTED_PARTNER" - This option may not be available for all locations.
+	//   "TRUSTED_PARTNER" - Verify the location via a trusted partner.
 	Method string `json:"method,omitempty"`
 	// Name: Resource name of the verification.
 	Name string `json:"name,omitempty"`
@@ -711,6 +712,7 @@ type VerificationOption struct {
 	//   "AUTO" - Verify the location without additional user action. This option
 	// may not be available for all locations.
 	//   "VETTED_PARTNER" - This option may not be available for all locations.
+	//   "TRUSTED_PARTNER" - Verify the location via a trusted partner.
 	VerificationMethod string `json:"verificationMethod,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AddressData") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -814,6 +816,7 @@ type VerifyLocationRequest struct {
 	//   "AUTO" - Verify the location without additional user action. This option
 	// may not be available for all locations.
 	//   "VETTED_PARTNER" - This option may not be available for all locations.
+	//   "TRUSTED_PARTNER" - Verify the location via a trusted partner.
 	Method string `json:"method,omitempty"`
 	// PhoneNumber: Optional. The input for PHONE_CALL/SMS method The phone number
 	// that should be called or be sent SMS to. It must be one of the phone numbers
@@ -824,6 +827,9 @@ type VerifyLocationRequest struct {
 	// not needed for a vetted account. Token that is associated to the location.
 	// Token that is associated to the location.
 	Token *VerificationToken `json:"token,omitempty"`
+	// TrustedPartnerToken: The input for TRUSTED_PARTNER method The verification
+	// token that is associated to the location.
+	TrustedPartnerToken string `json:"trustedPartnerToken,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Context") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

@@ -4115,7 +4115,12 @@ type Image struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#image".
 	Kind string `json:"kind,omitempty"`
-	// SourceUri: The URI for the image.
+	// PrivateImageId: An ID for an already uploaded private image. Either this or
+	// source_uri should be set. Requests setting both or neither will be rejected.
+	// Please contact support to use private images.
+	PrivateImageId string `json:"privateImageId,omitempty"`
+	// SourceUri: A URI for the image. Either this or private_image_id should be
+	// set. Requests setting both or neither will be rejected.
 	SourceUri *ImageUri `json:"sourceUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContentDescription") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7805,6 +7810,34 @@ type UpcomingNotification struct {
 
 func (s UpcomingNotification) MarshalJSON() ([]byte, error) {
 	type NoMethod UpcomingNotification
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UploadPrivateImageRequest: Request to upload a private image to use in a
+// pass.
+type UploadPrivateImageRequest struct {
+}
+
+// UploadPrivateImageResponse: Response for uploading the private image.
+type UploadPrivateImageResponse struct {
+	// PrivateImageId: Unique ID of the uploaded image to be referenced later in
+	// Image.private_image_id.
+	PrivateImageId string `json:"privateImageId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PrivateImageId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PrivateImageId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UploadPrivateImageResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadPrivateImageResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

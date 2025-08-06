@@ -1,5 +1,17 @@
 # Changes
 
+## [0.246.0](https://github.com/googleapis/google-api-go-client/compare/v0.245.0...v0.246.0) (2025-08-06)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#3261](https://github.com/googleapis/google-api-go-client/issues/3261)) ([b792200](https://github.com/googleapis/google-api-go-client/commit/b792200673836a4a042bb48938dff17ee6a0954f))
+
+
+### Bug Fixes
+
+* **idtoken:** Don't assume DefaultTransport is a http.Transport ([#3263](https://github.com/googleapis/google-api-go-client/issues/3263)) ([61fba51](https://github.com/googleapis/google-api-go-client/commit/61fba51991b51d84065a1c66e4a49434462d2c94)), refs [#3260](https://github.com/googleapis/google-api-go-client/issues/3260)
+
 ## [0.245.0](https://github.com/googleapis/google-api-go-client/compare/v0.244.0...v0.245.0) (2025-08-05)
 
 

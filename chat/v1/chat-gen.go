@@ -5576,8 +5576,8 @@ type Space struct {
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 	// and `SpaceType` is `SPACE`, otherwise should not be set. In the format
 	// `customers/{customer}`, where `customer` is the `id` from the Admin SDK
-	// customer resource (
-	// https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers).
+	// customer resource
+	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers).
 	// Private apps can also use the `customers/my_customer` alias to create the
 	// space in the same Google Workspace organization as the app. For DMs, this
 	// field isn't populated.

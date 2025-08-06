@@ -415,7 +415,7 @@ type TermsOfServiceService struct {
 }
 
 // About: Collection of information related to the about page (impressum
-// (https://support.google.com/merchants/answer/14675634?hl=en&ref_topic=15145634&sjid=6892280366904591178-NC)).
+// (https://support.google.com/merchants/answer/14675634?ref_topic=15145634&sjid=6892280366904591178-NC)).
 type About struct {
 	// State: Output only. The state of the URI.
 	//
@@ -2182,7 +2182,7 @@ func (s InStock) MarshalJSON() ([]byte, error) {
 
 // InventoryVerification: Collection of information related to inventory
 // verification
-// (https://support.google.com/merchants/answer/14684499?hl=en&ref_topic=15145634&sjid=6892280366904591178-NC).
+// (https://support.google.com/merchants/answer/14684499?ref_topic=15145634&sjid=6892280366904591178-NC).
 type InventoryVerification struct {
 	// Contact: Required. The name of the contact for the inventory verification
 	// process.
@@ -2944,7 +2944,7 @@ func (s OmnichannelSetting) MarshalJSON() ([]byte, error) {
 
 // OnDisplayToOrder: Collection of information related to the on display to
 // order (ODO
-// (https://support.google.com/merchants/answer/14615056?hl=en&ref_topic=15145747&sjid=6892280366904591178-NC)).
+// (https://support.google.com/merchants/answer/14615056?ref_topic=15145747&sjid=6892280366904591178-NC)).
 type OnDisplayToOrder struct {
 	// State: Output only. The state of the URI.
 	//

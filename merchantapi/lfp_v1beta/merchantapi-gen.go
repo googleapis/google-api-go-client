@@ -499,7 +499,7 @@ func (s LfpSale) MarshalJSON() ([]byte, error) {
 // will not be used.
 type LfpStore struct {
 	// GcidCategory: Optional. Google My Business category id
-	// (https://gcid-explorer.corp.google.com/static/gcid.html).
+	// (https://support.google.com/business/answer/7249669).
 	GcidCategory []string `json:"gcidCategory,omitempty"`
 	// MatchingState: Optional. Output only. The state of matching to a Google
 	// Business Profile. See matchingStateHint for further details if no match is

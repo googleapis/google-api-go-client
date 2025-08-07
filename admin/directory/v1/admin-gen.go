@@ -1719,6 +1719,14 @@ type ChromeOsDevice struct {
 	OsUpdateStatus *OsUpdateStatus `json:"osUpdateStatus,omitempty"`
 	// OsVersion: The Chrome device's operating system version.
 	OsVersion string `json:"osVersion,omitempty"`
+	// OsVersionCompliance: Output only. Compliance status of the OS version.
+	//
+	// Possible values:
+	//   "complianceUnspecified" - Compliance status unspecified.
+	//   "compliant" - Compliance status compliant.
+	//   "pending" - Compliance status pending.
+	//   "notCompliant" - Compliance status not compliant.
+	OsVersionCompliance string `json:"osVersionCompliance,omitempty"`
 	// PlatformVersion: The Chrome device's platform version.
 	PlatformVersion string `json:"platformVersion,omitempty"`
 	// RecentUsers: A list of recent device users, in descending order, by last

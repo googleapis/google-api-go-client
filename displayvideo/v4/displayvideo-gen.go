@@ -6433,6 +6433,16 @@ type CustomBiddingAlgorithm struct {
 	// (/display-video/api/reference/rest/v1/customBiddingAlgorithms/list#body.QUERY
 	// _PARAMETERS.oneof_accessor).
 	SharedAdvertiserIds googleapi.Int64s `json:"sharedAdvertiserIds,omitempty"`
+	// ThirdPartyOptimizationPartner: Optional. Immutable. Designates the third
+	// party optimization partner that manages this algorithm.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Type value is not specified or is unknown in this version.
+	//   "SCIBIDS" - Third party data science service provider that DV3
+	// partners/advertisers can partner with.
+	//   "ADELAIDE" - Third party attention measurement service provider that DV3
+	// partners/advertisers can partner with.
+	ThirdPartyOptimizationPartner string `json:"thirdPartyOptimizationPartner,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

@@ -971,6 +971,9 @@ type VoiceSelectionParams struct {
 	// isn't a Canadian voice available), or even a different language, e.g. using
 	// "nb" (Norwegian Bokmal) instead of "no" (Norwegian)".
 	LanguageCode string `json:"languageCode,omitempty"`
+	// ModelName: Optional. The name of the model. If set, the service will choose
+	// the model matching the specified configuration.
+	ModelName string `json:"modelName,omitempty"`
 	// Name: The name of the voice. If both the name and the gender are not set,
 	// the service will choose a voice based on the other parameters such as
 	// language_code.

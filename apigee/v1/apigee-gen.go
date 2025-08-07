@@ -6017,6 +6017,9 @@ type GoogleCloudApigeeV1KeyValueMap struct {
 	// of encrypted will always be `true`. Apigee X and hybrid do not support
 	// unencrypted key value maps.
 	Encrypted bool `json:"encrypted,omitempty"`
+	// MaskedValues: Required. Flag that specifies whether entry values will be
+	// masked when returned.
+	MaskedValues bool `json:"maskedValues,omitempty"`
 	// Name: Required. ID of the key value map.
 	Name string `json:"name,omitempty"`
 
@@ -21055,9 +21058,9 @@ func (c *OrganizationsAppsListCall) KeyStatus(keyStatus string) *OrganizationsAp
 }
 
 // PageSize sets the optional parameter "pageSize": Count of apps a single page
-// can have in the response. If unspecified, at most 100 apps will be returned.
-// The maximum value is 100; values above 100 will be coerced to 100.
-// "page_size" is supported from ver 1.10.0 and above.
+// can have in the response. If unspecified, at most 1000 apps will be
+// returned. The maximum value is 1000; values above 1000 will be coerced to
+// 1000. "page_size" is supported from ver 1.10.0 and above.
 func (c *OrganizationsAppsListCall) PageSize(pageSize int64) *OrganizationsAppsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -21072,7 +21075,8 @@ func (c *OrganizationsAppsListCall) PageToken(pageToken string) *OrganizationsAp
 }
 
 // Rows sets the optional parameter "rows": Maximum number of app IDs to
-// return. Defaults to 1000.
+// return. Defaults to 1000, which is also the upper limit. To get more than
+// 1000, use pagination with 'pageSize' and 'pageToken' parameters.
 func (c *OrganizationsAppsListCall) Rows(rows int64) *OrganizationsAppsListCall {
 	c.urlParams_.Set("rows", fmt.Sprint(rows))
 	return c

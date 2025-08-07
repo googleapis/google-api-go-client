@@ -2381,6 +2381,8 @@ func (s DataSourceReference) MarshalJSON() ([]byte, error) {
 // DiskBackupProperties: DiskBackupProperties represents the properties of a
 // Disk backup.
 type DiskBackupProperties struct {
+	// AccessMode: The access mode of the source disk.
+	AccessMode string `json:"accessMode,omitempty"`
 	// Architecture: The architecture of the source disk. Valid values are ARM64 or
 	// X86_64.
 	//
@@ -2391,13 +2393,25 @@ type DiskBackupProperties struct {
 	Architecture string `json:"architecture,omitempty"`
 	// Description: A description of the source disk.
 	Description string `json:"description,omitempty"`
+	// EnableConfidentialCompute: Indicates whether the source disk is using
+	// confidential compute mode.
+	EnableConfidentialCompute bool `json:"enableConfidentialCompute,omitempty"`
 	// GuestOsFeature: A list of guest OS features that are applicable to this
 	// backup.
 	GuestOsFeature []*GuestOsFeature `json:"guestOsFeature,omitempty"`
+	// Labels: The labels of the source disk.
+	Labels map[string]string `json:"labels,omitempty"`
 	// Licenses: A list of publicly available licenses that are applicable to this
 	// backup. This is applicable if the original image had licenses attached, e.g.
 	// Windows image.
 	Licenses []string `json:"licenses,omitempty"`
+	// PhysicalBlockSizeBytes: The physical block size of the source disk.
+	PhysicalBlockSizeBytes int64 `json:"physicalBlockSizeBytes,omitempty,string"`
+	// ProvisionedIops: The number of IOPS provisioned for the source disk.
+	ProvisionedIops int64 `json:"provisionedIops,omitempty,string"`
+	// ProvisionedThroughput: The number of throughput provisioned for the source
+	// disk.
+	ProvisionedThroughput int64 `json:"provisionedThroughput,omitempty,string"`
 	// Region: Region and zone are mutually exclusive fields. The URL of the region
 	// of the source disk.
 	Region string `json:"region,omitempty"`
@@ -2408,17 +2422,19 @@ type DiskBackupProperties struct {
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
 	// SourceDisk: The source disk used to create this backup.
 	SourceDisk string `json:"sourceDisk,omitempty"`
+	// StoragePool: The storage pool of the source disk.
+	StoragePool string `json:"storagePool,omitempty"`
 	// Type: The URL of the type of the disk.
 	Type string `json:"type,omitempty"`
 	// Zone: The URL of the Zone where the source disk.
 	Zone string `json:"zone,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Architecture") to
+	// ForceSendFields is a list of field names (e.g. "AccessMode") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Architecture") to include in API
+	// NullFields is a list of field names (e.g. "AccessMode") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3594,6 +3610,30 @@ type Location struct {
 
 func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type LocationMetadata struct {
+	// Possible values:
+	//   "FEATURE_UNSPECIFIED"
+	//   "MANAGEMENT_SERVER"
+	//   "COMPUTE_INSTANCE"
+	UnsupportedFeatures []string `json:"unsupportedFeatures,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UnsupportedFeatures") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UnsupportedFeatures") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LocationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod LocationMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

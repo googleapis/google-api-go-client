@@ -7686,6 +7686,9 @@ type GoogleCloudDialogflowCxV3beta1Flow struct {
 	// transition_routes, these handlers are evaluated on a first-match basis. The
 	// first one that matches the event get executed, with the rest being ignored.
 	EventHandlers []*GoogleCloudDialogflowCxV3beta1EventHandler `json:"eventHandlers,omitempty"`
+	// InputParameterDefinitions: Optional. Defined structured input parameters for
+	// this flow.
+	InputParameterDefinitions []*GoogleCloudDialogflowCxV3beta1ParameterDefinition `json:"inputParameterDefinitions,omitempty"`
 	// KnowledgeConnectorSettings: Optional. Knowledge connector configuration.
 	KnowledgeConnectorSettings *GoogleCloudDialogflowCxV3beta1KnowledgeConnectorSettings `json:"knowledgeConnectorSettings,omitempty"`
 	// Locked: Indicates whether the flow is locked for changes. If the flow is
@@ -7698,6 +7701,9 @@ type GoogleCloudDialogflowCxV3beta1Flow struct {
 	Name string `json:"name,omitempty"`
 	// NluSettings: NLU related settings of the flow.
 	NluSettings *GoogleCloudDialogflowCxV3beta1NluSettings `json:"nluSettings,omitempty"`
+	// OutputParameterDefinitions: Optional. Defined structured output parameters
+	// for this flow.
+	OutputParameterDefinitions []*GoogleCloudDialogflowCxV3beta1ParameterDefinition `json:"outputParameterDefinitions,omitempty"`
 	// TransitionRouteGroups: A flow's transition route group serve two purposes: *
 	// They are responsible for matching the user's first utterances in the flow. *
 	// They are inherited by every page's transition route groups. Transition route

@@ -807,7 +807,7 @@
       }
     }
   },
-  "revision": "20250612",
+  "revision": "20250806",
   "rootUrl": "https://firebaseappdistribution.googleapis.com/",
   "schemas": {
     "AndroidxCrawlerOutputPoint": {
@@ -1933,6 +1933,10 @@
         },
         "name": {
           "description": "Identifier. The name of the test case resource. Format: `projects/{project_number}/apps/{app_id}/testCases/{test_case_id}`",
+          "type": "string"
+        },
+        "prerequisiteTestCase": {
+          "description": "Optional. Test case that must be run before this test case.",
           "type": "string"
         }
       },

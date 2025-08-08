@@ -1393,6 +1393,10 @@ type RestrictionChange struct {
 	// Stream.
 	//   "FILE_ORGANIZER_CAN_SHARE_FOLDERS" - When restricted, this limits sharing
 	// of folders to managers only.
+	//   "READERS_CAN_DOWNLOAD" - When restricted, this prevents actions like copy,
+	// download, and print for readers. This is the same as ITEM_DUPLICATION.
+	//   "WRITERS_CAN_DOWNLOAD" - When restricted, this prevents actions like copy,
+	// download, and print for writers.
 	Feature string `json:"feature,omitempty"`
 	// NewRestriction: The restriction in place after the change.
 	//

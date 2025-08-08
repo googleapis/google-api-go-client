@@ -2128,6 +2128,9 @@ type GoogleCloudContactcenterinsightsV1ConversationQualityMetadata struct {
 	// CustomerSatisfactionRating: An arbitrary integer value indicating the
 	// customer's satisfaction rating.
 	CustomerSatisfactionRating int64 `json:"customerSatisfactionRating,omitempty"`
+	// FeedbackLabels: Input only. The feedback labels associated with the
+	// conversation.
+	FeedbackLabels []*GoogleCloudContactcenterinsightsV1FeedbackLabel `json:"feedbackLabels,omitempty"`
 	// MenuPath: An arbitrary string value specifying the menu path the customer
 	// took.
 	MenuPath string `json:"menuPath,omitempty"`
@@ -7965,6 +7968,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadata struct 
 	// CustomerSatisfactionRating: An arbitrary integer value indicating the
 	// customer's satisfaction rating.
 	CustomerSatisfactionRating int64 `json:"customerSatisfactionRating,omitempty"`
+	// FeedbackLabels: Input only. The feedback labels associated with the
+	// conversation.
+	FeedbackLabels []*GoogleCloudContactcenterinsightsV1alpha1FeedbackLabel `json:"feedbackLabels,omitempty"`
 	// MenuPath: An arbitrary string value specifying the menu path the customer
 	// took.
 	MenuPath string `json:"menuPath,omitempty"`

@@ -2552,6 +2552,126 @@ func (c *CasesShowFeedCall) Pages(ctx context.Context, f func(*ShowFeedResponse)
 	}
 }
 
+type CasesAttachmentsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieve an attachment associated with a support case. EXAMPLES: cURL:
+// ```shell
+// attachment="projects/some-project/cases/23598314/attachments/0684M00000P3h1fQ
+// AB" curl \ --header "Authorization: Bearer $(gcloud auth
+// print-access-token)" \ "https://cloudsupport.googleapis.com/v2/$attachment"
+// ``` Python: ```python import googleapiclient.discovery api_version =
+// "v2beta" supportApiService = googleapiclient.discovery.build(
+// serviceName="cloudsupport", version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request = ( supportApiService.cases() .attachments()
+// .get(name="projects/some-project/cases/43595344/attachments/0684M00000P3h1fQA
+// B") ) print(request.execute()) ```
+//
+// - name: The name of the attachment to get.
+func (r *CasesAttachmentsService) Get(name string) *CasesAttachmentsGetCall {
+	c := &CasesAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CasesAttachmentsGetCall) Fields(s ...googleapi.Field) *CasesAttachmentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CasesAttachmentsGetCall) IfNoneMatch(entityTag string) *CasesAttachmentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CasesAttachmentsGetCall) Context(ctx context.Context) *CasesAttachmentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CasesAttachmentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CasesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.cases.attachments.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsupport.cases.attachments.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Attachment.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CasesAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*Attachment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Attachment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.cases.attachments.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type CasesAttachmentsListCall struct {
 	s            *Service
 	parent       string
@@ -2823,6 +2943,125 @@ func (c *CasesCommentsCreateCall) Do(opts ...googleapi.CallOption) (*Comment, er
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.cases.comments.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CasesCommentsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieve a comment. EXAMPLES: cURL: ```shell
+// comment="projects/some-project/cases/43595344/comments/234567890" curl \
+// --header "Authorization: Bearer $(gcloud auth print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2/$comment" ``` Python: ```python
+// import googleapiclient.discovery api_version = "v2beta" supportApiService =
+// googleapiclient.discovery.build( serviceName="cloudsupport",
+// version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request = supportApiService.cases().comments().get(
+// name="projects/some-project/cases/43595344/comments/234567890", )
+// print(request.execute()) ```
+//
+// - name: The name of the comment to retrieve.
+func (r *CasesCommentsService) Get(name string) *CasesCommentsGetCall {
+	c := &CasesCommentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CasesCommentsGetCall) Fields(s ...googleapi.Field) *CasesCommentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CasesCommentsGetCall) IfNoneMatch(entityTag string) *CasesCommentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CasesCommentsGetCall) Context(ctx context.Context) *CasesCommentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CasesCommentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CasesCommentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.cases.comments.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsupport.cases.comments.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Comment.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CasesCommentsGetCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Comment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.cases.comments.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -358,6 +358,10 @@ type CheckResponse struct {
 	// use the error_code field below.
 	DebugString string `json:"debugString,omitempty"`
 	// ErrorCode: Error codes that describe the result of the Check operation.
+	// NOTE: Error codes may be populated even when `linked` is true. The error
+	// codes do not necessarily imply that the request failed, but rather, specify
+	// any errors encountered in the statements file(s) which may or may not impact
+	// whether the server determines the requested source and target to be linked.
 	//
 	// Possible values:
 	//   "ERROR_CODE_UNSPECIFIED" - Default value, otherwise unused.

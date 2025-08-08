@@ -147,7 +147,7 @@
       }
     }
   },
-  "revision": "20250804",
+  "revision": "20250805",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "DateTime": {
@@ -209,9 +209,12 @@
           "description": "Optional. Brand of the product.",
           "type": "string"
         },
-        "gtin": {
-          "description": "Optional. The Global Trade Item Number.",
-          "type": "string"
+        "gtins": {
+          "description": "Optional. The Global Trade Item Numbers.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "lineItemId": {
           "description": "Required. The ID for this line item.",

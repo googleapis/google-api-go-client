@@ -1217,19 +1217,19 @@ func (r *AccountsPromotionsService) List(parent string) *AccountsPromotionsListC
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Output only. The maximum
-// number of promotions to return. The service may return fewer than this
-// value. The maximum value is 250; values above 250 will be coerced to 250. If
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// promotions to return. The service may return fewer than this value. The
+// maximum value is 250; values above 250 will be coerced to 250. If
 // unspecified, the maximum number of promotions will be returned.
 func (c *AccountsPromotionsListCall) PageSize(pageSize int64) *AccountsPromotionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Output only. A page
-// token, received from a previous `ListPromotions` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters provided
-// to `ListPromotions` must match the call that provided the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListPromotions` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListPromotions` must match the call that provided the page token.
 func (c *AccountsPromotionsListCall) PageToken(pageToken string) *AccountsPromotionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

@@ -1586,6 +1586,9 @@ type GoogleFirebaseAppdistroV1alphaTestCase struct {
 	// Name: Identifier. The name of the test case resource. Format:
 	// `projects/{project_number}/apps/{app_id}/testCases/{test_case_id}`
 	Name string `json:"name,omitempty"`
+	// PrerequisiteTestCase: Optional. Test case that must be run before this test
+	// case.
+	PrerequisiteTestCase string `json:"prerequisiteTestCase,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

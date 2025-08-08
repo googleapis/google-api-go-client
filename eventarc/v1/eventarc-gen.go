@@ -480,8 +480,8 @@ type Channel struct {
 	ActivationToken string `json:"activationToken,omitempty"`
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
-	// CryptoKeyName: Resource name of a KMS crypto key (managed by the user) used
-	// to encrypt/decrypt their event data. It must match the pattern
+	// CryptoKeyName: Optional. Resource name of a KMS crypto key (managed by the
+	// user) used to encrypt/decrypt their event data. It must match the pattern
 	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
 	// Labels: Optional. Resource labels.

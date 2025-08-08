@@ -243,6 +243,8 @@ type LineItemDetails struct {
 	Brand string `json:"brand,omitempty"`
 	// Gtin: Optional. The Global Trade Item Number.
 	Gtin string `json:"gtin,omitempty"`
+	// Gtins: Optional. The Global Trade Item Numbers.
+	Gtins []string `json:"gtins,omitempty"`
 	// LineItemId: Required. The ID for this line item.
 	LineItemId string `json:"lineItemId,omitempty"`
 	// Mpn: Optional. The manufacturer part number.

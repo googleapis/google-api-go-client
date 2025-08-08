@@ -176,6 +176,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Customers = NewCustomersService(s)
 	s.Devices = NewDevicesService(s)
 	s.Groups = NewGroupsService(s)
+	s.InboundOidcSsoProfiles = NewInboundOidcSsoProfilesService(s)
 	s.InboundSamlSsoProfiles = NewInboundSamlSsoProfilesService(s)
 	s.InboundSsoAssignments = NewInboundSsoAssignmentsService(s)
 	s.OrgUnits = NewOrgUnitsService(s)
@@ -209,6 +210,8 @@ type Service struct {
 	Devices *DevicesService
 
 	Groups *GroupsService
+
+	InboundOidcSsoProfiles *InboundOidcSsoProfilesService
 
 	InboundSamlSsoProfiles *InboundSamlSsoProfilesService
 
@@ -298,6 +301,15 @@ func NewGroupsMembershipsService(s *Service) *GroupsMembershipsService {
 }
 
 type GroupsMembershipsService struct {
+	s *Service
+}
+
+func NewInboundOidcSsoProfilesService(s *Service) *InboundOidcSsoProfilesService {
+	rs := &InboundOidcSsoProfilesService{s: s}
+	return rs
+}
+
+type InboundOidcSsoProfilesService struct {
 	s *Service
 }
 
@@ -1021,6 +1033,32 @@ func (s CreateDeviceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CreateInboundOidcSsoProfileOperationMetadata: LRO response metadata for
+// InboundOidcSsoProfilesService.CreateInboundOidcSsoProfile.
+type CreateInboundOidcSsoProfileOperationMetadata struct {
+	// State: State of this Operation Will be "awaiting-multi-party-approval" when
+	// the operation is deferred due to the target customer having enabled
+	// Multi-party approval for sensitive actions
+	// (https://support.google.com/a/answer/13790448).
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateInboundOidcSsoProfileOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateInboundOidcSsoProfileOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CreateInboundSamlSsoProfileOperationMetadata: LRO response metadata for
 // InboundSamlSsoProfilesService.CreateInboundSamlSsoProfile.
 type CreateInboundSamlSsoProfileOperationMetadata struct {
@@ -1096,6 +1134,11 @@ func (s *CustomAttributeValue) UnmarshalJSON(data []byte) error {
 // DeleteIdpCredentialOperationMetadata: LRO response metadata for
 // InboundSamlSsoProfilesService.DeleteIdpCredential.
 type DeleteIdpCredentialOperationMetadata struct {
+}
+
+// DeleteInboundOidcSsoProfileOperationMetadata: LRO response metadata for
+// InboundOidcSsoProfilesService.DeleteInboundOidcSsoProfile.
+type DeleteInboundOidcSsoProfileOperationMetadata struct {
 }
 
 // DeleteInboundSamlSsoProfileOperationMetadata: LRO response metadata for
@@ -2564,6 +2607,45 @@ func (s IdpCredential) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InboundOidcSsoProfile: An OIDC
+// (https://openid.net/developers/how-connect-works/) federation between a
+// Google enterprise customer and an OIDC identity provider.
+type InboundOidcSsoProfile struct {
+	// Customer: Immutable. The customer. For example: `customers/C0123abc`.
+	Customer string `json:"customer,omitempty"`
+	// DisplayName: Human-readable name of the OIDC SSO profile.
+	DisplayName string `json:"displayName,omitempty"`
+	// IdpConfig: OIDC identity provider configuration.
+	IdpConfig *OidcIdpConfig `json:"idpConfig,omitempty"`
+	// Name: Output only. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the OIDC SSO
+	// profile.
+	Name string `json:"name,omitempty"`
+	// RpConfig: OIDC relying party (RP) configuration for this OIDC SSO profile.
+	// These are the RP details provided by Google that should be configured on the
+	// corresponding identity provider.
+	RpConfig *OidcRpConfig `json:"rpConfig,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Customer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Customer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InboundOidcSsoProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod InboundOidcSsoProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InboundSamlSsoProfile: A SAML 2.0
 // (https://www.oasis-open.org/standards#samlv2.0) federation between a Google
 // enterprise customer and a SAML identity provider.
@@ -2612,6 +2694,9 @@ type InboundSsoAssignment struct {
 	// (https://cloud.google.com/apis/design/resource_names) of the Inbound SSO
 	// Assignment.
 	Name string `json:"name,omitempty"`
+	// OidcSsoInfo: OpenID Connect SSO details. Must be set if and only if
+	// `sso_mode` is set to `OIDC_SSO`.
+	OidcSsoInfo *OidcSsoInfo `json:"oidcSsoInfo,omitempty"`
 	// Rank: Must be zero (which is the default value so it can be omitted) for
 	// assignments with `target_org_unit` set and must be greater-than-or-equal-to
 	// one for assignments with `target_group` set.
@@ -2629,6 +2714,8 @@ type InboundSsoAssignment struct {
 	//   "SSO_MODE_UNSPECIFIED" - Not allowed.
 	//   "SSO_OFF" - Disable SSO for the targeted users.
 	//   "SAML_SSO" - Use an external SAML Identity Provider for SSO for the
+	// targeted users.
+	//   "OIDC_SSO" - Use an external OIDC Identity Provider for SSO for the
 	// targeted users.
 	//   "DOMAIN_WIDE_SAML_IF_ENABLED" - Use the domain-wide SAML Identity Provider
 	// for the targeted users if one is configured; otherwise, this is equivalent
@@ -2825,6 +2912,35 @@ type ListIdpCredentialsResponse struct {
 
 func (s ListIdpCredentialsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListIdpCredentialsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListInboundOidcSsoProfilesResponse: Response of the
+// InboundOidcSsoProfilesService.ListInboundOidcSsoProfiles method.
+type ListInboundOidcSsoProfilesResponse struct {
+	// InboundOidcSsoProfiles: List of InboundOidcSsoProfiles.
+	InboundOidcSsoProfiles []*InboundOidcSsoProfile `json:"inboundOidcSsoProfiles,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "InboundOidcSsoProfiles") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InboundOidcSsoProfiles") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListInboundOidcSsoProfilesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListInboundOidcSsoProfilesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3458,6 +3574,87 @@ type MoveOrgMembershipRequest struct {
 
 func (s MoveOrgMembershipRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MoveOrgMembershipRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OidcIdpConfig: OIDC IDP (identity provider) configuration.
+type OidcIdpConfig struct {
+	// ChangePasswordUri: The **Change Password URL** of the identity provider.
+	// Users will be sent to this URL when changing their passwords at
+	// `myaccount.google.com`. This takes precedence over the change password URL
+	// configured at customer-level. Must use `HTTPS`.
+	ChangePasswordUri string `json:"changePasswordUri,omitempty"`
+	// IssuerUri: Required. The Issuer identifier for the IdP. Must be a URL. The
+	// discovery URL will be derived from this as described in Section 4 of the
+	// OIDC specification
+	// (https://openid.net/specs/openid-connect-discovery-1_0.html).
+	IssuerUri string `json:"issuerUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChangePasswordUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChangePasswordUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OidcIdpConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod OidcIdpConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OidcRpConfig: OIDC RP (relying party) configuration.
+type OidcRpConfig struct {
+	// ClientId: OAuth2 client ID for OIDC.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Input only. OAuth2 client secret for OIDC.
+	ClientSecret string `json:"clientSecret,omitempty"`
+	// RedirectUris: Output only. The URL(s) that this client may use in
+	// authentication requests.
+	RedirectUris []string `json:"redirectUris,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OidcRpConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod OidcRpConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OidcSsoInfo: Details that are applicable when `sso_mode` is set to
+// `OIDC_SSO`.
+type OidcSsoInfo struct {
+	// InboundOidcSsoProfile: Required. Name of the `InboundOidcSsoProfile` to use.
+	// Must be of the form `inboundOidcSsoProfiles/{inbound_oidc_sso_profile}`.
+	InboundOidcSsoProfile string `json:"inboundOidcSsoProfile,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InboundOidcSsoProfile") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InboundOidcSsoProfile") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OidcSsoInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod OidcSsoInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4115,6 +4312,32 @@ type TransitiveMembershipRole struct {
 
 func (s TransitiveMembershipRole) MarshalJSON() ([]byte, error) {
 	type NoMethod TransitiveMembershipRole
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateInboundOidcSsoProfileOperationMetadata: LRO response metadata for
+// InboundOidcSsoProfilesService.UpdateInboundOidcSsoProfile.
+type UpdateInboundOidcSsoProfileOperationMetadata struct {
+	// State: State of this Operation Will be "awaiting-multi-party-approval" when
+	// the operation is deferred due to the target customer having enabled
+	// Multi-party approval for sensitive actions
+	// (https://support.google.com/a/answer/13790448).
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateInboundOidcSsoProfileOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateInboundOidcSsoProfileOperationMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9602,6 +9825,592 @@ func (c *GroupsMembershipsSearchTransitiveMembershipsCall) Pages(ctx context.Con
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type InboundOidcSsoProfilesCreateCall struct {
+	s                     *Service
+	inboundoidcssoprofile *InboundOidcSsoProfile
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Create: Creates an InboundOidcSsoProfile for a customer. When the target
+// customer has enabled Multi-party approval for sensitive actions
+// (https://support.google.com/a/answer/13790448), the `Operation` in the
+// response will have "done": false`, it will not have a response, and the
+// metadata will have "state": "awaiting-multi-party-approval".
+func (r *InboundOidcSsoProfilesService) Create(inboundoidcssoprofile *InboundOidcSsoProfile) *InboundOidcSsoProfilesCreateCall {
+	c := &InboundOidcSsoProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.inboundoidcssoprofile = inboundoidcssoprofile
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InboundOidcSsoProfilesCreateCall) Fields(s ...googleapi.Field) *InboundOidcSsoProfilesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InboundOidcSsoProfilesCreateCall) Context(ctx context.Context) *InboundOidcSsoProfilesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InboundOidcSsoProfilesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InboundOidcSsoProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.inboundoidcssoprofile)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/inboundOidcSsoProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudidentity.inboundOidcSsoProfiles.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.inboundOidcSsoProfiles.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *InboundOidcSsoProfilesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudidentity.inboundOidcSsoProfiles.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type InboundOidcSsoProfilesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an InboundOidcSsoProfile.
+//
+//   - name: The resource name
+//     (https://cloud.google.com/apis/design/resource_names) of the
+//     InboundOidcSsoProfile to delete. Format:
+//     `inboundOidcSsoProfiles/{sso_profile_id}`.
+func (r *InboundOidcSsoProfilesService) Delete(name string) *InboundOidcSsoProfilesDeleteCall {
+	c := &InboundOidcSsoProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InboundOidcSsoProfilesDeleteCall) Fields(s ...googleapi.Field) *InboundOidcSsoProfilesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InboundOidcSsoProfilesDeleteCall) Context(ctx context.Context) *InboundOidcSsoProfilesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InboundOidcSsoProfilesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InboundOidcSsoProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudidentity.inboundOidcSsoProfiles.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.inboundOidcSsoProfiles.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *InboundOidcSsoProfilesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudidentity.inboundOidcSsoProfiles.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type InboundOidcSsoProfilesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an InboundOidcSsoProfile.
+//
+//   - name: The resource name
+//     (https://cloud.google.com/apis/design/resource_names) of the
+//     InboundOidcSsoProfile to get. Format:
+//     `inboundOidcSsoProfiles/{sso_profile_id}`.
+func (r *InboundOidcSsoProfilesService) Get(name string) *InboundOidcSsoProfilesGetCall {
+	c := &InboundOidcSsoProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InboundOidcSsoProfilesGetCall) Fields(s ...googleapi.Field) *InboundOidcSsoProfilesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InboundOidcSsoProfilesGetCall) IfNoneMatch(entityTag string) *InboundOidcSsoProfilesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InboundOidcSsoProfilesGetCall) Context(ctx context.Context) *InboundOidcSsoProfilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InboundOidcSsoProfilesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InboundOidcSsoProfilesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudidentity.inboundOidcSsoProfiles.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.inboundOidcSsoProfiles.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *InboundOidcSsoProfile.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *InboundOidcSsoProfilesGetCall) Do(opts ...googleapi.CallOption) (*InboundOidcSsoProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &InboundOidcSsoProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudidentity.inboundOidcSsoProfiles.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type InboundOidcSsoProfilesListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists InboundOidcSsoProfile objects for a Google enterprise customer.
+func (r *InboundOidcSsoProfilesService) List() *InboundOidcSsoProfilesListCall {
+	c := &InboundOidcSsoProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Filter sets the optional parameter "filter": A Common Expression Language
+// (https://github.com/google/cel-spec) expression to filter the results. The
+// only supported filter is filtering by customer. For example:
+// `customer=="customers/C0123abc". Omitting the filter or specifying a filter
+// of `customer=="customers/my_customer" will return the profiles for the
+// customer that the caller (authenticated user) belongs to. Specifying a
+// filter of `customer=="" will return the global shared OIDC profiles.
+func (c *InboundOidcSsoProfilesListCall) Filter(filter string) *InboundOidcSsoProfilesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// InboundOidcSsoProfiles to return. The service may return fewer than this
+// value. If omitted (or defaulted to zero) the server will use a sensible
+// default. This default may change over time. The maximum allowed value is
+// 100. Requests with page_size greater than that will be silently interpreted
+// as having this maximum value.
+func (c *InboundOidcSsoProfilesListCall) PageSize(pageSize int64) *InboundOidcSsoProfilesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListInboundOidcSsoProfiles` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListInboundOidcSsoProfiles` must match the call that provided the page
+// token.
+func (c *InboundOidcSsoProfilesListCall) PageToken(pageToken string) *InboundOidcSsoProfilesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InboundOidcSsoProfilesListCall) Fields(s ...googleapi.Field) *InboundOidcSsoProfilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InboundOidcSsoProfilesListCall) IfNoneMatch(entityTag string) *InboundOidcSsoProfilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InboundOidcSsoProfilesListCall) Context(ctx context.Context) *InboundOidcSsoProfilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InboundOidcSsoProfilesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InboundOidcSsoProfilesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/inboundOidcSsoProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudidentity.inboundOidcSsoProfiles.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.inboundOidcSsoProfiles.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListInboundOidcSsoProfilesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InboundOidcSsoProfilesListCall) Do(opts ...googleapi.CallOption) (*ListInboundOidcSsoProfilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListInboundOidcSsoProfilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudidentity.inboundOidcSsoProfiles.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *InboundOidcSsoProfilesListCall) Pages(ctx context.Context, f func(*ListInboundOidcSsoProfilesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type InboundOidcSsoProfilesPatchCall struct {
+	s                     *Service
+	name                  string
+	inboundoidcssoprofile *InboundOidcSsoProfile
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Patch: Updates an InboundOidcSsoProfile. When the target customer has
+// enabled Multi-party approval for sensitive actions
+// (https://support.google.com/a/answer/13790448), the `Operation` in the
+// response will have "done": false`, it will not have a response, and the
+// metadata will have "state": "awaiting-multi-party-approval".
+//
+//   - name: Output only. Resource name
+//     (https://cloud.google.com/apis/design/resource_names) of the OIDC SSO
+//     profile.
+func (r *InboundOidcSsoProfilesService) Patch(name string, inboundoidcssoprofile *InboundOidcSsoProfile) *InboundOidcSsoProfilesPatchCall {
+	c := &InboundOidcSsoProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.inboundoidcssoprofile = inboundoidcssoprofile
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to be updated.
+func (c *InboundOidcSsoProfilesPatchCall) UpdateMask(updateMask string) *InboundOidcSsoProfilesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InboundOidcSsoProfilesPatchCall) Fields(s ...googleapi.Field) *InboundOidcSsoProfilesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InboundOidcSsoProfilesPatchCall) Context(ctx context.Context) *InboundOidcSsoProfilesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InboundOidcSsoProfilesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InboundOidcSsoProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.inboundoidcssoprofile)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudidentity.inboundOidcSsoProfiles.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.inboundOidcSsoProfiles.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *InboundOidcSsoProfilesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudidentity.inboundOidcSsoProfiles.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type InboundSamlSsoProfilesCreateCall struct {

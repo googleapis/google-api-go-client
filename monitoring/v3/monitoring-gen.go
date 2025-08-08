@@ -3253,11 +3253,11 @@ type MetricAbsence struct {
 	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list).
 	// It is advisable to use the ListTimeSeries method when debugging this field.
 	Aggregations []*Aggregation `json:"aggregations,omitempty"`
-	// Duration: The amount of time that a time series must fail to report new data
-	// to be considered failing. The minimum value of this field is 120 seconds.
-	// Larger values that are a multiple of a minute--for example, 240 or 300
-	// seconds--are supported. If an invalid value is given, an error will be
-	// returned. The Duration.nanos field is ignored.
+	// Duration: Required. The amount of time that a time series must fail to
+	// report new data to be considered failing. The minimum value of this field is
+	// 120 seconds. Larger values that are a multiple of a minute--for example, 240
+	// or 300 seconds--are supported. If an invalid value is given, an error will
+	// be returned.
 	Duration string `json:"duration,omitempty"`
 	// Filter: Required. A filter
 	// (https://cloud.google.com/monitoring/api/v3/filters) that identifies which
@@ -3612,15 +3612,15 @@ type MetricThreshold struct {
 	// on resource type, resource labels, and metric labels. This field may not
 	// exceed 2048 Unicode characters in length.
 	DenominatorFilter string `json:"denominatorFilter,omitempty"`
-	// Duration: The amount of time that a time series must violate the threshold
-	// to be considered failing. Currently, only values that are a multiple of a
-	// minute--e.g., 0, 60, 120, or 300 seconds--are supported. If an invalid value
-	// is given, an error will be returned. When choosing a duration, it is useful
-	// to keep in mind the frequency of the underlying time series data (which may
-	// also be affected by any alignments specified in the aggregations field); a
-	// good duration is long enough so that a single outlier does not generate
-	// spurious alerts, but short enough that unhealthy states are detected and
-	// alerted on quickly.
+	// Duration: Required. The amount of time that a time series must violate the
+	// threshold to be considered failing. Currently, only values that are a
+	// multiple of a minute--e.g., 0, 60, 120, or 300 seconds--are supported. If an
+	// invalid value is given, an error will be returned. When choosing a duration,
+	// it is useful to keep in mind the frequency of the underlying time series
+	// data (which may also be affected by any alignments specified in the
+	// aggregations field); a good duration is long enough so that a single outlier
+	// does not generate spurious alerts, but short enough that unhealthy states
+	// are detected and alerted on quickly.
 	Duration string `json:"duration,omitempty"`
 	// EvaluationMissingData: A condition control that determines how
 	// metric-threshold conditions are evaluated when data stops arriving. To use
@@ -3884,15 +3884,15 @@ func (s MonitoredResourceMetadata) MarshalJSON() ([]byte, error) {
 // policies to be defined using Monitoring Query Language
 // (https://cloud.google.com/monitoring/mql).
 type MonitoringQueryLanguageCondition struct {
-	// Duration: The amount of time that a time series must violate the threshold
-	// to be considered failing. Currently, only values that are a multiple of a
-	// minute--e.g., 0, 60, 120, or 300 seconds--are supported. If an invalid value
-	// is given, an error will be returned. When choosing a duration, it is useful
-	// to keep in mind the frequency of the underlying time series data (which may
-	// also be affected by any alignments specified in the aggregations field); a
-	// good duration is long enough so that a single outlier does not generate
-	// spurious alerts, but short enough that unhealthy states are detected and
-	// alerted on quickly.
+	// Duration: Optional. The amount of time that a time series must violate the
+	// threshold to be considered failing. Currently, only values that are a
+	// multiple of a minute--e.g., 0, 60, 120, or 300 seconds--are supported. If an
+	// invalid value is given, an error will be returned. When choosing a duration,
+	// it is useful to keep in mind the frequency of the underlying time series
+	// data (which may also be affected by any alignments specified in the
+	// aggregations field); a good duration is long enough so that a single outlier
+	// does not generate spurious alerts, but short enough that unhealthy states
+	// are detected and alerted on quickly. The default value is zero.
 	Duration string `json:"duration,omitempty"`
 	// EvaluationMissingData: A condition control that determines how
 	// metric-threshold conditions are evaluated when data stops arriving.

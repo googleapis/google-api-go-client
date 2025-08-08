@@ -542,9 +542,15 @@ type GoogleCloudDialogflowCxV3Action struct {
 	// FlowInvocation: Optional. Action performed on behalf of the agent by
 	// invoking a CX flow.
 	FlowInvocation *GoogleCloudDialogflowCxV3FlowInvocation `json:"flowInvocation,omitempty"`
+	// FlowTransition: Optional. Action performed on behalf of the agent by
+	// transitioning to a target CX flow.
+	FlowTransition *GoogleCloudDialogflowCxV3FlowTransition `json:"flowTransition,omitempty"`
 	// PlaybookInvocation: Optional. Action performed on behalf of the agent by
 	// invoking a child playbook.
 	PlaybookInvocation *GoogleCloudDialogflowCxV3PlaybookInvocation `json:"playbookInvocation,omitempty"`
+	// PlaybookTransition: Optional. Action performed on behalf of the agent by
+	// transitioning to a target playbook.
+	PlaybookTransition *GoogleCloudDialogflowCxV3PlaybookTransition `json:"playbookTransition,omitempty"`
 	// ToolUse: Optional. Action performed on behalf of the agent by calling a
 	// plugin tool.
 	ToolUse *GoogleCloudDialogflowCxV3ToolUse `json:"toolUse,omitempty"`
@@ -3536,6 +3542,9 @@ type GoogleCloudDialogflowCxV3Flow struct {
 	// transition_routes, these handlers are evaluated on a first-match basis. The
 	// first one that matches the event get executed, with the rest being ignored.
 	EventHandlers []*GoogleCloudDialogflowCxV3EventHandler `json:"eventHandlers,omitempty"`
+	// InputParameterDefinitions: Optional. Defined structured input parameters for
+	// this flow.
+	InputParameterDefinitions []*GoogleCloudDialogflowCxV3ParameterDefinition `json:"inputParameterDefinitions,omitempty"`
 	// KnowledgeConnectorSettings: Optional. Knowledge connector configuration.
 	KnowledgeConnectorSettings *GoogleCloudDialogflowCxV3KnowledgeConnectorSettings `json:"knowledgeConnectorSettings,omitempty"`
 	// Locked: Indicates whether the flow is locked for changes. If the flow is
@@ -3548,6 +3557,9 @@ type GoogleCloudDialogflowCxV3Flow struct {
 	Name string `json:"name,omitempty"`
 	// NluSettings: NLU related settings of the flow.
 	NluSettings *GoogleCloudDialogflowCxV3NluSettings `json:"nluSettings,omitempty"`
+	// OutputParameterDefinitions: Optional. Defined structured output parameters
+	// for this flow.
+	OutputParameterDefinitions []*GoogleCloudDialogflowCxV3ParameterDefinition `json:"outputParameterDefinitions,omitempty"`
 	// TransitionRouteGroups: A flow's transition route group serve two purposes: *
 	// They are responsible for matching the user's first utterances in the flow. *
 	// They are inherited by every page's transition route groups. Transition route
@@ -3690,6 +3702,33 @@ type GoogleCloudDialogflowCxV3FlowMultiLanguageSettings struct {
 
 func (s GoogleCloudDialogflowCxV3FlowMultiLanguageSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3FlowMultiLanguageSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3FlowTransition: Stores metadata of the transition
+// to a target CX flow. Flow transition actions exit the caller playbook and
+// enter the child flow.
+type GoogleCloudDialogflowCxV3FlowTransition struct {
+	// DisplayName: Output only. The display name of the flow.
+	DisplayName string `json:"displayName,omitempty"`
+	// Flow: Required. The unique identifier of the flow. Format:
+	// `projects//locations//agents/`.
+	Flow string `json:"flow,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3FlowTransition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3FlowTransition
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4893,6 +4932,38 @@ type GoogleCloudDialogflowCxV3InlineDestination struct {
 
 func (s GoogleCloudDialogflowCxV3InlineDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3InlineDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3InlineSchema: A type schema object that's specified
+// inline.
+type GoogleCloudDialogflowCxV3InlineSchema struct {
+	// Items: Schema of the elements if this is an ARRAY type.
+	Items *GoogleCloudDialogflowCxV3TypeSchema `json:"items,omitempty"`
+	// Type: Data type of the schema.
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Not specified.
+	//   "STRING" - Represents any string value.
+	//   "NUMBER" - Represents any number value.
+	//   "BOOLEAN" - Represents a boolean value.
+	//   "ARRAY" - Represents a repeated value.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3InlineSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3InlineSchema
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6589,6 +6660,47 @@ func (s GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo) MarshalJSON() ([
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3ParameterDefinition: Defines the properties of a
+// parameter. Used to define parameters used in the agent and the input /
+// output parameters for each fulfillment.
+type GoogleCloudDialogflowCxV3ParameterDefinition struct {
+	// Description: Human-readable description of the parameter. Limited to 300
+	// characters.
+	Description string `json:"description,omitempty"`
+	// Name: Required. Name of parameter.
+	Name string `json:"name,omitempty"`
+	// Type: Type of parameter.
+	//
+	// Possible values:
+	//   "PARAMETER_TYPE_UNSPECIFIED" - Not specified. No validation will be
+	// performed.
+	//   "STRING" - Represents any string value.
+	//   "NUMBER" - Represents any number value.
+	//   "BOOLEAN" - Represents a boolean value.
+	//   "NULL" - Represents a null value.
+	//   "OBJECT" - Represents any object value.
+	//   "LIST" - Represents a repeated value.
+	Type string `json:"type,omitempty"`
+	// TypeSchema: Optional. Type schema of parameter.
+	TypeSchema *GoogleCloudDialogflowCxV3TypeSchema `json:"typeSchema,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3ParameterDefinition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ParameterDefinition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3Phrase: Text input which can be used for prompt or
 // banned phrases.
 type GoogleCloudDialogflowCxV3Phrase struct {
@@ -6632,6 +6744,9 @@ type GoogleCloudDialogflowCxV3Playbook struct {
 	// Handlers: Optional. A list of registered handlers to execuate based on the
 	// specified triggers.
 	Handlers []*GoogleCloudDialogflowCxV3Handler `json:"handlers,omitempty"`
+	// InputParameterDefinitions: Optional. Defined structured input parameters for
+	// this playbook.
+	InputParameterDefinitions []*GoogleCloudDialogflowCxV3ParameterDefinition `json:"inputParameterDefinitions,omitempty"`
 	// Instruction: Instruction to accomplish target goal.
 	Instruction *GoogleCloudDialogflowCxV3PlaybookInstruction `json:"instruction,omitempty"`
 	// LlmModelSettings: Optional. Llm model settings for the playbook.
@@ -6639,6 +6754,16 @@ type GoogleCloudDialogflowCxV3Playbook struct {
 	// Name: The unique identifier of the playbook. Format:
 	// `projects//locations//agents//playbooks/`.
 	Name string `json:"name,omitempty"`
+	// OutputParameterDefinitions: Optional. Defined structured output parameters
+	// for this playbook.
+	OutputParameterDefinitions []*GoogleCloudDialogflowCxV3ParameterDefinition `json:"outputParameterDefinitions,omitempty"`
+	// PlaybookType: Optional. Type of the playbook.
+	//
+	// Possible values:
+	//   "PLAYBOOK_TYPE_UNSPECIFIED" - Unspecified type. Default to TASK.
+	//   "TASK" - Task playbook.
+	//   "ROUTINE" - Routine playbook.
+	PlaybookType string `json:"playbookType,omitempty"`
 	// ReferencedFlows: Output only. The resource name of flows referenced by the
 	// current playbook in the instructions.
 	ReferencedFlows []string `json:"referencedFlows,omitempty"`
@@ -6883,6 +7008,33 @@ type GoogleCloudDialogflowCxV3PlaybookStep struct {
 
 func (s GoogleCloudDialogflowCxV3PlaybookStep) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3PlaybookStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3PlaybookTransition: Stores metadata of the
+// transition to another target playbook. Playbook transition actions exit the
+// caller playbook and enter the target playbook.
+type GoogleCloudDialogflowCxV3PlaybookTransition struct {
+	// DisplayName: Output only. The display name of the playbook.
+	DisplayName string `json:"displayName,omitempty"`
+	// Playbook: Required. The unique identifier of the playbook. Format:
+	// `projects//locations//agents//playbooks/`.
+	Playbook string `json:"playbook,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3PlaybookTransition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3PlaybookTransition
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9625,6 +9777,58 @@ func (s *GoogleCloudDialogflowCxV3TurnSignals) UnmarshalJSON(data []byte) error 
 	s.SentimentMagnitude = float64(s1.SentimentMagnitude)
 	s.SentimentScore = float64(s1.SentimentScore)
 	return nil
+}
+
+// GoogleCloudDialogflowCxV3TypeSchema: Encapsulates different type schema
+// variations: either a reference to an a schema that's already defined by a
+// tool, or an inline definition.
+type GoogleCloudDialogflowCxV3TypeSchema struct {
+	// InlineSchema: Set if this is an inline schema definition.
+	InlineSchema *GoogleCloudDialogflowCxV3InlineSchema `json:"inlineSchema,omitempty"`
+	// SchemaReference: Set if this is a schema reference.
+	SchemaReference *GoogleCloudDialogflowCxV3TypeSchemaSchemaReference `json:"schemaReference,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InlineSchema") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InlineSchema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3TypeSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3TypeSchema
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3TypeSchemaSchemaReference: A reference to the
+// schema of an existing tool.
+type GoogleCloudDialogflowCxV3TypeSchemaSchemaReference struct {
+	// Schema: The name of the schema.
+	Schema string `json:"schema,omitempty"`
+	// Tool: The tool that contains this schema definition. Format:
+	// `projects//locations//agents//tools/`.
+	Tool string `json:"tool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Schema") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Schema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3TypeSchemaSchemaReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3TypeSchemaSchemaReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3UserUtterance: UserUtterance represents one message

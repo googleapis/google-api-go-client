@@ -2829,6 +2829,10 @@ func (s DeactivateSubscriptionOfferRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeferredItemRemoval: Information related to deferred item replacement.
+type DeferredItemRemoval struct {
+}
+
 // DeferredItemReplacement: Information related to deferred item replacement.
 type DeferredItemReplacement struct {
 	// ProductId: The product_id going to replace the existing product_id.
@@ -8327,6 +8331,8 @@ func (s SubscriptionPurchase) MarshalJSON() ([]byte, error) {
 type SubscriptionPurchaseLineItem struct {
 	// AutoRenewingPlan: The item is auto renewing.
 	AutoRenewingPlan *AutoRenewingPlan `json:"autoRenewingPlan,omitempty"`
+	// DeferredItemRemoval: Information for deferred item removal.
+	DeferredItemRemoval *DeferredItemRemoval `json:"deferredItemRemoval,omitempty"`
 	// DeferredItemReplacement: Information for deferred item replacement.
 	DeferredItemReplacement *DeferredItemReplacement `json:"deferredItemReplacement,omitempty"`
 	// ExpiryTime: Time at which the subscription expired or will expire unless the

@@ -989,8 +989,9 @@ func (s GoogleCloudDataplexV1AspectType) MarshalJSON() ([]byte, error) {
 // AspectType.
 type GoogleCloudDataplexV1AspectTypeAuthorization struct {
 	// AlternateUsePermission: Immutable. The IAM permission grantable on the
-	// EntryGroup to allow access to instantiate Aspects of Dataplex owned
-	// AspectTypes, only settable for Dataplex owned Types.
+	// EntryGroup to allow access to instantiate Aspects of Dataplex Universal
+	// Catalog owned AspectTypes, only settable for Dataplex Universal Catalog
+	// owned Types.
 	AlternateUsePermission string `json:"alternateUsePermission,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AlternateUsePermission") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2292,7 +2293,7 @@ type GoogleCloudDataplexV1DataProfileResultProfileField struct {
 	// Type: The data type retrieved from the schema of the data source. For
 	// instance, for a BigQuery native table, it is the BigQuery Table Schema
 	// (https://cloud.google.com/bigquery/docs/reference/rest/v2/tables#tablefieldschema).
-	// For a Dataplex Entity, it is the Entity Schema
+	// For a Dataplex Universal Catalog Entity, it is the Entity Schema
 	// (https://cloud.google.com/dataplex/docs/reference/rpc/google.cloud.dataplex.v1#type_3).
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
@@ -2830,7 +2831,7 @@ func (s *GoogleCloudDataplexV1DataQualityDimensionResult) UnmarshalJSON(data []b
 // GoogleCloudDataplexV1DataQualityResult: The output of a DataQualityScan.
 type GoogleCloudDataplexV1DataQualityResult struct {
 	// CatalogPublishingStatus: Output only. The status of publishing the data scan
-	// to Catalog.
+	// as Dataplex Universal Catalog metadata.
 	CatalogPublishingStatus *GoogleCloudDataplexV1DataScanCatalogPublishingStatus `json:"catalogPublishingStatus,omitempty"`
 	// Columns: Output only. A list of results at the column level.A column will
 	// have a corresponding DataQualityColumnResult if and only if there is at
@@ -3406,7 +3407,7 @@ func (s *GoogleCloudDataplexV1DataQualityScanRuleResult) UnmarshalJSON(data []by
 // GoogleCloudDataplexV1DataQualitySpec: DataQualityScan related setting.
 type GoogleCloudDataplexV1DataQualitySpec struct {
 	// CatalogPublishingEnabled: Optional. If set, the latest DataScan job result
-	// will be published to Dataplex Catalog.
+	// will be published as Dataplex Universal Catalog metadata.
 	CatalogPublishingEnabled bool `json:"catalogPublishingEnabled,omitempty"`
 	// PostScanActions: Optional. Actions to take upon job completion.
 	PostScanActions *GoogleCloudDataplexV1DataQualitySpecPostScanActions `json:"postScanActions,omitempty"`
@@ -3707,7 +3708,7 @@ func (s GoogleCloudDataplexV1DataScan) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDataplexV1DataScanCatalogPublishingStatus: The status of
-// publishing the data scan result to Catalog.
+// publishing the data scan result as Dataplex Universal Catalog metadata.
 type GoogleCloudDataplexV1DataScanCatalogPublishingStatus struct {
 	// State: Output only. Execution state for catalog publishing.
 	//
@@ -3737,7 +3738,8 @@ func (s GoogleCloudDataplexV1DataScanCatalogPublishingStatus) MarshalJSON() ([]b
 // GoogleCloudDataplexV1DataScanEvent: These messages contain information about
 // the execution of a datascan. The monitored resource is 'DataScan'
 type GoogleCloudDataplexV1DataScanEvent struct {
-	// CatalogPublishingStatus: The status of publishing the data scan to Catalog.
+	// CatalogPublishingStatus: The status of publishing the data scan as Dataplex
+	// Universal Catalog metadata.
 	CatalogPublishingStatus *GoogleCloudDataplexV1DataScanCatalogPublishingStatus `json:"catalogPublishingStatus,omitempty"`
 	// CreateTime: The time when the data scan job was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -4163,8 +4165,8 @@ func (s GoogleCloudDataplexV1DataScanJob) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudDataplexV1DataSource: The data source for DataScan.
 type GoogleCloudDataplexV1DataSource struct {
-	// Entity: Immutable. The Dataplex entity that represents the data source (e.g.
-	// BigQuery table) for DataScan, of the form:
+	// Entity: Immutable. The Dataplex Universal Catalog entity that represents the
+	// data source (e.g. BigQuery table) for DataScan, of the form:
 	// projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone
 	// _id}/entities/{entity_id}.
 	Entity string `json:"entity,omitempty"`
@@ -4700,7 +4702,8 @@ type GoogleCloudDataplexV1Entry struct {
 	// attached to an entry's path:
 	// {project_id_or_number}.{location_id}.{aspect_type_id}@{path}
 	Aspects map[string]GoogleCloudDataplexV1Aspect `json:"aspects,omitempty"`
-	// CreateTime: Output only. The time when the entry was created in Dataplex.
+	// CreateTime: Output only. The time when the entry was created in Dataplex
+	// Universal Catalog.
 	CreateTime string `json:"createTime,omitempty"`
 	// EntrySource: Optional. Information related to the source system of the data
 	// resource that is represented by the entry.
@@ -4725,7 +4728,7 @@ type GoogleCloudDataplexV1Entry struct {
 	// oup_id}/entries/{entry_id}.
 	ParentEntry string `json:"parentEntry,omitempty"`
 	// UpdateTime: Output only. The time when the entry was last updated in
-	// Dataplex.
+	// Dataplex Universal Catalog.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5083,8 +5086,8 @@ func (s GoogleCloudDataplexV1EntryTypeAspectInfo) MarshalJSON() ([]byte, error) 
 // Type.
 type GoogleCloudDataplexV1EntryTypeAuthorization struct {
 	// AlternateUsePermission: Immutable. The IAM permission grantable on the Entry
-	// Group to allow access to instantiate Entries of Dataplex owned Entry Types,
-	// only settable for Dataplex owned Types.
+	// Group to allow access to instantiate Entries of Dataplex Universal Catalog
+	// owned Entry Types, only settable for Dataplex Universal Catalog owned Types.
 	AlternateUsePermission string `json:"alternateUsePermission,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AlternateUsePermission") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5251,7 +5254,7 @@ func (s GoogleCloudDataplexV1EnvironmentInfrastructureSpecComputeResources) Mars
 // GoogleCloudDataplexV1EnvironmentInfrastructureSpecOsImageRuntime: Software
 // Runtime Configuration to run Analyze.
 type GoogleCloudDataplexV1EnvironmentInfrastructureSpecOsImageRuntime struct {
-	// ImageVersion: Required. Dataplex Image version.
+	// ImageVersion: Required. Dataplex Universal Catalog Image version.
 	ImageVersion string `json:"imageVersion,omitempty"`
 	// JavaLibraries: Optional. List of Java jars to be included in the runtime
 	// environment. Valid input includes Cloud Storage URIs to Jar binaries. For
@@ -5346,8 +5349,8 @@ type GoogleCloudDataplexV1GenerateDataQualityRulesRequest struct {
 // GoogleCloudDataplexV1GenerateDataQualityRulesResponse: Response details for
 // data quality rule recommendations.
 type GoogleCloudDataplexV1GenerateDataQualityRulesResponse struct {
-	// Rule: The data quality rules that Dataplex generates based on the results of
-	// a data profiling scan.
+	// Rule: The data quality rules that Dataplex Universal Catalog generates based
+	// on the results of a data profiling scan.
 	Rule []*GoogleCloudDataplexV1DataQualityRule `json:"rule,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5633,7 +5636,8 @@ type GoogleCloudDataplexV1ImportItem struct {
 	// {project_id_or_number}.{location_id}.{aspect_type_id}.In FULL entry sync
 	// mode, if you leave this field empty, it is treated as specifying exactly
 	// those aspects that are present within the specified entry. Dataplex
-	// implicitly adds the keys for all of the required aspects of an entry.
+	// Universal Catalog implicitly adds the keys for all of the required aspects
+	// of an entry.
 	AspectKeys []string `json:"aspectKeys,omitempty"`
 	// Entry: Information about an entry and its attached aspects.
 	Entry *GoogleCloudDataplexV1Entry `json:"entry,omitempty"`
@@ -5643,17 +5647,17 @@ type GoogleCloudDataplexV1ImportItem struct {
 	EntryLink *GoogleCloudDataplexV1EntryLink `json:"entryLink,omitempty"`
 	// UpdateMask: The fields to update, in paths that are relative to the Entry
 	// resource. Separate each field with a comma.In FULL entry sync mode, Dataplex
-	// includes the paths of all of the fields for an entry that can be modified,
-	// including aspects. This means that Dataplex replaces the existing entry with
-	// the entry in the metadata import file. All modifiable fields are updated,
-	// regardless of the fields that are listed in the update mask, and regardless
-	// of whether a field is present in the entry object.The update_mask field is
-	// ignored when an entry is created or re-created.In an aspect-only metadata
-	// job (when entry sync mode is NONE), set this value to aspects.Dataplex also
-	// determines which entries and aspects to modify by comparing the values and
-	// timestamps that you provide in the metadata import file with the values and
-	// timestamps that exist in your project. For more information, see Comparison
-	// logic
+	// Universal Catalog includes the paths of all of the fields for an entry that
+	// can be modified, including aspects. This means that Dataplex Universal
+	// Catalog replaces the existing entry with the entry in the metadata import
+	// file. All modifiable fields are updated, regardless of the fields that are
+	// listed in the update mask, and regardless of whether a field is present in
+	// the entry object.The update_mask field is ignored when an entry is created
+	// or re-created.In an aspect-only metadata job (when entry sync mode is NONE),
+	// set this value to aspects.Dataplex Universal Catalog also determines which
+	// entries and aspects to modify by comparing the values and timestamps that
+	// you provide in the metadata import file with the values and timestamps that
+	// exist in your project. For more information, see Comparison logic
 	// (https://cloud.google.com/dataplex/docs/import-metadata#data-modification-logic).
 	UpdateMask string `json:"updateMask,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AspectKeys") to
@@ -5711,14 +5715,14 @@ type GoogleCloudDataplexV1Job struct {
 	//   "CANCELLED" - The job cancellation was successful.
 	//   "SUCCEEDED" - The job completed successfully.
 	//   "FAILED" - The job is no longer running due to an error.
-	//   "ABORTED" - The job was cancelled outside of Dataplex.
+	//   "ABORTED" - The job was cancelled outside of Dataplex Universal Catalog.
 	State string `json:"state,omitempty"`
 	// Trigger: Output only. Job execution trigger.
 	//
 	// Possible values:
 	//   "TRIGGER_UNSPECIFIED" - The trigger is unspecified.
-	//   "TASK_CONFIG" - The job was triggered by Dataplex based on trigger spec
-	// from task definition.
+	//   "TASK_CONFIG" - The job was triggered by Dataplex Universal Catalog based
+	// on trigger spec from task definition.
 	//   "RUN_REQUEST" - The job was triggered by the explicit call of Task API.
 	Trigger string `json:"trigger,omitempty"`
 	// Uid: Output only. System generated globally unique ID for the job.
@@ -5754,8 +5758,8 @@ type GoogleCloudDataplexV1JobEvent struct {
 	// Possible values:
 	//   "EXECUTION_TRIGGER_UNSPECIFIED" - The job execution trigger is
 	// unspecified.
-	//   "TASK_CONFIG" - The job was triggered by Dataplex based on trigger spec
-	// from task definition.
+	//   "TASK_CONFIG" - The job was triggered by Dataplex Universal Catalog based
+	// on trigger spec from task definition.
 	//   "RUN_REQUEST" - The job was triggered by the explicit call of Task API.
 	ExecutionTrigger string `json:"executionTrigger,omitempty"`
 	// JobId: The unique id identifying the job.
@@ -6765,9 +6769,10 @@ type GoogleCloudDataplexV1MetadataJobExportJobSpec struct {
 	// the metadata to, in the format gs://{bucket}/. You can optionally specify a
 	// custom prefix after the bucket name, in the format gs://{bucket}/{prefix}/.
 	// The maximum length of the custom prefix is 128 characters. Dataplex
-	// constructs the object path for the exported files by using the bucket name
-	// and prefix that you provide, followed by a system-generated path.The bucket
-	// must be in the same VPC Service Controls perimeter as the job.
+	// Universal Catalog constructs the object path for the exported files by using
+	// the bucket name and prefix that you provide, followed by a system-generated
+	// path.The bucket must be in the same VPC Service Controls perimeter as the
+	// job.
 	OutputPath string `json:"outputPath,omitempty"`
 	// Scope: Required. The scope of the export job.
 	Scope *GoogleCloudDataplexV1MetadataJobExportJobSpecExportJobScope `json:"scope,omitempty"`
@@ -6903,10 +6908,10 @@ type GoogleCloudDataplexV1MetadataJobImportJobSpec struct {
 	// Possible values:
 	//   "SYNC_MODE_UNSPECIFIED" - Sync mode unspecified.
 	//   "FULL" - All resources in the job's scope are modified. If a resource
-	// exists in Dataplex but isn't included in the metadata import file, the
-	// resource is deleted when you run the metadata job. Use this mode to perform
-	// a full sync of the set of entries in the job scope.This sync mode is
-	// supported for entries.
+	// exists in Dataplex Universal Catalog but isn't included in the metadata
+	// import file, the resource is deleted when you run the metadata job. Use this
+	// mode to perform a full sync of the set of entries in the job scope.This sync
+	// mode is supported for entries.
 	//   "INCREMENTAL" - Only the resources that are explicitly included in the
 	// metadata import file are modified. Use this mode to modify a subset of
 	// resources while leaving unreferenced resources unchanged.This sync mode is
@@ -6920,10 +6925,10 @@ type GoogleCloudDataplexV1MetadataJobImportJobSpec struct {
 	// Possible values:
 	//   "SYNC_MODE_UNSPECIFIED" - Sync mode unspecified.
 	//   "FULL" - All resources in the job's scope are modified. If a resource
-	// exists in Dataplex but isn't included in the metadata import file, the
-	// resource is deleted when you run the metadata job. Use this mode to perform
-	// a full sync of the set of entries in the job scope.This sync mode is
-	// supported for entries.
+	// exists in Dataplex Universal Catalog but isn't included in the metadata
+	// import file, the resource is deleted when you run the metadata job. Use this
+	// mode to perform a full sync of the set of entries in the job scope.This sync
+	// mode is supported for entries.
 	//   "INCREMENTAL" - Only the resources that are explicitly included in the
 	// metadata import file are modified. Use this mode to modify a subset of
 	// resources while leaving unreferenced resources unchanged.This sync mode is
@@ -7368,14 +7373,15 @@ type GoogleCloudDataplexV1Schema struct {
 	// gs://bucket/path/to/table/dt=2019-10-31/lang=en/late.
 	PartitionStyle string `json:"partitionStyle,omitempty"`
 	// UserManaged: Required. Set to true if user-managed or false if managed by
-	// Dataplex. The default is false (managed by Dataplex). Set to falseto enable
-	// Dataplex discovery to update the schema. including new data discovery,
-	// schema inference, and schema evolution. Users retain the ability to input
-	// and edit the schema. Dataplex treats schema input by the user as though
-	// produced by a previous Dataplex discovery operation, and it will evolve the
-	// schema and take action based on that treatment. Set to true to fully manage
-	// the entity schema. This setting guarantees that Dataplex will not change
-	// schema fields.
+	// Dataplex Universal Catalog. The default is false (managed by Dataplex
+	// Universal Catalog). Set to falseto enable Dataplex Universal Catalog
+	// discovery to update the schema. including new data discovery, schema
+	// inference, and schema evolution. Users retain the ability to input and edit
+	// the schema. Dataplex Universal Catalog treats schema input by the user as
+	// though produced by a previous Dataplex Universal Catalog discovery
+	// operation, and it will evolve the schema and take action based on that
+	// treatment. Set to true to fully manage the entity schema. This setting
+	// guarantees that Dataplex Universal Catalog will not change schema fields.
 	UserManaged bool `json:"userManaged,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -11019,7 +11025,7 @@ func (c *ProjectsLocationsSearchEntriesCall) PageToken(pageToken string) *Projec
 
 // Query sets the optional parameter "query": Required. The query against which
 // entries in scope should be matched. The query syntax is defined in Search
-// syntax for Dataplex Catalog
+// syntax for Dataplex Universal Catalog
 // (https://cloud.google.com/dataplex/docs/search-syntax).
 func (c *ProjectsLocationsSearchEntriesCall) Query(query string) *ProjectsLocationsSearchEntriesCall {
 	c.urlParams_.Set("query", query)
@@ -33054,8 +33060,7 @@ type ProjectsLocationsMetadataJobsCreateCall struct {
 }
 
 // Create: Creates a metadata job. For example, use a metadata job to import
-// Dataplex Catalog entries and aspects from a third-party system into
-// Dataplex.
+// metadata from a third-party system into Dataplex Universal Catalog.
 //
 //   - parent: The resource name of the parent location, in the format
 //     projects/{project_id_or_number}/locations/{location_id}.

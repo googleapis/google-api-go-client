@@ -532,10 +532,10 @@ type Empty struct {
 
 // ErrorLogEntry: An entry describing an error that has occurred.
 type ErrorLogEntry struct {
-	// ErrorDetails: A list of messages that carry the error details.
+	// ErrorDetails: Optional. A list of messages that carry the error details.
 	ErrorDetails []string `json:"errorDetails,omitempty"`
-	// Url: Required. A URL that refers to the target (a data source, a data sink,
-	// or an object) with which the error is associated.
+	// Url: Output only. A URL that refers to the target (a data source, a data
+	// sink, or an object) with which the error is associated.
 	Url string `json:"url,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ErrorDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1927,15 +1927,15 @@ func (s TransferOptions) MarshalJSON() ([]byte, error) {
 
 // TransferSpec: Configuration for running a transfer.
 type TransferSpec struct {
-	// AwsS3CompatibleDataSource: An AWS S3 compatible data source.
+	// AwsS3CompatibleDataSource: Optional. An AWS S3 compatible data source.
 	AwsS3CompatibleDataSource *AwsS3CompatibleData `json:"awsS3CompatibleDataSource,omitempty"`
-	// AwsS3DataSource: An AWS S3 data source.
+	// AwsS3DataSource: Optional. An AWS S3 data source.
 	AwsS3DataSource *AwsS3Data `json:"awsS3DataSource,omitempty"`
-	// AzureBlobStorageDataSource: An Azure Blob Storage data source.
+	// AzureBlobStorageDataSource: Optional. An Azure Blob Storage data source.
 	AzureBlobStorageDataSource *AzureBlobStorageData `json:"azureBlobStorageDataSource,omitempty"`
-	// GcsDataSink: A Cloud Storage data sink.
+	// GcsDataSink: Optional. A Cloud Storage data sink.
 	GcsDataSink *GcsData `json:"gcsDataSink,omitempty"`
-	// GcsDataSource: A Cloud Storage data source.
+	// GcsDataSource: Optional. A Cloud Storage data source.
 	GcsDataSource *GcsData `json:"gcsDataSource,omitempty"`
 	// GcsIntermediateDataLocation: For transfers between file systems, specifies a
 	// Cloud Storage bucket to be used as an intermediate location through which to
@@ -1943,18 +1943,18 @@ type TransferSpec struct {
 	// (https://cloud.google.com/storage-transfer/docs/file-to-file) for more
 	// information.
 	GcsIntermediateDataLocation *GcsData `json:"gcsIntermediateDataLocation,omitempty"`
-	// HdfsDataSource: An HDFS cluster data source.
+	// HdfsDataSource: Optional. An HDFS cluster data source.
 	HdfsDataSource *HdfsData `json:"hdfsDataSource,omitempty"`
-	// HttpDataSource: An HTTP URL data source.
+	// HttpDataSource: Optional. An HTTP URL data source.
 	HttpDataSource *HttpData `json:"httpDataSource,omitempty"`
 	// ObjectConditions: Only objects that satisfy these object conditions are
 	// included in the set of data source and data sink objects. Object conditions
 	// based on objects' "last modification time" do not exclude objects in a data
 	// sink.
 	ObjectConditions *ObjectConditions `json:"objectConditions,omitempty"`
-	// PosixDataSink: A POSIX Filesystem data sink.
+	// PosixDataSink: Optional. A POSIX Filesystem data sink.
 	PosixDataSink *PosixFilesystem `json:"posixDataSink,omitempty"`
-	// PosixDataSource: A POSIX Filesystem data source.
+	// PosixDataSource: Optional. A POSIX Filesystem data source.
 	PosixDataSource *PosixFilesystem `json:"posixDataSource,omitempty"`
 	// SinkAgentPoolName: Specifies the agent pool name associated with the posix
 	// data sink. When unspecified, the default name is used.

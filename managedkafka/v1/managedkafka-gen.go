@@ -7622,6 +7622,29 @@ func (r *ProjectsLocationsSchemaRegistriesService) List(parent string) *Projects
 	return c
 }
 
+// View sets the optional parameter "view": Specifies the view to return for
+// the schema registry instances. If not specified, the default view is
+// SCHEMA_REGISTRY_VIEW_BASIC.
+//
+// Possible values:
+//
+//	"SCHEMA_REGISTRY_VIEW_UNSPECIFIED" - The unset value. The API will default
+//
+// to SCHEMA_REGISTRY_VIEW_BASIC.
+//
+//	"SCHEMA_REGISTRY_VIEW_BASIC" - If SchemaRegistryView is not specified,
+//
+// this is the default value. Returns only the name of the schema registry. The
+// contexts associated with it are not included.
+//
+//	"SCHEMA_REGISTRY_VIEW_FULL" - Returns the name of the schema registry and
+//
+// all the contexts associated with it.
+func (c *ProjectsLocationsSchemaRegistriesListCall) View(view string) *ProjectsLocationsSchemaRegistriesListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.

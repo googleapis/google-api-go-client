@@ -4502,6 +4502,10 @@ type WorkerConfig struct {
 	// Specify a value of up to 4000. If `0` is specified, Cloud Build will use a
 	// standard disk size.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
+	// EnableNestedVirtualization: Optional. Enable nested virtualization on the
+	// worker, if supported by the machine type. By default, nested virtualization
+	// is disabled.
+	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
 	// MachineType: Optional. Machine type of a worker, such as `e2-medium`. See
 	// Worker pool config file
 	// (https://cloud.google.com/build/docs/private-pools/worker-pool-config-file-schema).

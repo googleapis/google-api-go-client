@@ -1632,6 +1632,7 @@ type ReplicaConfig struct {
 	//   "FAILED" - The replica is experiencing an issue and might be unusable. You
 	// can get further details from the `stateReasons` field of the `ReplicaConfig`
 	// object.
+	//   "PROMOTING" - The replica is being promoted.
 	State string `json:"state,omitempty"`
 	// StateReasons: Output only. Additional information about the replication
 	// state, if available.

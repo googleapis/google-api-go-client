@@ -1048,6 +1048,14 @@ type PostgreSql struct {
 	CloudSql *CloudSqlInstance `json:"cloudSql,omitempty"`
 	// Database: Required. Name of the PostgreSQL database.
 	Database string `json:"database,omitempty"`
+	// Ephemeral: Output only. Ephemeral is true if this data connect service is
+	// served from in-memory emulation of Postgres. Data Connect service will
+	// transfer the data on a best-effort basis to the Cloud SQL instance once it's
+	// provisioned and linked. WARNING: When `ephemeral=true`, mutations to the
+	// database are not guaranteed to be durably persisted, even if an OK status
+	// code is returned. All or parts of the data may be lost or reverted to
+	// earlier versions.
+	Ephemeral bool `json:"ephemeral,omitempty"`
 	// SchemaMigration: Optional. Configure how to perform Postgresql schema
 	// migration.
 	//

@@ -923,6 +923,8 @@ type CryptoKey struct {
 	// interoperable symmetric encryption and does not support automatic CryptoKey
 	// rotation.
 	//   "MAC" - CryptoKeys with this purpose may be used with MacSign.
+	//   "KEY_ENCAPSULATION" - CryptoKeys with this purpose may be used with
+	// GetPublicKey and Decapsulate.
 	Purpose string `json:"purpose,omitempty"`
 	// RotationPeriod: next_rotation_time will be advanced by this period when the
 	// service automatically rotates a key. Must be at least 24 hours and at most
@@ -1023,6 +1025,10 @@ type CryptoKeyVersion struct {
 	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
+	//   "ML_KEM_768" - ML-KEM-768 (FIPS 203)
+	//   "ML_KEM_1024" - ML-KEM-1024 (FIPS 203)
+	//   "KEM_XWING" - X-Wing hybrid KEM combining ML-KEM-768 with X25519 following
+	// datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/.
 	//   "PQ_SIGN_ML_DSA_65" - The post-quantum Module-Lattice-Based Digital
 	// Signature Algorithm, at security level 3. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
@@ -1211,6 +1217,10 @@ type CryptoKeyVersionTemplate struct {
 	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
+	//   "ML_KEM_768" - ML-KEM-768 (FIPS 203)
+	//   "ML_KEM_1024" - ML-KEM-1024 (FIPS 203)
+	//   "KEM_XWING" - X-Wing hybrid KEM combining ML-KEM-768 with X25519 following
+	// datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/.
 	//   "PQ_SIGN_ML_DSA_65" - The post-quantum Module-Lattice-Based Digital
 	// Signature Algorithm, at security level 3. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
@@ -1245,6 +1255,105 @@ type CryptoKeyVersionTemplate struct {
 
 func (s CryptoKeyVersionTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod CryptoKeyVersionTemplate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DecapsulateRequest: Request message for KeyManagementService.Decapsulate.
+type DecapsulateRequest struct {
+	// Ciphertext: Required. The ciphertext produced from encapsulation with the
+	// named CryptoKeyVersion public key(s).
+	Ciphertext string `json:"ciphertext,omitempty"`
+	// CiphertextCrc32c: Optional. A CRC32C checksum of the
+	// DecapsulateRequest.ciphertext. If specified, KeyManagementService will
+	// verify the integrity of the received DecapsulateRequest.ciphertext using
+	// this checksum. KeyManagementService will report an error if the checksum
+	// verification fails. If you receive a checksum error, your client should
+	// verify that CRC32C(DecapsulateRequest.ciphertext) is equal to
+	// DecapsulateRequest.ciphertext_crc32c, and if so, perform a limited number of
+	// retries. A persistent mismatch may indicate an issue in your computation of
+	// the CRC32C checksum. Note: This field is defined as int64 for reasons of
+	// compatibility across different languages. However, it is a non-negative
+	// integer, which will never exceed 2^32-1, and can be safely downconverted to
+	// uint32 in languages that support this type.
+	CiphertextCrc32c int64 `json:"ciphertextCrc32c,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Ciphertext") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Ciphertext") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DecapsulateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DecapsulateRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DecapsulateResponse: Response message for KeyManagementService.Decapsulate.
+type DecapsulateResponse struct {
+	// Name: The resource name of the CryptoKeyVersion used for decapsulation.
+	// Check this field to verify that the intended resource was used for
+	// decapsulation.
+	Name string `json:"name,omitempty"`
+	// ProtectionLevel: The ProtectionLevel of the CryptoKeyVersion used in
+	// decapsulation.
+	//
+	// Possible values:
+	//   "PROTECTION_LEVEL_UNSPECIFIED" - Not specified.
+	//   "SOFTWARE" - Crypto operations are performed in software.
+	//   "HSM" - Crypto operations are performed in a Hardware Security Module.
+	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
+	ProtectionLevel string `json:"protectionLevel,omitempty"`
+	// SharedSecret: The decapsulated shared_secret originally encapsulated with
+	// the matching public key.
+	SharedSecret string `json:"sharedSecret,omitempty"`
+	// SharedSecretCrc32c: Integrity verification field. A CRC32C checksum of the
+	// returned DecapsulateResponse.shared_secret. An integrity check of
+	// DecapsulateResponse.shared_secret can be performed by computing the CRC32C
+	// checksum of DecapsulateResponse.shared_secret and comparing your results to
+	// this field. Discard the response in case of non-matching checksum values,
+	// and perform a limited number of retries. A persistent mismatch may indicate
+	// an issue in your computation of the CRC32C checksum. Note: receiving this
+	// response message indicates that KeyManagementService is able to successfully
+	// decrypt the ciphertext. Note: This field is defined as int64 for reasons of
+	// compatibility across different languages. However, it is a non-negative
+	// integer, which will never exceed 2^32-1, and can be safely downconverted to
+	// uint32 in languages that support this type.
+	SharedSecretCrc32c int64 `json:"sharedSecretCrc32c,omitempty,string"`
+	// VerifiedCiphertextCrc32c: Integrity verification field. A flag indicating
+	// whether DecapsulateRequest.ciphertext_crc32c was received by
+	// KeyManagementService and used for the integrity verification of the
+	// ciphertext. A false value of this field indicates either that
+	// DecapsulateRequest.ciphertext_crc32c was left unset or that it was not
+	// delivered to KeyManagementService. If you've set
+	// DecapsulateRequest.ciphertext_crc32c but this field is still false, discard
+	// the response and perform a limited number of retries.
+	VerifiedCiphertextCrc32c bool `json:"verifiedCiphertextCrc32c,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DecapsulateResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod DecapsulateResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1821,6 +1930,10 @@ type ImportCryptoKeyVersionRequest struct {
 	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
+	//   "ML_KEM_768" - ML-KEM-768 (FIPS 203)
+	//   "ML_KEM_1024" - ML-KEM-1024 (FIPS 203)
+	//   "KEM_XWING" - X-Wing hybrid KEM combining ML-KEM-768 with X25519 following
+	// datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/.
 	//   "PQ_SIGN_ML_DSA_65" - The post-quantum Module-Lattice-Based Digital
 	// Signature Algorithm, at security level 3. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
@@ -2933,6 +3046,10 @@ type PublicKey struct {
 	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
+	//   "ML_KEM_768" - ML-KEM-768 (FIPS 203)
+	//   "ML_KEM_1024" - ML-KEM-1024 (FIPS 203)
+	//   "KEM_XWING" - X-Wing hybrid KEM combining ML-KEM-768 with X25519 following
+	// datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/.
 	//   "PQ_SIGN_ML_DSA_65" - The post-quantum Module-Lattice-Based Digital
 	// Signature Algorithm, at security level 3. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
@@ -2988,9 +3105,14 @@ type PublicKey struct {
 	// Considerations](https://tools.ietf.org/html/rfc7468#section-2) and [Textual
 	// Encoding of Subject Public Key Info]
 	// (https://tools.ietf.org/html/rfc7468#section-13) for more information.
+	//   "DER" - The returned public key will be encoded in DER format (the
+	// PrivateKeyInfo structure from RFC 5208).
 	//   "NIST_PQC" - This is supported only for PQC algorithms. The key material
 	// is returned in the format defined by NIST PQC standards (FIPS 203, FIPS 204,
 	// and FIPS 205).
+	//   "XWING_RAW_BYTES" - The returned public key is in raw bytes format defined
+	// in its standard
+	// https://datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem.
 	PublicKeyFormat string `json:"publicKeyFormat,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -9416,6 +9538,112 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall) Do(opts
 	return ret, nil
 }
 
+type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDecapsulateCall struct {
+	s                  *Service
+	name               string
+	decapsulaterequest *DecapsulateRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Decapsulate: Decapsulates data that was encapsulated with a public key
+// retrieved from GetPublicKey corresponding to a CryptoKeyVersion with
+// CryptoKey.purpose KEY_ENCAPSULATION.
+//
+// - name: The resource name of the CryptoKeyVersion to use for decapsulation.
+func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Decapsulate(name string, decapsulaterequest *DecapsulateRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDecapsulateCall {
+	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDecapsulateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.decapsulaterequest = decapsulaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDecapsulateCall) Fields(s ...googleapi.Field) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDecapsulateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDecapsulateCall) Context(ctx context.Context) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDecapsulateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDecapsulateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDecapsulateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.decapsulaterequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:decapsulate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.decapsulate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.decapsulate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DecapsulateResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDecapsulateCall) Do(opts ...googleapi.CallOption) (*DecapsulateResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DecapsulateResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.decapsulate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall struct {
 	s                              *Service
 	name                           string
@@ -9676,10 +9904,19 @@ func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) GetPublicK
 // Encoding of Subject Public Key Info]
 // (https://tools.ietf.org/html/rfc7468#section-13) for more information.
 //
+//	"DER" - The returned public key will be encoded in DER format (the
+//
+// PrivateKeyInfo structure from RFC 5208).
+//
 //	"NIST_PQC" - This is supported only for PQC algorithms. The key material
 //
 // is returned in the format defined by NIST PQC standards (FIPS 203, FIPS 204,
 // and FIPS 205).
+//
+//	"XWING_RAW_BYTES" - The returned public key is in raw bytes format defined
+//
+// in its standard
+// https://datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem.
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall) PublicKeyFormat(publicKeyFormat string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall {
 	c.urlParams_.Set("publicKeyFormat", publicKeyFormat)
 	return c

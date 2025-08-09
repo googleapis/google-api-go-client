@@ -948,6 +948,14 @@ func (s IOPSPerTB) MarshalJSON() ([]byte, error) {
 
 // Instance: A Filestore instance.
 type Instance struct {
+	// BackendType: Optional. Immutable. Designates the backend type of this
+	// instance. Intended to be used by internal tests and allowed customers.
+	//
+	// Possible values:
+	//   "BACKEND_TYPE_UNSPECIFIED" - Backend type not set.
+	//   "COMPUTE_BASED_BACKEND" - Instance is backed by Compute.
+	//   "FILESTORE_BACKEND" - Instance is backed by Filestore.
+	BackendType string `json:"backendType,omitempty"`
 	// CapacityGb: The storage capacity of the instance in gigabytes (GB = 1024^3
 	// bytes). This capacity can be increased up to `max_capacity_gb` GB in
 	// multipliers of `capacity_step_size_gb` GB.
@@ -1081,13 +1089,13 @@ type Instance struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CapacityGb") to
+	// ForceSendFields is a list of field names (e.g. "BackendType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CapacityGb") to include in API
+	// NullFields is a list of field names (e.g. "BackendType") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1833,6 +1841,7 @@ type ReplicaConfig struct {
 	//   "FAILED" - The replica is experiencing an issue and might be unusable. You
 	// can get further details from the `stateReasons` field of the `ReplicaConfig`
 	// object.
+	//   "PROMOTING" - The replica is being promoted.
 	State string `json:"state,omitempty"`
 	// StateReasons: Output only. Additional information about the replication
 	// state, if available.

@@ -1610,6 +1610,7 @@ type OperationMetadata struct {
 	//   "LOAD_SNAPSHOT" - Loads snapshot of the resource operation.
 	//   "DATABASE_FAILOVER" - Triggers failover of environment's Cloud SQL
 	// instance (only for highly resilient environments).
+	//   "MIGRATE" - Migrates resource to a new major version.
 	OperationType string `json:"operationType,omitempty"`
 	// Resource: Output only. The resource being operated on, as a relative
 	// resource name ( /apis/design/resource_names#relative_resource_name).

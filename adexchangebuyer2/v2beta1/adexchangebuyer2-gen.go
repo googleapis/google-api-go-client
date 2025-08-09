@@ -3607,6 +3607,8 @@ type NonBillableWinningBidStatusRow struct {
 	// reported from the client during playback.
 	//   "LOST_IN_MEDIATION" - The buyer was not billed because the ad was
 	// outplaced in the mediation waterfall.
+	//   "OVERDELIVERED_IMPRESSION" - The impression was not billed because it
+	// exceeded a guaranteed deal delivery goal.
 	Status string `json:"status,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BidCount") to
 	// unconditionally include in API requests. By default, fields with empty or

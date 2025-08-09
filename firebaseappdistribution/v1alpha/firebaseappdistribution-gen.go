@@ -1581,6 +1581,9 @@ type GoogleFirebaseAppdistroV1alphaTestCase struct {
 	AiInstructions *GoogleFirebaseAppdistroV1alphaAiInstructions `json:"aiInstructions,omitempty"`
 	// CreateTime: Output only. Timestamp when the test case was created
 	CreateTime string `json:"createTime,omitempty"`
+	// DependentTestCases: Output only. Other test cases that depend on this test
+	// cse as a prerequisite.
+	DependentTestCases []string `json:"dependentTestCases,omitempty"`
 	// DisplayName: Required. Display name of the test case.
 	DisplayName string `json:"displayName,omitempty"`
 	// Name: Identifier. The name of the test case resource. Format:

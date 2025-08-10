@@ -210,9 +210,8 @@ type PartnersUserSessionsService struct {
 	s *Service
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Amount: Describes the amount unit
-// including the currency code.
-type GoogleCloudPaymentsResellerSubscriptionV1Amount struct {
+// Amount: Describes the amount unit including the currency code.
+type Amount struct {
 	// AmountMicros: Required. Amount in micros (1_000_000 micros = 1 currency
 	// unit)
 	AmountMicros int64 `json:"amountMicros,omitempty,string"`
@@ -232,14 +231,13 @@ type GoogleCloudPaymentsResellerSubscriptionV1Amount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1Amount) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Amount
+func (s Amount) MarshalJSON() ([]byte, error) {
+	type NoMethod Amount
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest: Request
-// to cancel a subscription.
-type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
+// CancelSubscriptionRequest: Request to cancel a subscription.
+type CancelSubscriptionRequest struct {
 	// CancelImmediately: Optional. If true, Google will cancel the subscription
 	// immediately, and may or may not (based on the contract) issue a prorated
 	// refund for the remainder of the billing cycle. Otherwise, Google defers the
@@ -282,16 +280,16 @@ type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest
+func (s CancelSubscriptionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelSubscriptionRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse:
-// Response that contains the cancelled subscription resource.
-type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse struct {
+// CancelSubscriptionResponse: Response that contains the cancelled
+// subscription resource.
+type CancelSubscriptionResponse struct {
 	// Subscription: The cancelled subscription resource.
-	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
+	Subscription *Subscription `json:"subscription,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -308,19 +306,19 @@ type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse struct 
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse
+func (s CancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelSubscriptionResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1CreateSubscriptionIntent: Intent
-// message for creating a Subscription resource.
-type GoogleCloudPaymentsResellerSubscriptionV1CreateSubscriptionIntent struct {
+// CreateSubscriptionIntent: Intent message for creating a Subscription
+// resource.
+type CreateSubscriptionIntent struct {
 	// Parent: Required. The parent resource name, which is the identifier of the
 	// partner.
 	Parent string `json:"parent,omitempty"`
 	// Subscription: Required. The Subscription to be created.
-	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
+	Subscription *Subscription `json:"subscription,omitempty"`
 	// SubscriptionId: Required. Identifies the subscription resource on the
 	// Partner side. The value is restricted to 63 ASCII characters at the maximum.
 	// If a subscription was previously created with the same subscription_id, we
@@ -339,14 +337,13 @@ type GoogleCloudPaymentsResellerSubscriptionV1CreateSubscriptionIntent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1CreateSubscriptionIntent) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1CreateSubscriptionIntent
+func (s CreateSubscriptionIntent) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateSubscriptionIntent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Duration: Describes the length of a
-// period of a time.
-type GoogleCloudPaymentsResellerSubscriptionV1Duration struct {
+// Duration: Describes the length of a period of a time.
+type Duration struct {
 	// Count: number of duration units to be included.
 	Count int64 `json:"count,omitempty"`
 	// Unit: The unit used for the duration
@@ -371,14 +368,14 @@ type GoogleCloudPaymentsResellerSubscriptionV1Duration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1Duration) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Duration
+func (s Duration) MarshalJSON() ([]byte, error) {
+	type NoMethod Duration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionIntent: Intent
-// for entitling the previously provisioned subscription to an end user.
-type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionIntent struct {
+// EntitleSubscriptionIntent: Intent for entitling the previously provisioned
+// subscription to an end user.
+type EntitleSubscriptionIntent struct {
 	// Name: Required. The name of the subscription resource that is entitled to
 	// the current end user. It is in the format of
 	// "partners/{partner_id}/subscriptions/{subscriptionId}".
@@ -396,18 +393,18 @@ type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionIntent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionIntent) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionIntent
+func (s EntitleSubscriptionIntent) MarshalJSON() ([]byte, error) {
+	type NoMethod EntitleSubscriptionIntent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest: Partner
-// request for entitling the previously provisioned subscription to an end
-// user. The end user identity is inferred from the request OAuth context.
-type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest struct {
+// EntitleSubscriptionRequest: Partner request for entitling the previously
+// provisioned subscription to an end user. The end user identity is inferred
+// from the request OAuth context.
+type EntitleSubscriptionRequest struct {
 	// LineItemEntitlementDetails: Optional. The line items to be entitled. If
 	// unspecified, all line items will be entitled.
-	LineItemEntitlementDetails []*GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEntitlementDetails `json:"lineItemEntitlementDetails,omitempty"`
+	LineItemEntitlementDetails []*EntitleSubscriptionRequestLineItemEntitlementDetails `json:"lineItemEntitlementDetails,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LineItemEntitlementDetails")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -421,14 +418,14 @@ type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest struct 
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest
+func (s EntitleSubscriptionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod EntitleSubscriptionRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEn
-// titlementDetails: The details of the line item to be entitled.
-type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEntitlementDetails struct {
+// EntitleSubscriptionRequestLineItemEntitlementDetails: The details of the
+// line item to be entitled.
+type EntitleSubscriptionRequestLineItemEntitlementDetails struct {
 	// LineItemIndex: Required. The index of the line item to be entitled.
 	LineItemIndex int64 `json:"lineItemIndex,omitempty"`
 	// Products: Optional. Only applicable if the line item corresponds to a hard
@@ -449,16 +446,16 @@ type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItem
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEntitlementDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEntitlementDetails
+func (s EntitleSubscriptionRequestLineItemEntitlementDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod EntitleSubscriptionRequestLineItemEntitlementDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse:
-// Response that contains the entitled subscription resource.
-type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse struct {
+// EntitleSubscriptionResponse: Response that contains the entitled
+// subscription resource.
+type EntitleSubscriptionResponse struct {
 	// Subscription: The subscription that has user linked to it.
-	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
+	Subscription *Subscription `json:"subscription,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -475,19 +472,19 @@ type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse struct
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse
+func (s EntitleSubscriptionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod EntitleSubscriptionResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest: Request
-// message for extending a Subscription resource. A new recurrence will be made
-// based on the subscription schedule defined by the original product.
-type GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest struct {
+// ExtendSubscriptionRequest: Request message for extending a Subscription
+// resource. A new recurrence will be made based on the subscription schedule
+// defined by the original product.
+type ExtendSubscriptionRequest struct {
 	// Extension: Required. Specifies details of the extension. Currently, the
 	// duration of the extension must be exactly one billing cycle of the original
 	// subscription.
-	Extension *GoogleCloudPaymentsResellerSubscriptionV1Extension `json:"extension,omitempty"`
+	Extension *Extension `json:"extension,omitempty"`
 	// RequestId: Required. Restricted to 36 ASCII characters. A random UUID is
 	// recommended. The idempotency key for the request. The ID generation logic is
 	// controlled by the partner. request_id should be the same as on retries of
@@ -507,14 +504,14 @@ type GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest
+func (s ExtendSubscriptionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtendSubscriptionRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse:
-// Response that contains the timestamps after the extension.
-type GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse struct {
+// ExtendSubscriptionResponse: Response that contains the timestamps after the
+// extension.
+type ExtendSubscriptionResponse struct {
 	// CycleEndTime: The time at which the subscription is expected to be extended,
 	// in ISO 8061 format. UTC timezone. Example,
 	// "cycleEndTime":"2019-08-31T17:28:54.564Z"
@@ -547,17 +544,16 @@ type GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse struct 
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse
+func (s ExtendSubscriptionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtendSubscriptionResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Extension: Describes the details of
-// an extension request.
-type GoogleCloudPaymentsResellerSubscriptionV1Extension struct {
+// Extension: Describes the details of an extension request.
+type Extension struct {
 	// Duration: Required. Specifies the period of access the subscription should
 	// grant.
-	Duration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"duration,omitempty"`
+	Duration *Duration `json:"duration,omitempty"`
 	// PartnerUserToken: Required. Identifier of the end-user in partner’s
 	// system.
 	PartnerUserToken string `json:"partnerUserToken,omitempty"`
@@ -574,14 +570,14 @@ type GoogleCloudPaymentsResellerSubscriptionV1Extension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1Extension) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Extension
+func (s Extension) MarshalJSON() ([]byte, error) {
+	type NoMethod Extension
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest:
-// Request to find eligible promotions for the current user.
-type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest struct {
+// FindEligiblePromotionsRequest: Request to find eligible promotions for the
+// current user.
+type FindEligiblePromotionsRequest struct {
 	// Filter: Optional. Specifies the filters for the promotion results. The
 	// syntax is defined in https://google.aip.dev/160 with the following caveats:
 	// 1. Only the following features are supported: - Logical operator `AND` -
@@ -617,19 +613,19 @@ type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest stru
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest
+func (s FindEligiblePromotionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod FindEligiblePromotionsRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse:
-// Response containing the found promotions for the current user.
-type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse struct {
+// FindEligiblePromotionsResponse: Response containing the found promotions for
+// the current user.
+type FindEligiblePromotionsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
 	// next page. If this field is empty, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Promotions: The promotions for the current user.
-	Promotions []*GoogleCloudPaymentsResellerSubscriptionV1Promotion `json:"promotions,omitempty"`
+	Promotions []*Promotion `json:"promotions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -646,14 +642,14 @@ type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse str
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse
+func (s FindEligiblePromotionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FindEligiblePromotionsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails: Details
-// for a subscriptiin line item with finite billing cycles.
-type GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails struct {
+// FiniteBillingCycleDetails: Details for a subscriptiin line item with finite
+// billing cycles.
+type FiniteBillingCycleDetails struct {
 	// BillingCycleCountLimit: Required. The number of a subscription line item
 	// billing cycles after which billing will stop automatically.
 	BillingCycleCountLimit int64 `json:"billingCycleCountLimit,omitempty,string"`
@@ -670,16 +666,15 @@ type GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails
+func (s FiniteBillingCycleDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod FiniteBillingCycleDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest: Request
-// to generate a user session.
-type GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest struct {
+// GenerateUserSessionRequest: Request to generate a user session.
+type GenerateUserSessionRequest struct {
 	// IntentPayload: The user intent to generate the user session.
-	IntentPayload *GoogleCloudPaymentsResellerSubscriptionV1IntentPayload `json:"intentPayload,omitempty"`
+	IntentPayload *IntentPayload `json:"intentPayload,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IntentPayload") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -693,17 +688,17 @@ type GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest struct 
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest
+func (s GenerateUserSessionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateUserSessionRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse:
-// Response that contains the details for generated user session.
-type GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse struct {
+// GenerateUserSessionResponse: Response that contains the details for
+// generated user session.
+type GenerateUserSessionResponse struct {
 	// UserSession: The generated user session. The token size is proportional to
 	// the size of the intent payload.
-	UserSession *GoogleCloudPaymentsResellerSubscriptionV1UserSession `json:"userSession,omitempty"`
+	UserSession *UserSession `json:"userSession,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -720,17 +715,18 @@ type GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse struct
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse
+func (s GenerateUserSessionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateUserSessionResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1GoogleHomePayload: Payload specific
-// for Google Home products.
-type GoogleCloudPaymentsResellerSubscriptionV1GoogleHomePayload struct {
+// GoogleHomePayload: Payload specific for Google Home products.
+type GoogleHomePayload struct {
 	// AttachedToGoogleStructure: Output only. This identifies whether the
 	// subscription is attached to a Google Home structure.
 	AttachedToGoogleStructure bool `json:"attachedToGoogleStructure,omitempty"`
+	// GoogleStructureId: Optional. Structure identifier on Google side.
+	GoogleStructureId string `json:"googleStructureId,omitempty"`
 	// PartnerStructureId: Optional. This identifies the structure ID on partner
 	// side that the subscription should be applied to. Only required when the
 	// partner requires structure mapping.
@@ -748,14 +744,13 @@ type GoogleCloudPaymentsResellerSubscriptionV1GoogleHomePayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1GoogleHomePayload) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1GoogleHomePayload
+func (s GoogleHomePayload) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleHomePayload
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload: Payload specific
-// to Google One products.
-type GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload struct {
+// GoogleOnePayload: Payload specific to Google One products.
+type GoogleOnePayload struct {
 	// Campaigns: Campaign attributed to sales of this subscription.
 	Campaigns []string `json:"campaigns,omitempty"`
 	// Offering: The type of offering the subscription was sold by the partner.
@@ -801,18 +796,44 @@ type GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload
+func (s GoogleOnePayload) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleOnePayload
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1IntentPayload: The payload that
-// describes the user intent.
-type GoogleCloudPaymentsResellerSubscriptionV1IntentPayload struct {
+// GoogleTypeLocalizedText: Localized variant of a text in a particular
+// language.
+type GoogleTypeLocalizedText struct {
+	// LanguageCode: The text's BCP-47 language code, such as "en-US" or "sr-Latn".
+	// For more information, see
+	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// Text: Localized string in the language corresponding to language_code below.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LanguageCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleTypeLocalizedText) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeLocalizedText
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IntentPayload: The payload that describes the user intent.
+type IntentPayload struct {
 	// CreateIntent: The request to create a subscription.
-	CreateIntent *GoogleCloudPaymentsResellerSubscriptionV1CreateSubscriptionIntent `json:"createIntent,omitempty"`
+	CreateIntent *CreateSubscriptionIntent `json:"createIntent,omitempty"`
 	// EntitleIntent: The request to entitle a subscription.
-	EntitleIntent *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionIntent `json:"entitleIntent,omitempty"`
+	EntitleIntent *EntitleSubscriptionIntent `json:"entitleIntent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateIntent") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -826,19 +847,18 @@ type GoogleCloudPaymentsResellerSubscriptionV1IntentPayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1IntentPayload) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1IntentPayload
+func (s IntentPayload) MarshalJSON() ([]byte, error) {
+	type NoMethod IntentPayload
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse: Response that
-// contains the products.
-type GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse struct {
+// ListProductsResponse: Response that contains the products.
+type ListProductsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
 	// next page. If this field is empty, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Products: The products for the specified partner.
-	Products []*GoogleCloudPaymentsResellerSubscriptionV1Product `json:"products,omitempty"`
+	Products []*Product `json:"products,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -855,19 +875,18 @@ type GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse
+func (s ListProductsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListProductsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse: Response
-// that contains the promotions.
-type GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse struct {
+// ListPromotionsResponse: Response that contains the promotions.
+type ListPromotionsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
 	// next page. If this field is empty, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Promotions: The promotions for the specified partner.
-	Promotions []*GoogleCloudPaymentsResellerSubscriptionV1Promotion `json:"promotions,omitempty"`
+	Promotions []*Promotion `json:"promotions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -884,14 +903,13 @@ type GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse
+func (s ListPromotionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPromotionsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Location: Describes a location of
-// an end user.
-type GoogleCloudPaymentsResellerSubscriptionV1Location struct {
+// Location: Describes a location of an end user.
+type Location struct {
 	// PostalCode: The postal code this location refers to. Ex. "94043"
 	PostalCode string `json:"postalCode,omitempty"`
 	// RegionCode: 2-letter ISO region code for current content region. Ex.
@@ -910,26 +928,26 @@ type GoogleCloudPaymentsResellerSubscriptionV1Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1Location) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Location
+func (s Location) MarshalJSON() ([]byte, error) {
+	type NoMethod Location
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Product: A Product resource that
-// defines a subscription service that can be resold.
-type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
+// Product: A Product resource that defines a subscription service that can be
+// resold.
+type Product struct {
 	// BundleDetails: Output only. Specifies the details for a bundle product.
 	BundleDetails *ProductBundleDetails `json:"bundleDetails,omitempty"`
 	// FiniteBillingCycleDetails: Optional. Details for a subscription line item
 	// with finite billing cycles. If unset, the line item will be charged
 	// indefinitely.
-	FiniteBillingCycleDetails *GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails `json:"finiteBillingCycleDetails,omitempty"`
+	FiniteBillingCycleDetails *FiniteBillingCycleDetails `json:"finiteBillingCycleDetails,omitempty"`
 	// Name: Identifier. Response only. Resource name of the product. It will have
 	// the format of "partners/{partner_id}/products/{product_id}"
 	Name string `json:"name,omitempty"`
 	// PriceConfigs: Output only. Price configs for the product in the available
 	// regions.
-	PriceConfigs []*GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig `json:"priceConfigs,omitempty"`
+	PriceConfigs []*ProductPriceConfig `json:"priceConfigs,omitempty"`
 	// ProductType: Output only. Specifies the type of the product.
 	//
 	// Possible values:
@@ -945,7 +963,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
 	RegionCodes []string `json:"regionCodes,omitempty"`
 	// SubscriptionBillingCycleDuration: Output only. Specifies the length of the
 	// billing cycle of the subscription.
-	SubscriptionBillingCycleDuration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"subscriptionBillingCycleDuration,omitempty"`
+	SubscriptionBillingCycleDuration *Duration `json:"subscriptionBillingCycleDuration,omitempty"`
 	// Titles: Output only. Localized human readable name of the product.
 	Titles []*GoogleTypeLocalizedText `json:"titles,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BundleDetails") to
@@ -961,14 +979,46 @@ type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1Product) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Product
+func (s Product) MarshalJSON() ([]byte, error) {
+	type NoMethod Product
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement:
-// The individual product that is included in the bundle.
-type GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement struct {
+// ProductBundleDetails: Details for a bundle product.
+type ProductBundleDetails struct {
+	// BundleElements: The individual products that are included in the bundle.
+	BundleElements []*ProductBundleDetailsBundleElement `json:"bundleElements,omitempty"`
+	// EntitlementMode: The entitlement mode of the bundle product.
+	//
+	// Possible values:
+	//   "ENTITLEMENT_MODE_UNSPECIFIED" - Unspecified. It's reserved as an
+	// unexpected value, should not be used.
+	//   "ENTITLEMENT_MODE_FULL" - All the bundle elements must be fully activated
+	// in a single request.
+	//   "ENTITLEMENT_MODE_INCREMENTAL" - The bundle elements could be
+	// incrementally activated.
+	EntitlementMode string `json:"entitlementMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BundleElements") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BundleElements") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProductBundleDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductBundleDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProductBundleDetailsBundleElement: The individual product that is included
+// in the bundle.
+type ProductBundleDetailsBundleElement struct {
 	// Product: Required. Output only. Product resource name that identifies the
 	// bundle element. The format is 'partners/{partner_id}/products/{product_id}'.
 	Product string `json:"product,omitempty"`
@@ -985,21 +1035,20 @@ type GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement 
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement
+func (s ProductBundleDetailsBundleElement) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductBundleDetailsBundleElement
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ProductPayload: Specifies product
-// specific payload.
-type GoogleCloudPaymentsResellerSubscriptionV1ProductPayload struct {
+// ProductPayload: Specifies product specific payload.
+type ProductPayload struct {
 	// GoogleHomePayload: Payload specific to Google Home products.
-	GoogleHomePayload *GoogleCloudPaymentsResellerSubscriptionV1GoogleHomePayload `json:"googleHomePayload,omitempty"`
+	GoogleHomePayload *GoogleHomePayload `json:"googleHomePayload,omitempty"`
 	// GoogleOnePayload: Product-specific payloads. Payload specific to Google One
 	// products.
-	GoogleOnePayload *GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload `json:"googleOnePayload,omitempty"`
+	GoogleOnePayload *GoogleOnePayload `json:"googleOnePayload,omitempty"`
 	// YoutubePayload: Payload specific to Youtube products.
-	YoutubePayload *GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload `json:"youtubePayload,omitempty"`
+	YoutubePayload *YoutubePayload `json:"youtubePayload,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GoogleHomePayload") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1013,16 +1062,15 @@ type GoogleCloudPaymentsResellerSubscriptionV1ProductPayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1ProductPayload) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ProductPayload
+func (s ProductPayload) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductPayload
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig: Configs the
-// prices in an available region.
-type GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig struct {
+// ProductPriceConfig: Configs the prices in an available region.
+type ProductPriceConfig struct {
 	// Amount: Output only. The price in the region.
-	Amount *GoogleCloudPaymentsResellerSubscriptionV1Amount `json:"amount,omitempty"`
+	Amount *Amount `json:"amount,omitempty"`
 	// RegionCode: Output only. 2-letter ISO region code where the product is
 	// available in. Ex. "US".
 	RegionCode string `json:"regionCode,omitempty"`
@@ -1039,14 +1087,14 @@ type GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig
+func (s ProductPriceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductPriceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Promotion: A Promotion resource
-// that defines a promotion for a subscription that can be resold.
-type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
+// Promotion: A Promotion resource that defines a promotion for a subscription
+// that can be resold.
+type Promotion struct {
 	// ApplicableProducts: Output only. The product ids this promotion can be
 	// applied to.
 	ApplicableProducts []string `json:"applicableProducts,omitempty"`
@@ -1056,10 +1104,10 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 	EndTime string `json:"endTime,omitempty"`
 	// FreeTrialDuration: Optional. Specifies the duration of the free trial of the
 	// subscription when promotion_type is PROMOTION_TYPE_FREE_TRIAL
-	FreeTrialDuration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"freeTrialDuration,omitempty"`
+	FreeTrialDuration *Duration `json:"freeTrialDuration,omitempty"`
 	// IntroductoryPricingDetails: Optional. Specifies the introductory pricing
 	// details when the promotion_type is PROMOTION_TYPE_INTRODUCTORY_PRICING.
-	IntroductoryPricingDetails *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails `json:"introductoryPricingDetails,omitempty"`
+	IntroductoryPricingDetails *PromotionIntroductoryPricingDetails `json:"introductoryPricingDetails,omitempty"`
 	// Name: Identifier. Response only. Resource name of the subscription
 	// promotion. It will have the format of
 	// "partners/{partner_id}/promotion/{promotion_id}"
@@ -1094,18 +1142,17 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1Promotion) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Promotion
+func (s Promotion) MarshalJSON() ([]byte, error) {
+	type NoMethod Promotion
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails:
-//
-//	The details of a introductory pricing promotion.
-type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails struct {
+// PromotionIntroductoryPricingDetails: The details of a introductory pricing
+// promotion.
+type PromotionIntroductoryPricingDetails struct {
 	// IntroductoryPricingSpecs: Output only. Specifies the introductory pricing
 	// periods.
-	IntroductoryPricingSpecs []*GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec `json:"introductoryPricingSpecs,omitempty"`
+	IntroductoryPricingSpecs []*PromotionIntroductoryPricingDetailsIntroductoryPricingSpec `json:"introductoryPricingSpecs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IntroductoryPricingSpecs")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1119,16 +1166,16 @@ type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetail
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails
+func (s PromotionIntroductoryPricingDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PromotionIntroductoryPricingDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsI
-// ntroductoryPricingSpec: The duration of an introductory pricing promotion.
-type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec struct {
+// PromotionIntroductoryPricingDetailsIntroductoryPricingSpec: The duration of
+// an introductory pricing promotion.
+type PromotionIntroductoryPricingDetailsIntroductoryPricingSpec struct {
 	// DiscountAmount: Output only. The discount amount. The value is positive.
-	DiscountAmount *GoogleCloudPaymentsResellerSubscriptionV1Amount `json:"discountAmount,omitempty"`
+	DiscountAmount *Amount `json:"discountAmount,omitempty"`
 	// DiscountRatioMicros: Output only. The discount percentage in micros. For
 	// example, 50,000 represents 5%.
 	DiscountRatioMicros int64 `json:"discountRatioMicros,omitempty,string"`
@@ -1151,21 +1198,19 @@ type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetail
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec
+func (s PromotionIntroductoryPricingDetailsIntroductoryPricingSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod PromotionIntroductoryPricingDetailsIntroductoryPricingSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionRequest: Request
-// to resume a suspended subscription.
-type GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionRequest struct {
+// ResumeSubscriptionRequest: Request to resume a suspended subscription.
+type ResumeSubscriptionRequest struct {
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionResponse:
-// Response that contains the resumed subscription.
-type GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionResponse struct {
+// ResumeSubscriptionResponse: Response that contains the resumed subscription.
+type ResumeSubscriptionResponse struct {
 	// Subscription: The resumed subscription resource.
-	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
+	Subscription *Subscription `json:"subscription,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1182,15 +1227,14 @@ type GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionResponse struct 
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionResponse
+func (s ResumeSubscriptionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ResumeSubscriptionResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod: A description of
-// what time period or moment in time the product or service is being delivered
-// over.
-type GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod struct {
+// ServicePeriod: A description of what time period or moment in time the
+// product or service is being delivered over.
+type ServicePeriod struct {
 	// EndTime: Optional. The end time of the service period. Time is exclusive.
 	EndTime string `json:"endTime,omitempty"`
 	// StartTime: Required. The start time of the service period. Time is
@@ -1209,25 +1253,24 @@ type GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod
+func (s ServicePeriod) MarshalJSON() ([]byte, error) {
+	type NoMethod ServicePeriod
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Subscription: A subscription serves
-// as a central billing entity between an external partner and Google. The
-// underlying Google services rely on the subscription state to grant or revoke
-// the user's service entitlement. It's important to note that the subscription
-// state may not always perfectly align with the user's service entitlement.
-// For example, some Google services may continue providing access to the user
-// until the current billing cycle ends, even if the subscription has been
-// immediately canceled. However, other services may not do the same. To fully
-// understand the specific details, please consult the relevant contract or
-// product policy.
-type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
+// Subscription: A subscription serves as a central billing entity between an
+// external partner and Google. The underlying Google services rely on the
+// subscription state to grant or revoke the user's service entitlement. It's
+// important to note that the subscription state may not always perfectly align
+// with the user's service entitlement. For example, some Google services may
+// continue providing access to the user until the current billing cycle ends,
+// even if the subscription has been immediately canceled. However, other
+// services may not do the same. To fully understand the specific details,
+// please consult the relevant contract or product policy.
+type Subscription struct {
 	// CancellationDetails: Output only. Describes the details of a cancelled
 	// subscription. Only applicable to subscription of state `STATE_CANCELLED`.
-	CancellationDetails *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails `json:"cancellationDetails,omitempty"`
+	CancellationDetails *SubscriptionCancellationDetails `json:"cancellationDetails,omitempty"`
 	// CreateTime: Output only. System generated timestamp when the subscription is
 	// created. UTC timezone.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1243,11 +1286,11 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// createTime if no free trial promotion is specified.
 	FreeTrialEndTime string `json:"freeTrialEndTime,omitempty"`
 	// LineItems: Required. The line items of the subscription.
-	LineItems []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem `json:"lineItems,omitempty"`
+	LineItems []*SubscriptionLineItem `json:"lineItems,omitempty"`
 	// MigrationDetails: Output only. Describes the details of the migrated
 	// subscription. Only populated if this subscription is migrated from another
 	// system.
-	MigrationDetails *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionMigrationDetails `json:"migrationDetails,omitempty"`
+	MigrationDetails *SubscriptionMigrationDetails `json:"migrationDetails,omitempty"`
 	// Name: Identifier. Resource name of the subscription. It will have the format
 	// of "partners/{partner_id}/subscriptions/{subscription_id}". This is
 	// available for authorizeAddon, but otherwise is response only.
@@ -1273,7 +1316,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// supported on this level. It determines the first renewal time of the
 	// subscription to be the end of the free trial period. Specify the promotion
 	// resource name only when used as input.
-	PromotionSpecs []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec `json:"promotionSpecs,omitempty"`
+	PromotionSpecs []*SubscriptionPromotionSpec `json:"promotionSpecs,omitempty"`
 	// Promotions: Optional. Deprecated: consider using the top-level
 	// `promotion_specs` as the input. Optional. Resource name that identifies one
 	// or more promotions that can be applied on the product. A typical promotion
@@ -1298,7 +1341,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	RenewalTime string `json:"renewalTime,omitempty"`
 	// ServiceLocation: Required. The location that the service is provided as
 	// indicated by the partner.
-	ServiceLocation *GoogleCloudPaymentsResellerSubscriptionV1Location `json:"serviceLocation,omitempty"`
+	ServiceLocation *Location `json:"serviceLocation,omitempty"`
 	// State: Output only. Describes the state of the subscription. See more
 	// details at the lifecycle of a subscription
 	// (/payments/reseller/subscription/reference/index/Receive.Notifications#paymen
@@ -1325,7 +1368,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// UpgradeDowngradeDetails: Optional. Details about the previous subscription
 	// that this new subscription upgrades/downgrades from. Only populated if this
 	// subscription is an upgrade/downgrade from another subscription.
-	UpgradeDowngradeDetails *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails `json:"upgradeDowngradeDetails,omitempty"`
+	UpgradeDowngradeDetails *SubscriptionUpgradeDowngradeDetails `json:"upgradeDowngradeDetails,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1342,14 +1385,14 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1Subscription) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Subscription
+func (s Subscription) MarshalJSON() ([]byte, error) {
+	type NoMethod Subscription
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails:
-// Describes the details of a cancelled or cancelling subscription.
-type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails struct {
+// SubscriptionCancellationDetails: Describes the details of a cancelled or
+// cancelling subscription.
+type SubscriptionCancellationDetails struct {
 	// Reason: Output only. The reason of the cancellation.
 	//
 	// Possible values:
@@ -1385,18 +1428,17 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails st
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails
+func (s SubscriptionCancellationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscriptionCancellationDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem: Individual
-// line item definition of a subscription.
-type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
+// SubscriptionLineItem: Individual line item definition of a subscription.
+type SubscriptionLineItem struct {
 	// Amount: Output only. The price of the product/service in this line item. The
 	// amount could be the wholesale price, or it can include a cost of sale based
 	// on the contract.
-	Amount *GoogleCloudPaymentsResellerSubscriptionV1Amount `json:"amount,omitempty"`
+	Amount *Amount `json:"amount,omitempty"`
 	// BundleDetails: Output only. The bundle details for the line item. Only
 	// populated if the line item corresponds to a hard bundle.
 	BundleDetails *SubscriptionLineItemBundleDetails `json:"bundleDetails,omitempty"`
@@ -1405,7 +1447,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	// FiniteBillingCycleDetails: Optional. Details for a subscription line item
 	// with finite billing cycles. If unset, the line item will be charged
 	// indefinitely. Used only with LINE_ITEM_RECURRENCE_TYPE_PERIODIC.
-	FiniteBillingCycleDetails *GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails `json:"finiteBillingCycleDetails,omitempty"`
+	FiniteBillingCycleDetails *FiniteBillingCycleDetails `json:"finiteBillingCycleDetails,omitempty"`
 	// LineItemFreeTrialEndTime: Output only. The free trial end time will be
 	// populated after the line item is successfully processed. End time of the
 	// line item free trial period, in ISO 8061 format. For example,
@@ -1418,15 +1460,15 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	// It can be: - an introductory pricing promotion. - a free trial promotion.
 	// This feature is not enabled. If used, the request will be rejected. When
 	// used as input in Create or Provision API, specify its resource name only.
-	LineItemPromotionSpecs []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec `json:"lineItemPromotionSpecs,omitempty"`
+	LineItemPromotionSpecs []*SubscriptionPromotionSpec `json:"lineItemPromotionSpecs,omitempty"`
 	// OneTimeRecurrenceDetails: Output only. Details only set for a ONE_TIME
 	// recurrence line item.
-	OneTimeRecurrenceDetails *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails `json:"oneTimeRecurrenceDetails,omitempty"`
+	OneTimeRecurrenceDetails *SubscriptionLineItemOneTimeRecurrenceDetails `json:"oneTimeRecurrenceDetails,omitempty"`
 	// Product: Required. Product resource name that identifies one the line item
 	// The format is 'partners/{partner_id}/products/{product_id}'.
 	Product string `json:"product,omitempty"`
 	// ProductPayload: Optional. Product specific payload for this line item.
-	ProductPayload *GoogleCloudPaymentsResellerSubscriptionV1ProductPayload `json:"productPayload,omitempty"`
+	ProductPayload *ProductPayload `json:"productPayload,omitempty"`
 	// RecurrenceType: Output only. The recurrence type of the line item.
 	//
 	// Possible values:
@@ -1470,14 +1512,38 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem
+func (s SubscriptionLineItem) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscriptionLineItem
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBun
-// dleElementDetails: The details for an element in the hard bundle.
-type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails struct {
+// SubscriptionLineItemBundleDetails: The bundle details for a line item
+// corresponding to a hard bundle.
+type SubscriptionLineItemBundleDetails struct {
+	// BundleElementDetails: Output only. The details for each element in the hard
+	// bundle.
+	BundleElementDetails []*SubscriptionLineItemBundleDetailsBundleElementDetails `json:"bundleElementDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BundleElementDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BundleElementDetails") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SubscriptionLineItemBundleDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscriptionLineItemBundleDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SubscriptionLineItemBundleDetailsBundleElementDetails: The details for an
+// element in the hard bundle.
+type SubscriptionLineItemBundleDetailsBundleElementDetails struct {
 	// Product: Output only. Product resource name that identifies the bundle
 	// element. The format is 'partners/{partner_id}/products/{product_id}'.
 	Product string `json:"product,omitempty"`
@@ -1497,16 +1563,16 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsB
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails
+func (s SubscriptionLineItemBundleDetailsBundleElementDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscriptionLineItemBundleDetailsBundleElementDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenc
-// eDetails: Details for a ONE_TIME recurrence line item.
-type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails struct {
+// SubscriptionLineItemOneTimeRecurrenceDetails: Details for a ONE_TIME
+// recurrence line item.
+type SubscriptionLineItemOneTimeRecurrenceDetails struct {
 	// ServicePeriod: Output only. The service period of the ONE_TIME line item.
-	ServicePeriod *GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod `json:"servicePeriod,omitempty"`
+	ServicePeriod *ServicePeriod `json:"servicePeriod,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ServicePeriod") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1520,14 +1586,14 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurre
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails
+func (s SubscriptionLineItemOneTimeRecurrenceDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscriptionLineItemOneTimeRecurrenceDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionMigrationDetails:
-// Describes the details of the migrated subscription.
-type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionMigrationDetails struct {
+// SubscriptionMigrationDetails: Describes the details of the migrated
+// subscription.
+type SubscriptionMigrationDetails struct {
 	// MigratedSubscriptionId: Output only. The migrated subscription id in the
 	// legacy system.
 	MigratedSubscriptionId string `json:"migratedSubscriptionId,omitempty"`
@@ -1544,20 +1610,19 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionMigrationDetails struc
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionMigrationDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionMigrationDetails
+func (s SubscriptionMigrationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscriptionMigrationDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec:
-// Describes the spec for one promotion.
-type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec struct {
+// SubscriptionPromotionSpec: Describes the spec for one promotion.
+type SubscriptionPromotionSpec struct {
 	// FreeTrialDuration: Output only. The duration of the free trial if the
 	// promotion is of type FREE_TRIAL.
-	FreeTrialDuration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"freeTrialDuration,omitempty"`
+	FreeTrialDuration *Duration `json:"freeTrialDuration,omitempty"`
 	// IntroductoryPricingDetails: Output only. The details of the introductory
 	// pricing spec if the promotion is of type INTRODUCTORY_PRICING.
-	IntroductoryPricingDetails *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails `json:"introductoryPricingDetails,omitempty"`
+	IntroductoryPricingDetails *PromotionIntroductoryPricingDetails `json:"introductoryPricingDetails,omitempty"`
 	// Promotion: Required. Promotion resource name that identifies a promotion.
 	// The format is 'partners/{partner_id}/promotions/{promotion_id}'.
 	Promotion string `json:"promotion,omitempty"`
@@ -1582,17 +1647,14 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec
+func (s SubscriptionPromotionSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscriptionPromotionSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails:
-//
-//	Details about the previous subscription that this new subscription
-//
-// upgrades/downgrades from.
-type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails struct {
+// SubscriptionUpgradeDowngradeDetails: Details about the previous subscription
+// that this new subscription upgrades/downgrades from.
+type SubscriptionUpgradeDowngradeDetails struct {
 	// BillingCycleSpec: Required. Specifies the billing cycle spec for the new
 	// upgraded/downgraded subscription.
 	//
@@ -1625,21 +1687,20 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetail
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails
+func (s SubscriptionUpgradeDowngradeDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscriptionUpgradeDowngradeDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionRequest: Request
-// to suspend a subscription.
-type GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionRequest struct {
+// SuspendSubscriptionRequest: Request to suspend a subscription.
+type SuspendSubscriptionRequest struct {
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionResponse:
-// Response that contains the suspended subscription.
-type GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionResponse struct {
+// SuspendSubscriptionResponse: Response that contains the suspended
+// subscription.
+type SuspendSubscriptionResponse struct {
 	// Subscription: The suspended subscription resource.
-	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
+	Subscription *Subscription `json:"subscription,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1656,21 +1717,20 @@ type GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionResponse struct
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionResponse
+func (s SuspendSubscriptionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SuspendSubscriptionResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionRequest:
-// Request to revoke a cancellation request.
-type GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionRequest struct {
+// UndoCancelSubscriptionRequest: Request to revoke a cancellation request.
+type UndoCancelSubscriptionRequest struct {
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse:
-// Response that contains the updated subscription resource.
-type GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse struct {
+// UndoCancelSubscriptionResponse: Response that contains the updated
+// subscription resource.
+type UndoCancelSubscriptionResponse struct {
 	// Subscription: The updated subscription resource.
-	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
+	Subscription *Subscription `json:"subscription,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1687,25 +1747,24 @@ type GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse str
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse
+func (s UndoCancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UndoCancelSubscriptionResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1UserSession: A user session
-// contains a short-lived token that includes information required to interact
-// with Google Payments Reseller Platform using the following web endpoints. -
-// A user session token should be generated dynamically for an authenticated
-// user. You should refrain from sharing a token directly with a user in an
-// unauthenticated context, such as SMS, or email. - You can re-generate new
-// session tokens repeatedly for same `generate` request if necessary,
-// regardless of the previous tokens being expired or not. You don't need to
-// worry about multiple sessions resulting in duplicate fulfillments as
-// guaranteed by the same subscription id. Please refer to the Google Managed
-// Signup
+// UserSession: A user session contains a short-lived token that includes
+// information required to interact with Google Payments Reseller Platform
+// using the following web endpoints. - A user session token should be
+// generated dynamically for an authenticated user. You should refrain from
+// sharing a token directly with a user in an unauthenticated context, such as
+// SMS, or email. - You can re-generate new session tokens repeatedly for same
+// `generate` request if necessary, regardless of the previous tokens being
+// expired or not. You don't need to worry about multiple sessions resulting in
+// duplicate fulfillments as guaranteed by the same subscription id. Please
+// refer to the Google Managed Signup
 // (/payments/reseller/subscription/reference/index/User.Signup.Integration/Goog
 // le.Managed.Signup) documentation for additional integration details.
-type GoogleCloudPaymentsResellerSubscriptionV1UserSession struct {
+type UserSession struct {
 	// ExpireTime: Output only. The time at which the user session expires.
 	ExpireTime string `json:"expireTime,omitempty"`
 	// Token: Output only. The encrypted token of the user session, including the
@@ -1725,14 +1784,13 @@ type GoogleCloudPaymentsResellerSubscriptionV1UserSession struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1UserSession) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1UserSession
+func (s UserSession) MarshalJSON() ([]byte, error) {
+	type NoMethod UserSession
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload: Payload specific to
-// Youtube products.
-type GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload struct {
+// YoutubePayload: Payload specific to Youtube products.
+type YoutubePayload struct {
 	// AccessEndTime: Output only. The access expiration time for this line item.
 	AccessEndTime string `json:"accessEndTime,omitempty"`
 	// PartnerEligibilityIds: The list of eligibility_ids which are applicable for
@@ -1765,91 +1823,8 @@ type GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleTypeLocalizedText: Localized variant of a text in a particular
-// language.
-type GoogleTypeLocalizedText struct {
-	// LanguageCode: The text's BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more information, see
-	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
-	LanguageCode string `json:"languageCode,omitempty"`
-	// Text: Localized string in the language corresponding to language_code below.
-	Text string `json:"text,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LanguageCode") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleTypeLocalizedText) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleTypeLocalizedText
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ProductBundleDetails: Details for a bundle product.
-type ProductBundleDetails struct {
-	// BundleElements: The individual products that are included in the bundle.
-	BundleElements []*GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement `json:"bundleElements,omitempty"`
-	// EntitlementMode: The entitlement mode of the bundle product.
-	//
-	// Possible values:
-	//   "ENTITLEMENT_MODE_UNSPECIFIED" - Unspecified. It's reserved as an
-	// unexpected value, should not be used.
-	//   "ENTITLEMENT_MODE_FULL" - All the bundle elements must be fully activated
-	// in a single request.
-	//   "ENTITLEMENT_MODE_INCREMENTAL" - The bundle elements could be
-	// incrementally activated.
-	EntitlementMode string `json:"entitlementMode,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BundleElements") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BundleElements") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ProductBundleDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod ProductBundleDetails
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// SubscriptionLineItemBundleDetails: The bundle details for a line item
-// corresponding to a hard bundle.
-type SubscriptionLineItemBundleDetails struct {
-	// BundleElementDetails: Output only. The details for each element in the hard
-	// bundle.
-	BundleElementDetails []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails `json:"bundleElementDetails,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BundleElementDetails") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BundleElementDetails") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s SubscriptionLineItemBundleDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod SubscriptionLineItemBundleDetails
+func (s YoutubePayload) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubePayload
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1961,11 +1936,11 @@ func (c *PartnersProductsListCall) doRequest(alt string) (*http.Response, error)
 
 // Do executes the "paymentsresellersubscription.partners.products.list" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse, error) {
+// *ListProductsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*ListProductsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1984,7 +1959,7 @@ func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse{
+	ret := &ListProductsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2002,7 +1977,7 @@ func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *PartnersProductsListCall) Pages(ctx context.Context, f func(*GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse) error) error {
+func (c *PartnersProductsListCall) Pages(ctx context.Context, f func(*ListProductsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -2021,12 +1996,12 @@ func (c *PartnersProductsListCall) Pages(ctx context.Context, f func(*GoogleClou
 }
 
 type PartnersPromotionsFindEligibleCall struct {
-	s                                                                      *Service
-	parent                                                                 string
-	googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest
-	urlParams_                                                             gensupport.URLParams
-	ctx_                                                                   context.Context
-	header_                                                                http.Header
+	s                             *Service
+	parent                        string
+	findeligiblepromotionsrequest *FindEligiblePromotionsRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
 }
 
 // FindEligible: Currently, it is only enabeld for **YouTube**. Finds eligible
@@ -2036,10 +2011,10 @@ type PartnersPromotionsFindEligibleCall struct {
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.
-func (r *PartnersPromotionsService) FindEligible(parent string, googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest) *PartnersPromotionsFindEligibleCall {
+func (r *PartnersPromotionsService) FindEligible(parent string, findeligiblepromotionsrequest *FindEligiblePromotionsRequest) *PartnersPromotionsFindEligibleCall {
 	c := &PartnersPromotionsFindEligibleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest = googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest
+	c.findeligiblepromotionsrequest = findeligiblepromotionsrequest
 	return c
 }
 
@@ -2068,7 +2043,7 @@ func (c *PartnersPromotionsFindEligibleCall) Header() http.Header {
 
 func (c *PartnersPromotionsFindEligibleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.findeligiblepromotionsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2090,11 +2065,11 @@ func (c *PartnersPromotionsFindEligibleCall) doRequest(alt string) (*http.Respon
 
 // Do executes the "paymentsresellersubscription.partners.promotions.findEligible" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse.Serv
-// erResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *PartnersPromotionsFindEligibleCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse, error) {
+// *FindEligiblePromotionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PartnersPromotionsFindEligibleCall) Do(opts ...googleapi.CallOption) (*FindEligiblePromotionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2113,7 +2088,7 @@ func (c *PartnersPromotionsFindEligibleCall) Do(opts ...googleapi.CallOption) (*
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse{
+	ret := &FindEligiblePromotionsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2131,11 +2106,9 @@ func (c *PartnersPromotionsFindEligibleCall) Do(opts ...googleapi.CallOption) (*
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *PartnersPromotionsFindEligibleCall) Pages(ctx context.Context, f func(*GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse) error) error {
+func (c *PartnersPromotionsFindEligibleCall) Pages(ctx context.Context, f func(*FindEligiblePromotionsResponse) error) error {
 	c.ctx_ = ctx
-	defer func(pt string) {
-		c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest.PageToken = pt
-	}(c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest.PageToken)
+	defer func(pt string) { c.findeligiblepromotionsrequest.PageToken = pt }(c.findeligiblepromotionsrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2147,7 +2120,7 @@ func (c *PartnersPromotionsFindEligibleCall) Pages(ctx context.Context, f func(*
 		if x.NextPageToken == "" {
 			return nil
 		}
-		c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest.PageToken = x.NextPageToken
+		c.findeligiblepromotionsrequest.PageToken = x.NextPageToken
 	}
 }
 
@@ -2260,11 +2233,11 @@ func (c *PartnersPromotionsListCall) doRequest(alt string) (*http.Response, erro
 
 // Do executes the "paymentsresellersubscription.partners.promotions.list" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse.ServerRespon
-// se.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse, error) {
+// *ListPromotionsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*ListPromotionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2283,7 +2256,7 @@ func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse{
+	ret := &ListPromotionsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2301,7 +2274,7 @@ func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *PartnersPromotionsListCall) Pages(ctx context.Context, f func(*GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse) error) error {
+func (c *PartnersPromotionsListCall) Pages(ctx context.Context, f func(*ListPromotionsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -2320,12 +2293,12 @@ func (c *PartnersPromotionsListCall) Pages(ctx context.Context, f func(*GoogleCl
 }
 
 type PartnersSubscriptionsCancelCall struct {
-	s                                                                  *Service
-	name                                                               string
-	googlecloudpaymentsresellersubscriptionv1cancelsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest
-	urlParams_                                                         gensupport.URLParams
-	ctx_                                                               context.Context
-	header_                                                            http.Header
+	s                         *Service
+	name                      string
+	cancelsubscriptionrequest *CancelSubscriptionRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
 }
 
 // Cancel: Cancels a subscription service either immediately or by the end of
@@ -2334,10 +2307,10 @@ type PartnersSubscriptionsCancelCall struct {
 //
 //   - name: The name of the subscription resource to be cancelled. It will have
 //     the format of "partners/{partner_id}/subscriptions/{subscription_id}".
-func (r *PartnersSubscriptionsService) Cancel(name string, googlecloudpaymentsresellersubscriptionv1cancelsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest) *PartnersSubscriptionsCancelCall {
+func (r *PartnersSubscriptionsService) Cancel(name string, cancelsubscriptionrequest *CancelSubscriptionRequest) *PartnersSubscriptionsCancelCall {
 	c := &PartnersSubscriptionsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	c.googlecloudpaymentsresellersubscriptionv1cancelsubscriptionrequest = googlecloudpaymentsresellersubscriptionv1cancelsubscriptionrequest
+	c.cancelsubscriptionrequest = cancelsubscriptionrequest
 	return c
 }
 
@@ -2366,7 +2339,7 @@ func (c *PartnersSubscriptionsCancelCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1cancelsubscriptionrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cancelsubscriptionrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2388,11 +2361,11 @@ func (c *PartnersSubscriptionsCancelCall) doRequest(alt string) (*http.Response,
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.cancel" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse.ServerRe
-// sponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *PartnersSubscriptionsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse, error) {
+// *CancelSubscriptionResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PartnersSubscriptionsCancelCall) Do(opts ...googleapi.CallOption) (*CancelSubscriptionResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2411,7 +2384,7 @@ func (c *PartnersSubscriptionsCancelCall) Do(opts ...googleapi.CallOption) (*Goo
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse{
+	ret := &CancelSubscriptionResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2427,12 +2400,12 @@ func (c *PartnersSubscriptionsCancelCall) Do(opts ...googleapi.CallOption) (*Goo
 }
 
 type PartnersSubscriptionsCreateCall struct {
-	s                                                     *Service
-	parentid                                              string
-	googlecloudpaymentsresellersubscriptionv1subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription
-	urlParams_                                            gensupport.URLParams
-	ctx_                                                  context.Context
-	header_                                               http.Header
+	s            *Service
+	parentid     string
+	subscription *Subscription
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
 }
 
 // Create: Used by partners to create a subscription for their customers. The
@@ -2441,10 +2414,10 @@ type PartnersSubscriptionsCreateCall struct {
 //
 //   - parent: The parent resource name, which is the identifier of the partner.
 //     It will have the format of "partners/{partner_id}".
-func (r *PartnersSubscriptionsService) Create(parentid string, googlecloudpaymentsresellersubscriptionv1subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription) *PartnersSubscriptionsCreateCall {
+func (r *PartnersSubscriptionsService) Create(parentid string, subscription *Subscription) *PartnersSubscriptionsCreateCall {
 	c := &PartnersSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
-	c.googlecloudpaymentsresellersubscriptionv1subscription = googlecloudpaymentsresellersubscriptionv1subscription
+	c.subscription = subscription
 	return c
 }
 
@@ -2483,7 +2456,7 @@ func (c *PartnersSubscriptionsCreateCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1subscription)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.subscription)
 	if err != nil {
 		return nil, err
 	}
@@ -2505,11 +2478,10 @@ func (c *PartnersSubscriptionsCreateCall) doRequest(alt string) (*http.Response,
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.create" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1Subscription.ServerResponse.Header
-// or (if a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *PartnersSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1Subscription, error) {
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *PartnersSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2528,7 +2500,7 @@ func (c *PartnersSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPaymentsResellerSubscriptionV1Subscription{
+	ret := &Subscription{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2544,12 +2516,12 @@ func (c *PartnersSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 }
 
 type PartnersSubscriptionsEntitleCall struct {
-	s                                                                   *Service
-	name                                                                string
-	googlecloudpaymentsresellersubscriptionv1entitlesubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest
-	urlParams_                                                          gensupport.URLParams
-	ctx_                                                                context.Context
-	header_                                                             http.Header
+	s                          *Service
+	name                       string
+	entitlesubscriptionrequest *EntitleSubscriptionRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
 }
 
 // Entitle: Entitles a previously provisioned subscription to the current end
@@ -2559,10 +2531,10 @@ type PartnersSubscriptionsEntitleCall struct {
 //   - name: The name of the subscription resource that is entitled to the
 //     current end user. It will have the format of
 //     "partners/{partner_id}/subscriptions/{subscription_id}".
-func (r *PartnersSubscriptionsService) Entitle(name string, googlecloudpaymentsresellersubscriptionv1entitlesubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest) *PartnersSubscriptionsEntitleCall {
+func (r *PartnersSubscriptionsService) Entitle(name string, entitlesubscriptionrequest *EntitleSubscriptionRequest) *PartnersSubscriptionsEntitleCall {
 	c := &PartnersSubscriptionsEntitleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	c.googlecloudpaymentsresellersubscriptionv1entitlesubscriptionrequest = googlecloudpaymentsresellersubscriptionv1entitlesubscriptionrequest
+	c.entitlesubscriptionrequest = entitlesubscriptionrequest
 	return c
 }
 
@@ -2591,7 +2563,7 @@ func (c *PartnersSubscriptionsEntitleCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsEntitleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1entitlesubscriptionrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.entitlesubscriptionrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2613,11 +2585,11 @@ func (c *PartnersSubscriptionsEntitleCall) doRequest(alt string) (*http.Response
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.entitle" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse.ServerR
-// esponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *PartnersSubscriptionsEntitleCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse, error) {
+// *EntitleSubscriptionResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PartnersSubscriptionsEntitleCall) Do(opts ...googleapi.CallOption) (*EntitleSubscriptionResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2636,7 +2608,7 @@ func (c *PartnersSubscriptionsEntitleCall) Do(opts ...googleapi.CallOption) (*Go
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse{
+	ret := &EntitleSubscriptionResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2652,12 +2624,12 @@ func (c *PartnersSubscriptionsEntitleCall) Do(opts ...googleapi.CallOption) (*Go
 }
 
 type PartnersSubscriptionsExtendCall struct {
-	s                                                                  *Service
-	name                                                               string
-	googlecloudpaymentsresellersubscriptionv1extendsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest
-	urlParams_                                                         gensupport.URLParams
-	ctx_                                                               context.Context
-	header_                                                            http.Header
+	s                         *Service
+	name                      string
+	extendsubscriptionrequest *ExtendSubscriptionRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
 }
 
 // Extend: [Opt-in only] Most partners should be on auto-extend by default.
@@ -2667,10 +2639,10 @@ type PartnersSubscriptionsExtendCall struct {
 //
 //   - name: The name of the subscription resource to be extended. It will have
 //     the format of "partners/{partner_id}/subscriptions/{subscription_id}".
-func (r *PartnersSubscriptionsService) Extend(name string, googlecloudpaymentsresellersubscriptionv1extendsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest) *PartnersSubscriptionsExtendCall {
+func (r *PartnersSubscriptionsService) Extend(name string, extendsubscriptionrequest *ExtendSubscriptionRequest) *PartnersSubscriptionsExtendCall {
 	c := &PartnersSubscriptionsExtendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	c.googlecloudpaymentsresellersubscriptionv1extendsubscriptionrequest = googlecloudpaymentsresellersubscriptionv1extendsubscriptionrequest
+	c.extendsubscriptionrequest = extendsubscriptionrequest
 	return c
 }
 
@@ -2699,7 +2671,7 @@ func (c *PartnersSubscriptionsExtendCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsExtendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1extendsubscriptionrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.extendsubscriptionrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2721,11 +2693,11 @@ func (c *PartnersSubscriptionsExtendCall) doRequest(alt string) (*http.Response,
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.extend" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse.ServerRe
-// sponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *PartnersSubscriptionsExtendCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse, error) {
+// *ExtendSubscriptionResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PartnersSubscriptionsExtendCall) Do(opts ...googleapi.CallOption) (*ExtendSubscriptionResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2744,7 +2716,7 @@ func (c *PartnersSubscriptionsExtendCall) Do(opts ...googleapi.CallOption) (*Goo
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse{
+	ret := &ExtendSubscriptionResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2833,11 +2805,10 @@ func (c *PartnersSubscriptionsGetCall) doRequest(alt string) (*http.Response, er
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.get" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1Subscription.ServerResponse.Header
-// or (if a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *PartnersSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1Subscription, error) {
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *PartnersSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2856,7 +2827,7 @@ func (c *PartnersSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Google
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPaymentsResellerSubscriptionV1Subscription{
+	ret := &Subscription{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2872,12 +2843,12 @@ func (c *PartnersSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Google
 }
 
 type PartnersSubscriptionsProvisionCall struct {
-	s                                                     *Service
-	parentid                                              string
-	googlecloudpaymentsresellersubscriptionv1subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription
-	urlParams_                                            gensupport.URLParams
-	ctx_                                                  context.Context
-	header_                                               http.Header
+	s            *Service
+	parentid     string
+	subscription *Subscription
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
 }
 
 // Provision: Used by partners to provision a subscription for their customers.
@@ -2888,10 +2859,10 @@ type PartnersSubscriptionsProvisionCall struct {
 //
 //   - parent: The parent resource name, which is the identifier of the partner.
 //     It will have the format of "partners/{partner_id}".
-func (r *PartnersSubscriptionsService) Provision(parentid string, googlecloudpaymentsresellersubscriptionv1subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription) *PartnersSubscriptionsProvisionCall {
+func (r *PartnersSubscriptionsService) Provision(parentid string, subscription *Subscription) *PartnersSubscriptionsProvisionCall {
 	c := &PartnersSubscriptionsProvisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
-	c.googlecloudpaymentsresellersubscriptionv1subscription = googlecloudpaymentsresellersubscriptionv1subscription
+	c.subscription = subscription
 	return c
 }
 
@@ -2930,7 +2901,7 @@ func (c *PartnersSubscriptionsProvisionCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsProvisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1subscription)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.subscription)
 	if err != nil {
 		return nil, err
 	}
@@ -2952,11 +2923,10 @@ func (c *PartnersSubscriptionsProvisionCall) doRequest(alt string) (*http.Respon
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.provision" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1Subscription.ServerResponse.Header
-// or (if a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *PartnersSubscriptionsProvisionCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1Subscription, error) {
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *PartnersSubscriptionsProvisionCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2975,7 +2945,7 @@ func (c *PartnersSubscriptionsProvisionCall) Do(opts ...googleapi.CallOption) (*
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPaymentsResellerSubscriptionV1Subscription{
+	ret := &Subscription{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2991,12 +2961,12 @@ func (c *PartnersSubscriptionsProvisionCall) Do(opts ...googleapi.CallOption) (*
 }
 
 type PartnersSubscriptionsResumeCall struct {
-	s                                                                  *Service
-	name                                                               string
-	googlecloudpaymentsresellersubscriptionv1resumesubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionRequest
-	urlParams_                                                         gensupport.URLParams
-	ctx_                                                               context.Context
-	header_                                                            http.Header
+	s                         *Service
+	name                      string
+	resumesubscriptionrequest *ResumeSubscriptionRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
 }
 
 // Resume: Resumes a suspended subscription. The new billing cycle will start
@@ -3005,10 +2975,10 @@ type PartnersSubscriptionsResumeCall struct {
 //
 //   - name: The name of the subscription resource to be resumed. It will have
 //     the format of "partners/{partner_id}/subscriptions/{subscription_id}".
-func (r *PartnersSubscriptionsService) Resume(name string, googlecloudpaymentsresellersubscriptionv1resumesubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionRequest) *PartnersSubscriptionsResumeCall {
+func (r *PartnersSubscriptionsService) Resume(name string, resumesubscriptionrequest *ResumeSubscriptionRequest) *PartnersSubscriptionsResumeCall {
 	c := &PartnersSubscriptionsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	c.googlecloudpaymentsresellersubscriptionv1resumesubscriptionrequest = googlecloudpaymentsresellersubscriptionv1resumesubscriptionrequest
+	c.resumesubscriptionrequest = resumesubscriptionrequest
 	return c
 }
 
@@ -3037,7 +3007,7 @@ func (c *PartnersSubscriptionsResumeCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1resumesubscriptionrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.resumesubscriptionrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3059,11 +3029,11 @@ func (c *PartnersSubscriptionsResumeCall) doRequest(alt string) (*http.Response,
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.resume" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionResponse.ServerRe
-// sponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *PartnersSubscriptionsResumeCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionResponse, error) {
+// *ResumeSubscriptionResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PartnersSubscriptionsResumeCall) Do(opts ...googleapi.CallOption) (*ResumeSubscriptionResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3082,7 +3052,7 @@ func (c *PartnersSubscriptionsResumeCall) Do(opts ...googleapi.CallOption) (*Goo
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPaymentsResellerSubscriptionV1ResumeSubscriptionResponse{
+	ret := &ResumeSubscriptionResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -3098,12 +3068,12 @@ func (c *PartnersSubscriptionsResumeCall) Do(opts ...googleapi.CallOption) (*Goo
 }
 
 type PartnersSubscriptionsSuspendCall struct {
-	s                                                                   *Service
-	name                                                                string
-	googlecloudpaymentsresellersubscriptionv1suspendsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionRequest
-	urlParams_                                                          gensupport.URLParams
-	ctx_                                                                context.Context
-	header_                                                             http.Header
+	s                          *Service
+	name                       string
+	suspendsubscriptionrequest *SuspendSubscriptionRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
 }
 
 // Suspend: Suspends a subscription. Contract terms may dictate if a prorated
@@ -3112,10 +3082,10 @@ type PartnersSubscriptionsSuspendCall struct {
 //
 //   - name: The name of the subscription resource to be suspended. It will have
 //     the format of "partners/{partner_id}/subscriptions/{subscription_id}".
-func (r *PartnersSubscriptionsService) Suspend(name string, googlecloudpaymentsresellersubscriptionv1suspendsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionRequest) *PartnersSubscriptionsSuspendCall {
+func (r *PartnersSubscriptionsService) Suspend(name string, suspendsubscriptionrequest *SuspendSubscriptionRequest) *PartnersSubscriptionsSuspendCall {
 	c := &PartnersSubscriptionsSuspendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	c.googlecloudpaymentsresellersubscriptionv1suspendsubscriptionrequest = googlecloudpaymentsresellersubscriptionv1suspendsubscriptionrequest
+	c.suspendsubscriptionrequest = suspendsubscriptionrequest
 	return c
 }
 
@@ -3144,7 +3114,7 @@ func (c *PartnersSubscriptionsSuspendCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsSuspendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1suspendsubscriptionrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.suspendsubscriptionrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3166,11 +3136,11 @@ func (c *PartnersSubscriptionsSuspendCall) doRequest(alt string) (*http.Response
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.suspend" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionResponse.ServerR
-// esponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *PartnersSubscriptionsSuspendCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionResponse, error) {
+// *SuspendSubscriptionResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PartnersSubscriptionsSuspendCall) Do(opts ...googleapi.CallOption) (*SuspendSubscriptionResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3189,7 +3159,7 @@ func (c *PartnersSubscriptionsSuspendCall) Do(opts ...googleapi.CallOption) (*Go
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPaymentsResellerSubscriptionV1SuspendSubscriptionResponse{
+	ret := &SuspendSubscriptionResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -3205,12 +3175,12 @@ func (c *PartnersSubscriptionsSuspendCall) Do(opts ...googleapi.CallOption) (*Go
 }
 
 type PartnersSubscriptionsUndoCancelCall struct {
-	s                                                                      *Service
-	name                                                                   string
-	googlecloudpaymentsresellersubscriptionv1undocancelsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionRequest
-	urlParams_                                                             gensupport.URLParams
-	ctx_                                                                   context.Context
-	header_                                                                http.Header
+	s                             *Service
+	name                          string
+	undocancelsubscriptionrequest *UndoCancelSubscriptionRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
 }
 
 // UndoCancel: Currently, it is used by **Google One, Play Pass** partners.
@@ -3222,10 +3192,10 @@ type PartnersSubscriptionsUndoCancelCall struct {
 //   - name: The name of the subscription resource whose pending cancellation
 //     needs to be undone. It will have the format of
 //     "partners/{partner_id}/subscriptions/{subscription_id}".
-func (r *PartnersSubscriptionsService) UndoCancel(name string, googlecloudpaymentsresellersubscriptionv1undocancelsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionRequest) *PartnersSubscriptionsUndoCancelCall {
+func (r *PartnersSubscriptionsService) UndoCancel(name string, undocancelsubscriptionrequest *UndoCancelSubscriptionRequest) *PartnersSubscriptionsUndoCancelCall {
 	c := &PartnersSubscriptionsUndoCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	c.googlecloudpaymentsresellersubscriptionv1undocancelsubscriptionrequest = googlecloudpaymentsresellersubscriptionv1undocancelsubscriptionrequest
+	c.undocancelsubscriptionrequest = undocancelsubscriptionrequest
 	return c
 }
 
@@ -3254,7 +3224,7 @@ func (c *PartnersSubscriptionsUndoCancelCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsUndoCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1undocancelsubscriptionrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.undocancelsubscriptionrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3276,11 +3246,11 @@ func (c *PartnersSubscriptionsUndoCancelCall) doRequest(alt string) (*http.Respo
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.undoCancel" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse.Serv
-// erResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *PartnersSubscriptionsUndoCancelCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse, error) {
+// *UndoCancelSubscriptionResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PartnersSubscriptionsUndoCancelCall) Do(opts ...googleapi.CallOption) (*UndoCancelSubscriptionResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3299,7 +3269,7 @@ func (c *PartnersSubscriptionsUndoCancelCall) Do(opts ...googleapi.CallOption) (
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse{
+	ret := &UndoCancelSubscriptionResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -3315,12 +3285,12 @@ func (c *PartnersSubscriptionsUndoCancelCall) Do(opts ...googleapi.CallOption) (
 }
 
 type PartnersUserSessionsGenerateCall struct {
-	s                                                                   *Service
-	parent                                                              string
-	googlecloudpaymentsresellersubscriptionv1generateusersessionrequest *GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest
-	urlParams_                                                          gensupport.URLParams
-	ctx_                                                                context.Context
-	header_                                                             http.Header
+	s                          *Service
+	parent                     string
+	generateusersessionrequest *GenerateUserSessionRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
 }
 
 // Generate: This API replaces user authorized OAuth consent based APIs
@@ -3332,10 +3302,10 @@ type PartnersUserSessionsGenerateCall struct {
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.
-func (r *PartnersUserSessionsService) Generate(parent string, googlecloudpaymentsresellersubscriptionv1generateusersessionrequest *GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest) *PartnersUserSessionsGenerateCall {
+func (r *PartnersUserSessionsService) Generate(parent string, generateusersessionrequest *GenerateUserSessionRequest) *PartnersUserSessionsGenerateCall {
 	c := &PartnersUserSessionsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.googlecloudpaymentsresellersubscriptionv1generateusersessionrequest = googlecloudpaymentsresellersubscriptionv1generateusersessionrequest
+	c.generateusersessionrequest = generateusersessionrequest
 	return c
 }
 
@@ -3364,7 +3334,7 @@ func (c *PartnersUserSessionsGenerateCall) Header() http.Header {
 
 func (c *PartnersUserSessionsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudpaymentsresellersubscriptionv1generateusersessionrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.generateusersessionrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3386,11 +3356,11 @@ func (c *PartnersUserSessionsGenerateCall) doRequest(alt string) (*http.Response
 
 // Do executes the "paymentsresellersubscription.partners.userSessions.generate" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse.ServerR
-// esponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *PartnersUserSessionsGenerateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse, error) {
+// *GenerateUserSessionResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PartnersUserSessionsGenerateCall) Do(opts ...googleapi.CallOption) (*GenerateUserSessionResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3409,7 +3379,7 @@ func (c *PartnersUserSessionsGenerateCall) Do(opts ...googleapi.CallOption) (*Go
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse{
+	ret := &GenerateUserSessionResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

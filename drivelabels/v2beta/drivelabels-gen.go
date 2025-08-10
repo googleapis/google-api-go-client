@@ -323,14 +323,14 @@ func (s GoogleAppsDriveLabelsV2betaBadgeConfig) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest: Deletes one
-// of more Label Permissions.
+// or more label permissions.
 type GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest struct {
 	// Requests: Required. The request message specifying the resources to update.
 	Requests []*GoogleAppsDriveLabelsV2betaDeleteLabelPermissionRequest `json:"requests,omitempty"`
 	// UseAdminAccess: Set to `true` in order to use the user's admin credentials.
-	// The server will verify the user is an admin for the Label before allowing
-	// access. If this is set, the use_admin_access field in the
-	// DeleteLabelPermissionRequest messages must either be empty or match this
+	// The server will verify the user is an admin for the label before allowing
+	// access. If this is set, the `use_admin_access` field in the
+	// `DeleteLabelPermissionRequest` messages must either be empty or match this
 	// field.
 	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Requests") to
@@ -352,14 +352,14 @@ func (s GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest) MarshalJS
 }
 
 // GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsRequest: Updates one
-// or more Label Permissions.
+// or more label permissions.
 type GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsRequest struct {
 	// Requests: Required. The request message specifying the resources to update.
 	Requests []*GoogleAppsDriveLabelsV2betaUpdateLabelPermissionRequest `json:"requests,omitempty"`
 	// UseAdminAccess: Set to `true` in order to use the user's admin credentials.
-	// The server will verify the user is an admin for the Label before allowing
-	// access. If this is set, the use_admin_access field in the
-	// UpdateLabelPermissionRequest messages must either be empty or match this
+	// The server will verify the user is an admin for the label before allowing
+	// access. If this is set, the `use_admin_access` field in the
+	// `UpdateLabelPermissionRequest` messages must either be empty or match this
 	// field.
 	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Requests") to
@@ -381,7 +381,7 @@ func (s GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsRequest) MarshalJS
 }
 
 // GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsResponse: Response for
-// updating one or more Label Permissions.
+// updating one or more label permissions.
 type GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsResponse struct {
 	// Permissions: Required. Permissions updated.
 	Permissions []*GoogleAppsDriveLabelsV2betaLabelPermission `json:"permissions,omitempty"`
@@ -406,11 +406,11 @@ func (s GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsResponse) MarshalJ
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsDriveLabelsV2betaDateLimits: Limits for date Field type.
+// GoogleAppsDriveLabelsV2betaDateLimits: Limits for date field type.
 type GoogleAppsDriveLabelsV2betaDateLimits struct {
-	// MaxValue: Maximum value for the date Field type.
+	// MaxValue: Maximum value for the date field type.
 	MaxValue *GoogleTypeDate `json:"maxValue,omitempty"`
-	// MinValue: Minimum value for the date Field type.
+	// MinValue: Minimum value for the date field type.
 	MinValue *GoogleTypeDate `json:"minValue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MaxValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -430,14 +430,14 @@ func (s GoogleAppsDriveLabelsV2betaDateLimits) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsDriveLabelsV2betaDeleteLabelPermissionRequest: Deletes a Label
-// Permission. Permissions affect the Label resource as a whole, are not
-// revisioned, and do not require publishing.
+// GoogleAppsDriveLabelsV2betaDeleteLabelPermissionRequest: Deletes a label
+// permission. Permissions affect the label resource as a whole, aren't
+// revisioned, and don't require publishing.
 type GoogleAppsDriveLabelsV2betaDeleteLabelPermissionRequest struct {
-	// Name: Required. Label Permission resource name.
+	// Name: Required. Label permission resource name.
 	Name string `json:"name,omitempty"`
 	// UseAdminAccess: Set to `true` in order to use the user's admin credentials.
-	// The server will verify the user is an admin for the Label before allowing
+	// The server will verify the user is an admin for the label before allowing
 	// access.
 	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
@@ -459,17 +459,17 @@ func (s GoogleAppsDriveLabelsV2betaDeleteLabelPermissionRequest) MarshalJSON() (
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequest: The set of requests for
-// updating aspects of a Label. If any request is not valid, no requests will
-// be applied.
+// updating aspects of a label. If any request isn't valid, no requests will be
+// applied.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequest struct {
-	// LanguageCode: The BCP-47 language code to use for evaluating localized Field
+	// LanguageCode: The BCP-47 language code to use for evaluating localized field
 	// labels when `include_label_in_response` is `true`.
 	LanguageCode string `json:"languageCode,omitempty"`
-	// Requests: A list of updates to apply to the Label. Requests will be applied
+	// Requests: A list of updates to apply to the label. Requests will be applied
 	// in the order they are specified.
 	Requests []*GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestRequest `json:"requests,omitempty"`
 	// UseAdminAccess: Set to `true` in order to use the user's admin credentials.
-	// The server will verify the user is an admin for the Label before allowing
+	// The server will verify the user is an admin for the label before allowing
 	// access.
 	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
 	// View: When specified, only certain fields belonging to the indicated view
@@ -501,7 +501,7 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequest) MarshalJSON() ([]byt
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateFieldRequest:
-// Request to create a Field within a Label.
+// Request to create a field within a label.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateFieldRequest struct {
 	// Field: Required. Field to create.
 	Field *GoogleAppsDriveLabelsV2betaField `json:"field,omitempty"`
@@ -524,11 +524,11 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateFieldRequest) Ma
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateSelectionChoiceReques
-// t: Request to create a Selection Choice.
+// t: Request to create a selection choice.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateSelectionChoiceRequest struct {
-	// Choice: Required. The Choice to create.
+	// Choice: Required. The choice to create.
 	Choice *GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoice `json:"choice,omitempty"`
-	// FieldId: Required. The Selection Field in which a Choice will be created.
+	// FieldId: Required. The selection field in which a choice will be created.
 	FieldId string `json:"fieldId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Choice") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -549,9 +549,9 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateSelectionChoiceR
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteFieldRequest:
-// Request to delete the Field.
+// Request to delete the field.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteFieldRequest struct {
-	// Id: Required. ID of the Field to delete.
+	// Id: Required. ID of the field to delete.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -572,9 +572,9 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteFieldRequest) Ma
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteSelectionChoiceReques
-// t: Request to delete a Choice.
+// t: Request to delete a choice.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteSelectionChoiceRequest struct {
-	// FieldId: Required. The Selection Field from which a Choice will be deleted.
+	// FieldId: Required. The selection field from which a choice will be deleted.
 	FieldId string `json:"fieldId,omitempty"`
 	// Id: Required. Choice to delete.
 	Id string `json:"id,omitempty"`
@@ -597,15 +597,16 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteSelectionChoiceR
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableFieldRequest:
-// Request to disable the Field.
+// Request to disable the field.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableFieldRequest struct {
-	// DisabledPolicy: Required. Field Disabled Policy.
+	// DisabledPolicy: Required. Field disabled policy.
 	DisabledPolicy *GoogleAppsDriveLabelsV2betaLifecycleDisabledPolicy `json:"disabledPolicy,omitempty"`
-	// Id: Required. Key of the Field to disable.
+	// Id: Required. Key of the field to disable.
 	Id string `json:"id,omitempty"`
 	// UpdateMask: The fields that should be updated. At least one field must be
 	// specified. The root `disabled_policy` is implied and should not be
-	// specified. A single `*` can be used as short-hand for updating every field.
+	// specified. A single `*` can be used as a short-hand for updating every
+	// field.
 	UpdateMask string `json:"updateMask,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisabledPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -626,17 +627,18 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableFieldRequest) M
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableSelectionChoiceReque
-// st: Request to disable a Choice.
+// st: Request to disable a choice.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableSelectionChoiceRequest struct {
 	// DisabledPolicy: Required. The disabled policy to update.
 	DisabledPolicy *GoogleAppsDriveLabelsV2betaLifecycleDisabledPolicy `json:"disabledPolicy,omitempty"`
-	// FieldId: Required. The Selection Field in which a Choice will be disabled.
+	// FieldId: Required. The selection field in which a choice will be disabled.
 	FieldId string `json:"fieldId,omitempty"`
 	// Id: Required. Choice to disable.
 	Id string `json:"id,omitempty"`
 	// UpdateMask: The fields that should be updated. At least one field must be
 	// specified. The root `disabled_policy` is implied and should not be
-	// specified. A single `*` can be used as short-hand for updating every field.
+	// specified. A single `*` can be used as a short-hand for updating every
+	// field.
 	UpdateMask string `json:"updateMask,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisabledPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -657,9 +659,9 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableSelectionChoice
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableFieldRequest:
-// Request to enable the Field.
+// Request to enable the field.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableFieldRequest struct {
-	// Id: Required. ID of the Field to enable.
+	// Id: Required. ID of the field to enable.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -680,9 +682,9 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableFieldRequest) Ma
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableSelectionChoiceReques
-// t: Request to enable a Choice.
+// t: Request to enable a choice.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableSelectionChoiceRequest struct {
-	// FieldId: Required. The Selection Field in which a Choice will be enabled.
+	// FieldId: Required. The selection field in which a choice will be enabled.
 	FieldId string `json:"fieldId,omitempty"`
 	// Id: Required. Choice to enable.
 	Id string `json:"id,omitempty"`
@@ -705,32 +707,32 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableSelectionChoiceR
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestRequest: A single kind of
-// update to apply to a Label.
+// update to apply to a label.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestRequest struct {
-	// CreateField: Creates a new Field.
+	// CreateField: Creates a field.
 	CreateField *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateFieldRequest `json:"createField,omitempty"`
-	// CreateSelectionChoice: Creates Choice within a Selection field.
+	// CreateSelectionChoice: Create a choice within a selection field.
 	CreateSelectionChoice *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateSelectionChoiceRequest `json:"createSelectionChoice,omitempty"`
-	// DeleteField: Deletes a Field from the label.
+	// DeleteField: Deletes a field from the label.
 	DeleteField *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteFieldRequest `json:"deleteField,omitempty"`
-	// DeleteSelectionChoice: Delete a Choice within a Selection Field.
+	// DeleteSelectionChoice: Delete a choice within a selection field.
 	DeleteSelectionChoice *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteSelectionChoiceRequest `json:"deleteSelectionChoice,omitempty"`
-	// DisableField: Disables the Field.
+	// DisableField: Disables the field.
 	DisableField *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableFieldRequest `json:"disableField,omitempty"`
-	// DisableSelectionChoice: Disable a Choice within a Selection Field.
+	// DisableSelectionChoice: Disable a choice within a selection field.
 	DisableSelectionChoice *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableSelectionChoiceRequest `json:"disableSelectionChoice,omitempty"`
-	// EnableField: Enables the Field.
+	// EnableField: Enables the field.
 	EnableField *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableFieldRequest `json:"enableField,omitempty"`
-	// EnableSelectionChoice: Enable a Choice within a Selection Field.
+	// EnableSelectionChoice: Enable a choice within a selection field.
 	EnableSelectionChoice *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableSelectionChoiceRequest `json:"enableSelectionChoice,omitempty"`
-	// UpdateField: Updates basic properties of a Field.
+	// UpdateField: Updates basic properties of a field.
 	UpdateField *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldPropertiesRequest `json:"updateField,omitempty"`
-	// UpdateFieldType: Update Field type and/or type options.
+	// UpdateFieldType: Update field type and/or type options.
 	UpdateFieldType *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldTypeRequest `json:"updateFieldType,omitempty"`
-	// UpdateLabel: Updates the Label properties.
+	// UpdateLabel: Updates the label properties.
 	UpdateLabel *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateLabelPropertiesRequest `json:"updateLabel,omitempty"`
-	// UpdateSelectionChoiceProperties: Update a Choice properties within a
-	// Selection Field.
+	// UpdateSelectionChoiceProperties: Update a choice property within a selection
+	// field.
 	UpdateSelectionChoiceProperties *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateSelectionChoicePropertiesRequest `json:"updateSelectionChoiceProperties,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateField") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -751,15 +753,15 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestRequest) MarshalJSON()
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldPropertiesReques
-// t: Request to update Field properties.
+// t: Request to update field properties.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldPropertiesRequest struct {
-	// Id: Required. The Field to update.
+	// Id: Required. The field to update.
 	Id string `json:"id,omitempty"`
-	// Properties: Required. Basic Field properties.
+	// Properties: Required. Basic field properties.
 	Properties *GoogleAppsDriveLabelsV2betaFieldProperties `json:"properties,omitempty"`
 	// UpdateMask: The fields that should be updated. At least one field must be
 	// specified. The root `properties` is implied and should not be specified. A
-	// single `*` can be used as short-hand for updating every field.
+	// single `*` can be used as a short-hand for updating every field.
 	UpdateMask string `json:"updateMask,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -780,11 +782,11 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldPropertiesR
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldTypeRequest:
-// Request to change the type of a Field.
+// Request to change the type of a field.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldTypeRequest struct {
 	// DateOptions: Update field to Date.
 	DateOptions *GoogleAppsDriveLabelsV2betaFieldDateOptions `json:"dateOptions,omitempty"`
-	// Id: Required. The Field to update.
+	// Id: Required. The field to update.
 	Id string `json:"id,omitempty"`
 	// IntegerOptions: Update field to Integer.
 	IntegerOptions *GoogleAppsDriveLabelsV2betaFieldIntegerOptions `json:"integerOptions,omitempty"`
@@ -794,7 +796,8 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldTypeRequest st
 	TextOptions *GoogleAppsDriveLabelsV2betaFieldTextOptions `json:"textOptions,omitempty"`
 	// UpdateMask: The fields that should be updated. At least one field must be
 	// specified. The root of `type_options` is implied and should not be
-	// specified. A single `*` can be used as short-hand for updating every field.
+	// specified. A single `*` can be used as a short-hand for updating every
+	// field.
 	UpdateMask string `json:"updateMask,omitempty"`
 	// UserOptions: Update field to User.
 	UserOptions *GoogleAppsDriveLabelsV2betaFieldUserOptions `json:"userOptions,omitempty"`
@@ -817,13 +820,14 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldTypeRequest
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateLabelPropertiesReques
-// t: Updates basic properties of a Label.
+// t: Updates basic properties of a label.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateLabelPropertiesRequest struct {
 	// Properties: Required. Label properties to update.
 	Properties *GoogleAppsDriveLabelsV2betaLabelProperties `json:"properties,omitempty"`
 	// UpdateMask: The fields that should be updated. At least one field must be
 	// specified. The root `label_properties` is implied and should not be
-	// specified. A single `*` can be used as short-hand for updating every field.
+	// specified. A single `*` can be used as a short-hand for updating every
+	// field.
 	UpdateMask string `json:"updateMask,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Properties") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -844,17 +848,17 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateLabelPropertiesR
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateSelectionChoiceProper
-// tiesRequest: Request to update a Choice properties.
+// tiesRequest: Request to update a choice property.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateSelectionChoicePropertiesRequest struct {
-	// FieldId: Required. The Selection Field to update.
+	// FieldId: Required. The selection field to update.
 	FieldId string `json:"fieldId,omitempty"`
-	// Id: Required. The Choice to update.
+	// Id: Required. The choice to update.
 	Id string `json:"id,omitempty"`
-	// Properties: Required. The Choice properties to update.
+	// Properties: Required. The choice properties to update.
 	Properties *GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceProperties `json:"properties,omitempty"`
 	// UpdateMask: The fields that should be updated. At least one field must be
 	// specified. The root `properties` is implied and should not be specified. A
-	// single `*` can be used as short-hand for updating every field.
+	// single `*` can be used as a short-hand for updating every field.
 	UpdateMask string `json:"updateMask,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FieldId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -874,15 +878,14 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateSelectionChoiceP
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponse: Response for Label
+// GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponse: Response for label
 // update.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponse struct {
 	// Responses: The reply of the updates. This maps 1:1 with the updates,
 	// although responses to some requests may be empty.
 	Responses []*GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseResponse `json:"responses,omitempty"`
 	// UpdatedLabel: The label after updates were applied. This is only set if
-	// [BatchUpdateLabelResponse2.include_label_in_response] is `true` and there
-	// were no errors.
+	// `include_label_in_response` is `true` and there were no errors.
 	UpdatedLabel *GoogleAppsDriveLabelsV2betaLabel `json:"updatedLabel,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -906,7 +909,7 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponse) MarshalJSON() ([]by
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateFieldResponse:
-// Response following Field create.
+// Response following field create.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateFieldResponse struct {
 	// Id: The field of the created field. When left blank in a create request, a
 	// key will be autogenerated and can be identified here.
@@ -933,11 +936,11 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateFieldResponse) 
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateSelectionChoiceRespo
-// nse: Response following Selection Choice create.
+// nse: Response following selection choice create.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateSelectionChoiceResponse struct {
-	// FieldId: The server-generated id of the field.
+	// FieldId: The server-generated ID of the field.
 	FieldId string `json:"fieldId,omitempty"`
-	// Id: The server-generated ID of the created choice within the Field
+	// Id: The server-generated ID of the created choice within the field.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FieldId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -958,62 +961,62 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateSelectionChoice
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseDeleteFieldResponse:
-// Response following Field delete.
+// Response following field delete.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseDeleteFieldResponse struct {
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseDeleteSelectionChoiceRespo
-// nse: Response following Choice delete.
+// nse: Response following choice delete.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseDeleteSelectionChoiceResponse struct {
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseDisableFieldResponse:
-// Response following Field disable.
+// Response following field disable.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseDisableFieldResponse struct {
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseDisableSelectionChoiceResp
-// onse: Response following Choice disable.
+// onse: Response following choice disable.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseDisableSelectionChoiceResponse struct {
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseEnableFieldResponse:
-// Response following Field enable.
+// Response following field enable.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseEnableFieldResponse struct {
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseEnableSelectionChoiceRespo
-// nse: Response following Choice enable.
+// nse: Response following choice enable.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseEnableSelectionChoiceResponse struct {
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseResponse: A single
 // response from an update.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseResponse struct {
-	// CreateField: Creates a new Field.
+	// CreateField: Creates a field.
 	CreateField *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateFieldResponse `json:"createField,omitempty"`
-	// CreateSelectionChoice: Creates a new selection list option to add to a
-	// Selection Field.
+	// CreateSelectionChoice: Creates a selection list option to add to a selection
+	// field.
 	CreateSelectionChoice *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateSelectionChoiceResponse `json:"createSelectionChoice,omitempty"`
-	// DeleteField: Deletes a Field from the label.
+	// DeleteField: Deletes a field from the label.
 	DeleteField *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseDeleteFieldResponse `json:"deleteField,omitempty"`
-	// DeleteSelectionChoice: Deletes a Choice from a Selection Field.
+	// DeleteSelectionChoice: Deletes a choice from a selection field.
 	DeleteSelectionChoice *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseDeleteSelectionChoiceResponse `json:"deleteSelectionChoice,omitempty"`
-	// DisableField: Disables Field.
+	// DisableField: Disables field.
 	DisableField *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseDisableFieldResponse `json:"disableField,omitempty"`
-	// DisableSelectionChoice: Disables a Choice within a Selection Field.
+	// DisableSelectionChoice: Disables a choice within a selection field.
 	DisableSelectionChoice *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseDisableSelectionChoiceResponse `json:"disableSelectionChoice,omitempty"`
-	// EnableField: Enables Field.
+	// EnableField: Enables field.
 	EnableField *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseEnableFieldResponse `json:"enableField,omitempty"`
-	// EnableSelectionChoice: Enables a Choice within a Selection Field.
+	// EnableSelectionChoice: Enables a choice within a selection field.
 	EnableSelectionChoice *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseEnableSelectionChoiceResponse `json:"enableSelectionChoice,omitempty"`
-	// UpdateField: Updates basic properties of a Field.
+	// UpdateField: Updates basic properties of a field.
 	UpdateField *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateFieldPropertiesResponse `json:"updateField,omitempty"`
-	// UpdateFieldType: Update Field type and/or type options.
+	// UpdateFieldType: Updates field type and/or type options.
 	UpdateFieldType *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateFieldTypeResponse `json:"updateFieldType,omitempty"`
-	// UpdateLabel: Updated basic properties of a Label.
+	// UpdateLabel: Updates basic properties of a label.
 	UpdateLabel *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateLabelPropertiesResponse `json:"updateLabel,omitempty"`
-	// UpdateSelectionChoiceProperties: Updates a Choice within a Selection Field.
+	// UpdateSelectionChoiceProperties: Updates a choice within a selection field.
 	UpdateSelectionChoiceProperties *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateSelectionChoicePropertiesResponse `json:"updateSelectionChoiceProperties,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateField") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1034,7 +1037,7 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseResponse) MarshalJSON
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateFieldPropertiesRespo
-// nse: Response following update to Field properties.
+// nse: Response following update to field properties.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateFieldPropertiesResponse struct {
 	// Priority: The priority of the updated field. The priority may change from
 	// what was specified to assure contiguous priorities between fields (1-n).
@@ -1058,17 +1061,17 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateFieldProperties
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateFieldTypeResponse:
-// Response following update to Field type.
+// Response following update to field type.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateFieldTypeResponse struct {
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateLabelPropertiesRespo
-// nse: Response following update to Label properties.
+// nse: Response following update to label properties.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateLabelPropertiesResponse struct {
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateSelectionChoicePrope
-// rtiesResponse: Response following update to Selection Choice properties.
+// rtiesResponse: Response following update to selection choice properties.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateSelectionChoicePropertiesResponse struct {
 	// Priority: The priority of the updated choice. The priority may change from
 	// what was specified to assure contiguous priorities between choices (1-n).
@@ -1092,7 +1095,7 @@ func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateSelectionChoice
 }
 
 // GoogleAppsDriveLabelsV2betaDisableLabelRequest: Request to deprecate a
-// published Label.
+// published label.
 type GoogleAppsDriveLabelsV2betaDisableLabelRequest struct {
 	// DisabledPolicy: Disabled policy to use.
 	DisabledPolicy *GoogleAppsDriveLabelsV2betaLifecycleDisabledPolicy `json:"disabledPolicy,omitempty"`
@@ -1102,14 +1105,15 @@ type GoogleAppsDriveLabelsV2betaDisableLabelRequest struct {
 	LanguageCode string `json:"languageCode,omitempty"`
 	// UpdateMask: The fields that should be updated. At least one field must be
 	// specified. The root `disabled_policy` is implied and should not be
-	// specified. A single `*` can be used as short-hand for updating every field.
+	// specified. A single `*` can be used as a short-hand for updating every
+	// field.
 	UpdateMask string `json:"updateMask,omitempty"`
 	// UseAdminAccess: Set to `true` in order to use the user's admin credentials.
-	// The server will verify the user is an admin for the Label before allowing
+	// The server will verify the user is an admin for the label before allowing
 	// access.
 	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
 	// WriteControl: Provides control over how write requests are executed.
-	// Defaults to unset, which means last write wins.
+	// Defaults to unset, which means the last write wins.
 	WriteControl *GoogleAppsDriveLabelsV2betaWriteControl `json:"writeControl,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisabledPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1136,11 +1140,11 @@ type GoogleAppsDriveLabelsV2betaEnableLabelRequest struct {
 	// be used.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// UseAdminAccess: Set to `true` in order to use the user's admin credentials.
-	// The server will verify the user is an admin for the Label before allowing
+	// The server will verify the user is an admin for the label before allowing
 	// access.
 	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
 	// WriteControl: Provides control over how write requests are executed.
-	// Defaults to unset, which means last write wins.
+	// Defaults to unset, which means the last write wins.
 	WriteControl *GoogleAppsDriveLabelsV2betaWriteControl `json:"writeControl,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1182,13 +1186,13 @@ type GoogleAppsDriveLabelsV2betaField struct {
 	// DisplayHints: Output only. UI display hints for rendering a field.
 	DisplayHints *GoogleAppsDriveLabelsV2betaFieldDisplayHints `json:"displayHints,omitempty"`
 	// Id: Output only. The key of a field, unique within a label or library. This
-	// value is autogenerated. Matches the regex: `([a-zA-Z0-9])+`
+	// value is autogenerated. Matches the regex: `([a-zA-Z0-9])+`.
 	Id string `json:"id,omitempty"`
 	// IntegerOptions: Integer field options.
 	IntegerOptions *GoogleAppsDriveLabelsV2betaFieldIntegerOptions `json:"integerOptions,omitempty"`
 	// Lifecycle: Output only. The lifecycle of this field.
 	Lifecycle *GoogleAppsDriveLabelsV2betaLifecycle `json:"lifecycle,omitempty"`
-	// LockStatus: Output only. The LockStatus of this field.
+	// LockStatus: Output only. The `LockStatus` of this field.
 	LockStatus *GoogleAppsDriveLabelsV2betaLockStatus `json:"lockStatus,omitempty"`
 	// Properties: The basic properties of the field.
 	Properties *GoogleAppsDriveLabelsV2betaFieldProperties `json:"properties,omitempty"`
@@ -1352,27 +1356,27 @@ func (s GoogleAppsDriveLabelsV2betaFieldIntegerOptions) MarshalJSON() ([]byte, e
 }
 
 // GoogleAppsDriveLabelsV2betaFieldLimits: Field constants governing the
-// structure of a Field; such as, the maximum title length, minimum and maximum
+// structure of a field; such as, the maximum title length, minimum and maximum
 // field values or length, etc.
 type GoogleAppsDriveLabelsV2betaFieldLimits struct {
-	// DateLimits: Date Field limits.
+	// DateLimits: Date field limits.
 	DateLimits *GoogleAppsDriveLabelsV2betaDateLimits `json:"dateLimits,omitempty"`
-	// IntegerLimits: Integer Field limits.
+	// IntegerLimits: Integer field limits.
 	IntegerLimits *GoogleAppsDriveLabelsV2betaIntegerLimits `json:"integerLimits,omitempty"`
-	// LongTextLimits: Long text Field limits.
+	// LongTextLimits: Long text field limits.
 	LongTextLimits *GoogleAppsDriveLabelsV2betaLongTextLimits `json:"longTextLimits,omitempty"`
-	// MaxDescriptionLength: Limits for Field description, also called help text.
+	// MaxDescriptionLength: Limits for field description, also called help text.
 	MaxDescriptionLength int64 `json:"maxDescriptionLength,omitempty"`
-	// MaxDisplayNameLength: Limits for Field title.
+	// MaxDisplayNameLength: Limits for field title.
 	MaxDisplayNameLength int64 `json:"maxDisplayNameLength,omitempty"`
-	// MaxIdLength: Max length for the id.
+	// MaxIdLength: Maximum length for the id.
 	MaxIdLength int64 `json:"maxIdLength,omitempty"`
-	// SelectionLimits: Selection Field limits.
+	// SelectionLimits: Selection field limits.
 	SelectionLimits *GoogleAppsDriveLabelsV2betaSelectionLimits `json:"selectionLimits,omitempty"`
-	// TextLimits: The relevant limits for the specified Field.Type. Text Field
+	// TextLimits: The relevant limits for the specified Field.Type. Text field
 	// limits.
 	TextLimits *GoogleAppsDriveLabelsV2betaTextLimits `json:"textLimits,omitempty"`
-	// UserLimits: User Field limits.
+	// UserLimits: User field limits.
 	UserLimits *GoogleAppsDriveLabelsV2betaUserLimits `json:"userLimits,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DateLimits") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1526,7 +1530,7 @@ type GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoice struct {
 	Id string `json:"id,omitempty"`
 	// Lifecycle: Output only. Lifecycle of the choice.
 	Lifecycle *GoogleAppsDriveLabelsV2betaLifecycle `json:"lifecycle,omitempty"`
-	// LockStatus: Output only. The LockStatus of this choice.
+	// LockStatus: Output only. The `LockStatus` of this choice.
 	LockStatus *GoogleAppsDriveLabelsV2betaLockStatus `json:"lockStatus,omitempty"`
 	// Properties: Basic properties of the choice.
 	Properties *GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceProperties `json:"properties,omitempty"`
@@ -1741,11 +1745,11 @@ func (s GoogleAppsDriveLabelsV2betaFieldUserOptions) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsDriveLabelsV2betaIntegerLimits: Limits for integer Field type.
+// GoogleAppsDriveLabelsV2betaIntegerLimits: Limits for integer field type.
 type GoogleAppsDriveLabelsV2betaIntegerLimits struct {
-	// MaxValue: Maximum value for an integer Field type.
+	// MaxValue: Maximum value for an integer field type.
 	MaxValue int64 `json:"maxValue,omitempty,string"`
-	// MinValue: Minimum value for an integer Field type.
+	// MinValue: Minimum value for an integer field type.
 	MinValue int64 `json:"minValue,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "MaxValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1781,23 +1785,23 @@ type GoogleAppsDriveLabelsV2betaLabel struct {
 	// Creator: Output only. The user who created this label.
 	Creator *GoogleAppsDriveLabelsV2betaUserInfo `json:"creator,omitempty"`
 	// Customer: Output only. The customer this label belongs to. For example:
-	// "customers/123abc789."
+	// `customers/123abc789`.
 	Customer string `json:"customer,omitempty"`
 	// DisableTime: Output only. The time this label was disabled. This value has
-	// no meaning when the label is not disabled.
+	// no meaning when the label isn't disabled.
 	DisableTime string `json:"disableTime,omitempty"`
 	// Disabler: Output only. The user who disabled this label. This value has no
-	// meaning when the label is not disabled.
+	// meaning when the label isn't disabled.
 	Disabler *GoogleAppsDriveLabelsV2betaUserInfo `json:"disabler,omitempty"`
 	// DisplayHints: Output only. UI display hints for rendering the label.
 	DisplayHints *GoogleAppsDriveLabelsV2betaLabelDisplayHints `json:"displayHints,omitempty"`
-	// EnabledAppSettings: Optional. The EnabledAppSettings for this Label.
+	// EnabledAppSettings: Optional. The `EnabledAppSettings` for this Label.
 	EnabledAppSettings *GoogleAppsDriveLabelsV2betaLabelEnabledAppSettings `json:"enabledAppSettings,omitempty"`
 	// Fields: List of fields in descending priority order.
 	Fields []*GoogleAppsDriveLabelsV2betaField `json:"fields,omitempty"`
 	// Id: Output only. Globally unique identifier of this label. ID makes up part
 	// of the label `name`, but unlike `name`, ID is consistent between revisions.
-	// Matches the regex: `([a-zA-Z0-9])+`
+	// Matches the regex: `([a-zA-Z0-9])+`.
 	Id string `json:"id,omitempty"`
 	// LabelType: Required. The type of label.
 	//
@@ -1815,7 +1819,7 @@ type GoogleAppsDriveLabelsV2betaLabel struct {
 	// Lifecycle: Output only. The lifecycle state of the label including whether
 	// it's published, deprecated, and has draft changes.
 	Lifecycle *GoogleAppsDriveLabelsV2betaLifecycle `json:"lifecycle,omitempty"`
-	// LockStatus: Output only. The LockStatus of this label.
+	// LockStatus: Output only. The `LockStatus` of this label.
 	LockStatus *GoogleAppsDriveLabelsV2betaLockStatus `json:"lockStatus,omitempty"`
 	// Name: Output only. Resource name of the label. Will be in the form of
 	// either: `labels/{id}` or `labels/{id}@{revision_id}` depending on the
@@ -1824,10 +1828,10 @@ type GoogleAppsDriveLabelsV2betaLabel struct {
 	// Properties: Required. The basic properties of the label.
 	Properties *GoogleAppsDriveLabelsV2betaLabelProperties `json:"properties,omitempty"`
 	// PublishTime: Output only. The time this label was published. This value has
-	// no meaning when the label is not published.
+	// no meaning when the label isn't published.
 	PublishTime string `json:"publishTime,omitempty"`
 	// Publisher: Output only. The user who published this label. This value has no
-	// meaning when the label is not published.
+	// meaning when the label isn't published.>>
 	Publisher *GoogleAppsDriveLabelsV2betaUserInfo `json:"publisher,omitempty"`
 	// RevisionCreateTime: Output only. The time this label revision was created.
 	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
@@ -1836,7 +1840,7 @@ type GoogleAppsDriveLabelsV2betaLabel struct {
 	// RevisionId: Output only. Revision ID of the label. Revision ID might be part
 	// of the label `name` depending on the request issued. A new revision is
 	// created whenever revisioned properties of a label are changed. Matches the
-	// regex: `([a-zA-Z0-9])+`
+	// regex: `([a-zA-Z0-9])+`.
 	RevisionId string `json:"revisionId,omitempty"`
 	// SchemaCapabilities: Output only. The capabilities the user has on this
 	// label.
@@ -1897,7 +1901,7 @@ type GoogleAppsDriveLabelsV2betaLabelAppliedLabelPolicy struct {
 	//
 	// Possible values:
 	//   "COPY_MODE_UNSPECIFIED" - Copy mode unspecified.
-	//   "DO_NOT_COPY" - The applied label and field values are not copied by
+	//   "DO_NOT_COPY" - The applied label and field values aren't copied by
 	// default when the Drive item it's applied to is copied.
 	//   "ALWAYS_COPY" - The applied label and field values are always copied when
 	// the Drive item it's applied to is copied. Only admins can use this mode.
@@ -1922,15 +1926,15 @@ func (s GoogleAppsDriveLabelsV2betaLabelAppliedLabelPolicy) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsDriveLabelsV2betaLabelDisplayHints: UI display hints for rendering
-// the label.
+// GoogleAppsDriveLabelsV2betaLabelDisplayHints: The UI display hints for
+// rendering the label.
 type GoogleAppsDriveLabelsV2betaLabelDisplayHints struct {
 	// Disabled: Whether the label should be shown in the UI as disabled.
 	Disabled bool `json:"disabled,omitempty"`
 	// HiddenInSearch: This label should be hidden in the search menu when
 	// searching for Drive items.
 	HiddenInSearch bool `json:"hiddenInSearch,omitempty"`
-	// Priority: Order to display label in a list.
+	// Priority: The order to display labels in a list.
 	Priority int64 `json:"priority,omitempty,string"`
 	// ShownInApply: This label should be shown in the apply menu when applying
 	// values to a Drive item.
@@ -1953,10 +1957,10 @@ func (s GoogleAppsDriveLabelsV2betaLabelDisplayHints) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsDriveLabelsV2betaLabelEnabledAppSettings: Describes the Workspace
-// apps in which the Label can be used.
+// GoogleAppsDriveLabelsV2betaLabelEnabledAppSettings: Describes the Google
+// Workspace apps in which the label can be used.
 type GoogleAppsDriveLabelsV2betaLabelEnabledAppSettings struct {
-	// EnabledApps: Optional. The list of Apps where the Label can be used.
+	// EnabledApps: Optional. The list of apps where the label can be used.
 	EnabledApps []*GoogleAppsDriveLabelsV2betaLabelEnabledAppSettingsEnabledApp `json:"enabledApps,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnabledApps") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1976,14 +1980,14 @@ func (s GoogleAppsDriveLabelsV2betaLabelEnabledAppSettings) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsDriveLabelsV2betaLabelEnabledAppSettingsEnabledApp: An App where
-// the Label can be used.
+// GoogleAppsDriveLabelsV2betaLabelEnabledAppSettingsEnabledApp: An app where
+// the label can be used.
 type GoogleAppsDriveLabelsV2betaLabelEnabledAppSettingsEnabledApp struct {
-	// App: Optional. The name of the App.
+	// App: Optional. The name of the app.
 	//
 	// Possible values:
 	//   "APP_UNSPECIFIED" - Unspecified
-	//   "DRIVE" - Drive.
+	//   "DRIVE" - Drive
 	//   "GMAIL" - Gmail
 	App string `json:"app,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "App") to unconditionally
@@ -2005,12 +2009,12 @@ func (s GoogleAppsDriveLabelsV2betaLabelEnabledAppSettingsEnabledApp) MarshalJSO
 }
 
 // GoogleAppsDriveLabelsV2betaLabelLimits: Label constraints governing the
-// structure of a Label; such as, the maximum number of Fields allowed and
+// structure of a label; such as, the maximum number of fields allowed and
 // maximum length of the label title.
 type GoogleAppsDriveLabelsV2betaLabelLimits struct {
-	// FieldLimits: The limits for Fields.
+	// FieldLimits: The limits for fields.
 	FieldLimits *GoogleAppsDriveLabelsV2betaFieldLimits `json:"fieldLimits,omitempty"`
-	// MaxDeletedFields: The maximum number of published Fields that can be
+	// MaxDeletedFields: The maximum number of published fields that can be
 	// deleted.
 	MaxDeletedFields int64 `json:"maxDeletedFields,omitempty"`
 	// MaxDescriptionLength: The maximum number of characters allowed for the
@@ -2019,7 +2023,7 @@ type GoogleAppsDriveLabelsV2betaLabelLimits struct {
 	// MaxDraftRevisions: The maximum number of draft revisions that will be kept
 	// before deleting old drafts.
 	MaxDraftRevisions int64 `json:"maxDraftRevisions,omitempty"`
-	// MaxFields: The maximum number of Fields allowed within the label.
+	// MaxFields: The maximum number of fields allowed within the label.
 	MaxFields int64 `json:"maxFields,omitempty"`
 	// MaxTitleLength: The maximum number of characters allowed for the title.
 	MaxTitleLength int64 `json:"maxTitleLength,omitempty"`
@@ -2046,35 +2050,35 @@ func (s GoogleAppsDriveLabelsV2betaLabelLimits) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsDriveLabelsV2betaLabelLock: A Lock that can be applied to a Label,
-// Field, or Choice.
+// GoogleAppsDriveLabelsV2betaLabelLock: A lock that can be applied to a label,
+// field, or choice.
 type GoogleAppsDriveLabelsV2betaLabelLock struct {
-	// Capabilities: Output only. The user's capabilities on this LabelLock.
+	// Capabilities: Output only. The user's capabilities on this label lock.
 	Capabilities *GoogleAppsDriveLabelsV2betaLabelLockCapabilities `json:"capabilities,omitempty"`
-	// ChoiceId: The ID of the Selection Field Choice that should be locked. If
+	// ChoiceId: The ID of the selection field choice that should be locked. If
 	// present, `field_id` must also be present.
 	ChoiceId string `json:"choiceId,omitempty"`
-	// CreateTime: Output only. The time this LabelLock was created.
+	// CreateTime: Output only. The time this label lock was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Creator: Output only. The user whose credentials were used to create the
-	// LabelLock. This will not be present if no user was responsible for creating
-	// the LabelLock.
+	// label lock. Not present if no user was responsible for creating the label
+	// lock.
 	Creator *GoogleAppsDriveLabelsV2betaUserInfo `json:"creator,omitempty"`
-	// DeleteTime: Output only. A timestamp indicating when this LabelLock was
-	// scheduled for deletion. This will be present only if this LabelLock is in
-	// the DELETING state.
+	// DeleteTime: Output only. A timestamp indicating when this label lock was
+	// scheduled for deletion. Present only if this label lock is in the `DELETING`
+	// state.
 	DeleteTime string `json:"deleteTime,omitempty"`
-	// FieldId: The ID of the Field that should be locked. Empty if the whole Label
+	// FieldId: The ID of the field that should be locked. Empty if the whole label
 	// should be locked.
 	FieldId string `json:"fieldId,omitempty"`
-	// Name: Output only. Resource name of this LabelLock.
+	// Name: Output only. Resource name of this label lock.
 	Name string `json:"name,omitempty"`
-	// State: Output only. This LabelLock's state.
+	// State: Output only. This label lock's state.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unknown state.
-	//   "ACTIVE" - The LabelLock is active and is being enforced by the server.
-	//   "DELETING" - The LabelLock is being deleted. The LabelLock will continue
+	//   "ACTIVE" - The label lock is active and is being enforced by the server.
+	//   "DELETING" - The label lock is being deleted. The label lock will continue
 	// to be enforced by the server until it has been fully removed.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Capabilities") to
@@ -2096,7 +2100,7 @@ func (s GoogleAppsDriveLabelsV2betaLabelLock) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsDriveLabelsV2betaLabelLockCapabilities: A description of a user's
-// capabilities on a LabelLock.
+// capabilities on a label lock.
 type GoogleAppsDriveLabelsV2betaLabelLockCapabilities struct {
 	// CanViewPolicy: True if the user is authorized to view the policy.
 	CanViewPolicy bool `json:"canViewPolicy,omitempty"`
@@ -2123,11 +2127,11 @@ func (s GoogleAppsDriveLabelsV2betaLabelLockCapabilities) MarshalJSON() ([]byte,
 type GoogleAppsDriveLabelsV2betaLabelPermission struct {
 	// Audience: Audience to grant a role to. The magic value of
 	// `audiences/default` may be used to apply the role to the default audience in
-	// the context of the organization that owns the Label.
+	// the context of the organization that owns the label.
 	Audience string `json:"audience,omitempty"`
-	// Email: Specifies the email address for a user or group pricinpal. Not
-	// populated for audience principals. User and Group permissions may only be
-	// inserted using email address. On update requests, if email address is
+	// Email: Specifies the email address for a user or group principal. Not
+	// populated for audience principals. User and group permissions may only be
+	// inserted using an email address. On update requests, if email address is
 	// specified, no principal should be specified.
 	Email string `json:"email,omitempty"`
 	// Group: Group resource name.
@@ -2227,16 +2231,18 @@ func (s GoogleAppsDriveLabelsV2betaLabelSchemaCapabilities) MarshalJSON() ([]byt
 }
 
 // GoogleAppsDriveLabelsV2betaLifecycle: The lifecycle state of an object, such
-// as label, field, or choice. The lifecycle enforces the following
-// transitions: * `UNPUBLISHED_DRAFT` (starting state) * `UNPUBLISHED_DRAFT` ->
-// `PUBLISHED` * `UNPUBLISHED_DRAFT` -> (Deleted) * `PUBLISHED` -> `DISABLED` *
-// `DISABLED` -> `PUBLISHED` * `DISABLED` -> (Deleted) The published and
-// disabled states have some distinct characteristics: * Published—Some kinds
-// of changes might be made to an object in this state, in which case
-// `has_unpublished_changes` will be true. Also, some kinds of changes are not
-// permitted. Generally, any change that would invalidate or cause new
-// restrictions on existing metadata related to the label are rejected. *
-// Disabled—When disabled, the configured `DisabledPolicy` takes effect.
+// as label, field, or choice. For more information, see Label lifecycle
+// (https://developers.google.com/workspace/drive/labels/guides/label-lifecycle).
+// The lifecycle enforces the following transitions: * `UNPUBLISHED_DRAFT`
+// (starting state) * `UNPUBLISHED_DRAFT` -> `PUBLISHED` * `UNPUBLISHED_DRAFT`
+// -> (Deleted) * `PUBLISHED` -> `DISABLED` * `DISABLED` -> `PUBLISHED` *
+// `DISABLED` -> (Deleted) The published and disabled states have some distinct
+// characteristics: * `Published`: Some kinds of changes might be made to an
+// object in this state, in which case `has_unpublished_changes` will be true.
+// Also, some kinds of changes aren't permitted. Generally, any change that
+// would invalidate or cause new restrictions on existing metadata related to
+// the label are rejected. * `Disabled`: When disabled, the configured
+// `DisabledPolicy` takes effect.
 type GoogleAppsDriveLabelsV2betaLifecycle struct {
 	// DisabledPolicy: The policy that governs how to show a disabled label, field,
 	// or selection choice.
@@ -2310,9 +2316,9 @@ func (s GoogleAppsDriveLabelsV2betaLifecycleDisabledPolicy) MarshalJSON() ([]byt
 }
 
 // GoogleAppsDriveLabelsV2betaListLabelLocksResponse: The response to a
-// ListLabelLocksRequest.
+// `ListLabelLocksRequest`.
 type GoogleAppsDriveLabelsV2betaListLabelLocksResponse struct {
-	// LabelLocks: LabelLocks.
+	// LabelLocks: Label locks.
 	LabelLocks []*GoogleAppsDriveLabelsV2betaLabelLock `json:"labelLocks,omitempty"`
 	// NextPageToken: The token of the next page in the response.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -2338,7 +2344,7 @@ func (s GoogleAppsDriveLabelsV2betaListLabelLocksResponse) MarshalJSON() ([]byte
 }
 
 // GoogleAppsDriveLabelsV2betaListLabelPermissionsResponse: Response for
-// listing the permissions on a Label.
+// listing the permissions on a label.
 type GoogleAppsDriveLabelsV2betaListLabelPermissionsResponse struct {
 	// LabelPermissions: Label permissions.
 	LabelPermissions []*GoogleAppsDriveLabelsV2betaLabelPermission `json:"labelPermissions,omitempty"`
@@ -2365,7 +2371,7 @@ func (s GoogleAppsDriveLabelsV2betaListLabelPermissionsResponse) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsDriveLabelsV2betaListLabelsResponse: Response for listing Labels.
+// GoogleAppsDriveLabelsV2betaListLabelsResponse: Response for listing labels.
 type GoogleAppsDriveLabelsV2betaListLabelsResponse struct {
 	// Labels: Labels.
 	Labels []*GoogleAppsDriveLabelsV2betaLabel `json:"labels,omitempty"`
@@ -2392,10 +2398,10 @@ func (s GoogleAppsDriveLabelsV2betaListLabelsResponse) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsDriveLabelsV2betaListLimits: Limits for list-variant of a Field
+// GoogleAppsDriveLabelsV2betaListLimits: Limits for list-variant of a field
 // type.
 type GoogleAppsDriveLabelsV2betaListLimits struct {
-	// MaxEntries: Maximum number of values allowed for the Field type.
+	// MaxEntries: Maximum number of values allowed for the field type.
 	MaxEntries int64 `json:"maxEntries,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MaxEntries") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2419,8 +2425,8 @@ func (s GoogleAppsDriveLabelsV2betaListLimits) MarshalJSON() ([]byte, error) {
 // label component should be considered locked.
 type GoogleAppsDriveLabelsV2betaLockStatus struct {
 	// Locked: Output only. Indicates whether this label component is the (direct)
-	// target of a LabelLock. A label component can be implicitly locked even if
-	// it's not the direct target of a LabelLock, in which case this field is set
+	// target of a label lock. A label component can be implicitly locked even if
+	// it's not the direct target of a label lock, in which case this field is set
 	// to false.
 	Locked bool `json:"locked,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Locked") to unconditionally
@@ -2441,11 +2447,11 @@ func (s GoogleAppsDriveLabelsV2betaLockStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsDriveLabelsV2betaLongTextLimits: Limits for long text Field type.
+// GoogleAppsDriveLabelsV2betaLongTextLimits: Limits for long text field type.
 type GoogleAppsDriveLabelsV2betaLongTextLimits struct {
-	// MaxLength: Maximum length allowed for a long text Field type.
+	// MaxLength: Maximum length allowed for a long text field type.
 	MaxLength int64 `json:"maxLength,omitempty"`
-	// MinLength: Minimum length allowed for a long text Field type.
+	// MinLength: Minimum length allowed for a long text field type.
 	MinLength int64 `json:"minLength,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MaxLength") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2472,11 +2478,11 @@ type GoogleAppsDriveLabelsV2betaPublishLabelRequest struct {
 	// be used.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// UseAdminAccess: Set to `true` in order to use the user's admin credentials.
-	// The server will verify the user is an admin for the Label before allowing
+	// The server will verify the user is an admin for the label before allowing
 	// access.
 	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
 	// WriteControl: Provides control over how write requests are executed.
-	// Defaults to unset, which means last write wins.
+	// Defaults to unset, which means the last write wins.
 	WriteControl *GoogleAppsDriveLabelsV2betaWriteControl `json:"writeControl,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2496,17 +2502,17 @@ func (s GoogleAppsDriveLabelsV2betaPublishLabelRequest) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsDriveLabelsV2betaSelectionLimits: Limits for selection Field type.
+// GoogleAppsDriveLabelsV2betaSelectionLimits: Limits for selection field type.
 type GoogleAppsDriveLabelsV2betaSelectionLimits struct {
-	// ListLimits: Limits for list-variant of a Field type.
+	// ListLimits: Limits for list-variant of a field type.
 	ListLimits *GoogleAppsDriveLabelsV2betaListLimits `json:"listLimits,omitempty"`
-	// MaxChoices: The max number of choices.
+	// MaxChoices: Maximum number of choices.
 	MaxChoices int64 `json:"maxChoices,omitempty"`
 	// MaxDeletedChoices: Maximum number of deleted choices.
 	MaxDeletedChoices int64 `json:"maxDeletedChoices,omitempty"`
 	// MaxDisplayNameLength: Maximum length for display name.
 	MaxDisplayNameLength int64 `json:"maxDisplayNameLength,omitempty"`
-	// MaxIdLength: Maximum ID length for a selection options.
+	// MaxIdLength: Maximum ID length for a selection option.
 	MaxIdLength int64 `json:"maxIdLength,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ListLimits") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2526,11 +2532,11 @@ func (s GoogleAppsDriveLabelsV2betaSelectionLimits) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsDriveLabelsV2betaTextLimits: Limits for text Field type.
+// GoogleAppsDriveLabelsV2betaTextLimits: Limits for text field type.
 type GoogleAppsDriveLabelsV2betaTextLimits struct {
-	// MaxLength: Maximum length allowed for a text Field type.
+	// MaxLength: Maximum length allowed for a text field type.
 	MaxLength int64 `json:"maxLength,omitempty"`
-	// MinLength: Minimum length allowed for a text Field type.
+	// MinLength: Minimum length allowed for a text field type.
 	MinLength int64 `json:"minLength,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MaxLength") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2551,15 +2557,15 @@ func (s GoogleAppsDriveLabelsV2betaTextLimits) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsDriveLabelsV2betaUpdateLabelCopyModeRequest: Request to update the
-// `CopyMode` of the given Label. Changes to this policy are not revisioned, do
-// not require publishing, and take effect immediately. \
+// `CopyMode` of the given label. Changes to this policy aren't revisioned,
+// don't require publishing, and take effect immediately. \
 type GoogleAppsDriveLabelsV2betaUpdateLabelCopyModeRequest struct {
-	// CopyMode: Required. Indicates how the applied Label, and Field values should
+	// CopyMode: Required. Indicates how the applied label and field values should
 	// be copied when a Drive item is copied.
 	//
 	// Possible values:
 	//   "COPY_MODE_UNSPECIFIED" - Copy mode unspecified.
-	//   "DO_NOT_COPY" - The applied label and field values are not copied by
+	//   "DO_NOT_COPY" - The applied label and field values aren't copied by
 	// default when the Drive item it's applied to is copied.
 	//   "ALWAYS_COPY" - The applied label and field values are always copied when
 	// the Drive item it's applied to is copied. Only admins can use this mode.
@@ -2571,7 +2577,7 @@ type GoogleAppsDriveLabelsV2betaUpdateLabelCopyModeRequest struct {
 	// be used.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// UseAdminAccess: Set to `true` in order to use the user's admin credentials.
-	// The server will verify the user is an admin for the Label before allowing
+	// The server will verify the user is an admin for the label before allowing
 	// access.
 	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
 	// View: When specified, only certain fields belonging to the indicated view
@@ -2601,18 +2607,18 @@ func (s GoogleAppsDriveLabelsV2betaUpdateLabelCopyModeRequest) MarshalJSON() ([]
 }
 
 // GoogleAppsDriveLabelsV2betaUpdateLabelEnabledAppSettingsRequest: Request to
-// update the `EnabledAppSettings` of the given Label. This change is not
-// revisioned, does not require publishing, and takes effect immediately. \
+// update the `EnabledAppSettings` of the given label. This change is not
+// revisioned, doesn't require publishing, and takes effect immediately. \
 type GoogleAppsDriveLabelsV2betaUpdateLabelEnabledAppSettingsRequest struct {
 	// EnabledAppSettings: Required. The new `EnabledAppSettings` value for the
-	// Label.
+	// label.
 	EnabledAppSettings *GoogleAppsDriveLabelsV2betaLabelEnabledAppSettings `json:"enabledAppSettings,omitempty"`
 	// LanguageCode: Optional. The BCP-47 language code to use for evaluating
 	// localized field labels. When not specified, values in the default configured
 	// language will be used.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// UseAdminAccess: Optional. Set to `true` in order to use the user's admin
-	// credentials. The server will verify the user is an admin for the Label
+	// credentials. The server will verify the user is an admin for the label
 	// before allowing access.
 	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
 	// View: Optional. When specified, only certain fields belonging to the
@@ -2641,16 +2647,16 @@ func (s GoogleAppsDriveLabelsV2betaUpdateLabelEnabledAppSettingsRequest) Marshal
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsDriveLabelsV2betaUpdateLabelPermissionRequest: Updates a Label
-// Permission. Permissions affect the Label resource as a whole, are not
-// revisioned, and do not require publishing.
+// GoogleAppsDriveLabelsV2betaUpdateLabelPermissionRequest: Updates a label
+// permission. Permissions affect the label resource as a whole, aren't
+// revisioned, and don't require publishing.
 type GoogleAppsDriveLabelsV2betaUpdateLabelPermissionRequest struct {
-	// LabelPermission: Required. The permission to create or update on the Label.
+	// LabelPermission: Required. The permission to create or update on the label.
 	LabelPermission *GoogleAppsDriveLabelsV2betaLabelPermission `json:"labelPermission,omitempty"`
-	// Parent: Required. The parent Label resource name.
+	// Parent: Required. The parent label resource name.
 	Parent string `json:"parent,omitempty"`
 	// UseAdminAccess: Set to `true` in order to use the user's admin credentials.
-	// The server will verify the user is an admin for the Label before allowing
+	// The server will verify the user is an admin for the label before allowing
 	// access.
 	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LabelPermission") to
@@ -2679,11 +2685,11 @@ type GoogleAppsDriveLabelsV2betaUserCapabilities struct {
 	// CanAdministrateLabels: Output only. Whether the user is an administrator for
 	// the shared labels feature.
 	CanAdministrateLabels bool `json:"canAdministrateLabels,omitempty"`
-	// CanCreateAdminLabels: Output only. Whether the user is allowed to create new
+	// CanCreateAdminLabels: Output only. Whether the user is allowed to create
 	// admin labels.
 	CanCreateAdminLabels bool `json:"canCreateAdminLabels,omitempty"`
 	// CanCreateSharedLabels: Output only. Whether the user is allowed to create
-	// new shared labels.
+	// shared labels.
 	CanCreateSharedLabels bool `json:"canCreateSharedLabels,omitempty"`
 	// Name: Output only. Resource name for the user capabilities.
 	Name string `json:"name,omitempty"`
@@ -2710,8 +2716,9 @@ func (s GoogleAppsDriveLabelsV2betaUserCapabilities) MarshalJSON() ([]byte, erro
 
 // GoogleAppsDriveLabelsV2betaUserInfo: Information about a user.
 type GoogleAppsDriveLabelsV2betaUserInfo struct {
-	// Person: The identifier for this user that can be used with the People API to
-	// get more information. For example, people/12345678.
+	// Person: The identifier for this user that can be used with the People API
+	// (https://developers.google.com/people) to get more information. For example,
+	// `people/12345678`.
 	Person string `json:"person,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Person") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2733,7 +2740,7 @@ func (s GoogleAppsDriveLabelsV2betaUserInfo) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsDriveLabelsV2betaUserLimits: Limits for Field.Type.USER.
 type GoogleAppsDriveLabelsV2betaUserLimits struct {
-	// ListLimits: Limits for list-variant of a Field type.
+	// ListLimits: Limits for list-variant of a field type.
 	ListLimits *GoogleAppsDriveLabelsV2betaListLimits `json:"listLimits,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ListLimits") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2756,8 +2763,8 @@ func (s GoogleAppsDriveLabelsV2betaUserLimits) MarshalJSON() ([]byte, error) {
 // GoogleAppsDriveLabelsV2betaWriteControl: Provides control over how write
 // requests are executed. When not specified, the last write wins.
 type GoogleAppsDriveLabelsV2betaWriteControl struct {
-	// RequiredRevisionId: The revision_id of the label that the write request will
-	// be applied to. If this is not the latest revision of the label, the request
+	// RequiredRevisionId: The revision ID of the label that the write request will
+	// be applied to. If this isn't the latest revision of the label, the request
 	// will not be processed and will return a 400 Bad Request error.
 	RequiredRevisionId string `json:"requiredRevisionId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RequiredRevisionId") to
@@ -2937,7 +2944,9 @@ type LabelsCreateCall struct {
 	header_                          http.Header
 }
 
-// Create: Creates a new Label.
+// Create: Creates a label. For more information, see Create and publish a
+// label
+// (https://developers.google.com/workspace/drive/labels/guides/create-label).
 func (r *LabelsService) Create(googleappsdrivelabelsv2betalabel *GoogleAppsDriveLabelsV2betaLabel) *LabelsCreateCall {
 	c := &LabelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googleappsdrivelabelsv2betalabel = googleappsdrivelabelsv2betalabel
@@ -2945,7 +2954,7 @@ func (r *LabelsService) Create(googleappsdrivelabelsv2betalabel *GoogleAppsDrive
 }
 
 // LanguageCode sets the optional parameter "languageCode": The BCP-47 language
-// code to use for evaluating localized Field labels in response. When not
+// code to use for evaluating localized field labels in response. When not
 // specified, values in the default configured language will be used.
 func (c *LabelsCreateCall) LanguageCode(languageCode string) *LabelsCreateCall {
 	c.urlParams_.Set("languageCode", languageCode)
@@ -3050,9 +3059,11 @@ type LabelsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Permanently deletes a Label and related metadata on Drive Items.
-// Once deleted, the Label and related Drive item metadata will be deleted.
-// Only draft Labels, and disabled Labels may be deleted.
+// Delete: Permanently deletes a label and related metadata on Drive items. For
+// more information, see Disable, enable, and delete a label
+// (https://developers.google.com/workspace/drive/labels/guides/disable-delete-label).
+// Once deleted, the label and related Drive item metadata will be deleted.
+// Only draft labels and disabled labels may be deleted.
 //
 // - name: Label resource name.
 func (r *LabelsService) Delete(name string) *LabelsDeleteCall {
@@ -3063,15 +3074,15 @@ func (r *LabelsService) Delete(name string) *LabelsDeleteCall {
 
 // UseAdminAccess sets the optional parameter "useAdminAccess": Set to `true`
 // in order to use the user's admin credentials. The server will verify the
-// user is an admin for the Label before allowing access.
+// user is an admin for the label before allowing access.
 func (c *LabelsDeleteCall) UseAdminAccess(useAdminAccess bool) *LabelsDeleteCall {
 	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
 }
 
 // WriteControlRequiredRevisionId sets the optional parameter
-// "writeControl.requiredRevisionId": The revision_id of the label that the
-// write request will be applied to. If this is not the latest revision of the
+// "writeControl.requiredRevisionId": The revision ID of the label that the
+// write request will be applied to. If this isn't the latest revision of the
 // label, the request will not be processed and will return a 400 Bad Request
 // error.
 func (c *LabelsDeleteCall) WriteControlRequiredRevisionId(writeControlRequiredRevisionId string) *LabelsDeleteCall {
@@ -3169,12 +3180,14 @@ type LabelsDeltaCall struct {
 	header_                                            http.Header
 }
 
-// Delta: Updates a single Label by applying a set of update requests resulting
-// in a new draft revision. The batch update is all-or-nothing: If any of the
-// update requests are invalid, no changes are applied. The resulting draft
-// revision must be published before the changes may be used with Drive Items.
+// Delta: Updates a single label by applying a set of update requests resulting
+// in a new draft revision. For more information, see Update a label
+// (https://developers.google.com/workspace/drive/labels/guides/update-label).
+// The batch update is all-or-nothing: If any of the update requests are
+// invalid, no changes are applied. The resulting draft revision must be
+// published before the changes may be used with Drive items.
 //
-// - name: The resource name of the Label to update.
+// - name: The resource name of the label to update.
 func (r *LabelsService) Delta(name string, googleappsdrivelabelsv2betadeltaupdatelabelrequest *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequest) *LabelsDeltaCall {
 	c := &LabelsDeltaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3276,11 +3289,14 @@ type LabelsDisableCall struct {
 	header_                                        http.Header
 }
 
-// Disable: Disable a published Label. Disabling a Label will result in a new
-// disabled published revision based on the current published revision. If
-// there is a draft revision, a new disabled draft revision will be created
-// based on the latest draft revision. Older draft revisions will be deleted.
-// Once disabled, a label may be deleted with `DeleteLabel`.
+// Disable: Disable a published label. For more information, see Disable,
+// enable, and delete a label
+// (https://developers.google.com/workspace/drive/labels/guides/disable-delete-label).
+// Disabling a label will result in a new disabled published revision based on
+// the current published revision. If there's a draft revision, a new disabled
+// draft revision will be created based on the latest draft revision. Older
+// draft revisions will be deleted. Once disabled, a label may be deleted with
+// `DeleteLabel`.
 //
 // - name: Label resource name.
 func (r *LabelsService) Disable(name string, googleappsdrivelabelsv2betadisablelabelrequest *GoogleAppsDriveLabelsV2betaDisableLabelRequest) *LabelsDisableCall {
@@ -3384,9 +3400,11 @@ type LabelsEnableCall struct {
 	header_                                       http.Header
 }
 
-// Enable: Enable a disabled Label and restore it to its published state. This
-// will result in a new published revision based on the current disabled
-// published revision. If there is an existing disabled draft revision, a new
+// Enable: Enable a disabled label and restore it to its published state. For
+// more information, see Disable, enable, and delete a label
+// (https://developers.google.com/workspace/drive/labels/guides/disable-delete-label).
+// This will result in a new published revision based on the current disabled
+// published revision. If there's an existing disabled draft revision, a new
 // revision will be created based on that draft and will be enabled.
 //
 // - name: Label resource name.
@@ -3491,11 +3509,13 @@ type LabelsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get a label by its resource name. Resource name may be any of: *
-// `labels/{id}` - See `labels/{id}@latest` * `labels/{id}@latest` - Gets the
-// latest revision of the label. * `labels/{id}@published` - Gets the current
-// published revision of the label. * `labels/{id}@{revision_id}` - Gets the
-// label at the specified revision ID.
+// Get: Get a label by its resource name. For more information, see Search for
+// labels
+// (https://developers.google.com/workspace/drive/labels/guides/search-label).
+// Resource name may be any of: * `labels/{id}` - See `labels/{id}@latest` *
+// `labels/{id}@latest` - Gets the latest revision of the label. *
+// `labels/{id}@published` - Gets the current published revision of the label.
+// * `labels/{id}@{revision_id}` - Gets the label at the specified revision ID.
 //
 //   - name: Label resource name. May be any of: * `labels/{id}` (equivalent to
 //     labels/{id}@latest) * `labels/{id}@latest` * `labels/{id}@published` *
@@ -3637,14 +3657,15 @@ type LabelsListCall struct {
 	header_      http.Header
 }
 
-// List: List labels.
+// List: List labels. For more information, see Search for labels
+// (https://developers.google.com/workspace/drive/labels/guides/search-label).
 func (r *LabelsService) List() *LabelsListCall {
 	c := &LabelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // Customer sets the optional parameter "customer": The customer to scope this
-// list request to. For example: "customers/abcd1234". If unset, will return
+// list request to. For example: `customers/abcd1234`. If unset, will return
 // all labels within the current customer.
 func (c *LabelsListCall) Customer(customer string) *LabelsListCall {
 	c.urlParams_.Set("customer", customer)
@@ -3660,7 +3681,7 @@ func (c *LabelsListCall) LanguageCode(languageCode string) *LabelsListCall {
 }
 
 // MinimumRole sets the optional parameter "minimumRole": Specifies the level
-// of access the user must have on the returned Labels. The minimum role a user
+// of access the user must have on the returned labels. The minimum role a user
 // must have on a label. Defaults to `READER`.
 //
 // Possible values:
@@ -3713,7 +3734,7 @@ func (c *LabelsListCall) PublishedOnly(publishedOnly bool) *LabelsListCall {
 }
 
 // UseAdminAccess sets the optional parameter "useAdminAccess": Set to `true`
-// in order to use the user's admin credentials. This will return all Labels
+// in order to use the user's admin credentials. This will return all labels
 // within the customer.
 func (c *LabelsListCall) UseAdminAccess(useAdminAccess bool) *LabelsListCall {
 	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
@@ -3854,19 +3875,23 @@ type LabelsPublishCall struct {
 	header_                                        http.Header
 }
 
-// Publish: Publish all draft changes to the Label. Once published, the Label
-// may not return to its draft state. See
-// `google.apps.drive.labels.v2.Lifecycle` for more information. Publishing a
-// Label will result in a new published revision. All previous draft revisions
-// will be deleted. Previous published revisions will be kept but are subject
-// to automated deletion as needed. Once published, some changes are no longer
-// permitted. Generally, any change that would invalidate or cause new
-// restrictions on existing metadata related to the Label will be rejected. For
-// example, the following changes to a Label will be rejected after the Label
-// is published: * The label cannot be directly deleted. It must be disabled
-// first, then deleted. * Field.FieldType cannot be changed. * Changes to Field
-// validation options cannot reject something that was previously accepted. *
-// Reducing the max entries.
+// Publish: Publish all draft changes to the label. Once published, the label
+// may not return to its draft state. For more information, see Create and
+// publish a label
+// (https://developers.google.com/workspace/drive/labels/guides/create-label).
+// Publishing a label will result in a new published revision. All previous
+// draft revisions will be deleted. Previous published revisions will be kept
+// but are subject to automated deletion as needed. For more information, see
+// Label lifecycle
+// (https://developers.google.com/workspace/drive/labels/guides/label-lifecycle).
+// Once published, some changes are no longer permitted. Generally, any change
+// that would invalidate or cause new restrictions on existing metadata related
+// to the label will be rejected. For example, the following changes to a label
+// will be rejected after the label is published: * The label cannot be
+// directly deleted. It must be disabled first, then deleted. *
+// `Field.FieldType` cannot be changed. * Changes to field validation options
+// cannot reject something that was previously accepted. * Reducing the maximum
+// entries.
 //
 // - name: Label resource name.
 func (r *LabelsService) Publish(name string, googleappsdrivelabelsv2betapublishlabelrequest *GoogleAppsDriveLabelsV2betaPublishLabelRequest) *LabelsPublishCall {
@@ -3970,10 +3995,10 @@ type LabelsUpdateLabelCopyModeCall struct {
 	header_                                               http.Header
 }
 
-// UpdateLabelCopyMode: Updates a Label's `CopyMode`. Changes to this policy
-// are not revisioned, do not require publishing, and take effect immediately.
+// UpdateLabelCopyMode: Updates a label's `CopyMode`. Changes to this policy
+// aren't revisioned, don't require publishing, and take effect immediately.
 //
-// - name: The resource name of the Label to update.
+// - name: The resource name of the label to update.
 func (r *LabelsService) UpdateLabelCopyMode(name string, googleappsdrivelabelsv2betaupdatelabelcopymoderequest *GoogleAppsDriveLabelsV2betaUpdateLabelCopyModeRequest) *LabelsUpdateLabelCopyModeCall {
 	c := &LabelsUpdateLabelCopyModeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4075,13 +4100,13 @@ type LabelsUpdateLabelEnabledAppSettingsCall struct {
 	header_                                                         http.Header
 }
 
-// UpdateLabelEnabledAppSettings: Updates a Label's EabledAppSettings. Enabling
-// a Label in a Workspace Application allows it to be used in that application.
-// This change is not revisioned, does not require publishing, and takes effect
+// UpdateLabelEnabledAppSettings: Updates a label's `EnabledAppSettings`.
+// Enabling a label in a Google Workspace app allows it to be used in that app.
+// This change isn't revisioned, doesn't require publishing, and takes effect
 // immediately.
 //
-//   - name: The resource name of the Label to update. The resource name of the
-//     Label to update.
+//   - name: The resource name of the label to update. The resource name of the
+//     label to update.
 func (r *LabelsService) UpdateLabelEnabledAppSettings(name string, googleappsdrivelabelsv2betaupdatelabelenabledappsettingsrequest *GoogleAppsDriveLabelsV2betaUpdateLabelEnabledAppSettingsRequest) *LabelsUpdateLabelEnabledAppSettingsCall {
 	c := &LabelsUpdateLabelEnabledAppSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4183,12 +4208,12 @@ type LabelsUpdatePermissionsCall struct {
 	header_                                    http.Header
 }
 
-// UpdatePermissions: Updates a Label's permissions. If a permission for the
-// indicated principal doesn't exist, a new Label Permission is created,
-// otherwise the existing permission is updated. Permissions affect the Label
-// resource as a whole, are not revisioned, and do not require publishing.
+// UpdatePermissions: Updates a label's permissions. If a permission for the
+// indicated principal doesn't exist, a label permission is created, otherwise
+// the existing permission is updated. Permissions affect the label resource as
+// a whole, aren't revisioned, and don't require publishing.
 //
-// - parent: The parent Label resource name.
+// - parent: The parent label resource name.
 func (r *LabelsService) UpdatePermissions(parent string, googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission) *LabelsUpdatePermissionsCall {
 	c := &LabelsUpdatePermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4198,7 +4223,7 @@ func (r *LabelsService) UpdatePermissions(parent string, googleappsdrivelabelsv2
 
 // UseAdminAccess sets the optional parameter "useAdminAccess": Set to `true`
 // in order to use the user's admin credentials. The server will verify the
-// user is an admin for the Label before allowing access.
+// user is an admin for the label before allowing access.
 func (c *LabelsUpdatePermissionsCall) UseAdminAccess(useAdminAccess bool) *LabelsUpdatePermissionsCall {
 	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
@@ -4298,16 +4323,16 @@ type LabelsLocksListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the LabelLocks on a Label.
+// List: Lists the label locks on a label.
 //
-// - parent: Label on which Locks are applied. Format: labels/{label}.
+// - parent: Label on which locks are applied. Format: `labels/{label}`.
 func (r *LabelsLocksService) List(parent string) *LabelsLocksListCall {
 	c := &LabelsLocksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of Locks to
+// PageSize sets the optional parameter "pageSize": Maximum number of locks to
 // return per page. Default: 100. Max: 200.
 func (c *LabelsLocksListCall) PageSize(pageSize int64) *LabelsLocksListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -4443,12 +4468,12 @@ type LabelsPermissionsBatchDeleteCall struct {
 	header_                                                       http.Header
 }
 
-// BatchDelete: Deletes Label permissions. Permissions affect the Label
-// resource as a whole, are not revisioned, and do not require publishing.
+// BatchDelete: Deletes label permissions. Permissions affect the label
+// resource as a whole, aren't revisioned, and don't require publishing.
 //
-//   - parent: The parent Label resource name shared by all permissions being
-//     deleted. Format: labels/{label} If this is set, the parent field in the
-//     UpdateLabelPermissionRequest messages must either be empty or match this
+//   - parent: The parent label resource name shared by all permissions being
+//     deleted. Format: `labels/{label}`. If this is set, the parent field in the
+//     `UpdateLabelPermissionRequest` messages must either be empty or match this
 //     field.
 func (r *LabelsPermissionsService) BatchDelete(parent string, googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest) *LabelsPermissionsBatchDeleteCall {
 	c := &LabelsPermissionsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4551,14 +4576,14 @@ type LabelsPermissionsBatchUpdateCall struct {
 	header_                                                       http.Header
 }
 
-// BatchUpdate: Updates Label permissions. If a permission for the indicated
-// principal doesn't exist, a new Label Permission is created, otherwise the
-// existing permission is updated. Permissions affect the Label resource as a
-// whole, are not revisioned, and do not require publishing.
+// BatchUpdate: Updates label permissions. If a permission for the indicated
+// principal doesn't exist, a label permission is created, otherwise the
+// existing permission is updated. Permissions affect the label resource as a
+// whole, aren't revisioned, and don't require publishing.
 //
-//   - parent: The parent Label resource name shared by all permissions being
-//     updated. Format: labels/{label} If this is set, the parent field in the
-//     UpdateLabelPermissionRequest messages must either be empty or match this
+//   - parent: The parent label resource name shared by all permissions being
+//     updated. Format: `labels/{label}`. If this is set, the parent field in the
+//     `UpdateLabelPermissionRequest` messages must either be empty or match this
 //     field.
 func (r *LabelsPermissionsService) BatchUpdate(parent string, googleappsdrivelabelsv2betabatchupdatelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsRequest) *LabelsPermissionsBatchUpdateCall {
 	c := &LabelsPermissionsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4661,13 +4686,13 @@ type LabelsPermissionsCreateCall struct {
 	header_                                    http.Header
 }
 
-// Create: Updates a Label's permissions. If a permission for the indicated
-// principal doesn't exist, a new Label Permission is created, otherwise the
-// existing permission is updated. Permissions affect the Label resource as a
-// whole, are not revisioned, and do not require publishing.
+// Create: Updates a label's permissions. If a permission for the indicated
+// principal doesn't exist, a label permission is created, otherwise the
+// existing permission is updated. Permissions affect the label resource as a
+// whole, aren't revisioned, and don't require publishing.
 //
-//   - parent: The parent Label resource name on the Label Permission is created.
-//     Format: labels/{label}.
+//   - parent: The parent label resource name on the label permission is created.
+//     Format: `labels/{label}`.
 func (r *LabelsPermissionsService) Create(parent string, googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission) *LabelsPermissionsCreateCall {
 	c := &LabelsPermissionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4677,7 +4702,7 @@ func (r *LabelsPermissionsService) Create(parent string, googleappsdrivelabelsv2
 
 // UseAdminAccess sets the optional parameter "useAdminAccess": Set to `true`
 // in order to use the user's admin credentials. The server will verify the
-// user is an admin for the Label before allowing access.
+// user is an admin for the label before allowing access.
 func (c *LabelsPermissionsCreateCall) UseAdminAccess(useAdminAccess bool) *LabelsPermissionsCreateCall {
 	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
@@ -4776,10 +4801,10 @@ type LabelsPermissionsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a Label's permission. Permissions affect the Label resource
-// as a whole, are not revisioned, and do not require publishing.
+// Delete: Deletes a label's permission. Permissions affect the label resource
+// as a whole, aren't revisioned, and don't require publishing.
 //
-// - name: Label Permission resource name.
+// - name: Label permission resource name.
 func (r *LabelsPermissionsService) Delete(name string) *LabelsPermissionsDeleteCall {
 	c := &LabelsPermissionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4788,7 +4813,7 @@ func (r *LabelsPermissionsService) Delete(name string) *LabelsPermissionsDeleteC
 
 // UseAdminAccess sets the optional parameter "useAdminAccess": Set to `true`
 // in order to use the user's admin credentials. The server will verify the
-// user is an admin for the Label before allowing access.
+// user is an admin for the label before allowing access.
 func (c *LabelsPermissionsDeleteCall) UseAdminAccess(useAdminAccess bool) *LabelsPermissionsDeleteCall {
 	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
@@ -4884,10 +4909,10 @@ type LabelsPermissionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists a Label's permissions.
+// List: Lists a label's permissions.
 //
-//   - parent: The parent Label resource name on which Label Permission are
-//     listed. Format: labels/{label}.
+//   - parent: The parent label resource name on which label permissions are
+//     listed. Format: `labels/{label}`.
 func (r *LabelsPermissionsService) List(parent string) *LabelsPermissionsListCall {
 	c := &LabelsPermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4910,7 +4935,7 @@ func (c *LabelsPermissionsListCall) PageToken(pageToken string) *LabelsPermissio
 
 // UseAdminAccess sets the optional parameter "useAdminAccess": Set to `true`
 // in order to use the user's admin credentials. The server will verify the
-// user is an admin for the Label before allowing access.
+// user is an admin for the label before allowing access.
 func (c *LabelsPermissionsListCall) UseAdminAccess(useAdminAccess bool) *LabelsPermissionsListCall {
 	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
@@ -5038,12 +5063,12 @@ type LabelsRevisionsUpdatePermissionsCall struct {
 	header_                                    http.Header
 }
 
-// UpdatePermissions: Updates a Label's permissions. If a permission for the
-// indicated principal doesn't exist, a new Label Permission is created,
-// otherwise the existing permission is updated. Permissions affect the Label
-// resource as a whole, are not revisioned, and do not require publishing.
+// UpdatePermissions: Updates a label's permissions. If a permission for the
+// indicated principal doesn't exist, a label permission is created, otherwise
+// the existing permission is updated. Permissions affect the label resource as
+// a whole, aren't revisioned, and don't require publishing.
 //
-// - parent: The parent Label resource name.
+// - parent: The parent label resource name.
 func (r *LabelsRevisionsService) UpdatePermissions(parent string, googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission) *LabelsRevisionsUpdatePermissionsCall {
 	c := &LabelsRevisionsUpdatePermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5053,7 +5078,7 @@ func (r *LabelsRevisionsService) UpdatePermissions(parent string, googleappsdriv
 
 // UseAdminAccess sets the optional parameter "useAdminAccess": Set to `true`
 // in order to use the user's admin credentials. The server will verify the
-// user is an admin for the Label before allowing access.
+// user is an admin for the label before allowing access.
 func (c *LabelsRevisionsUpdatePermissionsCall) UseAdminAccess(useAdminAccess bool) *LabelsRevisionsUpdatePermissionsCall {
 	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
@@ -5153,16 +5178,16 @@ type LabelsRevisionsLocksListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the LabelLocks on a Label.
+// List: Lists the label locks on a label.
 //
-// - parent: Label on which Locks are applied. Format: labels/{label}.
+// - parent: Label on which locks are applied. Format: `labels/{label}`.
 func (r *LabelsRevisionsLocksService) List(parent string) *LabelsRevisionsLocksListCall {
 	c := &LabelsRevisionsLocksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of Locks to
+// PageSize sets the optional parameter "pageSize": Maximum number of locks to
 // return per page. Default: 100. Max: 200.
 func (c *LabelsRevisionsLocksListCall) PageSize(pageSize int64) *LabelsRevisionsLocksListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -5298,12 +5323,12 @@ type LabelsRevisionsPermissionsBatchDeleteCall struct {
 	header_                                                       http.Header
 }
 
-// BatchDelete: Deletes Label permissions. Permissions affect the Label
-// resource as a whole, are not revisioned, and do not require publishing.
+// BatchDelete: Deletes label permissions. Permissions affect the label
+// resource as a whole, aren't revisioned, and don't require publishing.
 //
-//   - parent: The parent Label resource name shared by all permissions being
-//     deleted. Format: labels/{label} If this is set, the parent field in the
-//     UpdateLabelPermissionRequest messages must either be empty or match this
+//   - parent: The parent label resource name shared by all permissions being
+//     deleted. Format: `labels/{label}`. If this is set, the parent field in the
+//     `UpdateLabelPermissionRequest` messages must either be empty or match this
 //     field.
 func (r *LabelsRevisionsPermissionsService) BatchDelete(parent string, googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest) *LabelsRevisionsPermissionsBatchDeleteCall {
 	c := &LabelsRevisionsPermissionsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5406,14 +5431,14 @@ type LabelsRevisionsPermissionsBatchUpdateCall struct {
 	header_                                                       http.Header
 }
 
-// BatchUpdate: Updates Label permissions. If a permission for the indicated
-// principal doesn't exist, a new Label Permission is created, otherwise the
-// existing permission is updated. Permissions affect the Label resource as a
-// whole, are not revisioned, and do not require publishing.
+// BatchUpdate: Updates label permissions. If a permission for the indicated
+// principal doesn't exist, a label permission is created, otherwise the
+// existing permission is updated. Permissions affect the label resource as a
+// whole, aren't revisioned, and don't require publishing.
 //
-//   - parent: The parent Label resource name shared by all permissions being
-//     updated. Format: labels/{label} If this is set, the parent field in the
-//     UpdateLabelPermissionRequest messages must either be empty or match this
+//   - parent: The parent label resource name shared by all permissions being
+//     updated. Format: `labels/{label}`. If this is set, the parent field in the
+//     `UpdateLabelPermissionRequest` messages must either be empty or match this
 //     field.
 func (r *LabelsRevisionsPermissionsService) BatchUpdate(parent string, googleappsdrivelabelsv2betabatchupdatelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsRequest) *LabelsRevisionsPermissionsBatchUpdateCall {
 	c := &LabelsRevisionsPermissionsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5516,13 +5541,13 @@ type LabelsRevisionsPermissionsCreateCall struct {
 	header_                                    http.Header
 }
 
-// Create: Updates a Label's permissions. If a permission for the indicated
-// principal doesn't exist, a new Label Permission is created, otherwise the
-// existing permission is updated. Permissions affect the Label resource as a
-// whole, are not revisioned, and do not require publishing.
+// Create: Updates a label's permissions. If a permission for the indicated
+// principal doesn't exist, a label permission is created, otherwise the
+// existing permission is updated. Permissions affect the label resource as a
+// whole, aren't revisioned, and don't require publishing.
 //
-//   - parent: The parent Label resource name on the Label Permission is created.
-//     Format: labels/{label}.
+//   - parent: The parent label resource name on the label permission is created.
+//     Format: `labels/{label}`.
 func (r *LabelsRevisionsPermissionsService) Create(parent string, googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission) *LabelsRevisionsPermissionsCreateCall {
 	c := &LabelsRevisionsPermissionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5532,7 +5557,7 @@ func (r *LabelsRevisionsPermissionsService) Create(parent string, googleappsdriv
 
 // UseAdminAccess sets the optional parameter "useAdminAccess": Set to `true`
 // in order to use the user's admin credentials. The server will verify the
-// user is an admin for the Label before allowing access.
+// user is an admin for the label before allowing access.
 func (c *LabelsRevisionsPermissionsCreateCall) UseAdminAccess(useAdminAccess bool) *LabelsRevisionsPermissionsCreateCall {
 	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
@@ -5631,10 +5656,10 @@ type LabelsRevisionsPermissionsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a Label's permission. Permissions affect the Label resource
-// as a whole, are not revisioned, and do not require publishing.
+// Delete: Deletes a label's permission. Permissions affect the label resource
+// as a whole, aren't revisioned, and don't require publishing.
 //
-// - name: Label Permission resource name.
+// - name: Label permission resource name.
 func (r *LabelsRevisionsPermissionsService) Delete(name string) *LabelsRevisionsPermissionsDeleteCall {
 	c := &LabelsRevisionsPermissionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5643,7 +5668,7 @@ func (r *LabelsRevisionsPermissionsService) Delete(name string) *LabelsRevisions
 
 // UseAdminAccess sets the optional parameter "useAdminAccess": Set to `true`
 // in order to use the user's admin credentials. The server will verify the
-// user is an admin for the Label before allowing access.
+// user is an admin for the label before allowing access.
 func (c *LabelsRevisionsPermissionsDeleteCall) UseAdminAccess(useAdminAccess bool) *LabelsRevisionsPermissionsDeleteCall {
 	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
@@ -5739,10 +5764,10 @@ type LabelsRevisionsPermissionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists a Label's permissions.
+// List: Lists a label's permissions.
 //
-//   - parent: The parent Label resource name on which Label Permission are
-//     listed. Format: labels/{label}.
+//   - parent: The parent label resource name on which label permissions are
+//     listed. Format: `labels/{label}`.
 func (r *LabelsRevisionsPermissionsService) List(parent string) *LabelsRevisionsPermissionsListCall {
 	c := &LabelsRevisionsPermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5765,7 +5790,7 @@ func (c *LabelsRevisionsPermissionsListCall) PageToken(pageToken string) *Labels
 
 // UseAdminAccess sets the optional parameter "useAdminAccess": Set to `true`
 // in order to use the user's admin credentials. The server will verify the
-// user is an admin for the Label before allowing access.
+// user is an admin for the label before allowing access.
 func (c *LabelsRevisionsPermissionsListCall) UseAdminAccess(useAdminAccess bool) *LabelsRevisionsPermissionsListCall {
 	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
@@ -5892,15 +5917,15 @@ type LimitsGetLabelCall struct {
 	header_      http.Header
 }
 
-// GetLabel: Get the constraints on the structure of a Label; such as, the
-// maximum number of Fields allowed and maximum length of the label title.
+// GetLabel: Get the constraints on the structure of a label; such as, the
+// maximum number of fields allowed and maximum length of the label title.
 func (r *LimitsService) GetLabel() *LimitsGetLabelCall {
 	c := &LimitsGetLabelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // Name sets the optional parameter "name": Required. Label revision resource
-// name Must be: "limits/label"
+// name must be: "limits/label".
 func (c *LimitsGetLabelCall) Name(name string) *LimitsGetLabelCall {
 	c.urlParams_.Set("name", name)
 	return c
@@ -6015,7 +6040,7 @@ func (r *UsersService) GetCapabilities(name string) *UsersGetCapabilitiesCall {
 }
 
 // Customer sets the optional parameter "customer": The customer to scope this
-// request to. For example: "customers/abcd1234". If unset, will return
+// request to. For example: `customers/abcd1234`. If unset, it will return
 // settings within the current customer.
 func (c *UsersGetCapabilitiesCall) Customer(customer string) *UsersGetCapabilitiesCall {
 	c.urlParams_.Set("customer", customer)

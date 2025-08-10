@@ -964,13 +964,13 @@ func (s GoogleFirebaseAppdistroV1BatchRemoveTestersResponse) MarshalJSON() ([]by
 // GoogleFirebaseAppdistroV1DistributeReleaseRequest: The request message for
 // `DistributeRelease`.
 type GoogleFirebaseAppdistroV1DistributeReleaseRequest struct {
-	// GroupAliases: A list of group aliases (IDs) to be given access to this
-	// release. A combined maximum of 999 `testerEmails` and `groupAliases` can be
-	// specified in a single request.
+	// GroupAliases: Optional. A list of group aliases (IDs) to be given access to
+	// this release. A combined maximum of 999 `testerEmails` and `groupAliases`
+	// can be specified in a single request.
 	GroupAliases []string `json:"groupAliases,omitempty"`
-	// TesterEmails: A list of tester email addresses to be given access to this
-	// release. A combined maximum of 999 `testerEmails` and `groupAliases` can be
-	// specified in a single request.
+	// TesterEmails: Optional. A list of tester email addresses to be given access
+	// to this release. A combined maximum of 999 `testerEmails` and `groupAliases`
+	// can be specified in a single request.
 	TesterEmails []string `json:"testerEmails,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GroupAliases") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2666,19 +2666,19 @@ func (r *ProjectsAppsReleasesFeedbackReportsService) List(parent string) *Projec
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number of
-// feedback reports to return. The service may return fewer than this value.
-// The valid range is [1-100]; If unspecified (0), at most 25 feedback reports
-// are returned. Values above 100 are coerced to 100.
+// PageSize sets the optional parameter "pageSize": Output only. The maximum
+// number of feedback reports to return. The service may return fewer than this
+// value. The valid range is [1-100]; If unspecified (0), at most 25 feedback
+// reports are returned. Values above 100 are coerced to 100.
 func (c *ProjectsAppsReleasesFeedbackReportsListCall) PageSize(pageSize int64) *ProjectsAppsReleasesFeedbackReportsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token, received
-// from a previous `ListFeedbackReports` call. Provide this to retrieve the
-// subsequent page. When paginating, all other parameters provided to
-// `ListFeedbackReports` must match the call that provided the page token.
+// PageToken sets the optional parameter "pageToken": Output only. A page
+// token, received from a previous `ListFeedbackReports` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to `ListFeedbackReports` must match the call that provided the page token.
 func (c *ProjectsAppsReleasesFeedbackReportsListCall) PageToken(pageToken string) *ProjectsAppsReleasesFeedbackReportsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

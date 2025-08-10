@@ -3524,11 +3524,11 @@ func (s HTTPHeader) MarshalJSON() ([]byte, error) {
 // latest Ready Revision.
 type InstanceSplit struct {
 	// LatestRevision: Uses the "status.latestReadyRevisionName" to determine the
-	// traffic target. When it changes, traffic will automatically migrate from the
-	// prior "latest ready" revision to the new one.
+	// instance split target. When it changes, workloads will automatically migrate
+	// from the prior "latest ready" revision to the new one.
 	LatestRevision bool `json:"latestRevision,omitempty"`
-	// Percent: Specifies percent of the instance split to this Revision. This
-	// defaults to zero if unspecified.
+	// Percent: Optional. Specifies percent of the instance split to this Revision.
+	// This defaults to zero if unspecified.
 	Percent int64 `json:"percent,omitempty"`
 	// RevisionName: Revision to which to assign this portion of instances.
 	RevisionName string `json:"revisionName,omitempty"`
@@ -5750,7 +5750,7 @@ type WorkerPoolStatus struct {
 	// state of the world. * `Ready`: `True` when all underlying resources are
 	// ready.
 	Conditions []*GoogleCloudRunV1Condition `json:"conditions,omitempty"`
-	// InstanceSplits: Holds the configured traffic distribution. These entries
+	// InstanceSplits: Holds the configured workload distribution. These entries
 	// will always contain RevisionName references. When ConfigurationName appears
 	// in the spec, this will hold the LatestReadyRevisionName that we last
 	// observed.

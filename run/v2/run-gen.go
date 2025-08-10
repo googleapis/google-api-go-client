@@ -2746,6 +2746,11 @@ type GoogleCloudRunV2SubmitBuildRequest struct {
 	DockerBuild *GoogleCloudRunV2DockerBuild `json:"dockerBuild,omitempty"`
 	// ImageUri: Required. Artifact Registry URI to store the built image.
 	ImageUri string `json:"imageUri,omitempty"`
+	// MachineType: Optional. The machine type from default pool to use for the
+	// build. If left blank, cloudbuild will use a sensible default. Currently only
+	// E2_HIGHCPU_8 is supported. If worker_pool is set, this field will be
+	// ignored.
+	MachineType string `json:"machineType,omitempty"`
 	// ServiceAccount: Optional. The service account to use for the build. If not
 	// set, the default Cloud Build service account for the project will be used.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
@@ -3368,8 +3373,8 @@ type GoogleCloudRunV2WorkerPool struct {
 	// process in Cloud Run.
 	LatestCreatedRevision string `json:"latestCreatedRevision,omitempty"`
 	// LatestReadyRevision: Output only. Name of the latest revision that is
-	// serving traffic. See comments in `reconciling` for additional information on
-	// reconciliation process in Cloud Run.
+	// serving workloads. See comments in `reconciling` for additional information
+	// on reconciliation process in Cloud Run.
 	LatestReadyRevision string `json:"latestReadyRevision,omitempty"`
 	// LaunchStage: Optional. The launch stage as defined by Google Cloud Platform
 	// Launch Stages (https://cloud.google.com/terms/launch-stages). Cloud Run
@@ -3418,9 +3423,9 @@ type GoogleCloudRunV2WorkerPool struct {
 	// Format: `projects/{project}/locations/{location}/workerPools/{worker_id}`
 	Name string `json:"name,omitempty"`
 	// ObservedGeneration: Output only. The generation of this WorkerPool currently
-	// serving traffic. See comments in `reconciling` for additional information on
-	// reconciliation process in Cloud Run. Please note that unlike v1, this is an
-	// int64 value. As with most Google APIs, its JSON representation will be a
+	// serving workloads. See comments in `reconciling` for additional information
+	// on reconciliation process in Cloud Run. Please note that unlike v1, this is
+	// an int64 value. As with most Google APIs, its JSON representation will be a
 	// `string` instead of an `integer`.
 	ObservedGeneration int64 `json:"observedGeneration,omitempty,string"`
 	// Reconciling: Output only. Returns true if the WorkerPool is currently being
@@ -3429,15 +3434,16 @@ type GoogleCloudRunV2WorkerPool struct {
 	// asynchronously perform all necessary steps to bring the WorkerPool to the
 	// desired serving state. This process is called reconciliation. While
 	// reconciliation is in process, `observed_generation`, `latest_ready_revison`,
-	// `traffic_statuses`, and `uri` will have transient values that might mismatch
-	// the intended state: Once reconciliation is over (and this field is false),
-	// there are two possible outcomes: reconciliation succeeded and the serving
-	// state matches the WorkerPool, or there was an error, and reconciliation
-	// failed. This state can be found in `terminal_condition.state`. If
-	// reconciliation succeeded, the following fields will match: `traffic` and
-	// `traffic_statuses`, `observed_generation` and `generation`,
-	// `latest_ready_revision` and `latest_created_revision`. If reconciliation
-	// failed, `traffic_statuses`, `observed_generation`, and
+	// `instance_split_statuses`, and `uri` will have transient values that might
+	// mismatch the intended state: Once reconciliation is over (and this field is
+	// false), there are two possible outcomes: reconciliation succeeded and the
+	// serving state matches the WorkerPool, or there was an error, and
+	// reconciliation failed. This state can be found in
+	// `terminal_condition.state`. If reconciliation succeeded, the following
+	// fields will match: `instance_splits` and `instance_split_statuses`,
+	// `observed_generation` and `generation`, `latest_ready_revision` and
+	// `latest_created_revision`. If reconciliation failed,
+	// `instance_split_statuses`, `observed_generation`, and
 	// `latest_ready_revision` will have the state of the last serving revision, or
 	// empty for newly created WorkerPools. Additional information on the failure
 	// can be found in `terminal_condition` and `conditions`.

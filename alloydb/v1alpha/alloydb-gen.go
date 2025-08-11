@@ -3289,6 +3289,40 @@ func (s StorageDatabasecenterPartnerapiV1mainBackupDRConfiguration) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// StorageDatabasecenterPartnerapiV1mainBackupDRMetadata: BackupDRMetadata
+// contains information about the backup and disaster recovery metadata of a
+// database resource.
+type StorageDatabasecenterPartnerapiV1mainBackupDRMetadata struct {
+	// BackupConfiguration: Backup configuration for this instance.
+	BackupConfiguration *StorageDatabasecenterPartnerapiV1mainBackupConfiguration `json:"backupConfiguration,omitempty"`
+	// BackupRun: Latest backup run information for this instance.
+	BackupRun *StorageDatabasecenterPartnerapiV1mainBackupRun `json:"backupRun,omitempty"`
+	// BackupdrConfiguration: BackupDR configuration for this instance.
+	BackupdrConfiguration *StorageDatabasecenterPartnerapiV1mainBackupDRConfiguration `json:"backupdrConfiguration,omitempty"`
+	// FullResourceName: Required. Full resource name of this instance.
+	FullResourceName string `json:"fullResourceName,omitempty"`
+	// LastRefreshTime: Required. Last time backup configuration was refreshed.
+	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
+	// ResourceId: Required. Database resource id.
+	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupConfiguration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupConfiguration") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StorageDatabasecenterPartnerapiV1mainBackupDRMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainBackupDRMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // StorageDatabasecenterPartnerapiV1mainBackupRun: A backup run.
 type StorageDatabasecenterPartnerapiV1mainBackupRun struct {
 	// EndTime: The time the backup operation completed. REQUIRED
@@ -3423,8 +3457,11 @@ func (s StorageDatabasecenterPartnerapiV1mainCustomMetadataData) MarshalJSON() (
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed:
 // DatabaseResourceFeed is the top level proto to be used to ingest different
-// database resource level events into Condor platform. Next ID: 9
+// database resource level events into Condor platform. Next ID: 10
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
+	// BackupdrMetadata: BackupDR metadata is used to ingest metadata from
+	// BackupDR.
+	BackupdrMetadata *StorageDatabasecenterPartnerapiV1mainBackupDRMetadata `json:"backupdrMetadata,omitempty"`
 	// ConfigBasedSignalData: Config based signal data is used to ingest signals
 	// that are generated based on the configuration of the database resource.
 	ConfigBasedSignalData *StorageDatabasecenterPartnerapiV1mainConfigBasedSignalData `json:"configBasedSignalData,omitempty"`
@@ -3440,6 +3477,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	//   "RECOMMENDATION_SIGNAL_DATA" - Database resource recommendation signal
 	// data
 	//   "CONFIG_BASED_SIGNAL_DATA" - Database config based signal data
+	//   "BACKUPDR_METADATA" - Database resource metadata from BackupDR
 	FeedType                 string                                                                         `json:"feedType,omitempty"`
 	ObservabilityMetricData  *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData                  `json:"observabilityMetricData,omitempty"`
 	RecommendationSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData `json:"recommendationSignalData,omitempty"`
@@ -3448,15 +3486,15 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	// available in individual feed level as well.
 	ResourceId       *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId       `json:"resourceId,omitempty"`
 	ResourceMetadata *StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata `json:"resourceMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ConfigBasedSignalData") to
+	// ForceSendFields is a list of field names (e.g. "BackupdrMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ConfigBasedSignalData") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BackupdrMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3776,6 +3814,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	//   "SIGNAL_TYPE_MANY_IDLE_CONNECTIONS" - High number of idle connections.
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
 	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
+	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -4267,6 +4306,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	//   "SIGNAL_TYPE_MANY_IDLE_CONNECTIONS" - High number of idle connections.
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
 	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
+	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or

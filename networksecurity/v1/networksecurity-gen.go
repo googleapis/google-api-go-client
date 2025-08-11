@@ -825,7 +825,8 @@ func (s AuthzPolicyAuthzRuleFrom) MarshalJSON() ([]byte, error) {
 // source.
 type AuthzPolicyAuthzRuleFromRequestSource struct {
 	// IpBlocks: Optional. A list of IP addresses or IP address ranges to match
-	// against the source IP address of the request. Limited to 5 ip_blocks.
+	// against the source IP address of the request. Limited to 10 ip_blocks per
+	// Authorization Policy
 	IpBlocks []*AuthzPolicyAuthzRuleIpBlock `json:"ipBlocks,omitempty"`
 	// Principals: Optional. A list of identities derived from the client's
 	// certificate. This field will not match on a request unless frontend mutual
@@ -833,10 +834,15 @@ type AuthzPolicyAuthzRuleFromRequestSource struct {
 	// has been successfully validated by mTLS. Each identity is a string whose
 	// value is matched against a list of URI SANs, DNS Name SANs, or the common
 	// name in the client's certificate. A match happens when any principal matches
-	// with the rule. Limited to 5 principals.
+	// with the rule. Limited to 50 principals per Authorization Policy for
+	// Regional Internal Application Load Balancer, Regional External Application
+	// Load Balancer, Cross-region Internal Application Load Balancer, and Cloud
+	// Service Mesh. Limited to 25 principals per Authorization Policy for Global
+	// External Application Load Balancer.
 	Principals []*AuthzPolicyAuthzRulePrincipal `json:"principals,omitempty"`
 	// Resources: Optional. A list of resources to match against the resource of
-	// the source VM of a request. Limited to 5 resources.
+	// the source VM of a request. Limited to 10 resources per Authorization
+	// Policy.
 	Resources []*AuthzPolicyAuthzRuleRequestResource `json:"resources,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IpBlocks") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -921,13 +927,13 @@ type AuthzPolicyAuthzRulePrincipal struct {
 	//   "PRINCIPAL_SELECTOR_UNSPECIFIED" - Unspecified principal selector. It will
 	// be treated as CLIENT_CERT_URI_SAN by default.
 	//   "CLIENT_CERT_URI_SAN" - The principal rule is matched against a list of
-	// URI SANs in the validated client’s certificate. A match happens when there
+	// URI SANs in the validated client's certificate. A match happens when there
 	// is any exact URI SAN value match. This is the default principal selector.
 	//   "CLIENT_CERT_DNS_NAME_SAN" - The principal rule is matched against a list
-	// of DNS Name SANs in the validated client’s certificate. A match happens
-	// when there is any exact DNS Name SAN value match.
+	// of DNS Name SANs in the validated client's certificate. A match happens when
+	// there is any exact DNS Name SAN value match.
 	//   "CLIENT_CERT_COMMON_NAME" - The principal rule is matched against the
-	// common name in the client’s certificate. Authorization against multiple
+	// common name in the client's certificate. Authorization against multiple
 	// common names in the client certificate is not supported. Requests with
 	// multiple common names in the client certificate will be rejected if
 	// CLIENT_CERT_COMMON_NAME is set as the principal selector. A match happens
@@ -989,7 +995,7 @@ type AuthzPolicyAuthzRuleRequestResourceTagValueIdSet struct {
 	// Ids: Required. A list of resource tag value permanent IDs to match against
 	// the resource manager tags value associated with the source VM of a request.
 	// The match follows AND semantics which means all the ids must match. Limited
-	// to 5 matches.
+	// to 5 ids in the Tag value id set.
 	Ids googleapi.Int64s `json:"ids,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Ids") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1089,17 +1095,20 @@ type AuthzPolicyAuthzRuleToRequestOperation struct {
 	HeaderSet *AuthzPolicyAuthzRuleToRequestOperationHeaderSet `json:"headerSet,omitempty"`
 	// Hosts: Optional. A list of HTTP Hosts to match against. The match can be one
 	// of exact, prefix, suffix, or contains (substring match). Matches are always
-	// case sensitive unless the ignoreCase is set. Limited to 5 matches.
+	// case sensitive unless the ignoreCase is set. Limited to 10 hosts per
+	// Authorization Policy.
 	Hosts []*AuthzPolicyAuthzRuleStringMatch `json:"hosts,omitempty"`
 	// Methods: Optional. A list of HTTP methods to match against. Each entry must
 	// be a valid HTTP method name (GET, PUT, POST, HEAD, PATCH, DELETE, OPTIONS).
-	// It only allows exact match and is always case sensitive.
+	// It only allows exact match and is always case sensitive. Limited to 10
+	// methods per Authorization Policy.
 	Methods []string `json:"methods,omitempty"`
 	// Paths: Optional. A list of paths to match against. The match can be one of
 	// exact, prefix, suffix, or contains (substring match). Matches are always
-	// case sensitive unless the ignoreCase is set. Limited to 5 matches. Note that
-	// this path match includes the query parameters. For gRPC services, this
-	// should be a fully-qualified name of the form /package.service/method.
+	// case sensitive unless the ignoreCase is set. Limited to 10 paths per
+	// Authorization Policy. Note that this path match includes the query
+	// parameters. For gRPC services, this should be a fully-qualified name of the
+	// form /package.service/method.
 	Paths []*AuthzPolicyAuthzRuleStringMatch `json:"paths,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "HeaderSet") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1125,8 +1134,8 @@ type AuthzPolicyAuthzRuleToRequestOperationHeaderSet struct {
 	// Headers: Required. A list of headers to match against in http header. The
 	// match can be one of exact, prefix, suffix, or contains (substring match).
 	// The match follows AND semantics which means all the headers must match.
-	// Matches are always case sensitive unless the ignoreCase is set. Limited to 5
-	// matches.
+	// Matches are always case sensitive unless the ignoreCase is set. Limited to
+	// 10 headers per Authorization Policy.
 	Headers []*AuthzPolicyAuthzRuleHeaderMatch `json:"headers,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

@@ -230,6 +230,7 @@ type ProjectsLocationsService struct {
 func NewProjectsLocationsDataExchangesService(s *Service) *ProjectsLocationsDataExchangesService {
 	rs := &ProjectsLocationsDataExchangesService{s: s}
 	rs.Listings = NewProjectsLocationsDataExchangesListingsService(s)
+	rs.QueryTemplates = NewProjectsLocationsDataExchangesQueryTemplatesService(s)
 	return rs
 }
 
@@ -237,6 +238,8 @@ type ProjectsLocationsDataExchangesService struct {
 	s *Service
 
 	Listings *ProjectsLocationsDataExchangesListingsService
+
+	QueryTemplates *ProjectsLocationsDataExchangesQueryTemplatesService
 }
 
 func NewProjectsLocationsDataExchangesListingsService(s *Service) *ProjectsLocationsDataExchangesListingsService {
@@ -248,6 +251,15 @@ type ProjectsLocationsDataExchangesListingsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsDataExchangesQueryTemplatesService(s *Service) *ProjectsLocationsDataExchangesQueryTemplatesService {
+	rs := &ProjectsLocationsDataExchangesQueryTemplatesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDataExchangesQueryTemplatesService struct {
+	s *Service
+}
+
 func NewProjectsLocationsSubscriptionsService(s *Service) *ProjectsLocationsSubscriptionsService {
 	rs := &ProjectsLocationsSubscriptionsService{s: s}
 	return rs
@@ -255,6 +267,10 @@ func NewProjectsLocationsSubscriptionsService(s *Service) *ProjectsLocationsSubs
 
 type ProjectsLocationsSubscriptionsService struct {
 	s *Service
+}
+
+// ApproveQueryTemplateRequest: Message for approving a QueryTemplate.
+type ApproveQueryTemplateRequest struct {
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -1388,6 +1404,34 @@ func (s ListOrgDataExchangesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListQueryTemplatesResponse: Message for response to the list of
+// QueryTemplates.
+type ListQueryTemplatesResponse struct {
+	// NextPageToken: A token to request the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// QueryTemplates: The list of QueryTemplates.
+	QueryTemplates []*QueryTemplate `json:"queryTemplates,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListQueryTemplatesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListQueryTemplatesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListSharedResourceSubscriptionsResponse: Message for response to the listing
 // of shared resource subscriptions.
 type ListSharedResourceSubscriptionsResponse struct {
@@ -1945,6 +1989,66 @@ func (s PushConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// QueryTemplate: A query template is a container for sharing table-valued
+// functions defined by contributors in a data clean room.
+type QueryTemplate struct {
+	// CreateTime: Output only. Timestamp when the QueryTemplate was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. Short description of the QueryTemplate. The
+	// description must not contain Unicode non-characters and C0 and C1 control
+	// codes except tabs (HT), new lines (LF), carriage returns (CR), and page
+	// breaks (FF). Default value is an empty string. Max length: 2000 bytes.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Required. Human-readable display name of the QueryTemplate. The
+	// display name must contain only Unicode letters, numbers (0-9), underscores
+	// (_), dashes (-), spaces ( ), ampersands (&) and can't start or end with
+	// spaces. Default value is an empty string. Max length: 63 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+	// Documentation: Optional. Documentation describing the QueryTemplate.
+	Documentation string `json:"documentation,omitempty"`
+	// Name: Output only. The resource name of the QueryTemplate. e.g.
+	// `projects/myproject/locations/us/dataExchanges/123/queryTemplates/456`
+	Name string `json:"name,omitempty"`
+	// PrimaryContact: Optional. Email or URL of the primary point of contact of
+	// the QueryTemplate. Max Length: 1000 bytes.
+	PrimaryContact string `json:"primaryContact,omitempty"`
+	// Proposer: Optional. Will be deprecated. Email or URL of the primary point of
+	// contact of the QueryTemplate. Max Length: 1000 bytes.
+	Proposer string `json:"proposer,omitempty"`
+	// Routine: Optional. The routine associated with the QueryTemplate.
+	Routine *Routine `json:"routine,omitempty"`
+	// State: Output only. The QueryTemplate lifecycle state.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "DRAFTED" - The QueryTemplate is in draft state.
+	//   "PENDING" - The QueryTemplate is in pending state.
+	//   "DELETED" - The QueryTemplate is in deleted state.
+	//   "APPROVED" - The QueryTemplate is in approved state.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. Timestamp when the QueryTemplate was last modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QueryTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryTemplate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RefreshSubscriptionRequest: Message for refreshing a subscription.
 type RefreshSubscriptionRequest struct {
 }
@@ -2095,6 +2199,34 @@ type RevokeSubscriptionResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// Routine: Represents a bigquery routine.
+type Routine struct {
+	// DefinitionBody: Optional. The definition body of the routine.
+	DefinitionBody string `json:"definitionBody,omitempty"`
+	// RoutineType: Required. The type of routine.
+	//
+	// Possible values:
+	//   "ROUTINE_TYPE_UNSPECIFIED" - Default value.
+	//   "TABLE_VALUED_FUNCTION" - Non-built-in persistent TVF.
+	RoutineType string `json:"routineType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefinitionBody") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefinitionBody") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Routine) MarshalJSON() ([]byte, error) {
+	type NoMethod Routine
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SelectedResource: Resource in this dataset that is selectively shared.
 type SelectedResource struct {
 	// Routine: Optional. Format: For routine:
@@ -2212,6 +2344,10 @@ type Status struct {
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SubmitQueryTemplateRequest: Message for submitting a QueryTemplate.
+type SubmitQueryTemplateRequest struct {
 }
 
 // SubscribeDataExchangeRequest: Message for subscribing to a Data Exchange.
@@ -4937,6 +5073,798 @@ func (c *ProjectsLocationsDataExchangesListingsTestIamPermissionsCall) Do(opts .
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.listings.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataExchangesQueryTemplatesApproveCall struct {
+	s                           *Service
+	name                        string
+	approvequerytemplaterequest *ApproveQueryTemplateRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Approve: Approves a query template.
+//
+//   - name: The resource path of the QueryTemplate. e.g.
+//     `projects/myproject/locations/us/dataExchanges/123/queryTemplates/myqueryTe
+//     mplate`.
+func (r *ProjectsLocationsDataExchangesQueryTemplatesService) Approve(name string, approvequerytemplaterequest *ApproveQueryTemplateRequest) *ProjectsLocationsDataExchangesQueryTemplatesApproveCall {
+	c := &ProjectsLocationsDataExchangesQueryTemplatesApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.approvequerytemplaterequest = approvequerytemplaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesApproveCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataExchangesQueryTemplatesApproveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesApproveCall) Context(ctx context.Context) *ProjectsLocationsDataExchangesQueryTemplatesApproveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesApproveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataExchangesQueryTemplatesApproveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.approvequerytemplaterequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:approve")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.queryTemplates.approve", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticshub.projects.locations.dataExchanges.queryTemplates.approve" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *QueryTemplate.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesApproveCall) Do(opts ...googleapi.CallOption) (*QueryTemplate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueryTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.queryTemplates.approve", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataExchangesQueryTemplatesCreateCall struct {
+	s             *Service
+	parent        string
+	querytemplate *QueryTemplate
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Create: Creates a new QueryTemplate
+//
+//   - parent: The parent resource path of the QueryTemplate. e.g.
+//     `projects/myproject/locations/us/dataExchanges/123/queryTemplates/myQueryTe
+//     mplate`.
+func (r *ProjectsLocationsDataExchangesQueryTemplatesService) Create(parent string, querytemplate *QueryTemplate) *ProjectsLocationsDataExchangesQueryTemplatesCreateCall {
+	c := &ProjectsLocationsDataExchangesQueryTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.querytemplate = querytemplate
+	return c
+}
+
+// QueryTemplateId sets the optional parameter "queryTemplateId": Required. The
+// ID of the QueryTemplate to create. Must contain only Unicode letters,
+// numbers (0-9), underscores (_). Max length: 100 bytes.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesCreateCall) QueryTemplateId(queryTemplateId string) *ProjectsLocationsDataExchangesQueryTemplatesCreateCall {
+	c.urlParams_.Set("queryTemplateId", queryTemplateId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataExchangesQueryTemplatesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesCreateCall) Context(ctx context.Context) *ProjectsLocationsDataExchangesQueryTemplatesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataExchangesQueryTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.querytemplate)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/queryTemplates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.queryTemplates.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticshub.projects.locations.dataExchanges.queryTemplates.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *QueryTemplate.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*QueryTemplate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueryTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.queryTemplates.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataExchangesQueryTemplatesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a query template.
+//
+//   - name: The resource path of the QueryTemplate. e.g.
+//     `projects/myproject/locations/us/dataExchanges/123/queryTemplates/myqueryTe
+//     mplate`.
+func (r *ProjectsLocationsDataExchangesQueryTemplatesService) Delete(name string) *ProjectsLocationsDataExchangesQueryTemplatesDeleteCall {
+	c := &ProjectsLocationsDataExchangesQueryTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataExchangesQueryTemplatesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesDeleteCall) Context(ctx context.Context) *ProjectsLocationsDataExchangesQueryTemplatesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataExchangesQueryTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.queryTemplates.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticshub.projects.locations.dataExchanges.queryTemplates.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.queryTemplates.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataExchangesQueryTemplatesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a QueryTemplate
+//
+//   - name: The parent resource path of the QueryTemplate. e.g.
+//     `projects/myproject/locations/us/dataExchanges/123/queryTemplates/myqueryTe
+//     mplate`.
+func (r *ProjectsLocationsDataExchangesQueryTemplatesService) Get(name string) *ProjectsLocationsDataExchangesQueryTemplatesGetCall {
+	c := &ProjectsLocationsDataExchangesQueryTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataExchangesQueryTemplatesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataExchangesQueryTemplatesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesGetCall) Context(ctx context.Context) *ProjectsLocationsDataExchangesQueryTemplatesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataExchangesQueryTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.queryTemplates.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticshub.projects.locations.dataExchanges.queryTemplates.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *QueryTemplate.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesGetCall) Do(opts ...googleapi.CallOption) (*QueryTemplate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueryTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.queryTemplates.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataExchangesQueryTemplatesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all QueryTemplates in a given project and location.
+//
+//   - parent: The parent resource path of the QueryTemplates. e.g.
+//     `projects/myproject/locations/us/dataExchanges/123`.
+func (r *ProjectsLocationsDataExchangesQueryTemplatesService) List(parent string) *ProjectsLocationsDataExchangesQueryTemplatesListCall {
+	c := &ProjectsLocationsDataExchangesQueryTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return in a single response page. Leverage the page tokens to
+// iterate through the entire collection.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesListCall) PageSize(pageSize int64) *ProjectsLocationsDataExchangesQueryTemplatesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token, returned by a
+// previous call, to request the next page of results.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesListCall) PageToken(pageToken string) *ProjectsLocationsDataExchangesQueryTemplatesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataExchangesQueryTemplatesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataExchangesQueryTemplatesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesListCall) Context(ctx context.Context) *ProjectsLocationsDataExchangesQueryTemplatesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataExchangesQueryTemplatesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/queryTemplates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.queryTemplates.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticshub.projects.locations.dataExchanges.queryTemplates.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListQueryTemplatesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesListCall) Do(opts ...googleapi.CallOption) (*ListQueryTemplatesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListQueryTemplatesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.queryTemplates.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesListCall) Pages(ctx context.Context, f func(*ListQueryTemplatesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsDataExchangesQueryTemplatesPatchCall struct {
+	s             *Service
+	name          string
+	querytemplate *QueryTemplate
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Patch: Updates an existing QueryTemplate
+//
+//   - name: Output only. The resource name of the QueryTemplate. e.g.
+//     `projects/myproject/locations/us/dataExchanges/123/queryTemplates/456`.
+func (r *ProjectsLocationsDataExchangesQueryTemplatesService) Patch(name string, querytemplate *QueryTemplate) *ProjectsLocationsDataExchangesQueryTemplatesPatchCall {
+	c := &ProjectsLocationsDataExchangesQueryTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.querytemplate = querytemplate
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask specifies
+// the fields to update in the query template resource. The fields specified in
+// the `updateMask` are relative to the resource and are not a full request.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDataExchangesQueryTemplatesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataExchangesQueryTemplatesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesPatchCall) Context(ctx context.Context) *ProjectsLocationsDataExchangesQueryTemplatesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataExchangesQueryTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.querytemplate)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.queryTemplates.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticshub.projects.locations.dataExchanges.queryTemplates.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *QueryTemplate.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesPatchCall) Do(opts ...googleapi.CallOption) (*QueryTemplate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueryTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.queryTemplates.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataExchangesQueryTemplatesSubmitCall struct {
+	s                          *Service
+	name                       string
+	submitquerytemplaterequest *SubmitQueryTemplateRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Submit: Submits a query template for approval.
+//
+//   - name: The resource path of the QueryTemplate. e.g.
+//     `projects/myproject/locations/us/dataExchanges/123/queryTemplates/myqueryTe
+//     mplate`.
+func (r *ProjectsLocationsDataExchangesQueryTemplatesService) Submit(name string, submitquerytemplaterequest *SubmitQueryTemplateRequest) *ProjectsLocationsDataExchangesQueryTemplatesSubmitCall {
+	c := &ProjectsLocationsDataExchangesQueryTemplatesSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.submitquerytemplaterequest = submitquerytemplaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesSubmitCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataExchangesQueryTemplatesSubmitCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesSubmitCall) Context(ctx context.Context) *ProjectsLocationsDataExchangesQueryTemplatesSubmitCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesSubmitCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataExchangesQueryTemplatesSubmitCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.submitquerytemplaterequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:submit")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.queryTemplates.submit", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticshub.projects.locations.dataExchanges.queryTemplates.submit" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *QueryTemplate.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataExchangesQueryTemplatesSubmitCall) Do(opts ...googleapi.CallOption) (*QueryTemplate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueryTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "analyticshub.projects.locations.dataExchanges.queryTemplates.submit", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

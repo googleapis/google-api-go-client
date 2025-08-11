@@ -5721,8 +5721,27 @@ type ServiceMeshCondition struct {
 	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
 	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.
 	//   "MODERNIZATION_ABORTED" - Modernization is aborted for a cluster.
+	//   "MODERNIZATION_PREPARING" - Preparing cluster so that its workloads can be
+	// migrated.
+	//   "MODERNIZATION_STALLED" - Modernization is stalled for a cluster.
+	//   "MODERNIZATION_PREPARED" - Cluster has been prepared for its workloads to
+	// be migrated.
+	//   "MODERNIZATION_MIGRATING_WORKLOADS" - Migrating the cluster's workloads to
+	// the new implementation.
+	//   "MODERNIZATION_ROLLING_BACK_CLUSTER" - Rollback is in progress for
+	// modernization of a cluster.
 	//   "MODERNIZATION_WILL_BE_SCHEDULED" - Modernization will be scheduled for a
 	// fleet.
+	//   "MODERNIZATION_MANUAL" - Fleet is opted out from automated modernization.
+	//   "MODERNIZATION_ELIGIBLE" - Fleet is eligible for modernization.
+	//   "MODERNIZATION_MODERNIZING" - Modernization of one or more clusters in a
+	// fleet is in progress.
+	//   "MODERNIZATION_MODERNIZED_SOAKING" - Modernization of all the fleet's
+	// clusters is complete. Soaking before finalizing the modernization.
+	//   "MODERNIZATION_FINALIZED" - Modernization is finalized for all clusters in
+	// a fleet. Rollback is no longer allowed.
+	//   "MODERNIZATION_ROLLING_BACK_FLEET" - Rollback is in progress for
+	// modernization of all clusters in a fleet.
 	Code string `json:"code,omitempty"`
 	// Details: A short summary about the issue.
 	Details string `json:"details,omitempty"`

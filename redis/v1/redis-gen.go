@@ -1189,7 +1189,7 @@ func (s CustomMetadataData) MarshalJSON() ([]byte, error) {
 
 // DatabaseResourceFeed: DatabaseResourceFeed is the top level proto to be used
 // to ingest different database resource level events into Condor platform.
-// Next ID: 10
+// Next ID: 11
 type DatabaseResourceFeed struct {
 	// BackupdrMetadata: BackupDR metadata is used to ingest metadata from
 	// BackupDR.
@@ -1218,6 +1218,12 @@ type DatabaseResourceFeed struct {
 	// available in individual feed level as well.
 	ResourceId       *DatabaseResourceId       `json:"resourceId,omitempty"`
 	ResourceMetadata *DatabaseResourceMetadata `json:"resourceMetadata,omitempty"`
+	// SkipIngestion: Optional. If true, the feed won't be ingested by DB Center.
+	// This indicates that the feed is intentionally skipped. For example, BackupDR
+	// feeds are only needed for resources integrated with DB Center (e.g.,
+	// CloudSQL, AlloyDB). Feeds for non-integrated resources (e.g., Compute
+	// Engine, Persistent Disk) can be skipped.
+	SkipIngestion bool `json:"skipIngestion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupdrMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1546,6 +1552,7 @@ type DatabaseResourceHealthSignalData struct {
 	//   "SIGNAL_TYPE_MANY_IDLE_CONNECTIONS" - High number of idle connections.
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
 	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
+	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -2037,6 +2044,7 @@ type DatabaseResourceRecommendationSignalData struct {
 	//   "SIGNAL_TYPE_MANY_IDLE_CONNECTIONS" - High number of idle connections.
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
 	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
+	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or

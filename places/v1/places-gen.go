@@ -1698,7 +1698,7 @@ type GoogleMapsPlacesV1PlaceEvChargeAmenitySummary struct {
 	Overview *GoogleMapsPlacesV1ContentBlock `json:"overview,omitempty"`
 	// Restaurant: A summary of the nearby restaurants.
 	Restaurant *GoogleMapsPlacesV1ContentBlock `json:"restaurant,omitempty"`
-	// Store: A summary of the nearby gas stations.
+	// Store: A summary of the nearby stores.
 	Store *GoogleMapsPlacesV1ContentBlock `json:"store,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Coffee") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

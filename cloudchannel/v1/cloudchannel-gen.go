@@ -1329,6 +1329,56 @@ func (s GoogleCloudChannelV1DateRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudChannelV1DiscountComponent: Represents a single component of the
+// total discount applicable on a Price.
+type GoogleCloudChannelV1DiscountComponent struct {
+	// DiscountAbsolute: Fixed value discount.
+	DiscountAbsolute *GoogleTypeMoney `json:"discountAbsolute,omitempty"`
+	// DiscountPercentage: Discount percentage, represented as decimal. For
+	// example, a 20% discount will be represented as 0.2.
+	DiscountPercentage float64 `json:"discountPercentage,omitempty"`
+	// DiscountType: Type of the discount.
+	//
+	// Possible values:
+	//   "DISCOUNT_TYPE_UNSPECIFIED" - Not used.
+	//   "REGIONAL_DISCOUNT" - Regional discount.
+	//   "PROMOTIONAL_DISCOUNT" - Promotional discount.
+	//   "SALES_DISCOUNT" - Sales-provided discount.
+	//   "RESELLER_MARGIN" - Reseller margin.
+	//   "DEAL_CODE" - Deal code discount.
+	DiscountType string `json:"discountType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DiscountAbsolute") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiscountAbsolute") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudChannelV1DiscountComponent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1DiscountComponent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudChannelV1DiscountComponent) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudChannelV1DiscountComponent
+	var s1 struct {
+		DiscountPercentage gensupport.JSONFloat64 `json:"discountPercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DiscountPercentage = float64(s1.DiscountPercentage)
+	return nil
+}
+
 // GoogleCloudChannelV1EduData: Required Edu Attributes
 type GoogleCloudChannelV1EduData struct {
 	// InstituteSize: Size of the institute.
@@ -2643,11 +2693,17 @@ type GoogleCloudChannelV1Price struct {
 	// Discount: Discount percentage, represented as decimal. For example, a 20%
 	// discount will be represent as 0.2.
 	Discount float64 `json:"discount,omitempty"`
+	// DiscountComponents: Breakdown of the discount into its components. This will
+	// be empty if there is no discount present.
+	DiscountComponents []*GoogleCloudChannelV1DiscountComponent `json:"discountComponents,omitempty"`
 	// EffectivePrice: Effective Price after applying the discounts.
 	EffectivePrice *GoogleTypeMoney `json:"effectivePrice,omitempty"`
 	// ExternalPriceUri: Link to external price list, such as link to Google Voice
 	// rate card.
 	ExternalPriceUri string `json:"externalPriceUri,omitempty"`
+	// PricePeriod: The time period with respect to which base and effective prices
+	// are defined. Example: 1 month, 6 months, 1 year, etc.
+	PricePeriod *GoogleCloudChannelV1Period `json:"pricePeriod,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BasePrice") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

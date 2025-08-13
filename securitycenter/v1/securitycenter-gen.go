@@ -5752,6 +5752,10 @@ type GoogleCloudSecuritycenterV2BigQueryExport struct {
 	// This field is set by the server and will be ignored if provided on export on
 	// creation.
 	CreateTime string `json:"createTime,omitempty"`
+	// CryptoKeyName: Output only. The resource name of the Cloud KMS `CryptoKey`
+	// used to protect this configuration's data, if configured during Security
+	// Command Center activation.
+	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
 	// Dataset: The dataset to write findings' updates to. Its format is
 	// "projects/[project_id]/datasets/[bigquery_dataset_id]". BigQuery dataset
 	// unique ID must contain only letters (a-z, A-Z), numbers (0-9), or
@@ -7127,6 +7131,9 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// CreateTime: Output only. The time at which the finding was created in
 	// Security Command Center.
 	CreateTime string `json:"createTime,omitempty"`
+	// CryptoKeyName: Output only. The name of the Cloud KMS key used to encrypt
+	// this finding, if any.
+	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
 	// DataAccessEvents: Data access events associated with the finding.
 	DataAccessEvents []*GoogleCloudSecuritycenterV2DataAccessEvent `json:"dataAccessEvents,omitempty"`
 	// DataFlowEvents: Data flow events associated with the finding.
@@ -8696,6 +8703,10 @@ type GoogleCloudSecuritycenterV2MuteConfig struct {
 	// field is set by the server and will be ignored if provided on config
 	// creation.
 	CreateTime string `json:"createTime,omitempty"`
+	// CryptoKeyName: Output only. The resource name of the Cloud KMS `CryptoKey`
+	// used to encrypt this configuration data, if CMEK was enabled during Security
+	// Command Center activation.
+	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
 	// Description: A description of the mute config.
 	Description string `json:"description,omitempty"`
 	// ExpiryTime: Optional. The expiry of the mute config. Only applicable for

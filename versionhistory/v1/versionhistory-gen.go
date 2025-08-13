@@ -435,6 +435,10 @@ type Release struct {
 	Name string `json:"name,omitempty"`
 	// Pinnable: Whether or not the release was available for version pinning.
 	Pinnable bool `json:"pinnable,omitempty"`
+	// RolloutData: Rollout-related metadata. Some releases are part of one or more
+	// A/B rollouts. This field contains the names and data describing this
+	// release's role in any rollouts.
+	RolloutData []*RolloutData `json:"rolloutData,omitempty"`
 	// Serving: Timestamp interval of when the release was live. If end_time is
 	// unspecified, the release is currently live.
 	Serving *Interval `json:"serving,omitempty"`
@@ -470,6 +474,32 @@ func (s *Release) UnmarshalJSON(data []byte) error {
 	}
 	s.Fraction = float64(s1.Fraction)
 	return nil
+}
+
+// RolloutData: Rollout-related metadata for a release.
+type RolloutData struct {
+	// RolloutName: The name of the rollout.
+	RolloutName string `json:"rolloutName,omitempty"`
+	// Tag: Tags associated with a release's role in a rollout. Most rollouts will
+	// have at least one release with a "rollout" tag and another release with a
+	// "control" tag. Some rollouts may have additional named arms.
+	Tag []string `json:"tag,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RolloutName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RolloutName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RolloutData) MarshalJSON() ([]byte, error) {
+	type NoMethod RolloutData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Version: Each Version is owned by a Channel. A Version only displays the

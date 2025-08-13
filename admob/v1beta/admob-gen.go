@@ -1543,7 +1543,7 @@ type MediationGroupTargeting struct {
 	//   "AVAILABLE" - Only the devices with IDFA availability are targeted.
 	//   "NOT_AVAILABLE" - Only the devices without IDFA availability are targeted.
 	IdfaTargeting string `json:"idfaTargeting,omitempty"`
-	// Platform: Describes the platform of the app. Examples: "IOS", "Android".
+	// Platform: Describes the platform of the app. Examples: "IOS", "ANDROID".
 	Platform string `json:"platform,omitempty"`
 	// TargetedRegionCodes: The Unicode country/region code (CLDR) of a location,
 	// such as "US". Unset if this mediation group targets all available regions.

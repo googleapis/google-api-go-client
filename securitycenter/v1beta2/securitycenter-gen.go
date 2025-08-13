@@ -4664,6 +4664,10 @@ type GoogleCloudSecuritycenterV2BigQueryExport struct {
 	// This field is set by the server and will be ignored if provided on export on
 	// creation.
 	CreateTime string `json:"createTime,omitempty"`
+	// CryptoKeyName: Output only. The resource name of the Cloud KMS `CryptoKey`
+	// used to protect this configuration's data, if configured during Security
+	// Command Center activation.
+	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
 	// Dataset: The dataset to write findings' updates to. Its format is
 	// "projects/[project_id]/datasets/[bigquery_dataset_id]". BigQuery dataset
 	// unique ID must contain only letters (a-z, A-Z), numbers (0-9), or
@@ -6039,6 +6043,9 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// CreateTime: Output only. The time at which the finding was created in
 	// Security Command Center.
 	CreateTime string `json:"createTime,omitempty"`
+	// CryptoKeyName: Output only. The name of the Cloud KMS key used to encrypt
+	// this finding, if any.
+	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
 	// DataAccessEvents: Data access events associated with the finding.
 	DataAccessEvents []*GoogleCloudSecuritycenterV2DataAccessEvent `json:"dataAccessEvents,omitempty"`
 	// DataFlowEvents: Data flow events associated with the finding.
@@ -7608,6 +7615,10 @@ type GoogleCloudSecuritycenterV2MuteConfig struct {
 	// field is set by the server and will be ignored if provided on config
 	// creation.
 	CreateTime string `json:"createTime,omitempty"`
+	// CryptoKeyName: Output only. The resource name of the Cloud KMS `CryptoKey`
+	// used to encrypt this configuration data, if CMEK was enabled during Security
+	// Command Center activation.
+	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
 	// Description: A description of the mute config.
 	Description string `json:"description,omitempty"`
 	// ExpiryTime: Optional. The expiry of the mute config. Only applicable for
@@ -10287,6 +10298,10 @@ func (s SecurityBulletin) MarshalJSON() ([]byte, error) {
 
 // SecurityCenterSettings: Resource capturing the settings for Security Center.
 type SecurityCenterSettings struct {
+	// CryptoKeyName: The KMS key name used for CMEK encryption. Format:
+	// projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{key_n
+	// ame}
+	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
 	// LogSinkProject: The resource name of the project to send logs to. This
 	// project must be part of the organization this resource resides in. The
 	// format is `projects/{project_id}`. An empty value disables logging. This
@@ -10308,15 +10323,15 @@ type SecurityCenterSettings struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "LogSinkProject") to
+	// ForceSendFields is a list of field names (e.g. "CryptoKeyName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LogSinkProject") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CryptoKeyName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

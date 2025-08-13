@@ -2106,6 +2106,9 @@ type StoragePool struct {
 	// enabled volumes. Default is false. Auto-tiering can be enabled after storage
 	// pool creation but it can't be disabled once enabled.
 	AllowAutoTiering bool `json:"allowAutoTiering,omitempty"`
+	// AvailableThroughputMibps: Output only. Available throughput of the storage
+	// pool (in MiB/s).
+	AvailableThroughputMibps float64 `json:"availableThroughputMibps,omitempty"`
 	// CapacityGib: Required. Capacity in GIB of the pool
 	CapacityGib int64 `json:"capacityGib,omitempty,string"`
 	// CreateTime: Output only. Create time of the storage pool
@@ -2153,6 +2156,13 @@ type StoragePool struct {
 	// PsaRange: Optional. This field is not implemented. The values provided in
 	// this field are ignored.
 	PsaRange string `json:"psaRange,omitempty"`
+	// QosType: Optional. QoS (Quality of Service) Type of the storage pool
+	//
+	// Possible values:
+	//   "QOS_TYPE_UNSPECIFIED" - Unspecified QoS Type
+	//   "AUTO" - QoS Type is Auto
+	//   "MANUAL" - QoS Type is Manual
+	QosType string `json:"qosType,omitempty"`
 	// ReplicaZone: Optional. Specifies the replica zone for regional storagePool.
 	ReplicaZone string `json:"replicaZone,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use
@@ -2214,6 +2224,20 @@ type StoragePool struct {
 func (s StoragePool) MarshalJSON() ([]byte, error) {
 	type NoMethod StoragePool
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *StoragePool) UnmarshalJSON(data []byte) error {
+	type NoMethod StoragePool
+	var s1 struct {
+		AvailableThroughputMibps gensupport.JSONFloat64 `json:"availableThroughputMibps"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AvailableThroughputMibps = float64(s1.AvailableThroughputMibps)
+	return nil
 }
 
 // SwitchActiveReplicaZoneRequest: SwitchActiveReplicaZoneRequest switch the
@@ -2513,6 +2537,8 @@ type Volume struct {
 	StateDetails string `json:"stateDetails,omitempty"`
 	// StoragePool: Required. StoragePool name of the volume
 	StoragePool string `json:"storagePool,omitempty"`
+	// ThroughputMibps: Optional. Throughput of the volume (in MiB/s)
+	ThroughputMibps float64 `json:"throughputMibps,omitempty"`
 	// TieringPolicy: Tiering policy for the volume.
 	TieringPolicy *TieringPolicy `json:"tieringPolicy,omitempty"`
 	// UnixPermissions: Optional. Default unix style permission (e.g. 777) the
@@ -2547,7 +2573,8 @@ func (s Volume) MarshalJSON() ([]byte, error) {
 func (s *Volume) UnmarshalJSON(data []byte) error {
 	type NoMethod Volume
 	var s1 struct {
-		SnapReserve gensupport.JSONFloat64 `json:"snapReserve"`
+		SnapReserve     gensupport.JSONFloat64 `json:"snapReserve"`
+		ThroughputMibps gensupport.JSONFloat64 `json:"throughputMibps"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -2555,6 +2582,7 @@ func (s *Volume) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.SnapReserve = float64(s1.SnapReserve)
+	s.ThroughputMibps = float64(s1.ThroughputMibps)
 	return nil
 }
 

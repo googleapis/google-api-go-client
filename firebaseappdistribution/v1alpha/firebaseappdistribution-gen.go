@@ -845,6 +845,10 @@ func (s GoogleFirebaseAppdistroV1alphaDeviceExecution) MarshalJSON() ([]byte, er
 // GoogleFirebaseAppdistroV1alphaDeviceInteraction: An interaction with the
 // device, such as a tap, text entry, wait, etc.
 type GoogleFirebaseAppdistroV1alphaDeviceInteraction struct {
+	// BackAction: Output only. A back action.
+	BackAction *GoogleFirebaseAppdistroV1alphaDeviceInteractionBack `json:"backAction,omitempty"`
+	// DragAndDrop: Output only. A drag and drop action.
+	DragAndDrop *GoogleFirebaseAppdistroV1alphaDeviceInteractionDragAndDrop `json:"dragAndDrop,omitempty"`
 	// EnterText: Output only. A text entry action, that enters text into a
 	// particular text field, clearing any existing text in the field. Unlike
 	// `text_input` this action does not require any other actions such as a tap to
@@ -852,6 +856,8 @@ type GoogleFirebaseAppdistroV1alphaDeviceInteraction struct {
 	EnterText *GoogleFirebaseAppdistroV1alphaDeviceInteractionEnterText `json:"enterText,omitempty"`
 	// KeyCode: Output only. Key code for a key event action.
 	KeyCode string `json:"keyCode,omitempty"`
+	// LongPress: Output only. A long press (tap and hold) action.
+	LongPress *AndroidxCrawlerOutputPoint `json:"longPress,omitempty"`
 	// Screenshot: Output only. The screenshot used in the context of this action.
 	// The screen may have changed before the action was actually taken.
 	Screenshot *GoogleFirebaseAppdistroV1alphaScreenshot `json:"screenshot,omitempty"`
@@ -866,13 +872,13 @@ type GoogleFirebaseAppdistroV1alphaDeviceInteraction struct {
 	TextInput string `json:"textInput,omitempty"`
 	// Wait: Output only. A wait action.
 	Wait *GoogleFirebaseAppdistroV1alphaDeviceInteractionWait `json:"wait,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnterText") to
+	// ForceSendFields is a list of field names (e.g. "BackAction") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnterText") to include in API
+	// NullFields is a list of field names (e.g. "BackAction") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -881,6 +887,35 @@ type GoogleFirebaseAppdistroV1alphaDeviceInteraction struct {
 
 func (s GoogleFirebaseAppdistroV1alphaDeviceInteraction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaDeviceInteraction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppdistroV1alphaDeviceInteractionBack: A back action.
+type GoogleFirebaseAppdistroV1alphaDeviceInteractionBack struct {
+}
+
+// GoogleFirebaseAppdistroV1alphaDeviceInteractionDragAndDrop: A drag and drop
+// action.
+type GoogleFirebaseAppdistroV1alphaDeviceInteractionDragAndDrop struct {
+	// End: Output only. The end point of the drag and drop.
+	End *AndroidxCrawlerOutputPoint `json:"end,omitempty"`
+	// Start: Output only. The start point of the drag and drop.
+	Start *AndroidxCrawlerOutputPoint `json:"start,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "End") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "End") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppdistroV1alphaDeviceInteractionDragAndDrop) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaDeviceInteractionDragAndDrop
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

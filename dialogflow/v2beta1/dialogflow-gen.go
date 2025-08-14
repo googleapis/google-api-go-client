@@ -11615,6 +11615,8 @@ type GoogleCloudDialogflowV2beta1AgentAssistantRecord struct {
 	DialogflowAssistAnswer *GoogleCloudDialogflowV2beta1DialogflowAssistAnswer `json:"dialogflowAssistAnswer,omitempty"`
 	// FaqAnswer: Output only. The FAQ answer.
 	FaqAnswer *GoogleCloudDialogflowV2beta1FaqAnswer `json:"faqAnswer,omitempty"`
+	// GeneratorSuggestion: Output only. The generator suggestion.
+	GeneratorSuggestion *GoogleCloudDialogflowV2beta1GeneratorSuggestion `json:"generatorSuggestion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArticleSuggestionAnswer") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

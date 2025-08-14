@@ -12648,7 +12648,10 @@ func (s GoogleCloudDialogflowCxV3beta1SecuritySettings) MarshalJSON() ([]byte, e
 // GoogleCloudDialogflowCxV3beta1SecuritySettingsAudioExportSettings: Settings
 // for exporting audio.
 type GoogleCloudDialogflowCxV3beta1SecuritySettingsAudioExportSettings struct {
-	// AudioExportPattern: Filename pattern for exported audio.
+	// AudioExportPattern: Filename pattern for exported audio. {conversation} and
+	// {timestamp} are placeholders that will be replaced with the conversation ID
+	// and epoch micros of the conversation. For example,
+	// "{conversation}/recording_{timestamp}.mulaw".
 	AudioExportPattern string `json:"audioExportPattern,omitempty"`
 	// AudioFormat: File format for exported audio file. Currently only in
 	// telephony recordings.

@@ -6017,9 +6017,6 @@ type GoogleCloudApigeeV1KeyValueMap struct {
 	// of encrypted will always be `true`. Apigee X and hybrid do not support
 	// unencrypted key value maps.
 	Encrypted bool `json:"encrypted,omitempty"`
-	// MaskedValues: Required. Flag that specifies whether entry values will be
-	// masked when returned.
-	MaskedValues bool `json:"maskedValues,omitempty"`
 	// Name: Required. ID of the key value map.
 	Name string `json:"name,omitempty"`
 

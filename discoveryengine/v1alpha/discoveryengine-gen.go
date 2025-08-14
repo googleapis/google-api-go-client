@@ -6495,6 +6495,9 @@ type GoogleCloudDiscoveryengineV1alphaActionConfig struct {
 	// endpoint used to connect to the data source's `instance_uri`, defined in
 	// DataConnector.params. Required when VPC Service Controls are enabled.
 	ServiceName string `json:"serviceName,omitempty"`
+	// UseStaticSecrets: Optional. Whether to use static secrets for the connector.
+	// If true, the secrets provided in the action_params will be ignored.
+	UseStaticSecrets bool `json:"useStaticSecrets,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActionParams") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -16695,7 +16698,7 @@ type GoogleCloudDiscoveryengineV1alphaListSessionsRequest struct {
 	// OrderBy: A comma-separated list of fields to order by, sorted in ascending
 	// order. Use "desc" after a field name for descending. Supported fields: *
 	// `update_time` * `create_time` * `session_name` * `is_pinned` Example: *
-	// "update_time desc" * "create_time" * "is_pinned desc,update_time desc": list
+	// `update_time desc` * `create_time` * `is_pinned desc,update_time desc`: list
 	// sessions by is_pinned first, then by update_time.
 	OrderBy string `json:"orderBy,omitempty"`
 	// PageSize: Maximum number of results to return. If unspecified, defaults to
@@ -23485,6 +23488,16 @@ func (s GoogleCloudDiscoveryengineV1alphaWidgetConfigAccessSettings) MarshalJSON
 // GoogleCloudDiscoveryengineV1alphaWidgetConfigAssistantSettings: Describes
 // the assistant settings of the widget.
 type GoogleCloudDiscoveryengineV1alphaWidgetConfigAssistantSettings struct {
+	// DefaultWebGroundingToggleOff: Output only. This field controls the default
+	// web grounding toggle for end users if `web_grounding_type` is set to
+	// `WEB_GROUNDING_TYPE_GOOGLE_SEARCH` or
+	// `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`. By default, this field is set to
+	// false. If `web_grounding_type` is `WEB_GROUNDING_TYPE_GOOGLE_SEARCH` or
+	// `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`, end users will have web
+	// grounding enabled by default on UI. If true, grounding toggle will be
+	// disabled by default on UI. End users can still enable web grounding in the
+	// UI if web grounding is enabled.
+	DefaultWebGroundingToggleOff bool `json:"defaultWebGroundingToggleOff,omitempty"`
 	// GoogleSearchGroundingEnabled: Whether or not the Google search grounding
 	// toggle is shown. Deprecated. Use web_grounding_type instead.
 	GoogleSearchGroundingEnabled bool `json:"googleSearchGroundingEnabled,omitempty"`
@@ -23500,12 +23513,12 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfigAssistantSettings struct {
 	// Search is enabled.
 	WebGroundingType string `json:"webGroundingType,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
-	// "GoogleSearchGroundingEnabled") to unconditionally include in API requests.
+	// "DefaultWebGroundingToggleOff") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
 	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
 	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GoogleSearchGroundingEnabled") to
+	// NullFields is a list of field names (e.g. "DefaultWebGroundingToggleOff") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -29030,6 +29043,32 @@ func (s GoogleCloudNotebooklmV1alphaBatchCreateSourcesResponse) MarshalJSON() ([
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudNotebooklmV1alphaCmekConfig: Customer-managed encryption
+// configuration for Notebooks.
+type GoogleCloudNotebooklmV1alphaCmekConfig struct {
+	// KmsKey: Required. KMS key resource name which will be used to encrypt
+	// resources
+	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
+	// }`.
+	KmsKey string `json:"kmsKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaCmekConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaCmekConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudNotebooklmV1alphaListRecentlyViewedNotebooksResponse: Response
 // for NotebookService.ListRecentlyViewedNotebooks method.
 type GoogleCloudNotebooklmV1alphaListRecentlyViewedNotebooksResponse struct {
@@ -29061,6 +29100,8 @@ func (s GoogleCloudNotebooklmV1alphaListRecentlyViewedNotebooksResponse) Marshal
 // GoogleCloudNotebooklmV1alphaNotebook: Notebook is a resource where users can
 // store their content (as sources) and interacts with the content.
 type GoogleCloudNotebooklmV1alphaNotebook struct {
+	// CmekConfig: Output only. CMEK-related information for the Notebook.
+	CmekConfig *GoogleCloudNotebooklmV1alphaCmekConfig `json:"cmekConfig,omitempty"`
 	// Emoji: Output only. The emoji of the notebook.
 	Emoji string `json:"emoji,omitempty"`
 	// Metadata: The metadata of the notebook.
@@ -29074,13 +29115,13 @@ type GoogleCloudNotebooklmV1alphaNotebook struct {
 	NotebookId string `json:"notebookId,omitempty"`
 	// Title: Optional. The title of the notebook.
 	Title string `json:"title,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Emoji") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CmekConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Emoji") to include in API
+	// NullFields is a list of field names (e.g. "CmekConfig") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -40684,8 +40725,8 @@ func (c *ProjectsLocationsCollectionsDataStoresSessionsListCall) Filter(filter s
 // OrderBy sets the optional parameter "orderBy": A comma-separated list of
 // fields to order by, sorted in ascending order. Use "desc" after a field name
 // for descending. Supported fields: * `update_time` * `create_time` *
-// `session_name` * `is_pinned` Example: * "update_time desc" * "create_time" *
-// "is_pinned desc,update_time desc": list sessions by is_pinned first, then by
+// `session_name` * `is_pinned` Example: * `update_time desc` * `create_time` *
+// `is_pinned desc,update_time desc`: list sessions by is_pinned first, then by
 // update_time.
 func (c *ProjectsLocationsCollectionsDataStoresSessionsListCall) OrderBy(orderBy string) *ProjectsLocationsCollectionsDataStoresSessionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -48716,8 +48757,8 @@ func (c *ProjectsLocationsCollectionsEnginesSessionsListCall) Filter(filter stri
 // OrderBy sets the optional parameter "orderBy": A comma-separated list of
 // fields to order by, sorted in ascending order. Use "desc" after a field name
 // for descending. Supported fields: * `update_time` * `create_time` *
-// `session_name` * `is_pinned` Example: * "update_time desc" * "create_time" *
-// "is_pinned desc,update_time desc": list sessions by is_pinned first, then by
+// `session_name` * `is_pinned` Example: * `update_time desc` * `create_time` *
+// `is_pinned desc,update_time desc`: list sessions by is_pinned first, then by
 // update_time.
 func (c *ProjectsLocationsCollectionsEnginesSessionsListCall) OrderBy(orderBy string) *ProjectsLocationsCollectionsEnginesSessionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -56671,8 +56712,8 @@ func (c *ProjectsLocationsDataStoresSessionsListCall) Filter(filter string) *Pro
 // OrderBy sets the optional parameter "orderBy": A comma-separated list of
 // fields to order by, sorted in ascending order. Use "desc" after a field name
 // for descending. Supported fields: * `update_time` * `create_time` *
-// `session_name` * `is_pinned` Example: * "update_time desc" * "create_time" *
-// "is_pinned desc,update_time desc": list sessions by is_pinned first, then by
+// `session_name` * `is_pinned` Example: * `update_time desc` * `create_time` *
+// `is_pinned desc,update_time desc`: list sessions by is_pinned first, then by
 // update_time.
 func (c *ProjectsLocationsDataStoresSessionsListCall) OrderBy(orderBy string) *ProjectsLocationsDataStoresSessionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)

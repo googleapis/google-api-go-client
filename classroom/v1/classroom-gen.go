@@ -3375,8 +3375,9 @@ type CoursesCreateCall struct {
 // permitted to create courses or for access errors. * `NOT_FOUND` if the
 // primary teacher is not a valid user. * `FAILED_PRECONDITION` if the course
 // owner's account is disabled or for the following request errors: *
-// UserCannotOwnCourse * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if
-// an alias was specified in the `id` and already exists.
+// UserCannotOwnCourse * UserGroupsMembershipLimitReached *
+// CourseTitleCannotContainUrl * `ALREADY_EXISTS` if an alias was specified in
+// the `id` and already exists.
 func (r *CoursesService) Create(course *Course) *CoursesCreateCall {
 	c := &CoursesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.course = course
@@ -4010,7 +4011,8 @@ type CoursesPatchCall struct {
 // if no course exists with the requested ID. * `INVALID_ARGUMENT` if invalid
 // fields are specified in the update mask or if no update mask is supplied. *
 // `FAILED_PRECONDITION` for the following request errors: *
-// CourseNotModifiable * InactiveCourseOwner * IneligibleOwner
+// CourseNotModifiable * InactiveCourseOwner * IneligibleOwner *
+// CourseTitleCannotContainUrl
 //
 //   - id: Identifier of the course to update. This identifier can be either the
 //     Classroom-assigned identifier or an alias.
@@ -4132,7 +4134,7 @@ type CoursesUpdateCall struct {
 // `PERMISSION_DENIED` if the requesting user is not permitted to modify the
 // requested course or for access errors. * `NOT_FOUND` if no course exists
 // with the requested ID. * `FAILED_PRECONDITION` for the following request
-// errors: * CourseNotModifiable
+// errors: * CourseNotModifiable * CourseTitleCannotContainUrl
 //
 //   - id: Identifier of the course to update. This identifier can be either the
 //     Classroom-assigned identifier or an alias.

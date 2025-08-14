@@ -5780,8 +5780,8 @@ type BackendService struct {
 	// connection before the connection was redirected to the load balancer. -
 	// MAGLEV: used as a drop in replacement for the ring hash load balancer.
 	// Maglev is not as stable as ring hash but has faster table lookup build times
-	// and host selection times. For more information about Maglev, see
-	// https://ai.google/research/pubs/pub44824 - WEIGHTED_ROUND_ROBIN:
+	// and host selection times. For more information about Maglev, see Maglev: A
+	// Fast and Reliable Software Network Load Balancer. - WEIGHTED_ROUND_ROBIN:
 	// Per-endpoint Weighted Round Robin Load Balancing using weights computed from
 	// Backend reported Custom Metrics. If set, the Backend Service responses are
 	// expected to contain non-standard HTTP response header field
@@ -5806,8 +5806,8 @@ type BackendService struct {
 	//   "MAGLEV" - This algorithm implements consistent hashing to backends.
 	// Maglev can be used as a drop in replacement for the ring hash load balancer.
 	// Maglev is not as stable as ring hash but has faster table lookup build times
-	// and host selection times. For more information about Maglev, see
-	// https://ai.google/research/pubs/pub44824
+	// and host selection times. For more information about Maglev, see Maglev: A
+	// Fast and Reliable Software Network Load Balancer.
 	//   "ORIGINAL_DESTINATION" - Backend host is selected based on the client
 	// connection metadata, i.e., connections are opened to the same address as the
 	// destination address of the incoming connection before the connection was
@@ -5948,8 +5948,8 @@ type BackendService struct {
 	// backends and health checks must be both empty.
 	ServiceBindings []string `json:"serviceBindings,omitempty"`
 	// ServiceLbPolicy: URL to networkservices.ServiceLbPolicy resource. Can only
-	// be set if load balancing scheme is EXTERNAL, EXTERNAL_MANAGED,
-	// INTERNAL_MANAGED or INTERNAL_SELF_MANAGED and the scope is global.
+	// be set if load balancing scheme is EXTERNAL_MANAGED, INTERNAL_MANAGED or
+	// INTERNAL_SELF_MANAGED and the scope is global.
 	ServiceLbPolicy string `json:"serviceLbPolicy,omitempty"`
 	// SessionAffinity: Type of session affinity to use. The default is NONE. Only
 	// NONE and HEADER_FIELD are supported when the backend service is referenced
@@ -7227,8 +7227,8 @@ type BackendServiceLocalityLoadBalancingPolicyConfigPolicy struct {
 	//   "MAGLEV" - This algorithm implements consistent hashing to backends.
 	// Maglev can be used as a drop in replacement for the ring hash load balancer.
 	// Maglev is not as stable as ring hash but has faster table lookup build times
-	// and host selection times. For more information about Maglev, see
-	// https://ai.google/research/pubs/pub44824
+	// and host selection times. For more information about Maglev, see Maglev: A
+	// Fast and Reliable Software Network Load Balancer.
 	//   "ORIGINAL_DESTINATION" - Backend host is selected based on the client
 	// connection metadata, i.e., connections are opened to the same address as the
 	// destination address of the incoming connection before the connection was
@@ -31165,7 +31165,8 @@ type MultiMig struct {
 	// ResourcePolicies: Resource policies for this multi-MIG.
 	ResourcePolicies *MultiMigResourcePolicies `json:"resourcePolicies,omitempty"`
 	// SelfLink: [Output only] Server-defined URL for the resource.
-	SelfLink string `json:"selfLink,omitempty"`
+	SelfLink string          `json:"selfLink,omitempty"`
+	Status   *MultiMigStatus `json:"status,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -31213,6 +31214,168 @@ type MultiMigResourcePolicies struct {
 
 func (s MultiMigResourcePolicies) MarshalJSON() ([]byte, error) {
 	type NoMethod MultiMigResourcePolicies
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type MultiMigStatus struct {
+	// AppliedAcceleratorTopologies: [Output Only] The accelerator topology applied
+	// to this multi-MIG. Currently only one accelerator topology is supported.
+	AppliedAcceleratorTopologies []*MultiMigStatusAcceleratorTopology `json:"appliedAcceleratorTopologies,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AppliedAcceleratorTopologies") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppliedAcceleratorTopologies") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MultiMigStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiMigStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type MultiMigStatusAcceleratorTopology struct {
+	// AcceleratorTopology: [Output Only] Topology in the format of: "16x16",
+	// "4x4x4", etc. The value is the same as configured in the WorkloadPolicy.
+	AcceleratorTopology string `json:"acceleratorTopology,omitempty"`
+	// AcceleratorTopologyState: [Output Only] The state of the accelerator
+	// topology.
+	//
+	// Possible values:
+	//   "ACTIVATING" - The accelerator topology is being activated.
+	//   "ACTIVE" - The accelerator topology is active.
+	//   "ACTIVE_DEGRADED" - The accelerator topology is active but operating in
+	// degraded mode.
+	//   "DEACTIVATING" - The accelerator topology is being deactivated.
+	//   "FAILED" - The accelerator topology failed.
+	//   "INCOMPLETE" - The configuration is incomplete and the accelerator
+	// topology cannot be activated due to insufficient number of running VMs.
+	AcceleratorTopologyState string `json:"acceleratorTopologyState,omitempty"`
+	// AcceleratorTopologyStateLastCheck: [Output Only] The result of the latest
+	// accelerator topology state check.
+	AcceleratorTopologyStateLastCheck *MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheck `json:"acceleratorTopologyStateLastCheck,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AcceleratorTopology") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcceleratorTopology") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MultiMigStatusAcceleratorTopology) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiMigStatusAcceleratorTopology
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheck struct {
+	// Error: [Output Only] Encountered errors on the last state check.
+	Error *MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheckError `json:"error,omitempty"`
+	// Timestamp: [Output Only] Timestamp is shown only if there is an error. The
+	// field has // RFC3339 // text format.
+	Timestamp string `json:"timestamp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheck) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheck
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheckError:
+// [Output Only] Encountered errors on the last state check.
+type MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheckError struct {
+	// Errors: [Output Only] The array of errors encountered while processing this
+	// operation.
+	Errors []*MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheckErrorErrors `json:"errors,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Errors") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheckError) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheckError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheckErrorErrors struct {
+	// Code: [Output Only] The error type identifier for this error.
+	Code string `json:"code,omitempty"`
+	// ErrorDetails: [Output Only] An optional list of messages that contain the
+	// error details. There is a set of defined message types to use for providing
+	// details.The syntax depends on the error code. For example, QuotaExceededInfo
+	// will have details when the error code is QUOTA_EXCEEDED.
+	ErrorDetails []*MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheckErrorErrorsErrorDetails `json:"errorDetails,omitempty"`
+	// Location: [Output Only] Indicates the field in the request that caused the
+	// error. This property is optional.
+	Location string `json:"location,omitempty"`
+	// Message: [Output Only] An optional, human-readable error message.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheckErrorErrors) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheckErrorErrors
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheckErrorErrorsErrorDetails struct {
+	ErrorInfo        *ErrorInfo         `json:"errorInfo,omitempty"`
+	Help             *Help              `json:"help,omitempty"`
+	LocalizedMessage *LocalizedMessage  `json:"localizedMessage,omitempty"`
+	QuotaInfo        *QuotaExceededInfo `json:"quotaInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheckErrorErrorsErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiMigStatusAcceleratorTopologyAcceleratorTopologyStateLastCheckErrorErrorsErrorDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -58305,9 +58468,9 @@ func (s TargetHttpsProxiesSetSslCertificatesRequest) MarshalJSON() ([]byte, erro
 // (/compute/docs/reference/rest/beta/targetHttpsProxies) * Regional
 // (/compute/docs/reference/rest/beta/regionTargetHttpsProxies) A target HTTPS
 // proxy is a component of Google Cloud HTTPS load balancers. *
-// targetHttpProxies are used by global external Application Load Balancers,
+// targetHttpsProxies are used by global external Application Load Balancers,
 // classic Application Load Balancers, cross-region internal Application Load
-// Balancers, and Traffic Director. * regionTargetHttpProxies are used by
+// Balancers, and Traffic Director. * regionTargetHttpsProxies are used by
 // regional internal Application Load Balancers and regional external
 // Application Load Balancers. Forwarding rules reference a target HTTPS proxy,
 // and the target proxy then references a URL map. For more information, read
@@ -61639,6 +61802,8 @@ type UpcomingMaintenance struct {
 	//   "FAILURE_MEMORY" - Maintenance due to memory errors.
 	//   "FAILURE_NETWORK" - Maintenance due to network errors.
 	//   "FAILURE_NVLINK" - Maintenance due to NVLink failure.
+	//   "FAILURE_REDUNDANT_HARDWARE_FAULT" - Maintenance due to redundant hardware
+	// fault.
 	//   "INFRASTRUCTURE_RELOCATION" - Maintenance due to infrastructure
 	// relocation.
 	//   "MAINTENANCE_REASON_UNKNOWN" - Unknown maintenance reason. Do not use this

@@ -261,6 +261,8 @@ type Action struct {
 	InputJsonSchema *JsonSchema `json:"inputJsonSchema,omitempty"`
 	// InputParameters: List containing input parameter metadata.
 	InputParameters []*InputParameter `json:"inputParameters,omitempty"`
+	// Metadata: Metadata like service latency, etc.
+	Metadata map[string]googleapi.RawMessage `json:"metadata,omitempty"`
 	// Name: Name of the action.
 	Name string `json:"name,omitempty"`
 	// ResultJsonSchema: JsonSchema representation of this actions's result schema
@@ -350,6 +352,8 @@ type CheckStatusResponse struct {
 	// Description: When the connector is not in ACTIVE state, the description must
 	// be populated to specify the reason why it's not in ACTIVE state.
 	Description string `json:"description,omitempty"`
+	// Metadata: Metadata like service latency, etc.
+	Metadata map[string]googleapi.RawMessage `json:"metadata,omitempty"`
 	// State: State of the connector.
 	//
 	// Possible values:
@@ -497,6 +501,8 @@ type Entity struct {
 	// Fields: Fields of the entity. The key is name of the field and the value
 	// contains the applicable `google.protobuf.Value` entry for this field.
 	Fields googleapi.RawMessage `json:"fields,omitempty"`
+	// Metadata: Metadata like service latency, etc.
+	Metadata map[string]googleapi.RawMessage `json:"metadata,omitempty"`
 	// Name: Output only. Resource name of the Entity. Format:
 	// projects/{project}/locations/{location}/connections/{connection}/entityTypes/
 	// {type}/entities/{id}
@@ -525,11 +531,14 @@ func (s Entity) MarshalJSON() ([]byte, error) {
 // EntityType: EntityType message contains metadata information about a single
 // entity type present in the external system.
 type EntityType struct {
+	DefaultSortBy string `json:"defaultSortBy,omitempty"`
 	// Fields: List containing metadata information about each field of the entity
 	// type.
 	Fields []*Field `json:"fields,omitempty"`
 	// JsonSchema: JsonSchema representation of this entity's schema
 	JsonSchema *JsonSchema `json:"jsonSchema,omitempty"`
+	// Metadata: Metadata like service latency, etc.
+	Metadata map[string]googleapi.RawMessage `json:"metadata,omitempty"`
 	// Name: The name of the entity type.
 	Name string `json:"name,omitempty"`
 	// Possible values:
@@ -543,13 +552,13 @@ type EntityType struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DefaultSortBy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// NullFields is a list of field names (e.g. "DefaultSortBy") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -590,6 +599,8 @@ func (s ExchangeAuthCodeRequest) MarshalJSON() ([]byte, error) {
 // access token and its associated credentials.
 type ExchangeAuthCodeResponse struct {
 	AccessCredentials *AccessCredentials `json:"accessCredentials,omitempty"`
+	// Metadata: Metadata like service latency, etc.
+	Metadata map[string]googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -636,6 +647,8 @@ func (s ExecuteActionRequest) MarshalJSON() ([]byte, error) {
 
 // ExecuteActionResponse: Response message for ActionService.ExecuteAction
 type ExecuteActionResponse struct {
+	// Metadata: Metadata like service latency, etc.
+	Metadata map[string]googleapi.RawMessage `json:"metadata,omitempty"`
 	// Results: In the case of successful invocation of the specified action, the
 	// results Struct contains values based on the response of the action invoked.
 	// 1. If the action execution produces any entities as a result, they are
@@ -646,13 +659,13 @@ type ExecuteActionResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Results") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Results") to include in API
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1122,6 +1135,8 @@ func (s JsonSchema) MarshalJSON() ([]byte, error) {
 type ListActionsResponse struct {
 	// Actions: List of action metadata.
 	Actions []*Action `json:"actions,omitempty"`
+	// Metadata: Metadata like service latency, etc.
+	Metadata map[string]googleapi.RawMessage `json:"metadata,omitempty"`
 	// NextPageToken: Next page token if more actions available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// UnsupportedActionNames: List of actions which contain unsupported Datatypes.
@@ -1152,6 +1167,8 @@ func (s ListActionsResponse) MarshalJSON() ([]byte, error) {
 type ListEntitiesResponse struct {
 	// Entities: List containing entity rows.
 	Entities []*Entity `json:"entities,omitempty"`
+	// Metadata: Metadata like service latency, etc.
+	Metadata map[string]googleapi.RawMessage `json:"metadata,omitempty"`
 	// NextPageToken: Next page token if more records are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -1177,6 +1194,8 @@ func (s ListEntitiesResponse) MarshalJSON() ([]byte, error) {
 
 // ListEntityTypesResponse: Response message for EntityService.ListEntityTypes
 type ListEntityTypesResponse struct {
+	// Metadata: Metadata like service latency, etc.
+	Metadata map[string]googleapi.RawMessage `json:"metadata,omitempty"`
 	// NextPageToken: Next page token if more entity types available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Types: List of metadata related to all entity types.
@@ -1187,13 +1206,13 @@ type ListEntityTypesResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1622,6 +1641,8 @@ func (s RefreshAccessTokenRequest) MarshalJSON() ([]byte, error) {
 // access token and its associated credentials.
 type RefreshAccessTokenResponse struct {
 	AccessCredentials *AccessCredentials `json:"accessCredentials,omitempty"`
+	// Metadata: Metadata like service latency, etc.
+	Metadata map[string]googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1861,18 +1882,20 @@ func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 // UpdateEntitiesWithConditionsResponse: Response message for
 // EntityService.UpdateEntitiesWithConditions
 type UpdateEntitiesWithConditionsResponse struct {
+	// Metadata: Metadata like service latency, etc.
+	Metadata map[string]googleapi.RawMessage `json:"metadata,omitempty"`
 	// Response: Response returned by the external system.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Response") to
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Response") to include in API
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2913,6 +2936,14 @@ type ProjectsLocationsConnectionsEntityTypesGetCall struct {
 func (r *ProjectsLocationsConnectionsEntityTypesService) Get(name string) *ProjectsLocationsConnectionsEntityTypesGetCall {
 	c := &ProjectsLocationsConnectionsEntityTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ContextMetadata sets the optional parameter "contextMetadata": Context
+// metadata for request could be used to fetch customization of entity type
+// schema.
+func (c *ProjectsLocationsConnectionsEntityTypesGetCall) ContextMetadata(contextMetadata string) *ProjectsLocationsConnectionsEntityTypesGetCall {
+	c.urlParams_.Set("contextMetadata", contextMetadata)
 	return c
 }
 

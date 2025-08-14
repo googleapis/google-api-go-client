@@ -4180,7 +4180,8 @@ type BulkUpdateLineItemsRequest struct {
 	// line_item_ids."
 	TargetLineItem *LineItem `json:"targetLineItem,omitempty"`
 	// UpdateMask: Required. A field mask identifying which fields to update. Only
-	// the following fields are currently supported: * entityStatus
+	// the following fields are currently supported: * entityStatus *
+	// containsEuPoliticalAdvertising
 	UpdateMask string `json:"updateMask,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LineItemIds") to
 	// unconditionally include in API requests. By default, fields with empty or

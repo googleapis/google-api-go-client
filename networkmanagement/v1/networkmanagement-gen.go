@@ -1241,12 +1241,18 @@ type DropInfo struct {
 	//   "CLOUD_NAT_PROTOCOL_UNSUPPORTED" - Packet is dropped by Cloud NAT due to
 	// using an unsupported protocol.
 	Cause string `json:"cause,omitempty"`
+	// DestinationGeolocationCode: Geolocation (region code) of the destination IP
+	// address (if relevant).
+	DestinationGeolocationCode string `json:"destinationGeolocationCode,omitempty"`
 	// DestinationIp: Destination IP address of the dropped packet (if relevant).
 	DestinationIp string `json:"destinationIp,omitempty"`
 	// Region: Region of the dropped packet (if relevant).
 	Region string `json:"region,omitempty"`
 	// ResourceUri: URI of the resource that caused the drop.
 	ResourceUri string `json:"resourceUri,omitempty"`
+	// SourceGeolocationCode: Geolocation (region code) of the source IP address
+	// (if relevant).
+	SourceGeolocationCode string `json:"sourceGeolocationCode,omitempty"`
 	// SourceIp: Source IP address of the dropped packet (if relevant).
 	SourceIp string `json:"sourceIp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cause") to unconditionally
@@ -1579,6 +1585,15 @@ type FirewallInfo struct {
 	// TargetTags: The target tags defined by the VPC firewall rule. This field is
 	// not applicable to firewall policy rules.
 	TargetTags []string `json:"targetTags,omitempty"`
+	// TargetType: Target type of the firewall rule.
+	//
+	// Possible values:
+	//   "TARGET_TYPE_UNSPECIFIED" - Target type is not specified. In this case we
+	// treat the rule as applying to INSTANCES target type.
+	//   "INSTANCES" - Firewall rule applies to instances.
+	//   "INTERNAL_MANAGED_LB" - Firewall rule applies to internal managed load
+	// balancers.
+	TargetType string `json:"targetType,omitempty"`
 	// Uri: The URI of the firewall rule. This field is not applicable to implied
 	// VPC firewall rules.
 	Uri string `json:"uri,omitempty"`
@@ -1722,6 +1737,30 @@ func (s GKEMasterInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GeoLocation: The geographical location of the MonitoringPoint.
+type GeoLocation struct {
+	// Country: Country.
+	Country string `json:"country,omitempty"`
+	// FormattedAddress: Formatted address.
+	FormattedAddress string `json:"formattedAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Country") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Country") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GeoLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GeoLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleServiceInfo: For display only. Details of a Google Service sending
 // packets to a VPC network. Although the source IP might be a publicly
 // routable address, some Google Services use special routes within Google
@@ -1853,6 +1892,39 @@ type InstanceInfo struct {
 
 func (s InstanceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterconnectAttachmentInfo: For display only. Metadata associated with an
+// Interconnect attachment.
+type InterconnectAttachmentInfo struct {
+	// CloudRouterUri: URI of the Cloud Router to be used for dynamic routing.
+	CloudRouterUri string `json:"cloudRouterUri,omitempty"`
+	// DisplayName: Name of an Interconnect attachment.
+	DisplayName string `json:"displayName,omitempty"`
+	// InterconnectUri: URI of the Interconnect where the Interconnect attachment
+	// is configured.
+	InterconnectUri string `json:"interconnectUri,omitempty"`
+	// Region: Name of a Google Cloud region where the Interconnect attachment is
+	// configured.
+	Region string `json:"region,omitempty"`
+	// Uri: URI of an Interconnect attachment.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudRouterUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudRouterUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterconnectAttachmentInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod InterconnectAttachmentInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2365,8 +2437,8 @@ type MonitoringPoint struct {
 	//   "DOWNLOAD_FAILED" - Error detected while downloading.
 	Errors []string `json:"errors,omitempty"`
 	// GeoLocation: Output only. The geographical location of the MonitoringPoint.
-	// Examples: - "New York, NY, USA" - "Berlin, Germany"
-	GeoLocation string `json:"geoLocation,omitempty"`
+	// ;
+	GeoLocation *GeoLocation `json:"geoLocation,omitempty"`
 	// Host: Output only. The host information of the MonitoringPoint.
 	Host *Host `json:"host,omitempty"`
 	// Hostname: Output only. The hostname of the MonitoringPoint.
@@ -2387,6 +2459,9 @@ type MonitoringPoint struct {
 	Type string `json:"type,omitempty"`
 	// UpdateTime: Output only. The time the MonitoringPoint was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// UpgradeAvailable: Output only. Indicates if an upgrade is available for the
+	// MonitoringPoint.
+	UpgradeAvailable bool `json:"upgradeAvailable,omitempty"`
 	// UpgradeType: Output only. The type of upgrade available for the
 	// MonitoringPoint.
 	//
@@ -2557,6 +2632,9 @@ func (s NetworkInterface) MarshalJSON() ([]byte, error) {
 type NetworkMonitoringProvider struct {
 	// CreateTime: Output only. The time the NetworkMonitoringProvider was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// Errors: Output only. The list of error messages detected for the
+	// NetworkMonitoringProvider.
+	Errors []string `json:"errors,omitempty"`
 	// Name: Output only. Identifier. Name of the resource. Format:
 	// `projects/{project}/locations/{location}/networkMonitoringProviders/{network_
 	// monitoring_provider}`
@@ -2613,8 +2691,8 @@ type NetworkPath struct {
 	// destination.
 	Destination string `json:"destination,omitempty"`
 	// DestinationGeoLocation: Output only. Geographical location of the
-	// destination MonitoringPoint.
-	DestinationGeoLocation string `json:"destinationGeoLocation,omitempty"`
+	// destination MonitoringPoint. ;
+	DestinationGeoLocation *GeoLocation `json:"destinationGeoLocation,omitempty"`
 	// DisplayName: Output only. The display name of the network path.
 	DisplayName string `json:"displayName,omitempty"`
 	// DualEnded: Output only. Indicates if the network path is dual ended. When
@@ -2935,7 +3013,6 @@ type ProviderTag struct {
 	//   "RESOURCE_TYPE_UNSPECIFIED" - The default value. This value is used if the
 	// status is omitted.
 	//   "NETWORK_PATH" - Network path.
-	//   "PATH_TEMPLATE" - Path template.
 	//   "WEB_PATH" - Web path.
 	//   "MONITORING_POLICY" - Monitoring policy.
 	//   "MONITORING_POINT" - Monitoring point.
@@ -3474,6 +3551,8 @@ type Step struct {
 	GoogleService *GoogleServiceInfo `json:"googleService,omitempty"`
 	// Instance: Display information of a Compute Engine instance.
 	Instance *InstanceInfo `json:"instance,omitempty"`
+	// InterconnectAttachment: Display information of an interconnect attachment.
+	InterconnectAttachment *InterconnectAttachmentInfo `json:"interconnectAttachment,omitempty"`
 	// LoadBalancer: Display information of the load balancers. Deprecated in favor
 	// of the `load_balancer_backend_info` field, not used in new tests.
 	LoadBalancer *LoadBalancerInfo `json:"loadBalancer,omitempty"`
@@ -3565,6 +3644,8 @@ type Step struct {
 	//   "ARRIVE_AT_VPN_GATEWAY" - Forwarding state: arriving at a Cloud VPN
 	// gateway.
 	//   "ARRIVE_AT_VPN_TUNNEL" - Forwarding state: arriving at a Cloud VPN tunnel.
+	//   "ARRIVE_AT_INTERCONNECT_ATTACHMENT" - Forwarding state: arriving at an
+	// interconnect attachment.
 	//   "ARRIVE_AT_VPC_CONNECTOR" - Forwarding state: arriving at a VPC connector.
 	//   "DIRECT_VPC_EGRESS_CONNECTION" - Forwarding state: for packets originating
 	// from a serverless endpoint forwarded through Direct VPC egress.

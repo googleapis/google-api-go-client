@@ -3868,10 +3868,6 @@ type GoogleCloudRetailV2betaControl struct {
 	// Retail UI. This field must be a UTF-8 encoded string with a length limit of
 	// 128 characters. Otherwise, an INVALID_ARGUMENT error is thrown.
 	DisplayName string `json:"displayName,omitempty"`
-	// FacetSpec: A facet specification to perform faceted search. Note that this
-	// field is deprecated and will throw NOT_IMPLEMENTED if used for creating a
-	// control.
-	FacetSpec *GoogleCloudRetailV2betaSearchRequestFacetSpec `json:"facetSpec,omitempty"`
 	// Name: Immutable. Fully qualified name
 	// `projects/*/locations/global/catalogs/*/controls/*`
 	Name string `json:"name,omitempty"`

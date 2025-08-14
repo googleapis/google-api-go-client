@@ -14100,6 +14100,9 @@ type GoogleCloudDiscoveryengineV1alphaActionConfig struct {
 	// endpoint used to connect to the data source's `instance_uri`, defined in
 	// DataConnector.params. Required when VPC Service Controls are enabled.
 	ServiceName string `json:"serviceName,omitempty"`
+	// UseStaticSecrets: Optional. Whether to use static secrets for the connector.
+	// If true, the secrets provided in the action_params will be ignored.
+	UseStaticSecrets bool `json:"useStaticSecrets,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActionParams") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -18709,7 +18712,7 @@ type GoogleCloudDiscoveryengineV1alphaListSessionsRequest struct {
 	// OrderBy: A comma-separated list of fields to order by, sorted in ascending
 	// order. Use "desc" after a field name for descending. Supported fields: *
 	// `update_time` * `create_time` * `session_name` * `is_pinned` Example: *
-	// "update_time desc" * "create_time" * "is_pinned desc,update_time desc": list
+	// `update_time desc` * `create_time` * `is_pinned desc,update_time desc`: list
 	// sessions by is_pinned first, then by update_time.
 	OrderBy string `json:"orderBy,omitempty"`
 	// PageSize: Maximum number of results to return. If unspecified, defaults to
@@ -34935,8 +34938,8 @@ func (c *ProjectsLocationsCollectionsDataStoresSessionsListCall) Filter(filter s
 // OrderBy sets the optional parameter "orderBy": A comma-separated list of
 // fields to order by, sorted in ascending order. Use "desc" after a field name
 // for descending. Supported fields: * `update_time` * `create_time` *
-// `session_name` * `is_pinned` Example: * "update_time desc" * "create_time" *
-// "is_pinned desc,update_time desc": list sessions by is_pinned first, then by
+// `session_name` * `is_pinned` Example: * `update_time desc` * `create_time` *
+// `is_pinned desc,update_time desc`: list sessions by is_pinned first, then by
 // update_time.
 func (c *ProjectsLocationsCollectionsDataStoresSessionsListCall) OrderBy(orderBy string) *ProjectsLocationsCollectionsDataStoresSessionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -41926,8 +41929,8 @@ func (c *ProjectsLocationsCollectionsEnginesSessionsListCall) Filter(filter stri
 // OrderBy sets the optional parameter "orderBy": A comma-separated list of
 // fields to order by, sorted in ascending order. Use "desc" after a field name
 // for descending. Supported fields: * `update_time` * `create_time` *
-// `session_name` * `is_pinned` Example: * "update_time desc" * "create_time" *
-// "is_pinned desc,update_time desc": list sessions by is_pinned first, then by
+// `session_name` * `is_pinned` Example: * `update_time desc` * `create_time` *
+// `is_pinned desc,update_time desc`: list sessions by is_pinned first, then by
 // update_time.
 func (c *ProjectsLocationsCollectionsEnginesSessionsListCall) OrderBy(orderBy string) *ProjectsLocationsCollectionsEnginesSessionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -48654,8 +48657,8 @@ func (c *ProjectsLocationsDataStoresSessionsListCall) Filter(filter string) *Pro
 // OrderBy sets the optional parameter "orderBy": A comma-separated list of
 // fields to order by, sorted in ascending order. Use "desc" after a field name
 // for descending. Supported fields: * `update_time` * `create_time` *
-// `session_name` * `is_pinned` Example: * "update_time desc" * "create_time" *
-// "is_pinned desc,update_time desc": list sessions by is_pinned first, then by
+// `session_name` * `is_pinned` Example: * `update_time desc` * `create_time` *
+// `is_pinned desc,update_time desc`: list sessions by is_pinned first, then by
 // update_time.
 func (c *ProjectsLocationsDataStoresSessionsListCall) OrderBy(orderBy string) *ProjectsLocationsDataStoresSessionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)

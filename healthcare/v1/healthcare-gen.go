@@ -508,7 +508,8 @@ type AccessDeterminationLogConfig struct {
 	// leading to the decision * Enforcement version at the time the applicable
 	// consents were applied * The Consent resource name * The timestamp of the
 	// Consent resource used for enforcement * Policy type (`PATIENT` or `ADMIN`)
-	// Note that this mode adds some overhead to CRUD operations.
+	// Due to the limited space for logging, this mode is the same as `MINIMUM` for
+	// methods that return multiple resources (such as FHIR Search).
 	LogLevel string `json:"logLevel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LogLevel") to
 	// unconditionally include in API requests. By default, fields with empty or

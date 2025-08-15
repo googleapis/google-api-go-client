@@ -303,8 +303,17 @@ type AgentStates struct {
 	// AvailableVersion: Optional. The available version of the agent in artifact
 	// registry.
 	AvailableVersion string `json:"availableVersion,omitempty"`
+	// HanaMonitoring: Optional. HANA monitoring metrics of the agent.
+	HanaMonitoring *ServiceStates `json:"hanaMonitoring,omitempty"`
 	// InstalledVersion: Optional. The installed version of the agent on the host.
 	InstalledVersion string `json:"installedVersion,omitempty"`
+	// IsFullyEnabled: Optional. Whether the agent is fully enabled. If false, the
+	// agent is has some issues.
+	IsFullyEnabled bool `json:"isFullyEnabled,omitempty"`
+	// ProcessMetrics: Optional. The Process metrics of the agent.
+	ProcessMetrics *ServiceStates `json:"processMetrics,omitempty"`
+	// SystemDiscovery: Optional. The System discovery metrics of the agent.
+	SystemDiscovery *ServiceStates `json:"systemDiscovery,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AvailableVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -793,6 +802,13 @@ func (s Evaluation) MarshalJSON() ([]byte, error) {
 type Execution struct {
 	// EndTime: Output only. [Output only] End time stamp
 	EndTime string `json:"endTime,omitempty"`
+	// Engine: Optional. Engine
+	//
+	// Possible values:
+	//   "ENGINE_UNSPECIFIED" - The original CG
+	//   "ENGINE_SCANNER" - SlimCG / Scanner
+	//   "V2" - Evaluation Engine V2
+	Engine string `json:"engine,omitempty"`
 	// EvaluationId: Output only. [Output only] Evaluation ID
 	EvaluationId string `json:"evaluationId,omitempty"`
 	// ExternalDataSources: Optional. External data sources
@@ -947,6 +963,30 @@ type GceInstanceFilter struct {
 
 func (s GceInstanceFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GceInstanceFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IAMPermission: The IAM permission status.
+type IAMPermission struct {
+	// Granted: Output only. Whether the permission is granted.
+	Granted bool `json:"granted,omitempty"`
+	// Name: Output only. The name of the permission.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Granted") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Granted") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IAMPermission) MarshalJSON() ([]byte, error) {
+	type NoMethod IAMPermission
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2377,6 +2417,39 @@ type ScannedResource struct {
 
 func (s ScannedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ScannedResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceStates: The state of the service.
+type ServiceStates struct {
+	// IamPermissions: Optional. Output only. The IAM permissions for the service.
+	IamPermissions []*IAMPermission `json:"iamPermissions,omitempty"`
+	// State: Output only. The overall state of the service.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unspecified.
+	//   "CONFIG_FAILURE" - The state means the service has config errors.
+	//   "IAM_FAILURE" - The state means the service has IAM permission errors.
+	//   "FUNCTIONAILITY_FAILURE" - The state means the service has functionality
+	// errors.
+	//   "ENABLED" - The state means the service has no error.
+	//   "DISABLED" - The state means the service disabled.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IamPermissions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IamPermissions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceStates) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceStates
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -1648,28 +1648,6 @@ func (s GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig) MarshalJSON(
 // GoogleCloudAiplatformV1beta1GoogleMaps: Tool to retrieve public maps data
 // for grounding, powered by Google.
 type GoogleCloudAiplatformV1beta1GoogleMaps struct {
-	// ApiAuth: The authentication config to access the API. Deprecated. Please use
-	// auth_config instead.
-	ApiAuth *GoogleCloudAiplatformV1beta1ApiAuth `json:"apiAuth,omitempty"`
-	// AuthConfig: The authentication config to access the API. Only API key is
-	// supported.
-	AuthConfig *GoogleCloudAiplatformV1beta1AuthConfig `json:"authConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ApiAuth") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ApiAuth") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudAiplatformV1beta1GoogleMaps) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1beta1GoogleMaps
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1beta1GoogleSearchRetrieval: Tool to retrieve public
@@ -1846,6 +1824,9 @@ func (s GoogleCloudAiplatformV1beta1GroundingChunkMapsPlaceAnswerSourcesReviewSn
 // GoogleCloudAiplatformV1beta1GroundingChunkRetrievedContext: Chunk from
 // context retrieved by the retrieval tools.
 type GoogleCloudAiplatformV1beta1GroundingChunkRetrievedContext struct {
+	// DocumentName: Output only. The full document name for the referenced Vertex
+	// AI Search document.
+	DocumentName string `json:"documentName,omitempty"`
 	// RagChunk: Additional context for the RAG retrieval result. This is only
 	// populated when using the RAG retrieval tool.
 	RagChunk *GoogleCloudAiplatformV1beta1RagChunk `json:"ragChunk,omitempty"`
@@ -1855,13 +1836,13 @@ type GoogleCloudAiplatformV1beta1GroundingChunkRetrievedContext struct {
 	Title string `json:"title,omitempty"`
 	// Uri: URI reference of the attribution.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RagChunk") to
+	// ForceSendFields is a list of field names (e.g. "DocumentName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RagChunk") to include in API
+	// NullFields is a list of field names (e.g. "DocumentName") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

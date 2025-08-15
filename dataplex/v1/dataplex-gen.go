@@ -2176,11 +2176,11 @@ func (s GoogleCloudDataplexV1DataDiscoverySpecStorageConfigJsonOptions) MarshalJ
 type GoogleCloudDataplexV1DataProfileResult struct {
 	// PostScanActionsResult: Output only. The result of post scan actions.
 	PostScanActionsResult *GoogleCloudDataplexV1DataProfileResultPostScanActionsResult `json:"postScanActionsResult,omitempty"`
-	// Profile: The profile information per field.
+	// Profile: Output only. The profile information per field.
 	Profile *GoogleCloudDataplexV1DataProfileResultProfile `json:"profile,omitempty"`
-	// RowCount: The count of rows scanned.
+	// RowCount: Output only. The count of rows scanned.
 	RowCount int64 `json:"rowCount,omitempty,string"`
-	// ScannedData: The data scanned for this result.
+	// ScannedData: Output only. The data scanned for this result.
 	ScannedData *GoogleCloudDataplexV1ScannedData `json:"scannedData,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PostScanActionsResult") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2259,8 +2259,8 @@ func (s GoogleCloudDataplexV1DataProfileResultPostScanActionsResultBigQueryExpor
 // GoogleCloudDataplexV1DataProfileResultProfile: Contains name, type, mode and
 // field type specific profile information.
 type GoogleCloudDataplexV1DataProfileResultProfile struct {
-	// Fields: List of fields with structural and profile information for each
-	// field.
+	// Fields: Output only. List of fields with structural and profile information
+	// for each field.
 	Fields []*GoogleCloudDataplexV1DataProfileResultProfileField `json:"fields,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2282,16 +2282,17 @@ func (s GoogleCloudDataplexV1DataProfileResultProfile) MarshalJSON() ([]byte, er
 
 // GoogleCloudDataplexV1DataProfileResultProfileField: A field within a table.
 type GoogleCloudDataplexV1DataProfileResultProfileField struct {
-	// Mode: The mode of the field. Possible values include: REQUIRED, if it is a
-	// required field. NULLABLE, if it is an optional field. REPEATED, if it is a
-	// repeated field.
+	// Mode: Output only. The mode of the field. Possible values include: REQUIRED,
+	// if it is a required field. NULLABLE, if it is an optional field. REPEATED,
+	// if it is a repeated field.
 	Mode string `json:"mode,omitempty"`
-	// Name: The name of the field.
+	// Name: Output only. The name of the field.
 	Name string `json:"name,omitempty"`
-	// Profile: Profile information for the corresponding field.
+	// Profile: Output only. Profile information for the corresponding field.
 	Profile *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo `json:"profile,omitempty"`
-	// Type: The data type retrieved from the schema of the data source. For
-	// instance, for a BigQuery native table, it is the BigQuery Table Schema
+	// Type: Output only. The data type retrieved from the schema of the data
+	// source. For instance, for a BigQuery native table, it is the BigQuery Table
+	// Schema
 	// (https://cloud.google.com/bigquery/docs/reference/rest/v2/tables#tablefieldschema).
 	// For a Dataplex Universal Catalog Entity, it is the Entity Schema
 	// (https://cloud.google.com/dataplex/docs/reference/rpc/google.cloud.dataplex.v1#type_3).
@@ -2317,23 +2318,24 @@ func (s GoogleCloudDataplexV1DataProfileResultProfileField) MarshalJSON() ([]byt
 // GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo: The profile
 // information for each field type.
 type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo struct {
-	// DistinctRatio: Ratio of rows with distinct values against total scanned
-	// rows. Not available for complex non-groupable field type, including RECORD,
-	// ARRAY, GEOGRAPHY, and JSON, as well as fields with REPEATABLE mode.
+	// DistinctRatio: Output only. Ratio of rows with distinct values against total
+	// scanned rows. Not available for complex non-groupable field type, including
+	// RECORD, ARRAY, GEOGRAPHY, and JSON, as well as fields with REPEATABLE mode.
 	DistinctRatio float64 `json:"distinctRatio,omitempty"`
 	// DoubleProfile: Double type field information.
 	DoubleProfile *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFieldInfo `json:"doubleProfile,omitempty"`
 	// IntegerProfile: Integer type field information.
 	IntegerProfile *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoIntegerFieldInfo `json:"integerProfile,omitempty"`
-	// NullRatio: Ratio of rows with null value against total scanned rows.
+	// NullRatio: Output only. Ratio of rows with null value against total scanned
+	// rows.
 	NullRatio float64 `json:"nullRatio,omitempty"`
 	// StringProfile: String type field information.
 	StringProfile *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoStringFieldInfo `json:"stringProfile,omitempty"`
-	// TopNValues: The list of top N non-null values, frequency and ratio with
-	// which they occur in the scanned data. N is 10 or equal to the number of
-	// distinct values in the field, whichever is smaller. Not available for
-	// complex non-groupable field type, including RECORD, ARRAY, GEOGRAPHY, and
-	// JSON, as well as fields with REPEATABLE mode.
+	// TopNValues: Output only. The list of top N non-null values, frequency and
+	// ratio with which they occur in the scanned data. N is 10 or equal to the
+	// number of distinct values in the field, whichever is smaller. Not available
+	// for complex non-groupable field type, including RECORD, ARRAY, GEOGRAPHY,
+	// and JSON, as well as fields with REPEATABLE mode.
 	TopNValues []*GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue `json:"topNValues,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DistinctRatio") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2373,28 +2375,28 @@ func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo) Unmarsha
 //
 //	The profile information for a double type field.
 type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFieldInfo struct {
-	// Average: Average of non-null values in the scanned data. NaN, if the field
-	// has a NaN.
+	// Average: Output only. Average of non-null values in the scanned data. NaN,
+	// if the field has a NaN.
 	Average float64 `json:"average,omitempty"`
-	// Max: Maximum of non-null values in the scanned data. NaN, if the field has a
-	// NaN.
+	// Max: Output only. Maximum of non-null values in the scanned data. NaN, if
+	// the field has a NaN.
 	Max float64 `json:"max,omitempty"`
-	// Min: Minimum of non-null values in the scanned data. NaN, if the field has a
-	// NaN.
+	// Min: Output only. Minimum of non-null values in the scanned data. NaN, if
+	// the field has a NaN.
 	Min float64 `json:"min,omitempty"`
-	// Quartiles: A quartile divides the number of data points into four parts, or
-	// quarters, of more-or-less equal size. Three main quartiles used are: The
-	// first quartile (Q1) splits off the lowest 25% of data from the highest 75%.
-	// It is also known as the lower or 25th empirical quartile, as 25% of the data
-	// is below this point. The second quartile (Q2) is the median of a data set.
-	// So, 50% of the data lies below this point. The third quartile (Q3) splits
-	// off the highest 25% of data from the lowest 75%. It is known as the upper or
-	// 75th empirical quartile, as 75% of the data lies below this point. Here, the
-	// quartiles is provided as an ordered list of quartile values for the scanned
-	// data, occurring in order Q1, median, Q3.
+	// Quartiles: Output only. A quartile divides the number of data points into
+	// four parts, or quarters, of more-or-less equal size. Three main quartiles
+	// used are: The first quartile (Q1) splits off the lowest 25% of data from the
+	// highest 75%. It is also known as the lower or 25th empirical quartile, as
+	// 25% of the data is below this point. The second quartile (Q2) is the median
+	// of a data set. So, 50% of the data lies below this point. The third quartile
+	// (Q3) splits off the highest 25% of data from the lowest 75%. It is known as
+	// the upper or 75th empirical quartile, as 75% of the data lies below this
+	// point. Here, the quartiles is provided as an ordered list of quartile values
+	// for the scanned data, occurring in order Q1, median, Q3.
 	Quartiles []float64 `json:"quartiles,omitempty"`
-	// StandardDeviation: Standard deviation of non-null values in the scanned
-	// data. NaN, if the field has a NaN.
+	// StandardDeviation: Output only. Standard deviation of non-null values in the
+	// scanned data. NaN, if the field has a NaN.
 	StandardDeviation float64 `json:"standardDeviation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Average") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2442,28 +2444,28 @@ func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFiel
 // GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoIntegerFieldInfo
 // : The profile information for an integer type field.
 type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoIntegerFieldInfo struct {
-	// Average: Average of non-null values in the scanned data. NaN, if the field
-	// has a NaN.
+	// Average: Output only. Average of non-null values in the scanned data. NaN,
+	// if the field has a NaN.
 	Average float64 `json:"average,omitempty"`
-	// Max: Maximum of non-null values in the scanned data. NaN, if the field has a
-	// NaN.
+	// Max: Output only. Maximum of non-null values in the scanned data. NaN, if
+	// the field has a NaN.
 	Max int64 `json:"max,omitempty,string"`
-	// Min: Minimum of non-null values in the scanned data. NaN, if the field has a
-	// NaN.
+	// Min: Output only. Minimum of non-null values in the scanned data. NaN, if
+	// the field has a NaN.
 	Min int64 `json:"min,omitempty,string"`
-	// Quartiles: A quartile divides the number of data points into four parts, or
-	// quarters, of more-or-less equal size. Three main quartiles used are: The
-	// first quartile (Q1) splits off the lowest 25% of data from the highest 75%.
-	// It is also known as the lower or 25th empirical quartile, as 25% of the data
-	// is below this point. The second quartile (Q2) is the median of a data set.
-	// So, 50% of the data lies below this point. The third quartile (Q3) splits
-	// off the highest 25% of data from the lowest 75%. It is known as the upper or
-	// 75th empirical quartile, as 75% of the data lies below this point. Here, the
-	// quartiles is provided as an ordered list of approximate quartile values for
-	// the scanned data, occurring in order Q1, median, Q3.
+	// Quartiles: Output only. A quartile divides the number of data points into
+	// four parts, or quarters, of more-or-less equal size. Three main quartiles
+	// used are: The first quartile (Q1) splits off the lowest 25% of data from the
+	// highest 75%. It is also known as the lower or 25th empirical quartile, as
+	// 25% of the data is below this point. The second quartile (Q2) is the median
+	// of a data set. So, 50% of the data lies below this point. The third quartile
+	// (Q3) splits off the highest 25% of data from the lowest 75%. It is known as
+	// the upper or 75th empirical quartile, as 75% of the data lies below this
+	// point. Here, the quartiles is provided as an ordered list of approximate
+	// quartile values for the scanned data, occurring in order Q1, median, Q3.
 	Quartiles googleapi.Int64s `json:"quartiles,omitempty"`
-	// StandardDeviation: Standard deviation of non-null values in the scanned
-	// data. NaN, if the field has a NaN.
+	// StandardDeviation: Output only. Standard deviation of non-null values in the
+	// scanned data. NaN, if the field has a NaN.
 	StandardDeviation float64 `json:"standardDeviation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Average") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2503,11 +2505,14 @@ func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoIntegerFie
 //
 //	The profile information for a string type field.
 type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoStringFieldInfo struct {
-	// AverageLength: Average length of non-null values in the scanned data.
+	// AverageLength: Output only. Average length of non-null values in the scanned
+	// data.
 	AverageLength float64 `json:"averageLength,omitempty"`
-	// MaxLength: Maximum length of non-null values in the scanned data.
+	// MaxLength: Output only. Maximum length of non-null values in the scanned
+	// data.
 	MaxLength int64 `json:"maxLength,omitempty,string"`
-	// MinLength: Minimum length of non-null values in the scanned data.
+	// MinLength: Output only. Minimum length of non-null values in the scanned
+	// data.
 	MinLength int64 `json:"minLength,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "AverageLength") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2544,12 +2549,12 @@ func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoStringFiel
 // GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue: Top
 // N non-null values in the scanned data.
 type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue struct {
-	// Count: Count of the corresponding value in the scanned data.
+	// Count: Output only. Count of the corresponding value in the scanned data.
 	Count int64 `json:"count,omitempty,string"`
-	// Ratio: Ratio of the corresponding value in the field against the total
-	// number of rows in the scanned data.
+	// Ratio: Output only. Ratio of the corresponding value in the field against
+	// the total number of rows in the scanned data.
 	Ratio float64 `json:"ratio,omitempty"`
-	// Value: String value of a top N non-null value.
+	// Value: Output only. String value of a top N non-null value.
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2596,10 +2601,8 @@ type GoogleCloudDataplexV1DataProfileSpec struct {
 	// PostScanActions: Optional. Actions to take upon job completion..
 	PostScanActions *GoogleCloudDataplexV1DataProfileSpecPostScanActions `json:"postScanActions,omitempty"`
 	// RowFilter: Optional. A filter applied to all rows in a single DataScan job.
-	// The filter needs to be a valid SQL expression for a WHERE clause in
-	// GoogleSQL syntax
-	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#where_clause).Example:
-	// col1 >= 0 AND col2 < 10
+	// The filter needs to be a valid SQL expression for a WHERE clause in BigQuery
+	// standard SQL syntax. Example: col1 >= 0 AND col2 < 10
 	RowFilter string `json:"rowFilter,omitempty"`
 	// SamplingPercent: Optional. The percentage of the records to be selected from
 	// the dataset for DataScan. Value can range between 0.0 and 100.0 with up to 3
@@ -2668,7 +2671,7 @@ type GoogleCloudDataplexV1DataProfileSpecPostScanActionsBigQueryExport struct {
 	// ResultsTable: Optional. The BigQuery table to export DataProfileScan results
 	// to. Format:
 	// //bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tables/TABL
-	// E_ID or projects/PROJECT_ID/datasets/DATASET_ID/tables/TABLE_ID
+	// E_ID
 	ResultsTable string `json:"resultsTable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResultsTable") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2763,8 +2766,9 @@ func (s *GoogleCloudDataplexV1DataQualityColumnResult) UnmarshalJSON(data []byte
 // GoogleCloudDataplexV1DataQualityDimension: A dimension captures data quality
 // intent about a defined subset of the rules specified.
 type GoogleCloudDataplexV1DataQualityDimension struct {
-	// Name: Optional. The dimension name a rule belongs to. Custom dimension name
-	// is supported with all uppercase letters and maximum length of 30 characters.
+	// Name: Output only. The dimension name a rule belongs to. Custom dimension
+	// name is supported with all uppercase letters and maximum length of 30
+	// characters.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7328,12 +7332,12 @@ func (s GoogleCloudDataplexV1ScannedData) MarshalJSON() ([]byte, error) {
 // GoogleCloudDataplexV1ScannedDataIncrementalField: A data range denoted by a
 // pair of start/end values of a field.
 type GoogleCloudDataplexV1ScannedDataIncrementalField struct {
-	// End: Value that marks the end of the range.
+	// End: Output only. Value that marks the end of the range.
 	End string `json:"end,omitempty"`
-	// Field: The field that contains values which monotonically increases over
-	// time (e.g. a timestamp column).
+	// Field: Output only. The field that contains values which monotonically
+	// increases over time (e.g. a timestamp column).
 	Field string `json:"field,omitempty"`
-	// Start: Value that marks the start of the range.
+	// Start: Output only. Value that marks the start of the range.
 	Start string `json:"start,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "End") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

@@ -1229,8 +1229,8 @@ type Saas struct {
 	// Labels: Optional. The labels on the resource, which can be used for
 	// categorization. similar to Kubernetes resource labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Locations: Optional. Immutable. List of locations that the service is
-	// available in. Rollout refers to the list to generate a rollout plan.
+	// Locations: Optional. List of locations that the service is available in.
+	// Rollout refers to the list to generate a rollout plan.
 	Locations []*Location `json:"locations,omitempty"`
 	// Name: Identifier. The resource name (full URI of the resource) following the
 	// standard naming scheme:
@@ -1305,7 +1305,7 @@ type Tenant struct {
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// ConsumerResource: Optional. Immutable. A reference to the consumer resource
 	// this SaaS Tenant is representing. The relationship with a consumer resource
-	// can be used by EasySaaS for retrieving consumer-defined settings and
+	// can be used by SaaS Runtime for retrieving consumer-defined settings and
 	// policies such as maintenance policies (using Unified Maintenance Policy
 	// API).
 	ConsumerResource string `json:"consumerResource,omitempty"`
@@ -1323,8 +1323,8 @@ type Tenant struct {
 	// "projects/{project}/locations/{location}/tenants/{tenant}"
 	Name string `json:"name,omitempty"`
 	// Saas: Required. Immutable. A reference to the Saas that defines the product
-	// (managed service) that the producer wants to manage with EasySaaS. Part of
-	// the EasySaaS common data model.
+	// (managed service) that the producer wants to manage with SaaS Runtime. Part
+	// of the SaaS Runtime common data model.
 	Saas string `json:"saas,omitempty"`
 	// Uid: Output only. The unique identifier of the resource. UID is unique in
 	// the time and space for this resource within the scope of the service. It is
@@ -1362,7 +1362,7 @@ type ToMapping struct {
 	// Dependency: Required. Alias of the dependency that the inputVariable will
 	// pass its value to
 	Dependency string `json:"dependency,omitempty"`
-	// IgnoreForLookup: Optional. Tells EasySaaS if this mapping should be used
+	// IgnoreForLookup: Optional. Tells SaaS Runtime if this mapping should be used
 	// during lookup or not
 	IgnoreForLookup bool `json:"ignoreForLookup,omitempty"`
 	// InputVariable: Required. Name of the inputVariable on the dependency
@@ -1631,8 +1631,8 @@ type UnitKind struct {
 	// will be passed to this unit's outputVariables. Maximum 100.
 	OutputVariableMappings []*VariableMapping `json:"outputVariableMappings,omitempty"`
 	// Saas: Required. Immutable. A reference to the Saas that defines the product
-	// (managed service) that the producer wants to manage with EasySaaS. Part of
-	// the EasySaaS common data model. Immutable once set.
+	// (managed service) that the producer wants to manage with SaaS Runtime. Part
+	// of the SaaS Runtime common data model. Immutable once set.
 	Saas string `json:"saas,omitempty"`
 	// Uid: Output only. The unique identifier of the resource. UID is unique in
 	// the time and space for this resource within the scope of the service. It is
@@ -1672,7 +1672,7 @@ func (s UnitKind) MarshalJSON() ([]byte, error) {
 // the future for non-mutating operations). UnitOperations allow different
 // actors interacting with the same unit to focus only on the change they have
 // requested. This is a base object that contains the common fields in all unit
-// operations.
+// operations. Next: 19
 type UnitOperation struct {
 	// Annotations: Optional. Annotations is an unstructured key-value map stored
 	// with a resource that may be set by external tools to store and retrieve

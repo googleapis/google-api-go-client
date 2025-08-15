@@ -3457,7 +3457,7 @@ func (s StorageDatabasecenterPartnerapiV1mainCustomMetadataData) MarshalJSON() (
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed:
 // DatabaseResourceFeed is the top level proto to be used to ingest different
-// database resource level events into Condor platform. Next ID: 10
+// database resource level events into Condor platform. Next ID: 11
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	// BackupdrMetadata: BackupDR metadata is used to ingest metadata from
 	// BackupDR.
@@ -3486,6 +3486,12 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	// available in individual feed level as well.
 	ResourceId       *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId       `json:"resourceId,omitempty"`
 	ResourceMetadata *StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata `json:"resourceMetadata,omitempty"`
+	// SkipIngestion: Optional. If true, the feed won't be ingested by DB Center.
+	// This indicates that the feed is intentionally skipped. For example, BackupDR
+	// feeds are only needed for resources integrated with DB Center (e.g.,
+	// CloudSQL, AlloyDB). Feeds for non-integrated resources (e.g., Compute
+	// Engine, Persistent Disk) can be skipped.
+	SkipIngestion bool `json:"skipIngestion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupdrMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

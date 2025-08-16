@@ -205,6 +205,8 @@ type CloudLocation struct {
 	//   "CLOUD_LOCATION_TYPE_ZONE" - CloudLocation type for zone.
 	//   "CLOUD_LOCATION_TYPE_REGION_EXTENSION" - CloudLocation type for region
 	// extension.
+	//   "CLOUD_LOCATION_TYPE_GDCC_ZONE" - CloudLocation type for Google
+	// Distributed Cloud Connected Zone.
 	CloudLocationType string `json:"cloudLocationType,omitempty"`
 	// CloudProvider: Optional. The provider of the cloud location. Values can be
 	// Google Cloud or third-party providers, including AWS, Azure, or Oracle Cloud
@@ -520,9 +522,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

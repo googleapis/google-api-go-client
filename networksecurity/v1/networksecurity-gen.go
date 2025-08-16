@@ -931,7 +931,10 @@ type AuthzPolicyAuthzRulePrincipal struct {
 	// is any exact URI SAN value match. This is the default principal selector.
 	//   "CLIENT_CERT_DNS_NAME_SAN" - The principal rule is matched against a list
 	// of DNS Name SANs in the validated client's certificate. A match happens when
-	// there is any exact DNS Name SAN value match.
+	// there is any exact DNS Name SAN value match. This is only applicable for
+	// Application Load Balancers except for classic Global External Application
+	// load balancer. CLIENT_CERT_DNS_NAME_SAN is not supported for
+	// INTERNAL_SELF_MANAGED load balancing scheme.
 	//   "CLIENT_CERT_COMMON_NAME" - The principal rule is matched against the
 	// common name in the client's certificate. Authorization against multiple
 	// common names in the client certificate is not supported. Requests with
@@ -1600,7 +1603,7 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// FirewallEndpoint: Message describing Endpoint object
+// FirewallEndpoint: Message describing Endpoint object.
 type FirewallEndpoint struct {
 	// AssociatedNetworks: Output only. List of networks that are associated with
 	// this endpoint in the local zone. This is a projection of the
@@ -1614,14 +1617,14 @@ type FirewallEndpoint struct {
 	Associations []*FirewallEndpointAssociationReference `json:"associations,omitempty"`
 	// BillingProjectId: Required. Project to bill on endpoint uptime usage.
 	BillingProjectId string `json:"billingProjectId,omitempty"`
-	// CreateTime: Output only. Create time stamp
+	// CreateTime: Output only. Create time stamp.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. Description of the firewall endpoint. Max length 2048
 	// characters.
 	Description string `json:"description,omitempty"`
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Immutable. Identifier. name of resource
+	// Name: Immutable. Identifier. Name of resource.
 	Name string `json:"name,omitempty"`
 	// Reconciling: Output only. Whether reconciling is in progress, recommended
 	// per https://google.aip.dev/128.
@@ -6531,7 +6534,7 @@ type OrganizationsLocationsFirewallEndpointsPatchCall struct {
 
 // Patch: Update a single Endpoint.
 //
-// - name: Immutable. Identifier. name of resource.
+// - name: Immutable. Identifier. Name of resource.
 func (r *OrganizationsLocationsFirewallEndpointsService) Patch(name string, firewallendpoint *FirewallEndpoint) *OrganizationsLocationsFirewallEndpointsPatchCall {
 	c := &OrganizationsLocationsFirewallEndpointsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

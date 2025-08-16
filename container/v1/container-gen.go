@@ -4125,7 +4125,11 @@ func (s LoggingVariantConfig) MarshalJSON() ([]byte, error) {
 // LustreCsiDriverConfig: Configuration for the Lustre CSI driver.
 type LustreCsiDriverConfig struct {
 	// EnableLegacyLustrePort: If set to true, the Lustre CSI driver will install
-	// Lustre kernel modules using port 6988.
+	// Lustre kernel modules using port 6988. This serves as a workaround for a
+	// port conflict with the gke-metadata-server. This field is required ONLY
+	// under the following conditions: 1. The GKE node version is older than
+	// 1.33.2-gke.4655000. 2. You're connecting to a Lustre instance that has the
+	// 'gke-support-enabled' flag.
 	EnableLegacyLustrePort bool `json:"enableLegacyLustrePort,omitempty"`
 	// Enabled: Whether the Lustre CSI driver is enabled for this cluster.
 	Enabled bool `json:"enabled,omitempty"`
@@ -6734,6 +6738,31 @@ func (s RollbackNodePoolUpgradeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RotationConfig: RotationConfig is config for secret manager auto rotation.
+type RotationConfig struct {
+	// Enabled: Whether the rotation is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// RotationInterval: The interval between two consecutive rotations. Default
+	// rotation interval is 2 minutes.
+	RotationInterval string `json:"rotationInterval,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RotationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RotationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SandboxConfig: SandboxConfig contains configurations of the sandbox to use
 // for the node.
 type SandboxConfig struct {
@@ -6802,6 +6831,8 @@ type SecondaryBootDiskUpdateStrategy struct {
 type SecretManagerConfig struct {
 	// Enabled: Enable/Disable Secret Manager Config.
 	Enabled bool `json:"enabled,omitempty"`
+	// RotationConfig: Rotation config for secret manager.
+	RotationConfig *RotationConfig `json:"rotationConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

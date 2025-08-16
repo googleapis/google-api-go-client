@@ -1079,6 +1079,10 @@ type CloneContext struct {
 	// instance to the specified zone. If no zone is specified, clone to the same
 	// primary zone as the source instance.
 	PreferredZone string `json:"preferredZone,omitempty"`
+	// SourceInstanceDeletionTime: The timestamp used to identify the time when the
+	// source instance is deleted. If this instance is deleted, then you must set
+	// the timestamp.
+	SourceInstanceDeletionTime string `json:"sourceInstanceDeletionTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllocatedIpRange") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1094,6 +1098,30 @@ type CloneContext struct {
 
 func (s CloneContext) MarshalJSON() ([]byte, error) {
 	type NoMethod CloneContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Column: Contains the name and datatype of a column.
+type Column struct {
+	// Name: Name of the column.
+	Name string `json:"name,omitempty"`
+	// Type: Datatype of the column.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Column) MarshalJSON() ([]byte, error) {
+	type NoMethod Column
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1243,6 +1271,17 @@ type ConnectSettings struct {
 	IpAddresses []*IpMapping `json:"ipAddresses,omitempty"`
 	// Kind: This is always `sql#connectSettings`.
 	Kind string `json:"kind,omitempty"`
+	// MdxProtocolSupport: Optional. Output only. mdx_protocol_support controls how
+	// the client uses metadata exchange when connecting to the instance. The
+	// values in the list representing parts of the MDX protocol that are supported
+	// by this instance. When the list is empty, the instance does not support MDX,
+	// so the client must not send an MDX request. The default is empty.
+	//
+	// Possible values:
+	//   "MDX_PROTOCOL_SUPPORT_UNSPECIFIED" - Not specified.
+	//   "CLIENT_PROTOCOL_TYPE" - Client should send the client protocol type in
+	// the MDX request.
+	MdxProtocolSupport []string `json:"mdxProtocolSupport,omitempty"`
 	// NodeCount: The number of read pool nodes in a read pool.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 	// Nodes: Output only. Entries containing information about each read pool node
@@ -1293,6 +1332,8 @@ type ConnectionPoolConfig struct {
 	ConnectionPoolingEnabled bool `json:"connectionPoolingEnabled,omitempty"`
 	// Flags: Optional. List of connection pool configuration flags.
 	Flags []*ConnectionPoolFlags `json:"flags,omitempty"`
+	// PoolerCount: Output only. Number of connection poolers.
+	PoolerCount int64 `json:"poolerCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConnectionPoolingEnabled")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1451,8 +1492,6 @@ type DatabaseInstance struct {
 	//   "SECOND_GEN" - V2 speckle instance.
 	//   "EXTERNAL" - On premises instance.
 	BackendType string `json:"backendType,omitempty"`
-	// ClearNetwork: Clears private network settings when the instance is restored.
-	ClearNetwork bool `json:"clearNetwork,omitempty"`
 	// ConnectionName: Connection name of the Cloud SQL instance used in connection
 	// strings.
 	ConnectionName string `json:"connectionName,omitempty"`
@@ -2059,6 +2098,38 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ExecuteSqlPayload: The request payload used to execute SQL statements.
+type ExecuteSqlPayload struct {
+	// AutoIamAuthn: Optional. When set to true, the API caller identity associated
+	// with the request is used for database authentication. The API caller must be
+	// an IAM user in the database.
+	AutoIamAuthn bool `json:"autoIamAuthn,omitempty"`
+	// Database: Optional. Name of the database on which the statement will be
+	// executed.
+	Database string `json:"database,omitempty"`
+	// RowLimit: Optional. The maximum number of rows returned per SQL statement.
+	RowLimit int64 `json:"rowLimit,omitempty,string"`
+	// SqlStatement: Required. SQL statements to run on the database. It can be a
+	// single statement or a sequence of statements separated by semicolons.
+	SqlStatement string `json:"sqlStatement,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AutoIamAuthn") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoIamAuthn") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecuteSqlPayload) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteSqlPayload
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExportContext: Database instance export context.
 type ExportContext struct {
 	// BakExportOptions: Options for exporting BAK files (SQL Server-only)
@@ -2376,6 +2447,33 @@ type FailoverContext struct {
 
 func (s FailoverContext) MarshalJSON() ([]byte, error) {
 	type NoMethod FailoverContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FinalBackupConfig: Config used to determine the final backup settings for
+// the instance.
+type FinalBackupConfig struct {
+	// Enabled: Whether the final backup is enabled for the instance.
+	Enabled bool `json:"enabled,omitempty"`
+	// RetentionDays: The number of days to retain the final backup after the
+	// instance deletion. The final backup will be purged at
+	// (time_of_instance_deletion + retention_days).
+	RetentionDays int64 `json:"retentionDays,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FinalBackupConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod FinalBackupConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3275,6 +3373,11 @@ type InstancesRestoreBackupRequest struct {
 	// RestoreBackupContext: Parameters required to perform the restore backup
 	// operation.
 	RestoreBackupContext *RestoreBackupContext `json:"restoreBackupContext,omitempty"`
+	// RestoreInstanceClearOverridesFieldNames: Optional. This field has the same
+	// purpose as restore_instance_settings, changes any instance settings stored
+	// in the backup you are restoring from. With the difference that these fields
+	// are cleared in the settings.
+	RestoreInstanceClearOverridesFieldNames []string `json:"restoreInstanceClearOverridesFieldNames,omitempty"`
 	// RestoreInstanceSettings: Optional. By using this parameter, Cloud SQL
 	// overrides any instance settings stored in the backup you are restoring from.
 	// You can't change the instance's major database version and you can only
@@ -3662,6 +3765,29 @@ type MaintenanceWindow struct {
 
 func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Metadata: The additional metadata information regarding the execution of the
+// SQL statements.
+type Metadata struct {
+	// SqlStatementExecutionTime: The time taken to execute the SQL statements.
+	SqlStatementExecutionTime string `json:"sqlStatementExecutionTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SqlStatementExecutionTime")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SqlStatementExecutionTime") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Metadata) MarshalJSON() ([]byte, error) {
+	type NoMethod Metadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4174,7 +4300,6 @@ type PointInTimeRestoreContext struct {
 	// must comply with RFC 1035 (https://tools.ietf.org/html/rfc1035) standards.
 	// Specifically, the name must be 1-63 characters long and match the regular
 	// expression a-z ([-a-z0-9]*[a-z0-9])?. Reserved for future use.
-	// http://go/speckle-subnet-picker-clone
 	AllocatedIpRange string `json:"allocatedIpRange,omitempty"`
 	// Datasource: The Google Cloud Backup and Disaster Recovery Datasource URI.
 	// Format:
@@ -4336,6 +4461,37 @@ type PscConfig struct {
 
 func (s PscConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PscConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// QueryResult: QueryResult contains the result of executing a single SQL
+// statement.
+type QueryResult struct {
+	// Columns: List of columns included in the result. This also includes the data
+	// type of the column.
+	Columns []*Column `json:"columns,omitempty"`
+	// Message: Message related to the SQL execution result.
+	Message string `json:"message,omitempty"`
+	// PartialResult: Set to true if the SQL execution's result is truncated due to
+	// size limits.
+	PartialResult bool `json:"partialResult,omitempty"`
+	// Rows: Rows returned by the SQL statement.
+	Rows []*Row `json:"rows,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Columns") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Columns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QueryResult) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4536,6 +4692,28 @@ func (s RotateServerCertificateContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Row: Contains the values for a row.
+type Row struct {
+	// Values: The values for the row.
+	Values []*Value `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Row) MarshalJSON() ([]byte, error) {
+	type NoMethod Row
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SelectedObjects: A list of objects that the user selects for replication
 // from an external source instance.
 type SelectedObjects struct {
@@ -4674,6 +4852,9 @@ type Settings struct {
 	// predictions and insights to the AI. The default value is false. This applies
 	// only to Cloud SQL for MySQL and Cloud SQL for PostgreSQL instances.
 	EnableGoogleMlIntegration bool `json:"enableGoogleMlIntegration,omitempty"`
+	// FinalBackupConfig: Optional. The final backup configuration for the
+	// instance.
+	FinalBackupConfig *FinalBackupConfig `json:"finalBackupConfig,omitempty"`
 	// InsightsConfig: Insights configuration, for now relevant only for Postgres.
 	InsightsConfig *InsightsConfig `json:"insightsConfig,omitempty"`
 	// IpConfiguration: The settings for IP Management. This allows to enable or
@@ -4770,19 +4951,36 @@ func (s Settings) MarshalJSON() ([]byte, error) {
 // SqlActiveDirectoryConfig: Active Directory configuration, relevant only for
 // Cloud SQL for SQL Server.
 type SqlActiveDirectoryConfig struct {
+	// AdminCredentialSecretName: Optional. The secret manager key storing the
+	// administrator credential. (e.g., projects/{project}/secrets/{secret}).
+	AdminCredentialSecretName string `json:"adminCredentialSecretName,omitempty"`
+	// DnsServers: Optional. Domain controller IPv4 addresses used to bootstrap
+	// Active Directory.
+	DnsServers []string `json:"dnsServers,omitempty"`
 	// Domain: The name of the domain (e.g., mydomain.com).
 	Domain string `json:"domain,omitempty"`
 	// Kind: This is always sql#activeDirectoryConfig.
 	Kind string `json:"kind,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// Mode: Optional. The mode of the Active Directory configuration.
+	//
+	// Possible values:
+	//   "ACTIVE_DIRECTORY_MODE_UNSPECIFIED" - Unspecified mode.
+	//   "MANAGED_ACTIVE_DIRECTORY" - Managed Active Directory mode. This is the
+	// fallback option to maintain backward compatibility.
+	//   "SELF_MANAGED_ACTIVE_DIRECTORY" - Self-managed Active Directory mode.
+	Mode string `json:"mode,omitempty"`
+	// OrganizationalUnit: Optional. The organizational unit distinguished name.
+	// This is the full hierarchical path to the organizational unit.
+	OrganizationalUnit string `json:"organizationalUnit,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdminCredentialSecretName")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Domain") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdminCredentialSecretName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4918,6 +5116,15 @@ type SqlExternalSyncSettingError struct {
 	// on the source instance.
 	//   "PSC_ONLY_INSTANCE_WITH_NO_NETWORK_ATTACHMENT_URI" - PSC only destination
 	// instance does not have a network attachment URI.
+	//   "SELECTED_OBJECTS_REFERENCE_UNSELECTED_OBJECTS" - Selected objects
+	// reference unselected objects. Based on their object type (foreign key
+	// constraint or view), selected objects will fail during migration.
+	//   "PROMPT_DELETE_EXISTING" - The migration will delete existing data in the
+	// replica; set replica_overwrite_enabled in the request to acknowledge this.
+	// This is an error. MySQL only.
+	//   "WILL_DELETE_EXISTING" - The migration will delete existing data in the
+	// replica; replica_overwrite_enabled was set in the request acknowledging
+	// this. This is a warning rather than an error. MySQL only.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Detail") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4959,6 +5166,34 @@ type SqlInstancesAcquireSsrsLeaseResponse struct {
 
 func (s SqlInstancesAcquireSsrsLeaseResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlInstancesAcquireSsrsLeaseResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlInstancesExecuteSqlResponse: Execute SQL statements response.
+type SqlInstancesExecuteSqlResponse struct {
+	// Metadata: The additional metadata information regarding the execution of the
+	// SQL statements.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Results: The list of results after executing all the SQL statements.
+	Results []*QueryResult `json:"results,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlInstancesExecuteSqlResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlInstancesExecuteSqlResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5089,6 +5324,11 @@ type SqlInstancesStartExternalSyncRequest struct {
 	MigrationType string `json:"migrationType,omitempty"`
 	// MysqlSyncConfig: MySQL-specific settings for start external sync.
 	MysqlSyncConfig *MySqlSyncConfig `json:"mysqlSyncConfig,omitempty"`
+	// ReplicaOverwriteEnabled: Optional. MySQL only. True if end-user has
+	// confirmed that this SES call will wipe replica databases overlapping with
+	// the proposed selected_objects. If this field is not set and there are both
+	// overlapping and additional databases proposed, an error will be returned.
+	ReplicaOverwriteEnabled bool `json:"replicaOverwriteEnabled,omitempty"`
 	// SkipVerification: Whether to skip the verification step (VESS).
 	SkipVerification bool `json:"skipVerification,omitempty"`
 	// SyncMode: External sync mode.
@@ -5822,6 +6062,30 @@ type UsersListResponse struct {
 
 func (s UsersListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UsersListResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Value: The cell value of the table.
+type Value struct {
+	// NullValue: If cell value is null, then this flag will be set to true.
+	NullValue bool `json:"nullValue,omitempty"`
+	// Value: The cell value represented in string format.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NullValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NullValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Value) MarshalJSON() ([]byte, error) {
+	type NoMethod Value
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8935,6 +9199,114 @@ func (c *InstancesDemoteMasterCall) Do(opts ...googleapi.CallOption) (*Operation
 	return ret, nil
 }
 
+type InstancesExecuteSqlCall struct {
+	s                 *Service
+	project           string
+	instance          string
+	executesqlpayload *ExecuteSqlPayload
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// ExecuteSql: Execute SQL statements.
+//
+// - instance: Database instance ID. This does not include the project ID.
+// - project: Project ID of the project that contains the instance.
+func (r *InstancesService) ExecuteSql(project string, instance string, executesqlpayload *ExecuteSqlPayload) *InstancesExecuteSqlCall {
+	c := &InstancesExecuteSqlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.instance = instance
+	c.executesqlpayload = executesqlpayload
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InstancesExecuteSqlCall) Fields(s ...googleapi.Field) *InstancesExecuteSqlCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InstancesExecuteSqlCall) Context(ctx context.Context) *InstancesExecuteSqlCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InstancesExecuteSqlCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstancesExecuteSqlCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.executesqlpayload)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/projects/{project}/instances/{instance}/executeSql")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"instance": c.instance,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.executeSql", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sql.instances.executeSql" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SqlInstancesExecuteSqlResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstancesExecuteSqlCall) Do(opts ...googleapi.CallOption) (*SqlInstancesExecuteSqlResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SqlInstancesExecuteSqlResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.executeSql", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type InstancesExportCall struct {
 	s                      *Service
 	project                string
@@ -11754,6 +12126,15 @@ func (r *ProjectsInstancesService) GetLatestRecoveryTime(project string, instanc
 	c := &ProjectsInstancesGetLatestRecoveryTimeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
+	return c
+}
+
+// SourceInstanceDeletionTime sets the optional parameter
+// "sourceInstanceDeletionTime": The timestamp used to identify the time when
+// the source instance is deleted. If this instance is deleted, then you must
+// set the timestamp.
+func (c *ProjectsInstancesGetLatestRecoveryTimeCall) SourceInstanceDeletionTime(sourceInstanceDeletionTime string) *ProjectsInstancesGetLatestRecoveryTimeCall {
+	c.urlParams_.Set("sourceInstanceDeletionTime", sourceInstanceDeletionTime)
 	return c
 }
 

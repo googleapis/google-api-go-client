@@ -2234,6 +2234,9 @@ type GoogleAppsCardV1Card struct {
 	//   "REPLACE" - Default value. The card is shown by replacing the view of the
 	// top card in the card stack.
 	DisplayStyle string `json:"displayStyle,omitempty"`
+	// ExpressionData: The expression data for the card. Only supported by Google
+	// Workspace Workflow, but not Google Chat apps or Google Workspace add-ons.
+	ExpressionData []*GoogleAppsCardV1ExpressionData `json:"expressionData,omitempty"`
 	// FixedFooter: The fixed footer shown at the bottom of this card. Setting
 	// `fixedFooter` without specifying a `primaryButton` or a `secondaryButton`
 	// causes an error. For Chat apps, you can use fixed footers in dialogs
@@ -2675,6 +2678,83 @@ func (s GoogleAppsCardV1Columns) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1CommonWidgetAction: Represents an action that is not
+// specific to a widget. Only supported by Google Workspace Workflow, but not
+// Google Chat apps or Google Workspace add-ons.
+type GoogleAppsCardV1CommonWidgetAction struct {
+	// UpdateVisibilityAction: The action to update the visibility of a widget.
+	UpdateVisibilityAction *GoogleAppsCardV1UpdateVisibilityAction `json:"updateVisibilityAction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UpdateVisibilityAction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UpdateVisibilityAction") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1CommonWidgetAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1CommonWidgetAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1Condition: Represents a condition that can be used to
+// trigger an action. Only supported by Google Workspace Workflow, but not
+// Google Chat apps or Google Workspace add-ons.
+type GoogleAppsCardV1Condition struct {
+	// ActionRuleId: The unique identifier of the ActionRule.
+	ActionRuleId string `json:"actionRuleId,omitempty"`
+	// ExpressionDataCondition: The condition that is determined by the expression
+	// data.
+	ExpressionDataCondition *GoogleAppsCardV1ExpressionDataCondition `json:"expressionDataCondition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActionRuleId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActionRuleId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1Condition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Condition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1DataSourceConfig: A configuration object that helps
+// configure the data sources for a widget. Only supported by Google Workspace
+// Workflow, but not Google Chat apps or Google Workspace add-ons.
+type GoogleAppsCardV1DataSourceConfig struct {
+	// PlatformDataSource: The data is from a Google Workspace application.
+	PlatformDataSource *GoogleAppsCardV1PlatformDataSource `json:"platformDataSource,omitempty"`
+	// RemoteDataSource: The data is from a remote data provider.
+	RemoteDataSource *GoogleAppsCardV1Action `json:"remoteDataSource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PlatformDataSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PlatformDataSource") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1DataSourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1DataSourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsCardV1DateTimePicker: Lets users input a date, a time, or both a
 // date and a time. Supports form submission validation. When
 // `Action.all_widgets_are_required` is set to `true` or this widget is
@@ -2687,6 +2767,11 @@ func (s GoogleAppsCardV1Columns) MarshalJSON() ([]byte, error) {
 // to input the information correctly. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1DateTimePicker struct {
+	// HostAppDataSource: A data source that's unique to a Google Workspace host
+	// application, such as Gmail emails, Google Calendar events, or Google Chat
+	// messages. Only supported by Google Workspace Workflows, but not Google Chat
+	// API or Google Workspace Add-ons.
+	HostAppDataSource *HostAppDataSourceMarkup `json:"hostAppDataSource,omitempty"`
 	// Label: The text that prompts users to input a date, a time, or a date and
 	// time. For example, if users are scheduling an appointment, use a label such
 	// as `Appointment date` or `Appointment date and time`.
@@ -2719,15 +2804,15 @@ type GoogleAppsCardV1DateTimePicker struct {
 	// `1672531200000`. * `TIME_ONLY`: a time in UTC. For example, to represent
 	// 12:00 PM, use `43200000` (or `12 * 60 * 60 * 1000`).
 	ValueMsEpoch int64 `json:"valueMsEpoch,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "Label") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "HostAppDataSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Label") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "HostAppDataSource") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2803,6 +2888,97 @@ func (s GoogleAppsCardV1DecoratedText) MarshalJSON() ([]byte, error) {
 // (https://developers.google.com/workspace/extend): For example, the following
 // JSON creates a divider: ``` "divider": {} ```
 type GoogleAppsCardV1Divider struct {
+}
+
+// GoogleAppsCardV1EventAction: Represents an actionthat can be performed on an
+// ui element. Only supported by Google Workspace Workflow, but not Google Chat
+// apps or Google Workspace add-ons.
+type GoogleAppsCardV1EventAction struct {
+	// ActionRuleId: The unique identifier of the ActionRule.
+	ActionRuleId string `json:"actionRuleId,omitempty"`
+	// CommonWidgetAction: Common widget action.
+	CommonWidgetAction *GoogleAppsCardV1CommonWidgetAction `json:"commonWidgetAction,omitempty"`
+	// PostEventTriggers: The list of triggers that will be triggered after the
+	// EventAction is executed.
+	PostEventTriggers []*GoogleAppsCardV1Trigger `json:"postEventTriggers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActionRuleId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActionRuleId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1EventAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1EventAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1ExpressionData: Represents the data that is used to evaluate
+// an expression. Only supported by Google Workspace Workflow, but not Google
+// Chat apps or Google Workspace add-ons.
+type GoogleAppsCardV1ExpressionData struct {
+	// Conditions: The list of conditions that are determined by the expression
+	// evaluation result.
+	Conditions []*GoogleAppsCardV1Condition `json:"conditions,omitempty"`
+	// EventActions: The list of actions that the ExpressionData can be used.
+	EventActions []*GoogleAppsCardV1EventAction `json:"eventActions,omitempty"`
+	// Expression: The uncompiled expression.
+	Expression string `json:"expression,omitempty"`
+	// Id: The unique identifier of the ExpressionData.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conditions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conditions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1ExpressionData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1ExpressionData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1ExpressionDataCondition: Represents a condition that is
+// evaluated using CEL. Only supported by Google Workspace Workflow, but not
+// Google Chat apps or Google Workspace add-ons.
+type GoogleAppsCardV1ExpressionDataCondition struct {
+	// ConditionType: The type of the condition.
+	//
+	// Possible values:
+	//   "CONDITION_TYPE_UNSPECIFIED" - Unspecified condition type.
+	//   "EXPRESSION_EVALUATION_SUCCESS" - The expression evaluation was
+	// successful.
+	//   "EXPRESSION_EVALUATION_FAILURE" - The expression evaluation was
+	// unsuccessful.
+	ConditionType string `json:"conditionType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConditionType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConditionType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1ExpressionDataCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1ExpressionDataCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCardV1Grid: Displays a grid with a collection of items. Items can
@@ -3347,6 +3523,11 @@ type GoogleAppsCardV1Section struct {
 	// and Formatting text in Google Workspace add-ons
 	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	Header string `json:"header,omitempty"`
+	// Id: A unique ID assigned to the section that's used to identify the section
+	// to be mutated. The ID has a character limit of 64 characters and should be
+	// in the format of `[a-zA-Z0-9-]+`. Only supported by Google Workspace
+	// Workflow, but not Google Chat apps or Google Workspace add-ons.
+	Id string `json:"id,omitempty"`
 	// UncollapsibleWidgetsCount: The number of uncollapsible widgets which remain
 	// visible even when a section is collapsed. For example, when a section
 	// contains five widgets and the `uncollapsibleWidgetsCount` is set to `2`, the
@@ -3390,6 +3571,13 @@ func (s GoogleAppsCardV1Section) MarshalJSON() ([]byte, error) {
 // Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1SelectionInput struct {
+	// DataSourceConfigs: Optional. The data source configs for the selection
+	// control. This field provides more fine-grained control over the data source.
+	// If specified, the `multi_select_max_selected_items` field,
+	// `multi_select_min_query_length` field, `external_data_source` field and
+	// `platform_data_source` field are ignored. Only supported by Google Workspace
+	// Workflow, but not Google Chat apps or Google Workspace add-ons.
+	DataSourceConfigs []*GoogleAppsCardV1DataSourceConfig `json:"dataSourceConfigs,omitempty"`
 	// ExternalDataSource: An external data source, such as a relational database.
 	ExternalDataSource *GoogleAppsCardV1Action `json:"externalDataSource,omitempty"`
 	// HintText: Optional. Text that appears below the selection input field meant
@@ -3456,15 +3644,15 @@ type GoogleAppsCardV1SelectionInput struct {
 	// alog#multiselect-menu). [Google Workspace add-ons and Chat
 	// apps](https://developers.google.com/workspace/extend):
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExternalDataSource") to
+	// ForceSendFields is a list of field names (e.g. "DataSourceConfigs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExternalDataSource") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DataSourceConfigs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3640,6 +3828,11 @@ type GoogleAppsCardV1TextInput struct {
 	// by prompting them to enter a certain value. This text is always visible.
 	// Required if `label` is unspecified. Otherwise, optional.
 	HintText string `json:"hintText,omitempty"`
+	// HostAppDataSource: A data source that's unique to a Google Workspace host
+	// application, such as Gmail emails, Google Calendar events, or Google Chat
+	// messages. Only supported by Google Workspace Workflow, but not Google Chat
+	// apps or Google Workspace add-ons.
+	HostAppDataSource *HostAppDataSourceMarkup `json:"hostAppDataSource,omitempty"`
 	// InitialSuggestions: Suggested values that users can enter. These values
 	// appear when users click inside the text input field. As users type, the
 	// suggested values dynamically filter to match what the users have typed. For
@@ -3745,6 +3938,58 @@ func (s GoogleAppsCardV1TextParagraph) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1Trigger: Represents a trigger. Only supported by Google
+// Workspace Workflow, but not Google Chat apps or Google Workspace add-ons.
+type GoogleAppsCardV1Trigger struct {
+	// ActionRuleId: The unique identifier of the ActionRule.
+	ActionRuleId string `json:"actionRuleId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActionRuleId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActionRuleId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1Trigger) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Trigger
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1UpdateVisibilityAction: Represents an action that updates
+// the visibility of a widget. Only supported by Google Workspace Workflow, but
+// not Google Chat apps or Google Workspace add-ons.
+type GoogleAppsCardV1UpdateVisibilityAction struct {
+	// Visibility: The new visibility.
+	//
+	// Possible values:
+	//   "VISIBILITY_UNSPECIFIED" - Unspecified visibility. Do not use.
+	//   "VISIBLE" - The UI element is visible.
+	//   "HIDDEN" - The UI element is hidden.
+	Visibility string `json:"visibility,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Visibility") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Visibility") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1UpdateVisibilityAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1UpdateVisibilityAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsCardV1Validation: Represents the necessary data for validating the
 // widget it's attached to. Google Workspace add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
@@ -3832,6 +4077,10 @@ type GoogleAppsCardV1Widget struct {
 	// Divider: Displays a horizontal line divider between widgets. For example,
 	// the following JSON creates a divider: ``` "divider": { } ```
 	Divider *GoogleAppsCardV1Divider `json:"divider,omitempty"`
+	// EventActions: Specifies the event actions that can be performed on the
+	// widget. Only supported by Google Workspace Workflow, but not Google Chat
+	// apps or Google Workspace add-ons.
+	EventActions []*GoogleAppsCardV1EventAction `json:"eventActions,omitempty"`
 	// Grid: Displays a grid with a collection of items. A grid supports any number
 	// of columns and items. The number of rows is determined by the upper bounds
 	// of the number items divided by the number of columns. A grid with 10 items
@@ -3859,6 +4108,11 @@ type GoogleAppsCardV1Widget struct {
 	// left-to-right layouts, aligns widgets to the right. For right-to-left
 	// layouts, aligns widgets to the left.
 	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
+	// Id: A unique ID assigned to the widget that's used to identify the widget to
+	// be mutated. The ID has a character limit of 64 characters and should be in
+	// the format of `[a-zA-Z0-9-]+` and. Only supported by Google Workspace
+	// Workflow, but not Google Chat apps or Google Workspace add-ons.
+	Id string `json:"id,omitempty"`
 	// Image: Displays an image. For example, the following JSON creates an image
 	// with alternative text: ``` "image": { "imageUrl":
 	// "https://developers.google.com/workspace/chat/images/quickstart-app-avatar.pn
@@ -3891,6 +4145,15 @@ type GoogleAppsCardV1Widget struct {
 	// For example, the following JSON creates a bolded text: ``` "textParagraph":
 	// { "text": " *bold text*" } ```
 	TextParagraph *GoogleAppsCardV1TextParagraph `json:"textParagraph,omitempty"`
+	// Visibility: Specifies whether the widget is visible or hidden. The default
+	// value is `VISIBLE`. Only supported by Google Workspace Workflow, but not
+	// Google Chat apps or Google Workspace add-ons.
+	//
+	// Possible values:
+	//   "VISIBILITY_UNSPECIFIED" - Unspecified visibility. Do not use.
+	//   "VISIBLE" - The UI element is visible.
+	//   "HIDDEN" - The UI element is hidden.
+	Visibility string `json:"visibility,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ButtonList") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3971,13 +4234,13 @@ func (s Group) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// HostAppDataSourceMarkup: For a `SelectionInput` widget that uses a
-// multiselect menu, a data source from a Google Workspace application. The
-// data source populates selection items for the multiselect menu. Google Chat
-// apps (https://developers.google.com/workspace/chat):
+// HostAppDataSourceMarkup: A data source from a Google Workspace application.
+// The data source populates available items for a widget.
 type HostAppDataSourceMarkup struct {
 	// ChatDataSource: A data source from Google Chat.
 	ChatDataSource *ChatClientDataSourceMarkup `json:"chatDataSource,omitempty"`
+	// WorkflowDataSource: A data source from Google Workflow.
+	WorkflowDataSource *WorkflowDataSourceMarkup `json:"workflowDataSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChatDataSource") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6435,6 +6698,43 @@ type WidgetMarkup struct {
 
 func (s WidgetMarkup) MarshalJSON() ([]byte, error) {
 	type NoMethod WidgetMarkup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkflowDataSourceMarkup: * Only supported by Google Workspace Workflow, but
+// not Google Chat apps or Google Workspace add-ons. In a `TextInput` or
+// `SelectionInput` widget with MULTI_SELECT type or a `DateTimePicker`,
+// provide data source from Google.
+type WorkflowDataSourceMarkup struct {
+	// IncludeVariables: Whether to include variables from the previous step in the
+	// data source.
+	IncludeVariables bool `json:"includeVariables,omitempty"`
+	// Type: The type of data source.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Default value. Don't use.
+	//   "USER" - Google Workspace users. The user can only view and select users
+	// from their Google Workspace organization.
+	//   "SPACE" - Google Chat spaces that the user is a member of.
+	//   "USER_WITH_FREE_FORM" - Users can choose to view and select existing
+	// members from their Google Workspace organization or manually enter an email
+	// address or a valid domain.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IncludeVariables") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IncludeVariables") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkflowDataSourceMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkflowDataSourceMarkup
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

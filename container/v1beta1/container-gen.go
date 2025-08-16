@@ -1653,7 +1653,8 @@ type Cluster struct {
 	// configuration.
 	VerticalPodAutoscaling *VerticalPodAutoscaling `json:"verticalPodAutoscaling,omitempty"`
 	// WorkloadAltsConfig: Configuration for direct-path (via ALTS) with workload
-	// identity.
+	// identity. This feature is not officially supported for external customers in
+	// Kubernetes Engine when using Workload Identity.
 	WorkloadAltsConfig *WorkloadALTSConfig `json:"workloadAltsConfig,omitempty"`
 	// WorkloadCertificates: Configuration for issuance of mTLS keys and
 	// certificates to Kubernetes pods.
@@ -2064,7 +2065,8 @@ type ClusterUpdate struct {
 	// configuration.
 	DesiredVerticalPodAutoscaling *VerticalPodAutoscaling `json:"desiredVerticalPodAutoscaling,omitempty"`
 	// DesiredWorkloadAltsConfig: Configuration for direct-path (via ALTS) with
-	// workload identity.
+	// workload identity. This feature is not officially supported for external
+	// customers in Kubernetes Engine when using Workload Identity.
 	DesiredWorkloadAltsConfig *WorkloadALTSConfig `json:"desiredWorkloadAltsConfig,omitempty"`
 	// DesiredWorkloadCertificates: Configuration for issuance of mTLS keys and
 	// certificates to Kubernetes pods.
@@ -4532,7 +4534,11 @@ func (s LoggingVariantConfig) MarshalJSON() ([]byte, error) {
 // LustreCsiDriverConfig: Configuration for the Lustre CSI driver.
 type LustreCsiDriverConfig struct {
 	// EnableLegacyLustrePort: If set to true, the Lustre CSI driver will install
-	// Lustre kernel modules using port 6988.
+	// Lustre kernel modules using port 6988. This serves as a workaround for a
+	// port conflict with the gke-metadata-server. This field is required ONLY
+	// under the following conditions: 1. The GKE node version is older than
+	// 1.33.2-gke.4655000. 2. You're connecting to a Lustre instance that has the
+	// 'gke-support-enabled' flag.
 	EnableLegacyLustrePort bool `json:"enableLegacyLustrePort,omitempty"`
 	// Enabled: Whether the Lustre CSI driver is enabled for this cluster.
 	Enabled bool `json:"enabled,omitempty"`
@@ -9275,7 +9281,8 @@ func (s WindowsVersions) MarshalJSON() ([]byte, error) {
 }
 
 // WorkloadALTSConfig: Configuration for direct-path (via ALTS) with workload
-// identity.
+// identity. This feature is not officially supported for external customers in
+// Kubernetes Engine when using Workload Identity.
 type WorkloadALTSConfig struct {
 	// EnableAlts: enable_alts controls whether the alts handshaker should be
 	// enabled or not for direct-path. Requires Workload Identity (workload_pool

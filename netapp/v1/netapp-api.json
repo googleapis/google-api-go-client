@@ -144,7 +144,7 @@
               ],
               "parameters": {
                 "extraLocationTypes": {
-                  "description": "Optional. A list of extra location types that should be used as conditions for controlling the visibility of the locations.",
+                  "description": "Optional. Do not use this field. It is unsupported and is ignored unless explicitly documented otherwise. This is primarily for internal usage.",
                   "location": "query",
                   "repeated": true,
                   "type": "string"
@@ -2270,7 +2270,7 @@
       }
     }
   },
-  "revision": "20250811",
+  "revision": "20250813",
   "rootUrl": "https://netapp.googleapis.com/",
   "schemas": {
     "ActiveDirectory": {
@@ -4362,7 +4362,7 @@
           "type": "string"
         },
         "coldTierSizeGib": {
-          "description": "Output only. Size of the volume cold tier data in GiB.",
+          "description": "Output only. Size of the volume cold tier data rounded down to the nearest GiB.",
           "format": "int64",
           "readOnly": true,
           "type": "string"

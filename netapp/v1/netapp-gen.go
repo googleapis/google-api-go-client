@@ -2403,7 +2403,8 @@ type Volume struct {
 	BackupConfig *BackupConfig `json:"backupConfig,omitempty"`
 	// CapacityGib: Required. Capacity in GIB of the volume
 	CapacityGib int64 `json:"capacityGib,omitempty,string"`
-	// ColdTierSizeGib: Output only. Size of the volume cold tier data in GiB.
+	// ColdTierSizeGib: Output only. Size of the volume cold tier data rounded down
+	// to the nearest GiB.
 	ColdTierSizeGib int64 `json:"coldTierSizeGib,omitempty,string"`
 	// CreateTime: Output only. Create time of the volume
 	CreateTime string `json:"createTime,omitempty"`
@@ -2763,9 +2764,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

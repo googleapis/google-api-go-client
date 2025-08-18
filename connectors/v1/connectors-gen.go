@@ -1330,14 +1330,9 @@ type ConnectorInfraConfig struct {
 	MigrateDeploymentModel bool `json:"migrateDeploymentModel,omitempty"`
 	// MigrateTls: Indicate whether connector is being migrated to TLS.
 	MigrateTls bool `json:"migrateTls,omitempty"`
-	// NetworkEgressMode: Indicate whether connector is being migrated to use
-	// direct VPC egress.
-	//
-	// Possible values:
-	//   "NETWORK_EGRESS_MODE_UNSPECIFIED" - Network egress mode is not specified.
-	//   "SERVERLESS_VPC_ACCESS_CONNECTOR" - Default model VPC Access Connector.
-	//   "DIRECT_VPC_EGRESS" - Direct VPC Egress.
-	NetworkEgressMode string `json:"networkEgressMode,omitempty"`
+	// NetworkEgressModeOverride: Network egress mode override to migrate to direct
+	// VPC egress.
+	NetworkEgressModeOverride *NetworkEgressModeOverride `json:"networkEgressModeOverride,omitempty"`
 	// ProvisionCloudSpanner: Indicate whether cloud spanner is required for
 	// connector job.
 	ProvisionCloudSpanner bool `json:"provisionCloudSpanner,omitempty"`
@@ -4664,6 +4659,40 @@ func (s NetworkConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// NetworkEgressModeOverride: NetworkEgressModeOverride provides the network
+// egress mode override for a connector.
+type NetworkEgressModeOverride struct {
+	// IsEventingOverrideEnabled: boolean should be set to true to make sure only
+	// eventing enabled connections are migrated to direct vpc egress.
+	IsEventingOverrideEnabled bool `json:"isEventingOverrideEnabled,omitempty"`
+	// IsJobsOverrideEnabled: boolean should be set to true to make sure only async
+	// operations enabled connections are migrated to direct vpc egress.
+	IsJobsOverrideEnabled bool `json:"isJobsOverrideEnabled,omitempty"`
+	// NetworkEgressMode: Determines the VPC Egress mode for the connector.
+	//
+	// Possible values:
+	//   "NETWORK_EGRESS_MODE_UNSPECIFIED" - Network Egress mode is not specified.
+	//   "SERVERLESS_VPC_ACCESS_CONNECTOR" - Default model VPC Access Connector.
+	//   "DIRECT_VPC_EGRESS" - Direct VPC Egress.
+	NetworkEgressMode string `json:"networkEgressMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsEventingOverrideEnabled")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsEventingOverrideEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NetworkEgressModeOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkEgressModeOverride
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // NodeConfig: Node configuration for the connection.
 type NodeConfig struct {
 	// MaxNodeCount: Optional. Maximum number of nodes in the runtime nodes.
@@ -7006,9 +7035,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

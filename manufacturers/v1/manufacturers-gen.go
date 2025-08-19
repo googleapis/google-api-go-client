@@ -385,7 +385,7 @@ func (s Capacity) MarshalJSON() ([]byte, error) {
 type Certification struct {
 	// Authority: Required. Name of the certification body.
 	Authority string `json:"authority,omitempty"`
-	// Code: Required. A unique code to identify the certification.
+	// Code: Optional. A unique code to identify the certification.
 	Code string `json:"code,omitempty"`
 	// Link: Optional. A URL link to the certification.
 	Link string `json:"link,omitempty"`
@@ -559,10 +559,18 @@ func (s *FloatUnit) UnmarshalJSON(data []byte) error {
 type GoogleShoppingManufacturersV1ProductCertification struct {
 	// Authority: Required. Name of the certification body.
 	Authority string `json:"authority,omitempty"`
-	// Code: Required. A unique code to identify the certification.
+	// Code: Optional. A unique code to identify the certification.
 	Code string `json:"code,omitempty"`
+	// Link: Optional. A URL link to the certification.
+	Link string `json:"link,omitempty"`
+	// Logo: Optional. A URL link to the certification logo.
+	Logo string `json:"logo,omitempty"`
 	// Name: Required. Name of the certification.
 	Name string `json:"name,omitempty"`
+	// ValidUntil: Optional. The expiration date (UTC).
+	ValidUntil string `json:"validUntil,omitempty"`
+	// Value: Optional. A custom value of the certification.
+	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Authority") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -436,6 +436,8 @@ type DataSourceParameter struct {
 	Fields []*DataSourceParameter `json:"fields,omitempty"`
 	// Immutable: Cannot be changed after initial creation.
 	Immutable bool `json:"immutable,omitempty"`
+	// MaxListSize: For list parameters, the max size of the list.
+	MaxListSize int64 `json:"maxListSize,omitempty,string"`
 	// MaxValue: For integer and double values specifies maximum allowed value.
 	MaxValue float64 `json:"maxValue,omitempty"`
 	// MinValue: For integer and double values specifies minimum allowed value.
@@ -2078,9 +2080,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

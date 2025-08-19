@@ -769,9 +769,11 @@ type InternalRange struct {
 	PrefixLength int64 `json:"prefixLength,omitempty"`
 	// TargetCidrRange: Optional. Can be set to narrow down or pick a different
 	// address space while searching for a free range. If not set, defaults to the
-	// "10.0.0.0/8" address space. This can be used to search in other rfc-1918
-	// address spaces like "172.16.0.0/12" and "192.168.0.0/16" or non-rfc-1918
-	// address spaces used in the VPC.
+	// ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"] address space (for
+	// auto-mode networks, the "10.0.0.0/9" range is used instead of "10.0.0.0/8").
+	// This can be used to target the search in other rfc-1918 address spaces like
+	// "172.16.0.0/12" and "192.168.0.0/16" or non-rfc-1918 address spaces used in
+	// the VPC.
 	TargetCidrRange []string `json:"targetCidrRange,omitempty"`
 	// UpdateTime: Time when the internal range was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1435,9 +1437,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

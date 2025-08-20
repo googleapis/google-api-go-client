@@ -1075,7 +1075,7 @@
                   "type": "string"
                 },
                 "updateMask": {
-                  "description": "Required. The field paths to update. Separate multiple values with commas or use `*` to update all field paths. Currently supported field paths: - `text` - `attachment` - `cards` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `accessory_widgets` (Requires [app authentication](/chat/api/guides/auth/service-accounts).)",
+                  "description": "Required. The field paths to update. Separate multiple values with commas or use `*` to update all field paths. Currently supported field paths: - `text` - `attachment` - `cards` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `accessory_widgets` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `quoted_message_metadata` (Only allows removal of the quoted message.)",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -1116,7 +1116,7 @@
                   "type": "string"
                 },
                 "updateMask": {
-                  "description": "Required. The field paths to update. Separate multiple values with commas or use `*` to update all field paths. Currently supported field paths: - `text` - `attachment` - `cards` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `accessory_widgets` (Requires [app authentication](/chat/api/guides/auth/service-accounts).)",
+                  "description": "Required. The field paths to update. Separate multiple values with commas or use `*` to update all field paths. Currently supported field paths: - `text` - `attachment` - `cards` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `accessory_widgets` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `quoted_message_metadata` (Only allows removal of the quoted message.)",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -1528,7 +1528,7 @@
       }
     }
   },
-  "revision": "20250812",
+  "revision": "20250814",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessSettings": {
@@ -4684,7 +4684,7 @@
         },
         "quotedMessageMetadata": {
           "$ref": "QuotedMessageMetadata",
-          "description": "Optional. Information about a message that's quoted by a Google Chat user in a space. Google Chat users can quote a message to reply to it."
+          "description": "Optional. Information about a message that another message quotes. When you create a message, you can quote messages within the same thread, or quote a root message to create a new root message. However, you can't quote a message reply from a different thread. When you update a message, you can't add or replace the `quotedMessageMetadata` field, but you can remove it. For example usage, see [Quote another message](https://developers.google.com/workspace/chat/create-messages#quote-a-message)."
         },
         "sender": {
           "$ref": "User",
@@ -4874,11 +4874,11 @@
       "type": "object"
     },
     "QuotedMessageMetadata": {
-      "description": "Information about a quoted message.",
+      "description": "Information about a message that another message quotes. When you create a message, you can quote messages within the same thread, or quote a root message to create a new root message. However, you can't quote a message reply from a different thread. When you update a message, you can't add or replace the `quotedMessageMetadata` field, but you can remove it. For example usage, see [Quote another message](https://developers.google.com/workspace/chat/create-messages#quote-a-message).",
       "id": "QuotedMessageMetadata",
       "properties": {
         "lastUpdateTime": {
-          "description": "Required. The timestamp when the quoted message was created or when the quoted message was last updated.",
+          "description": "Required. The timestamp when the quoted message was created or when the quoted message was last updated. If the message was edited, use this field, `last_update_time`. If the message was never edited, use `create_time`. If `last_update_time` doesn't match the latest version of the quoted message, the request fails.",
           "format": "google-datetime",
           "type": "string"
         },

@@ -6175,6 +6175,10 @@ type BackendService struct {
 	// requests.
 	//   "ROUND_ROBIN" - This is a simple policy in which each healthy backend is
 	// selected in round robin order. This is the default.
+	//   "WEIGHTED_GCP_RENDEZVOUS" - Per-instance weighted Load Balancing via
+	// health check reported weights. In internal passthrough network load
+	// balancing, it is weighted rendezvous hashing. This option is only supported
+	// in internal passthrough network load balancing.
 	//   "WEIGHTED_MAGLEV" - Per-instance weighted Load Balancing via health check
 	// reported weights. If set, the Backend Service must configure a non legacy
 	// HTTP-based Health Check, and health check replies are expected to contain
@@ -7646,6 +7650,10 @@ type BackendServiceLocalityLoadBalancingPolicyConfigPolicy struct {
 	// requests.
 	//   "ROUND_ROBIN" - This is a simple policy in which each healthy backend is
 	// selected in round robin order. This is the default.
+	//   "WEIGHTED_GCP_RENDEZVOUS" - Per-instance weighted Load Balancing via
+	// health check reported weights. In internal passthrough network load
+	// balancing, it is weighted rendezvous hashing. This option is only supported
+	// in internal passthrough network load balancing.
 	//   "WEIGHTED_MAGLEV" - Per-instance weighted Load Balancing via health check
 	// reported weights. If set, the Backend Service must configure a non legacy
 	// HTTP-based Health Check, and health check replies are expected to contain
@@ -7892,6 +7900,25 @@ type BackendServiceTlsSettings struct {
 	// authenticationMode field. Can only be specified if authenticationMode is not
 	// NONE.
 	AuthenticationConfig string `json:"authenticationConfig,omitempty"`
+	// Identity: Assigns the Managed Identity for the RegionBackendService
+	// Workload. Use this property to configure the load balancer back-end to use
+	// certificates and roots of trust provisioned by the Managed Workload Identity
+	// system. The `managedIdentity` property is the fully-specified SPIFFE ID to
+	// use in the SVID presented by the Load Balancer Workload. The SPIFFE ID must
+	// be a resource starting with the "spiffe" scheme identifier, followed by the
+	// "trustDomain" property value, followed by the path to the Managed Workload
+	// Identity. Supported SPIFFE ID format: -
+	// spiffe://<trust_domain>/ns/<namespace>/sa/<subject> The Trust Domain within
+	// the Managed Identity must refer to a valid Workload Identity Pool. The
+	// TrustConfig and CertificateIssuanceConfig will be inherited from the
+	// Workload Identity Pool. Restrictions: - If you set the `managedIdentity`
+	// property, you cannot manually set the following fields: - tlsSettings.sni -
+	// tlsSettings.subjectAltNames - tlsSettings.authenticationConfig When defining
+	// a `managedIdentity` for a RegionBackendServices, the corresponding Workload
+	// Identity Pool must have a ca_pool configured in the same region. The system
+	// will set up a read-only tlsSettings.authenticationConfig for the Managed
+	// Identity.
+	Identity string `json:"identity,omitempty"`
 	// Sni: Server Name Indication - see RFC3546 section 3.1. If set, the load
 	// balancer sends this string as the SNI hostname in the TLS connection to the
 	// backend, and requires that this string match a Subject Alternative Name
@@ -27459,7 +27486,7 @@ func (s InstanceMoveRequest) MarshalJSON() ([]byte, error) {
 // InstanceParams: Additional instance params.
 type InstanceParams struct {
 	// RequestValidForDuration: Relative deadline for waiting for capacity.
-	// Relevant only for Instances.Insert and Instances.Start API.
+	// Relevant only for Instances.Insert API.
 	RequestValidForDuration *Duration `json:"requestValidForDuration,omitempty"`
 	// ResourceManagerTags: Resource manager tags to be bound to the instance. Tag
 	// keys and values have the same definition as resource manager tags. Keys must
@@ -29873,6 +29900,13 @@ type Interconnect struct {
 	//   "UNPROVISIONED" - The interconnect has not completed turnup. No
 	// attachments may be provisioned on this interconnect.
 	State string `json:"state,omitempty"`
+	// Subzone: Specific subzone in the InterconnectLocation that represents where
+	// this connection is to be provisioned.
+	//
+	// Possible values:
+	//   "SUBZONE_A" - Subzone A.
+	//   "SUBZONE_B" - Subzone B.
+	Subzone string `json:"subzone,omitempty"`
 	// WireGroups: [Output Only] A list of the URLs of all CrossSiteNetwork
 	// WireGroups configured to use this Interconnect. The Interconnect cannot be
 	// deleted if this list is non-empty.
@@ -33176,6 +33210,11 @@ type InterconnectLocation struct {
 	// SelfLinkWithId: [Output Only] Server-defined URL for this resource with the
 	// resource id.
 	SelfLinkWithId string `json:"selfLinkWithId,omitempty"`
+	// SingleRegionProductionCriticalPeerLocations: [Output Only] URLs of the other
+	// locations that can pair up with this location to support Single-Region
+	// 99.99% SLA. E.g. iad-zone1-1 and iad-zone2-5467 are Single-Region 99.99%
+	// peer locations of each other.
+	SingleRegionProductionCriticalPeerLocations []string `json:"singleRegionProductionCriticalPeerLocations,omitempty"`
 	// Status: [Output Only] The status of this InterconnectLocation, which can
 	// take one of the following values: - CLOSED: The InterconnectLocation is
 	// closed and is unavailable for provisioning new Interconnects. - AVAILABLE:
@@ -59323,15 +59362,15 @@ type SecurityPolicy struct {
 	// edge security policies can be configured to filter incoming HTTP requests
 	// targeting backend services (including Cloud CDN-enabled) as well as backend
 	// buckets (Cloud Storage). They filter requests before the request is served
-	// from Google's cache. - CLOUD_ARMOR_INTERNAL_SERVICE: Cloud Armor internal
-	// service policies can be configured to filter HTTP requests targeting
-	// services managed by Traffic Director in a service mesh. They filter requests
-	// before the request is served from the application. - CLOUD_ARMOR_NETWORK:
-	// Cloud Armor network policies can be configured to filter packets targeting
-	// network load balancing resources such as backend services, target pools,
-	// target instances, and instances with external IPs. They filter requests
-	// before the request is served from the application. This field can be set
-	// only at resource creation time.
+	// from Google's cache. - CLOUD_ARMOR_INTERNAL_SERVICE (preview only): Cloud
+	// Armor internal service policies can be configured to filter HTTP requests
+	// targeting services managed by Traffic Director in a service mesh. They
+	// filter requests before the request is served from the application. -
+	// CLOUD_ARMOR_NETWORK: Cloud Armor network policies can be configured to
+	// filter packets targeting network load balancing resources such as backend
+	// services, target pools, target instances, and instances with external IPs.
+	// They filter requests before the request is served from the application. This
+	// field can be set only at resource creation time.
 	//
 	// Possible values:
 	//   "CLOUD_ARMOR"
@@ -59957,7 +59996,11 @@ type SecurityPolicyRule struct {
 	// configured via redirectOptions. This action is only supported in Global
 	// Security Policies of type CLOUD_ARMOR. - throttle: limit client traffic to
 	// the configured threshold. Configure parameters for this action in
-	// rateLimitOptions. Requires rate_limit_options to be set for this.
+	// rateLimitOptions. Requires rate_limit_options to be set for this. -
+	// fairshare (preview only): when traffic reaches the threshold limit, requests
+	// from the clients matching this rule begin to be rate-limited using the Fair
+	// Share algorithm. This action is only allowed in security policies of type
+	// `CLOUD_ARMOR_INTERNAL_SERVICE`.
 	Action string `json:"action,omitempty"`
 	// Description: An optional description of this resource. Provide this property
 	// when you create the resource.
@@ -60019,7 +60062,7 @@ type SecurityPolicyRule struct {
 	// and 2147483647 is the lowest priority.
 	Priority int64 `json:"priority,omitempty"`
 	// RateLimitOptions: Must be specified if the action is "rate_based_ban" or
-	// "throttle". Cannot be specified for any other actions.
+	// "throttle" or "fairshare". Cannot be specified for any other actions.
 	RateLimitOptions *SecurityPolicyRuleRateLimitOptions `json:"rateLimitOptions,omitempty"`
 	// RedirectOptions: Parameters defining the redirect action. Cannot be
 	// specified for any other actions. This field is only supported in Global
@@ -60513,7 +60556,9 @@ type SecurityPolicyRuleRateLimitOptions struct {
 	// policy. If there is no "userIpRequestHeaders" configuration or an IP address
 	// cannot be resolved from it, the key type defaults to IP. -
 	// TLS_JA4_FINGERPRINT: JA4 TLS/SSL fingerprint if the client connects using
-	// HTTPS, HTTP/2 or HTTP/3. If not available, the key type defaults to ALL.
+	// HTTPS, HTTP/2 or HTTP/3. If not available, the key type defaults to ALL. For
+	// "fairshare" action, this value is limited to ALL i.e. a single rate limit
+	// threshold is enforced for all the requests matching the rule.
 	//
 	// Possible values:
 	//   "ALL"

@@ -221,10 +221,8 @@ type AccountDetails struct {
 	// Possible values:
 	//   "UNKNOWN" - Play does not have sufficient information to evaluate
 	// licensing details
-	//   "LICENSED" - The app and certificate match the versions distributed by
-	// Play.
-	//   "UNLICENSED" - The certificate or package name does not match Google Play
-	// records.
+	//   "LICENSED" - The user has a valid license to use the app.
+	//   "UNLICENSED" - The user does not have a valid license to use the app.
 	//   "UNEVALUATED" - Licensing details were not evaluated since a necessary
 	// requirement was missed. For example DeviceIntegrity did not meet the minimum
 	// bar or the application was not a known Play version.
@@ -590,6 +588,38 @@ func (s EnvironmentDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PcAccountDetails: Contains the account information such as the licensing
+// status for the user in the scope.
+type PcAccountDetails struct {
+	// AppLicensingVerdict: Required. Details about the licensing status of the
+	// user for the app in the scope.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Play does not have sufficient information to evaluate
+	// licensing details
+	//   "LICENSED" - The user has a valid license to use the app.
+	//   "UNLICENSED" - The user does not have a valid license to use the app.
+	//   "UNEVALUATED" - Licensing details were not evaluated since a necessary
+	// requirement was missed.
+	AppLicensingVerdict string `json:"appLicensingVerdict,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppLicensingVerdict") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppLicensingVerdict") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PcAccountDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PcAccountDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PcDeviceIntegrity: Contains the device attestation information.
 type PcDeviceIntegrity struct {
 	// DeviceRecognitionVerdict: Details about the integrity of the device the app
@@ -648,17 +678,20 @@ func (s PcRequestDetails) MarshalJSON() ([]byte, error) {
 
 // PcTokenPayloadExternal: Contains PC device attestation details.
 type PcTokenPayloadExternal struct {
+	// AccountDetails: Details about the account information such as the licensing
+	// status.
+	AccountDetails *PcAccountDetails `json:"accountDetails,omitempty"`
 	// DeviceIntegrity: Required. Details about the device integrity.
 	DeviceIntegrity *PcDeviceIntegrity `json:"deviceIntegrity,omitempty"`
 	// RequestDetails: Required. Details about the integrity request.
 	RequestDetails *PcRequestDetails `json:"requestDetails,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DeviceIntegrity") to
+	// ForceSendFields is a list of field names (e.g. "AccountDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DeviceIntegrity") to include in
+	// NullFields is a list of field names (e.g. "AccountDetails") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

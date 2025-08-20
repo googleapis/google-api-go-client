@@ -930,9 +930,25 @@ type HybridReplicationParameters struct {
 	ClusterLocation string `json:"clusterLocation,omitempty"`
 	// Description: Optional. Description of the replication.
 	Description string `json:"description,omitempty"`
+	// HybridReplicationType: Optional. Type of the hybrid replication.
+	//
+	// Possible values:
+	//   "VOLUME_HYBRID_REPLICATION_TYPE_UNSPECIFIED" - Unspecified hybrid
+	// replication type.
+	//   "MIGRATION" - Hybrid replication type for migration.
+	//   "CONTINUOUS_REPLICATION" - Hybrid replication type for continuous
+	// replication.
+	//   "ONPREM_REPLICATION" - New field for reversible OnPrem replication, to be
+	// used for data protection.
+	//   "REVERSE_ONPREM_REPLICATION" - New field for reversible OnPrem
+	// replication, to be used for data protection.
+	HybridReplicationType string `json:"hybridReplicationType,omitempty"`
 	// Labels: Optional. Labels to be added to the replication as the key value
 	// pairs.
 	Labels map[string]string `json:"labels,omitempty"`
+	// LargeVolumeConstituentCount: Optional. Constituent volume count for large
+	// volume.
+	LargeVolumeConstituentCount int64 `json:"largeVolumeConstituentCount,omitempty"`
 	// PeerClusterName: Required. Name of the user's local source cluster to be
 	// peered with the destination cluster.
 	PeerClusterName string `json:"peerClusterName,omitempty"`
@@ -946,6 +962,16 @@ type HybridReplicationParameters struct {
 	PeerVolumeName string `json:"peerVolumeName,omitempty"`
 	// Replication: Required. Desired name for the replication of this volume.
 	Replication string `json:"replication,omitempty"`
+	// ReplicationSchedule: Optional. Replication Schedule for the replication
+	// created.
+	//
+	// Possible values:
+	//   "HYBRID_REPLICATION_SCHEDULE_UNSPECIFIED" - Unspecified
+	// HybridReplicationSchedule
+	//   "EVERY_10_MINUTES" - Replication happens once every 10 minutes.
+	//   "HOURLY" - Replication happens once every hour.
+	//   "DAILY" - Replication happens once every day.
+	ReplicationSchedule string `json:"replicationSchedule,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterLocation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1735,7 +1761,14 @@ type Replication struct {
 	//   "MIGRATION" - Hybrid replication type for migration.
 	//   "CONTINUOUS_REPLICATION" - Hybrid replication type for continuous
 	// replication.
+	//   "ONPREM_REPLICATION" - New field for reversible OnPrem replication, to be
+	// used for data protection.
+	//   "REVERSE_ONPREM_REPLICATION" - Hybrid replication type for incremental
+	// Transfer in the reverse direction (GCNV is source and Onprem is destination)
 	HybridReplicationType string `json:"hybridReplicationType,omitempty"`
+	// HybridReplicationUserCommands: Output only. Copy pastable snapmirror
+	// commands to be executed on onprem cluster by the customer.
+	HybridReplicationUserCommands *UserCommands `json:"hybridReplicationUserCommands,omitempty"`
 	// Labels: Resource labels to represent user provided metadata.
 	Labels map[string]string `json:"labels,omitempty"`
 	// MirrorState: Output only. Indicates the state of mirroring.
@@ -1749,6 +1782,8 @@ type Replication struct {
 	//   "TRANSFERRING" - Incremental replication is in progress.
 	//   "BASELINE_TRANSFERRING" - Baseline replication is in progress.
 	//   "ABORTED" - Replication is aborted.
+	//   "EXTERNALLY_MANAGED" - Replication is being managed from Onprem ONTAP.
+	//   "PENDING_PEERING" - Peering is yet to be established.
 	MirrorState string `json:"mirrorState,omitempty"`
 	// Name: Identifier. The resource name of the Replication. Format:
 	// `projects/{project_id}/locations/{location}/volumes/{volume_id}/replications/
@@ -1785,6 +1820,10 @@ type Replication struct {
 	// be established.
 	//   "PENDING_SVM_PEERING" - Replication is waiting for SVM peering to be
 	// established.
+	//   "PENDING_REMOTE_RESYNC" - Replication is waiting for Commands to be
+	// executed on Onprem ONTAP.
+	//   "EXTERNALLY_MANAGED_REPLICATION" - Onprem ONTAP is destination and
+	// Replication can only be managed from Onprem.
 	State string `json:"state,omitempty"`
 	// StateDetails: Output only. State details of the replication.
 	StateDetails string `json:"stateDetails,omitempty"`
@@ -2325,6 +2364,29 @@ type TransferStats struct {
 
 func (s TransferStats) MarshalJSON() ([]byte, error) {
 	type NoMethod TransferStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserCommands: UserCommands contains the commands to be executed by the
+// customer.
+type UserCommands struct {
+	// Commands: Output only. List of commands to be executed by the customer.
+	Commands []string `json:"commands,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Commands") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Commands") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserCommands) MarshalJSON() ([]byte, error) {
+	type NoMethod UserCommands
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

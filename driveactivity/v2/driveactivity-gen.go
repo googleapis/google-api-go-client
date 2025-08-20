@@ -1386,15 +1386,13 @@ type RestrictionChange struct {
 	// shared outside the domain.
 	//   "DIRECT_SHARING" - When restricted, this prevents direct sharing of
 	// individual items.
-	//   "ITEM_DUPLICATION" - When restricted, this prevents actions like copy,
-	// download, and print that might result in uncontrolled duplicates of items.
-	// Now deprecated in favor of READERS_CAN_DOWNLOAD.
+	//   "ITEM_DUPLICATION" - Deprecated: Use READERS_CAN_DOWNLOAD instead.
 	//   "DRIVE_FILE_STREAM" - When restricted, this prevents use of Drive File
 	// Stream.
 	//   "FILE_ORGANIZER_CAN_SHARE_FOLDERS" - When restricted, this limits sharing
 	// of folders to managers only.
 	//   "READERS_CAN_DOWNLOAD" - When restricted, this prevents actions like copy,
-	// download, and print for readers. This is the same as ITEM_DUPLICATION.
+	// download, and print for readers. Replaces ITEM_DUPLICATION.
 	//   "WRITERS_CAN_DOWNLOAD" - When restricted, this prevents actions like copy,
 	// download, and print for writers.
 	Feature string `json:"feature,omitempty"`

@@ -795,6 +795,9 @@ type AnalyzeBatchRequest struct {
 	// contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens
 	// (-). The maximum length is 40 characters.
 	RequestId string `json:"requestId,omitempty"`
+	// RequestorId: Optional. The requestor ID is used to identify if the request
+	// comes from a GCA investigation or the old Ask Gemini Experience.
+	RequestorId string `json:"requestorId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RequestId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1589,13 +1592,13 @@ type ClusterConfig struct {
 	AutoscalingConfig *AutoscalingConfig `json:"autoscalingConfig,omitempty"`
 	// AuxiliaryNodeGroups: Optional. The node group settings.
 	AuxiliaryNodeGroups []*AuxiliaryNodeGroup `json:"auxiliaryNodeGroups,omitempty"`
-	// ClusterTier: Optional. The tier of the cluster.
+	// ClusterTier: Optional. The cluster tier.
 	//
 	// Possible values:
 	//   "CLUSTER_TIER_UNSPECIFIED" - Not set. Works the same as
 	// CLUSTER_TIER_STANDARD.
-	//   "CLUSTER_TIER_STANDARD" - Standard dataproc cluster.
-	//   "CLUSTER_TIER_PREMIUM" - Premium dataproc cluster.
+	//   "CLUSTER_TIER_STANDARD" - Standard Dataproc cluster.
+	//   "CLUSTER_TIER_PREMIUM" - Premium Dataproc cluster.
 	ClusterTier string `json:"clusterTier,omitempty"`
 	// ClusterType: Optional. The type of the cluster.
 	//
@@ -6853,7 +6856,7 @@ type SessionTemplate struct {
 	// (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be
 	// associated with a session.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Required. The resource name of the session template.
+	// Name: Required. Identifier. The resource name of the session template.
 	Name string `json:"name,omitempty"`
 	// RuntimeConfig: Optional. Runtime configuration for session execution.
 	RuntimeConfig *RuntimeConfig `json:"runtimeConfig,omitempty"`
@@ -7160,6 +7163,7 @@ type SoftwareConfig struct {
 	//   "SOLR" - The Solr service.
 	//   "ZEPPELIN" - The Zeppelin notebook.
 	//   "ZOOKEEPER" - The Zookeeper service.
+	//   "JUPYTER_KERNEL_GATEWAY" - The Jupyter Kernel Gateway.
 	OptionalComponents []string `json:"optionalComponents,omitempty"`
 	// Properties: Optional. The properties to set on daemon config files.Property
 	// keys are specified in prefix:property format, for example
@@ -14952,7 +14956,7 @@ type ProjectsLocationsSessionTemplatesPatchCall struct {
 
 // Patch: Updates the session template synchronously.
 //
-// - name: The resource name of the session template.
+// - name: Identifier. The resource name of the session template.
 func (r *ProjectsLocationsSessionTemplatesService) Patch(name string, sessiontemplate *SessionTemplate) *ProjectsLocationsSessionTemplatesPatchCall {
 	c := &ProjectsLocationsSessionTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -5110,9 +5110,13 @@ type Message struct {
 	// For details, see Send a message privately
 	// (https://developers.google.com/workspace/chat/create-messages#private).
 	PrivateMessageViewer *User `json:"privateMessageViewer,omitempty"`
-	// QuotedMessageMetadata: Optional. Information about a message that's quoted
-	// by a Google Chat user in a space. Google Chat users can quote a message to
-	// reply to it.
+	// QuotedMessageMetadata: Optional. Information about a message that another
+	// message quotes. When you create a message, you can quote messages within the
+	// same thread, or quote a root message to create a new root message. However,
+	// you can't quote a message reply from a different thread. When you update a
+	// message, you can't add or replace the `quotedMessageMetadata` field, but you
+	// can remove it. For example usage, see Quote another message
+	// (https://developers.google.com/workspace/chat/create-messages#quote-a-message).
 	QuotedMessageMetadata *QuotedMessageMetadata `json:"quotedMessageMetadata,omitempty"`
 	// Sender: Output only. The user who created the message. If your Chat app
 	// authenticates as a user
@@ -5418,10 +5422,19 @@ func (s PermissionSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// QuotedMessageMetadata: Information about a quoted message.
+// QuotedMessageMetadata: Information about a message that another message
+// quotes. When you create a message, you can quote messages within the same
+// thread, or quote a root message to create a new root message. However, you
+// can't quote a message reply from a different thread. When you update a
+// message, you can't add or replace the `quotedMessageMetadata` field, but you
+// can remove it. For example usage, see Quote another message
+// (https://developers.google.com/workspace/chat/create-messages#quote-a-message).
 type QuotedMessageMetadata struct {
 	// LastUpdateTime: Required. The timestamp when the quoted message was created
-	// or when the quoted message was last updated.
+	// or when the quoted message was last updated. If the message was edited, use
+	// this field, `last_update_time`. If the message was never edited, use
+	// `create_time`. If `last_update_time` doesn't match the latest version of the
+	// quoted message, the request fails.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
 	// Name: Required. Resource name of the message that is quoted. Format:
 	// `spaces/{space}/messages/{message}`
@@ -10470,7 +10483,8 @@ func (c *SpacesMessagesPatchCall) AllowMissing(allowMissing bool) *SpacesMessage
 // (/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires app
 // authentication (/chat/api/guides/auth/service-accounts).) -
 // `accessory_widgets` (Requires app authentication
-// (/chat/api/guides/auth/service-accounts).)
+// (/chat/api/guides/auth/service-accounts).) - `quoted_message_metadata` (Only
+// allows removal of the quoted message.)
 func (c *SpacesMessagesPatchCall) UpdateMask(updateMask string) *SpacesMessagesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -10622,7 +10636,8 @@ func (c *SpacesMessagesUpdateCall) AllowMissing(allowMissing bool) *SpacesMessag
 // (/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires app
 // authentication (/chat/api/guides/auth/service-accounts).) -
 // `accessory_widgets` (Requires app authentication
-// (/chat/api/guides/auth/service-accounts).)
+// (/chat/api/guides/auth/service-accounts).) - `quoted_message_metadata` (Only
+// allows removal of the quoted message.)
 func (c *SpacesMessagesUpdateCall) UpdateMask(updateMask string) *SpacesMessagesUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

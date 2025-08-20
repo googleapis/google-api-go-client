@@ -632,8 +632,8 @@ type GoogleCloudSecuritypostureV1PolicyRule struct {
 	// Parameters: Optional. Required for managed constraints if parameters are
 	// defined. Passes parameter values when policy enforcement is enabled. Ensure
 	// that parameter value types match those defined in the constraint definition.
-	// For example: { "allowedLocations" : ["us-east1", "us-west1"], "allowAll" :
-	// true }
+	// For example: ``` { "allowedLocations": ["us-east1", "us-west1"], "allowAll":
+	// true } ```
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 	// ResourceTypes: Optional. The resource types policies can support, only used
 	// for managed constraints. Method type is `GOVERN_TAGS`.
@@ -1565,15 +1565,13 @@ func (s ResourceSelector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ResourceTypes: Set multiple resource types for one policy, for example:
+// ResourceTypes: Set multiple resource types for one policy, for example: ```
 // resourceTypes: included: - compute.googleapis.com/Instance -
-// compute.googleapis.com/Disk Constraint definition contains an empty resource
-// type in order to support multiple resource types in the policy. Only
-// supports managed constraints. Method type is `GOVERN_TAGS`. Refer
-// go/multi-resource-support-force-tags-gmc to get more details.
+// compute.googleapis.com/Disk ``` Constraint definition contains an empty
+// resource type in order to support multiple resource types in the policy.
+// Only supports managed constraints. Method type is `GOVERN_TAGS`.
 type ResourceTypes struct {
 	// Included: Optional. The resource types we currently support.
-	// cloud/orgpolicy/customconstraintconfig/prod/resource_types.prototext
 	Included []string `json:"included,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Included") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4483,9 +4481,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

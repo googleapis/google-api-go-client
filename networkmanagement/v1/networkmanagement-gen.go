@@ -1326,8 +1326,8 @@ type Endpoint struct {
 	// are also used for protocol forwarding, Private Service Connect and other
 	// network services to provide forwarding information in the control plane.
 	// Applicable only to destination endpoint. Format:
-	// projects/{project}/global/forwardingRules/{id} or
-	// projects/{project}/regions/{region}/forwardingRules/{id}
+	// `projects/{project}/global/forwardingRules/{id}` or
+	// `projects/{project}/regions/{region}/forwardingRules/{id}`
 	ForwardingRule string `json:"forwardingRule,omitempty"`
 	// ForwardingRuleTarget: Output only. Specifies the type of the target of the
 	// forwarding rule.
@@ -4229,9 +4229,9 @@ func (r *OrganizationsLocationsService) List(name string) *OrganizationsLocation
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *OrganizationsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *OrganizationsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -4975,9 +4975,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -6898,8 +6898,8 @@ type ProjectsLocationsNetworkMonitoringProvidersGetCall struct {
 // Get: Gets the NetworkMonitoringProvider resource.
 //
 //   - name: Name of the resource. Format:
-//     projects/{project}/locations/{location}/networkMonitoringProviders/{network
-//     _monitoring_provider}.
+//     `projects/{project}/locations/{location}/networkMonitoringProviders/{networ
+//     k_monitoring_provider}`.
 func (r *ProjectsLocationsNetworkMonitoringProvidersService) Get(name string) *ProjectsLocationsNetworkMonitoringProvidersGetCall {
 	c := &ProjectsLocationsNetworkMonitoringProvidersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7010,7 +7010,7 @@ type ProjectsLocationsNetworkMonitoringProvidersListCall struct {
 // List: Lists NetworkMonitoringProviders for a given project and location.
 //
 //   - parent: Parent value for ListNetworkMonitoringProvidersRequest. Format:
-//     projects/{project}/locations/{location}.
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsNetworkMonitoringProvidersService) List(parent string) *ProjectsLocationsNetworkMonitoringProvidersListCall {
 	c := &ProjectsLocationsNetworkMonitoringProvidersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

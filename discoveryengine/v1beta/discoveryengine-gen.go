@@ -8124,6 +8124,11 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// Errors: Output only. The errors from initialization or from the latest
 	// connector run.
 	Errors []*GoogleRpcStatus `json:"errors,omitempty"`
+	// HybridIngestionDisabled: Optional. If the connector is a hybrid connector,
+	// determines whether ingestion is enabled and appropriate resources are
+	// provisioned during connector creation. If the connector is not a hybrid
+	// connector, this field is ignored.
+	HybridIngestionDisabled bool `json:"hybridIngestionDisabled,omitempty"`
 	// IdentityRefreshInterval: The refresh interval to sync the Access Control
 	// List information for the documents ingested by this connector. If not set,
 	// the access control list will be refreshed at the default interval of 30
@@ -12513,7 +12518,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestDataStoreSpec struct {
 	CustomSearchOperators string `json:"customSearchOperators,omitempty"`
 	// DataStore: Required. Full resource name of DataStore, such as
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
-	// es/{data_store_id}`.
+	// es/{data_store_id}`. The path must include the project number, project id is
+	// not supported for this field.
 	DataStore string `json:"dataStore,omitempty"`
 	// Filter: Optional. Filter specification to filter documents in the data store
 	// specified by data_store field. For more information on filtering, see
@@ -24617,7 +24623,8 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec struct {
 	CustomSearchOperators string `json:"customSearchOperators,omitempty"`
 	// DataStore: Required. Full resource name of DataStore, such as
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
-	// es/{data_store_id}`.
+	// es/{data_store_id}`. The path must include the project number, project id is
+	// not supported for this field.
 	DataStore string `json:"dataStore,omitempty"`
 	// Filter: Optional. Filter specification to filter documents in the data store
 	// specified by data_store field. For more information on filtering, see
@@ -25701,6 +25708,8 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseSearchResult struct {
 	Id string `json:"id,omitempty"`
 	// ModelScores: Output only. Google provided available scores.
 	ModelScores map[string]GoogleCloudDiscoveryengineV1betaDoubleList `json:"modelScores,omitempty"`
+	// RankSignals: Optional. A set of ranking signals associated with the result.
+	RankSignals *GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignals `json:"rankSignals,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Chunk") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -25717,6 +25726,113 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseSearchResult struct {
 func (s GoogleCloudDiscoveryengineV1betaSearchResponseSearchResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSearchResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignals: A set
+// of ranking signals.
+type GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignals struct {
+	// BoostingFactor: Optional. Combined custom boosts for a doc.
+	BoostingFactor float64 `json:"boostingFactor,omitempty"`
+	// CustomSignals: Optional. A list of custom clearbox signals.
+	CustomSignals []*GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignalsCustomSignal `json:"customSignals,omitempty"`
+	// DefaultRank: Optional. The default rank of the result.
+	DefaultRank float64 `json:"defaultRank,omitempty"`
+	// DocumentAge: Optional. Age of the document in hours.
+	DocumentAge float64 `json:"documentAge,omitempty"`
+	// KeywordSimilarityScore: Optional. Keyword matching adjustment.
+	KeywordSimilarityScore float64 `json:"keywordSimilarityScore,omitempty"`
+	// PctrRank: Optional. Predicted conversion rate adjustment as a rank.
+	PctrRank float64 `json:"pctrRank,omitempty"`
+	// RelevanceScore: Optional. Semantic relevance adjustment.
+	RelevanceScore float64 `json:"relevanceScore,omitempty"`
+	// SemanticSimilarityScore: Optional. Semantic similarity adjustment.
+	SemanticSimilarityScore float64 `json:"semanticSimilarityScore,omitempty"`
+	// TopicalityRank: Optional. Topicality adjustment as a rank.
+	TopicalityRank float64 `json:"topicalityRank,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoostingFactor") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoostingFactor") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignals
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignals
+	var s1 struct {
+		BoostingFactor          gensupport.JSONFloat64 `json:"boostingFactor"`
+		DefaultRank             gensupport.JSONFloat64 `json:"defaultRank"`
+		DocumentAge             gensupport.JSONFloat64 `json:"documentAge"`
+		KeywordSimilarityScore  gensupport.JSONFloat64 `json:"keywordSimilarityScore"`
+		PctrRank                gensupport.JSONFloat64 `json:"pctrRank"`
+		RelevanceScore          gensupport.JSONFloat64 `json:"relevanceScore"`
+		SemanticSimilarityScore gensupport.JSONFloat64 `json:"semanticSimilarityScore"`
+		TopicalityRank          gensupport.JSONFloat64 `json:"topicalityRank"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BoostingFactor = float64(s1.BoostingFactor)
+	s.DefaultRank = float64(s1.DefaultRank)
+	s.DocumentAge = float64(s1.DocumentAge)
+	s.KeywordSimilarityScore = float64(s1.KeywordSimilarityScore)
+	s.PctrRank = float64(s1.PctrRank)
+	s.RelevanceScore = float64(s1.RelevanceScore)
+	s.SemanticSimilarityScore = float64(s1.SemanticSimilarityScore)
+	s.TopicalityRank = float64(s1.TopicalityRank)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignalsCustomSi
+// gnal: Custom clearbox signal represented by name and value pair.
+type GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignalsCustomSignal struct {
+	// Name: Optional. Name of the signal.
+	Name string `json:"name,omitempty"`
+	// Value: Optional. Float value representing the ranking signal (e.g. 1.25 for
+	// BM25).
+	Value float64 `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignalsCustomSignal) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignalsCustomSignal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignalsCustomSignal) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignalsCustomSignal
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1betaSearchResponseSessionInfo: Information about

@@ -3239,6 +3239,9 @@ type GoogleCloudContactcenterinsightsV1ExportInsightsDataRequest struct {
 	//   "EXPORT_V5" - Export schema version 5.
 	//   "EXPORT_V6" - Export schema version 6.
 	//   "EXPORT_V7" - Export schema version 7.
+	//   "EXPORT_V8" - Export schema version 8.
+	//   "EXPORT_V9" - Export schema version 9.
+	//   "EXPORT_V10" - Export schema version 10.
 	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
 	// available.
 	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`
@@ -5169,6 +5172,11 @@ type GoogleCloudContactcenterinsightsV1QaAnswerAnswerValue struct {
 	PotentialScore float64 `json:"potentialScore,omitempty"`
 	// Score: Output only. Numerical score of the answer.
 	Score float64 `json:"score,omitempty"`
+	// SkipValue: Output only. A value of "Skip". If provided, this field may only
+	// be set to `true`. If a question receives this answer, it will be excluded
+	// from any score calculations. This would mean that the question was not
+	// evaluated.
+	SkipValue bool `json:"skipValue,omitempty"`
 	// StrValue: String value.
 	StrValue string `json:"strValue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
@@ -9052,6 +9060,9 @@ type GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequest struct {
 	//   "EXPORT_V5" - Export schema version 5.
 	//   "EXPORT_V6" - Export schema version 6.
 	//   "EXPORT_V7" - Export schema version 7.
+	//   "EXPORT_V8" - Export schema version 8.
+	//   "EXPORT_V9" - Export schema version 9.
+	//   "EXPORT_V10" - Export schema version 10.
 	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
 	// available.
 	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`
@@ -10249,6 +10260,11 @@ type GoogleCloudContactcenterinsightsV1alpha1QaAnswerAnswerValue struct {
 	PotentialScore float64 `json:"potentialScore,omitempty"`
 	// Score: Output only. Numerical score of the answer.
 	Score float64 `json:"score,omitempty"`
+	// SkipValue: Output only. A value of "Skip". If provided, this field may only
+	// be set to `true`. If a question receives this answer, it will be excluded
+	// from any score calculations. This would mean that the question was not
+	// evaluated.
+	SkipValue bool `json:"skipValue,omitempty"`
 	// StrValue: String value.
 	StrValue string `json:"strValue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
@@ -28510,10 +28526,11 @@ func (r *ProjectsLocationsQaQuestionTagsService) List(parent string) *ProjectsLo
 }
 
 // Filter sets the optional parameter "filter": A filter to reduce results to a
-// specific subset. Supports disjunctions (OR) and conjunctions (AND).
-// Supported fields include the following: * `project_id` - id of the project
-// to list tags for * `qa_scorecard_revision_id` - id of the scorecard revision
-// to list tags for * `qa_question_id - id of the question to list tags for`
+// specific subset. Supports conjunctions (ie. AND operators). Supported fields
+// include the following: * `project_id` - id of the project to list tags for *
+// `qa_scorecard_id` - id of the scorecard to list tags for * `revision_id` -
+// id of the scorecard revision to list tags for` * `qa_question_id - id of the
+// question to list tags for`
 func (c *ProjectsLocationsQaQuestionTagsListCall) Filter(filter string) *ProjectsLocationsQaQuestionTagsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

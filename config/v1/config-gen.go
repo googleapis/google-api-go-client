@@ -577,6 +577,8 @@ type Deployment struct {
 	// Name: Identifier. Resource name of the deployment. Format:
 	// `projects/{project}/locations/{location}/deployments/{deployment}`
 	Name string `json:"name,omitempty"`
+	// ProviderConfig: Optional. This field specifies the provider configurations.
+	ProviderConfig *ProviderConfig `json:"providerConfig,omitempty"`
 	// QuotaValidation: Optional. Input to control quota checks for resources in
 	// terraform configuration files. There are limited resources on which quota
 	// validation applies.
@@ -1480,6 +1482,8 @@ type Preview struct {
 	//   "DELETE" - DELETE mode generates as execution plan for destroying current
 	// resources.
 	PreviewMode string `json:"previewMode,omitempty"`
+	// ProviderConfig: Optional. This field specifies the provider configurations.
+	ProviderConfig *ProviderConfig `json:"providerConfig,omitempty"`
 	// ServiceAccount: Required. User-specified Service Account (SA) credentials to
 	// be used when previewing resources. Format:
 	// `projects/{projectID}/serviceAccounts/{serviceAccount}`
@@ -1696,6 +1700,34 @@ type PropertyDrift struct {
 
 func (s PropertyDrift) MarshalJSON() ([]byte, error) {
 	type NoMethod PropertyDrift
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProviderConfig: ProviderConfig contains the provider configurations.
+type ProviderConfig struct {
+	// SourceType: Optional. ProviderSource specifies the source type of the
+	// provider.
+	//
+	// Possible values:
+	//   "PROVIDER_SOURCE_UNSPECIFIED" - Unspecified source type, default to public
+	// sources.
+	//   "SERVICE_MAINTAINED" - Service maintained provider source type.
+	SourceType string `json:"sourceType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProviderConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ProviderConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1987,6 +2019,9 @@ type Revision struct {
 	// `projects/{project}/locations/{location}/deployments/{deployment}/
 	// revisions/{revision}`
 	Name string `json:"name,omitempty"`
+	// ProviderConfig: Output only. This field specifies the provider
+	// configurations.
+	ProviderConfig *ProviderConfig `json:"providerConfig,omitempty"`
 	// QuotaValidation: Optional. Input to control quota checks for resources in
 	// terraform configuration files. There are limited resources on which quota
 	// validation applies.
@@ -2504,9 +2539,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

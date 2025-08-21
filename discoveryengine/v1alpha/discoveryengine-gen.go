@@ -12070,6 +12070,11 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// Errors: Output only. The errors from initialization or from the latest
 	// connector run.
 	Errors []*GoogleRpcStatus `json:"errors,omitempty"`
+	// HybridIngestionDisabled: Optional. If the connector is a hybrid connector,
+	// determines whether ingestion is enabled and appropriate resources are
+	// provisioned during connector creation. If the connector is not a hybrid
+	// connector, this field is ignored.
+	HybridIngestionDisabled bool `json:"hybridIngestionDisabled,omitempty"`
 	// IdentityRefreshInterval: The refresh interval to sync the Access Control
 	// List information for the documents ingested by this connector. If not set,
 	// the access control list will be refreshed at the default interval of 30
@@ -19923,7 +19928,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestDataStoreSpec struct {
 	CustomSearchOperators string `json:"customSearchOperators,omitempty"`
 	// DataStore: Required. Full resource name of DataStore, such as
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
-	// es/{data_store_id}`.
+	// es/{data_store_id}`. The path must include the project number, project id is
+	// not supported for this field.
 	DataStore string `json:"dataStore,omitempty"`
 	// Filter: Optional. Filter specification to filter documents in the data store
 	// specified by data_store field. For more information on filtering, see
@@ -21007,6 +21013,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResult struct {
 	Id string `json:"id,omitempty"`
 	// ModelScores: Output only. Google provided available scores.
 	ModelScores map[string]GoogleCloudDiscoveryengineV1alphaDoubleList `json:"modelScores,omitempty"`
+	// RankSignals: Optional. A set of ranking signals associated with the result.
+	RankSignals *GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResultRankSignals `json:"rankSignals,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Chunk") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -21023,6 +21031,113 @@ type GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResult struct {
 func (s GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResultRankSignals: A
+// set of ranking signals.
+type GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResultRankSignals struct {
+	// BoostingFactor: Optional. Combined custom boosts for a doc.
+	BoostingFactor float64 `json:"boostingFactor,omitempty"`
+	// CustomSignals: Optional. A list of custom clearbox signals.
+	CustomSignals []*GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResultRankSignalsCustomSignal `json:"customSignals,omitempty"`
+	// DefaultRank: Optional. The default rank of the result.
+	DefaultRank float64 `json:"defaultRank,omitempty"`
+	// DocumentAge: Optional. Age of the document in hours.
+	DocumentAge float64 `json:"documentAge,omitempty"`
+	// KeywordSimilarityScore: Optional. Keyword matching adjustment.
+	KeywordSimilarityScore float64 `json:"keywordSimilarityScore,omitempty"`
+	// PctrRank: Optional. Predicted conversion rate adjustment as a rank.
+	PctrRank float64 `json:"pctrRank,omitempty"`
+	// RelevanceScore: Optional. Semantic relevance adjustment.
+	RelevanceScore float64 `json:"relevanceScore,omitempty"`
+	// SemanticSimilarityScore: Optional. Semantic similarity adjustment.
+	SemanticSimilarityScore float64 `json:"semanticSimilarityScore,omitempty"`
+	// TopicalityRank: Optional. Topicality adjustment as a rank.
+	TopicalityRank float64 `json:"topicalityRank,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoostingFactor") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoostingFactor") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResultRankSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResultRankSignals
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResultRankSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResultRankSignals
+	var s1 struct {
+		BoostingFactor          gensupport.JSONFloat64 `json:"boostingFactor"`
+		DefaultRank             gensupport.JSONFloat64 `json:"defaultRank"`
+		DocumentAge             gensupport.JSONFloat64 `json:"documentAge"`
+		KeywordSimilarityScore  gensupport.JSONFloat64 `json:"keywordSimilarityScore"`
+		PctrRank                gensupport.JSONFloat64 `json:"pctrRank"`
+		RelevanceScore          gensupport.JSONFloat64 `json:"relevanceScore"`
+		SemanticSimilarityScore gensupport.JSONFloat64 `json:"semanticSimilarityScore"`
+		TopicalityRank          gensupport.JSONFloat64 `json:"topicalityRank"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BoostingFactor = float64(s1.BoostingFactor)
+	s.DefaultRank = float64(s1.DefaultRank)
+	s.DocumentAge = float64(s1.DocumentAge)
+	s.KeywordSimilarityScore = float64(s1.KeywordSimilarityScore)
+	s.PctrRank = float64(s1.PctrRank)
+	s.RelevanceScore = float64(s1.RelevanceScore)
+	s.SemanticSimilarityScore = float64(s1.SemanticSimilarityScore)
+	s.TopicalityRank = float64(s1.TopicalityRank)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResultRankSignalsCustomS
+// ignal: Custom clearbox signal represented by name and value pair.
+type GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResultRankSignalsCustomSignal struct {
+	// Name: Optional. Name of the signal.
+	Name string `json:"name,omitempty"`
+	// Value: Optional. Float value representing the ranking signal (e.g. 1.25 for
+	// BM25).
+	Value float64 `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResultRankSignalsCustomSignal) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResultRankSignalsCustomSignal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResultRankSignalsCustomSignal) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResultRankSignalsCustomSignal
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1alphaSearchResponseSessionInfo: Information
@@ -27892,7 +28007,8 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec struct {
 	CustomSearchOperators string `json:"customSearchOperators,omitempty"`
 	// DataStore: Required. Full resource name of DataStore, such as
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
-	// es/{data_store_id}`.
+	// es/{data_store_id}`. The path must include the project number, project id is
+	// not supported for this field.
 	DataStore string `json:"dataStore,omitempty"`
 	// Filter: Optional. Filter specification to filter documents in the data store
 	// specified by data_store field. For more information on filtering, see
@@ -49151,6 +49267,25 @@ func (r *ProjectsLocationsCollectionsEnginesSessionsFilesService) List(parent st
 // filter format, please see https://google.aip.dev/160.
 func (c *ProjectsLocationsCollectionsEnginesSessionsFilesListCall) Filter(filter string) *ProjectsLocationsCollectionsEnginesSessionsFilesListCall {
 	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Specifies the order in which
+// files are returned. The value is a comma-separated string of fields to sort
+// by. For ascending order - just the field name is used. For descending order
+// - the field name is suffixed with ` desc`. Sorting is stable and applied
+// sequentially according to the order of fields provided in the string.
+// Supported fields for ordering: * `upload_time`: The time the file was
+// uploaded. * `file_name`: The name of the file. * `mime_type`: The MIME type
+// of the file. * `session_name`: The name of the session the file belongs to.
+// Default Behavior: If the `order_by` field is not specified, files will be
+// returned sorted by creation time in descending order. Examples: 1. Sort by
+// file name in ascending order: `file_name` 2. Sort by upload time in
+// descending order: `upload_time desc` 3. Sort by file name (ascending), then
+// by content type (MIME type) (descending), and finally by upload time
+// (ascending): `file_name, mime_type desc, upload_time`
+func (c *ProjectsLocationsCollectionsEnginesSessionsFilesListCall) OrderBy(orderBy string) *ProjectsLocationsCollectionsEnginesSessionsFilesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 

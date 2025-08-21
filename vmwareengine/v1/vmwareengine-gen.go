@@ -415,6 +415,35 @@ type ProjectsLocationsVmwareEngineNetworksService struct {
 	s *Service
 }
 
+// AcceleratePrivateCloudDeletionRequest: Request message for
+// VmwareEngine.AcceleratePrivateCloudDeletion
+type AcceleratePrivateCloudDeletionRequest struct {
+	// Etag: Optional. Checksum used to ensure that the user-provided value is up
+	// to date before the server processes the request. The server compares
+	// provided checksum with the current checksum of the resource. If the
+	// user-provided value is out of date, this request returns an `ABORTED` error.
+	Etag string `json:"etag,omitempty"`
+	// RequestId: Optional. The request ID must be a valid UUID with the exception
+	// that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AcceleratePrivateCloudDeletionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceleratePrivateCloudDeletionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Announcement: Announcement for the resources of Vmware Engine.
 type Announcement struct {
 	// ActivityType: Optional. Activity type of the announcement There can be only
@@ -8842,6 +8871,115 @@ func (c *ProjectsLocationsPrivateCloudsPatchCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPrivateCloudsPrivateCloudDeletionNowCall struct {
+	s                                     *Service
+	name                                  string
+	accelerateprivateclouddeletionrequest *AcceleratePrivateCloudDeletionRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// PrivateCloudDeletionNow: Accelerates the deletion of a private cloud that is
+// currently in soft deletion A `PrivateCloud` resource in soft deletion has
+// `PrivateCloud.state` set to `SOFT_DELETED` and `PrivateCloud.expireTime` set
+// to the time when deletion can no longer be reversed.
+//
+//   - name: The resource name of the private cloud in softdeletion. Resource
+//     names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`.
+func (r *ProjectsLocationsPrivateCloudsService) PrivateCloudDeletionNow(name string, accelerateprivateclouddeletionrequest *AcceleratePrivateCloudDeletionRequest) *ProjectsLocationsPrivateCloudsPrivateCloudDeletionNowCall {
+	c := &ProjectsLocationsPrivateCloudsPrivateCloudDeletionNowCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.accelerateprivateclouddeletionrequest = accelerateprivateclouddeletionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPrivateCloudsPrivateCloudDeletionNowCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsPrivateCloudDeletionNowCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPrivateCloudsPrivateCloudDeletionNowCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsPrivateCloudDeletionNowCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPrivateCloudsPrivateCloudDeletionNowCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsPrivateCloudDeletionNowCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.accelerateprivateclouddeletionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:privateCloudDeletionNow")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.privateCloudDeletionNow", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.privateCloudDeletionNow" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsPrivateCloudDeletionNowCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.privateCloudDeletionNow", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

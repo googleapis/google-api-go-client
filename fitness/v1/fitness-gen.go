@@ -1024,8 +1024,8 @@ type ListSessionsResponse struct {
 	// will only be provided if both startTime and endTime are omitted from the
 	// request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Session: Sessions with an end time that is between startTime and endTime of
-	// the request.
+	// Session: Sessions starting before endTime of the request and ending after
+	// startTime of the request up to (endTime of the request + 1 day).
 	Session []*Session `json:"session,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2547,9 +2547,10 @@ func (c *UsersSessionsListCall) ActivityType(activityType ...int64) *UsersSessio
 }
 
 // EndTime sets the optional parameter "endTime": An RFC3339 timestamp. Only
-// sessions ending between the start and end times will be included in the
-// response. If this time is omitted but startTime is specified, all sessions
-// from startTime to the end of time will be returned.
+// sessions starting before endTime and ending after startTime up to (endTime +
+// 1 day) will be included in the response. If this time is omitted but
+// startTime is specified, all sessions ending after startTime to the end of
+// time will be returned.
 func (c *UsersSessionsListCall) EndTime(endTime string) *UsersSessionsListCall {
 	c.urlParams_.Set("endTime", endTime)
 	return c
@@ -2574,9 +2575,10 @@ func (c *UsersSessionsListCall) PageToken(pageToken string) *UsersSessionsListCa
 }
 
 // StartTime sets the optional parameter "startTime": An RFC3339 timestamp.
-// Only sessions ending between the start and end times will be included in the
-// response. If this time is omitted but endTime is specified, all sessions
-// from the start of time up to endTime will be returned.
+// Only sessions starting before endTime and ending after startTime up to
+// (endTime + 1 day) will be included in the response. If this time is omitted
+// but endTime is specified, all sessions starting before endTime and ending
+// after the start of time up to (endTime + 1 day) will be returned.
 func (c *UsersSessionsListCall) StartTime(startTime string) *UsersSessionsListCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c

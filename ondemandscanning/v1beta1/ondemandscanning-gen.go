@@ -680,6 +680,28 @@ func (s BuilderConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type CISAKnownExploitedVulnerabilities struct {
+	// KnownRansomwareCampaignUse: Whether the vulnerability is known to have been
+	// leveraged as part of a ransomware campaign.
+	KnownRansomwareCampaignUse string `json:"knownRansomwareCampaignUse,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KnownRansomwareCampaignUse")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KnownRansomwareCampaignUse") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CISAKnownExploitedVulnerabilities) MarshalJSON() ([]byte, error) {
+	type NoMethod CISAKnownExploitedVulnerabilities
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CVSS: Common Vulnerability Scoring System. For details, see
 // https://www.first.org/cvss/specification-document This is a message we will
 // try to use for storing various versions of CVSS rather than making a
@@ -1140,6 +1162,47 @@ type EnvelopeSignature struct {
 func (s EnvelopeSignature) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvelopeSignature
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ExploitPredictionScoringSystem struct {
+	// Percentile: The percentile of the current score, the proportion of all
+	// scored vulnerabilities with the same or a lower EPSS score
+	Percentile float64 `json:"percentile,omitempty"`
+	// Score: The EPSS score representing the probability [0-1] of exploitation in
+	// the wild in the next 30 days
+	Score float64 `json:"score,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Percentile") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Percentile") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExploitPredictionScoringSystem) MarshalJSON() ([]byte, error) {
+	type NoMethod ExploitPredictionScoringSystem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ExploitPredictionScoringSystem) UnmarshalJSON(data []byte) error {
+	type NoMethod ExploitPredictionScoringSystem
+	var s1 struct {
+		Percentile gensupport.JSONFloat64 `json:"percentile"`
+		Score      gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Percentile = float64(s1.Percentile)
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 type File struct {
@@ -2613,6 +2676,31 @@ func (s ResourceDescriptor) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type Risk struct {
+	// CisaKev: CISA maintains the authoritative source of vulnerabilities that
+	// have been exploited in the wild.
+	CisaKev *CISAKnownExploitedVulnerabilities `json:"cisaKev,omitempty"`
+	// Epss: The Exploit Prediction Scoring System (EPSS) estimates the likelihood
+	// (probability) that a software vulnerability will be exploited in the wild.
+	Epss *ExploitPredictionScoringSystem `json:"epss,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CisaKev") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CisaKev") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Risk) MarshalJSON() ([]byte, error) {
+	type NoMethod Risk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type RunDetails struct {
 	Builder    *ProvenanceBuilder    `json:"builder,omitempty"`
 	Byproducts []*ResourceDescriptor `json:"byproducts,omitempty"`
@@ -3466,6 +3554,8 @@ type VulnerabilityOccurrence struct {
 	PackageIssue []*PackageIssue `json:"packageIssue,omitempty"`
 	// RelatedUrls: Output only. URLs related to this vulnerability.
 	RelatedUrls []*RelatedUrl `json:"relatedUrls,omitempty"`
+	// Risk: Risk information about the vulnerability, such as CISA, EPSS, etc.
+	Risk *Risk `json:"risk,omitempty"`
 	// Severity: Output only. The note provider assigned severity of this
 	// vulnerability.
 	//

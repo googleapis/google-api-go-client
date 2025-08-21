@@ -2432,6 +2432,9 @@ type GoogleFirestoreAdminV1Index struct {
 	// google.longrunning.Operations API to determine why the operation that last
 	// attempted to create this index failed, then re-create the index.
 	State string `json:"state,omitempty"`
+	// Unique: Optional. Whether it is an unique index. Unique index ensures all
+	// values for the indexed field(s) are unique across documents.
+	Unique bool `json:"unique,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

@@ -1456,8 +1456,9 @@ type AutoRenewingPlan struct {
 	// since subscription signup.
 	PriceChangeDetails *SubscriptionItemPriceChangeDetails `json:"priceChangeDetails,omitempty"`
 	// RecurringPrice: The current recurring price of the auto renewing plan. Note
-	// that the price does not take into account discounts and taxes, call
-	// orders.get API instead if transaction details are needed.
+	// that the price does not take into account discounts and does not include
+	// taxes for tax-exclusive pricing, please call orders.get API instead if
+	// transaction details are needed.
 	RecurringPrice *Money `json:"recurringPrice,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoRenewEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9114,7 +9115,9 @@ func (s TrackCountryAvailability) MarshalJSON() ([]byte, error) {
 
 // TrackRelease: A release within a track.
 type TrackRelease struct {
-	// CountryTargeting: Restricts a release to a specific set of countries.
+	// CountryTargeting: Restricts a release to a specific set of countries. Note
+	// this is only allowed to be set for inProgress releases in the production
+	// track.
 	CountryTargeting *CountryTargeting `json:"countryTargeting,omitempty"`
 	// InAppUpdatePriority: In-app update priority of the release. All newly added
 	// APKs in the release will be considered at this priority. Can take values in

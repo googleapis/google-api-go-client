@@ -1039,8 +1039,7 @@ func (s BackupDisasterRecovery) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BigQueryDestination: The destination big query dataset to export findings
-// to.
+// BigQueryDestination: The destination BigQuery dataset to export findings to.
 type BigQueryDestination struct {
 	// Dataset: Required. The relative resource name of the destination dataset, in
 	// the form projects/{projectId}/datasets/{datasetId}.
@@ -2240,7 +2239,7 @@ func (s Exfiltration) MarshalJSON() ([]byte, error) {
 
 // ExportFindingsMetadata: The LRO metadata for a ExportFindings request.
 type ExportFindingsMetadata struct {
-	// BigQueryDestination: Required. The destination big query dataset to export
+	// BigQueryDestination: Required. The destination BigQuery dataset to export
 	// findings to.
 	BigQueryDestination *BigQueryDestination `json:"bigQueryDestination,omitempty"`
 	// ExportStartTime: Optional. Timestamp at which export was started

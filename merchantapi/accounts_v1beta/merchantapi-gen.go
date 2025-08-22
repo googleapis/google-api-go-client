@@ -4445,7 +4445,7 @@ type User struct {
 	//   "PERFORMANCE_REPORTING" - Users with this right have access to performance
 	// and insights.
 	//   "API_DEVELOPER" - Users with this right have access to Merchant API and
-	// its notifications. This role is only accessible to accounts that has a
+	// its notifications. This role is only accessible to accounts that have a
 	// developer registration.
 	AccessRights []string `json:"accessRights,omitempty"`
 	// Name: Identifier. The resource name of the user. Format:

@@ -6499,6 +6499,9 @@ type GooglePrivacyDlpV2InfoTypeDescription struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Example: A sample that is a true positive for this infoType.
 	Example string `json:"example,omitempty"`
+	// LocationSupport: Locations at which this feature can be used. May change
+	// over time.
+	LocationSupport *GooglePrivacyDlpV2LocationSupport `json:"locationSupport,omitempty"`
 	// Name: Internal name of the infoType.
 	Name string `json:"name,omitempty"`
 	// SensitivityScore: The default sensitivity of the infoType.
@@ -8040,6 +8043,39 @@ type GooglePrivacyDlpV2Location struct {
 
 func (s GooglePrivacyDlpV2Location) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Location
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2LocationSupport: Locations at which a feature can be used.
+type GooglePrivacyDlpV2LocationSupport struct {
+	// Locations: Specific locations where the feature may be used. Examples:
+	// us-central1, us, asia, global If scope is ANY_LOCATION, no regions will be
+	// listed.
+	Locations []string `json:"locations,omitempty"`
+	// RegionalizationScope: The current scope for location on this feature. This
+	// may expand over time.
+	//
+	// Possible values:
+	//   "REGIONALIZATION_SCOPE_UNSPECIFIED" - Invalid.
+	//   "REGIONAL" - Feature may be used with one or more regions. See locations
+	// for details.
+	//   "ANY_LOCATION" - Feature may be used anywhere. Default value.
+	RegionalizationScope string `json:"regionalizationScope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Locations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Locations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2LocationSupport) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2LocationSupport
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

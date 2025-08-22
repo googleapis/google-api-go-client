@@ -917,6 +917,20 @@ type Advertiser struct {
 	// AdvertiserId: Output only. The unique ID of the advertiser. Assigned by the
 	// system.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+	// ContainsEuPoliticalAds: Optional. Whether this advertiser contains line
+	// items that serve European Union political ads. If this field is set to
+	// `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING`, then the following will happen:
+	// * Any new line items created under this advertiser will be assigned
+	// `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` if not otherwise specified. *
+	// Any existing line items under this advertiser that do not have a set value
+	// be updated to `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` within a day.
+	//
+	// Possible values:
+	//   "EU_POLITICAL_ADVERTISING_STATUS_UNKNOWN" - Unknown.
+	//   "CONTAINS_EU_POLITICAL_ADVERTISING" - Contains EU political advertising.
+	//   "DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING" - Does not contain EU
+	// political advertising.
+	ContainsEuPoliticalAds string `json:"containsEuPoliticalAds,omitempty"`
 	// CreativeConfig: Required. Creative related settings of the advertiser.
 	CreativeConfig *AdvertiserCreativeConfig `json:"creativeConfig,omitempty"`
 	// DataAccessConfig: Settings that control how advertiser data may be accessed.
@@ -3165,7 +3179,7 @@ type BulkUpdateLineItemsRequest struct {
 	TargetLineItem *LineItem `json:"targetLineItem,omitempty"`
 	// UpdateMask: Required. A field mask identifying which fields to update. Only
 	// the following fields are currently supported: * entityStatus *
-	// containsEuPoliticalAdvertising
+	// containsEuPoliticalAds
 	UpdateMask string `json:"updateMask,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LineItemIds") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4681,6 +4695,9 @@ type CreateSdfDownloadTaskRequest struct {
 	// guide](/display-video/api/structured-data-file/v8-migration-guide) before
 	// migrating to this version.
 	//   "SDF_VERSION_8_1" - SDF version 8.1.
+	//   "SDF_VERSION_9" - SDF version 9. Read the [v9 migration
+	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
+	// migrating to this version.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6315,18 +6332,35 @@ func (s DoubleVerifyVideoViewability) MarshalJSON() ([]byte, error) {
 // DuplicateLineItemRequest: Request message for
 // LineItemService.DuplicateLineItem.
 type DuplicateLineItemRequest struct {
+	// ContainsEuPoliticalAds: Whether this line item will serve European Union
+	// political ads. If contains_eu_political_ads has been set to
+	// `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` in the parent advertiser, then
+	// this field will be assigned `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` if
+	// not otherwise specified. This field can then be updated using the UI, API,
+	// or Structured Data Files. *Warning*: Starting **September 8, 2025**, this
+	// field must be set. If not, either the value
+	// `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` will be assigned to the line
+	// item if the parent advertiser has declared that it does not serve EU
+	// political ads, or **the request will fail**.
+	//
+	// Possible values:
+	//   "EU_POLITICAL_ADVERTISING_STATUS_UNKNOWN" - Unknown.
+	//   "CONTAINS_EU_POLITICAL_ADVERTISING" - Contains EU political advertising.
+	//   "DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING" - Does not contain EU
+	// political advertising.
+	ContainsEuPoliticalAds string `json:"containsEuPoliticalAds,omitempty"`
 	// TargetDisplayName: The display name of the new line item. Must be UTF-8
 	// encoded with a maximum size of 240 bytes.
 	TargetDisplayName string `json:"targetDisplayName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "TargetDisplayName") to
+	// ForceSendFields is a list of field names (e.g. "ContainsEuPoliticalAds") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "TargetDisplayName") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ContainsEuPoliticalAds") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -7369,6 +7403,23 @@ func (s GenderTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 // GenerateDefaultLineItemRequest: Request message for
 // LineItemService.GenerateDefaultLineItem.
 type GenerateDefaultLineItemRequest struct {
+	// ContainsEuPoliticalAds: Whether this line item will serve European Union
+	// political ads. If contains_eu_political_ads has been set to
+	// `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` in the parent advertiser, then
+	// this field will be assigned `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` if
+	// not otherwise specified. This field can then be updated using the UI, API,
+	// or Structured Data Files. *Warning*: Starting **September 8, 2025**, this
+	// field must be set. If not, either the value
+	// `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` will be assigned to the line
+	// item if the parent advertiser has declared that it does not serve EU
+	// political ads, or **the request will fail**.
+	//
+	// Possible values:
+	//   "EU_POLITICAL_ADVERTISING_STATUS_UNKNOWN" - Unknown.
+	//   "CONTAINS_EU_POLITICAL_ADVERTISING" - Contains EU political advertising.
+	//   "DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING" - Does not contain EU
+	// political advertising.
+	ContainsEuPoliticalAds string `json:"containsEuPoliticalAds,omitempty"`
 	// DisplayName: Required. The display name of the line item. Must be UTF-8
 	// encoded with a maximum size of 240 bytes.
 	DisplayName string `json:"displayName,omitempty"`
@@ -7450,15 +7501,15 @@ type GenerateDefaultLineItemRequest struct {
 	// when line_item_type is either `LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INSTALL` or
 	// `LINE_ITEM_TYPE_VIDEO_MOBILE_APP_INSTALL`.
 	MobileApp *MobileApp `json:"mobileApp,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "ContainsEuPoliticalAds") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisplayName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ContainsEuPoliticalAds") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -9270,6 +9321,23 @@ type LineItem struct {
 	// CampaignId: Output only. The unique ID of the campaign that the line item
 	// belongs to.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
+	// ContainsEuPoliticalAds: Whether this line item will serve European Union
+	// political ads. If contains_eu_political_ads has been set to
+	// `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` in the parent advertiser, then
+	// this field will be assigned `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` if
+	// not otherwise specified. This field can then be updated using the UI, API,
+	// or Structured Data Files. *Warning*: Starting **September 8, 2025**, this
+	// field must be set when creating a new line item. If not, either the value
+	// `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` will be assigned if the parent
+	// advertiser has declared that it does not serve EU political ads, or **the
+	// `advertisers.lineItems.create` request will fail**.
+	//
+	// Possible values:
+	//   "EU_POLITICAL_ADVERTISING_STATUS_UNKNOWN" - Unknown.
+	//   "CONTAINS_EU_POLITICAL_ADVERTISING" - Contains EU political advertising.
+	//   "DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING" - Does not contain EU
+	// political advertising.
+	ContainsEuPoliticalAds string `json:"containsEuPoliticalAds,omitempty"`
 	// ConversionCounting: The conversion tracking setting of the line item.
 	ConversionCounting *ConversionCountingConfig `json:"conversionCounting,omitempty"`
 	// CreativeIds: The IDs of the creatives associated with the line item.
@@ -12797,6 +12865,9 @@ type SdfConfig struct {
 	// guide](/display-video/api/structured-data-file/v8-migration-guide) before
 	// migrating to this version.
 	//   "SDF_VERSION_8_1" - SDF version 8.1.
+	//   "SDF_VERSION_9" - SDF version 9. Read the [v9 migration
+	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
+	// migrating to this version.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12876,6 +12947,9 @@ type SdfDownloadTaskMetadata struct {
 	// guide](/display-video/api/structured-data-file/v8-migration-guide) before
 	// migrating to this version.
 	//   "SDF_VERSION_8_1" - SDF version 8.1.
+	//   "SDF_VERSION_9" - SDF version 9. Read the [v9 migration
+	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
+	// migrating to this version.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14638,9 +14712,10 @@ type YoutubeAndPartnersBiddingStrategy struct {
 	// assigned at the line item level, this field is only applicable for the
 	// following strategy types: *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_CPA` *
-	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_ROAS` When the bidding
-	// strategy is assigned at the ad group level, this field is only applicable
-	// for the following strategy types: *
+	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_ROAS` *
+	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_RESERVE_SHARE_OF_VOICE` When the
+	// bidding strategy is assigned at the ad group level, this field is only
+	// applicable for the following strategy types: *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_MANUAL_CPM` *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_MANUAL_CPV` *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_CPA` *

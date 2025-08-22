@@ -1171,7 +1171,8 @@ func (c *ActivitiesListCall) CustomerId(customerId string) *ActivitiesListCall {
 // The report itself can be requested in August. If the `endTime` is not
 // specified, the report returns all activities from the `startTime` until the
 // current time or the most recent 180 days if the `startTime` is more than 180
-// days in the past.
+// days in the past. For Gmail requests, `startTime` and `endTime` must be
+// provided and the difference must not be greater than 30 days.
 func (c *ActivitiesListCall) EndTime(endTime string) *ActivitiesListCall {
 	c.urlParams_.Set("endTime", endTime)
 	return c
@@ -1274,7 +1275,8 @@ func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
 // example 2010-10-28T10:26:35.000Z. The report returns all activities from
 // `startTime` until `endTime`. The `startTime` must be before the `endTime`
 // (if specified) and the current time when the request is made, or the API
-// returns an error.
+// returns an error. For Gmail requests, `startTime` and `endTime` must be
+// provided and the difference must not be greater than 30 days.
 func (c *ActivitiesListCall) StartTime(startTime string) *ActivitiesListCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c

@@ -4157,17 +4157,17 @@ func (s WorkloadIdentityPool) MarshalJSON() ([]byte, error) {
 // WorkloadIdentityPoolManagedIdentity: Represents a managed identity for a
 // workload identity pool namespace.
 type WorkloadIdentityPoolManagedIdentity struct {
-	// Description: A description of the managed identity. Cannot exceed 256
-	// characters.
+	// Description: Optional. A description of the managed identity. Cannot exceed
+	// 256 characters.
 	Description string `json:"description,omitempty"`
-	// Disabled: Whether the managed identity is disabled. If disabled, credentials
-	// may no longer be issued for the identity, however existing credentials will
-	// still be accepted until they expire.
+	// Disabled: Optional. Whether the managed identity is disabled. If disabled,
+	// credentials may no longer be issued for the identity, however existing
+	// credentials will still be accepted until they expire.
 	Disabled bool `json:"disabled,omitempty"`
 	// ExpireTime: Output only. Time after which the managed identity will be
 	// permanently purged and cannot be recovered.
 	ExpireTime string `json:"expireTime,omitempty"`
-	// Name: Output only. The resource name of the managed identity.
+	// Name: Identifier. The resource name of the managed identity.
 	Name string `json:"name,omitempty"`
 	// State: Output only. The state of the managed identity.
 	//
@@ -4204,11 +4204,12 @@ func (s WorkloadIdentityPoolManagedIdentity) MarshalJSON() ([]byte, error) {
 // WorkloadIdentityPoolNamespace: Represents a namespace for a workload
 // identity pool. Namespaces are used to segment identities within the pool.
 type WorkloadIdentityPoolNamespace struct {
-	// Description: A description of the namespace. Cannot exceed 256 characters.
+	// Description: Optional. A description of the namespace. Cannot exceed 256
+	// characters.
 	Description string `json:"description,omitempty"`
-	// Disabled: Whether the namespace is disabled. If disabled, credentials may no
-	// longer be issued for identities within this namespace, however existing
-	// credentials will still be accepted until they expire.
+	// Disabled: Optional. Whether the namespace is disabled. If disabled,
+	// credentials may no longer be issued for identities within this namespace,
+	// however existing credentials will still be accepted until they expire.
 	Disabled bool `json:"disabled,omitempty"`
 	// ExpireTime: Output only. Time after which the namespace will be permanently
 	// purged and cannot be recovered.
@@ -4329,7 +4330,7 @@ type WorkloadIdentityPoolProvider struct {
 	// ExpireTime: Output only. Time after which the workload identity pool
 	// provider will be permanently purged and cannot be recovered.
 	ExpireTime string `json:"expireTime,omitempty"`
-	// Name: Output only. The resource name of the provider.
+	// Name: Identifier. The resource name of the provider.
 	Name string `json:"name,omitempty"`
 	// Oidc: An OpenId Connect 1.0 identity provider.
 	Oidc *Oidc `json:"oidc,omitempty"`
@@ -13729,7 +13730,7 @@ type ProjectsLocationsWorkloadIdentityPoolsNamespacesManagedIdentitiesPatchCall 
 // Patch: Updates an existing WorkloadIdentityPoolManagedIdentity in a
 // WorkloadIdentityPoolNamespace.
 //
-// - name: Output only. The resource name of the managed identity.
+// - name: Identifier. The resource name of the managed identity.
 func (r *ProjectsLocationsWorkloadIdentityPoolsNamespacesManagedIdentitiesService) Patch(name string, workloadidentitypoolmanagedidentity *WorkloadIdentityPoolManagedIdentity) *ProjectsLocationsWorkloadIdentityPoolsNamespacesManagedIdentitiesPatchCall {
 	c := &ProjectsLocationsWorkloadIdentityPoolsNamespacesManagedIdentitiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15080,7 +15081,7 @@ type ProjectsLocationsWorkloadIdentityPoolsProvidersPatchCall struct {
 
 // Patch: Updates an existing WorkloadIdentityPoolProvider.
 //
-// - name: Output only. The resource name of the provider.
+// - name: Identifier. The resource name of the provider.
 func (r *ProjectsLocationsWorkloadIdentityPoolsProvidersService) Patch(name string, workloadidentitypoolprovider *WorkloadIdentityPoolProvider) *ProjectsLocationsWorkloadIdentityPoolsProvidersPatchCall {
 	c := &ProjectsLocationsWorkloadIdentityPoolsProvidersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

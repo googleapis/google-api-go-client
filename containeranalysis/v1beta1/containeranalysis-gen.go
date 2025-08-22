@@ -908,7 +908,7 @@ func (s BuildSignature) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BuildStep: A step in the build pipeline. Next ID: 22
+// BuildStep: A step in the build pipeline. Next ID: 23
 type BuildStep struct {
 	// AllowExitCodes: Allow this build step to fail without failing the entire
 	// build if and only if the exit code is one of the specified codes. If
@@ -966,8 +966,10 @@ type BuildStep struct {
 	Name string `json:"name,omitempty"`
 	// PullTiming: Output only. Stores timing information for pulling this build
 	// step's builder image only.
-	PullTiming *TimeSpan     `json:"pullTiming,omitempty"`
-	Results    []*StepResult `json:"results,omitempty"`
+	PullTiming *TimeSpan `json:"pullTiming,omitempty"`
+	// RemoteConfig: Remote configuration for the build step.
+	RemoteConfig string        `json:"remoteConfig,omitempty"`
+	Results      []*StepResult `json:"results,omitempty"`
 	// Script: A shell script to be executed in the step. When script is provided,
 	// the user cannot specify the entrypoint or args.
 	Script string `json:"script,omitempty"`
@@ -4743,7 +4745,7 @@ type ListNotesResponse struct {
 	Notes []*Note `json:"notes,omitempty"`
 	// Unreachable: Unordered list. Unreachable regions. Populated for requests
 	// from the global region when `return_partial_success` is set. Format:
-	// projects//locations/
+	// `projects/[PROJECT_ID]/locations/[LOCATION]`
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4776,7 +4778,7 @@ type ListOccurrencesResponse struct {
 	Occurrences []*Occurrence `json:"occurrences,omitempty"`
 	// Unreachable: Unordered list. Unreachable regions. Populated for requests
 	// from the global region when `return_partial_success` is set. Format:
-	// projects//locations/
+	// `projects/[PROJECT_ID]/locations/[LOCATION]`
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -6694,7 +6696,7 @@ type VulnerabilityOccurrencesSummary struct {
 	Counts []*FixableTotalByDigest `json:"counts,omitempty"`
 	// Unreachable: Unordered list. Unreachable regions. Populated for requests
 	// from the global region when `return_partial_success` is set. Format:
-	// projects//locations/
+	// `projects/[PROJECT_ID]/locations/[LOCATION]`
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

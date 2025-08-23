@@ -600,7 +600,7 @@ func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AutokeyConfig: Cloud KMS Autokey configuration for a folder.
+// AutokeyConfig: Cloud KMS Autokey configuration for a folder or project.
 type AutokeyConfig struct {
 	// Etag: Optional. A checksum computed by the server based on the value of
 	// other fields. This may be sent on update requests to ensure that the client
@@ -618,7 +618,8 @@ type AutokeyConfig struct {
 	// the configuration.
 	KeyProject string `json:"keyProject,omitempty"`
 	// Name: Identifier. Name of the AutokeyConfig resource, e.g.
-	// `folders/{FOLDER_NUMBER}/autokeyConfig`.
+	// `folders/{FOLDER_NUMBER}/autokeyConfig`
+	// `projects/{PROJECT_NUMBER}/autokeyConfig`.
 	Name string `json:"name,omitempty"`
 	// State: Output only. The state for the AutokeyConfig.
 	//
@@ -4003,7 +4004,8 @@ type FoldersUpdateAutokeyConfigCall struct {
 // this configuration to determine where to create the resulting CryptoKey.
 //
 //   - name: Identifier. Name of the AutokeyConfig resource, e.g.
-//     `folders/{FOLDER_NUMBER}/autokeyConfig`.
+//     `folders/{FOLDER_NUMBER}/autokeyConfig`
+//     `projects/{PROJECT_NUMBER}/autokeyConfig`.
 func (r *FoldersService) UpdateAutokeyConfig(name string, autokeyconfig *AutokeyConfig) *FoldersUpdateAutokeyConfigCall {
 	c := &FoldersUpdateAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5348,9 +5350,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

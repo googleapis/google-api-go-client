@@ -339,8 +339,8 @@ type GoogleIdentityStsV1ExchangeTokenRequest struct {
 	GrantType string `json:"grantType,omitempty"`
 	// Options: A set of features that Security Token Service supports, in addition
 	// to the standard OAuth 2.0 token exchange, formatted as a serialized JSON
-	// object of Options. The size of the parameter value must not exceed 4096
-	// characters.
+	// object of Options. The size of the parameter value must not exceed 4 * 1024
+	// * 1024 characters (4 MB).
 	Options string `json:"options,omitempty"`
 	// RequestedTokenType: Required. An identifier for the type of requested
 	// security token. Can be `urn:ietf:params:oauth:token-type:access_token` or

@@ -2296,6 +2296,28 @@ func (s GoogleCloudClouddmsV1OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// HeterogeneousMetadata: Metadata for heterogeneous migration jobs objects.
+type HeterogeneousMetadata struct {
+	// UnsupportedEventsCount: The number of unsupported events.
+	UnsupportedEventsCount int64 `json:"unsupportedEventsCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "UnsupportedEventsCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UnsupportedEventsCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HeterogeneousMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod HeterogeneousMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ImportMappingRulesRequest: Request message for 'ImportMappingRules' request.
 type ImportMappingRulesRequest struct {
 	// AutoCommit: Required. Should the conversion workspace be committed
@@ -3157,6 +3179,9 @@ type MigrationJobObject struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Error: Output only. The error details in case of failure.
 	Error *Status `json:"error,omitempty"`
+	// HeterogeneousMetadata: Output only. Metadata for heterogeneous migration
+	// jobs objects.
+	HeterogeneousMetadata *HeterogeneousMetadata `json:"heterogeneousMetadata,omitempty"`
 	// Name: The object's name.
 	Name string `json:"name,omitempty"`
 	// Phase: Output only. The phase of the migration job object.
@@ -5993,9 +6018,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

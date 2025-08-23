@@ -623,6 +623,9 @@ type BuiltInVariable struct {
 	//   "serverPageLocationPath"
 	//   "serverPageLocationHostname"
 	//   "visitorRegion"
+	//   "analyticsClientId"
+	//   "analyticsSessionId"
+	//   "analyticsSessionNumber"
 	Type string `json:"type,omitempty"`
 	// WorkspaceId: GTM Workspace ID.
 	WorkspaceId string `json:"workspaceId,omitempty"`
@@ -7571,6 +7574,9 @@ func (r *AccountsContainersWorkspacesBuiltInVariablesService) Create(parent stri
 //	"serverPageLocationPath"
 //	"serverPageLocationHostname"
 //	"visitorRegion"
+//	"analyticsClientId"
+//	"analyticsSessionId"
+//	"analyticsSessionNumber"
 func (c *AccountsContainersWorkspacesBuiltInVariablesCreateCall) Type(type_ ...string) *AccountsContainersWorkspacesBuiltInVariablesCreateCall {
 	c.urlParams_.SetMulti("type", append([]string{}, type_...))
 	return c
@@ -7793,6 +7799,9 @@ func (r *AccountsContainersWorkspacesBuiltInVariablesService) Delete(path string
 //	"serverPageLocationPath"
 //	"serverPageLocationHostname"
 //	"visitorRegion"
+//	"analyticsClientId"
+//	"analyticsSessionId"
+//	"analyticsSessionNumber"
 func (c *AccountsContainersWorkspacesBuiltInVariablesDeleteCall) Type(type_ ...string) *AccountsContainersWorkspacesBuiltInVariablesDeleteCall {
 	c.urlParams_.SetMulti("type", append([]string{}, type_...))
 	return c
@@ -8128,6 +8137,9 @@ func (r *AccountsContainersWorkspacesBuiltInVariablesService) Revert(path string
 //	"serverPageLocationPath"
 //	"serverPageLocationHostname"
 //	"visitorRegion"
+//	"analyticsClientId"
+//	"analyticsSessionId"
+//	"analyticsSessionNumber"
 func (c *AccountsContainersWorkspacesBuiltInVariablesRevertCall) Type(type_ string) *AccountsContainersWorkspacesBuiltInVariablesRevertCall {
 	c.urlParams_.Set("type", type_)
 	return c

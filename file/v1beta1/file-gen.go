@@ -993,6 +993,8 @@ type Instance struct {
 	MaxCapacityGb int64 `json:"maxCapacityGb,omitempty,string"`
 	// MaxShareCount: The max number of shares allowed.
 	MaxShareCount int64 `json:"maxShareCount,omitempty,string"`
+	// MinCapacityGb: Output only. The min capacity of the instance.
+	MinCapacityGb int64 `json:"minCapacityGb,omitempty,string"`
 	// MultiShareEnabled: Indicates whether this instance uses a multi-share
 	// configuration with which it can have more than one file-share or none at
 	// all. File-shares are added, updated and removed through the separate
@@ -1696,6 +1698,11 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PauseReplicaRequest: PauseReplicaRequest pauses a Filestore standby instance
+// (replica).
+type PauseReplicaRequest struct {
+}
+
 // PerformanceConfig: Used for setting the performance configuration. If the
 // user doesn't specify PerformanceConfig, automatically provision the default
 // performance settings as described in
@@ -1842,6 +1849,9 @@ type ReplicaConfig struct {
 	// can get further details from the `stateReasons` field of the `ReplicaConfig`
 	// object.
 	//   "PROMOTING" - The replica is being promoted.
+	//   "PAUSING" - The replica is being paused.
+	//   "PAUSED" - The replica is paused.
+	//   "RESUMING" - The replica is being resumed.
 	State string `json:"state,omitempty"`
 	// StateReasons: Output only. Additional information about the replication
 	// state, if available.
@@ -1850,6 +1860,8 @@ type ReplicaConfig struct {
 	//   "STATE_REASON_UNSPECIFIED" - Reason not specified.
 	//   "PEER_INSTANCE_UNREACHABLE" - The peer instance is unreachable.
 	//   "REMOVE_FAILED" - The remove replica peer instance operation failed.
+	//   "PAUSE_FAILED" - The pause replica operation failed.
+	//   "RESUME_FAILED" - The resume replica operation failed.
 	StateReasons []string `json:"stateReasons,omitempty"`
 	// StateUpdateTime: Output only. The time when the replica state was updated.
 	StateUpdateTime string `json:"stateUpdateTime,omitempty"`
@@ -3721,6 +3733,113 @@ func (c *ProjectsLocationsInstancesPatchCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "file.projects.locations.instances.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInstancesPauseReplicaCall struct {
+	s                   *Service
+	name                string
+	pausereplicarequest *PauseReplicaRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// PauseReplica: Pause the standby instance (replica). WARNING: This operation
+// makes the standby instance's NFS filesystem writable. Any data written to
+// the standby instance while paused will be lost when the replica is resumed
+// or promoted.
+//
+//   - name: The resource name of the instance, in the format
+//     `projects/{project_id}/locations/{location_id}/instances/{instance_id}`.
+func (r *ProjectsLocationsInstancesService) PauseReplica(name string, pausereplicarequest *PauseReplicaRequest) *ProjectsLocationsInstancesPauseReplicaCall {
+	c := &ProjectsLocationsInstancesPauseReplicaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.pausereplicarequest = pausereplicarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInstancesPauseReplicaCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesPauseReplicaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInstancesPauseReplicaCall) Context(ctx context.Context) *ProjectsLocationsInstancesPauseReplicaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInstancesPauseReplicaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesPauseReplicaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.pausereplicarequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:pauseReplica")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "file.projects.locations.instances.pauseReplica", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "file.projects.locations.instances.pauseReplica" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesPauseReplicaCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "file.projects.locations.instances.pauseReplica", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

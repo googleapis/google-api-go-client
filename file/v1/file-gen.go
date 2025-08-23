@@ -912,6 +912,9 @@ func (s IOPSPerTB) MarshalJSON() ([]byte, error) {
 
 // Instance: A Filestore instance.
 type Instance struct {
+	// CapacityStepSizeGb: Output only. The increase/decrease capacity step size in
+	// GB.
+	CapacityStepSizeGb int64 `json:"capacityStepSizeGb,omitempty,string"`
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomPerformanceSupported: Output only. Indicates whether this instance
@@ -936,6 +939,10 @@ type Instance struct {
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// Labels: Resource labels to represent user provided metadata.
 	Labels map[string]string `json:"labels,omitempty"`
+	// MaxCapacityGb: Output only. The max capacity of the instance in GB.
+	MaxCapacityGb int64 `json:"maxCapacityGb,omitempty,string"`
+	// MinCapacityGb: Output only. The min capacity of the instance in GB.
+	MinCapacityGb int64 `json:"minCapacityGb,omitempty,string"`
 	// Name: Output only. The resource name of the instance, in the format
 	// `projects/{project}/locations/{location}/instances/{instance}`.
 	Name string `json:"name,omitempty"`
@@ -1027,15 +1034,15 @@ type Instance struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "CapacityStepSizeGb") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CapacityStepSizeGb") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1633,6 +1640,9 @@ type ReplicaConfig struct {
 	// can get further details from the `stateReasons` field of the `ReplicaConfig`
 	// object.
 	//   "PROMOTING" - The replica is being promoted.
+	//   "PAUSING" - The replica is being paused.
+	//   "PAUSED" - The replica is paused.
+	//   "RESUMING" - The replica is being resumed.
 	State string `json:"state,omitempty"`
 	// StateReasons: Output only. Additional information about the replication
 	// state, if available.
@@ -1641,6 +1651,8 @@ type ReplicaConfig struct {
 	//   "STATE_REASON_UNSPECIFIED" - Reason not specified.
 	//   "PEER_INSTANCE_UNREACHABLE" - The peer instance is unreachable.
 	//   "REMOVE_FAILED" - The remove replica peer instance operation failed.
+	//   "PAUSE_FAILED" - The pause replica operation failed.
+	//   "RESUME_FAILED" - The resume replica operation failed.
 	StateReasons []string `json:"stateReasons,omitempty"`
 	// StateUpdateTime: Output only. The time when the replica state was updated.
 	StateUpdateTime string `json:"stateUpdateTime,omitempty"`

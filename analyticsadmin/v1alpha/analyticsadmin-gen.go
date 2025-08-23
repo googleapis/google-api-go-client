@@ -9332,8 +9332,8 @@ type PropertiesGetReportingIdentitySettingsCall struct {
 	header_      http.Header
 }
 
-// GetReportingIdentitySettings: Returns the singleton data retention settings
-// for this property.
+// GetReportingIdentitySettings: Returns the reporting identity settings for
+// this property.
 //
 //   - name: The name of the settings to lookup. Format:
 //     properties/{property}/reportingIdentitySettings Example:

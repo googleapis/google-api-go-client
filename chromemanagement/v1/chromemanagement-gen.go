@@ -4186,6 +4186,11 @@ type GoogleChromeManagementVersionsV1CertificateProvisioningProcess struct {
 	// ProvisioningProfileId: Output only. The ID of the certificate provisioning
 	// profile.
 	ProvisioningProfileId string `json:"provisioningProfileId,omitempty"`
+	// ScepCaConnection: Output only. The CA connection is a SCEP CA connection.
+	ScepCaConnection *GoogleChromeManagementVersionsV1ScepCaConnection `json:"scepCaConnection,omitempty"`
+	// ScepProfile: Output only. The profile is a SCEP certificate provisioning
+	// profile.
+	ScepProfile *GoogleChromeManagementVersionsV1ScepProfile `json:"scepProfile,omitempty"`
 	// SignData: Output only. The data that the client was asked to sign. This
 	// field is only present after the `SignData` operation has been initiated.
 	SignData string `json:"signData,omitempty"`
@@ -4203,6 +4208,9 @@ type GoogleChromeManagementVersionsV1CertificateProvisioningProcess struct {
 	//   "SIGNATURE_ALGORITHM_RSA_PKCS1_V1_5_SHA256" - The server-side builds the
 	// PKCS#1 DigestInfo, i.e., the SHA256 hash is constructed on the server-side.
 	// The client should sign using RSA with PKCS#1 v1.5 padding.
+	//   "SIGNATURE_ALGORITHM_ECDSA_SHA256" - The PKCS#1 digest info is built by
+	// the server-side and sent to the client unhashed. The client is responsible
+	// for signing and hashing. Uses the P-256 curve.
 	SignatureAlgorithm string `json:"signatureAlgorithm,omitempty"`
 	// StartTime: Output only. Server-generated timestamp of when the certificate
 	// provisioning process has been created.
@@ -4890,6 +4898,80 @@ func (s GoogleChromeManagementVersionsV1ReportingDataPolicyData) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementVersionsV1ScepCaConnection: Describes a SCEP
+// Certificate Authority Connection.
+type GoogleChromeManagementVersionsV1ScepCaConnection struct {
+	// CaConnectionAdapterConfigReference: Output only. A string that references
+	// the administrator-provided configuration for the certification authority
+	// service. This field can be missing if no configuration was given.
+	CaConnectionAdapterConfigReference string `json:"caConnectionAdapterConfigReference,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CaConnectionAdapterConfigReference") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "CaConnectionAdapterConfigReference") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1ScepCaConnection) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1ScepCaConnection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1ScepProfile: Describes a SCEP certificate
+// provisioning profile.
+type GoogleChromeManagementVersionsV1ScepProfile struct {
+	// CertificateTemplateName: Output only. The certificate template name as
+	// defined by the admin on their on-prem infrastructure. This is identifiable
+	// by the customer's CA.
+	CertificateTemplateName string `json:"certificateTemplateName,omitempty"`
+	// Country: Output only. The country of the subject.
+	Country string `json:"country,omitempty"`
+	// KeyUsages: Output only. The allowed key usages for certificate's key.
+	//
+	// Possible values:
+	//   "KEY_USAGE_UNSPECIFIED" - The key usage is unspecified.
+	//   "KEY_USAGE_SIGNING" - The key can be used for signing.
+	//   "KEY_USAGE_KEY_ENCIPHERMENT" - The key can be used for key encipherment.
+	KeyUsages []string `json:"keyUsages,omitempty"`
+	// Locality: Output only. The locality of the subject.
+	Locality string `json:"locality,omitempty"`
+	// Organization: Output only. The name of the organization the subject belongs
+	// to.
+	Organization string `json:"organization,omitempty"`
+	// OrganizationalUnits: Output only. The organizational units of the subject.
+	OrganizationalUnits []string `json:"organizationalUnits,omitempty"`
+	// State: Output only. The state of the subject.
+	State string `json:"state,omitempty"`
+	// SubjectAltNames: Output only. The subject alternative names.
+	SubjectAltNames []*GoogleChromeManagementVersionsV1SubjectAltName `json:"subjectAltNames,omitempty"`
+	// SubjectCommonName: Output only. The common name of the subject.
+	SubjectCommonName string `json:"subjectCommonName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CertificateTemplateName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CertificateTemplateName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1ScepProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1ScepProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementVersionsV1SignDataMetadata: Metadata for the
 // long-running operation returned by signData.
 type GoogleChromeManagementVersionsV1SignDataMetadata struct {
@@ -4937,6 +5019,44 @@ type GoogleChromeManagementVersionsV1SignDataResponse struct {
 
 func (s GoogleChromeManagementVersionsV1SignDataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementVersionsV1SignDataResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1SubjectAltName: Describes a subject
+// alternative name.
+type GoogleChromeManagementVersionsV1SubjectAltName struct {
+	// Type: Output only. The type of the SubjectAltName extension.
+	//
+	// Possible values:
+	//   "SUBJECT_ALT_NAME_TYPE_UNSPECIFIED" - The subject alternative name type is
+	// unspecified.
+	//   "RFC822_NAME" - The subject alternative name type is an email address
+	// adhering to RFC822.
+	//   "DNS_NAME" - The subject alternative name type is a a Domain Name System
+	// (DNS).
+	//   "OTHER_NAME_USER_PRINCIPAL_NAME" - The subject alternative name type is a
+	// User Principal Name (UPN).
+	//   "UNIFORM_RESOURCE_IDENTIFIER" - The subject alternative name type is a
+	// Uniform Resource Identifier (URI).
+	Type string `json:"type,omitempty"`
+	// Value: Output only. The value of the subject alternative name with respoect
+	// to the `type`.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1SubjectAltName) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1SubjectAltName
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

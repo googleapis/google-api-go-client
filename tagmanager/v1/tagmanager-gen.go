@@ -554,6 +554,9 @@ type Container struct {
 	//   "elementVisibilityTime"
 	//   "elementVisibilityFirstTime"
 	//   "elementVisibilityRecentTime"
+	//   "analyticsClientId"
+	//   "analyticsSessionId"
+	//   "analyticsSessionNumber"
 	EnabledBuiltInVariable []string `json:"enabledBuiltInVariable,omitempty"`
 	// Fingerprint: The fingerprint of the GTM Container as computed at storage
 	// time. This value is recomputed whenever the account is modified.

@@ -1800,6 +1800,9 @@ type ClusterUpdate struct {
 	DesiredMonitoringService string `json:"desiredMonitoringService,omitempty"`
 	// DesiredNetworkPerformanceConfig: The desired network performance config.
 	DesiredNetworkPerformanceConfig *ClusterNetworkPerformanceConfig `json:"desiredNetworkPerformanceConfig,omitempty"`
+	// DesiredNetworkTierConfig: The desired network tier configuration for the
+	// cluster.
+	DesiredNetworkTierConfig *NetworkTierConfig `json:"desiredNetworkTierConfig,omitempty"`
 	// DesiredNodeKubeletConfig: The desired node kubelet config for the cluster.
 	DesiredNodeKubeletConfig *NodeKubeletConfig `json:"desiredNodeKubeletConfig,omitempty"`
 	// DesiredNodePoolAutoConfigKubeletConfig: The desired node kubelet config for
@@ -3481,6 +3484,10 @@ type IPAllocationPolicy struct {
 	//   "INTERNAL" - Access type internal (all v6 addresses are internal IPs)
 	//   "EXTERNAL" - Access type external (all v6 addresses are external IPs)
 	Ipv6AccessType string `json:"ipv6AccessType,omitempty"`
+	// NetworkTierConfig: Cluster-level network tier configuration is used to
+	// determine the default network tier for external IP addresses on cluster
+	// resources, such as node pools and load balancers.
+	NetworkTierConfig *NetworkTierConfig `json:"networkTierConfig,omitempty"`
 	// NodeIpv4Cidr: This field is deprecated, use node_ipv4_cidr_block.
 	NodeIpv4Cidr string `json:"nodeIpv4Cidr,omitempty"`
 	// NodeIpv4CidrBlock: The IP address range of the instance IPs in this cluster.
@@ -4752,6 +4759,41 @@ func (s NetworkTags) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// NetworkTierConfig: NetworkTierConfig contains network tier information.
+type NetworkTierConfig struct {
+	// NetworkTier: Network tier configuration.
+	//
+	// Possible values:
+	//   "NETWORK_TIER_UNSPECIFIED" - By default, use project-level configuration.
+	// When unspecified, the behavior defaults to NETWORK_TIER_DEFAULT. For cluster
+	// updates, this implies no action (no-op).
+	//   "NETWORK_TIER_DEFAULT" - Default network tier. Use project-level
+	// configuration. User can specify this value, meaning they want to keep the
+	// same behaviour as before cluster level network tier configuration is
+	// introduced. This field ensures backward compatibility for the network tier
+	// of cluster resources, such as node pools and load balancers, for their
+	// external IP addresses.
+	//   "NETWORK_TIER_PREMIUM" - Premium network tier.
+	//   "NETWORK_TIER_STANDARD" - Standard network tier.
+	NetworkTier string `json:"networkTier,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NetworkTier") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NetworkTier") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NetworkTierConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkTierConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // NodeAffinity: Specifies the NodeAffinity key, values, and affinity operator
 // according to shared sole tenant node group affinities
 // (https://{$universe.dns_names.final_documentation_domain}/compute/docs/nodes/sole-tenant-nodes#node_affinity_and_anti-affinity).
@@ -5250,6 +5292,10 @@ type NodeNetworkConfig struct {
 	EnablePrivateNodes bool `json:"enablePrivateNodes,omitempty"`
 	// NetworkPerformanceConfig: Network bandwidth tier configuration.
 	NetworkPerformanceConfig *NetworkPerformanceConfig `json:"networkPerformanceConfig,omitempty"`
+	// NetworkTierConfig: Output only. The network tier configuration for the node
+	// pool inherits from the cluster-level configuration and remains immutable
+	// throughout the node pool's lifecycle, including during upgrades.
+	NetworkTierConfig *NetworkTierConfig `json:"networkTierConfig,omitempty"`
 	// PodCidrOverprovisionConfig: [PRIVATE FIELD] Pod CIDR size overprovisioning
 	// config for the nodepool. Pod CIDR size per node depends on
 	// max_pods_per_node. By default, the value of max_pods_per_node is rounded off

@@ -463,8 +463,17 @@ type BackupCollection struct {
 	// KmsKey: Output only. The KMS key used to encrypt the backups under this
 	// backup collection.
 	KmsKey string `json:"kmsKey,omitempty"`
+	// LastBackupTime: Output only. The last time a backup was created in the
+	// backup collection.
+	LastBackupTime string `json:"lastBackupTime,omitempty"`
 	// Name: Identifier. Full resource path of the backup collection.
 	Name string `json:"name,omitempty"`
+	// TotalBackupCount: Output only. Total number of backups in the backup
+	// collection.
+	TotalBackupCount int64 `json:"totalBackupCount,omitempty,string"`
+	// TotalBackupSizeBytes: Output only. Total size of all backups in the backup
+	// collection.
+	TotalBackupSizeBytes int64 `json:"totalBackupSizeBytes,omitempty,string"`
 	// Uid: Output only. System assigned unique identifier of the backup
 	// collection.
 	Uid string `json:"uid,omitempty"`
@@ -4421,9 +4430,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

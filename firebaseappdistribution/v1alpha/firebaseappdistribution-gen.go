@@ -357,6 +357,8 @@ type GoogleFirebaseAppdistroV1Release struct {
 	// release, the display version is the `versionName`. For an iOS release, the
 	// display version is the `CFBundleShortVersionString`.
 	DisplayVersion string `json:"displayVersion,omitempty"`
+	// ExpireTime: Output only. The time the release will expire.
+	ExpireTime string `json:"expireTime,omitempty"`
 	// FirebaseConsoleUri: Output only. A link to the Firebase console displaying a
 	// single release.
 	FirebaseConsoleUri string `json:"firebaseConsoleUri,omitempty"`
@@ -369,6 +371,8 @@ type GoogleFirebaseAppdistroV1Release struct {
 	// Android app that lets testers (which were granted access to the app) view
 	// release notes and install the app onto their devices.
 	TestingUri string `json:"testingUri,omitempty"`
+	// UpdateTime: Output only. The time the release was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BinaryDownloadUri") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -259,6 +259,238 @@ type ProjectsLocationsProcessorsProcessorVersionsEvaluationsService struct {
 	s *Service
 }
 
+// CloudAiDocumentaiLabHifiaToolsValidationValidatorInput: Definition of the
+// validation rules. Those are the input to the validator logic and they are
+// used to validate a document.
+type CloudAiDocumentaiLabHifiaToolsValidationValidatorInput struct {
+	ValidationRules []*CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRule `json:"validationRules,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ValidationRules") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ValidationRules") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiDocumentaiLabHifiaToolsValidationValidatorInput) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiDocumentaiLabHifiaToolsValidationValidatorInput
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRule struct {
+	// Description: Description of the validation rule. This has no use but for
+	// documentation
+	Description      string                                                                                `json:"description,omitempty"`
+	FieldOccurrences *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFieldOccurrences `json:"fieldOccurrences,omitempty"`
+	FieldRegex       *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFieldRegex       `json:"fieldRegex,omitempty"`
+	FormValidation   *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFormValidation   `json:"formValidation,omitempty"`
+	// Name: Name of the validation rule.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRule) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleConstant:
+//
+//	The constant value used in the validation rules.
+type CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleConstant struct {
+	FloatValue float64 `json:"floatValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FloatValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FloatValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleConstant) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleConstant
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleConstant) UnmarshalJSON(data []byte) error {
+	type NoMethod CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleConstant
+	var s1 struct {
+		FloatValue gensupport.JSONFloat64 `json:"floatValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FloatValue = float64(s1.FloatValue)
+	return nil
+}
+
+type CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleField struct {
+	// DefaultValue: Default value to use if the field is not present. If the field
+	// is missing and the default value is not set, the validation run as if the
+	// field is not present in the validation logic.
+	DefaultValue *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleConstant `json:"defaultValue,omitempty"`
+	// FieldName: The field name to validate. This can be a simple field name or a
+	// nested field one using the ':' (meant as an aggregator) or '*' (meant as
+	// foreach) operators.
+	FieldName string `json:"fieldName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleField) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFieldOccurrences struct {
+	Field          *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleField `json:"field,omitempty"`
+	MaxOccurrences int64                                                                      `json:"maxOccurrences,omitempty"`
+	// MinOccurrences: Min and max occurrences of the field. If not set, there is
+	// limit set. The defined interval is a closed-closed interval, i.e. [min,
+	// max].
+	MinOccurrences int64 `json:"minOccurrences,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Field") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFieldOccurrences) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFieldOccurrences
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFieldRegex struct {
+	Field *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleField `json:"field,omitempty"`
+	// Pattern: Python regex to validate the field values.
+	Pattern string `json:"pattern,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Field") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFieldRegex) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFieldRegex
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFormValidation struct {
+	LeftOperand  *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFormValidationOperation `json:"leftOperand,omitempty"`
+	RightOperand *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFormValidationOperation `json:"rightOperand,omitempty"`
+	// ValidationOperator: The relational operator to be applied to the operands.
+	//
+	// Possible values:
+	//   "OPERATION_TYPE_UNSPECIFIED"
+	//   "OPERATION_TYPE_EQ"
+	//   "OPERATION_TYPE_NE"
+	//   "OPERATION_TYPE_LT"
+	//   "OPERATION_TYPE_LE"
+	//   "OPERATION_TYPE_GT"
+	//   "OPERATION_TYPE_GE"
+	ValidationOperator string `json:"validationOperator,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LeftOperand") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LeftOperand") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFormValidation) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFormValidation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFormValidationOperation struct {
+	// Constants: A list of constants to be used as operands.
+	Constants []*CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleConstant `json:"constants,omitempty"`
+	// Fields: A list of fields to be used as operands.
+	Fields []*CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleField `json:"fields,omitempty"`
+	// OperationType: The operation type to be applied to all the operands.
+	//
+	// Possible values:
+	//   "OPERATION_TYPE_UNSPECIFIED"
+	//   "OPERATION_TYPE_SUM"
+	//   "OPERATION_TYPE_SUB"
+	//   "OPERATION_TYPE_MUL"
+	//   "OPERATION_TYPE_DIV"
+	//   "OPERATION_TYPE_MAX"
+	//   "OPERATION_TYPE_MIN"
+	//   "OPERATION_TYPE_ABS"
+	//   "OPERATION_TYPE_UNIQUE"
+	//   "OPERATION_TYPE_COUNT"
+	OperationType string `json:"operationType,omitempty"`
+	// Operations: A list of recursive operations to be used as operands.
+	Operations []*CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFormValidationOperation `json:"operations,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Constants") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Constants") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFormValidationOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFormValidationOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadata: Metadata of the
 // auto-labeling documents operation.
 type GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadata struct {
@@ -2830,10 +3062,6 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	// information, refer to Google Cloud Storage Request URIs
 	// (https://cloud.google.com/storage/docs/reference-uris).
 	Uri string `json:"uri,omitempty"`
-	// ValidationOutputs: The output of the validation given the document and the
-	// validation rules. The output is appended to the document in the processing
-	// order.
-	ValidationOutputs []*GoogleCloudDocumentaiV1beta3DocumentValidationOutput `json:"validationOutputs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BlobAssets") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5150,71 +5378,6 @@ type GoogleCloudDocumentaiV1beta3DocumentTextChange struct {
 
 func (s GoogleCloudDocumentaiV1beta3DocumentTextChange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentTextChange
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDocumentaiV1beta3DocumentValidationOutput: The output of the
-// validation given the document and the validation rules.
-type GoogleCloudDocumentaiV1beta3DocumentValidationOutput struct {
-	// PassAllRules: The overall result of the validation, true if all applicable
-	// rules are valid.
-	PassAllRules bool `json:"passAllRules,omitempty"`
-	// ValidationResults: The result of each validation rule.
-	ValidationResults []*GoogleCloudDocumentaiV1beta3DocumentValidationOutputValidationResult `json:"validationResults,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PassAllRules") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PassAllRules") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDocumentaiV1beta3DocumentValidationOutput) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta3DocumentValidationOutput
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDocumentaiV1beta3DocumentValidationOutputValidationResult:
-// Validation result for a single validation rule.
-type GoogleCloudDocumentaiV1beta3DocumentValidationOutputValidationResult struct {
-	// RuleDescription: The description of the validation rule.
-	RuleDescription string `json:"ruleDescription,omitempty"`
-	// RuleName: The name of the validation rule.
-	RuleName string `json:"ruleName,omitempty"`
-	// ValidationDetails: The detailed information of the running the validation
-	// process using the entity from the document based on the validation rule.
-	ValidationDetails string `json:"validationDetails,omitempty"`
-	// ValidationResultType: The result of the validation rule.
-	//
-	// Possible values:
-	//   "VALIDATION_RESULT_TYPE_UNSPECIFIED" - The validation result type is
-	// unspecified.
-	//   "VALIDATION_RESULT_TYPE_VALID" - The validation is valid.
-	//   "VALIDATION_RESULT_TYPE_INVALID" - The validation is invalid.
-	//   "VALIDATION_RESULT_TYPE_SKIPPED" - The validation is skipped.
-	//   "VALIDATION_RESULT_TYPE_NOT_APPLICABLE" - The validation is not
-	// applicable.
-	ValidationResultType string `json:"validationResultType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RuleDescription") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RuleDescription") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDocumentaiV1beta3DocumentValidationOutputValidationResult) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta3DocumentValidationOutputValidationResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8438,9 +8601,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

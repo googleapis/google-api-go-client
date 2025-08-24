@@ -5165,7 +5165,9 @@ type DrivesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a shared drive.
+// Create: Creates a shared drive. For more information, see Manage shared
+// drives
+// (https://developers.google.com/workspace/drive/api/guides/manage-shareddrives).
 //
 //   - requestId: An ID, such as a random UUID, which uniquely identifies this
 //     user's request for idempotent creation of a shared drive. A repeated
@@ -5269,7 +5271,9 @@ type DrivesDeleteCall struct {
 }
 
 // Delete: Permanently deletes a shared drive for which the user is an
-// `organizer`. The shared drive cannot contain any untrashed items.
+// `organizer`. The shared drive cannot contain any untrashed items. For more
+// information, see Manage shared drives
+// (https://developers.google.com/workspace/drive/api/guides/manage-shareddrives).
 //
 // - driveId: The ID of the shared drive.
 func (r *DrivesService) Delete(driveId string) *DrivesDeleteCall {
@@ -5360,7 +5364,9 @@ type DrivesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a shared drive's metadata by ID.
+// Get: Gets a shared drive's metadata by ID. For more information, see Manage
+// shared drives
+// (https://developers.google.com/workspace/drive/api/guides/manage-shareddrives).
 //
 // - driveId: The ID of the shared drive.
 func (r *DrivesService) Get(driveId string) *DrivesGetCall {
@@ -5477,7 +5483,9 @@ type DrivesHideCall struct {
 	header_    http.Header
 }
 
-// Hide: Hides a shared drive from the default view.
+// Hide: Hides a shared drive from the default view. For more information, see
+// Manage shared drives
+// (https://developers.google.com/workspace/drive/api/guides/manage-shareddrives).
 //
 // - driveId: The ID of the shared drive.
 func (r *DrivesService) Hide(driveId string) *DrivesHideCall {
@@ -5729,7 +5737,9 @@ type DrivesUnhideCall struct {
 	header_    http.Header
 }
 
-// Unhide: Restores a shared drive to the default view.
+// Unhide: Restores a shared drive to the default view. For more information,
+// see Manage shared drives
+// (https://developers.google.com/workspace/drive/api/guides/manage-shareddrives).
 //
 // - driveId: The ID of the shared drive.
 func (r *DrivesService) Unhide(driveId string) *DrivesUnhideCall {
@@ -5827,7 +5837,9 @@ type DrivesUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates the metadata for a shared drive.
+// Update: Updates the metadata for a shared drive. For more information, see
+// Manage shared drives
+// (https://developers.google.com/workspace/drive/api/guides/manage-shareddrives).
 //
 // - driveId: The ID of the shared drive.
 func (r *DrivesService) Update(driveId string, drive *Drive) *DrivesUpdateCall {
@@ -9412,7 +9424,9 @@ type RevisionsDeleteCall struct {
 // Delete: Permanently deletes a file version. You can only delete revisions
 // for files with binary content in Google Drive, like images or videos.
 // Revisions for other files, like Google Docs or Sheets, and the last
-// remaining file version can't be deleted.
+// remaining file version can't be deleted. For more information, see Manage
+// file revisions
+// (https://developers.google.com/drive/api/guides/manage-revisions).
 //
 // - fileId: The ID of the file.
 // - revisionId: The ID of the revision.
@@ -9490,7 +9504,9 @@ type RevisionsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a revision's metadata or content by ID.
+// Get: Gets a revision's metadata or content by ID. For more information, see
+// Manage file revisions
+// (https://developers.google.com/workspace/drive/api/guides/manage-revisions).
 //
 // - fileId: The ID of the file.
 // - revisionId: The ID of the revision.
@@ -9628,7 +9644,9 @@ type RevisionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists a file's revisions.
+// List: Lists a file's revisions. For more information, see Manage file
+// revisions
+// (https://developers.google.com/workspace/drive/api/guides/manage-revisions).
 //
 // - fileId: The ID of the file.
 func (r *RevisionsService) List(fileId string) *RevisionsListCall {
@@ -9774,7 +9792,9 @@ type RevisionsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a revision with patch semantics.
+// Update: Updates a revision with patch semantics. For more information, see
+// Manage file revisions
+// (https://developers.google.com/workspace/drive/api/guides/manage-revisions).
 //
 // - fileId: The ID of the file.
 // - revisionId: The ID of the revision.

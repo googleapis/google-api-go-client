@@ -5521,6 +5521,16 @@ type GoogleCloudContactcenterinsightsV1QaScorecard struct {
 	// Name: Identifier. The scorecard name. Format:
 	// projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}
 	Name string `json:"name,omitempty"`
+	// Source: Output only. The source of the scorecard.
+	//
+	// Possible values:
+	//   "QA_SCORECARD_SOURCE_UNSPECIFIED" - The source of the scorecard is
+	// unspecified. Default to QA_SCORECARD_SOURCE_CUSTOMER_DEFINED.
+	//   "QA_SCORECARD_SOURCE_CUSTOMER_DEFINED" - The scorecard is a custom
+	// scorecard created by the user.
+	//   "QA_SCORECARD_SOURCE_DISCOVERY_ENGINE" - The scorecard is a scorecard
+	// created through discovery engine deployment.
+	Source string `json:"source,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the scorecard was
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -29112,6 +29122,29 @@ func (c *ProjectsLocationsQaScorecardsListCall) PageToken(pageToken string) *Pro
 	return c
 }
 
+// QaScorecardSources sets the optional parameter "qaScorecardSources": The
+// source of scorecards are based on how those Scorecards were created, e.g., a
+// customer-defined scorecard, a predefined scorecard, etc. This field is used
+// to retrieve Scorecards of one or more sources.
+//
+// Possible values:
+//
+//	"QA_SCORECARD_SOURCE_UNSPECIFIED" - The source of the scorecard is
+//
+// unspecified. Default to QA_SCORECARD_SOURCE_CUSTOMER_DEFINED.
+//
+//	"QA_SCORECARD_SOURCE_CUSTOMER_DEFINED" - The scorecard is a custom
+//
+// scorecard created by the user.
+//
+//	"QA_SCORECARD_SOURCE_DISCOVERY_ENGINE" - The scorecard is a scorecard
+//
+// created through discovery engine deployment.
+func (c *ProjectsLocationsQaScorecardsListCall) QaScorecardSources(qaScorecardSources ...string) *ProjectsLocationsQaScorecardsListCall {
+	c.urlParams_.SetMulti("qaScorecardSources", append([]string{}, qaScorecardSources...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -29818,6 +29851,29 @@ func (c *ProjectsLocationsQaScorecardsRevisionsListCall) PageSize(pageSize int64
 // should return the next page of data.
 func (c *ProjectsLocationsQaScorecardsRevisionsListCall) PageToken(pageToken string) *ProjectsLocationsQaScorecardsRevisionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QaScorecardSources sets the optional parameter "qaScorecardSources": The
+// source of scorecards are based on how those Scorecards were created, e.g., a
+// customer-defined scorecard, a predefined scorecard, etc. This field is used
+// to retrieve Scorecards Revisions from Scorecards of one or more sources.
+//
+// Possible values:
+//
+//	"QA_SCORECARD_SOURCE_UNSPECIFIED" - The source of the scorecard is
+//
+// unspecified. Default to QA_SCORECARD_SOURCE_CUSTOMER_DEFINED.
+//
+//	"QA_SCORECARD_SOURCE_CUSTOMER_DEFINED" - The scorecard is a custom
+//
+// scorecard created by the user.
+//
+//	"QA_SCORECARD_SOURCE_DISCOVERY_ENGINE" - The scorecard is a scorecard
+//
+// created through discovery engine deployment.
+func (c *ProjectsLocationsQaScorecardsRevisionsListCall) QaScorecardSources(qaScorecardSources ...string) *ProjectsLocationsQaScorecardsRevisionsListCall {
+	c.urlParams_.SetMulti("qaScorecardSources", append([]string{}, qaScorecardSources...))
 	return c
 }
 

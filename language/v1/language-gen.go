@@ -844,6 +844,7 @@ type CpuMetric struct {
 	//   "CUSTOM"
 	//   "E2"
 	//   "G2" - GPU-based machine, skip quota reporting.
+	//   "G4" - GPU-based machine, skip quota reporting.
 	//   "C3"
 	//   "M2" - MEMORY_OPTIMIZED_UPGRADE_PREMIUM
 	//   "M1" - MEMORY_OPTIMIZED
@@ -1003,6 +1004,7 @@ type CpuMetric struct {
 	//   "G2_STANDARD_32"
 	//   "G2_STANDARD_48"
 	//   "G2_STANDARD_96"
+	//   "G4_STANDARD_48"
 	//   "C3_STANDARD_4"
 	//   "C3_STANDARD_8"
 	//   "C3_STANDARD_22"
@@ -1377,6 +1379,7 @@ type GpuMetric struct {
 	//   "NVIDIA_H100_80GB"
 	//   "NVIDIA_H100_MEGA_80GB"
 	//   "NVIDIA_H200_141GB"
+	//   "NVIDIA_RTX_PRO_6000"
 	GpuType string `json:"gpuType,omitempty"`
 	// MachineSpec: Required. Machine spec, e.g. N1_STANDARD_4.
 	//
@@ -1529,6 +1532,7 @@ type GpuMetric struct {
 	//   "G2_STANDARD_32"
 	//   "G2_STANDARD_48"
 	//   "G2_STANDARD_96"
+	//   "G4_STANDARD_48"
 	//   "C3_STANDARD_4"
 	//   "C3_STANDARD_8"
 	//   "C3_STANDARD_22"
@@ -1967,6 +1971,7 @@ type RamMetric struct {
 	//   "G2_STANDARD_32"
 	//   "G2_STANDARD_48"
 	//   "G2_STANDARD_96"
+	//   "G4_STANDARD_48"
 	//   "C3_STANDARD_4"
 	//   "C3_STANDARD_8"
 	//   "C3_STANDARD_22"
@@ -2001,6 +2006,7 @@ type RamMetric struct {
 	//   "CUSTOM"
 	//   "E2"
 	//   "G2"
+	//   "G4"
 	//   "C3"
 	//   "M2" - MEMORY_OPTIMIZED_UPGRADE_PREMIUM
 	//   "M1" - MEMORY_OPTIMIZED

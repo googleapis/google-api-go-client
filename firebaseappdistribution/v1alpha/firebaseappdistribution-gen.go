@@ -509,6 +509,10 @@ type GoogleFirebaseAppdistroV1alphaAiStep struct {
 	// SuccessCriteria: Optional. A description of criteria the agent should use to
 	// determine if the goal has been successfully completed
 	SuccessCriteria string `json:"successCriteria,omitempty"`
+	// TestCase: Output only. The test case that contained this step. Note: The
+	// test case may have changed or been deleted since this step was created.
+	// Format: `projects/{project_number}/apps/{app}/testCases/{test_case}`
+	TestCase string `json:"testCase,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Assertion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1446,8 +1450,8 @@ func (s GoogleFirebaseAppdistroV1alphaReleaseNotes) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirebaseAppdistroV1alphaReleaseTest: The results of running an
-// automated test on a release.
+// GoogleFirebaseAppdistroV1alphaReleaseTest: Instance of an automated test for
+// a release.
 type GoogleFirebaseAppdistroV1alphaReleaseTest struct {
 	// AiInstructions: Optional. Instructions for AI driven test.
 	AiInstructions *GoogleFirebaseAppdistroV1alphaAiInstructions `json:"aiInstructions,omitempty"`

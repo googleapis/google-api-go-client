@@ -553,6 +553,7 @@ type ArimaForecastingMetrics struct {
 	//   "MONTHLY" - Monthly period, 30 days or irregular.
 	//   "QUARTERLY" - Quarterly period, 90 days or irregular.
 	//   "YEARLY" - Yearly period, 365 days or irregular.
+	//   "HOURLY" - Hourly period, 1 hour.
 	SeasonalPeriods []string `json:"seasonalPeriods,omitempty"`
 	// TimeSeriesId: Id to differentiate different time series for the large-scale
 	// case.
@@ -606,6 +607,7 @@ type ArimaModelInfo struct {
 	//   "MONTHLY" - Monthly period, 30 days or irregular.
 	//   "QUARTERLY" - Quarterly period, 90 days or irregular.
 	//   "YEARLY" - Yearly period, 365 days or irregular.
+	//   "HOURLY" - Hourly period, 1 hour.
 	SeasonalPeriods []string `json:"seasonalPeriods,omitempty"`
 	// TimeSeriesId: The time_series_id value for this time series. It will be one
 	// of the unique values from the time_series_id_column specified during ARIMA
@@ -680,6 +682,7 @@ type ArimaResult struct {
 	//   "MONTHLY" - Monthly period, 30 days or irregular.
 	//   "QUARTERLY" - Quarterly period, 90 days or irregular.
 	//   "YEARLY" - Yearly period, 365 days or irregular.
+	//   "HOURLY" - Hourly period, 1 hour.
 	SeasonalPeriods []string `json:"seasonalPeriods,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArimaModelInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -729,6 +732,7 @@ type ArimaSingleModelForecastingMetrics struct {
 	//   "MONTHLY" - Monthly period, 30 days or irregular.
 	//   "QUARTERLY" - Quarterly period, 90 days or irregular.
 	//   "YEARLY" - Yearly period, 365 days or irregular.
+	//   "HOURLY" - Hourly period, 1 hour.
 	SeasonalPeriods []string `json:"seasonalPeriods,omitempty"`
 	// TimeSeriesId: The time_series_id value for this time series. It will be one
 	// of the unique values from the time_series_id_column specified during ARIMA
@@ -1958,8 +1962,9 @@ func (s DataMaskingStatistics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DataPolicyOption: Data policy option proto, it currently supports name only,
-// will support precedence later.
+// DataPolicyOption: Data policy option. For more information, see Mask data by
+// applying data policies to a column
+// (https://cloud.google.com/bigquery/docs/column-data-masking#data-policies-on-column/).
 type DataPolicyOption struct {
 	// Name: Data policy resource name in the form of
 	// projects/project_id/locations/location_id/dataPolicies/data_policy_id.
@@ -4438,6 +4443,11 @@ type JobConfiguration struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// Load: [Pick one] Configures a load job.
 	Load *JobConfigurationLoad `json:"load,omitempty"`
+	// MaxSlots: Optional. INTERNAL: DO NOT USE. The maximum rate of slot
+	// consumption to allow for this job. If set, the number of slots used to
+	// execute the job will be throttled to try and keep its slot consumption below
+	// the requested rate.
+	MaxSlots int64 `json:"maxSlots,omitempty"`
 	// Query: [Pick one] Configures a query job.
 	Query *JobConfigurationQuery `json:"query,omitempty"`
 	// Reservation: Optional. The reservation that job would use. User can specify
@@ -7180,6 +7190,11 @@ type QueryRequest struct {
 	// large. In addition to this limit, responses are also limited to 10 MB. By
 	// default, there is no maximum row count, and only the byte limit applies.
 	MaxResults int64 `json:"maxResults,omitempty"`
+	// MaxSlots: Optional. INTERNAL: DO NOT USE. The maximum rate of slot
+	// consumption to allow for this job. If set, the number of slots used to
+	// execute the job will be throttled to try and keep its slot consumption below
+	// the requested rate. This limit is best effort.
+	MaxSlots int64 `json:"maxSlots,omitempty"`
 	// MaximumBytesBilled: Optional. Limits the bytes billed for this query.
 	// Queries with bytes billed above this limit will fail (without incurring a
 	// charge). If unspecified, the project default is used.
@@ -7755,15 +7770,17 @@ type Routine struct {
 	//   "DATA_MASKING" - The data governance type is data masking.
 	DataGovernanceType string `json:"dataGovernanceType,omitempty"`
 	// DefinitionBody: Required. The body of the routine. For functions, this is
-	// the expression in the AS clause. If language=SQL, it is the substring inside
-	// (but excluding) the parentheses. For example, for the function created with
-	// the following statement: `CREATE FUNCTION JoinLines(x string, y string) as
-	// (concat(x, "\n", y))` The definition_body is `concat(x, "\n", y)` (\n is not
-	// replaced with linebreak). If language=JAVASCRIPT, it is the evaluated string
-	// in the AS clause. For example, for the function created with the following
-	// statement: `CREATE FUNCTION f() RETURNS STRING LANGUAGE js AS 'return
-	// "\n";\n'` The definition_body is `return "\n";\n` Note that both \n are
-	// replaced with linebreaks.
+	// the expression in the AS clause. If `language = "SQL", it is the substring
+	// inside (but excluding) the parentheses. For example, for the function
+	// created with the following statement: `CREATE FUNCTION JoinLines(x string, y
+	// string) as (concat(x, "\n", y))` The definition_body is `concat(x, "\n", y)`
+	// (\n is not replaced with linebreak). If `language="JAVASCRIPT", it is the
+	// evaluated string in the AS clause. For example, for the function created
+	// with the following statement: `CREATE FUNCTION f() RETURNS STRING LANGUAGE
+	// js AS 'return "\n";\n'` The definition_body is `return "\n";\n` Note that
+	// both \n are replaced with linebreaks. If `definition_body` references
+	// another routine, then that routine must be fully qualified with its project
+	// ID.
 	DefinitionBody string `json:"definitionBody,omitempty"`
 	// Description: Optional. The description of the routine, if defined.
 	Description string `json:"description,omitempty"`
@@ -9382,7 +9399,8 @@ type TableFieldSchema struct {
 	// locale, case insensitive. * '': empty string. Default to case-sensitive
 	// behavior.
 	Collation string `json:"collation,omitempty"`
-	// DataPolicies: Optional. Data policy options, will replace the data_policies.
+	// DataPolicies: Optional. Data policies attached to this field, used for
+	// field-level access control.
 	DataPolicies []*DataPolicyOption `json:"dataPolicies,omitempty"`
 	// DefaultValueExpression: Optional. A SQL expression to specify the [default
 	// value] (https://cloud.google.com/bigquery/docs/default-values) for this

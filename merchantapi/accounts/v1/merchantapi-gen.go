@@ -1071,6 +1071,130 @@ func (s AutomaticShippingImprovements) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BatchCreateRegionsRequest: Request message for the `BatchCreateRegions`
+// method.
+type BatchCreateRegionsRequest struct {
+	// Requests: Required. The region(s) to create. The maximum number of regions
+	// that can be created in a batch is 100.
+	Requests []*CreateRegionRequest `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchCreateRegionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreateRegionsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchCreateRegionsResponse: Response message for the `BatchCreateRegions`
+// method.
+type BatchCreateRegionsResponse struct {
+	// Regions: The created region(s).
+	Regions []*Region `json:"regions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Regions") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Regions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchCreateRegionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreateRegionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchDeleteRegionsRequest: Request message for the `BatchDeleteRegions`
+// method.
+type BatchDeleteRegionsRequest struct {
+	// Requests: Required. The names of the regions to delete. A maximum of 1000
+	// regions can be deleted in a batch.
+	Requests []*DeleteRegionRequest `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchDeleteRegionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeleteRegionsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateRegionsRequest: Request message for the `BatchUpdateRegions`
+// method.
+type BatchUpdateRegionsRequest struct {
+	// Requests: Required. The region(s) to update. The maximum number of regions
+	// that can be updated in a batch is 100.
+	Requests []*UpdateRegionRequest `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchUpdateRegionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateRegionsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateRegionsResponse: Response message for the `BatchUpdateRegions`
+// method.
+type BatchUpdateRegionsResponse struct {
+	// Regions: The updated region(s).
+	Regions []*Region `json:"regions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Regions") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Regions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchUpdateRegionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateRegionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BusinessDayConfig: Business days of the warehouse.
 type BusinessDayConfig struct {
 	// BusinessDays: Required. Regular business days. May not be empty.
@@ -1441,6 +1565,34 @@ func (s CreateAndConfigureAccountRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CreateRegionRequest: Request message for the `CreateRegion` method.
+type CreateRegionRequest struct {
+	// Parent: Required. The account to create a region for. Format:
+	// `accounts/{account}`
+	Parent string `json:"parent,omitempty"`
+	// Region: Required. The region to create.
+	Region *Region `json:"region,omitempty"`
+	// RegionId: Required. The identifier for the region, unique over all regions
+	// of the same account.
+	RegionId string `json:"regionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Parent") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateRegionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateRegionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CustomerService: Customer service information.
 type CustomerService struct {
 	// Email: Optional. The email address where customer service may be reached.
@@ -1566,6 +1718,29 @@ type Date struct {
 
 func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeleteRegionRequest: Request message for the `DeleteRegion` method.
+type DeleteRegionRequest struct {
+	// Name: Required. The name of the region to delete. Format:
+	// `accounts/{account}/regions/{region}`
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteRegionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteRegionRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4363,6 +4538,31 @@ type UnclaimHomepageRequest struct {
 
 // UnregisterGcpRequest: Request message for the UnregisterGCP method.
 type UnregisterGcpRequest struct {
+}
+
+// UpdateRegionRequest: Request message for the `UpdateRegion` method.
+type UpdateRegionRequest struct {
+	// Region: Required. The updated region.
+	Region *Region `json:"region,omitempty"`
+	// UpdateMask: Optional. The comma-separated field mask indicating the fields
+	// to update. Example: "displayName,postalCodeArea.regionCode".
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Region") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Region") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateRegionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateRegionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UriSettings: URL settings for cart or checkout URL.
@@ -9906,6 +10106,322 @@ func (c *AccountsProgramsCheckoutSettingsUpdateCheckoutSettingsCall) Do(opts ...
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.programs.checkoutSettings.updateCheckoutSettings", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountsRegionsBatchCreateCall struct {
+	s                         *APIService
+	parent                    string
+	batchcreateregionsrequest *BatchCreateRegionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// BatchCreate: Creates one or more regions in your Merchant Center account.
+// Executing this method requires admin access.
+//
+//   - parent: The account to create one or more regions for. Format:
+//     `accounts/{account}`.
+func (r *AccountsRegionsService) BatchCreate(parent string, batchcreateregionsrequest *BatchCreateRegionsRequest) *AccountsRegionsBatchCreateCall {
+	c := &AccountsRegionsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchcreateregionsrequest = batchcreateregionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsRegionsBatchCreateCall) Fields(s ...googleapi.Field) *AccountsRegionsBatchCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsRegionsBatchCreateCall) Context(ctx context.Context) *AccountsRegionsBatchCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsRegionsBatchCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsRegionsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchcreateregionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1/{+parent}/regions:batchCreate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.regions.batchCreate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.regions.batchCreate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchCreateRegionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsRegionsBatchCreateCall) Do(opts ...googleapi.CallOption) (*BatchCreateRegionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchCreateRegionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.regions.batchCreate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountsRegionsBatchDeleteCall struct {
+	s                         *APIService
+	parent                    string
+	batchdeleteregionsrequest *BatchDeleteRegionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// BatchDelete: Deletes multiple regions by name from your Merchant Center
+// account. Executing this method requires admin access.
+//
+// - parent: The account to create a region for. Format: `accounts/{account}`.
+func (r *AccountsRegionsService) BatchDelete(parent string, batchdeleteregionsrequest *BatchDeleteRegionsRequest) *AccountsRegionsBatchDeleteCall {
+	c := &AccountsRegionsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchdeleteregionsrequest = batchdeleteregionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsRegionsBatchDeleteCall) Fields(s ...googleapi.Field) *AccountsRegionsBatchDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsRegionsBatchDeleteCall) Context(ctx context.Context) *AccountsRegionsBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsRegionsBatchDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsRegionsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchdeleteregionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1/{+parent}/regions:batchDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.regions.batchDelete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.regions.batchDelete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountsRegionsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.regions.batchDelete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountsRegionsBatchUpdateCall struct {
+	s                         *APIService
+	parent                    string
+	batchupdateregionsrequest *BatchUpdateRegionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// BatchUpdate: Updates one or more regions in your Merchant Center account.
+// Executing this method requires admin access.
+//
+//   - parent: The account to update one or more regions for. Format:
+//     `accounts/{account}`.
+func (r *AccountsRegionsService) BatchUpdate(parent string, batchupdateregionsrequest *BatchUpdateRegionsRequest) *AccountsRegionsBatchUpdateCall {
+	c := &AccountsRegionsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchupdateregionsrequest = batchupdateregionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsRegionsBatchUpdateCall) Fields(s ...googleapi.Field) *AccountsRegionsBatchUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsRegionsBatchUpdateCall) Context(ctx context.Context) *AccountsRegionsBatchUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsRegionsBatchUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsRegionsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchupdateregionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1/{+parent}/regions:batchUpdate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.regions.batchUpdate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.regions.batchUpdate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchUpdateRegionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsRegionsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchUpdateRegionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchUpdateRegionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.regions.batchUpdate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

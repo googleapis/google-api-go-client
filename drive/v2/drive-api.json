@@ -3893,7 +3893,7 @@
       }
     }
   },
-  "revision": "20250506",
+  "revision": "20250821",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -4561,19 +4561,19 @@
       "type": "object"
     },
     "Comment": {
-      "description": "A comment on a file in Google Drive. Some resource methods (such as `comments.update`) require a `commentId`. Use the `comments.list` method to retrieve the ID for a comment in a file.",
+      "description": "A comment on a file in Google Drive.",
       "id": "Comment",
       "properties": {
         "anchor": {
-          "description": "A region of the document represented as a JSON string. For details on defining anchor properties, refer to [Add comments and replies](https://developers.google.com/workspace/drive/api/v2/manage-comments).",
+          "description": "A region of the document represented as a JSON string. For details on defining anchor properties, refer to [Manage comments and replies](https://developers.google.com/workspace/drive/api/v3/manage-comments).",
           "type": "string"
         },
         "author": {
           "$ref": "User",
-          "description": "Output only. The author of the comment. The author's email address and permission ID will not be populated."
+          "description": "The user who wrote this comment."
         },
         "commentId": {
-          "description": "Output only. The ID of the comment.",
+          "description": "The ID of the comment.",
           "type": "string"
         },
         "content": {
@@ -4588,7 +4588,7 @@
           "type": "string"
         },
         "context": {
-          "description": "The context of the file which is being commented on.",
+          "description": "Context of a file which is being commented on.",
           "properties": {
             "type": {
               "description": "The MIME type of the context snippet.",
@@ -4607,24 +4607,28 @@
           "type": "string"
         },
         "deleted": {
-          "description": "Output only. Whether this comment has been deleted. If a comment has been deleted the content will be cleared and this will only represent a comment that once existed.",
+          "description": "Whether this comment has been deleted. If a comment has been deleted the content will be cleared and this will only represent a comment that once existed.",
           "type": "boolean"
         },
         "fileId": {
-          "description": "Output only. The file which this comment is addressing.",
+          "description": "The file which this comment is addressing.",
           "type": "string"
         },
         "fileTitle": {
-          "description": "Output only. The title of the file which this comment is addressing.",
+          "description": "The title of the file which this comment is addressing.",
           "type": "string"
         },
+        "genoaAuthor": {
+          "$ref": "GenoaUser",
+          "description": "The user who wrote this comment as a GenoaUser."
+        },
         "htmlContent": {
-          "description": "Output only. HTML formatted content for this comment.",
+          "description": "HTML formatted content for this comment.",
           "type": "string"
         },
         "kind": {
           "default": "drive#comment",
-          "description": "Output only. This is always `drive#comment`.",
+          "description": "This is always drive#comment.",
           "type": "string"
         },
         "modifiedDate": {
@@ -4633,18 +4637,22 @@
           "type": "string"
         },
         "replies": {
-          "description": "Output only. Replies to this post.",
+          "description": "Replies to this post.",
           "items": {
             "$ref": "CommentReply"
           },
           "type": "array"
         },
+        "resolved": {
+          "description": "Output only. Whether the comment has been resolved by one of its replies.",
+          "type": "boolean"
+        },
         "selfLink": {
-          "description": "Output only. A link back to this comment.",
+          "description": "A link back to this comment.",
           "type": "string"
         },
         "status": {
-          "description": "Output only. The status of this comment. Status can be changed by posting a reply to a comment with the desired status. * `open` - The comment is still open. * `resolved` - The comment has been resolved by one of its replies.",
+          "description": "The status of this comment. Status can be changed by posting a reply to a comment with the desired status. Possible values are: * `open` - The comment is still open. * `resolved` - The comment has been resolved by one of its replies.",
           "type": "string"
         }
       },
@@ -4663,7 +4671,7 @@
         },
         "kind": {
           "default": "drive#commentList",
-          "description": "This is always `drive#commentList`.",
+          "description": "This is always drive#commentList.",
           "type": "string"
         },
         "nextLink": {
@@ -4682,12 +4690,12 @@
       "type": "object"
     },
     "CommentReply": {
-      "description": "A comment on a file in Google Drive. Some resource methods (such as `replies.update`) require a `replyId`. Use the `replies.list` method to retrieve the ID for a reply.",
+      "description": "A reply to a comment on a file in Google Drive.",
       "id": "CommentReply",
       "properties": {
         "author": {
           "$ref": "User",
-          "description": "Output only. The author of the reply. The author's email address and permission ID will not be populated."
+          "description": "The user who wrote this reply."
         },
         "content": {
           "annotations": {
@@ -4705,16 +4713,20 @@
           "type": "string"
         },
         "deleted": {
-          "description": "Output only. Whether this reply has been deleted. If a reply has been deleted the content will be cleared and this will only represent a reply that once existed.",
+          "description": "Whether this reply has been deleted. If a reply has been deleted the content will be cleared and this will only represent a reply that once existed.",
           "type": "boolean"
         },
+        "genoaAuthor": {
+          "$ref": "GenoaUser",
+          "description": "The user who wrote this reply as a GenoaUser."
+        },
         "htmlContent": {
-          "description": "Output only. HTML formatted content for this reply.",
+          "description": "HTML formatted content for this reply.",
           "type": "string"
         },
         "kind": {
           "default": "drive#commentReply",
-          "description": "Output only. This is always `drive#commentReply`.",
+          "description": "This is always drive#commentReply.",
           "type": "string"
         },
         "modifiedDate": {
@@ -4723,11 +4735,11 @@
           "type": "string"
         },
         "replyId": {
-          "description": "Output only. The ID of the reply.",
+          "description": "The ID of the reply.",
           "type": "string"
         },
         "verb": {
-          "description": "The action this reply performed to the parent comment. When creating a new reply this is the action to be perform to the parent comment. Possible values are: * `resolve` - To resolve a comment. * `reopen` - To reopen (un-resolve) a comment.",
+          "description": "The action this reply performed to the parent comment. When creating a new reply this is the action to be perform tSo the parent comment. Possible values are: * `resolve` - To resolve a comment. * `reopen` - To reopen (un-resolve) a comment.",
           "type": "string"
         }
       },
@@ -4795,6 +4807,78 @@
         },
         "type": {
           "description": "Output only. The type of the content restriction. Currently the only possible value is `globalContentRestriction`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DomainSharingSettings": {
+      "description": "Next ID: 5",
+      "id": "DomainSharingSettings",
+      "properties": {
+        "maxAllUsersRole": {
+          "description": "Maximum allowed role when sharing with all users",
+          "enum": [
+            "OWNER",
+            "WRITER",
+            "COMMENTER",
+            "READER",
+            "NONE"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "maxDomainRole": {
+          "description": "Maximum allowed role when sharing with all users inside the domain",
+          "enum": [
+            "OWNER",
+            "WRITER",
+            "COMMENTER",
+            "READER",
+            "NONE"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "shareInPolicy": {
+          "deprecated": true,
+          "description": "Deprecated - See b/13414050",
+          "enum": [
+            "ALLOWED",
+            "ALLOWED_WITH_WARNING",
+            "DISALLOWED"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "shareOutPolicy": {
+          "description": "Policy for sharing with a user outside the domain",
+          "enum": [
+            "ALLOWED",
+            "ALLOWED_WITH_WARNING",
+            "DISALLOWED"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
           "type": "string"
         }
       },
@@ -5825,6 +5909,62 @@
       },
       "type": "object"
     },
+    "GenoaUser": {
+      "description": "Next ID: 13",
+      "id": "GenoaUser",
+      "properties": {
+        "customerId": {
+          "description": "The customer id which the user belongs to.",
+          "type": "string"
+        },
+        "domain": {
+          "deprecated": true,
+          "description": "The domain name of this user or group. As per FlexOrgs M2 compliance, usage of domain is not allowed. This field will continue to exist/be populated with the organization's display name (which is not necessarily the domain) to support mobile clients that use this field for display purposes. For more information please see: b/133505341",
+          "type": "string"
+        },
+        "domainSharingSettings": {
+          "$ref": "DomainSharingSettings",
+          "description": "The sharing settings for the domain of this user or group. Deprecated, see go/trust-rules-api-surface"
+        },
+        "emailAddress": {
+          "description": "The email address of the user",
+          "type": "string"
+        },
+        "emailAddressFromGaia": {
+          "description": "The primary email address of the user from GAIA.",
+          "type": "string"
+        },
+        "id": {
+          "description": "The user's obfuscated Gaia ID as visible throughout Google APIs",
+          "type": "string"
+        },
+        "isRequestingUser": {
+          "description": "Whether this user is the same as the user making the request.",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "A displayable name for the user.",
+          "type": "string"
+        },
+        "organizationDisplayName": {
+          "description": "The name of the organization that the user belongs to.",
+          "type": "string"
+        },
+        "permissionId": {
+          "description": "The user's ID as visible in the permissions collection",
+          "type": "string"
+        },
+        "photo": {
+          "$ref": "Photo",
+          "description": "A photo of the user."
+        },
+        "url": {
+          "description": "A URL to get more information about the user.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Label": {
       "description": "Representation of a label and label fields.",
       "id": "Label",
@@ -6333,6 +6473,27 @@
         "selfLink": {
           "description": "A link back to this list.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Photo": {
+      "description": "Next ID: 4",
+      "id": "Photo",
+      "properties": {
+        "height": {
+          "description": "The height of the picture in pixels.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "url": {
+          "description": "The URL to get the picture from.",
+          "type": "string"
+        },
+        "width": {
+          "description": "The width of the picture in pixels.",
+          "format": "uint32",
+          "type": "integer"
         }
       },
       "type": "object"

@@ -1044,51 +1044,52 @@ func (s ChildReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Comment: A comment on a file in Google Drive. Some resource methods (such as
-// `comments.update`) require a `commentId`. Use the `comments.list` method to
-// retrieve the ID for a comment in a file.
+// Comment: A comment on a file in Google Drive.
 type Comment struct {
 	// Anchor: A region of the document represented as a JSON string. For details
-	// on defining anchor properties, refer to Add comments and replies
-	// (https://developers.google.com/workspace/drive/api/v2/manage-comments).
+	// on defining anchor properties, refer to Manage comments and replies
+	// (https://developers.google.com/workspace/drive/api/v3/manage-comments).
 	Anchor string `json:"anchor,omitempty"`
-	// Author: Output only. The author of the comment. The author's email address
-	// and permission ID will not be populated.
+	// Author: The user who wrote this comment.
 	Author *User `json:"author,omitempty"`
-	// CommentId: Output only. The ID of the comment.
+	// CommentId: The ID of the comment.
 	CommentId string `json:"commentId,omitempty"`
 	// Content: The plain text content used to create this comment. This is not
 	// HTML safe and should only be used as a starting point to make edits to a
 	// comment's content.
 	Content string `json:"content,omitempty"`
-	// Context: The context of the file which is being commented on.
+	// Context: Context of a file which is being commented on.
 	Context *CommentContext `json:"context,omitempty"`
 	// CreatedDate: The date when this comment was first created.
 	CreatedDate string `json:"createdDate,omitempty"`
-	// Deleted: Output only. Whether this comment has been deleted. If a comment
-	// has been deleted the content will be cleared and this will only represent a
-	// comment that once existed.
+	// Deleted: Whether this comment has been deleted. If a comment has been
+	// deleted the content will be cleared and this will only represent a comment
+	// that once existed.
 	Deleted bool `json:"deleted,omitempty"`
-	// FileId: Output only. The file which this comment is addressing.
+	// FileId: The file which this comment is addressing.
 	FileId string `json:"fileId,omitempty"`
-	// FileTitle: Output only. The title of the file which this comment is
-	// addressing.
+	// FileTitle: The title of the file which this comment is addressing.
 	FileTitle string `json:"fileTitle,omitempty"`
-	// HtmlContent: Output only. HTML formatted content for this comment.
+	// GenoaAuthor: The user who wrote this comment as a GenoaUser.
+	GenoaAuthor *GenoaUser `json:"genoaAuthor,omitempty"`
+	// HtmlContent: HTML formatted content for this comment.
 	HtmlContent string `json:"htmlContent,omitempty"`
-	// Kind: Output only. This is always `drive#comment`.
+	// Kind: This is always drive#comment.
 	Kind string `json:"kind,omitempty"`
 	// ModifiedDate: The date when this comment or any of its replies were last
 	// modified.
 	ModifiedDate string `json:"modifiedDate,omitempty"`
-	// Replies: Output only. Replies to this post.
+	// Replies: Replies to this post.
 	Replies []*CommentReply `json:"replies,omitempty"`
-	// SelfLink: Output only. A link back to this comment.
-	SelfLink string `json:"selfLink,omitempty"`
-	// Status: Output only. The status of this comment. Status can be changed by
-	// posting a reply to a comment with the desired status. * `open` - The comment
-	// is still open. * `resolved` - The comment has been resolved by one of its
+	// Resolved: Output only. Whether the comment has been resolved by one of its
 	// replies.
+	Resolved bool `json:"resolved,omitempty"`
+	// SelfLink: A link back to this comment.
+	SelfLink string `json:"selfLink,omitempty"`
+	// Status: The status of this comment. Status can be changed by posting a reply
+	// to a comment with the desired status. Possible values are: * `open` - The
+	// comment is still open. * `resolved` - The comment has been resolved by one
+	// of its replies.
 	Status string `json:"status,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1111,7 +1112,7 @@ func (s Comment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CommentContext: The context of the file which is being commented on.
+// CommentContext: Context of a file which is being commented on.
 type CommentContext struct {
 	// Type: The MIME type of the context snippet.
 	Type string `json:"type,omitempty"`
@@ -1142,7 +1143,7 @@ type CommentList struct {
 	// Items: The list of comments. If nextPageToken is populated, then this list
 	// may be incomplete and an additional page of results should be fetched.
 	Items []*Comment `json:"items,omitempty"`
-	// Kind: This is always `drive#commentList`.
+	// Kind: This is always drive#commentList.
 	Kind string `json:"kind,omitempty"`
 	// NextLink: A link to the next page of comments.
 	NextLink string `json:"nextLink,omitempty"`
@@ -1174,12 +1175,9 @@ func (s CommentList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CommentReply: A comment on a file in Google Drive. Some resource methods
-// (such as `replies.update`) require a `replyId`. Use the `replies.list`
-// method to retrieve the ID for a reply.
+// CommentReply: A reply to a comment on a file in Google Drive.
 type CommentReply struct {
-	// Author: Output only. The author of the reply. The author's email address and
-	// permission ID will not be populated.
+	// Author: The user who wrote this reply.
 	Author *User `json:"author,omitempty"`
 	// Content: The plain text content used to create this reply. This is not HTML
 	// safe and should only be used as a starting point to make edits to a reply's
@@ -1188,20 +1186,22 @@ type CommentReply struct {
 	Content string `json:"content,omitempty"`
 	// CreatedDate: The date when this reply was first created.
 	CreatedDate string `json:"createdDate,omitempty"`
-	// Deleted: Output only. Whether this reply has been deleted. If a reply has
-	// been deleted the content will be cleared and this will only represent a
-	// reply that once existed.
+	// Deleted: Whether this reply has been deleted. If a reply has been deleted
+	// the content will be cleared and this will only represent a reply that once
+	// existed.
 	Deleted bool `json:"deleted,omitempty"`
-	// HtmlContent: Output only. HTML formatted content for this reply.
+	// GenoaAuthor: The user who wrote this reply as a GenoaUser.
+	GenoaAuthor *GenoaUser `json:"genoaAuthor,omitempty"`
+	// HtmlContent: HTML formatted content for this reply.
 	HtmlContent string `json:"htmlContent,omitempty"`
-	// Kind: Output only. This is always `drive#commentReply`.
+	// Kind: This is always drive#commentReply.
 	Kind string `json:"kind,omitempty"`
 	// ModifiedDate: The date when this reply was last modified.
 	ModifiedDate string `json:"modifiedDate,omitempty"`
-	// ReplyId: Output only. The ID of the reply.
+	// ReplyId: The ID of the reply.
 	ReplyId string `json:"replyId,omitempty"`
 	// Verb: The action this reply performed to the parent comment. When creating a
-	// new reply this is the action to be perform to the parent comment. Possible
+	// new reply this is the action to be perform tSo the parent comment. Possible
 	// values are: * `resolve` - To resolve a comment. * `reopen` - To reopen
 	// (un-resolve) a comment.
 	Verb string `json:"verb,omitempty"`
@@ -1304,6 +1304,59 @@ type ContentRestriction struct {
 
 func (s ContentRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentRestriction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainSharingSettings: Next ID: 5
+type DomainSharingSettings struct {
+	// MaxAllUsersRole: Maximum allowed role when sharing with all users
+	//
+	// Possible values:
+	//   "OWNER"
+	//   "WRITER"
+	//   "COMMENTER"
+	//   "READER"
+	//   "NONE"
+	MaxAllUsersRole string `json:"maxAllUsersRole,omitempty"`
+	// MaxDomainRole: Maximum allowed role when sharing with all users inside the
+	// domain
+	//
+	// Possible values:
+	//   "OWNER"
+	//   "WRITER"
+	//   "COMMENTER"
+	//   "READER"
+	//   "NONE"
+	MaxDomainRole string `json:"maxDomainRole,omitempty"`
+	// ShareInPolicy: Deprecated - See b/13414050
+	//
+	// Possible values:
+	//   "ALLOWED"
+	//   "ALLOWED_WITH_WARNING"
+	//   "DISALLOWED"
+	ShareInPolicy string `json:"shareInPolicy,omitempty"`
+	// ShareOutPolicy: Policy for sharing with a user outside the domain
+	//
+	// Possible values:
+	//   "ALLOWED"
+	//   "ALLOWED_WITH_WARNING"
+	//   "DISALLOWED"
+	ShareOutPolicy string `json:"shareOutPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxAllUsersRole") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxAllUsersRole") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainSharingSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainSharingSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2434,6 +2487,57 @@ func (s GeneratedIds) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GenoaUser: Next ID: 13
+type GenoaUser struct {
+	// CustomerId: The customer id which the user belongs to.
+	CustomerId string `json:"customerId,omitempty"`
+	// Domain: The domain name of this user or group. As per FlexOrgs M2
+	// compliance, usage of domain is not allowed. This field will continue to
+	// exist/be populated with the organization's display name (which is not
+	// necessarily the domain) to support mobile clients that use this field for
+	// display purposes. For more information please see: b/133505341
+	Domain string `json:"domain,omitempty"`
+	// DomainSharingSettings: The sharing settings for the domain of this user or
+	// group. Deprecated, see go/trust-rules-api-surface
+	DomainSharingSettings *DomainSharingSettings `json:"domainSharingSettings,omitempty"`
+	// EmailAddress: The email address of the user
+	EmailAddress string `json:"emailAddress,omitempty"`
+	// EmailAddressFromGaia: The primary email address of the user from GAIA.
+	EmailAddressFromGaia string `json:"emailAddressFromGaia,omitempty"`
+	// Id: The user's obfuscated Gaia ID as visible throughout Google APIs
+	Id string `json:"id,omitempty"`
+	// IsRequestingUser: Whether this user is the same as the user making the
+	// request.
+	IsRequestingUser bool `json:"isRequestingUser,omitempty"`
+	// Name: A displayable name for the user.
+	Name string `json:"name,omitempty"`
+	// OrganizationDisplayName: The name of the organization that the user belongs
+	// to.
+	OrganizationDisplayName string `json:"organizationDisplayName,omitempty"`
+	// PermissionId: The user's ID as visible in the permissions collection
+	PermissionId string `json:"permissionId,omitempty"`
+	// Photo: A photo of the user.
+	Photo *Photo `json:"photo,omitempty"`
+	// Url: A URL to get more information about the user.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomerId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomerId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenoaUser) MarshalJSON() ([]byte, error) {
+	type NoMethod GenoaUser
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Label: Representation of a label and label fields.
 type Label struct {
 	// Fields: A map of the fields on the label, keyed by the field's ID.
@@ -2955,6 +3059,32 @@ type PermissionList struct {
 
 func (s PermissionList) MarshalJSON() ([]byte, error) {
 	type NoMethod PermissionList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Photo: Next ID: 4
+type Photo struct {
+	// Height: The height of the picture in pixels.
+	Height int64 `json:"height,omitempty"`
+	// Url: The URL to get the picture from.
+	Url string `json:"url,omitempty"`
+	// Width: The width of the picture in pixels.
+	Width int64 `json:"width,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Height") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Height") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Photo) MarshalJSON() ([]byte, error) {
+	type NoMethod Photo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -279,6 +279,9 @@ type ContactCenter struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Early: Optional. Early release channel.
 	Early *Early `json:"early,omitempty"`
+	// FeatureConfig: Optional. Feature configuration to populate the feature
+	// flags.
+	FeatureConfig *FeatureConfig `json:"featureConfig,omitempty"`
 	// InstanceConfig: The configuration of this instance, it is currently
 	// immutable once created.
 	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
@@ -416,6 +419,28 @@ type Early struct {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+type FeatureConfig struct {
+	// AgentDesktopEnabled: Optional. If true - enables the agent desktop feature.
+	// Default is false.
+	AgentDesktopEnabled bool `json:"agentDesktopEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentDesktopEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentDesktopEnabled") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod FeatureConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudCommonOperationMetadata: Represents the metadata of the
@@ -1201,9 +1226,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

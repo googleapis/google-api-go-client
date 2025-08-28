@@ -1077,6 +1077,7 @@ type ProjectsLocationsIdentityMappingStoresOperationsService struct {
 
 func NewProjectsLocationsNotebooksService(s *Service) *ProjectsLocationsNotebooksService {
 	rs := &ProjectsLocationsNotebooksService{s: s}
+	rs.AudioOverviews = NewProjectsLocationsNotebooksAudioOverviewsService(s)
 	rs.Sources = NewProjectsLocationsNotebooksSourcesService(s)
 	return rs
 }
@@ -1084,7 +1085,18 @@ func NewProjectsLocationsNotebooksService(s *Service) *ProjectsLocationsNotebook
 type ProjectsLocationsNotebooksService struct {
 	s *Service
 
+	AudioOverviews *ProjectsLocationsNotebooksAudioOverviewsService
+
 	Sources *ProjectsLocationsNotebooksSourcesService
+}
+
+func NewProjectsLocationsNotebooksAudioOverviewsService(s *Service) *ProjectsLocationsNotebooksAudioOverviewsService {
+	rs := &ProjectsLocationsNotebooksAudioOverviewsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsNotebooksAudioOverviewsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsNotebooksSourcesService(s *Service) *ProjectsLocationsNotebooksSourcesService {
@@ -2639,6 +2651,32 @@ type GoogleCloudDiscoveryengineLoggingSourceLocation struct {
 
 func (s GoogleCloudDiscoveryengineLoggingSourceLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineLoggingSourceLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1AclConfig: Access Control Configuration.
+type GoogleCloudDiscoveryengineV1AclConfig struct {
+	// IdpConfig: Identity provider config.
+	IdpConfig *GoogleCloudDiscoveryengineV1IdpConfig `json:"idpConfig,omitempty"`
+	// Name: Immutable. The full resource name of the acl configuration. Format:
+	// `projects/{project}/locations/{location}/aclConfig`. This field must be a
+	// UTF-8 encoded string with a length limit of 1024 characters.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IdpConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IdpConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AclConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AclConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4332,6 +4370,14 @@ type GoogleCloudDiscoveryengineV1EnableAdvancedSiteSearchResponse struct {
 // GoogleCloudDiscoveryengineV1Engine: Metadata that describes the training and
 // serving parameters of an Engine.
 type GoogleCloudDiscoveryengineV1Engine struct {
+	// AppType: Optional. Immutable. This the application type which this engine
+	// resource represents. NOTE: this is a new concept independ of existing
+	// industry vertical or solution type.
+	//
+	// Possible values:
+	//   "APP_TYPE_UNSPECIFIED" - All non specified apps.
+	//   "APP_TYPE_INTRANET" - App type for intranet search and Agentspace.
+	AppType string `json:"appType,omitempty"`
 	// ChatEngineConfig: Configurations for the Chat Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_CHAT.
 	ChatEngineConfig *GoogleCloudDiscoveryengineV1EngineChatEngineConfig `json:"chatEngineConfig,omitempty"`
@@ -4405,15 +4451,15 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// UpdateTime: Output only. Timestamp the Recommendation Engine was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChatEngineConfig") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AppType") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChatEngineConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AppType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4830,6 +4876,59 @@ type GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata struct {
 
 func (s GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1IdpConfig: Identity Provider Config.
+type GoogleCloudDiscoveryengineV1IdpConfig struct {
+	// ExternalIdpConfig: External Identity provider config.
+	ExternalIdpConfig *GoogleCloudDiscoveryengineV1IdpConfigExternalIdpConfig `json:"externalIdpConfig,omitempty"`
+	// IdpType: Identity provider type configured.
+	//
+	// Possible values:
+	//   "IDP_TYPE_UNSPECIFIED" - Default value. ACL search not enabled.
+	//   "GSUITE" - Google 1P provider.
+	//   "THIRD_PARTY" - Third party provider.
+	IdpType string `json:"idpType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExternalIdpConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExternalIdpConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1IdpConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1IdpConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1IdpConfigExternalIdpConfig: Third party IDP
+// Config.
+type GoogleCloudDiscoveryengineV1IdpConfigExternalIdpConfig struct {
+	// WorkforcePoolName: Workforce pool name. Example:
+	// "locations/global/workforcePools/pool_id"
+	WorkforcePoolName string `json:"workforcePoolName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WorkforcePoolName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WorkforcePoolName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1IdpConfigExternalIdpConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1IdpConfigExternalIdpConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13506,6 +13605,14 @@ type GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchResponse struct {
 // GoogleCloudDiscoveryengineV1alphaEngine: Metadata that describes the
 // training and serving parameters of an Engine.
 type GoogleCloudDiscoveryengineV1alphaEngine struct {
+	// AppType: Optional. Immutable. This the application type which this engine
+	// resource represents. NOTE: this is a new concept independ of existing
+	// industry vertical or solution type.
+	//
+	// Possible values:
+	//   "APP_TYPE_UNSPECIFIED" - All non specified apps.
+	//   "APP_TYPE_INTRANET" - App type for intranet search and Agentspace.
+	AppType string `json:"appType,omitempty"`
 	// ChatEngineConfig: Configurations for the Chat Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_CHAT.
 	ChatEngineConfig *GoogleCloudDiscoveryengineV1alphaEngineChatEngineConfig `json:"chatEngineConfig,omitempty"`
@@ -13589,15 +13696,15 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ChatEngineConfig") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AppType") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChatEngineConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AppType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -24163,6 +24270,32 @@ func (s GoogleCloudDiscoveryengineV1alphaWorkspaceConfig) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaAclConfig: Access Control Configuration.
+type GoogleCloudDiscoveryengineV1betaAclConfig struct {
+	// IdpConfig: Identity provider config.
+	IdpConfig *GoogleCloudDiscoveryengineV1betaIdpConfig `json:"idpConfig,omitempty"`
+	// Name: Immutable. The full resource name of the acl configuration. Format:
+	// `projects/{project}/locations/{location}/aclConfig`. This field must be a
+	// UTF-8 encoded string with a length limit of 1024 characters.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IdpConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IdpConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAclConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAclConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig: Configuration data
 // for advance site search.
 type GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig struct {
@@ -25601,6 +25734,14 @@ type GoogleCloudDiscoveryengineV1betaEnableAdvancedSiteSearchResponse struct {
 // GoogleCloudDiscoveryengineV1betaEngine: Metadata that describes the training
 // and serving parameters of an Engine.
 type GoogleCloudDiscoveryengineV1betaEngine struct {
+	// AppType: Optional. Immutable. This the application type which this engine
+	// resource represents. NOTE: this is a new concept independ of existing
+	// industry vertical or solution type.
+	//
+	// Possible values:
+	//   "APP_TYPE_UNSPECIFIED" - All non specified apps.
+	//   "APP_TYPE_INTRANET" - App type for intranet search and Agentspace.
+	AppType string `json:"appType,omitempty"`
 	// ChatEngineConfig: Configurations for the Chat Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_CHAT.
 	ChatEngineConfig *GoogleCloudDiscoveryengineV1betaEngineChatEngineConfig `json:"chatEngineConfig,omitempty"`
@@ -25674,15 +25815,15 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// UpdateTime: Output only. Timestamp the Recommendation Engine was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChatEngineConfig") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AppType") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChatEngineConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AppType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -26206,6 +26347,59 @@ type GoogleCloudDiscoveryengineV1betaIdentityMappingEntryOperationMetadata struc
 
 func (s GoogleCloudDiscoveryengineV1betaIdentityMappingEntryOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaIdentityMappingEntryOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaIdpConfig: Identity Provider Config.
+type GoogleCloudDiscoveryengineV1betaIdpConfig struct {
+	// ExternalIdpConfig: External Identity provider config.
+	ExternalIdpConfig *GoogleCloudDiscoveryengineV1betaIdpConfigExternalIdpConfig `json:"externalIdpConfig,omitempty"`
+	// IdpType: Identity provider type configured.
+	//
+	// Possible values:
+	//   "IDP_TYPE_UNSPECIFIED" - Default value. ACL search not enabled.
+	//   "GSUITE" - Google 1P provider.
+	//   "THIRD_PARTY" - Third party provider.
+	IdpType string `json:"idpType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExternalIdpConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExternalIdpConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaIdpConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaIdpConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaIdpConfigExternalIdpConfig: Third party IDP
+// Config.
+type GoogleCloudDiscoveryengineV1betaIdpConfigExternalIdpConfig struct {
+	// WorkforcePoolName: Workforce pool name. Example:
+	// "locations/global/workforcePools/pool_id"
+	WorkforcePoolName string `json:"workforcePoolName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WorkforcePoolName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WorkforcePoolName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaIdpConfigExternalIdpConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaIdpConfigExternalIdpConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -29085,6 +29279,37 @@ func (s GoogleCloudDiscoveryengineV1betaWorkspaceConfig) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudNotebooklmV1alphaAccountAndRole: Account and role information.
+type GoogleCloudNotebooklmV1alphaAccountAndRole struct {
+	// Email: Required. The email address associated with the account.
+	Email string `json:"email,omitempty"`
+	// Role: Required. The role in the notebook.
+	//
+	// Possible values:
+	//   "PROJECT_ROLE_UNKNOWN" - Unknown role - do not use.
+	//   "PROJECT_ROLE_OWNER" - The user owns the project.
+	//   "PROJECT_ROLE_WRITER" - The user has writer permissions on the project.
+	//   "PROJECT_ROLE_READER" - The user has reader permissions on the project.
+	//   "PROJECT_ROLE_NOT_SHARED" - The user has no access to the project.
+	Role string `json:"role,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaAccountAndRole) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaAccountAndRole
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudNotebooklmV1alphaAgentspaceMetadata: Metadata about an agentspace
 // source.
 type GoogleCloudNotebooklmV1alphaAgentspaceMetadata struct {
@@ -29107,6 +29332,90 @@ type GoogleCloudNotebooklmV1alphaAgentspaceMetadata struct {
 
 func (s GoogleCloudNotebooklmV1alphaAgentspaceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudNotebooklmV1alphaAgentspaceMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaAudioOverview: An audio overview of a notebook.
+// This is a summary of the notebook in audio format.
+type GoogleCloudNotebooklmV1alphaAudioOverview struct {
+	// Audio: The audio overview in wav format. This is only present if the status
+	// is AUDIO_OVERVIEW_STATUS_COMPLETE.
+	Audio string `json:"audio,omitempty"`
+	// AudioOverviewId: Output only. Unique ID of the audio overview.
+	AudioOverviewId string `json:"audioOverviewId,omitempty"`
+	// LanguageCode: The language code of the generated audio overview. Use the BCP
+	// 47 language code (e.g. "en", "es", "hi", etc.). Examples:
+	// google3/i18n/identifiers/tools/language_code_constants.txt
+	LanguageCode string `json:"languageCode,omitempty"`
+	// MimeType: The mime type of the audio overview.
+	//
+	// Possible values:
+	//   "MIME_TYPE_UNKNOWN" - The mime type has not been set.
+	//   "MIME_TYPE_WAV" - The mime type is audio/wav.
+	//   "MIME_TYPE_MP4" - The mime type is audio/mp4.
+	MimeType string `json:"mimeType,omitempty"`
+	// Name: Identifier. The full resource name of the notebook. Format:
+	// `projects/{project}/locations/{location}/notebooks/{notebook}/audioOverviews/
+	// {audio_overview_id}`. This field must be a UTF-8 encoded string with a
+	// length limit of 1024 characters.
+	Name string `json:"name,omitempty"`
+	// PlaybackUrl: The url used to play the audio overview.
+	PlaybackUrl string `json:"playbackUrl,omitempty"`
+	// Status: The status of the audio overview.
+	//
+	// Possible values:
+	//   "AUDIO_OVERVIEW_STATUS_UNSPECIFIED" - The status has not been set.
+	//   "AUDIO_OVERVIEW_STATUS_NOT_STARTED" - The audio overview has not started
+	// being generated.
+	//   "AUDIO_OVERVIEW_STATUS_IN_PROGRESS" - The audio overview is in the process
+	// of being generated.
+	//   "AUDIO_OVERVIEW_STATUS_COMPLETE" - The audio overview has been generated
+	// and is available.
+	//   "AUDIO_OVERVIEW_STATUS_FAILED" - The audio overview failed to be
+	// generated.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Audio") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Audio") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaAudioOverview) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaAudioOverview
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaAudioOverviewGenerationOptions: Options used
+// during audio overview generation.
+type GoogleCloudNotebooklmV1alphaAudioOverviewGenerationOptions struct {
+	// EpisodeFocus: What the hosts of the show should focus on.
+	EpisodeFocus string `json:"episodeFocus,omitempty"`
+	// LanguageCode: The language that the audio overview was requested in.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// SourceIds: Optional. The sources in which the audio overview is grounded.
+	SourceIds []*GoogleCloudNotebooklmV1alphaSourceId `json:"sourceIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EpisodeFocus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EpisodeFocus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaAudioOverviewGenerationOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaAudioOverviewGenerationOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -29159,6 +29468,54 @@ func (s GoogleCloudNotebooklmV1alphaBatchCreateSourcesResponse) MarshalJSON() ([
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudNotebooklmV1alphaBatchDeleteNotebooksRequest: Request for
+// NotebookService.BatchDeleteNotebooks method.
+type GoogleCloudNotebooklmV1alphaBatchDeleteNotebooksRequest struct {
+	// Names: Required. Full resource names of Notebook, such as
+	// `projects/{project}/locations/{location}/notebooks/{notebook_id}`.
+	Names []string `json:"names,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Names") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Names") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaBatchDeleteNotebooksRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaBatchDeleteNotebooksRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaBatchDeleteSourcesRequest: Request for
+// SourceService.BatchDeleteSourcesRequest method.
+type GoogleCloudNotebooklmV1alphaBatchDeleteSourcesRequest struct {
+	// Names: Required. Names of sources to be deleted. Format:
+	// projects/{project}/locations/{location}/notebooks/{notebook}/sources/{source}
+	Names []string `json:"names,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Names") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Names") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaBatchDeleteSourcesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaBatchDeleteSourcesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudNotebooklmV1alphaCmekConfig: Customer-managed encryption
 // configuration for Notebooks.
 type GoogleCloudNotebooklmV1alphaCmekConfig struct {
@@ -29182,6 +29539,55 @@ type GoogleCloudNotebooklmV1alphaCmekConfig struct {
 
 func (s GoogleCloudNotebooklmV1alphaCmekConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudNotebooklmV1alphaCmekConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaCreateAudioOverviewRequest: Request for
+// AudioOverviewService.CreateAudioOverview method.
+type GoogleCloudNotebooklmV1alphaCreateAudioOverviewRequest struct {
+	// GenerationOptions: Options for the audio overview generation.
+	GenerationOptions *GoogleCloudNotebooklmV1alphaAudioOverviewGenerationOptions `json:"generationOptions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GenerationOptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GenerationOptions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaCreateAudioOverviewRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaCreateAudioOverviewRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaCreateAudioOverviewResponse: Response for
+// AudioOverviewService.CreateAudioOverview method.
+type GoogleCloudNotebooklmV1alphaCreateAudioOverviewResponse struct {
+	// AudioOverview: The generated audio overview.
+	AudioOverview *GoogleCloudNotebooklmV1alphaAudioOverview `json:"audioOverview,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AudioOverview") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AudioOverview") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaCreateAudioOverviewResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaCreateAudioOverviewResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -29231,6 +29637,9 @@ type GoogleCloudNotebooklmV1alphaNotebook struct {
 	NotebookId string `json:"notebookId,omitempty"`
 	// Title: Optional. The title of the notebook.
 	Title string `json:"title,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "CmekConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -29279,6 +29688,39 @@ func (s GoogleCloudNotebooklmV1alphaNotebookMetadata) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudNotebooklmV1alphaShareNotebookRequest: Request for
+// NotebookService.ShareNotebook method.
+type GoogleCloudNotebooklmV1alphaShareNotebookRequest struct {
+	// AccountAndRoles: Required. The list of accounts and roles to share the
+	// notebook with.
+	AccountAndRoles []*GoogleCloudNotebooklmV1alphaAccountAndRole `json:"accountAndRoles,omitempty"`
+	// NotifyViaEmail: Required. Whether to notify the shared users via email.
+	NotifyViaEmail bool `json:"notifyViaEmail,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccountAndRoles") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccountAndRoles") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaShareNotebookRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaShareNotebookRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaShareNotebookResponse: Response for
+// NotebookService.ShareNotebook method.
+type GoogleCloudNotebooklmV1alphaShareNotebookResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // GoogleCloudNotebooklmV1alphaSource: Source represents a single source of
 // content.
 type GoogleCloudNotebooklmV1alphaSource struct {
@@ -29294,6 +29736,9 @@ type GoogleCloudNotebooklmV1alphaSource struct {
 	SourceId *GoogleCloudNotebooklmV1alphaSourceId `json:"sourceId,omitempty"`
 	// Title: Optional. Title of the source.
 	Title string `json:"title,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "Metadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -29425,6 +29870,14 @@ func (s GoogleCloudNotebooklmV1alphaUploadSourceFileResponse) MarshalJSON() ([]b
 type GoogleCloudNotebooklmV1alphaUserContent struct {
 	// AgentspaceContent: Agentspace content uploaded as source.
 	AgentspaceContent *GoogleCloudNotebooklmV1alphaUserContentAgentspaceContent `json:"agentspaceContent,omitempty"`
+	// GoogleDriveContent: The content from Google Drive.
+	GoogleDriveContent *GoogleCloudNotebooklmV1alphaUserContentGoogleDriveContent `json:"googleDriveContent,omitempty"`
+	// TextContent: The text content uploaded as source.
+	TextContent *GoogleCloudNotebooklmV1alphaUserContentTextContent `json:"textContent,omitempty"`
+	// VideoContent: The video content uploaded as source.
+	VideoContent *GoogleCloudNotebooklmV1alphaUserContentVideoContent `json:"videoContent,omitempty"`
+	// WebContent: The web content uploaded as source.
+	WebContent *GoogleCloudNotebooklmV1alphaUserContentWebContent `json:"webContent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AgentspaceContent") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -29467,6 +29920,107 @@ type GoogleCloudNotebooklmV1alphaUserContentAgentspaceContent struct {
 
 func (s GoogleCloudNotebooklmV1alphaUserContentAgentspaceContent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudNotebooklmV1alphaUserContentAgentspaceContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaUserContentGoogleDriveContent: The content from
+// Google Drive.
+type GoogleCloudNotebooklmV1alphaUserContentGoogleDriveContent struct {
+	// DocumentId: The document id of the selected document.
+	DocumentId string `json:"documentId,omitempty"`
+	// MimeType: The mime type of the selected document. This can be used to
+	// differentiate type of content selected in the drive picker.
+	MimeType string `json:"mimeType,omitempty"`
+	// SourceName: Should track this from Drive Picker.
+	SourceName string `json:"sourceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocumentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaUserContentGoogleDriveContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaUserContentGoogleDriveContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaUserContentTextContent: The text content
+// uploaded as source.
+type GoogleCloudNotebooklmV1alphaUserContentTextContent struct {
+	// Content: The content of the text source.
+	Content string `json:"content,omitempty"`
+	// SourceName: The name of the text source.
+	SourceName string `json:"sourceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaUserContentTextContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaUserContentTextContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaUserContentVideoContent: Video content uploaded
+// as source.
+type GoogleCloudNotebooklmV1alphaUserContentVideoContent struct {
+	// YoutubeUrl: The youtube url of the video content.
+	YoutubeUrl string `json:"youtubeUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "YoutubeUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "YoutubeUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaUserContentVideoContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaUserContentVideoContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaUserContentWebContent: The web content uploaded
+// as source.
+type GoogleCloudNotebooklmV1alphaUserContentWebContent struct {
+	// SourceName: The name of the web source.
+	SourceName string `json:"sourceName,omitempty"`
+	// Url: If URL is supplied, will fetch the webpage in the backend.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaUserContentWebContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaUserContentWebContent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -61242,6 +61796,328 @@ func (c *ProjectsLocationsIdentityMappingStoresOperationsListCall) Pages(ctx con
 	}
 }
 
+type ProjectsLocationsNotebooksBatchDeleteCall struct {
+	s                                                       *Service
+	parent                                                  string
+	googlecloudnotebooklmv1alphabatchdeletenotebooksrequest *GoogleCloudNotebooklmV1alphaBatchDeleteNotebooksRequest
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// BatchDelete: Batch deletes Notebooks. Needs a side channel with the user's
+// EUC.
+//
+//   - parent: The parent branch resource name, such as
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsNotebooksService) BatchDelete(parent string, googlecloudnotebooklmv1alphabatchdeletenotebooksrequest *GoogleCloudNotebooklmV1alphaBatchDeleteNotebooksRequest) *ProjectsLocationsNotebooksBatchDeleteCall {
+	c := &ProjectsLocationsNotebooksBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudnotebooklmv1alphabatchdeletenotebooksrequest = googlecloudnotebooklmv1alphabatchdeletenotebooksrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebooksBatchDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebooksBatchDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebooksBatchDeleteCall) Context(ctx context.Context) *ProjectsLocationsNotebooksBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebooksBatchDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebooksBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudnotebooklmv1alphabatchdeletenotebooksrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/notebooks:batchDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.batchDelete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.notebooks.batchDelete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNotebooksBatchDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.batchDelete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNotebooksCreateCall struct {
+	s                                    *Service
+	parent                               string
+	googlecloudnotebooklmv1alphanotebook *GoogleCloudNotebooklmV1alphaNotebook
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Create: Creates a notebook. Needs a side channel with the user's EUC.
+//
+//   - parent: The parent resource name, such as
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsNotebooksService) Create(parent string, googlecloudnotebooklmv1alphanotebook *GoogleCloudNotebooklmV1alphaNotebook) *ProjectsLocationsNotebooksCreateCall {
+	c := &ProjectsLocationsNotebooksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudnotebooklmv1alphanotebook = googlecloudnotebooklmv1alphanotebook
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebooksCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebooksCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebooksCreateCall) Context(ctx context.Context) *ProjectsLocationsNotebooksCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebooksCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebooksCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudnotebooklmv1alphanotebook)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/notebooks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.notebooks.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudNotebooklmV1alphaNotebook.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebooksCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudNotebooklmV1alphaNotebook, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudNotebooklmV1alphaNotebook{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNotebooksGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a notebook. Needs a side channel with the user's EUC.
+//
+//   - name: Full resource name of Notebook, such as
+//     `projects/{project}/locations/{location}/notebooks/{notebook_id}`.
+func (r *ProjectsLocationsNotebooksService) Get(name string) *ProjectsLocationsNotebooksGetCall {
+	c := &ProjectsLocationsNotebooksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebooksGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebooksGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNotebooksGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotebooksGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebooksGetCall) Context(ctx context.Context) *ProjectsLocationsNotebooksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebooksGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebooksGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.notebooks.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudNotebooklmV1alphaNotebook.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebooksGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudNotebooklmV1alphaNotebook, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudNotebooklmV1alphaNotebook{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsNotebooksListRecentlyViewedCall struct {
 	s            *Service
 	parent       string
@@ -61390,6 +62266,318 @@ func (c *ProjectsLocationsNotebooksListRecentlyViewedCall) Pages(ctx context.Con
 	}
 }
 
+type ProjectsLocationsNotebooksShareCall struct {
+	s                                                *Service
+	name                                             string
+	googlecloudnotebooklmv1alphasharenotebookrequest *GoogleCloudNotebooklmV1alphaShareNotebookRequest
+	urlParams_                                       gensupport.URLParams
+	ctx_                                             context.Context
+	header_                                          http.Header
+}
+
+// Share: Shares a notebook to other accounts. Needs a side channel with the
+// user's EUC.
+//
+//   - name: Full resource name of Notebook, such as
+//     `projects/{project}/locations/{location}/notebooks/{notebook_id}`.
+func (r *ProjectsLocationsNotebooksService) Share(name string, googlecloudnotebooklmv1alphasharenotebookrequest *GoogleCloudNotebooklmV1alphaShareNotebookRequest) *ProjectsLocationsNotebooksShareCall {
+	c := &ProjectsLocationsNotebooksShareCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudnotebooklmv1alphasharenotebookrequest = googlecloudnotebooklmv1alphasharenotebookrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebooksShareCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebooksShareCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebooksShareCall) Context(ctx context.Context) *ProjectsLocationsNotebooksShareCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebooksShareCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebooksShareCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudnotebooklmv1alphasharenotebookrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:share")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.share", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.notebooks.share" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudNotebooklmV1alphaShareNotebookResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebooksShareCall) Do(opts ...googleapi.CallOption) (*GoogleCloudNotebooklmV1alphaShareNotebookResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudNotebooklmV1alphaShareNotebookResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.share", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNotebooksAudioOverviewsCreateCall struct {
+	s                                                      *Service
+	parent                                                 string
+	googlecloudnotebooklmv1alphacreateaudiooverviewrequest *GoogleCloudNotebooklmV1alphaCreateAudioOverviewRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Create: Generates a new audio overview. Needs a side channel with the user's
+// EUC.
+//
+//   - parent: The parent resource where this notebook will be created. Format:
+//     projects/{project}/locations/{location}/notebooks/{notebook}.
+func (r *ProjectsLocationsNotebooksAudioOverviewsService) Create(parent string, googlecloudnotebooklmv1alphacreateaudiooverviewrequest *GoogleCloudNotebooklmV1alphaCreateAudioOverviewRequest) *ProjectsLocationsNotebooksAudioOverviewsCreateCall {
+	c := &ProjectsLocationsNotebooksAudioOverviewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudnotebooklmv1alphacreateaudiooverviewrequest = googlecloudnotebooklmv1alphacreateaudiooverviewrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebooksAudioOverviewsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebooksAudioOverviewsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebooksAudioOverviewsCreateCall) Context(ctx context.Context) *ProjectsLocationsNotebooksAudioOverviewsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebooksAudioOverviewsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebooksAudioOverviewsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudnotebooklmv1alphacreateaudiooverviewrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/audioOverviews")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.audioOverviews.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.notebooks.audioOverviews.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudNotebooklmV1alphaCreateAudioOverviewResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebooksAudioOverviewsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudNotebooklmV1alphaCreateAudioOverviewResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudNotebooklmV1alphaCreateAudioOverviewResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.audioOverviews.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNotebooksAudioOverviewsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an audio overview. Needs a side channel with the user's EUC.
+//
+//   - name: The full resource name of the AudioOverview, such as
+//     `projects/{project}/locations/{location}/notebooks/{notebook}/audioOverview
+//     s/{audio_overview_id}`.
+func (r *ProjectsLocationsNotebooksAudioOverviewsService) Delete(name string) *ProjectsLocationsNotebooksAudioOverviewsDeleteCall {
+	c := &ProjectsLocationsNotebooksAudioOverviewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebooksAudioOverviewsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebooksAudioOverviewsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebooksAudioOverviewsDeleteCall) Context(ctx context.Context) *ProjectsLocationsNotebooksAudioOverviewsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebooksAudioOverviewsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebooksAudioOverviewsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.audioOverviews.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.notebooks.audioOverviews.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNotebooksAudioOverviewsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.audioOverviews.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsNotebooksSourcesBatchCreateCall struct {
 	s                                                     *Service
 	parent                                                string
@@ -61494,6 +62682,223 @@ func (c *ProjectsLocationsNotebooksSourcesBatchCreateCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.sources.batchCreate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNotebooksSourcesBatchDeleteCall struct {
+	s                                                     *Service
+	parent                                                string
+	googlecloudnotebooklmv1alphabatchdeletesourcesrequest *GoogleCloudNotebooklmV1alphaBatchDeleteSourcesRequest
+	urlParams_                                            gensupport.URLParams
+	ctx_                                                  context.Context
+	header_                                               http.Header
+}
+
+// BatchDelete: Deletes multiple sources
+//
+//   - parent: The parent resource where the sources will be deleted. Format:
+//     projects/{project}/locations/{location}/notebooks/{notebook}.
+func (r *ProjectsLocationsNotebooksSourcesService) BatchDelete(parent string, googlecloudnotebooklmv1alphabatchdeletesourcesrequest *GoogleCloudNotebooklmV1alphaBatchDeleteSourcesRequest) *ProjectsLocationsNotebooksSourcesBatchDeleteCall {
+	c := &ProjectsLocationsNotebooksSourcesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudnotebooklmv1alphabatchdeletesourcesrequest = googlecloudnotebooklmv1alphabatchdeletesourcesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebooksSourcesBatchDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebooksSourcesBatchDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebooksSourcesBatchDeleteCall) Context(ctx context.Context) *ProjectsLocationsNotebooksSourcesBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebooksSourcesBatchDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebooksSourcesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudnotebooklmv1alphabatchdeletesourcesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/sources:batchDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.sources.batchDelete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.notebooks.sources.batchDelete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNotebooksSourcesBatchDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.sources.batchDelete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsNotebooksSourcesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a Source.
+//
+//   - name: The resource name for source Format:
+//     projects/{project}/locations/{location}/notebooks/{notebook}/sources/{sourc
+//     e}.
+func (r *ProjectsLocationsNotebooksSourcesService) Get(name string) *ProjectsLocationsNotebooksSourcesGetCall {
+	c := &ProjectsLocationsNotebooksSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsNotebooksSourcesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebooksSourcesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsNotebooksSourcesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotebooksSourcesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsNotebooksSourcesGetCall) Context(ctx context.Context) *ProjectsLocationsNotebooksSourcesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsNotebooksSourcesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebooksSourcesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.sources.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.notebooks.sources.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudNotebooklmV1alphaSource.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebooksSourcesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudNotebooklmV1alphaSource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudNotebooklmV1alphaSource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.notebooks.sources.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

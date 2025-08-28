@@ -2090,6 +2090,8 @@ func (s ResourcesListResponse) MarshalJSON() ([]byte, error) {
 type SetAutoscalerLinkOperationMetadata struct {
 	// ZonalIgmIds: List of zonal IGM IDs part of the RMIG.
 	ZonalIgmIds googleapi.Int64s `json:"zonalIgmIds,omitempty"`
+	// ZoneToIgmIds: Map of zone to an ID of the zonal IGM belonging to the RMIG.
+	ZoneToIgmIds map[string]string `json:"zoneToIgmIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ZonalIgmIds") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

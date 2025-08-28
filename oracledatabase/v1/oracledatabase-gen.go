@@ -1250,8 +1250,9 @@ type CloudExadataInfrastructure struct {
 	// EntitlementId: Output only. Entitlement ID of the private offer against
 	// which this infrastructure resource is provisioned.
 	EntitlementId string `json:"entitlementId,omitempty"`
-	// GcpOracleZone: Optional. Google Cloud Platform location where Oracle Exadata
-	// is hosted.
+	// GcpOracleZone: Optional. The GCP Oracle zone where Oracle Exadata
+	// Infrastructure is hosted. Example: us-east4-b-r2. If not specified, the
+	// system will pick a zone based on availability.
 	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
 	// Labels: Optional. Labels or tags associated with the resource.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -1438,9 +1439,9 @@ type CloudVmCluster struct {
 	// projects/{project}/locations/{region}/cloudExadataInfrastuctures/{cloud_extra
 	// data_infrastructure}
 	ExadataInfrastructure string `json:"exadataInfrastructure,omitempty"`
-	// GcpOracleZone: Output only. Google Cloud Platform location where Oracle
-	// Exadata is hosted. It is same as Google Cloud Platform Oracle zone of
-	// Exadata infrastructure.
+	// GcpOracleZone: Output only. The GCP Oracle zone where Oracle CloudVmCluster
+	// is hosted. This will be the same as the gcp_oracle_zone of the
+	// CloudExadataInfrastructure. Example: us-east4-b-r2.
 	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
 	// Labels: Optional. Labels or tags associated with the VM Cluster.
 	Labels map[string]string `json:"labels,omitempty"`

@@ -2305,6 +2305,32 @@ func (s GoogleCloudDiscoveryengineLoggingSourceLocation) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1AclConfig: Access Control Configuration.
+type GoogleCloudDiscoveryengineV1AclConfig struct {
+	// IdpConfig: Identity provider config.
+	IdpConfig *GoogleCloudDiscoveryengineV1IdpConfig `json:"idpConfig,omitempty"`
+	// Name: Immutable. The full resource name of the acl configuration. Format:
+	// `projects/{project}/locations/{location}/aclConfig`. This field must be a
+	// UTF-8 encoded string with a length limit of 1024 characters.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IdpConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IdpConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AclConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AclConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig: Configuration data for
 // advance site search.
 type GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig struct {
@@ -3995,6 +4021,14 @@ type GoogleCloudDiscoveryengineV1EnableAdvancedSiteSearchResponse struct {
 // GoogleCloudDiscoveryengineV1Engine: Metadata that describes the training and
 // serving parameters of an Engine.
 type GoogleCloudDiscoveryengineV1Engine struct {
+	// AppType: Optional. Immutable. This the application type which this engine
+	// resource represents. NOTE: this is a new concept independ of existing
+	// industry vertical or solution type.
+	//
+	// Possible values:
+	//   "APP_TYPE_UNSPECIFIED" - All non specified apps.
+	//   "APP_TYPE_INTRANET" - App type for intranet search and Agentspace.
+	AppType string `json:"appType,omitempty"`
 	// ChatEngineConfig: Configurations for the Chat Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_CHAT.
 	ChatEngineConfig *GoogleCloudDiscoveryengineV1EngineChatEngineConfig `json:"chatEngineConfig,omitempty"`
@@ -4068,15 +4102,15 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// UpdateTime: Output only. Timestamp the Recommendation Engine was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChatEngineConfig") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AppType") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChatEngineConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AppType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4493,6 +4527,59 @@ type GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata struct {
 
 func (s GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1IdentityMappingEntryOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1IdpConfig: Identity Provider Config.
+type GoogleCloudDiscoveryengineV1IdpConfig struct {
+	// ExternalIdpConfig: External Identity provider config.
+	ExternalIdpConfig *GoogleCloudDiscoveryengineV1IdpConfigExternalIdpConfig `json:"externalIdpConfig,omitempty"`
+	// IdpType: Identity provider type configured.
+	//
+	// Possible values:
+	//   "IDP_TYPE_UNSPECIFIED" - Default value. ACL search not enabled.
+	//   "GSUITE" - Google 1P provider.
+	//   "THIRD_PARTY" - Third party provider.
+	IdpType string `json:"idpType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExternalIdpConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExternalIdpConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1IdpConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1IdpConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1IdpConfigExternalIdpConfig: Third party IDP
+// Config.
+type GoogleCloudDiscoveryengineV1IdpConfigExternalIdpConfig struct {
+	// WorkforcePoolName: Workforce pool name. Example:
+	// "locations/global/workforcePools/pool_id"
+	WorkforcePoolName string `json:"workforcePoolName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WorkforcePoolName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WorkforcePoolName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1IdpConfigExternalIdpConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1IdpConfigExternalIdpConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9221,6 +9308,14 @@ type GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchResponse struct {
 // GoogleCloudDiscoveryengineV1alphaEngine: Metadata that describes the
 // training and serving parameters of an Engine.
 type GoogleCloudDiscoveryengineV1alphaEngine struct {
+	// AppType: Optional. Immutable. This the application type which this engine
+	// resource represents. NOTE: this is a new concept independ of existing
+	// industry vertical or solution type.
+	//
+	// Possible values:
+	//   "APP_TYPE_UNSPECIFIED" - All non specified apps.
+	//   "APP_TYPE_INTRANET" - App type for intranet search and Agentspace.
+	AppType string `json:"appType,omitempty"`
 	// ChatEngineConfig: Configurations for the Chat Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_CHAT.
 	ChatEngineConfig *GoogleCloudDiscoveryengineV1alphaEngineChatEngineConfig `json:"chatEngineConfig,omitempty"`
@@ -9301,15 +9396,15 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// UpdateTime: Output only. Timestamp the Recommendation Engine was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChatEngineConfig") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AppType") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChatEngineConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AppType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -13826,6 +13921,35 @@ type GoogleCloudDiscoveryengineV1alphaWorkspaceConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaWorkspaceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaWorkspaceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAclConfig: Access Control Configuration.
+type GoogleCloudDiscoveryengineV1betaAclConfig struct {
+	// IdpConfig: Identity provider config.
+	IdpConfig *GoogleCloudDiscoveryengineV1betaIdpConfig `json:"idpConfig,omitempty"`
+	// Name: Immutable. The full resource name of the acl configuration. Format:
+	// `projects/{project}/locations/{location}/aclConfig`. This field must be a
+	// UTF-8 encoded string with a length limit of 1024 characters.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "IdpConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IdpConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAclConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAclConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -19775,6 +19899,14 @@ type GoogleCloudDiscoveryengineV1betaEnableAdvancedSiteSearchResponse struct {
 // GoogleCloudDiscoveryengineV1betaEngine: Metadata that describes the training
 // and serving parameters of an Engine.
 type GoogleCloudDiscoveryengineV1betaEngine struct {
+	// AppType: Optional. Immutable. This the application type which this engine
+	// resource represents. NOTE: this is a new concept independ of existing
+	// industry vertical or solution type.
+	//
+	// Possible values:
+	//   "APP_TYPE_UNSPECIFIED" - All non specified apps.
+	//   "APP_TYPE_INTRANET" - App type for intranet search and Agentspace.
+	AppType string `json:"appType,omitempty"`
 	// ChatEngineConfig: Configurations for the Chat Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_CHAT.
 	ChatEngineConfig *GoogleCloudDiscoveryengineV1betaEngineChatEngineConfig `json:"chatEngineConfig,omitempty"`
@@ -19851,15 +19983,15 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ChatEngineConfig") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AppType") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChatEngineConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AppType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -20724,6 +20856,59 @@ type GoogleCloudDiscoveryengineV1betaIdentityMappingStore struct {
 
 func (s GoogleCloudDiscoveryengineV1betaIdentityMappingStore) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaIdentityMappingStore
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaIdpConfig: Identity Provider Config.
+type GoogleCloudDiscoveryengineV1betaIdpConfig struct {
+	// ExternalIdpConfig: External Identity provider config.
+	ExternalIdpConfig *GoogleCloudDiscoveryengineV1betaIdpConfigExternalIdpConfig `json:"externalIdpConfig,omitempty"`
+	// IdpType: Identity provider type configured.
+	//
+	// Possible values:
+	//   "IDP_TYPE_UNSPECIFIED" - Default value. ACL search not enabled.
+	//   "GSUITE" - Google 1P provider.
+	//   "THIRD_PARTY" - Third party provider.
+	IdpType string `json:"idpType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExternalIdpConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExternalIdpConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaIdpConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaIdpConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaIdpConfigExternalIdpConfig: Third party IDP
+// Config.
+type GoogleCloudDiscoveryengineV1betaIdpConfigExternalIdpConfig struct {
+	// WorkforcePoolName: Workforce pool name. Example:
+	// "locations/global/workforcePools/pool_id"
+	WorkforcePoolName string `json:"workforcePoolName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WorkforcePoolName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WorkforcePoolName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaIdpConfigExternalIdpConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaIdpConfigExternalIdpConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -28463,6 +28648,119 @@ func (c *ProjectsProvisionCall) Do(opts ...googleapi.CallOption) (*GoogleLongrun
 	return ret, nil
 }
 
+type ProjectsLocationsGetAclConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetAclConfig: Gets the AclConfig.
+//
+//   - name: Resource name of AclConfig, such as
+//     `projects/*/locations/*/aclConfig`. If the caller does not have permission
+//     to access the AclConfig, regardless of whether or not it exists, a
+//     PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsService) GetAclConfig(name string) *ProjectsLocationsGetAclConfigCall {
+	c := &ProjectsLocationsGetAclConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGetAclConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetAclConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGetAclConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetAclConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGetAclConfigCall) Context(ctx context.Context) *ProjectsLocationsGetAclConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGetAclConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetAclConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.getAclConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.getAclConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaAclConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetAclConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaAclConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaAclConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.getAclConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsGetCmekConfigCall struct {
 	s            *Service
 	name         string
@@ -28902,6 +29200,114 @@ func (c *ProjectsLocationsSetDedicatedCrawlRateCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.setDedicatedCrawlRate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsUpdateAclConfigCall struct {
+	s                                         *Service
+	name                                      string
+	googleclouddiscoveryenginev1betaaclconfig *GoogleCloudDiscoveryengineV1betaAclConfig
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// UpdateAclConfig: Default ACL configuration for use in a location of a
+// customer's project. Updates will only reflect to new data stores. Existing
+// data stores will still use the old value.
+//
+//   - name: Immutable. The full resource name of the acl configuration. Format:
+//     `projects/{project}/locations/{location}/aclConfig`. This field must be a
+//     UTF-8 encoded string with a length limit of 1024 characters.
+func (r *ProjectsLocationsService) UpdateAclConfig(name string, googleclouddiscoveryenginev1betaaclconfig *GoogleCloudDiscoveryengineV1betaAclConfig) *ProjectsLocationsUpdateAclConfigCall {
+	c := &ProjectsLocationsUpdateAclConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1betaaclconfig = googleclouddiscoveryenginev1betaaclconfig
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsUpdateAclConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateAclConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsUpdateAclConfigCall) Context(ctx context.Context) *ProjectsLocationsUpdateAclConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsUpdateAclConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUpdateAclConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1betaaclconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.updateAclConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.updateAclConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaAclConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsUpdateAclConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaAclConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaAclConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.updateAclConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

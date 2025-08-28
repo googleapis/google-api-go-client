@@ -2888,7 +2888,7 @@ type GooglePrivacyDlpV2DataProfileAction struct {
 	// (https://cloud.google.com/chronicle/docs/detection/usecase-dlp-high-risk-user-download).
 	PublishToChronicle *GooglePrivacyDlpV2PublishToChronicle `json:"publishToChronicle,omitempty"`
 	// PublishToDataplexCatalog: Publishes a portion of each profile to Dataplex
-	// Catalog with the aspect type Sensitive Data Protection Profile.
+	// Universal Catalog with the aspect type Sensitive Data Protection Profile.
 	PublishToDataplexCatalog *GooglePrivacyDlpV2PublishToDataplexCatalog `json:"publishToDataplexCatalog,omitempty"`
 	// PublishToScc: Publishes findings to Security Command Center for each data
 	// profile.
@@ -8880,13 +8880,13 @@ type GooglePrivacyDlpV2PublishSummaryToCscc struct {
 type GooglePrivacyDlpV2PublishToChronicle struct {
 }
 
-// GooglePrivacyDlpV2PublishToDataplexCatalog: Create Dataplex Catalog aspects
-// for profiled resources with the aspect type Sensitive Data Protection
-// Profile. To learn more about aspects, see
+// GooglePrivacyDlpV2PublishToDataplexCatalog: Create Dataplex Universal
+// Catalog aspects for profiled resources with the aspect type Sensitive Data
+// Protection Profile. To learn more about aspects, see
 // https://cloud.google.com/sensitive-data-protection/docs/add-aspects.
 type GooglePrivacyDlpV2PublishToDataplexCatalog struct {
-	// LowerDataRiskToLow: Whether creating a Dataplex Catalog aspect for a
-	// profiled resource should lower the risk of the profile for that resource.
+	// LowerDataRiskToLow: Whether creating a Dataplex Universal Catalog aspect for
+	// a profiled resource should lower the risk of the profile for that resource.
 	// This also lowers the data risk of resources at the lower levels of the
 	// resource hierarchy. For example, reducing the data risk of a table data
 	// profile also reduces the data risk of the constituent column data profiles.
@@ -10450,7 +10450,9 @@ type GooglePrivacyDlpV2Tag struct {
 	// NamespacedTagValue: The namespaced name for the tag value to attach to
 	// Google Cloud resources. Must be in the format
 	// `{parent_id}/{tag_key_short_name}/{short_name}`, for example,
-	// "123456/environment/prod". This is only set for Google Cloud resources.
+	// "123456/environment/prod" for an organization parent, or
+	// "my-project/environment/prod" for a project parent. This is only set for
+	// Google Cloud resources.
 	NamespacedTagValue string `json:"namespacedTagValue,omitempty"`
 	// Value: The value of a tag key-value pair. For Google Cloud resources, this
 	// is the resource name of the value, for example, "tagValues/123456".
@@ -10555,7 +10557,8 @@ type GooglePrivacyDlpV2TagValue struct {
 	// NamespacedValue: The namespaced name for the tag value to attach to
 	// resources. Must be in the format
 	// `{parent_id}/{tag_key_short_name}/{short_name}`, for example,
-	// "123456/environment/prod".
+	// "123456/environment/prod" for an organization parent, or
+	// "my-project/environment/prod" for a project parent.
 	NamespacedValue string `json:"namespacedValue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NamespacedValue") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -632,8 +632,7 @@ type CancelOperationRequest struct {
 type CloudResource struct {
 	// InstanceProperties: Output only. All instance properties.
 	InstanceProperties *InstanceProperties `json:"instanceProperties,omitempty"`
-	// Kind: Output only. ComputeInstance, ComputeDisk, VPC, Bare Metal server,
-	// etc.
+	// Kind: Output only.
 	//
 	// Possible values:
 	//   "RESOURCE_KIND_UNSPECIFIED" - Unspecified resource kind.
@@ -649,7 +648,9 @@ type CloudResource struct {
 	//   "RESOURCE_KIND_PUBLIC_ADDRESS" - This is a public accessible IP Address.
 	//   "RESOURCE_KIND_INSTANCE_GROUP" - This is a compute instance group.
 	Kind string `json:"kind,omitempty"`
-	// Name: Output only. resource name
+	// Name: Output only. resource name Example:
+	// compute.googleapis.com/projects/wlm-obs-dev/zones/us-central1-a/instances/sap
+	// -pri
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InstanceProperties") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1569,6 +1570,13 @@ type Rule struct {
 	Remediation string `json:"remediation,omitempty"`
 	// RevisionId: Output only. the version of the rule
 	RevisionId string `json:"revisionId,omitempty"`
+	// RuleType: The type of the rule.
+	//
+	// Possible values:
+	//   "RULE_TYPE_UNSPECIFIED" - Not specified.
+	//   "BASELINE" - Baseline rules
+	//   "CUSTOM" - Custom rules
+	RuleType string `json:"ruleType,omitempty"`
 	// SecondaryCategory: the secondary category
 	SecondaryCategory string `json:"secondaryCategory,omitempty"`
 	// Severity: the severity of the rule

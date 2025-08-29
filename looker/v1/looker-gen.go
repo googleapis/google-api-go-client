@@ -1092,6 +1092,10 @@ type ServiceAttachment struct {
 	//   "CLOSED" - Target service attachment does not exist. This status is a
 	// terminal state.
 	ConnectionStatus string `json:"connectionStatus,omitempty"`
+	// FailureReason: Output only. Reason the service attachment creation failed.
+	// This value will only be populated if the service attachment encounters an
+	// issue during provisioning.
+	FailureReason string `json:"failureReason,omitempty"`
 	// LocalFqdn: Optional. Fully qualified domain name that will be used in the
 	// private DNS record created for the service attachment.
 	LocalFqdn string `json:"localFqdn,omitempty"`
@@ -1346,9 +1350,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

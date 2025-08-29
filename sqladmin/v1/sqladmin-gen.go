@@ -2105,11 +2105,26 @@ type ExecuteSqlPayload struct {
 	// Database: Optional. Name of the database on which the statement will be
 	// executed.
 	Database string `json:"database,omitempty"`
+	// PartialResultMode: Optional. Controls how the API should respond when the
+	// SQL execution result exceeds 10 MB. The default mode is to throw an error.
+	//
+	// Possible values:
+	//   "PARTIAL_RESULT_MODE_UNSPECIFIED" - Unspecified mode, effectively the same
+	// as `FAIL_PARTIAL_RESULT`.
+	//   "FAIL_PARTIAL_RESULT" - Throw an error if the result exceeds 10 MB. Don't
+	// return the result.
+	//   "ALLOW_PARTIAL_RESULT" - Return a truncated result and set
+	// `partial_result` to true if the result exceeds 10 MB. Don't throw an error.
+	PartialResultMode string `json:"partialResultMode,omitempty"`
 	// RowLimit: Optional. The maximum number of rows returned per SQL statement.
 	RowLimit int64 `json:"rowLimit,omitempty,string"`
 	// SqlStatement: Required. SQL statements to run on the database. It can be a
 	// single statement or a sequence of statements separated by semicolons.
 	SqlStatement string `json:"sqlStatement,omitempty"`
+	// User: Optional. The name of an existing database user to connect to the
+	// database. When `auto_iam_authn` is set to true, this field is ignored and
+	// the API caller's IAM user is used.
+	User string `json:"user,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoIamAuthn") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5226,6 +5241,9 @@ func (s SqlInstancesGetDiskShrinkConfigResponse) MarshalJSON() ([]byte, error) {
 // SqlInstancesGetLatestRecoveryTimeResponse: Instance get latest recovery time
 // response.
 type SqlInstancesGetLatestRecoveryTimeResponse struct {
+	// EarliestRecoveryTime: Timestamp, identifies the earliest recovery time of
+	// the source instance.
+	EarliestRecoveryTime string `json:"earliestRecoveryTime,omitempty"`
 	// Kind: This is always `sql#getLatestRecoveryTime`.
 	Kind string `json:"kind,omitempty"`
 	// LatestRecoveryTime: Timestamp, identifies the latest recovery time of the
@@ -5234,15 +5252,15 @@ type SqlInstancesGetLatestRecoveryTimeResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "EarliestRecoveryTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Kind") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "EarliestRecoveryTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

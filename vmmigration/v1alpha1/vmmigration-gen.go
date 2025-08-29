@@ -232,6 +232,7 @@ type ProjectsLocationsOperationsService struct {
 func NewProjectsLocationsSourcesService(s *Service) *ProjectsLocationsSourcesService {
 	rs := &ProjectsLocationsSourcesService{s: s}
 	rs.DatacenterConnectors = NewProjectsLocationsSourcesDatacenterConnectorsService(s)
+	rs.DiskMigrationJobs = NewProjectsLocationsSourcesDiskMigrationJobsService(s)
 	rs.MigratingVms = NewProjectsLocationsSourcesMigratingVmsService(s)
 	rs.UtilizationReports = NewProjectsLocationsSourcesUtilizationReportsService(s)
 	return rs
@@ -241,6 +242,8 @@ type ProjectsLocationsSourcesService struct {
 	s *Service
 
 	DatacenterConnectors *ProjectsLocationsSourcesDatacenterConnectorsService
+
+	DiskMigrationJobs *ProjectsLocationsSourcesDiskMigrationJobsService
 
 	MigratingVms *ProjectsLocationsSourcesMigratingVmsService
 
@@ -253,6 +256,15 @@ func NewProjectsLocationsSourcesDatacenterConnectorsService(s *Service) *Project
 }
 
 type ProjectsLocationsSourcesDatacenterConnectorsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSourcesDiskMigrationJobsService(s *Service) *ProjectsLocationsSourcesDiskMigrationJobsService {
+	rs := &ProjectsLocationsSourcesDiskMigrationJobsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSourcesDiskMigrationJobsService struct {
 	s *Service
 }
 
@@ -562,6 +574,44 @@ type AwsSourceDetails struct {
 
 func (s AwsSourceDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsSourceDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AwsSourceDiskDetails: Represents the source AWS Disk details.
+type AwsSourceDiskDetails struct {
+	// DiskType: Optional. Output only. Disk type.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified AWS disk type. Should not be used.
+	//   "GP2" - GP2 disk type.
+	//   "GP3" - GP3 disk type.
+	//   "IO1" - IO1 disk type.
+	//   "IO2" - IO2 disk type.
+	//   "ST1" - ST1 disk type.
+	//   "SC1" - SC1 disk type.
+	//   "STANDARD" - Standard disk type.
+	DiskType string `json:"diskType,omitempty"`
+	// SizeGib: Output only. Size in GiB.
+	SizeGib int64 `json:"sizeGib,omitempty,string"`
+	// Tags: Optional. Output only. A map of AWS volume tags.
+	Tags map[string]string `json:"tags,omitempty"`
+	// VolumeId: Required. AWS volume ID.
+	VolumeId string `json:"volumeId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DiskType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiskType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AwsSourceDiskDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsSourceDiskDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -981,6 +1031,11 @@ type CancelCloneJobRequest struct {
 type CancelCutoverJobRequest struct {
 }
 
+// CancelDiskMigrationJobRequest: Request message for 'CancelDiskMigrationJob'
+// request.
+type CancelDiskMigrationJobRequest struct {
+}
+
 // CancelImageImportJobRequest: Request message for 'CancelImageImportJob'
 // request.
 type CancelImageImportJobRequest struct {
@@ -1116,6 +1171,50 @@ type CloneStep struct {
 
 func (s CloneStep) MarshalJSON() ([]byte, error) {
 	type NoMethod CloneStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ComputeEngineDisk: Compute Engine disk target details.
+type ComputeEngineDisk struct {
+	// DiskId: Optional. Target Compute Engine Disk ID. This is the resource ID
+	// segment of the Compute Engine Disk to create. In the resource name
+	// compute/v1/projects/{project}/zones/{zone}/disks/disk1 "disk1" is the
+	// resource ID for the disk.
+	DiskId string `json:"diskId,omitempty"`
+	// DiskType: Required. The disk type to use.
+	//
+	// Possible values:
+	//   "COMPUTE_ENGINE_DISK_TYPE_UNSPECIFIED" - An unspecified disk type. Will be
+	// used as STANDARD.
+	//   "COMPUTE_ENGINE_DISK_TYPE_STANDARD" - A Standard disk type.
+	//   "COMPUTE_ENGINE_DISK_TYPE_SSD" - SSD hard disk type.
+	//   "COMPUTE_ENGINE_DISK_TYPE_BALANCED" - An alternative to SSD persistent
+	// disks that balance performance and cost.
+	//   "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED" - Hyperdisk balanced disk
+	// type.
+	DiskType string `json:"diskType,omitempty"`
+	// ReplicaZones: Optional. Replication zones of the regional disk. Should be of
+	// the form: projects/{target-project}/locations/{replica-zone} Currently only
+	// one replica zone is supported.
+	ReplicaZones []string `json:"replicaZones,omitempty"`
+	// Zone: Required. The Compute Engine zone in which to create the disk. Should
+	// be of the form: projects/{target-project}/locations/{zone}
+	Zone string `json:"zone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DiskId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiskId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComputeEngineDisk) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeEngineDisk
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1454,8 +1553,18 @@ func (s ComputeScheduling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CopyingSourceDiskSnapshotStep: CopyingSourceDiskSnapshotStep contains
+// specific step details.
+type CopyingSourceDiskSnapshotStep struct {
+}
+
 // CreatingImageStep: CreatingImageStep contains specific step details.
 type CreatingImageStep struct {
+}
+
+// CreatingSourceDiskSnapshotStep: CreatingSourceDiskSnapshotStep contains
+// specific step details.
+type CreatingSourceDiskSnapshotStep struct {
 }
 
 // CutoverForecast: CutoverForecast holds information about future CutoverJobs
@@ -1805,6 +1914,123 @@ func (s DiskImageTargetDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DiskMigrationJob: Describes the disk which will be migrated from the source
+// environment. The source disk has to be unattached.
+type DiskMigrationJob struct {
+	// AwsSourceDiskDetails: Details of the unattached AWS source disk.
+	AwsSourceDiskDetails *AwsSourceDiskDetails `json:"awsSourceDiskDetails,omitempty"`
+	// CreateTime: Output only. The time the DiskMigrationJob resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Errors: Output only. Provides details on the errors that led to the disk
+	// migration job's state in case of an error.
+	Errors []*Status `json:"errors,omitempty"`
+	// Name: Output only. Identifier. The identifier of the DiskMigrationJob.
+	Name string `json:"name,omitempty"`
+	// State: Output only. State of the DiskMigrationJob.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unspecified. This is not in use.
+	//   "READY" - The initial state of the disk migration. In this state the
+	// customers can update the target details.
+	//   "RUNNING" - The migration is active, and it's running or scheduled to run.
+	//   "SUCCEEDED" - The migration completed successfully.
+	//   "CANCELLING" - Migration cancellation was initiated.
+	//   "CANCELLED" - The migration was cancelled.
+	//   "FAILED" - The migration process encountered an unrecoverable error and
+	// was aborted.
+	State string `json:"state,omitempty"`
+	// Steps: Output only. The disk migration steps list representing its progress.
+	Steps []*DiskMigrationStep `json:"steps,omitempty"`
+	// TargetDetails: Required. Details of the target Disk in Compute Engine.
+	TargetDetails *DiskMigrationJobTargetDetails `json:"targetDetails,omitempty"`
+	// UpdateTime: Output only. The last time the DiskMigrationJob resource was
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AwsSourceDiskDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AwsSourceDiskDetails") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DiskMigrationJob) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskMigrationJob
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DiskMigrationJobTargetDetails: Details of the target disk in Compute Engine.
+type DiskMigrationJobTargetDetails struct {
+	// Encryption: Optional. The encryption to apply to the disk. If the
+	// DiskMigrationJob parent Source resource has an encryption, this field must
+	// be set to the same encryption key.
+	Encryption *Encryption `json:"encryption,omitempty"`
+	// Labels: Optional. A map of labels to associate with the disk.
+	Labels map[string]string `json:"labels,omitempty"`
+	// TargetDisk: Required. The target disk.
+	TargetDisk *ComputeEngineDisk `json:"targetDisk,omitempty"`
+	// TargetProject: Required. The name of the resource of type TargetProject
+	// which represents the Compute Engine project in which to create the disk.
+	// Should be of the form:
+	// projects/{project}/locations/global/targetProjects/{target-project}
+	TargetProject string `json:"targetProject,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Encryption") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Encryption") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DiskMigrationJobTargetDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskMigrationJobTargetDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DiskMigrationStep: DiskMigrationStep holds information about the disk
+// migration step progress.
+type DiskMigrationStep struct {
+	// CopyingSourceDiskSnapshot: Copying source disk snapshot step.
+	CopyingSourceDiskSnapshot *CopyingSourceDiskSnapshotStep `json:"copyingSourceDiskSnapshot,omitempty"`
+	// CreatingSourceDiskSnapshot: Creating source disk snapshot step.
+	CreatingSourceDiskSnapshot *CreatingSourceDiskSnapshotStep `json:"creatingSourceDiskSnapshot,omitempty"`
+	// EndTime: Output only. The time the step has ended.
+	EndTime string `json:"endTime,omitempty"`
+	// ProvisioningTargetDisk: Creating target disk step.
+	ProvisioningTargetDisk *ProvisioningTargetDiskStep `json:"provisioningTargetDisk,omitempty"`
+	// StartTime: Output only. The time the step has started.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CopyingSourceDiskSnapshot")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CopyingSourceDiskSnapshot") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DiskMigrationStep) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskMigrationStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DisksMigrationDisksTargetDefaults: Details for a disk only migration.
 type DisksMigrationDisksTargetDefaults struct {
 }
@@ -1992,6 +2218,38 @@ type FetchInventoryResponse struct {
 
 func (s FetchInventoryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchInventoryResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchStorageInventoryResponse: Response message for fetchStorageInventory.
+type FetchStorageInventoryResponse struct {
+	// NextPageToken: Output only. A token, which can be sent as `page_token` to
+	// retrieve the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Resources: The list of storage resources in the source.
+	Resources []*SourceStorageResource `json:"resources,omitempty"`
+	// UpdateTime: Output only. The timestamp when the source was last queried (if
+	// the result is from the cache).
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchStorageInventoryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchStorageInventoryResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2360,6 +2618,38 @@ type ListDatacenterConnectorsResponse struct {
 
 func (s ListDatacenterConnectorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDatacenterConnectorsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListDiskMigrationJobsResponse: Response message for 'ListDiskMigrationJobs'
+// request.
+type ListDiskMigrationJobsResponse struct {
+	// DiskMigrationJobs: Output only. The list of the disk migration jobs.
+	DiskMigrationJobs []*DiskMigrationJob `json:"diskMigrationJobs,omitempty"`
+	// NextPageToken: Optional. Output only. A token, which can be sent as
+	// `page_token` to retrieve the next page. If this field is omitted, there are
+	// no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Output only. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DiskMigrationJobs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiskMigrationJobs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListDiskMigrationJobsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDiskMigrationJobsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2990,6 +3280,8 @@ type MigrationError struct {
 	// error during appliance upgrade.
 	//   "IMAGE_IMPORT_ERROR" - Migrate to Virtual Machines encountered an error in
 	// image import operation.
+	//   "DISK_MIGRATION_ERROR" - Migrate to Virtual Machines encountered an error
+	// in disk migration operation.
 	Code string `json:"code,omitempty"`
 	// ErrorMessage: Output only. The localized error message.
 	ErrorMessage *LocalizedMessage `json:"errorMessage,omitempty"`
@@ -3312,6 +3604,11 @@ type PostProcessingStep struct {
 type PreparingVMDisksStep struct {
 }
 
+// ProvisioningTargetDiskStep: ProvisioningTargetDiskStep contains specific
+// step details.
+type ProvisioningTargetDiskStep struct {
+}
+
 // RemoveGroupMigrationRequest: Request message for 'RemoveMigration' request.
 type RemoveGroupMigrationRequest struct {
 	// MigratingVm: The MigratingVm to remove.
@@ -3450,6 +3747,11 @@ func (s ReplicationSync) MarshalJSON() ([]byte, error) {
 
 // ResumeMigrationRequest: Request message for 'ResumeMigration' request.
 type ResumeMigrationRequest struct {
+}
+
+// RunDiskMigrationJobRequest: Request message for 'RunDiskMigrationJobRequest'
+// request.
+type RunDiskMigrationJobRequest struct {
 }
 
 // SchedulePolicy: A policy for scheduling replications.
@@ -3633,6 +3935,29 @@ type Source struct {
 
 func (s Source) MarshalJSON() ([]byte, error) {
 	type NoMethod Source
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SourceStorageResource: SourceStorageResource describes a storage resource in
+// the source.
+type SourceStorageResource struct {
+	// AwsDiskDetails: Source AWS volume details.
+	AwsDiskDetails *AwsSourceDiskDetails `json:"awsDiskDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AwsDiskDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AwsDiskDetails") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SourceStorageResource) MarshalJSON() ([]byte, error) {
+	type NoMethod SourceStorageResource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7179,6 +7504,178 @@ func (c *ProjectsLocationsSourcesFetchInventoryCall) Pages(ctx context.Context, 
 	}
 }
 
+type ProjectsLocationsSourcesFetchStorageInventoryCall struct {
+	s            *Service
+	source       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchStorageInventory: List remote source's inventory of storage resources.
+// The remote source is another cloud vendor (e.g. AWS, Azure). The inventory
+// describes the list of existing storage resources in that source. Note that
+// this operation lists the resources on the remote source, as opposed to
+// listing the MigratingVms resources in the vmmigration service.
+//
+// - source: The name of the Source.
+func (r *ProjectsLocationsSourcesService) FetchStorageInventory(source string) *ProjectsLocationsSourcesFetchStorageInventoryCall {
+	c := &ProjectsLocationsSourcesFetchStorageInventoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.source = source
+	return c
+}
+
+// ForceRefresh sets the optional parameter "forceRefresh": If this flag is set
+// to true, the source will be queried instead of using cached results. Using
+// this flag will make the call slower.
+func (c *ProjectsLocationsSourcesFetchStorageInventoryCall) ForceRefresh(forceRefresh bool) *ProjectsLocationsSourcesFetchStorageInventoryCall {
+	c.urlParams_.Set("forceRefresh", fmt.Sprint(forceRefresh))
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of VMs
+// to return. The service may return fewer than this value.
+func (c *ProjectsLocationsSourcesFetchStorageInventoryCall) PageSize(pageSize int64) *ProjectsLocationsSourcesFetchStorageInventoryCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `FetchStorageInventory` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `FetchStorageInventory` must match the call that provided the page token.
+func (c *ProjectsLocationsSourcesFetchStorageInventoryCall) PageToken(pageToken string) *ProjectsLocationsSourcesFetchStorageInventoryCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Type sets the optional parameter "type": Required. The type of the storage
+// inventory to fetch.
+//
+// Possible values:
+//
+//	"STORAGE_TYPE_UNSPECIFIED" - The type is unspecified.
+//	"DISKS" - The type is disks.
+//	"SNAPSHOTS" - The type is snapshots.
+func (c *ProjectsLocationsSourcesFetchStorageInventoryCall) Type(type_ string) *ProjectsLocationsSourcesFetchStorageInventoryCall {
+	c.urlParams_.Set("type", type_)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSourcesFetchStorageInventoryCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesFetchStorageInventoryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSourcesFetchStorageInventoryCall) IfNoneMatch(entityTag string) *ProjectsLocationsSourcesFetchStorageInventoryCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSourcesFetchStorageInventoryCall) Context(ctx context.Context) *ProjectsLocationsSourcesFetchStorageInventoryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSourcesFetchStorageInventoryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesFetchStorageInventoryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+source}:fetchStorageInventory")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"source": c.source,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.fetchStorageInventory", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.sources.fetchStorageInventory" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchStorageInventoryResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourcesFetchStorageInventoryCall) Do(opts ...googleapi.CallOption) (*FetchStorageInventoryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchStorageInventoryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.fetchStorageInventory", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSourcesFetchStorageInventoryCall) Pages(ctx context.Context, f func(*FetchStorageInventoryResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type ProjectsLocationsSourcesGetCall struct {
 	s            *Service
 	name         string
@@ -8194,6 +8691,840 @@ func (c *ProjectsLocationsSourcesDatacenterConnectorsUpgradeApplianceCall) Do(op
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.datacenterConnectors.upgradeAppliance", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSourcesDiskMigrationJobsCancelCall struct {
+	s                             *Service
+	name                          string
+	canceldiskmigrationjobrequest *CancelDiskMigrationJobRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Cancel: Cancels the disk migration job.
+//
+// - name: The name of the DiskMigrationJob.
+func (r *ProjectsLocationsSourcesDiskMigrationJobsService) Cancel(name string, canceldiskmigrationjobrequest *CancelDiskMigrationJobRequest) *ProjectsLocationsSourcesDiskMigrationJobsCancelCall {
+	c := &ProjectsLocationsSourcesDiskMigrationJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.canceldiskmigrationjobrequest = canceldiskmigrationjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesDiskMigrationJobsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCancelCall) Context(ctx context.Context) *ProjectsLocationsSourcesDiskMigrationJobsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.canceldiskmigrationjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.diskMigrationJobs.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.sources.diskMigrationJobs.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCancelCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.diskMigrationJobs.cancel", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSourcesDiskMigrationJobsCreateCall struct {
+	s                *Service
+	parent           string
+	diskmigrationjob *DiskMigrationJob
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Create: Creates a new disk migration job in a given Source.
+//
+// - parent: The DiskMigrationJob's parent.
+func (r *ProjectsLocationsSourcesDiskMigrationJobsService) Create(parent string, diskmigrationjob *DiskMigrationJob) *ProjectsLocationsSourcesDiskMigrationJobsCreateCall {
+	c := &ProjectsLocationsSourcesDiskMigrationJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.diskmigrationjob = diskmigrationjob
+	return c
+}
+
+// DiskMigrationJobId sets the optional parameter "diskMigrationJobId":
+// Required. The DiskMigrationJob identifier. The maximum length of this value
+// is 63 characters. Valid characters are lower case Latin letters, digits and
+// hyphen. It must start with a Latin letter and must not end with a hyphen.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCreateCall) DiskMigrationJobId(diskMigrationJobId string) *ProjectsLocationsSourcesDiskMigrationJobsCreateCall {
+	c.urlParams_.Set("diskMigrationJobId", diskMigrationJobId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server will know to ignore the request if it has already been
+// completed. The server will guarantee that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request timed out. If you make the request again with the
+// same request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCreateCall) RequestId(requestId string) *ProjectsLocationsSourcesDiskMigrationJobsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesDiskMigrationJobsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCreateCall) Context(ctx context.Context) *ProjectsLocationsSourcesDiskMigrationJobsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.diskmigrationjob)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/diskMigrationJobs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.diskMigrationJobs.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.sources.diskMigrationJobs.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.diskMigrationJobs.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSourcesDiskMigrationJobsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single DiskMigrationJob.
+//
+// - name: The name of the DiskMigrationJob.
+func (r *ProjectsLocationsSourcesDiskMigrationJobsService) Delete(name string) *ProjectsLocationsSourcesDiskMigrationJobsDeleteCall {
+	c := &ProjectsLocationsSourcesDiskMigrationJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesDiskMigrationJobsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsDeleteCall) Context(ctx context.Context) *ProjectsLocationsSourcesDiskMigrationJobsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesDiskMigrationJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.diskMigrationJobs.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.sources.diskMigrationJobs.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.diskMigrationJobs.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSourcesDiskMigrationJobsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single DiskMigrationJob.
+//
+// - name: The name of the DiskMigrationJob.
+func (r *ProjectsLocationsSourcesDiskMigrationJobsService) Get(name string) *ProjectsLocationsSourcesDiskMigrationJobsGetCall {
+	c := &ProjectsLocationsSourcesDiskMigrationJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesDiskMigrationJobsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSourcesDiskMigrationJobsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsGetCall) Context(ctx context.Context) *ProjectsLocationsSourcesDiskMigrationJobsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesDiskMigrationJobsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.diskMigrationJobs.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.sources.diskMigrationJobs.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DiskMigrationJob.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsGetCall) Do(opts ...googleapi.CallOption) (*DiskMigrationJob, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DiskMigrationJob{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.diskMigrationJobs.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSourcesDiskMigrationJobsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists DiskMigrationJobs in a given Source.
+//
+// - parent: The parent, which owns this collection of DiskMigrationJobs.
+func (r *ProjectsLocationsSourcesDiskMigrationJobsService) List(parent string) *ProjectsLocationsSourcesDiskMigrationJobsListCall {
+	c := &ProjectsLocationsSourcesDiskMigrationJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter request (according
+// to AIP-160).
+func (c *ProjectsLocationsSourcesDiskMigrationJobsListCall) Filter(filter string) *ProjectsLocationsSourcesDiskMigrationJobsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Ordering of the result list.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsListCall) OrderBy(orderBy string) *ProjectsLocationsSourcesDiskMigrationJobsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of disk
+// migration jobs to return. The service may return fewer than this value. If
+// unspecified, at most 500 disk migration jobs will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsListCall) PageSize(pageSize int64) *ProjectsLocationsSourcesDiskMigrationJobsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListDiskMigrationJobs` call. Provide this to retrieve the
+// subsequent page. When paginating, all parameters provided to
+// `ListDiskMigrationJobs` except `page_size` must match the call that provided
+// the page token.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsListCall) PageToken(pageToken string) *ProjectsLocationsSourcesDiskMigrationJobsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesDiskMigrationJobsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSourcesDiskMigrationJobsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsListCall) Context(ctx context.Context) *ProjectsLocationsSourcesDiskMigrationJobsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesDiskMigrationJobsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/diskMigrationJobs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.diskMigrationJobs.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.sources.diskMigrationJobs.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDiskMigrationJobsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsListCall) Do(opts ...googleapi.CallOption) (*ListDiskMigrationJobsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDiskMigrationJobsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.diskMigrationJobs.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsListCall) Pages(ctx context.Context, f func(*ListDiskMigrationJobsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsSourcesDiskMigrationJobsPatchCall struct {
+	s                *Service
+	nameid           string
+	diskmigrationjob *DiskMigrationJob
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Patch: Updates the parameters of a single DiskMigrationJob.
+//
+// - name: Output only. Identifier. The identifier of the DiskMigrationJob.
+func (r *ProjectsLocationsSourcesDiskMigrationJobsService) Patch(nameid string, diskmigrationjob *DiskMigrationJob) *ProjectsLocationsSourcesDiskMigrationJobsPatchCall {
+	c := &ProjectsLocationsSourcesDiskMigrationJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.diskmigrationjob = diskmigrationjob
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server will know to ignore the request if it has already been
+// completed. The server will guarantee that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request timed out. If you make the request again with the
+// same request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsSourcesDiskMigrationJobsPatchCall) RequestId(requestId string) *ProjectsLocationsSourcesDiskMigrationJobsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the DiskMigrationJob resource by the
+// update. The fields specified in the update_mask are relative to the
+// resource, not the full request. A field will be overwritten if it is in the
+// mask. If the user does not provide a mask, then a mask equivalent to all
+// fields that are populated (have a non-empty value), will be implied.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSourcesDiskMigrationJobsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesDiskMigrationJobsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsPatchCall) Context(ctx context.Context) *ProjectsLocationsSourcesDiskMigrationJobsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesDiskMigrationJobsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.diskmigrationjob)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.diskMigrationJobs.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.sources.diskMigrationJobs.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.diskMigrationJobs.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSourcesDiskMigrationJobsRunCall struct {
+	s                          *Service
+	name                       string
+	rundiskmigrationjobrequest *RunDiskMigrationJobRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Run: Runs the disk migration job.
+//
+// - name: The name of the DiskMigrationJob.
+func (r *ProjectsLocationsSourcesDiskMigrationJobsService) Run(name string, rundiskmigrationjobrequest *RunDiskMigrationJobRequest) *ProjectsLocationsSourcesDiskMigrationJobsRunCall {
+	c := &ProjectsLocationsSourcesDiskMigrationJobsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rundiskmigrationjobrequest = rundiskmigrationjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsRunCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesDiskMigrationJobsRunCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsRunCall) Context(ctx context.Context) *ProjectsLocationsSourcesDiskMigrationJobsRunCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsRunCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesDiskMigrationJobsRunCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.rundiskmigrationjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}:run")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.diskMigrationJobs.run", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.sources.diskMigrationJobs.run" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourcesDiskMigrationJobsRunCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmmigration.projects.locations.sources.diskMigrationJobs.run", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

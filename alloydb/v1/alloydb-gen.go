@@ -344,6 +344,7 @@ type Backup struct {
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
+	//   "POSTGRES_17" - The database version is Postgres 17.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// DeleteTime: Output only. Delete time stamp
 	DeleteTime string `json:"deleteTime,omitempty"`
@@ -607,6 +608,7 @@ type Cluster struct {
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
+	//   "POSTGRES_17" - The database version is Postgres 17.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// DeleteTime: Output only. Delete time stamp
 	DeleteTime string `json:"deleteTime,omitempty"`
@@ -751,6 +753,7 @@ type ClusterUpgradeDetails struct {
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
+	//   "POSTGRES_17" - The database version is Postgres 17.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// InstanceUpgradeDetails: Upgrade details of the instances directly associated
 	// with this cluster.
@@ -4699,6 +4702,7 @@ type SupportedDatabaseFlag struct {
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
+	//   "POSTGRES_17" - The database version is Postgres 17.
 	SupportedDbVersions []string `json:"supportedDbVersions,omitempty"`
 	// Possible values:
 	//   "VALUE_TYPE_UNSPECIFIED" - This is an unknown flag type.
@@ -4843,6 +4847,7 @@ type UpgradeClusterRequest struct {
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
+	//   "POSTGRES_17" - The database version is Postgres 17.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4914,6 +4919,7 @@ type UpgradeClusterStatus struct {
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
+	//   "POSTGRES_17" - The database version is Postgres 17.
 	SourceVersion string `json:"sourceVersion,omitempty"`
 	// Stages: Status of all upgrade stages.
 	Stages []*StageStatus `json:"stages,omitempty"`
@@ -4937,6 +4943,7 @@ type UpgradeClusterStatus struct {
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
+	//   "POSTGRES_17" - The database version is Postgres 17.
 	TargetVersion string `json:"targetVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cancellable") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5194,9 +5201,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

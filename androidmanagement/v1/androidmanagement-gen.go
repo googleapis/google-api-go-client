@@ -387,7 +387,9 @@ type AdvancedSecurityOverrides struct {
 	ContentProtectionPolicy string `json:"contentProtectionPolicy,omitempty"`
 	// DeveloperSettings: Controls access to developer settings: developer options
 	// and safe boot. Replaces safeBootDisabled (deprecated) and
-	// debuggingFeaturesAllowed (deprecated).
+	// debuggingFeaturesAllowed (deprecated). On personally-owned devices with a
+	// work profile, setting this policy will not disable safe boot. In this case,
+	// a NonComplianceDetail with ADMIN_TYPE is reported.
 	//
 	// Possible values:
 	//   "DEVELOPER_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to

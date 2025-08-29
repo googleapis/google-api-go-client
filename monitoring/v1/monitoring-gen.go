@@ -1090,8 +1090,10 @@ func (s DataSet) MarshalJSON() ([]byte, error) {
 // Dimension: A chart dimension. Dimensions are a structured label, class, or
 // category for a set of measurements in your data.
 type Dimension struct {
-	// Column: Required. The name of the column in the source SQL query that is
-	// used to chart the dimension.
+	// Column: Required. For widgets that use SQL queries, set the value to the
+	// name of the column in the results table whose data is charted. For a
+	// histogram that uses a time series query, set the value of this field to
+	// metric_value.
 	Column string `json:"column,omitempty"`
 	// ColumnType: Optional. The type of the dimension column. This is relevant
 	// only if one of the bin_size fields is set. If it is empty, the type
@@ -1102,11 +1104,15 @@ type Dimension struct {
 	// FloatBinSize: Optional. float_bin_size is used when the column type used for
 	// a dimension is a floating point numeric column.
 	FloatBinSize float64 `json:"floatBinSize,omitempty"`
-	// MaxBinCount: A limit to the number of bins generated. When 0 is specified,
-	// the maximum count is not enforced.
+	// MaxBinCount: For widgets that use SQL queries, the limit to the number of
+	// bins to generate. When 0 is specified, the maximum count is not enforced.
+	// For a histogram that uses a time series query, the exact number of bins to
+	// generate. If not specified or the value is 0, then the histogram determines
+	// the number of bins to use.
 	MaxBinCount int64 `json:"maxBinCount,omitempty"`
 	// NumericBinSize: numeric_bin_size is used when the column type used for a
-	// dimension is numeric or string.
+	// dimension is numeric or string. If the column field is set to metric_value,
+	// then numericBinSize overrides maxBinCount.
 	NumericBinSize int64 `json:"numericBinSize,omitempty"`
 	// SortColumn: The column name to sort on for binning. This column can be the
 	// same column as this dimension or any other column used as a measure in the
@@ -1121,9 +1127,9 @@ type Dimension struct {
 	//   "SORT_ORDER_ASCENDING" - The lowest-valued entries are selected first.
 	//   "SORT_ORDER_DESCENDING" - The highest-valued entries are selected first.
 	SortOrder string `json:"sortOrder,omitempty"`
-	// TimeBinSize: time_bin_size is used when the data type specified by column is
-	// a time type and the bin size is determined by a time duration. If
-	// column_type is DATE, this must be a whole value multiple of 1 day. If
+	// TimeBinSize: time_bin_size is used when the data type of the specified
+	// dimension is a time type and the bin size is determined by a time duration.
+	// If column_type is DATE, this must be a whole value multiple of 1 day. If
 	// column_type is TIME, this must be less than or equal to 24 hours.
 	TimeBinSize string `json:"timeBinSize,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally

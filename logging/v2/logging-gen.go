@@ -4050,7 +4050,7 @@ type RecentQuery struct {
 	// LoggingQuery: Logging query that can be executed in Logs Explorer or via
 	// Logging API.
 	LoggingQuery *LoggingQuery `json:"loggingQuery,omitempty"`
-	// Name: Optional. Resource name of the recent query.In the format:
+	// Name: Output only. Resource name of the recent query.In the format:
 	// "projects/[PROJECT_ID]/locations/[LOCATION_ID]/recentQueries/[QUERY_ID]" For
 	// a list of supported locations, see Supported Regions
 	// (https://cloud.google.com/logging/docs/region-support)The QUERY_ID is a
@@ -5711,9 +5711,9 @@ func (r *BillingAccountsLocationsService) List(name string) *BillingAccountsLoca
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *BillingAccountsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *BillingAccountsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -12461,9 +12461,9 @@ func (r *FoldersLocationsService) List(name string) *FoldersLocationsListCall {
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *FoldersLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *FoldersLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -18149,9 +18149,9 @@ func (r *LocationsService) List(name string) *LocationsListCall {
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *LocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *LocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -22682,9 +22682,9 @@ func (r *OrganizationsLocationsService) List(name string) *OrganizationsLocation
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *OrganizationsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *OrganizationsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -29207,9 +29207,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

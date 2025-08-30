@@ -3893,7 +3893,7 @@
       }
     }
   },
-  "revision": "20250821",
+  "revision": "20250826",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -4618,10 +4618,6 @@
           "description": "The title of the file which this comment is addressing.",
           "type": "string"
         },
-        "genoaAuthor": {
-          "$ref": "GenoaUser",
-          "description": "The user who wrote this comment as a GenoaUser."
-        },
         "htmlContent": {
           "description": "HTML formatted content for this comment.",
           "type": "string"
@@ -4642,10 +4638,6 @@
             "$ref": "CommentReply"
           },
           "type": "array"
-        },
-        "resolved": {
-          "description": "Output only. Whether the comment has been resolved by one of its replies.",
-          "type": "boolean"
         },
         "selfLink": {
           "description": "A link back to this comment.",
@@ -4715,10 +4707,6 @@
         "deleted": {
           "description": "Whether this reply has been deleted. If a reply has been deleted the content will be cleared and this will only represent a reply that once existed.",
           "type": "boolean"
-        },
-        "genoaAuthor": {
-          "$ref": "GenoaUser",
-          "description": "The user who wrote this reply as a GenoaUser."
         },
         "htmlContent": {
           "description": "HTML formatted content for this reply.",
@@ -4807,78 +4795,6 @@
         },
         "type": {
           "description": "Output only. The type of the content restriction. Currently the only possible value is `globalContentRestriction`.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "DomainSharingSettings": {
-      "description": "Next ID: 5",
-      "id": "DomainSharingSettings",
-      "properties": {
-        "maxAllUsersRole": {
-          "description": "Maximum allowed role when sharing with all users",
-          "enum": [
-            "OWNER",
-            "WRITER",
-            "COMMENTER",
-            "READER",
-            "NONE"
-          ],
-          "enumDescriptions": [
-            "",
-            "",
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
-        },
-        "maxDomainRole": {
-          "description": "Maximum allowed role when sharing with all users inside the domain",
-          "enum": [
-            "OWNER",
-            "WRITER",
-            "COMMENTER",
-            "READER",
-            "NONE"
-          ],
-          "enumDescriptions": [
-            "",
-            "",
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
-        },
-        "shareInPolicy": {
-          "deprecated": true,
-          "description": "Deprecated - See b/13414050",
-          "enum": [
-            "ALLOWED",
-            "ALLOWED_WITH_WARNING",
-            "DISALLOWED"
-          ],
-          "enumDescriptions": [
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
-        },
-        "shareOutPolicy": {
-          "description": "Policy for sharing with a user outside the domain",
-          "enum": [
-            "ALLOWED",
-            "ALLOWED_WITH_WARNING",
-            "DISALLOWED"
-          ],
-          "enumDescriptions": [
-            "",
-            "",
-            ""
-          ],
           "type": "string"
         }
       },
@@ -5909,62 +5825,6 @@
       },
       "type": "object"
     },
-    "GenoaUser": {
-      "description": "Next ID: 13",
-      "id": "GenoaUser",
-      "properties": {
-        "customerId": {
-          "description": "The customer id which the user belongs to.",
-          "type": "string"
-        },
-        "domain": {
-          "deprecated": true,
-          "description": "The domain name of this user or group. As per FlexOrgs M2 compliance, usage of domain is not allowed. This field will continue to exist/be populated with the organization's display name (which is not necessarily the domain) to support mobile clients that use this field for display purposes. For more information please see: b/133505341",
-          "type": "string"
-        },
-        "domainSharingSettings": {
-          "$ref": "DomainSharingSettings",
-          "description": "The sharing settings for the domain of this user or group. Deprecated, see go/trust-rules-api-surface"
-        },
-        "emailAddress": {
-          "description": "The email address of the user",
-          "type": "string"
-        },
-        "emailAddressFromGaia": {
-          "description": "The primary email address of the user from GAIA.",
-          "type": "string"
-        },
-        "id": {
-          "description": "The user's obfuscated Gaia ID as visible throughout Google APIs",
-          "type": "string"
-        },
-        "isRequestingUser": {
-          "description": "Whether this user is the same as the user making the request.",
-          "type": "boolean"
-        },
-        "name": {
-          "description": "A displayable name for the user.",
-          "type": "string"
-        },
-        "organizationDisplayName": {
-          "description": "The name of the organization that the user belongs to.",
-          "type": "string"
-        },
-        "permissionId": {
-          "description": "The user's ID as visible in the permissions collection",
-          "type": "string"
-        },
-        "photo": {
-          "$ref": "Photo",
-          "description": "A photo of the user."
-        },
-        "url": {
-          "description": "A URL to get more information about the user.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "Label": {
       "description": "Representation of a label and label fields.",
       "id": "Label",
@@ -6473,27 +6333,6 @@
         "selfLink": {
           "description": "A link back to this list.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "Photo": {
-      "description": "Next ID: 4",
-      "id": "Photo",
-      "properties": {
-        "height": {
-          "description": "The height of the picture in pixels.",
-          "format": "uint32",
-          "type": "integer"
-        },
-        "url": {
-          "description": "The URL to get the picture from.",
-          "type": "string"
-        },
-        "width": {
-          "description": "The width of the picture in pixels.",
-          "format": "uint32",
-          "type": "integer"
         }
       },
       "type": "object"

@@ -1077,7 +1077,10 @@ type GoogleCloudAiplatformV1beta1FunctionCallingConfig struct {
 	//   "NONE" - Model will not predict any function calls. Model behavior is same
 	// as when not passing any function declarations.
 	//   "VALIDATED" - Model is constrained to predict either function calls or
-	// natural language response.
+	// natural language response. If "allowed_function_names" are set, the
+	// predicted function calls will be limited to any one of
+	// "allowed_function_names", else the predicted function calls will be any one
+	// of the provided "function_declarations".
 	Mode string `json:"mode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedFunctionNames") to
 	// unconditionally include in API requests. By default, fields with empty or

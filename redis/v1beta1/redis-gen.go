@@ -696,11 +696,7 @@ func (s CertificateAuthority) MarshalJSON() ([]byte, error) {
 
 // Cluster: A cluster instance.
 type Cluster struct {
-	// AllowFewerZonesDeployment: Optional. Immutable. Allows customers to specify
-	// if they are okay with deploying a multi-zone cluster in less than 3 zones.
-	// Once set, if there is a zonal outage during the cluster creation, the
-	// cluster will only be deployed in 2 zones, and stay within the 2 zones for
-	// its lifecycle.
+	// AllowFewerZonesDeployment: Optional. Immutable. Deprecated, do not use.
 	AllowFewerZonesDeployment bool `json:"allowFewerZonesDeployment,omitempty"`
 	// AsyncClusterEndpointsDeletionEnabled: Optional. If true, cluster endpoints
 	// that are created and registered by customers can be deleted asynchronously.

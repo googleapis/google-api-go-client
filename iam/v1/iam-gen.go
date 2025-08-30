@@ -3881,8 +3881,7 @@ type WorkforcePoolProvider struct {
 	// attribute condition expressions. To keep extended group memberships up to
 	// date, extended groups are retrieved when the user signs in and at regular
 	// intervals during the user's active session. Each user identity in the
-	// workforce identity pool must map to a specific, unique Microsoft Entra ID
-	// user.
+	// workforce identity pool must map to a unique Microsoft Entra ID user.
 	ExtendedAttributesOauth2Client *GoogleIamAdminV1WorkforcePoolProviderExtraAttributesOAuth2Client `json:"extendedAttributesOauth2Client,omitempty"`
 	// ExtraAttributesOauth2Client: Optional. The configuration for OAuth 2.0
 	// client used to get the additional user attributes. This should be used when
@@ -5103,8 +5102,7 @@ func (r *LocationsWorkforcePoolsService) List(location string) *LocationsWorkfor
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of pools
-// to return. If unspecified, at most 50 pools will be returned. The maximum
-// value is 1000; values above 1000 are truncated to 1000.
+// to return. The default value is 50. The maximum value is 100.
 func (c *LocationsWorkforcePoolsListCall) PageSize(pageSize int64) *LocationsWorkforcePoolsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

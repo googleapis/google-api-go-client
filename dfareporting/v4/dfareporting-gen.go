@@ -1740,6 +1740,16 @@ type Advertiser struct {
 	DefaultClickThroughEventTagId int64 `json:"defaultClickThroughEventTagId,omitempty,string"`
 	// DefaultEmail: Default email address used in sender field for tag emails.
 	DefaultEmail string `json:"defaultEmail,omitempty"`
+	// EuPoliticalAdsDeclaration: Optional. Whether the advertiser plans to serve
+	// EU political ads.
+	//
+	// Possible values:
+	//   "ADVERTISER_PLANS_TO_SERVE_EU_POLITICAL_ADS" - You'll need to confirm if
+	// your campaign contains EU political advertising.
+	//   "ADVERTISER_DOES_NOT_PLAN_TO_SERVE_EU_POLITICAL_ADS" - All new campaigns
+	// will have “No” selected for the question that asks if your campaign has
+	// EU political ads. You can change this for any campaign at any time.
+	EuPoliticalAdsDeclaration string `json:"euPoliticalAdsDeclaration,omitempty"`
 	// FloodlightConfigurationId: Floodlight configuration ID of this advertiser.
 	// The floodlight configuration ID will be created automatically, so on insert
 	// this field should be left blank. This field can be set to another
@@ -2446,6 +2456,15 @@ type Campaign struct {
 	// DefaultLandingPageId: The default landing page ID for this campaign.
 	DefaultLandingPageId int64  `json:"defaultLandingPageId,omitempty,string"`
 	EndDate              string `json:"endDate,omitempty"`
+	// EuPoliticalAdsDeclaration: Optional. Whether the campaign has EU political
+	// ads. Campaign Manager 360 doesn't allow campaigns with EU political ads to
+	// serve in the EU. They can still serve in other regions.
+	//
+	// Possible values:
+	//   "CONTAINS_EU_POLITICAL_ADS" - The campaign contains EU political ads.
+	//   "DOES_NOT_CONTAIN_EU_POLITICAL_ADS" - The campaign does not contain EU
+	// political ads.
+	EuPoliticalAdsDeclaration string `json:"euPoliticalAdsDeclaration,omitempty"`
 	// EventTagOverrides: Overrides that can be used to activate or deactivate
 	// advertiser event tags.
 	EventTagOverrides []*EventTagOverride `json:"eventTagOverrides,omitempty"`
@@ -8679,6 +8698,8 @@ type MeasurementPartnerWrappingData struct {
 	//   "VPAID_ONLY_FILTERING"
 	//   "VPAID_FILTERING"
 	//   "NON_VPAID_FILTERING"
+	//   "BLOCKING_FILTERING_VPAID"
+	//   "BLOCKING_FILTERING_VPAID_ONLY"
 	TagWrappingMode string `json:"tagWrappingMode,omitempty"`
 	// WrappedTag: Tag provided by the measurement partner during wrapping.
 	WrappedTag string `json:"wrappedTag,omitempty"`

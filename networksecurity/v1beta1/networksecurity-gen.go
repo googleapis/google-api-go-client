@@ -1265,8 +1265,8 @@ type AuthzPolicyCustomProviderCloudIap struct {
 type AuthzPolicyTarget struct {
 	// LoadBalancingScheme: Required. All gateways and forwarding rules referenced
 	// by this policy and extensions must share the same load balancing scheme.
-	// Supported values: `INTERNAL_MANAGED` and `EXTERNAL_MANAGED`. For more
-	// information, refer to Backend services overview
+	// Supported values: `INTERNAL_MANAGED`, `INTERNAL_SELF_MANAGED`, and
+	// `EXTERNAL_MANAGED`. For more information, refer to Backend services overview
 	// (https://cloud.google.com/load-balancing/docs/backend-service).
 	//
 	// Possible values:
@@ -1279,7 +1279,8 @@ type AuthzPolicyTarget struct {
 	// Mesh. Meant for use by CSM GKE controller only.
 	LoadBalancingScheme string `json:"loadBalancingScheme,omitempty"`
 	// Resources: Required. A list of references to the Forwarding Rules on which
-	// this policy will be applied.
+	// this policy will be applied. For policies created for Cloudrun, this field
+	// will reference the Cloud Run services.
 	Resources []string `json:"resources,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LoadBalancingScheme") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1582,15 +1583,19 @@ func (s Destination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DnsThreatDetector: Message describing DnsThreatDetector object.
+// DnsThreatDetector: A DNS threat detector sends DNS query logs to a
+// _provider_ that then analyzes the logs to identify malicious activity in the
+// DNS queries. By default, all VPC networks in your projects are included. You
+// can exclude specific networks by supplying `excluded_networks`.
 type DnsThreatDetector struct {
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. Create time stamp.
 	CreateTime string `json:"createTime,omitempty"`
-	// ExcludedNetworks: Optional. A list of Network resource names which are
-	// exempt from the configuration in this DnsThreatDetector. Example:
+	// ExcludedNetworks: Optional. A list of network resource names which aren't
+	// monitored by this DnsThreatDetector. Example:
 	// `projects/PROJECT_ID/global/networks/NETWORK_NAME`.
 	ExcludedNetworks []string `json:"excludedNetworks,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Any labels associated with the DnsThreatDetector, listed
+	// as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Immutable. Identifier. Name of the DnsThreatDetector resource.
 	Name string `json:"name,omitempty"`
@@ -1598,9 +1603,9 @@ type DnsThreatDetector struct {
 	//
 	// Possible values:
 	//   "PROVIDER_UNSPECIFIED" - An unspecified provider.
-	//   "INFOBLOX" - The Infoblox DNS threat detecter.
+	//   "INFOBLOX" - The Infoblox DNS threat detector provider.
 	Provider string `json:"provider,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. Update time stamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1699,6 +1704,8 @@ type FirewallEndpoint struct {
 	// Description: Optional. Description of the firewall endpoint. Max length 2048
 	// characters.
 	Description string `json:"description,omitempty"`
+	// EndpointSettings: Optional. Settings for the endpoint.
+	EndpointSettings *FirewallEndpointEndpointSettings `json:"endpointSettings,omitempty"`
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Immutable. Identifier. Name of resource.
@@ -1824,6 +1831,10 @@ type FirewallEndpointAssociationReference struct {
 func (s FirewallEndpointAssociationReference) MarshalJSON() ([]byte, error) {
 	type NoMethod FirewallEndpointAssociationReference
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FirewallEndpointEndpointSettings: Settings for the endpoint.
+type FirewallEndpointEndpointSettings struct {
 }
 
 // GatewaySecurityPolicy: The GatewaySecurityPolicy resource contains a
@@ -3092,12 +3103,12 @@ func (s ListClientTlsPoliciesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListDnsThreatDetectorsResponse: Message for response to listing
+// ListDnsThreatDetectorsResponse: The response message to requesting a list of
 // DnsThreatDetectors.
 type ListDnsThreatDetectorsResponse struct {
 	// DnsThreatDetectors: The list of DnsThreatDetector resources.
 	DnsThreatDetectors []*DnsThreatDetector `json:"dnsThreatDetectors,omitempty"`
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// NextPageToken: A token, which can be sent as `page_token`, to retrieve the
 	// next page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Unreachable: Unordered list. Unreachable `DnsThreatDetector` resources.
@@ -8828,9 +8839,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -13897,7 +13908,7 @@ type ProjectsLocationsDnsThreatDetectorsCreateCall struct {
 
 // Create: Creates a new DnsThreatDetector in a given project and location.
 //
-// - parent: Value for parent of the DnsThreatDetector resource.
+// - parent: The value for the parent of the DnsThreatDetector resource.
 func (r *ProjectsLocationsDnsThreatDetectorsService) Create(parent string, dnsthreatdetector *DnsThreatDetector) *ProjectsLocationsDnsThreatDetectorsCreateCall {
 	c := &ProjectsLocationsDnsThreatDetectorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13905,9 +13916,9 @@ func (r *ProjectsLocationsDnsThreatDetectorsService) Create(parent string, dnsth
 	return c
 }
 
-// DnsThreatDetectorId sets the optional parameter "dnsThreatDetectorId": Id of
-// the requesting DnsThreatDetector object. If this field is not supplied, the
-// service will generate an identifier.
+// DnsThreatDetectorId sets the optional parameter "dnsThreatDetectorId": The
+// ID of the requesting DnsThreatDetector object. If this field is not
+// supplied, the service generates an identifier.
 func (c *ProjectsLocationsDnsThreatDetectorsCreateCall) DnsThreatDetectorId(dnsThreatDetectorId string) *ProjectsLocationsDnsThreatDetectorsCreateCall {
 	c.urlParams_.Set("dnsThreatDetectorId", dnsThreatDetectorId)
 	return c
@@ -14104,7 +14115,7 @@ type ProjectsLocationsDnsThreatDetectorsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single DnsThreatDetector.
+// Get: Gets the details of a single DnsThreatDetector.
 //
 // - name: Name of the DnsThreatDetector resource.
 func (r *ProjectsLocationsDnsThreatDetectorsService) Get(name string) *ProjectsLocationsDnsThreatDetectorsGetCall {
@@ -14216,22 +14227,22 @@ type ProjectsLocationsDnsThreatDetectorsListCall struct {
 
 // List: Lists DnsThreatDetectors in a given project and location.
 //
-// - parent: Parent value for ListDnsThreatDetectorsRequest.
+// - parent: The parent value for `ListDnsThreatDetectorsRequest`.
 func (r *ProjectsLocationsDnsThreatDetectorsService) List(parent string) *ProjectsLocationsDnsThreatDetectorsListCall {
 	c := &ProjectsLocationsDnsThreatDetectorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size. Server
-// may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
+// PageSize sets the optional parameter "pageSize": The requested page size.
+// The server may return fewer items than requested. If unspecified, the server
+// picks an appropriate default.
 func (c *ProjectsLocationsDnsThreatDetectorsListCall) PageSize(pageSize int64) *ProjectsLocationsDnsThreatDetectorsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token, received
+// PageToken sets the optional parameter "pageToken": A page token received
 // from a previous `ListDnsThreatDetectorsRequest` call. Provide this to
 // retrieve the subsequent page.
 func (c *ProjectsLocationsDnsThreatDetectorsListCall) PageToken(pageToken string) *ProjectsLocationsDnsThreatDetectorsListCall {
@@ -14361,7 +14372,7 @@ type ProjectsLocationsDnsThreatDetectorsPatchCall struct {
 	header_           http.Header
 }
 
-// Patch: Updates the parameters of a single DnsThreatDetector.
+// Patch: Updates a single DnsThreatDetector.
 //
 // - name: Immutable. Identifier. Name of the DnsThreatDetector resource.
 func (r *ProjectsLocationsDnsThreatDetectorsService) Patch(name string, dnsthreatdetector *DnsThreatDetector) *ProjectsLocationsDnsThreatDetectorsPatchCall {
@@ -14371,8 +14382,8 @@ func (r *ProjectsLocationsDnsThreatDetectorsService) Patch(name string, dnsthrea
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Field mask is used to
-// specify the fields to be overwritten in the DnsThreatDetector resource by
+// UpdateMask sets the optional parameter "updateMask": The field mask is used
+// to specify the fields to be overwritten in the DnsThreatDetector resource by
 // the update. The fields specified in the update_mask are relative to the
 // resource, not the full request. A field will be overwritten if it is in the
 // mask. If the mask is not provided then all fields present in the request

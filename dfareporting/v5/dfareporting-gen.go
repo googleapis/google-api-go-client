@@ -1651,6 +1651,16 @@ type Advertiser struct {
 	DefaultClickThroughEventTagId int64 `json:"defaultClickThroughEventTagId,omitempty,string"`
 	// DefaultEmail: Default email address used in sender field for tag emails.
 	DefaultEmail string `json:"defaultEmail,omitempty"`
+	// EuPoliticalAdsDeclaration: Optional. Whether the advertiser plans to serve
+	// EU political ads.
+	//
+	// Possible values:
+	//   "ADVERTISER_PLANS_TO_SERVE_EU_POLITICAL_ADS" - You'll need to confirm if
+	// your campaign contains EU political advertising.
+	//   "ADVERTISER_DOES_NOT_PLAN_TO_SERVE_EU_POLITICAL_ADS" - All new campaigns
+	// will have “No” selected for the question that asks if your campaign has
+	// EU political ads. You can change this for any campaign at any time.
+	EuPoliticalAdsDeclaration string `json:"euPoliticalAdsDeclaration,omitempty"`
 	// FloodlightConfigurationId: Floodlight configuration ID of this advertiser.
 	// The floodlight configuration ID will be created automatically, so on insert
 	// this field should be left blank. This field can be set to another
@@ -2357,6 +2367,15 @@ type Campaign struct {
 	// DefaultLandingPageId: The default landing page ID for this campaign.
 	DefaultLandingPageId int64  `json:"defaultLandingPageId,omitempty,string"`
 	EndDate              string `json:"endDate,omitempty"`
+	// EuPoliticalAdsDeclaration: Optional. Whether the campaign has EU political
+	// ads. Campaign Manager 360 doesn't allow campaigns with EU political ads to
+	// serve in the EU. They can still serve in other regions.
+	//
+	// Possible values:
+	//   "CONTAINS_EU_POLITICAL_ADS" - The campaign contains EU political ads.
+	//   "DOES_NOT_CONTAIN_EU_POLITICAL_ADS" - The campaign does not contain EU
+	// political ads.
+	EuPoliticalAdsDeclaration string `json:"euPoliticalAdsDeclaration,omitempty"`
 	// EventTagOverrides: Overrides that can be used to activate or deactivate
 	// advertiser event tags.
 	EventTagOverrides []*EventTagOverride `json:"eventTagOverrides,omitempty"`
@@ -2526,6 +2545,87 @@ type CampaignsListResponse struct {
 func (s CampaignsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CampaignsListResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CartData:  *Beta:* This feature is currently in beta. Contains additional
+// information about cart data. This field may only be used when calling
+// batchinsert; it is not supported by batchupdate. Cart data reporting is only
+// supported in SA360. Learn more
+// (https://support.google.com/sa360/topic/13425788)
+type CartData struct {
+	// Items: Data of the items purchased.
+	Items []*CartDataItem `json:"items,omitempty"`
+	// MerchantFeedLabel: The feed labels associated with the feed where your items
+	// are uploaded. For more information, please refer to ​​
+	// https://support.google.com/merchants/answer/12453549. Providing the feed
+	// label reduces ambiguity in identifying the right offer details.
+	MerchantFeedLabel string `json:"merchantFeedLabel,omitempty"`
+	// MerchantFeedLanguage: The language associated with the feed where your items
+	// are uploaded. Use ISO 639-1 language codes. Providing the feed language
+	// reduces ambiguity in identifying the right offer details.
+	MerchantFeedLanguage string `json:"merchantFeedLanguage,omitempty"`
+	// MerchantId: The Merchant Center ID where the items are uploaded. Providing
+	// Merchant Center ID reduces ambiguity in identifying the right offer details.
+	MerchantId int64 `json:"merchantId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CartData) MarshalJSON() ([]byte, error) {
+	type NoMethod CartData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CartDataItem: Contains data of the items purchased.
+type CartDataItem struct {
+	// ItemId: The shopping id of the item. Must be equal to the Merchant Center
+	// product identifier. This is a required field.
+	ItemId string `json:"itemId,omitempty"`
+	// Quantity: Number of items sold. This is a required field.
+	Quantity int64 `json:"quantity,omitempty"`
+	// UnitPrice: Unit price excluding tax, shipping, and any transaction level
+	// discounts. Interpreted in CM360 Floodlight config parent advertiser's
+	// currency code. This is a required field.
+	UnitPrice float64 `json:"unitPrice,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ItemId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ItemId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CartDataItem) MarshalJSON() ([]byte, error) {
+	type NoMethod CartDataItem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *CartDataItem) UnmarshalJSON(data []byte) error {
+	type NoMethod CartDataItem
+	var s1 struct {
+		UnitPrice gensupport.JSONFloat64 `json:"unitPrice"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.UnitPrice = float64(s1.UnitPrice)
+	return nil
 }
 
 // ChangeLog: Describes a change that a user has made to a resource.
@@ -3076,6 +3176,14 @@ func (s ContentSourceMetaData) MarshalJSON() ([]byte, error) {
 // Conversion: A Conversion represents when a user successfully performs a
 // desired action after seeing an ad.
 type Conversion struct {
+	// AdUserDataConsent: This represents consent for ad user data.
+	//
+	// Possible values:
+	//   "GRANTED" - Granted.
+	//   "DENIED" - Denied.
+	AdUserDataConsent string `json:"adUserDataConsent,omitempty"`
+	// CartData: The cart data associated with this conversion.
+	CartData *CartData `json:"cartData,omitempty"`
 	// ChildDirectedTreatment: Whether this particular request may come from a user
 	// under the age of 13, under COPPA compliance.
 	ChildDirectedTreatment bool `json:"childDirectedTreatment,omitempty"`
@@ -3146,6 +3254,10 @@ type Conversion struct {
 	Ordinal string `json:"ordinal,omitempty"`
 	// Quantity: The quantity of the conversion. This is a required field.
 	Quantity int64 `json:"quantity,omitempty,string"`
+	// SessionAttributesEncoded: Session attributes for the conversion, encoded as
+	// based64 bytes. This field may only be used when calling batchinsert; it is
+	// not supported by batchupdate.
+	SessionAttributesEncoded string `json:"sessionAttributesEncoded,omitempty"`
 	// TimestampMicros: The timestamp of conversion, in Unix epoch micros. This is
 	// a required field.
 	TimestampMicros int64 `json:"timestampMicros,omitempty,string"`
@@ -3159,15 +3271,15 @@ type Conversion struct {
 	// Value: The value of the conversion. Interpreted in CM360 Floodlight config
 	// parent advertiser's currency code. This is a required field.
 	Value float64 `json:"value,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChildDirectedTreatment") to
+	// ForceSendFields is a list of field names (e.g. "AdUserDataConsent") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChildDirectedTreatment") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdUserDataConsent") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3650,8 +3762,6 @@ type Creative struct {
 	// clickTags. Applicable to the following creative types:
 	// DISPLAY_IMAGE_GALLERY, all RICH_MEDIA, and all VPAID.
 	CounterCustomEvents []*CreativeCustomEvent `json:"counterCustomEvents,omitempty"`
-	// CreativeAssetSelection: Required if dynamicAssetSelection is true.
-	CreativeAssetSelection *CreativeAssetSelection `json:"creativeAssetSelection,omitempty"`
 	// CreativeAssets: Assets associated with a creative. Applicable to all but the
 	// following creative types: INTERNAL_REDIRECT, INTERSTITIAL_INTERNAL_REDIRECT,
 	// and REDIRECT
@@ -3665,12 +3775,6 @@ type Creative struct {
 	// dynamically change the look or functionality of a creative. Applicable to
 	// the following creative types: all RICH_MEDIA, and all VPAID.
 	CustomKeyValues []string `json:"customKeyValues,omitempty"`
-	// DynamicAssetSelection: Set this to true to enable the use of rules to target
-	// individual assets in this creative. When set to true creativeAssetSelection
-	// must be set. This also controls asset-level companions. When this is true,
-	// companion creatives should be assigned to creative assets. Learn more.
-	// Applicable to INSTREAM_VIDEO creatives.
-	DynamicAssetSelection bool `json:"dynamicAssetSelection,omitempty"`
 	// ExitCustomEvents: List of exit events configured for the creative. For
 	// DISPLAY and DISPLAY_IMAGE_GALLERY creatives, these are read-only and
 	// auto-generated from clickTags, For DISPLAY, an event is also created from
@@ -4503,36 +4607,6 @@ type CreativeAssetMetadata struct {
 
 func (s CreativeAssetMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CreativeAssetMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// CreativeAssetSelection: Encapsulates the list of rules for asset selection
-// and a default asset in case none of the rules match. Applicable to
-// INSTREAM_VIDEO creatives.
-type CreativeAssetSelection struct {
-	// DefaultAssetId: A creativeAssets[].id. This should refer to one of the
-	// parent assets in this creative, and will be served if none of the rules
-	// match. This is a required field.
-	DefaultAssetId int64 `json:"defaultAssetId,omitempty,string"`
-	// Rules: Rules determine which asset will be served to a viewer. Rules will be
-	// evaluated in the order in which they are stored in this list. This list must
-	// contain at least one rule. Applicable to INSTREAM_VIDEO creatives.
-	Rules []*Rule `json:"rules,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DefaultAssetId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DefaultAssetId") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s CreativeAssetSelection) MarshalJSON() ([]byte, error) {
-	type NoMethod CreativeAssetSelection
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7126,6 +7200,63 @@ type FloodlightActivity struct {
 	//   "PHP"
 	//   "COLD_FUSION"
 	CacheBustingType string `json:"cacheBustingType,omitempty"`
+	// ConversionCategory: Required. The conversion category of the activity.
+	//
+	// Possible values:
+	//   "CONVERSION_CATEGORY_DEFAULT" - Unspecified category (called "Other"
+	// externally).
+	//   "CONVERSION_CATEGORY_PURCHASE" - Purchase, sales, or "order placed" event.
+	//   "CONVERSION_CATEGORY_SIGNUP" - Signup user action.
+	//   "CONVERSION_CATEGORY_PAGE_VIEW" - User visiting a page.
+	//   "CONVERSION_CATEGORY_DOWNLOAD" - Software download action (as for an app).
+	// A conversion type that is created as a download type may not have its
+	// category changed.
+	//   "CONVERSION_CATEGORY_BOOM_EVENT" - Boom event (for user list creation).
+	// This is an internal-only category.
+	//   "CONVERSION_CATEGORY_ADD_TO_CART" - The following are conversion
+	// categories added as part of go/new-categories-prd. The addition of items to
+	// a shopping cart or bag on an advertiser site.
+	//   "CONVERSION_CATEGORY_BEGIN_CHECKOUT" - When someone enters the checkout
+	// flow on an advertiser site.
+	//   "CONVERSION_CATEGORY_SUBSCRIBE_PAID" - The start of a paid subscription
+	// for a product or service.
+	//   "CONVERSION_CATEGORY_SUBSCRIBE_FREE" - The start of a free subscription
+	// for a product or service.
+	//   "CONVERSION_CATEGORY_PHONE_CALL_LEAD" - A call to indicate interesting in
+	// an advertiser's offering. Note: this is different from support calls.
+	//   "CONVERSION_CATEGORY_IMPORTED_LEAD" - A lead conversion imported from an
+	// external source into Google Ads.
+	//   "CONVERSION_CATEGORY_SUBMIT_LEAD_FORM" - A submission of a form on an
+	// advertiser site indicating business interest.
+	//   "CONVERSION_CATEGORY_BOOK_APPOINTMENT" - A booking of an appointment with
+	// an advertiser's business.
+	//   "CONVERSION_CATEGORY_REQUEST_QUOTE" - A quote or price estimate request.
+	//   "CONVERSION_CATEGORY_GET_DIRECTIONS" - A search for an advertiser's
+	// business location.
+	//   "CONVERSION_CATEGORY_OUTBOUND_CLICK" - A click to an advertiser's partner
+	// site, e.g. a referral.
+	//   "CONVERSION_CATEGORY_CONTACT" - A call, SMS, email, chat or other type of
+	// contact to an advertiser.
+	//   "CONVERSION_CATEGORY_VIEW_KEY_PAGE" - Key page views (ex: product page,
+	// article).
+	//   "CONVERSION_CATEGORY_ENGAGEMENT" - A website engagement event such as long
+	// site time or a GA Smart Goal, intended to be used for GA, Firebase, GA Gold
+	// goal imports. This will also be used for YouTube Hosted engagements like Add
+	// To Playlist, Likes etc. See go/add-to-playlist-conversion-buyside
+	//   "CONVERSION_CATEGORY_STORE_VISIT" - A visit to a physical store location.
+	//   "CONVERSION_CATEGORY_STORE_SALE" - A sale occurring in a physical store.
+	//   "CONVERSION_CATEGORY_QUALIFIED_LEAD" - End of new conversion categories
+	// from go/new-categories-prd. A lead conversion imported from an external
+	// source into Google Ads, that has been further qualified by the advertiser.
+	//   "CONVERSION_CATEGORY_CONVERTED_LEAD" - A lead conversion imported from an
+	// external source into Google Ads, that has further completed a desired stage
+	// as defined by the lead gen advertiser.
+	//   "CONVERSION_CATEGORY_IN_APP_AD_REVENUE" - Conversion event that provides
+	// the revenue value of impressions that were shown in-app to users. See
+	// go/ad-impression-type.
+	//   "CONVERSION_CATEGORY_MESSAGE_LEAD" - Message exchanges which indicate an
+	// interest in an advertiser's offering.
+	ConversionCategory string `json:"conversionCategory,omitempty"`
 	// CountingMethod: Counting method for conversions for this floodlight
 	// activity. This is a required field.
 	//
@@ -8366,6 +8497,8 @@ type MeasurementPartnerWrappingData struct {
 	//   "VPAID_ONLY_FILTERING"
 	//   "VPAID_FILTERING"
 	//   "NON_VPAID_FILTERING"
+	//   "BLOCKING_FILTERING_VPAID"
+	//   "BLOCKING_FILTERING_VPAID_ONLY"
 	TagWrappingMode string `json:"tagWrappingMode,omitempty"`
 	// WrappedTag: Tag provided by the measurement partner during wrapping.
 	WrappedTag string `json:"wrappedTag,omitempty"`
@@ -10804,36 +10937,6 @@ type RichMediaExitOverride struct {
 
 func (s RichMediaExitOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod RichMediaExitOverride
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// Rule: A rule associates an asset with a targeting template for asset-level
-// targeting. Applicable to INSTREAM_VIDEO creatives.
-type Rule struct {
-	// AssetId: A creativeAssets[].id. This should refer to one of the parent
-	// assets in this creative. This is a required field.
-	AssetId int64 `json:"assetId,omitempty,string"`
-	// Name: A user-friendly name for this rule. This is a required field.
-	Name string `json:"name,omitempty"`
-	// TargetingTemplateId: A targeting template ID. The targeting from the
-	// targeting template will be used to determine whether this asset should be
-	// served. This is a required field.
-	TargetingTemplateId int64 `json:"targetingTemplateId,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "AssetId") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AssetId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Rule) MarshalJSON() ([]byte, error) {
-	type NoMethod Rule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

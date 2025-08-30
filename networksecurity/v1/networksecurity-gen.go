@@ -1229,8 +1229,8 @@ type AuthzPolicyCustomProviderCloudIap struct {
 type AuthzPolicyTarget struct {
 	// LoadBalancingScheme: Required. All gateways and forwarding rules referenced
 	// by this policy and extensions must share the same load balancing scheme.
-	// Supported values: `INTERNAL_MANAGED` and `EXTERNAL_MANAGED`. For more
-	// information, refer to Backend services overview
+	// Supported values: `INTERNAL_MANAGED`, `INTERNAL_SELF_MANAGED`, and
+	// `EXTERNAL_MANAGED`. For more information, refer to Backend services overview
 	// (https://cloud.google.com/load-balancing/docs/backend-service).
 	//
 	// Possible values:
@@ -1243,7 +1243,8 @@ type AuthzPolicyTarget struct {
 	// Mesh. Meant for use by CSM GKE controller only.
 	LoadBalancingScheme string `json:"loadBalancingScheme,omitempty"`
 	// Resources: Required. A list of references to the Forwarding Rules on which
-	// this policy will be applied.
+	// this policy will be applied. For policies created for Cloudrun, this field
+	// will reference the Cloud Run services.
 	Resources []string `json:"resources,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LoadBalancingScheme") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1622,6 +1623,8 @@ type FirewallEndpoint struct {
 	// Description: Optional. Description of the firewall endpoint. Max length 2048
 	// characters.
 	Description string `json:"description,omitempty"`
+	// EndpointSettings: Optional. Settings for the endpoint.
+	EndpointSettings *FirewallEndpointEndpointSettings `json:"endpointSettings,omitempty"`
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Immutable. Identifier. Name of resource.
@@ -1747,6 +1750,10 @@ type FirewallEndpointAssociationReference struct {
 func (s FirewallEndpointAssociationReference) MarshalJSON() ([]byte, error) {
 	type NoMethod FirewallEndpointAssociationReference
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FirewallEndpointEndpointSettings: Settings for the endpoint.
+type FirewallEndpointEndpointSettings struct {
 }
 
 // GatewaySecurityPolicy: The GatewaySecurityPolicy resource contains a
@@ -8448,9 +8455,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

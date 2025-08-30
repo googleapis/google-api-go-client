@@ -9806,7 +9806,7 @@
       }
     }
   },
-  "revision": "20250722",
+  "revision": "20250828",
   "rootUrl": "https://dfareporting.googleapis.com/",
   "schemas": {
     "Account": {
@@ -10527,6 +10527,18 @@
           "description": "Default email address used in sender field for tag emails.",
           "type": "string"
         },
+        "euPoliticalAdsDeclaration": {
+          "description": "Optional. Whether the advertiser plans to serve EU political ads.",
+          "enum": [
+            "ADVERTISER_PLANS_TO_SERVE_EU_POLITICAL_ADS",
+            "ADVERTISER_DOES_NOT_PLAN_TO_SERVE_EU_POLITICAL_ADS"
+          ],
+          "enumDescriptions": [
+            "You'll need to confirm if your campaign contains EU political advertising.",
+            "All new campaigns will have “No” selected for the question that asks if your campaign has EU political ads. You can change this for any campaign at any time."
+          ],
+          "type": "string"
+        },
         "floodlightConfigurationId": {
           "description": "Floodlight configuration ID of this advertiser. The floodlight configuration ID will be created automatically, so on insert this field should be left blank. This field can be set to another advertiser's floodlight configuration ID in order to share that advertiser's floodlight configuration with this advertiser, so long as: - This advertiser's original floodlight configuration is not already associated with floodlight activities or floodlight activity groups. - This advertiser's original floodlight configuration is not already shared with another advertiser. ",
           "format": "int64",
@@ -11197,6 +11209,18 @@
           "format": "date",
           "type": "string"
         },
+        "euPoliticalAdsDeclaration": {
+          "description": "Optional. Whether the campaign has EU political ads. Campaign Manager 360 doesn't allow campaigns with EU political ads to serve in the EU. They can still serve in other regions.",
+          "enum": [
+            "CONTAINS_EU_POLITICAL_ADS",
+            "DOES_NOT_CONTAIN_EU_POLITICAL_ADS"
+          ],
+          "enumDescriptions": [
+            "The campaign contains EU political ads.",
+            "The campaign does not contain EU political ads."
+          ],
+          "type": "string"
+        },
         "eventTagOverrides": {
           "description": "Overrides that can be used to activate or deactivate advertiser event tags.",
           "items": {
@@ -11332,6 +11356,54 @@
         "nextPageToken": {
           "description": "Pagination token to be used for the next list operation.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CartData": {
+      "description": " *Beta:* This feature is currently in beta. Contains additional information about cart data. This field may only be used when calling batchinsert; it is not supported by batchupdate. Cart data reporting is only supported in SA360. [Learn more](https://support.google.com/sa360/topic/13425788)",
+      "id": "CartData",
+      "properties": {
+        "items": {
+          "description": "Data of the items purchased.",
+          "items": {
+            "$ref": "CartDataItem"
+          },
+          "type": "array"
+        },
+        "merchantFeedLabel": {
+          "description": "The feed labels associated with the feed where your items are uploaded. For more information, please refer to ​​ https://support.google.com/merchants/answer/12453549. Providing the feed label reduces ambiguity in identifying the right offer details.",
+          "type": "string"
+        },
+        "merchantFeedLanguage": {
+          "description": "The language associated with the feed where your items are uploaded. Use ISO 639-1 language codes. Providing the feed language reduces ambiguity in identifying the right offer details.",
+          "type": "string"
+        },
+        "merchantId": {
+          "description": "The Merchant Center ID where the items are uploaded. Providing Merchant Center ID reduces ambiguity in identifying the right offer details.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CartDataItem": {
+      "description": "Contains data of the items purchased.",
+      "id": "CartDataItem",
+      "properties": {
+        "itemId": {
+          "description": "The shopping id of the item. Must be equal to the Merchant Center product identifier. This is a required field.",
+          "type": "string"
+        },
+        "quantity": {
+          "description": "Number of items sold. This is a required field.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "unitPrice": {
+          "description": "Unit price excluding tax, shipping, and any transaction level discounts. Interpreted in CM360 Floodlight config parent advertiser's currency code. This is a required field.",
+          "format": "double",
+          "type": "number"
         }
       },
       "type": "object"
@@ -11790,6 +11862,22 @@
       "description": "A Conversion represents when a user successfully performs a desired action after seeing an ad.",
       "id": "Conversion",
       "properties": {
+        "adUserDataConsent": {
+          "description": "This represents consent for ad user data.",
+          "enum": [
+            "GRANTED",
+            "DENIED"
+          ],
+          "enumDescriptions": [
+            "Granted.",
+            "Denied."
+          ],
+          "type": "string"
+        },
+        "cartData": {
+          "$ref": "CartData",
+          "description": "The cart data associated with this conversion."
+        },
         "childDirectedTreatment": {
           "description": "Whether this particular request may come from a user under the age of 13, under COPPA compliance.",
           "type": "boolean"
@@ -11861,6 +11949,11 @@
         "quantity": {
           "description": "The quantity of the conversion. This is a required field.",
           "format": "int64",
+          "type": "string"
+        },
+        "sessionAttributesEncoded": {
+          "description": "Session attributes for the conversion, encoded as based64 bytes. This field may only be used when calling batchinsert; it is not supported by batchupdate.",
+          "format": "byte",
           "type": "string"
         },
         "timestampMicros": {
@@ -12380,10 +12473,6 @@
           },
           "type": "array"
         },
-        "creativeAssetSelection": {
-          "$ref": "CreativeAssetSelection",
-          "description": "Required if dynamicAssetSelection is true."
-        },
         "creativeAssets": {
           "description": "Assets associated with a creative. Applicable to all but the following creative types: INTERNAL_REDIRECT, INTERSTITIAL_INTERNAL_REDIRECT, and REDIRECT",
           "items": {
@@ -12404,10 +12493,6 @@
             "type": "string"
           },
           "type": "array"
-        },
-        "dynamicAssetSelection": {
-          "description": "Set this to true to enable the use of rules to target individual assets in this creative. When set to true creativeAssetSelection must be set. This also controls asset-level companions. When this is true, companion creatives should be assigned to creative assets. Learn more. Applicable to INSTREAM_VIDEO creatives.",
-          "type": "boolean"
         },
         "exitCustomEvents": {
           "description": "List of exit events configured for the creative. For DISPLAY and DISPLAY_IMAGE_GALLERY creatives, these are read-only and auto-generated from clickTags, For DISPLAY, an event is also created from the backupImageReportingLabel. Applicable to the following creative types: DISPLAY_IMAGE_GALLERY, all RICH_MEDIA, and all VPAID. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.",
@@ -13428,25 +13513,6 @@
               "Rich media primary asset is missing the Enabler reference."
             ],
             "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "CreativeAssetSelection": {
-      "description": "Encapsulates the list of rules for asset selection and a default asset in case none of the rules match. Applicable to INSTREAM_VIDEO creatives.",
-      "id": "CreativeAssetSelection",
-      "properties": {
-        "defaultAssetId": {
-          "description": "A creativeAssets[].id. This should refer to one of the parent assets in this creative, and will be served if none of the rules match. This is a required field.",
-          "format": "int64",
-          "type": "string"
-        },
-        "rules": {
-          "description": "Rules determine which asset will be served to a viewer. Rules will be evaluated in the order in which they are stored in this list. This list must contain at least one rule. Applicable to INSTREAM_VIDEO creatives.",
-          "items": {
-            "$ref": "Rule"
           },
           "type": "array"
         }
@@ -16024,6 +16090,66 @@
           ],
           "type": "string"
         },
+        "conversionCategory": {
+          "description": "Required. The conversion category of the activity.",
+          "enum": [
+            "CONVERSION_CATEGORY_DEFAULT",
+            "CONVERSION_CATEGORY_PURCHASE",
+            "CONVERSION_CATEGORY_SIGNUP",
+            "CONVERSION_CATEGORY_PAGE_VIEW",
+            "CONVERSION_CATEGORY_DOWNLOAD",
+            "CONVERSION_CATEGORY_BOOM_EVENT",
+            "CONVERSION_CATEGORY_ADD_TO_CART",
+            "CONVERSION_CATEGORY_BEGIN_CHECKOUT",
+            "CONVERSION_CATEGORY_SUBSCRIBE_PAID",
+            "CONVERSION_CATEGORY_SUBSCRIBE_FREE",
+            "CONVERSION_CATEGORY_PHONE_CALL_LEAD",
+            "CONVERSION_CATEGORY_IMPORTED_LEAD",
+            "CONVERSION_CATEGORY_SUBMIT_LEAD_FORM",
+            "CONVERSION_CATEGORY_BOOK_APPOINTMENT",
+            "CONVERSION_CATEGORY_REQUEST_QUOTE",
+            "CONVERSION_CATEGORY_GET_DIRECTIONS",
+            "CONVERSION_CATEGORY_OUTBOUND_CLICK",
+            "CONVERSION_CATEGORY_CONTACT",
+            "CONVERSION_CATEGORY_VIEW_KEY_PAGE",
+            "CONVERSION_CATEGORY_ENGAGEMENT",
+            "CONVERSION_CATEGORY_STORE_VISIT",
+            "CONVERSION_CATEGORY_STORE_SALE",
+            "CONVERSION_CATEGORY_QUALIFIED_LEAD",
+            "CONVERSION_CATEGORY_CONVERTED_LEAD",
+            "CONVERSION_CATEGORY_IN_APP_AD_REVENUE",
+            "CONVERSION_CATEGORY_MESSAGE_LEAD"
+          ],
+          "enumDescriptions": [
+            "Unspecified category (called \"Other\" externally).",
+            "Purchase, sales, or \"order placed\" event.",
+            "Signup user action.",
+            "User visiting a page.",
+            "Software download action (as for an app). A conversion type that is created as a download type may not have its category changed.",
+            "Boom event (for user list creation). This is an internal-only category.",
+            "The following are conversion categories added as part of go/new-categories-prd. The addition of items to a shopping cart or bag on an advertiser site.",
+            "When someone enters the checkout flow on an advertiser site.",
+            "The start of a paid subscription for a product or service.",
+            "The start of a free subscription for a product or service.",
+            "A call to indicate interesting in an advertiser's offering. Note: this is different from support calls.",
+            "A lead conversion imported from an external source into Google Ads.",
+            "A submission of a form on an advertiser site indicating business interest.",
+            "A booking of an appointment with an advertiser's business.",
+            "A quote or price estimate request.",
+            "A search for an advertiser's business location.",
+            "A click to an advertiser's partner site, e.g. a referral.",
+            "A call, SMS, email, chat or other type of contact to an advertiser.",
+            "Key page views (ex: product page, article).",
+            "A website engagement event such as long site time or a GA Smart Goal, intended to be used for GA, Firebase, GA Gold goal imports. This will also be used for YouTube Hosted engagements like Add To Playlist, Likes etc. See go/add-to-playlist-conversion-buyside",
+            "A visit to a physical store location.",
+            "A sale occurring in a physical store.",
+            "End of new conversion categories from go/new-categories-prd. A lead conversion imported from an external source into Google Ads, that has been further qualified by the advertiser.",
+            "A lead conversion imported from an external source into Google Ads, that has further completed a desired stage as defined by the lead gen advertiser.",
+            "Conversion event that provides the revenue value of impressions that were shown in-app to users. See go/ad-impression-type.",
+            "Message exchanges which indicate an interest in an advertiser's offering."
+          ],
+          "type": "string"
+        },
         "countingMethod": {
           "description": "Counting method for conversions for this floodlight activity. This is a required field.",
           "enum": [
@@ -17360,9 +17486,13 @@
             "VPAID_ONLY_BLOCKING",
             "VPAID_ONLY_FILTERING",
             "VPAID_FILTERING",
-            "NON_VPAID_FILTERING"
+            "NON_VPAID_FILTERING",
+            "BLOCKING_FILTERING_VPAID",
+            "BLOCKING_FILTERING_VPAID_ONLY"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",
@@ -19674,27 +19804,6 @@
         },
         "exitId": {
           "description": "ID for the override to refer to a specific exit in the creative.",
-          "format": "int64",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "Rule": {
-      "description": "A rule associates an asset with a targeting template for asset-level targeting. Applicable to INSTREAM_VIDEO creatives.",
-      "id": "Rule",
-      "properties": {
-        "assetId": {
-          "description": "A creativeAssets[].id. This should refer to one of the parent assets in this creative. This is a required field.",
-          "format": "int64",
-          "type": "string"
-        },
-        "name": {
-          "description": "A user-friendly name for this rule. This is a required field.",
-          "type": "string"
-        },
-        "targetingTemplateId": {
-          "description": "A targeting template ID. The targeting from the targeting template will be used to determine whether this asset should be served. This is a required field.",
           "format": "int64",
           "type": "string"
         }

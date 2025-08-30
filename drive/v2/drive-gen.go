@@ -1070,8 +1070,6 @@ type Comment struct {
 	FileId string `json:"fileId,omitempty"`
 	// FileTitle: The title of the file which this comment is addressing.
 	FileTitle string `json:"fileTitle,omitempty"`
-	// GenoaAuthor: The user who wrote this comment as a GenoaUser.
-	GenoaAuthor *GenoaUser `json:"genoaAuthor,omitempty"`
 	// HtmlContent: HTML formatted content for this comment.
 	HtmlContent string `json:"htmlContent,omitempty"`
 	// Kind: This is always drive#comment.
@@ -1081,9 +1079,6 @@ type Comment struct {
 	ModifiedDate string `json:"modifiedDate,omitempty"`
 	// Replies: Replies to this post.
 	Replies []*CommentReply `json:"replies,omitempty"`
-	// Resolved: Output only. Whether the comment has been resolved by one of its
-	// replies.
-	Resolved bool `json:"resolved,omitempty"`
 	// SelfLink: A link back to this comment.
 	SelfLink string `json:"selfLink,omitempty"`
 	// Status: The status of this comment. Status can be changed by posting a reply
@@ -1190,8 +1185,6 @@ type CommentReply struct {
 	// the content will be cleared and this will only represent a reply that once
 	// existed.
 	Deleted bool `json:"deleted,omitempty"`
-	// GenoaAuthor: The user who wrote this reply as a GenoaUser.
-	GenoaAuthor *GenoaUser `json:"genoaAuthor,omitempty"`
 	// HtmlContent: HTML formatted content for this reply.
 	HtmlContent string `json:"htmlContent,omitempty"`
 	// Kind: This is always drive#commentReply.
@@ -1304,59 +1297,6 @@ type ContentRestriction struct {
 
 func (s ContentRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentRestriction
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// DomainSharingSettings: Next ID: 5
-type DomainSharingSettings struct {
-	// MaxAllUsersRole: Maximum allowed role when sharing with all users
-	//
-	// Possible values:
-	//   "OWNER"
-	//   "WRITER"
-	//   "COMMENTER"
-	//   "READER"
-	//   "NONE"
-	MaxAllUsersRole string `json:"maxAllUsersRole,omitempty"`
-	// MaxDomainRole: Maximum allowed role when sharing with all users inside the
-	// domain
-	//
-	// Possible values:
-	//   "OWNER"
-	//   "WRITER"
-	//   "COMMENTER"
-	//   "READER"
-	//   "NONE"
-	MaxDomainRole string `json:"maxDomainRole,omitempty"`
-	// ShareInPolicy: Deprecated - See b/13414050
-	//
-	// Possible values:
-	//   "ALLOWED"
-	//   "ALLOWED_WITH_WARNING"
-	//   "DISALLOWED"
-	ShareInPolicy string `json:"shareInPolicy,omitempty"`
-	// ShareOutPolicy: Policy for sharing with a user outside the domain
-	//
-	// Possible values:
-	//   "ALLOWED"
-	//   "ALLOWED_WITH_WARNING"
-	//   "DISALLOWED"
-	ShareOutPolicy string `json:"shareOutPolicy,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MaxAllUsersRole") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MaxAllUsersRole") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s DomainSharingSettings) MarshalJSON() ([]byte, error) {
-	type NoMethod DomainSharingSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2487,57 +2427,6 @@ func (s GeneratedIds) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GenoaUser: Next ID: 13
-type GenoaUser struct {
-	// CustomerId: The customer id which the user belongs to.
-	CustomerId string `json:"customerId,omitempty"`
-	// Domain: The domain name of this user or group. As per FlexOrgs M2
-	// compliance, usage of domain is not allowed. This field will continue to
-	// exist/be populated with the organization's display name (which is not
-	// necessarily the domain) to support mobile clients that use this field for
-	// display purposes. For more information please see: b/133505341
-	Domain string `json:"domain,omitempty"`
-	// DomainSharingSettings: The sharing settings for the domain of this user or
-	// group. Deprecated, see go/trust-rules-api-surface
-	DomainSharingSettings *DomainSharingSettings `json:"domainSharingSettings,omitempty"`
-	// EmailAddress: The email address of the user
-	EmailAddress string `json:"emailAddress,omitempty"`
-	// EmailAddressFromGaia: The primary email address of the user from GAIA.
-	EmailAddressFromGaia string `json:"emailAddressFromGaia,omitempty"`
-	// Id: The user's obfuscated Gaia ID as visible throughout Google APIs
-	Id string `json:"id,omitempty"`
-	// IsRequestingUser: Whether this user is the same as the user making the
-	// request.
-	IsRequestingUser bool `json:"isRequestingUser,omitempty"`
-	// Name: A displayable name for the user.
-	Name string `json:"name,omitempty"`
-	// OrganizationDisplayName: The name of the organization that the user belongs
-	// to.
-	OrganizationDisplayName string `json:"organizationDisplayName,omitempty"`
-	// PermissionId: The user's ID as visible in the permissions collection
-	PermissionId string `json:"permissionId,omitempty"`
-	// Photo: A photo of the user.
-	Photo *Photo `json:"photo,omitempty"`
-	// Url: A URL to get more information about the user.
-	Url string `json:"url,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CustomerId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CustomerId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GenoaUser) MarshalJSON() ([]byte, error) {
-	type NoMethod GenoaUser
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // Label: Representation of a label and label fields.
 type Label struct {
 	// Fields: A map of the fields on the label, keyed by the field's ID.
@@ -3059,32 +2948,6 @@ type PermissionList struct {
 
 func (s PermissionList) MarshalJSON() ([]byte, error) {
 	type NoMethod PermissionList
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// Photo: Next ID: 4
-type Photo struct {
-	// Height: The height of the picture in pixels.
-	Height int64 `json:"height,omitempty"`
-	// Url: The URL to get the picture from.
-	Url string `json:"url,omitempty"`
-	// Width: The width of the picture in pixels.
-	Width int64 `json:"width,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Height") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Height") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Photo) MarshalJSON() ([]byte, error) {
-	type NoMethod Photo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

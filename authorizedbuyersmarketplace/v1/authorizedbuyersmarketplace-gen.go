@@ -2163,7 +2163,8 @@ type SendRfpRequest struct {
 	FlightStartTime string `json:"flightStartTime,omitempty"`
 	// GeoTargeting: Geo criteria IDs to be targeted. Refer to Geo tables.
 	GeoTargeting *CriteriaTargeting `json:"geoTargeting,omitempty"`
-	// InventorySizeTargeting: Inventory sizes to be targeted.
+	// InventorySizeTargeting: Inventory sizes to be targeted. Only PIXEL inventory
+	// size type is supported.
 	InventorySizeTargeting *InventorySizeTargeting `json:"inventorySizeTargeting,omitempty"`
 	// Note: A message that is sent to the publisher. Maximum length is 1024
 	// characters.

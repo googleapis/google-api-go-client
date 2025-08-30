@@ -3835,7 +3835,9 @@ type RegisterGcpRequest struct {
 	// that user will be updated to have the new "API notifications" preference. If
 	// the developer email provided is not associated with any user we will just
 	// add it as a contact. The email preference corresponding to that contact will
-	// have the new "API notifications" preference
+	// have the new "API notifications" preference. Make sure the email used is
+	// associated with a Google Account (Google Workspace account or Gmail account)
+	// and is not a service account as service accounts can't receive emails.
 	DeveloperEmail string `json:"developerEmail,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeveloperEmail") to
 	// unconditionally include in API requests. By default, fields with empty or

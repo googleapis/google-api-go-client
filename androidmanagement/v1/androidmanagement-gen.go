@@ -389,7 +389,7 @@ type AdvancedSecurityOverrides struct {
 	// and safe boot. Replaces safeBootDisabled (deprecated) and
 	// debuggingFeaturesAllowed (deprecated). On personally-owned devices with a
 	// work profile, setting this policy will not disable safe boot. In this case,
-	// a NonComplianceDetail with ADMIN_TYPE is reported.
+	// a NonComplianceDetail with MANAGEMENT_MODE is reported.
 	//
 	// Possible values:
 	//   "DEVELOPER_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to
@@ -1154,6 +1154,9 @@ type ApplicationPolicy struct {
 	//   "CREDENTIAL_PROVIDER_ALLOWED" - App is allowed to act as a credential
 	// provider.
 	CredentialProviderPolicy string `json:"credentialProviderPolicy,omitempty"`
+	// CustomAppConfig: Optional. Configuration for this custom app.install_type
+	// must be set to CUSTOM for this to be set.
+	CustomAppConfig *CustomAppConfig `json:"customAppConfig,omitempty"`
 	// DefaultPermissionPolicy: The default policy for all permissions requested by
 	// the app. If specified, this overrides the policy-level
 	// default_permission_policy which applies to all apps. It does not override
@@ -1245,11 +1248,13 @@ type ApplicationPolicy struct {
 	// the capability of interacting with Android Device Policy offline.This field
 	// can be set for at most one app.The signing key certificate fingerprint of
 	// the app on the device must match one of the entries in
-	// signingKeyFingerprintsSha256 or the signing key certificate fingerprints
-	// obtained from Play Store for the app to be able to communicate with Android
-	// Device Policy. If the app is not on Play Store and
-	// signingKeyFingerprintsSha256 is not set, a NonComplianceDetail with
-	// INVALID_VALUE is reported.
+	// ApplicationPolicy.signingKeyCerts or
+	// ExtensionConfig.signingKeyFingerprintsSha256 (deprecated) or the signing key
+	// certificate fingerprints obtained from Play Store for the app to be able to
+	// communicate with Android Device Policy. If the app is not on Play Store and
+	// if ApplicationPolicy.signingKeyCerts and
+	// ExtensionConfig.signingKeyFingerprintsSha256 (deprecated) are not set, a
+	// NonComplianceDetail with INVALID_VALUE is reported.
 	ExtensionConfig *ExtensionConfig `json:"extensionConfig,omitempty"`
 	// InstallConstraint: Optional. The constraints for installing the app. You can
 	// specify a maximum of one InstallConstraint. Multiple constraints are
@@ -1282,6 +1287,22 @@ type ApplicationPolicy struct {
 	// be able to remove the app. You can only set this installType for one app per
 	// policy. When this is present in the policy, status bar will be automatically
 	// disabled.
+	//   "CUSTOM" - The app can only be installed and updated via AMAPI SDK command
+	// (https://developers.google.com/android/management/extensibility-sdk-integration).Note:
+	// This only affects fully managed devices. Play related fields
+	// minimumVersionCode, accessibleTrackIds, autoUpdateMode, installConstraint
+	// and installPriority cannot be set for the app. The app isn't available in
+	// the Play Store. The app installed on the device has applicationSource set to
+	// CUSTOM. The signing key certificate fingerprint of the app on the device
+	// must match one of the entries in ApplicationPolicy.signingKeyCerts .
+	// Otherwise, a NonComplianceDetail with APP_SIGNING_CERT_MISMATCH is reported.
+	// Changing the installType to and from CUSTOM uninstalls the existing app if
+	// its signing key certificate fingerprint doesn't match the one from the new
+	// app source. Removing the app from applications doesn't uninstall the
+	// existing app if it conforms to playStoreMode. See also customAppConfig. This
+	// is different from the Google Play Custom App Publishing
+	// (https://developers.google.com/android/work/play/custom-app-api/get-started)
+	// feature.
 	InstallType string `json:"installType,omitempty"`
 	// LockTaskAllowed: Whether the app is allowed to lock itself in full-screen
 	// mode. DEPRECATED. Use InstallType KIOSK or kioskCustomLauncherEnabled to
@@ -1334,6 +1355,18 @@ type ApplicationPolicy struct {
 	//   "PREFERENTIAL_NETWORK_ID_FOUR" - Preferential network identifier 4.
 	//   "PREFERENTIAL_NETWORK_ID_FIVE" - Preferential network identifier 5.
 	PreferentialNetworkId string `json:"preferentialNetworkId,omitempty"`
+	// SigningKeyCerts: Optional. Signing key certificates of the app.This field is
+	// required in the following cases: The app has installType set to CUSTOM (i.e.
+	// a custom app). The app has extensionConfig set (i.e. an extension app) but
+	// ExtensionConfig.signingKeyFingerprintsSha256 (deprecated) is not set and the
+	// app does not exist on the Play Store.If this field is not set for a custom
+	// app, the policy is rejected. If it is not set when required for a non-custom
+	// app, a NonComplianceDetail with INVALID_VALUE is reported.For other cases,
+	// this field is optional and the signing key certificates obtained from Play
+	// Store are used.See following policy settings to see how this field is used:
+	// choosePrivateKeyRules ApplicationPolicy.InstallType.CUSTOM
+	// ApplicationPolicy.extensionConfig
+	SigningKeyCerts []*ApplicationSigningKeyCert `json:"signingKeyCerts,omitempty"`
 	// UserControlSettings: Optional. Specifies whether user control is permitted
 	// for the app. User control includes user actions like force-stopping and
 	// clearing app data. Certain types of apps have special treatment, see
@@ -1425,6 +1458,9 @@ type ApplicationReport struct {
 	//   "SYSTEM_APP_UPDATED_VERSION" - This is an updated system app.
 	//   "INSTALLED_FROM_PLAY_STORE" - The app was installed from the Google Play
 	// Store.
+	//   "CUSTOM" - The app was installed using the AMAPI SDK command
+	// (https://developers.google.com/android/management/extensibility-sdk-integration).
+	// See also: CUSTOM
 	ApplicationSource string `json:"applicationSource,omitempty"`
 	// DisplayName: The display name of the app.
 	DisplayName string `json:"displayName,omitempty"`
@@ -1504,6 +1540,31 @@ type ApplicationReportingSettings struct {
 
 func (s ApplicationReportingSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationReportingSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ApplicationSigningKeyCert: The application signing key certificate.
+type ApplicationSigningKeyCert struct {
+	// SigningKeyCertFingerprintSha256: Required. The SHA-256 hash value of the
+	// signing key certificate of the app. This must be a valid SHA-256 hash value,
+	// i.e. 32 bytes. Otherwise, the policy is rejected.
+	SigningKeyCertFingerprintSha256 string `json:"signingKeyCertFingerprintSha256,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "SigningKeyCertFingerprintSha256") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SigningKeyCertFingerprintSha256")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApplicationSigningKeyCert) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplicationSigningKeyCert
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1709,10 +1770,11 @@ func (s CertValidationFailureEvent) MarshalJSON() ([]byte, error) {
 // calls KeyChain.choosePrivateKeyAlias if more than one choosePrivateKeyRules
 // matches, the last matching rule defines which key alias to return.
 type ChoosePrivateKeyRule struct {
-	// PackageNames: The package names to which this rule applies. The hash of the
-	// signing certificate for each app is verified against the hash provided by
-	// Play. If no package names are specified, then the alias is provided to all
-	// apps that call KeyChain.choosePrivateKeyAlias
+	// PackageNames: The package names to which this rule applies. The signing key
+	// certificate fingerprint of the app is verified against the signing key
+	// certificate fingerprints provided by Play Store and
+	// ApplicationPolicy.signingKeyCerts . If no package names are specified, then
+	// the alias is provided to all apps that call KeyChain.choosePrivateKeyAlias
 	// (https://developer.android.com/reference/android/security/KeyChain#choosePrivateKeyAlias%28android.app.Activity,%20android.security.KeyChainAliasCallback,%20java.lang.String[],%20java.security.Principal[],%20java.lang.String,%20int,%20java.lang.String%29)
 	// or any overloads (but not without calling KeyChain.choosePrivateKeyAlias,
 	// even on Android 11 and above). Any app with the same Android UID as a
@@ -2280,6 +2342,35 @@ type CryptoSelfTestCompletedEvent struct {
 
 func (s CryptoSelfTestCompletedEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod CryptoSelfTestCompletedEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomAppConfig: Configuration for a custom app.
+type CustomAppConfig struct {
+	// UserUninstallSettings: Optional. User uninstall settings of the custom app.
+	//
+	// Possible values:
+	//   "USER_UNINSTALL_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to
+	// DISALLOW_UNINSTALL_BY_USER.
+	//   "DISALLOW_UNINSTALL_BY_USER" - User is not allowed to uninstall the custom
+	// app.
+	//   "ALLOW_UNINSTALL_BY_USER" - User is allowed to uninstall the custom app.
+	UserUninstallSettings string `json:"userUninstallSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UserUninstallSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UserUninstallSettings") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomAppConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomAppConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5012,6 +5103,8 @@ type NonComplianceDetail struct {
 	// the minimum version code specified by policy.
 	//   "DEVICE_INCOMPATIBLE" - The device is incompatible with the policy
 	// requirements.
+	//   "APP_SIGNING_CERT_MISMATCH" - The app's signing certificate does not match
+	// the setting value.
 	//   "PROJECT_NOT_PERMITTED" - The Google Cloud Platform project used to manage
 	// the device is not permitted to use this policy.
 	NonComplianceReason string `json:"nonComplianceReason,omitempty"`
@@ -5121,6 +5214,8 @@ type NonComplianceDetailCondition struct {
 	// the minimum version code specified by policy.
 	//   "DEVICE_INCOMPATIBLE" - The device is incompatible with the policy
 	// requirements.
+	//   "APP_SIGNING_CERT_MISMATCH" - The app's signing certificate does not match
+	// the setting value.
 	//   "PROJECT_NOT_PERMITTED" - The Google Cloud Platform project used to manage
 	// the device is not permitted to use this policy.
 	NonComplianceReason string `json:"nonComplianceReason,omitempty"`

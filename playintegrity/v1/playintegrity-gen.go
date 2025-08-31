@@ -676,6 +676,30 @@ func (s PcRequestDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PcTestingDetails: Contains additional information generated for testing
+// responses.
+type PcTestingDetails struct {
+	// IsTestingResponse: Indicates that the information contained in this payload
+	// is a testing response that is statically overridden for a tester.
+	IsTestingResponse bool `json:"isTestingResponse,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsTestingResponse") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsTestingResponse") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PcTestingDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PcTestingDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PcTokenPayloadExternal: Contains PC device attestation details.
 type PcTokenPayloadExternal struct {
 	// AccountDetails: Details about the account information such as the licensing
@@ -685,6 +709,10 @@ type PcTokenPayloadExternal struct {
 	DeviceIntegrity *PcDeviceIntegrity `json:"deviceIntegrity,omitempty"`
 	// RequestDetails: Required. Details about the integrity request.
 	RequestDetails *PcRequestDetails `json:"requestDetails,omitempty"`
+	// TestingDetails: Indicates that this payload is generated for testing
+	// purposes and contains any additional data that is linked with testing
+	// status.
+	TestingDetails *PcTestingDetails `json:"testingDetails,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccountDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

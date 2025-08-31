@@ -362,6 +362,57 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GetTagsRequest: Request message for GetTags.
+type GetTagsRequest struct {
+	// Name: Required. The full One Platform resource name of the service resource.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetTagsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GetTagsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GetTagsResponse: Response message for GetTags.
+type GetTagsResponse struct {
+	// Name: Required. The full One Platform resource name of the service resource.
+	Name string `json:"name,omitempty"`
+	// Tags: Required. Tag keys/values directly bound to this resource. Each item
+	// in the map must be expressed as " : ". For example: "123/environment" :
+	// "production", "123/costCenter" : "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
+	// TagsEtag: A checksum based on the current bindings. This field is always set
+	// in server responses.
+	TagsEtag string `json:"tagsEtag,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetTagsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GetTagsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudMemcacheV1beta2LocationMetadata: Metadata for the given
 // google.cloud.location.Location.
 type GoogleCloudMemcacheV1beta2LocationMetadata struct {
@@ -1531,6 +1582,69 @@ func (s Schedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SetTagsRequest: Request message for SetTags.
+type SetTagsRequest struct {
+	// Name: Required. The full One Platform resource name of the service resource.
+	Name string `json:"name,omitempty"`
+	// RequestId: Optional. A unique identifier for this request. Must be a valid
+	// UUID. This request is only idempotent if a `request_id` is provided.
+	RequestId string `json:"requestId,omitempty"`
+	// Tags: Required. These bindings will override any bindings previously set and
+	// will be effective immediately. Each item in the map must be expressed as " :
+	// ". For example: "123/environment" : "production", "123/costCenter" :
+	// "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
+	// TagsEtag: Optional. A checksum based on the current bindings which can be
+	// passed to prevent race conditions. If not passed, etag check would be
+	// skipped.
+	TagsEtag string `json:"tagsEtag,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SetTagsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SetTagsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SetTagsResponse: Response message for SetTags.
+type SetTagsResponse struct {
+	// Name: Required. The full One Platform resource name of the service resource.
+	Name string `json:"name,omitempty"`
+	// Tags: Required. Tag keys/values directly bound to this resource. Each item
+	// in the map must be expressed as " : ". For example: "123/environment" :
+	// "production", "123/costCenter" : "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
+	// TagsEtag: A checksum based on the current bindings. This field is always set
+	// in server responses.
+	TagsEtag string `json:"tagsEtag,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SetTagsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SetTagsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is suitable for
 // different programming environments, including REST APIs and RPC APIs. It is
 // used by gRPC (https://github.com/grpc). Each `Status` message contains three
@@ -1862,9 +1976,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

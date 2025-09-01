@@ -174,11 +174,13 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.MulticloudDataTransferSupportedServices = NewProjectsLocationsMulticloudDataTransferSupportedServicesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.RegionalEndpoints = NewProjectsLocationsRegionalEndpointsService(s)
+	rs.RemoteTransportProfiles = NewProjectsLocationsRemoteTransportProfilesService(s)
 	rs.ServiceClasses = NewProjectsLocationsServiceClassesService(s)
 	rs.ServiceConnectionMaps = NewProjectsLocationsServiceConnectionMapsService(s)
 	rs.ServiceConnectionPolicies = NewProjectsLocationsServiceConnectionPoliciesService(s)
 	rs.ServiceConnectionTokens = NewProjectsLocationsServiceConnectionTokensService(s)
 	rs.Spokes = NewProjectsLocationsSpokesService(s)
+	rs.Transports = NewProjectsLocationsTransportsService(s)
 	return rs
 }
 
@@ -197,6 +199,8 @@ type ProjectsLocationsService struct {
 
 	RegionalEndpoints *ProjectsLocationsRegionalEndpointsService
 
+	RemoteTransportProfiles *ProjectsLocationsRemoteTransportProfilesService
+
 	ServiceClasses *ProjectsLocationsServiceClassesService
 
 	ServiceConnectionMaps *ProjectsLocationsServiceConnectionMapsService
@@ -206,6 +210,8 @@ type ProjectsLocationsService struct {
 	ServiceConnectionTokens *ProjectsLocationsServiceConnectionTokensService
 
 	Spokes *ProjectsLocationsSpokesService
+
+	Transports *ProjectsLocationsTransportsService
 }
 
 func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalService {
@@ -334,6 +340,15 @@ type ProjectsLocationsRegionalEndpointsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsRemoteTransportProfilesService(s *Service) *ProjectsLocationsRemoteTransportProfilesService {
+	rs := &ProjectsLocationsRemoteTransportProfilesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRemoteTransportProfilesService struct {
+	s *Service
+}
+
 func NewProjectsLocationsServiceClassesService(s *Service) *ProjectsLocationsServiceClassesService {
 	rs := &ProjectsLocationsServiceClassesService{s: s}
 	return rs
@@ -376,6 +391,15 @@ func NewProjectsLocationsSpokesService(s *Service) *ProjectsLocationsSpokesServi
 }
 
 type ProjectsLocationsSpokesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsTransportsService(s *Service) *ProjectsLocationsTransportsService {
+	rs := &ProjectsLocationsTransportsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsTransportsService struct {
 	s *Service
 }
 
@@ -622,6 +646,40 @@ type AutoAccept struct {
 
 func (s AutoAccept) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoAccept
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AutoCreatedSubnetworkInfo: Information for the automatically created
+// subnetwork and its associated IR.
+type AutoCreatedSubnetworkInfo struct {
+	// InternalRange: Output only. URI of the automatically created Internal Range.
+	// Only set if the subnetwork mode is AUTO_CREATED during creation.
+	InternalRange string `json:"internalRange,omitempty"`
+	// InternalRangeRef: Output only. URI of the automatically created Internal
+	// Range reference. Only set if the subnetwork mode is AUTO_CREATED during
+	// creation.
+	InternalRangeRef string `json:"internalRangeRef,omitempty"`
+	// Subnetwork: Output only. URI of the automatically created subnetwork. Only
+	// set if the subnetwork mode is AUTO_CREATED during creation.
+	Subnetwork string `json:"subnetwork,omitempty"`
+	// SubnetworkRef: Output only. URI of the automatically created subnetwork
+	// reference. Only set if the subnetwork mode is AUTO_CREATED during creation.
+	SubnetworkRef string `json:"subnetworkRef,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InternalRange") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InternalRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutoCreatedSubnetworkInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoCreatedSubnetworkInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -887,44 +945,45 @@ func (s ConsumerPscConnection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Destination: The Destination resource.
+// Destination: The `Destination` resource. It specifies the IP prefix and the
+// associated autonomous system numbers (ASN) that you want to include in a
+// `MulticloudDataTransferConfig` resource.
 type Destination struct {
-	// CreateTime: Output only. Time when the Destination was created.
+	// CreateTime: Output only. Time when the `Destination` resource was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: Optional. An optional field to provide a description of this
-	// resource.
+	// Description: Optional. A description of this resource.
 	Description string `json:"description,omitempty"`
-	// Endpoints: Required. Unordered list. The list of Endpoints configured for
-	// the IP Prefix.
+	// Endpoints: Required. Unordered list. The list of `DestinationEndpoint`
+	// resources configured for the IP prefix.
 	Endpoints []*DestinationEndpoint `json:"endpoints,omitempty"`
-	// Etag: The etag is computed by the server, and may be sent on update and
-	// delete requests to ensure the client has an up-to-date value before
+	// Etag: The etag is computed by the server, and might be sent with update and
+	// delete requests so that the client has an up-to-date value before
 	// proceeding.
 	Etag string `json:"etag,omitempty"`
-	// IpPrefix: Required. Immutable. Remote IP Prefix in the remote CSP, where the
-	// customer's workload is located
+	// IpPrefix: Required. Immutable. The IP prefix that represents your workload
+	// on another CSP.
 	IpPrefix string `json:"ipPrefix,omitempty"`
 	// Labels: Optional. User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Identifier. The name of the Destination resource. Format:
+	// Name: Identifier. The name of the `Destination` resource. Format:
 	// `projects/{project}/locations/{location}/multicloudDataTransferConfigs/{multi
 	// cloud_data_transfer_config}/destinations/{destination}`.
 	Name string `json:"name,omitempty"`
-	// StateTimeline: Output only. The timeline of the expected Destination states
-	// or the current rest state. If a state change is expected, the value will be
-	// the list of ADDING, DELETING or SUSPENDING statesdepending on the actions
-	// taken. Example: "state_timeline": { "states": [ { "state": "ADDING", // The
-	// time when the Destination will be activated. "effective_time":
-	// "2024-12-01T08:00:00Z" }, { "state": "SUSPENDING", // The time when the
-	// Destination will be suspended. "effective_time": "2024-12-01T20:00:00Z" } ]
-	// }
+	// StateTimeline: Output only. The timeline of the expected `Destination`
+	// states or the current rest state. If a state change is expected, the value
+	// is `ADDING`, `DELETING` or `SUSPENDING`, depending on the action specified.
+	// Example: "state_timeline": { "states": [ { // The time when the
+	// `Destination` resource will be activated. "effectiveTime":
+	// "2024-12-01T08:00:00Z", "state": "ADDING" }, { // The time when the
+	// `Destination` resource will be suspended. "effectiveTime":
+	// "2024-12-01T20:00:00Z", "state": "SUSPENDING" } ] }
 	StateTimeline *StateTimeline `json:"stateTimeline,omitempty"`
-	// Uid: Output only. The Google-generated UUID for the destination. This value
-	// is unique across all destination resources. If a destination is deleted and
-	// another with the same name is created, the new destination is assigned a
-	// different uid.
+	// Uid: Output only. The Google-generated unique ID for the `Destination`
+	// resource. This value is unique across all `Destination` resources. If a
+	// resource is deleted and another with the same name is created, the new
+	// resource is assigned a different and unique ID.
 	Uid string `json:"uid,omitempty"`
-	// UpdateTime: Output only. Time when the Destination was updated.
+	// UpdateTime: Output only. Time when the `Destination` resource was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -947,20 +1006,21 @@ func (s Destination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DestinationEndpoint: The metadata for a DestinationEndpoint.
+// DestinationEndpoint: The metadata for a `DestinationEndpoint` resource.
 type DestinationEndpoint struct {
-	// Asn: Required. The ASN of the remote IP Prefix.
+	// Asn: Required. The ASN of the remote IP prefix.
 	Asn int64 `json:"asn,omitempty,string"`
-	// Csp: Required. The name of the CSP of the remote IP Prefix.
+	// Csp: Required. The CSP of the remote IP prefix.
 	Csp string `json:"csp,omitempty"`
-	// State: Output only. The state of the Endpoint.
+	// State: Output only. The state of the `DestinationEndpoint` resource.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - An invalid state as the default case.
-	//   "VALID" - The Endpoint is valid.
-	//   "INVALID" - The Endpoint is invalid.
+	//   "STATE_UNSPECIFIED" - An invalid state, which is the default case.
+	//   "VALID" - The `DestinationEndpoint` resource is valid.
+	//   "INVALID" - The `DestinationEndpoint` resource is invalid.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. Time when the DestinationEndpoint was updated.
+	// UpdateTime: Output only. Time when the `DestinationEndpoint` resource was
+	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Asn") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1793,9 +1853,9 @@ func (s LinkedVpnTunnels) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListDestinationsResponse: Response message for ListDestinations.
+// ListDestinationsResponse: Response message to list `Destination` resources.
 type ListDestinationsResponse struct {
-	// Destinations: Destinations to be returned.
+	// Destinations: The list of `Destination` resources to be listed.
 	Destinations []*Destination `json:"destinations,omitempty"`
 	// NextPageToken: The next page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -1975,10 +2035,11 @@ func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListMulticloudDataTransferConfigsResponse: Response message for
-// ListMulticloudDataTransferConfigs.
+// ListMulticloudDataTransferConfigsResponse: Response message to list
+// `MulticloudDataTransferConfig` resources.
 type ListMulticloudDataTransferConfigsResponse struct {
-	// MulticloudDataTransferConfigs: MulticloudDataTransferConfigs to be returned.
+	// MulticloudDataTransferConfigs: The list of `MulticloudDataTransferConfig`
+	// resources to be listed.
 	MulticloudDataTransferConfigs []*MulticloudDataTransferConfig `json:"multicloudDataTransferConfigs,omitempty"`
 	// NextPageToken: The next page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -2005,8 +2066,9 @@ func (s ListMulticloudDataTransferConfigsResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListMulticloudDataTransferSupportedServicesResponse: Response message for
-// ListMulticloudDataTransferSupportedServices.
+// ListMulticloudDataTransferSupportedServicesResponse: Response message to
+// list the services in your project in regions that are eligible for Data
+// Transfer Essentials configuration.
 type ListMulticloudDataTransferSupportedServicesResponse struct {
 	// MulticloudDataTransferSupportedServices: The list of supported services.
 	MulticloudDataTransferSupportedServices []*MulticloudDataTransferSupportedService `json:"multicloudDataTransferSupportedServices,omitempty"`
@@ -2095,6 +2157,37 @@ type ListRegionalEndpointsResponse struct {
 
 func (s ListRegionalEndpointsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRegionalEndpointsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListRemoteTransportProfilesResponse: Message for response to listing
+// RemoteTransportProfiles
+type ListRemoteTransportProfilesResponse struct {
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// RemoteTransportProfiles: The list of RemoteTransportProfiles
+	RemoteTransportProfiles []*RemoteTransportProfile `json:"remoteTransportProfiles,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListRemoteTransportProfilesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRemoteTransportProfilesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2317,6 +2410,36 @@ func (s ListSpokesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListTransportsResponse: Message for response to listing Transports
+type ListTransportsResponse struct {
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Transports: The list of Transport
+	Transports []*Transport `json:"transports,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListTransportsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListTransportsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby city
@@ -2415,49 +2538,48 @@ func (s Migration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MulticloudDataTransferConfig: The MulticloudDataTransferConfig resource.
-// This lists the services for which customer is opting in for Multicloud Data
-// Transfer.
+// MulticloudDataTransferConfig: The `MulticloudDataTransferConfig` resource.
+// It lists the services that you configure for Data Transfer Essentials
+// billing and metering.
 type MulticloudDataTransferConfig struct {
-	// CreateTime: Output only. Time when the MulticloudDataTransferConfig was
-	// created.
+	// CreateTime: Output only. Time when the `MulticloudDataTransferConfig`
+	// resource was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: Optional. An optional field to provide a description of this
-	// resource.
+	// Description: Optional. A description of this resource.
 	Description string `json:"description,omitempty"`
-	// DestinationsActiveCount: Output only. The number of Destinations in use
-	// under the MulticloudDataTransferConfig resource.
+	// DestinationsActiveCount: Output only. The number of `Destination` resources
+	// in use with the `MulticloudDataTransferConfig` resource.
 	DestinationsActiveCount int64 `json:"destinationsActiveCount,omitempty"`
-	// DestinationsCount: Output only. The number of Destinations configured under
-	// the MulticloudDataTransferConfig resource.
+	// DestinationsCount: Output only. The number of `Destination` resources
+	// configured for the `MulticloudDataTransferConfig` resource.
 	DestinationsCount int64 `json:"destinationsCount,omitempty"`
-	// Etag: The etag is computed by the server, and may be sent on update and
-	// delete requests to ensure the client has an up-to-date value before
+	// Etag: The etag is computed by the server, and might be sent with update and
+	// delete requests so that the client has an up-to-date value before
 	// proceeding.
 	Etag string `json:"etag,omitempty"`
 	// Labels: Optional. User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Identifier. The name of the MulticloudDataTransferConfig resource.
+	// Name: Identifier. The name of the `MulticloudDataTransferConfig` resource.
 	// Format:
 	// `projects/{project}/locations/{location}/multicloudDataTransferConfigs/{multi
 	// cloud_data_transfer_config}`.
 	Name string `json:"name,omitempty"`
-	// Services: Optional. This map services to either their current or planned
-	// states. Service names are keys, and the associated values describe the
-	// service's state. If a state change is expected, the value will be the list
-	// of ADDING or DELETING states depending on the actions taken. Example:
-	// "services": { "big-query": { "states": [ { "state": "ADDING",
-	// "effective_time": "2024-12-12T08:00:00Z" }, ] }, "cloud-storage": {
-	// "states": [ { "state": "ACTIVE", } ] } }
+	// Services: Optional. Maps services to their current or planned states.
+	// Service names are keys, and the associated values describe the state of the
+	// service. If a state change is expected, the value is either `ADDING` or
+	// `DELETING`, depending on the actions taken. Sample output: "services": {
+	// "big-query": { "states": [ { "effectiveTime": "2024-12-12T08:00:00Z"
+	// "state": "ADDING", }, ] }, "cloud-storage": { "states": [ { "state":
+	// "ACTIVE", } ] } }
 	Services map[string]StateTimeline `json:"services,omitempty"`
-	// Uid: Output only. The Google-generated UUID for the
-	// MulticloudDataTransferConfig. This value is unique across all
-	// MulticloudDataTransferConfig resources. If a MulticloudDataTransferConfig is
-	// deleted and another with the same name is created, the new
-	// MulticloudDataTransferConfig is assigned a different uid.
+	// Uid: Output only. The Google-generated unique ID for the
+	// `MulticloudDataTransferConfig` resource. This value is unique across all
+	// `MulticloudDataTransferConfig` resources. If a resource is deleted and
+	// another with the same name is created, the new resource is assigned a
+	// different and unique ID.
 	Uid string `json:"uid,omitempty"`
-	// UpdateTime: Output only. Time when the MulticloudDataTransferConfig was
-	// updated.
+	// UpdateTime: Output only. Time when the `MulticloudDataTransferConfig`
+	// resource was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2480,13 +2602,13 @@ func (s MulticloudDataTransferConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MulticloudDataTransferSupportedService: The supported service for Multicloud
-// Data Transfer.
+// MulticloudDataTransferSupportedService: A service in your project in a
+// region that is eligible for Data Transfer Essentials configuration.
 type MulticloudDataTransferSupportedService struct {
 	// Name: Identifier. The name of the service.
 	Name string `json:"name,omitempty"`
-	// ServiceConfigs: Output only. The network service tiers supported for the
-	// service.
+	// ServiceConfigs: Output only. The network service tier or regional endpoint
+	// supported for the service.
 	ServiceConfigs []*ServiceConfig `json:"serviceConfigs,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3278,6 +3400,37 @@ func (s RejectSpokeUpdateRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RemoteTransportProfile: Message describing RemoteTransportProfile object
+type RemoteTransportProfile struct {
+	// CreateTime: Output only. [Output only] Create time stamp
+	CreateTime string `json:"createTime,omitempty"`
+	// Labels: Optional. Labels as key value pairs
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. name of resource
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. [Output only] Update time stamp
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoteTransportProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteTransportProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Route: A route defines a path from VM instances within a spoke to a specific
 // destination resource. Only VPC spokes have routes.
 type Route struct {
@@ -3540,27 +3693,22 @@ func (s ServiceClass) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceConfig: Specifies the Multicloud Data Transfer supported services
-// configuration. This includes either the network tier or the request
-// endpoint. If end of support for multicloud data transfer is planned for a
-// service's network tier or request endpoint, the end time will be provided.
+// ServiceConfig: Specifies eligibility information for the service.
 type ServiceConfig struct {
 	// EligibilityCriteria: Output only. The eligibility criteria for the service.
-	// The user has to meet the eligibility criteria specified here for the service
-	// to qualify for multicloud data transfer.
 	//
 	// Possible values:
-	//   "ELIGIBILITY_CRITERIA_UNSPECIFIED" - An invalid eligibility criteria as
-	// the default case.
-	//   "NETWORK_SERVICE_TIER_PREMIUM_ONLY" - The service is eligible for
-	// multicloud data transfer only for the premium network tier.
-	//   "NETWORK_SERVICE_TIER_STANDARD_ONLY" - The service is eligible for
-	// multicloud data transfer only for the standard network tier.
+	//   "ELIGIBILITY_CRITERIA_UNSPECIFIED" - The service is not eligible for Data
+	// Transfer Essentials configuration. This is the default case.
+	//   "NETWORK_SERVICE_TIER_PREMIUM_ONLY" - The service is eligible for Data
+	// Transfer Essentials configuration only for Premium Tier.
+	//   "NETWORK_SERVICE_TIER_STANDARD_ONLY" - The service is eligible for Data
+	// Transfer Essentials configuration only for Standard Tier.
 	//   "REQUEST_ENDPOINT_REGIONAL_ENDPOINT_ONLY" - The service is eligible for
-	// multicloud data transfer only for the regional endpoint.
+	// Data Transfer Essentials configuration only for the regional endpoint.
 	EligibilityCriteria string `json:"eligibilityCriteria,omitempty"`
-	// SupportEndTime: Output only. The eligibility criteria support end time. If
-	// the end time is not specified, no planned end time is available.
+	// SupportEndTime: Output only. The end time for eligibility criteria support.
+	// If not specified, no planned end time is set.
 	SupportEndTime string `json:"supportEndTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EligibilityCriteria") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3613,7 +3761,7 @@ type ServiceConnectionMap struct {
 	ProducerPscConfigs []*ProducerPscConfig `json:"producerPscConfigs,omitempty"`
 	// ServiceClass: The service class identifier this ServiceConnectionMap is for.
 	// The user of ServiceConnectionMap create API needs to have
-	// networkconnecitivty.serviceclasses.use iam permission for the service class.
+	// networkconnectivity.serviceClasses.use IAM permission for the service class.
 	ServiceClass string `json:"serviceClass,omitempty"`
 	// ServiceClassUri: Output only. The service class uri this
 	// ServiceConnectionMap is for.
@@ -3646,6 +3794,9 @@ func (s ServiceConnectionMap) MarshalJSON() ([]byte, error) {
 
 // ServiceConnectionPolicy: The ServiceConnectionPolicy resource.
 type ServiceConnectionPolicy struct {
+	// AutoCreatedSubnetInfo: Output only. Information for the automatically
+	// created subnetwork and its associated IR.
+	AutoCreatedSubnetInfo *AutoCreatedSubnetworkInfo `json:"autoCreatedSubnetInfo,omitempty"`
 	// CreateTime: Output only. Time when the ServiceConnectionPolicy was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: A description of this resource.
@@ -3690,15 +3841,15 @@ type ServiceConnectionPolicy struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "AutoCreatedSubnetInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutoCreatedSubnetInfo") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4032,22 +4183,21 @@ func (s SpokeTypeCount) MarshalJSON() ([]byte, error) {
 
 // StateMetadata: The state and activation time details of the resource state.
 type StateMetadata struct {
-	// EffectiveTime: Output only. This field will be accompanied only with
-	// transient states (PENDING_ADD, PENDING_DELETE, PENDING_SUSPENSION) and
-	// denotes the time when the transient state of the resource will be effective.
-	// For instance, if the state is "ADDING," this field will show the time the
-	// resource transitions to "ACTIVE." Similarly, if the state is
-	// "PENDING_DELETE," it will show the deletion time.
+	// EffectiveTime: Output only. Accompanies only the transient states, which
+	// include `ADDING`, `DELETING`, and `SUSPENDING`, to denote the time until
+	// which the transient state of the resource will be effective. For instance,
+	// if the state is `ADDING`, this field shows the time when the resource state
+	// transitions to `ACTIVE`.
 	EffectiveTime string `json:"effectiveTime,omitempty"`
 	// State: Output only. The state of the resource.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - An invalid state as the default case.
+	//   "STATE_UNSPECIFIED" - An invalid state, which is the default case.
 	//   "ADDING" - The resource is being added.
 	//   "ACTIVE" - The resource is in use.
 	//   "DELETING" - The resource is being deleted.
 	//   "SUSPENDING" - The resource is being suspended.
-	//   "SUSPENDED" - The resource is not in use for billing and is suspended.
+	//   "SUSPENDED" - The resource is suspended and not in use.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EffectiveTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4108,7 +4258,7 @@ func (s StateReason) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StateTimeline: The timeline of pending states for a resource.
+// StateTimeline: The timeline of the pending states for a resource.
 type StateTimeline struct {
 	// States: Output only. The state and activation time details of the resource
 	// state.
@@ -4180,6 +4330,37 @@ type TestIamPermissionsResponse struct {
 
 func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Transport: Message describing Transport object
+type Transport struct {
+	// CreateTime: Output only. [Output only] Create time stamp
+	CreateTime string `json:"createTime,omitempty"`
+	// Labels: Optional. Labels as key value pairs
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. name of resource
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. [Output only] Update time stamp
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Transport) MarshalJSON() ([]byte, error) {
+	type NoMethod Transport
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9454,10 +9635,10 @@ type ProjectsLocationsMulticloudDataTransferConfigsCreateCall struct {
 	header_                      http.Header
 }
 
-// Create: Creates a MulticloudDataTransferConfig in a given project and
-// location.
+// Create: Creates a `MulticloudDataTransferConfig` resource in a specified
+// project and location.
 //
-// - parent: The parent resource's name.
+// - parent: The name of the parent resource.
 func (r *ProjectsLocationsMulticloudDataTransferConfigsService) Create(parent string, multiclouddatatransferconfig *MulticloudDataTransferConfig) *ProjectsLocationsMulticloudDataTransferConfigsCreateCall {
 	c := &ProjectsLocationsMulticloudDataTransferConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9467,25 +9648,24 @@ func (r *ProjectsLocationsMulticloudDataTransferConfigsService) Create(parent st
 
 // MulticloudDataTransferConfigId sets the optional parameter
 // "multicloudDataTransferConfigId": Required. The ID to use for the
-// MulticloudDataTransferConfig, which will become the final component of the
-// MulticloudDataTransferConfig's resource name.
+// `MulticloudDataTransferConfig` resource, which becomes the final component
+// of the `MulticloudDataTransferConfig` resource name.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsCreateCall) MulticloudDataTransferConfigId(multicloudDataTransferConfigId string) *ProjectsLocationsMulticloudDataTransferConfigsCreateCall {
 	c.urlParams_.Set("multicloudDataTransferConfigId", multicloudDataTransferConfigId)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate
-// MulticloudDataTransferConfigs. The request ID must be a valid UUID with the
-// exception that zero UUID is not supported
-// (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server can ignore the request if it has already been completed.
+// The server waits for at least 60 minutes since the first request. For
+// example, consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same request ID,
+// the server can check if original operation with the same request ID was
+// received, and if so, can ignore the second request. This prevents clients
+// from accidentally creating duplicate `MulticloudDataTransferConfig`
+// resources. The request ID must be a valid UUID with the exception that zero
+// UUID (00000000-0000-0000-0000-000000000000) isn't supported.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsCreateCall) RequestId(requestId string) *ProjectsLocationsMulticloudDataTransferConfigsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -9584,9 +9764,9 @@ type ProjectsLocationsMulticloudDataTransferConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single MulticloudDataTransferConfig.
+// Delete: Deletes a `MulticloudDataTransferConfig` resource.
 //
-// - name: The name of the MulticloudDataTransferConfig resource to delete.
+// - name: The name of the `MulticloudDataTransferConfig` resource to delete.
 func (r *ProjectsLocationsMulticloudDataTransferConfigsService) Delete(name string) *ProjectsLocationsMulticloudDataTransferConfigsDeleteCall {
 	c := &ProjectsLocationsMulticloudDataTransferConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9594,25 +9774,24 @@ func (r *ProjectsLocationsMulticloudDataTransferConfigsService) Delete(name stri
 }
 
 // Etag sets the optional parameter "etag": The etag is computed by the server,
-// and may be sent on update and delete requests to ensure the client has an
+// and might be sent with update and delete requests so that the client has an
 // up-to-date value before proceeding.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsDeleteCall) Etag(etag string) *ProjectsLocationsMulticloudDataTransferConfigsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate
-// MulticloudDataTransferConfigs. The request ID must be a valid UUID with the
-// exception that zero UUID is not supported
-// (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server can ignore the request if it has already been completed.
+// The server waits for at least 60 minutes since the first request. For
+// example, consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same request ID,
+// the server can check if original operation with the same request ID was
+// received, and if so, can ignore the second request. This prevents clients
+// from accidentally creating duplicate `MulticloudDataTransferConfig`
+// resources. The request ID must be a valid UUID with the exception that zero
+// UUID (00000000-0000-0000-0000-000000000000) isn't supported.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsDeleteCall) RequestId(requestId string) *ProjectsLocationsMulticloudDataTransferConfigsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -9708,9 +9887,9 @@ type ProjectsLocationsMulticloudDataTransferConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single MulticloudDataTransferConfig.
+// Get: Gets the details of a `MulticloudDataTransferConfig` resource.
 //
-// - name: Name of the MulticloudDataTransferConfig to get.
+// - name: The name of the `MulticloudDataTransferConfig` resource to get.
 func (r *ProjectsLocationsMulticloudDataTransferConfigsService) Get(name string) *ProjectsLocationsMulticloudDataTransferConfigsGetCall {
 	c := &ProjectsLocationsMulticloudDataTransferConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9818,31 +9997,32 @@ type ProjectsLocationsMulticloudDataTransferConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists MulticloudDataTransferConfigs in a given project and location.
+// List: Lists the `MulticloudDataTransferConfig` resources in a specified
+// project and location.
 //
-// - parent: The parent resource's name.
+// - parent: The name of the parent resource.
 func (r *ProjectsLocationsMulticloudDataTransferConfigsService) List(parent string) *ProjectsLocationsMulticloudDataTransferConfigsListCall {
 	c := &ProjectsLocationsMulticloudDataTransferConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter expression that
-// filters the results listed in the response.
+// Filter sets the optional parameter "filter": An expression that filters the
+// results listed in the response.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsListCall) Filter(filter string) *ProjectsLocationsMulticloudDataTransferConfigsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Sort the results by a certain
-// order.
+// OrderBy sets the optional parameter "orderBy": The sort order of the
+// results.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsListCall) OrderBy(orderBy string) *ProjectsLocationsMulticloudDataTransferConfigsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// results per page that should be returned.
+// results listed per page.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsListCall) PageSize(pageSize int64) *ProjectsLocationsMulticloudDataTransferConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -9855,7 +10035,8 @@ func (c *ProjectsLocationsMulticloudDataTransferConfigsListCall) PageToken(pageT
 }
 
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
-// true, allow partial responses for multi-regional Aggregated List requests.
+// `true`, allows partial responses for multi-regional aggregated list
+// requests.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsMulticloudDataTransferConfigsListCall {
 	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
@@ -9983,10 +10164,10 @@ type ProjectsLocationsMulticloudDataTransferConfigsPatchCall struct {
 	header_                      http.Header
 }
 
-// Patch: Updates a MulticloudDataTransferConfig in a given project and
-// location.
+// Patch: Updates a `MulticloudDataTransferConfig` resource in a specified
+// project and location.
 //
-//   - name: Identifier. The name of the MulticloudDataTransferConfig resource.
+//   - name: Identifier. The name of the `MulticloudDataTransferConfig` resource.
 //     Format:
 //     `projects/{project}/locations/{location}/multicloudDataTransferConfigs/{mul
 //     ticloud_data_transfer_config}`.
@@ -9997,29 +10178,27 @@ func (r *ProjectsLocationsMulticloudDataTransferConfigsService) Patch(name strin
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate
-// MulticloudDataTransferConfigs. The request ID must be a valid UUID with the
-// exception that zero UUID is not supported
-// (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server can ignore the request if it has already been completed.
+// The server waits for at least 60 minutes since the first request. For
+// example, consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same request ID,
+// the server can check if original operation with the same request ID was
+// received, and if so, can ignore the second request. This prevents clients
+// from accidentally creating duplicate `MulticloudDataTransferConfig`
+// resources. The request ID must be a valid UUID with the exception that zero
+// UUID (00000000-0000-0000-0000-000000000000) isn't supported.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsPatchCall) RequestId(requestId string) *ProjectsLocationsMulticloudDataTransferConfigsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Field mask is used to
-// specify the fields to be overwritten in the MulticloudDataTransferConfig
-// resource by the update. The fields specified in the update_mask are relative
-// to the resource, not the full request. A field will be overwritten if it is
-// in the mask. If the user does not provide a mask then all fields will be
-// overwritten.
+// UpdateMask sets the optional parameter "updateMask": `FieldMask` is used to
+// specify the fields in the `MulticloudDataTransferConfig` resource to be
+// overwritten by the update. The fields specified in `update_mask` are
+// relative to the resource, not the full request. A field is overwritten if it
+// is in the mask. If you don't specify a mask, all fields are overwritten.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMulticloudDataTransferConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -10119,9 +10298,10 @@ type ProjectsLocationsMulticloudDataTransferConfigsDestinationsCreateCall struct
 	header_     http.Header
 }
 
-// Create: Creates a Destination in a given project and location.
+// Create: Creates a `Destination` resource in a specified project and
+// location.
 //
-// - parent: The parent resource's name.
+// - parent: The name of the parent resource.
 func (r *ProjectsLocationsMulticloudDataTransferConfigsDestinationsService) Create(parent string, destination *Destination) *ProjectsLocationsMulticloudDataTransferConfigsDestinationsCreateCall {
 	c := &ProjectsLocationsMulticloudDataTransferConfigsDestinationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10130,24 +10310,24 @@ func (r *ProjectsLocationsMulticloudDataTransferConfigsDestinationsService) Crea
 }
 
 // DestinationId sets the optional parameter "destinationId": Required. The ID
-// to use for the Destination, which will become the final component of the
-// Destination's resource name.
+// to use for the `Destination` resource, which becomes the final component of
+// the `Destination` resource name.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsDestinationsCreateCall) DestinationId(destinationId string) *ProjectsLocationsMulticloudDataTransferConfigsDestinationsCreateCall {
 	c.urlParams_.Set("destinationId", destinationId)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate Destinations. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server can ignore the request if it has already been completed.
+// The server waits for at least 60 minutes since the first request. For
+// example, consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same request ID,
+// the server can check if original operation with the same request ID was
+// received, and if so, can ignore the second request. This prevents clients
+// from accidentally creating duplicate `Destination` resources. The request ID
+// must be a valid UUID with the exception that zero UUID
+// (00000000-0000-0000-0000-000000000000) isn't supported.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsDestinationsCreateCall) RequestId(requestId string) *ProjectsLocationsMulticloudDataTransferConfigsDestinationsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -10246,9 +10426,9 @@ type ProjectsLocationsMulticloudDataTransferConfigsDestinationsDeleteCall struct
 	header_    http.Header
 }
 
-// Delete: Deletes a single Destination.
+// Delete: Deletes a `Destination` resource.
 //
-// - name: The name of the Destination resource to delete.
+// - name: The name of the `Destination` resource to delete.
 func (r *ProjectsLocationsMulticloudDataTransferConfigsDestinationsService) Delete(name string) *ProjectsLocationsMulticloudDataTransferConfigsDestinationsDeleteCall {
 	c := &ProjectsLocationsMulticloudDataTransferConfigsDestinationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10256,23 +10436,23 @@ func (r *ProjectsLocationsMulticloudDataTransferConfigsDestinationsService) Dele
 }
 
 // Etag sets the optional parameter "etag": The etag is computed by the server,
-// and may be sent on update and delete requests to ensure the client has an
+// and might be sent with update and delete requests so that the client has an
 // up-to-date value before proceeding.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsDestinationsDeleteCall) Etag(etag string) *ProjectsLocationsMulticloudDataTransferConfigsDestinationsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// The request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server can ignore the request if it has already been completed.
+// The server waits for at least 60 minutes since the first request. For
+// example, consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same request ID,
+// the server can check if original operation with the same request ID was
+// received, and if so, can ignore the second request. The request ID must be a
+// valid UUID with the exception that zero UUID
+// (00000000-0000-0000-0000-000000000000) isn't supported.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsDestinationsDeleteCall) RequestId(requestId string) *ProjectsLocationsMulticloudDataTransferConfigsDestinationsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -10368,9 +10548,9 @@ type ProjectsLocationsMulticloudDataTransferConfigsDestinationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single Destination.
+// Get: Gets the details of a `Destination` resource.
 //
-// - name: Name of the Destination to get.
+// - name: The name of the `Destination` resource to get.
 func (r *ProjectsLocationsMulticloudDataTransferConfigsDestinationsService) Get(name string) *ProjectsLocationsMulticloudDataTransferConfigsDestinationsGetCall {
 	c := &ProjectsLocationsMulticloudDataTransferConfigsDestinationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10477,31 +10657,31 @@ type ProjectsLocationsMulticloudDataTransferConfigsDestinationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Destinations in a given project and location.
+// List: Lists the `Destination` resources in a specified project and location.
 //
-// - parent: The parent resource's name.
+// - parent: The name of the parent resource.
 func (r *ProjectsLocationsMulticloudDataTransferConfigsDestinationsService) List(parent string) *ProjectsLocationsMulticloudDataTransferConfigsDestinationsListCall {
 	c := &ProjectsLocationsMulticloudDataTransferConfigsDestinationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter expression that
-// filters the results listed in the response.
+// Filter sets the optional parameter "filter": An expression that filters the
+// results listed in the response.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsDestinationsListCall) Filter(filter string) *ProjectsLocationsMulticloudDataTransferConfigsDestinationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Sort the results by a certain
-// order.
+// OrderBy sets the optional parameter "orderBy": The sort order of the
+// results.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsDestinationsListCall) OrderBy(orderBy string) *ProjectsLocationsMulticloudDataTransferConfigsDestinationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// results per page that should be returned.
+// results listed per page.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsDestinationsListCall) PageSize(pageSize int64) *ProjectsLocationsMulticloudDataTransferConfigsDestinationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -10514,7 +10694,7 @@ func (c *ProjectsLocationsMulticloudDataTransferConfigsDestinationsListCall) Pag
 }
 
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
-// true, allow partial responses for multi-regional Aggregated List requests.
+// `true`, allow partial responses for multi-regional aggregated list requests.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsDestinationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsMulticloudDataTransferConfigsDestinationsListCall {
 	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
@@ -10642,9 +10822,9 @@ type ProjectsLocationsMulticloudDataTransferConfigsDestinationsPatchCall struct 
 	header_     http.Header
 }
 
-// Patch: Updates a Destination in a given project and location.
+// Patch: Updates a `Destination` resource in a specified project and location.
 //
-//   - name: Identifier. The name of the Destination resource. Format:
+//   - name: Identifier. The name of the `Destination` resource. Format:
 //     `projects/{project}/locations/{location}/multicloudDataTransferConfigs/{mul
 //     ticloud_data_transfer_config}/destinations/{destination}`.
 func (r *ProjectsLocationsMulticloudDataTransferConfigsDestinationsService) Patch(name string, destination *Destination) *ProjectsLocationsMulticloudDataTransferConfigsDestinationsPatchCall {
@@ -10654,27 +10834,26 @@ func (r *ProjectsLocationsMulticloudDataTransferConfigsDestinationsService) Patc
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// The request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server can ignore the request if it has already been completed.
+// The server waits for at least 60 minutes since the first request. For
+// example, consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same request ID,
+// the server can check if original operation with the same request ID was
+// received, and if so, can ignore the second request. The request ID must be a
+// valid UUID with the exception that zero UUID
+// (00000000-0000-0000-0000-000000000000) isn't supported.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsDestinationsPatchCall) RequestId(requestId string) *ProjectsLocationsMulticloudDataTransferConfigsDestinationsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Field mask is used to
-// specify the fields to be overwritten in the Destination resource by the
-// update. The fields specified in the update_mask are relative to the
-// resource, not the full request. A field will be overwritten if it is in the
-// mask. If the user does not provide a mask then all fields will be
-// overwritten.
+// UpdateMask sets the optional parameter "updateMask": `FieldMask is used to
+// specify the fields to be overwritten in the `Destination` resource by the
+// update. The fields specified in `update_mask` are relative to the resource,
+// not the full request. A field is overwritten if it is in the mask. If you
+// don't specify a mask, all fields are overwritten.
 func (c *ProjectsLocationsMulticloudDataTransferConfigsDestinationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMulticloudDataTransferConfigsDestinationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -10774,7 +10953,8 @@ type ProjectsLocationsMulticloudDataTransferSupportedServicesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single MulticloudDataTransferSupportedServices.
+// Get: Gets the details of a service that is supported for Data Transfer
+// Essentials.
 //
 // - name: The name of the service.
 func (r *ProjectsLocationsMulticloudDataTransferSupportedServicesService) Get(name string) *ProjectsLocationsMulticloudDataTransferSupportedServicesGetCall {
@@ -10884,10 +11064,10 @@ type ProjectsLocationsMulticloudDataTransferSupportedServicesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the supported services for Multicloud Data Transfer. This is a
-// passthrough method.
+// List: Lists the services in the project for a region that are supported for
+// Data Transfer Essentials.
 //
-// - parent: The parent resource's name.
+// - parent: The name of the parent resource.
 func (r *ProjectsLocationsMulticloudDataTransferSupportedServicesService) List(parent string) *ProjectsLocationsMulticloudDataTransferSupportedServicesListCall {
 	c := &ProjectsLocationsMulticloudDataTransferSupportedServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10895,7 +11075,7 @@ func (r *ProjectsLocationsMulticloudDataTransferSupportedServicesService) List(p
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// results per page that should be returned.
+// results listed per page.
 func (c *ProjectsLocationsMulticloudDataTransferSupportedServicesListCall) PageSize(pageSize int64) *ProjectsLocationsMulticloudDataTransferSupportedServicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -11991,6 +12171,275 @@ func (c *ProjectsLocationsRegionalEndpointsListCall) Do(opts ...googleapi.CallOp
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsRegionalEndpointsListCall) Pages(ctx context.Context, f func(*ListRegionalEndpointsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsRemoteTransportProfilesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single RemoteTransportProfile.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsRemoteTransportProfilesService) Get(name string) *ProjectsLocationsRemoteTransportProfilesGetCall {
+	c := &ProjectsLocationsRemoteTransportProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRemoteTransportProfilesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsRemoteTransportProfilesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRemoteTransportProfilesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsRemoteTransportProfilesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRemoteTransportProfilesGetCall) Context(ctx context.Context) *ProjectsLocationsRemoteTransportProfilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRemoteTransportProfilesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRemoteTransportProfilesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.remoteTransportProfiles.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.remoteTransportProfiles.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RemoteTransportProfile.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRemoteTransportProfilesGetCall) Do(opts ...googleapi.CallOption) (*RemoteTransportProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RemoteTransportProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.remoteTransportProfiles.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRemoteTransportProfilesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists RemoteTransportProfiles in a given project and location.
+//
+// - parent: Parent value for ListRemoteTransportProfilesRequest.
+func (r *ProjectsLocationsRemoteTransportProfilesService) List(parent string) *ProjectsLocationsRemoteTransportProfilesListCall {
+	c := &ProjectsLocationsRemoteTransportProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results
+func (c *ProjectsLocationsRemoteTransportProfilesListCall) Filter(filter string) *ProjectsLocationsRemoteTransportProfilesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results
+func (c *ProjectsLocationsRemoteTransportProfilesListCall) OrderBy(orderBy string) *ProjectsLocationsRemoteTransportProfilesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsRemoteTransportProfilesListCall) PageSize(pageSize int64) *ProjectsLocationsRemoteTransportProfilesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsRemoteTransportProfilesListCall) PageToken(pageToken string) *ProjectsLocationsRemoteTransportProfilesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRemoteTransportProfilesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRemoteTransportProfilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRemoteTransportProfilesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRemoteTransportProfilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRemoteTransportProfilesListCall) Context(ctx context.Context) *ProjectsLocationsRemoteTransportProfilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRemoteTransportProfilesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRemoteTransportProfilesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/remoteTransportProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.remoteTransportProfiles.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.remoteTransportProfiles.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListRemoteTransportProfilesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRemoteTransportProfilesListCall) Do(opts ...googleapi.CallOption) (*ListRemoteTransportProfilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRemoteTransportProfilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.remoteTransportProfiles.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRemoteTransportProfilesListCall) Pages(ctx context.Context, f func(*ListRemoteTransportProfilesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -13900,6 +14349,44 @@ func (r *ProjectsLocationsServiceConnectionPoliciesService) Create(parent string
 	return c
 }
 
+// AutoSubnetworkConfigAllocRangeSpace sets the optional parameter
+// "autoSubnetworkConfig.allocRangeSpace": The space where we search for a free
+// range to create a subnetwork. It can be narrow down or pick a different
+// space. This is in standard CIDR format. If not specified, “10.0.0.0/8”
+// is used. Only eligible for IPV4_ONLY and IPV4_IPV6 subnetwork.
+func (c *ProjectsLocationsServiceConnectionPoliciesCreateCall) AutoSubnetworkConfigAllocRangeSpace(autoSubnetworkConfigAllocRangeSpace string) *ProjectsLocationsServiceConnectionPoliciesCreateCall {
+	c.urlParams_.Set("autoSubnetworkConfig.allocRangeSpace", autoSubnetworkConfigAllocRangeSpace)
+	return c
+}
+
+// AutoSubnetworkConfigIpStack sets the optional parameter
+// "autoSubnetworkConfig.ipStack": The requested IP stack for the subnetwork.
+// If not specified, IPv4 is used.
+//
+// Possible values:
+//
+//	"SUBNET_IP_STACK_UNSPECIFIED" - Default value. Will create an IPV4_ONLY
+//
+// subnetwork by default.
+//
+//	"IPV4_ONLY" - Will create an IPV4_ONLY subnetwork.
+//	"IPV6_ONLY" - Will create an IPV6_ONLY subnetwork.
+//	"IPV4_IPV6" - Will use IPv4 and IPv6 (dual stack).
+func (c *ProjectsLocationsServiceConnectionPoliciesCreateCall) AutoSubnetworkConfigIpStack(autoSubnetworkConfigIpStack string) *ProjectsLocationsServiceConnectionPoliciesCreateCall {
+	c.urlParams_.Set("autoSubnetworkConfig.ipStack", autoSubnetworkConfigIpStack)
+	return c
+}
+
+// AutoSubnetworkConfigPrefixLength sets the optional parameter
+// "autoSubnetworkConfig.prefixLength": The desired prefix length for the
+// subnet's IP address range. E.g., 24 for a /24. The actual range is allocated
+// from available space. If not specified, 24 is used. Only eligible for
+// IPV4_ONLY and IPV4_IPV6 subnetwork.
+func (c *ProjectsLocationsServiceConnectionPoliciesCreateCall) AutoSubnetworkConfigPrefixLength(autoSubnetworkConfigPrefixLength int64) *ProjectsLocationsServiceConnectionPoliciesCreateCall {
+	c.urlParams_.Set("autoSubnetworkConfig.prefixLength", fmt.Sprint(autoSubnetworkConfigPrefixLength))
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
 // your request, the server will know to ignore the request if it has already
@@ -13922,6 +14409,24 @@ func (c *ProjectsLocationsServiceConnectionPoliciesCreateCall) RequestId(request
 // https://google.aip.dev/122#resource-id-segments Unique per location.
 func (c *ProjectsLocationsServiceConnectionPoliciesCreateCall) ServiceConnectionPolicyId(serviceConnectionPolicyId string) *ProjectsLocationsServiceConnectionPoliciesCreateCall {
 	c.urlParams_.Set("serviceConnectionPolicyId", serviceConnectionPolicyId)
+	return c
+}
+
+// SubnetworkMode sets the optional parameter "subnetworkMode": If this field
+// is not set, USER_PROVIDED is the inferred value to use.
+//
+// Possible values:
+//
+//	"SUBNETWORK_MODE_UNSPECIFIED" - The default value if the enum is unset.
+//
+// Note user is not allowed to set the subnetwork mode to this value.
+//
+//	"USER_PROVIDED" - Subnetworks are provided from the user input.
+//	"AUTO_CREATED" - Subnetwork list is empty from the user input. A
+//
+// subnetwork will be created automatically.
+func (c *ProjectsLocationsServiceConnectionPoliciesCreateCall) SubnetworkMode(subnetworkMode string) *ProjectsLocationsServiceConnectionPoliciesCreateCall {
+	c.urlParams_.Set("subnetworkMode", subnetworkMode)
 	return c
 }
 
@@ -16391,5 +16896,645 @@ func (c *ProjectsLocationsSpokesTestIamPermissionsCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.spokes.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsTransportsCreateCall struct {
+	s          *Service
+	parent     string
+	transport  *Transport
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new Transport in a given project and location.
+//
+// - parent: Value for parent.
+func (r *ProjectsLocationsTransportsService) Create(parent string, transport *Transport) *ProjectsLocationsTransportsCreateCall {
+	c := &ProjectsLocationsTransportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.transport = transport
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsTransportsCreateCall) RequestId(requestId string) *ProjectsLocationsTransportsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// TransportId sets the optional parameter "transportId": Required. Id of the
+// requesting object
+func (c *ProjectsLocationsTransportsCreateCall) TransportId(transportId string) *ProjectsLocationsTransportsCreateCall {
+	c.urlParams_.Set("transportId", transportId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsTransportsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransportsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsTransportsCreateCall) Context(ctx context.Context) *ProjectsLocationsTransportsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsTransportsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTransportsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.transport)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/transports")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.transports.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsTransportsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsTransportsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single Transport.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsTransportsService) Delete(name string) *ProjectsLocationsTransportsDeleteCall {
+	c := &ProjectsLocationsTransportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsTransportsDeleteCall) RequestId(requestId string) *ProjectsLocationsTransportsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsTransportsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransportsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsTransportsDeleteCall) Context(ctx context.Context) *ProjectsLocationsTransportsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsTransportsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTransportsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.transports.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsTransportsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsTransportsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single Transport.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsTransportsService) Get(name string) *ProjectsLocationsTransportsGetCall {
+	c := &ProjectsLocationsTransportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsTransportsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransportsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsTransportsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsTransportsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsTransportsGetCall) Context(ctx context.Context) *ProjectsLocationsTransportsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsTransportsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTransportsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.transports.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Transport.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsTransportsGetCall) Do(opts ...googleapi.CallOption) (*Transport, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Transport{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsTransportsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Transports in a given project and location.
+//
+// - parent: Parent value for ListTransportsRequest.
+func (r *ProjectsLocationsTransportsService) List(parent string) *ProjectsLocationsTransportsListCall {
+	c := &ProjectsLocationsTransportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results
+func (c *ProjectsLocationsTransportsListCall) Filter(filter string) *ProjectsLocationsTransportsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results
+func (c *ProjectsLocationsTransportsListCall) OrderBy(orderBy string) *ProjectsLocationsTransportsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsTransportsListCall) PageSize(pageSize int64) *ProjectsLocationsTransportsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsTransportsListCall) PageToken(pageToken string) *ProjectsLocationsTransportsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsTransportsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransportsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsTransportsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsTransportsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsTransportsListCall) Context(ctx context.Context) *ProjectsLocationsTransportsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsTransportsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTransportsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/transports")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.transports.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListTransportsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsTransportsListCall) Do(opts ...googleapi.CallOption) (*ListTransportsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListTransportsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsTransportsListCall) Pages(ctx context.Context, f func(*ListTransportsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsTransportsPatchCall struct {
+	s          *Service
+	name       string
+	transport  *Transport
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the parameters of a single Transport.
+//
+// - name: Identifier. name of resource.
+func (r *ProjectsLocationsTransportsService) Patch(name string, transport *Transport) *ProjectsLocationsTransportsPatchCall {
+	c := &ProjectsLocationsTransportsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.transport = transport
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsTransportsPatchCall) RequestId(requestId string) *ProjectsLocationsTransportsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the Transport resource by the
+// update. The fields specified in the update_mask are relative to the
+// resource, not the full request. A field will be overwritten if it is in the
+// mask. If the user does not provide a mask then all fields present in the
+// request will be overwritten.
+func (c *ProjectsLocationsTransportsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTransportsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsTransportsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransportsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsTransportsPatchCall) Context(ctx context.Context) *ProjectsLocationsTransportsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsTransportsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTransportsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.transport)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.transports.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsTransportsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

@@ -560,14 +560,13 @@ func (s ExecutionResponse) MarshalJSON() ([]byte, error) {
 // code, HTML, or a configuration file. Each script project can contain
 // multiple files.
 type File struct {
-	// CreateTime: Creation date timestamp. This read-only field is only visible to
-	// users who have WRITER permission for the script project.
+	// CreateTime: Creation date timestamp.
 	CreateTime string `json:"createTime,omitempty"`
 	// FunctionSet: The defined set of functions in the script file, if any.
 	FunctionSet *GoogleAppsScriptTypeFunctionSet `json:"functionSet,omitempty"`
-	// LastModifyUser: The user who modified the file most recently. This read-only
-	// field is only visible to users who have WRITER permission for the script
-	// project.
+	// LastModifyUser: The user who modified the file most recently. The details
+	// visible in this object are controlled by the profile visibility settings of
+	// the last modifying user.
 	LastModifyUser *GoogleAppsScriptTypeUser `json:"lastModifyUser,omitempty"`
 	// Name: The name of the file. The file extension is not part of the file name,
 	// which can be identified from the type field.
@@ -584,8 +583,7 @@ type File struct {
 	// project's manifest. The manifest file content must match the structure of a
 	// valid [ScriptManifest](/apps-script/concepts/manifests)
 	Type string `json:"type,omitempty"`
-	// UpdateTime: Last modified date timestamp. This read-only field is only
-	// visible to users who have WRITER permission for the script project.
+	// UpdateTime: Last modified date timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or

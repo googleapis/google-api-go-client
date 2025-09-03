@@ -919,7 +919,7 @@ type ConfigVariableTemplate struct {
 	IsAdvanced bool `json:"isAdvanced,omitempty"`
 	// Key: Optional. Key of the config variable.
 	Key string `json:"key,omitempty"`
-	// LocationType: Optional. Location Tyep denotes where this value should be
+	// LocationType: Optional. Location Type denotes where this value should be
 	// sent in BYOC connections.
 	//
 	// Possible values:

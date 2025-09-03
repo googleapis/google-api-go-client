@@ -1124,7 +1124,7 @@ func (s BatchCreateRegionsResponse) MarshalJSON() ([]byte, error) {
 // BatchDeleteRegionsRequest: Request message for the `BatchDeleteRegions`
 // method.
 type BatchDeleteRegionsRequest struct {
-	// Requests: Required. The names of the regions to delete. A maximum of 1000
+	// Requests: Required. The names of the regions to delete. A maximum of 100
 	// regions can be deleted in a batch.
 	Requests []*DeleteRegionRequest `json:"requests,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Requests") to
@@ -3665,7 +3665,7 @@ type ProductsManagement struct {
 // (https://support.google.com/merchants/answer/13889434) program, which
 // enables products from a business's store to be shown across Google for free.
 // The following list is the available set of program resource IDs accessible
-// through the API: * `free-listings` * `shopping-ads` *
+// through the API: * `checkout` * `free-listings` * `shopping-ads` *
 // `youtube-shopping-checkout`
 type Program struct {
 	// ActiveRegionCodes: Output only. The regions in which the account is actively
@@ -10229,7 +10229,8 @@ type AccountsRegionsBatchDeleteCall struct {
 // BatchDelete: Deletes multiple regions by name from your Merchant Center
 // account. Executing this method requires admin access.
 //
-// - parent: The account to create a region for. Format: `accounts/{account}`.
+//   - parent: The account to delete one or more regions from. Format:
+//     `accounts/{account}`.
 func (r *AccountsRegionsService) BatchDelete(parent string, batchdeleteregionsrequest *BatchDeleteRegionsRequest) *AccountsRegionsBatchDeleteCall {
 	c := &AccountsRegionsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

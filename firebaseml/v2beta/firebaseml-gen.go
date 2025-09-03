@@ -1331,44 +1331,49 @@ func (s GoogleCloudAiplatformV1beta1GenerateContentResponsePromptFeedback) Marsh
 }
 
 // GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata: Usage
-// metadata about response(s).
+// metadata about the content generation request and response. This message
+// provides a detailed breakdown of token usage and other relevant metrics.
 type GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata struct {
-	// CacheTokensDetails: Output only. List of modalities of the cached content in
-	// the request input.
+	// CacheTokensDetails: Output only. A detailed breakdown of the token count for
+	// each modality in the cached content.
 	CacheTokensDetails []*GoogleCloudAiplatformV1beta1ModalityTokenCount `json:"cacheTokensDetails,omitempty"`
-	// CachedContentTokenCount: Output only. Number of tokens in the cached part in
-	// the input (the cached content).
+	// CachedContentTokenCount: Output only. The number of tokens in the cached
+	// content that was used for this request.
 	CachedContentTokenCount int64 `json:"cachedContentTokenCount,omitempty"`
-	// CandidatesTokenCount: Number of tokens in the response(s).
+	// CandidatesTokenCount: The total number of tokens in the generated
+	// candidates.
 	CandidatesTokenCount int64 `json:"candidatesTokenCount,omitempty"`
-	// CandidatesTokensDetails: Output only. List of modalities that were returned
-	// in the response.
+	// CandidatesTokensDetails: Output only. A detailed breakdown of the token
+	// count for each modality in the generated candidates.
 	CandidatesTokensDetails []*GoogleCloudAiplatformV1beta1ModalityTokenCount `json:"candidatesTokensDetails,omitempty"`
-	// PromptTokenCount: Number of tokens in the request. When `cached_content` is
-	// set, this is still the total effective prompt size meaning this includes the
-	// number of tokens in the cached content.
+	// PromptTokenCount: The total number of tokens in the prompt. This includes
+	// any text, images, or other media provided in the request. When
+	// `cached_content` is set, this also includes the number of tokens in the
+	// cached content.
 	PromptTokenCount int64 `json:"promptTokenCount,omitempty"`
-	// PromptTokensDetails: Output only. List of modalities that were processed in
-	// the request input.
+	// PromptTokensDetails: Output only. A detailed breakdown of the token count
+	// for each modality in the prompt.
 	PromptTokensDetails []*GoogleCloudAiplatformV1beta1ModalityTokenCount `json:"promptTokensDetails,omitempty"`
-	// ThoughtsTokenCount: Output only. Number of tokens present in thoughts
-	// output.
+	// ThoughtsTokenCount: Output only. The number of tokens that were part of the
+	// model's generated "thoughts" output, if applicable.
 	ThoughtsTokenCount int64 `json:"thoughtsTokenCount,omitempty"`
-	// ToolUsePromptTokenCount: Output only. Number of tokens present in tool-use
-	// prompt(s).
+	// ToolUsePromptTokenCount: Output only. The number of tokens in the results
+	// from tool executions, which are provided back to the model as input, if
+	// applicable.
 	ToolUsePromptTokenCount int64 `json:"toolUsePromptTokenCount,omitempty"`
-	// ToolUsePromptTokensDetails: Output only. List of modalities that were
-	// processed for tool-use request inputs.
+	// ToolUsePromptTokensDetails: Output only. A detailed breakdown by modality of
+	// the token counts from the results of tool executions, which are provided
+	// back to the model as input.
 	ToolUsePromptTokensDetails []*GoogleCloudAiplatformV1beta1ModalityTokenCount `json:"toolUsePromptTokensDetails,omitempty"`
-	// TotalTokenCount: Total token count for prompt, response candidates, and
-	// tool-use prompts (if present).
+	// TotalTokenCount: The total number of tokens for the entire request. This is
+	// the sum of `prompt_token_count`, `candidates_token_count`,
+	// `tool_use_prompt_token_count`, and `thoughts_token_count`.
 	TotalTokenCount int64 `json:"totalTokenCount,omitempty"`
-	// TrafficType: Output only. Traffic type. This shows whether a request
-	// consumes Pay-As-You-Go or Provisioned Throughput quota.
+	// TrafficType: Output only. The traffic type for this request.
 	//
 	// Possible values:
 	//   "TRAFFIC_TYPE_UNSPECIFIED" - Unspecified request traffic type.
-	//   "ON_DEMAND" - Type for Pay-As-You-Go traffic.
+	//   "ON_DEMAND" - The request was processed using Pay-As-You-Go quota.
 	//   "PROVISIONED_THROUGHPUT" - Type for Provisioned Throughput traffic.
 	TrafficType string `json:"trafficType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CacheTokensDetails") to
@@ -1655,6 +1660,25 @@ func (s GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig) MarshalJSON(
 // GoogleCloudAiplatformV1beta1GoogleMaps: Tool to retrieve public maps data
 // for grounding, powered by Google.
 type GoogleCloudAiplatformV1beta1GoogleMaps struct {
+	// EnableWidget: Optional. If true, include the widget context token in the
+	// response.
+	EnableWidget bool `json:"enableWidget,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableWidget") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableWidget") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1GoogleMaps) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1GoogleMaps
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1beta1GoogleSearchRetrieval: Tool to retrieve public
@@ -2919,8 +2943,8 @@ type GoogleCloudAiplatformV1beta1Tool struct {
 	// GoogleSearch: Optional. GoogleSearch tool type. Tool to support Google
 	// Search in Model. Powered by Google.
 	GoogleSearch *GoogleCloudAiplatformV1beta1ToolGoogleSearch `json:"googleSearch,omitempty"`
-	// GoogleSearchRetrieval: Optional. GoogleSearchRetrieval tool type.
-	// Specialized retrieval tool that is powered by Google search.
+	// GoogleSearchRetrieval: Optional. Specialized retrieval tool that is powered
+	// by Google Search.
 	GoogleSearchRetrieval *GoogleCloudAiplatformV1beta1GoogleSearchRetrieval `json:"googleSearchRetrieval,omitempty"`
 	// Retrieval: Optional. Retrieval tool type. System will always execute the
 	// provided retrieval tool(s) to get external knowledge to answer the prompt.

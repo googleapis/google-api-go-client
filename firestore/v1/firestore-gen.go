@@ -1710,7 +1710,7 @@ type GoogleFirestoreAdminV1CloneDatabaseRequest struct {
 	// characters. Valid characters are /a-z-/ with first character a letter and
 	// the last a letter or a number. Must not be UUID-like
 	// /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. "(default)" database ID is also
-	// valid.
+	// valid if the database is Standard edition.
 	DatabaseId string `json:"databaseId,omitempty"`
 	// EncryptionConfig: Optional. Encryption configuration for the cloned
 	// database. If this field is not specified, the cloned database will use the
@@ -2947,7 +2947,7 @@ type GoogleFirestoreAdminV1RestoreDatabaseRequest struct {
 	// characters. Valid characters are /a-z-/ with first character a letter and
 	// the last a letter or a number. Must not be UUID-like
 	// /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. "(default)" database ID is also
-	// valid.
+	// valid if the database is Standard edition.
 	DatabaseId string `json:"databaseId,omitempty"`
 	// EncryptionConfig: Optional. Encryption configuration for the restored
 	// database. If this field is not specified, the restored database will use the
@@ -4833,7 +4833,7 @@ func (r *ProjectsDatabasesService) Create(parent string, googlefirestoreadminv1d
 // resource name. This value should be 4-63 characters. Valid characters are
 // /a-z-/ with first character a letter and the last a letter or a number. Must
 // not be UUID-like /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. "(default)"
-// database ID is also valid.
+// database ID is also valid if the database is Standard edition.
 func (c *ProjectsDatabasesCreateCall) DatabaseId(databaseId string) *ProjectsDatabasesCreateCall {
 	c.urlParams_.Set("databaseId", databaseId)
 	return c
@@ -10627,9 +10627,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

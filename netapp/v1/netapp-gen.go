@@ -2150,6 +2150,9 @@ type StoragePool struct {
 	AvailableThroughputMibps float64 `json:"availableThroughputMibps,omitempty"`
 	// CapacityGib: Required. Capacity in GIB of the pool
 	CapacityGib int64 `json:"capacityGib,omitempty,string"`
+	// ColdTierSizeUsedGib: Output only. Total cold tier data rounded down to the
+	// nearest GiB used by the storage pool.
+	ColdTierSizeUsedGib int64 `json:"coldTierSizeUsedGib,omitempty,string"`
 	// CreateTime: Output only. Create time of the storage pool
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomPerformanceEnabled: Optional. True if using Independent Scaling of
@@ -2179,6 +2182,9 @@ type StoragePool struct {
 	// storage pool size and cannot be more than the current storage pool size. It
 	// cannot be decreased once set.
 	HotTierSizeGib int64 `json:"hotTierSizeGib,omitempty,string"`
+	// HotTierSizeUsedGib: Output only. Total hot tier data rounded down to the
+	// nearest GiB used by the storage pool.
+	HotTierSizeUsedGib int64 `json:"hotTierSizeUsedGib,omitempty,string"`
 	// KmsConfig: Optional. Specifies the KMS config to be used for volume
 	// encryption.
 	KmsConfig string `json:"kmsConfig,omitempty"`
@@ -2486,6 +2492,10 @@ type Volume struct {
 	// HasReplication: Output only. Indicates whether the volume is part of a
 	// replication relationship.
 	HasReplication bool `json:"hasReplication,omitempty"`
+	// HotTierSizeUsedGib: Output only. Total hot tier data rounded down to the
+	// nearest GiB used by the Volume. This field is only used for flex Service
+	// Level
+	HotTierSizeUsedGib int64 `json:"hotTierSizeUsedGib,omitempty,string"`
 	// HybridReplicationParameters: Optional. The Hybrid Replication parameters for
 	// the volume.
 	HybridReplicationParameters *HybridReplicationParameters `json:"hybridReplicationParameters,omitempty"`

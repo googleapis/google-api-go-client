@@ -697,6 +697,8 @@ type ExternalAction struct {
 	// the business can request a legal appeal for the issue.
 	//   "VERIFY_IDENTITY_IN_MERCHANT_CENTER" - Redirect to Merchant Center where
 	// the business can perform identity verification.
+	//   "VERIFY_BUSINESS_VIDEO_IN_MERCHANT_CENTER" - Redirect to Merchant Center
+	// where the business can perform business video verification.
 	Type string `json:"type,omitempty"`
 	// Uri: URL to external system, for example Merchant Center, where the business
 	// can perform the action.

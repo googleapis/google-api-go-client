@@ -3076,11 +3076,12 @@ type GoogleCloudRetailV2alphaConversationalSearchRequestConversationalFilteringS
 	//
 	// Possible values:
 	//   "MODE_UNSPECIFIED" - Default value.
-	//   "DISABLED" - Disable Conversational Filtering.
-	//   "ENABLED" - Enabled Conversational Filtering with default Conversational
+	//   "DISABLED" - Disables Conversational Filtering when using Conversational
 	// Search.
-	//   "CONVERSATIONAL_FILTER_ONLY" - Enabled Conversational Filtering without
-	// default Conversational Search.
+	//   "ENABLED" - Enables Conversational Filtering when using Conversational
+	// Search.
+	//   "CONVERSATIONAL_FILTER_ONLY" - Enables Conversational Filtering without
+	// Conversational Search.
 	ConversationalFilteringMode string `json:"conversationalFilteringMode,omitempty"`
 	// EnableConversationalFiltering: Optional. This field is deprecated. Please
 	// use ConversationalFilteringSpec.conversational_filtering_mode instead.

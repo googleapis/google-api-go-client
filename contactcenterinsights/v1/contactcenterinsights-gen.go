@@ -6645,8 +6645,11 @@ type GoogleCloudContactcenterinsightsV1Settings struct {
 	// "ingest-conversations": Notify each time an IngestConversations LRO is
 	// complete. * "update-conversation": Notify each time a conversation is
 	// updated via UpdateConversation. * "upload-conversation": Notify when an
-	// UploadConversation LRO is complete. Values are Pub/Sub topics. The format of
-	// each Pub/Sub topic is: projects/{project}/topics/{topic}
+	// UploadConversation LRO is complete. * "update-or-analyze-conversation":
+	// Notify when an analysis for a conversation is completed or when the
+	// conversation is updated. The message will contain the conversation with
+	// transcript, analysis and other metadata. Values are Pub/Sub topics. The
+	// format of each Pub/Sub topic is: projects/{project}/topics/{topic}
 	PubsubNotificationSettings map[string]string `json:"pubsubNotificationSettings,omitempty"`
 	// RedactionConfig: Default DLP redaction resources to be applied while
 	// ingesting conversations. This applies to conversations ingested from the
@@ -14217,7 +14220,7 @@ func (r *ProjectsLocationsAuthorizedViewSetsService) Create(parent string, googl
 // component of the AuthorizedViewSet's resource name. If no ID is specified, a
 // server-generated ID will be used. This value should be 4-64 characters and
 // must match the regular expression `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`. See
-// aip.dev/122#resource-id-segments
+// https://google.aip.dev/122#resource-id-segments
 func (c *ProjectsLocationsAuthorizedViewSetsCreateCall) AuthorizedViewSetId(authorizedViewSetId string) *ProjectsLocationsAuthorizedViewSetsCreateCall {
 	c.urlParams_.Set("authorizedViewSetId", authorizedViewSetId)
 	return c
@@ -14826,7 +14829,7 @@ func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsService) Create(paren
 // AuthorizedView's resource name. If no ID is specified, a server-generated ID
 // will be used. This value should be 4-64 characters and must match the
 // regular expression `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`. See
-// aip.dev/122#resource-id-segments
+// https://google.aip.dev/122#resource-id-segments
 func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCreateCall) AuthorizedViewId(authorizedViewId string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsCreateCall {
 	c.urlParams_.Set("authorizedViewId", authorizedViewId)
 	return c

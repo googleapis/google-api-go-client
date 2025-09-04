@@ -830,6 +830,8 @@ type GoogleFirebaseAppdistroV1alphaDeviceExecution struct {
 	//   "FAILED" - The test has failed.
 	//   "INCONCLUSIVE" - The test was inconclusive.
 	State string `json:"state,omitempty"`
+	// VideoStartTime: Output only. The time at which the video started recording.
+	VideoStartTime string `json:"videoStartTime,omitempty"`
 	// VideoUri: Output only. A URI to a video of the test run.
 	VideoUri string `json:"videoUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AiStepResults") to
@@ -1164,7 +1166,7 @@ func (s GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse) MarshalJSON() ([]
 // while attempting to accomplish a goal.
 type GoogleFirebaseAppdistroV1alphaGoalAction struct {
 	// DebugInfo: Output only. Debug information explaining why the agent to the
-	// specific action
+	// specific action.
 	DebugInfo *GoogleFirebaseAppdistroV1alphaGoalActionDebugInfo `json:"debugInfo,omitempty"`
 	// DeviceAction: Output only. A high level action taken by the AI on the
 	// device.
@@ -1172,6 +1174,8 @@ type GoogleFirebaseAppdistroV1alphaGoalAction struct {
 	// Explanation: Output only. An explanation justifying why the action was
 	// taken.
 	Explanation string `json:"explanation,omitempty"`
+	// StartTime: Output only. The time at which the action started.
+	StartTime string `json:"startTime,omitempty"`
 	// TerminalAction: Output only. An action taken by the AI to end the goal.
 	TerminalAction *GoogleFirebaseAppdistroV1alphaTerminalAction `json:"terminalAction,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DebugInfo") to
@@ -1193,12 +1197,12 @@ func (s GoogleFirebaseAppdistroV1alphaGoalAction) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleFirebaseAppdistroV1alphaGoalActionDebugInfo: Information to help the
-// customer understand why the agent took this action
+// customer understand why the agent took this action.
 type GoogleFirebaseAppdistroV1alphaGoalActionDebugInfo struct {
 	// AnnotatedScreenshotUri: Output only. URI of the screenshot with elements
-	// labeled which was used by the agent
+	// labeled which was used by the agent.
 	AnnotatedScreenshotUri string `json:"annotatedScreenshotUri,omitempty"`
-	// JsonUri: Output only. Structured data explaining the agent's choice
+	// JsonUri: Output only. Structured data explaining the agent's choice.
 	JsonUri string `json:"jsonUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnnotatedScreenshotUri") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -3429,10 +3429,12 @@ type FhirStore struct {
 	// versions are kept. The server sends errors for attempts to read the
 	// historical versions. Defaults to false.
 	DisableResourceVersioning bool `json:"disableResourceVersioning,omitempty"`
-	// EnableHistoryModifications: Optional. Whether to allow ExecuteBundle to
-	// accept history bundles, and directly insert and overwrite historical
-	// resource versions into the FHIR store. If set to false, using history
-	// bundles fails with an error. Defaults to false.
+	// EnableHistoryModifications: Optional. Whether to allow the
+	// [ImportResourcesHistory] and [ExecuteBundle] APIs to accept history bundles,
+	// and directly insert and overwrite historical resource versions into the FHIR
+	// store. Changing resource histories creates resource interactions that have
+	// occurred in the past which clients might not allow. If set to false,
+	// [ImportResourcesHistory] and [ExecuteBundle] requests will return errors.
 	EnableHistoryModifications bool `json:"enableHistoryModifications,omitempty"`
 	// EnableUpdateCreate: Whether this FHIR store has the updateCreate capability
 	// (https://www.hl7.org/fhir/capabilitystatement-definitions.html#CapabilityStatement.rest.resource.updateCreate).
@@ -7143,6 +7145,16 @@ func (s Type) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// UpdateSeriesMetadataResponse: UpdateSeriesMetadataResponse is the LRO
+// response for UpdateSeriesMetadata.
+type UpdateSeriesMetadataResponse struct {
+}
+
+// UpdateStudyMetadataResponse: UpdateStudyMetadataResponse is the LRO response
+// for UpdateStudyMetadata.
+type UpdateStudyMetadataResponse struct {
+}
+
 // UserDataMapping: Maps a resource to the associated user and Attributes.
 type UserDataMapping struct {
 	// ArchiveTime: Output only. Indicates the time when this mapping was archived.
@@ -7400,9 +7412,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -15171,6 +15183,83 @@ func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) Do(opts ...
 	return ret, nil
 }
 
+type ProjectsLocationsDatasetsDicomStoresUpdateInstancesCall struct {
+	s            *Service
+	parent       string
+	dicomWebPath string
+	body_        io.Reader
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// UpdateInstances: UpdateInstances updates DICOM instances associated with
+// study instance unique identifiers (SUID).
+//
+//   - dicomWebPath: The path of the UpdateInstances DICOMweb request. For
+//     example, `studies/[{study_uid}]`. Note that the `study_uid` is optional.
+//   - parent: The name of the DICOM store that is being accessed. For example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomS
+//     tores/{dicom_store_id}`.
+func (r *ProjectsLocationsDatasetsDicomStoresService) UpdateInstances(parent string, dicomWebPath string, body_ io.Reader) *ProjectsLocationsDatasetsDicomStoresUpdateInstancesCall {
+	c := &ProjectsLocationsDatasetsDicomStoresUpdateInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.dicomWebPath = dicomWebPath
+	c.body_ = body_
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsDicomStoresUpdateInstancesCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresUpdateInstancesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsDicomStoresUpdateInstancesCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresUpdateInstancesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresUpdateInstancesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresUpdateInstancesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	body := bytes.NewBuffer(nil)
+	_, err := body.ReadFrom(c.body_)
+	if err != nil {
+		return nil, err
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/dicomWeb/{+dicomWebPath}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent":       c.parent,
+		"dicomWebPath": c.dicomWebPath,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.updateInstances", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.updateInstances" call.
+func (c *ProjectsLocationsDatasetsDicomStoresUpdateInstancesCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
 type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall struct {
 	s            *Service
 	study        string
@@ -16177,6 +16266,162 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) Do(opts 
 	return c.doRequest("")
 }
 
+type ProjectsLocationsDatasetsDicomStoresStudiesUpdateInstancesCall struct {
+	s            *Service
+	parent       string
+	dicomWebPath string
+	body_        io.Reader
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// UpdateInstances: UpdateInstances updates DICOM instances associated with
+// study instance unique identifiers (SUID).
+//
+//   - dicomWebPath: The path of the UpdateInstances DICOMweb request. For
+//     example, `studies/[{study_uid}]`. Note that the `study_uid` is optional.
+//   - parent: The name of the DICOM store that is being accessed. For example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomS
+//     tores/{dicom_store_id}`.
+func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) UpdateInstances(parent string, dicomWebPath string, body_ io.Reader) *ProjectsLocationsDatasetsDicomStoresStudiesUpdateInstancesCall {
+	c := &ProjectsLocationsDatasetsDicomStoresStudiesUpdateInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.dicomWebPath = dicomWebPath
+	c.body_ = body_
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesUpdateInstancesCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresStudiesUpdateInstancesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesUpdateInstancesCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresStudiesUpdateInstancesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesUpdateInstancesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesUpdateInstancesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	body := bytes.NewBuffer(nil)
+	_, err := body.ReadFrom(c.body_)
+	if err != nil {
+		return nil, err
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/dicomWeb/{+dicomWebPath}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent":       c.parent,
+		"dicomWebPath": c.dicomWebPath,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.updateInstances", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.studies.updateInstances" call.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesUpdateInstancesCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
+type ProjectsLocationsDatasetsDicomStoresStudiesUpdateMetadataCall struct {
+	s            *Service
+	parent       string
+	dicomWebPath string
+	body_        io.Reader
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// UpdateMetadata: UpdateStudyMetadata modifies the metadata of all instances
+// in the given study. The request body must contain a JSON Patch document
+// specifying the updates to be applied to the metadata of all instances within
+// the study.
+//
+//   - dicomWebPath: The path of the UpdateStudyMetadata request (for example,
+//     `studies/{study_uid}`).
+//   - parent: The name of the DICOM store that is being accessed (for example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomS
+//     tores/{dicom_store_id}`).
+func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) UpdateMetadata(parent string, dicomWebPath string, body_ io.Reader) *ProjectsLocationsDatasetsDicomStoresStudiesUpdateMetadataCall {
+	c := &ProjectsLocationsDatasetsDicomStoresStudiesUpdateMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.dicomWebPath = dicomWebPath
+	c.body_ = body_
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesUpdateMetadataCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresStudiesUpdateMetadataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesUpdateMetadataCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresStudiesUpdateMetadataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesUpdateMetadataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesUpdateMetadataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	body := bytes.NewBuffer(nil)
+	_, err := body.ReadFrom(c.body_)
+	if err != nil {
+		return nil, err
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/dicomWeb/{+dicomWebPath}/metadata")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent":       c.parent,
+		"dicomWebPath": c.dicomWebPath,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.updateMetadata", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.studies.updateMetadata" call.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesUpdateMetadataCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
 type ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall struct {
 	s            *Service
 	parent       string
@@ -16557,6 +16802,85 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall
 
 // Do executes the "healthcare.projects.locations.datasets.dicomStores.studies.series.searchForInstances" call.
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
+type ProjectsLocationsDatasetsDicomStoresStudiesSeriesUpdateMetadataCall struct {
+	s            *Service
+	parent       string
+	dicomWebPath string
+	body_        io.Reader
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// UpdateMetadata: UpdateSeriesMetadata modifies the metadata of all instances
+// in the given series. The request body must contain a JSON Patch document
+// specifying the updates to be applied to the metadata of all instances within
+// the series.
+//
+//   - dicomWebPath: The path of the UpdateSeriesMetadata request (for example,
+//     `studies/{study_uid}/series/{series_uid}`).
+//   - parent: The name of the DICOM store that is being accessed (for example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomS
+//     tores/{dicom_store_id}`).
+func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) UpdateMetadata(parent string, dicomWebPath string, body_ io.Reader) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesUpdateMetadataCall {
+	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesUpdateMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.dicomWebPath = dicomWebPath
+	c.body_ = body_
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesUpdateMetadataCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesUpdateMetadataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesUpdateMetadataCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesUpdateMetadataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesUpdateMetadataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesUpdateMetadataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	body := bytes.NewBuffer(nil)
+	_, err := body.ReadFrom(c.body_)
+	if err != nil {
+		return nil, err
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/dicomWeb/{+dicomWebPath}/metadata")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent":       c.parent,
+		"dicomWebPath": c.dicomWebPath,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.series.updateMetadata", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.studies.series.updateMetadata" call.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesUpdateMetadataCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 }
@@ -16957,6 +17281,84 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 
 // Do executes the "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.retrieveRendered" call.
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
+type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesUpdateMetadataCall struct {
+	s            *Service
+	parent       string
+	dicomWebPath string
+	body_        io.Reader
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// UpdateMetadata: UpdateInstanceMetadata modifies the metadata of a single
+// instance. The request body must contain a JSON Patch document specifying the
+// updates to be applied to the metadata of the instance.
+//
+//   - dicomWebPath: The path of the UpdateInstanceMetadata request (for example,
+//     `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`).
+//   - parent: The name of the DICOM store that is being accessed (for example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomS
+//     tores/{dicom_store_id}`).
+func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) UpdateMetadata(parent string, dicomWebPath string, body_ io.Reader) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesUpdateMetadataCall {
+	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesUpdateMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.dicomWebPath = dicomWebPath
+	c.body_ = body_
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesUpdateMetadataCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesUpdateMetadataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesUpdateMetadataCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesUpdateMetadataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesUpdateMetadataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesUpdateMetadataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	body := bytes.NewBuffer(nil)
+	_, err := body.ReadFrom(c.body_)
+	if err != nil {
+		return nil, err
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/dicomWeb/{+dicomWebPath}/metadata")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent":       c.parent,
+		"dicomWebPath": c.dicomWebPath,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.updateMetadata", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.updateMetadata" call.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesUpdateMetadataCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 }
@@ -22396,10 +22798,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
 // resources. For a search query that will match a large number of resources,
 // you can avoiding using the special synchronous index by including an
 // additional `_sort` parameter in your query. Use `_sort=-_lastUpdated` if you
-// want to keep the default sorting order. Note: The special synchronous
-// identifier index are currently disabled for DocumentReference and
-// DocumentManifest searches. For samples and detailed information, see
-// Searching for FHIR resources
+// want to keep the default sorting order. For samples and detailed
+// information, see Searching for FHIR resources
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and Advanced
 // FHIR search features
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).
@@ -22534,10 +22934,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
 // resources. For a search query that will match a large number of resources,
 // you can avoiding using the special synchronous index by including an
 // additional `_sort` parameter in your query. Use `_sort=-_lastUpdated` if you
-// want to keep the default sorting order. Note: The special synchronous
-// identifier index are currently disabled for DocumentReference and
-// DocumentManifest searches. For samples and detailed information, see
-// Searching for FHIR resources
+// want to keep the default sorting order. For samples and detailed
+// information, see Searching for FHIR resources
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and Advanced
 // FHIR search features
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).

@@ -1443,6 +1443,9 @@ type CloudVmCluster struct {
 	// is hosted. This will be the same as the gcp_oracle_zone of the
 	// CloudExadataInfrastructure. Example: us-east4-b-r2.
 	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
+	// IdentityConnector: Output only. The identity connector details which will
+	// allow OCI to securely access the resources in the customer project.
+	IdentityConnector *IdentityConnector `json:"identityConnector,omitempty"`
 	// Labels: Optional. Labels or tags associated with the VM Cluster.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. The name of the VM Cluster resource with the format:
@@ -2095,6 +2098,42 @@ type GiVersion struct {
 
 func (s GiVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GiVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityConnector: The identity connector details which will allow OCI to
+// securely access the resources in the customer project.
+type IdentityConnector struct {
+	// ConnectionState: Output only. The connection state of the identity
+	// connector.
+	//
+	// Possible values:
+	//   "CONNECTION_STATE_UNSPECIFIED" - Default unspecified value.
+	//   "CONNECTED" - The identity pool connection is connected.
+	//   "PARTIALLY_CONNECTED" - The identity pool connection is partially
+	// connected.
+	//   "DISCONNECTED" - The identity pool connection is disconnected.
+	//   "UNKNOWN" - The identity pool connection is in an unknown state.
+	ConnectionState string `json:"connectionState,omitempty"`
+	// ServiceAgentEmail: Output only. A google managed service account on which
+	// customers can grant roles to access resources in the customer project.
+	// Example: `p176944527254-55-75119d87fd8f@gcp-sa-oci.iam.gserviceaccount.com`
+	ServiceAgentEmail string `json:"serviceAgentEmail,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConnectionState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectionState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityConnector) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityConnector
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

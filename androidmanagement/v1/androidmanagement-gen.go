@@ -3699,7 +3699,9 @@ type HardwareInfo struct {
 	Manufacturer string `json:"manufacturer,omitempty"`
 	// Model: The model of the device. For example, Asus Nexus 7.
 	Model string `json:"model,omitempty"`
-	// SerialNumber: The device serial number.
+	// SerialNumber: The device serial number. However, for personally-owned
+	// devices running Android 12 and above, this is the same as the
+	// enterpriseSpecificId.
 	SerialNumber string `json:"serialNumber,omitempty"`
 	// SkinShutdownTemperatures: Device skin shutdown temperature thresholds in
 	// Celsius.

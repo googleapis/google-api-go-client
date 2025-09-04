@@ -12113,6 +12113,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// IPs.
 	//   "ALLOWLIST_IN_SERVICE_ATTACHMENT" - Connector requires customer to
 	// allowlist our project in their service attachment.
+	//   "ALLOWLIST_SERVICE_ACCOUNT" - Connector requires customer to allowlist
+	// service account in their project.
 	BlockingReasons []string `json:"blockingReasons,omitempty"`
 	// ConnectorModes: Optional. The modes enabled for this connector. Default
 	// state is CONNECTOR_MODE_UNSPECIFIED.
@@ -12169,6 +12171,10 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// Errors: Output only. The errors from initialization or from the latest
 	// connector run.
 	Errors []*GoogleRpcStatus `json:"errors,omitempty"`
+	// FederatedConfig: Optional. Any params and credentials used specifically for
+	// hybrid connectors supporting FEDERATED mode. This field should only be set
+	// if the connector is a hybrid connector and we want to enable FEDERATED mode.
+	FederatedConfig *GoogleCloudDiscoveryengineV1alphaDataConnectorFederatedConfig `json:"federatedConfig,omitempty"`
 	// HybridIngestionDisabled: Optional. If the connector is a hybrid connector,
 	// determines whether ingestion is enabled and appropriate resources are
 	// provisioned during connector creation. If the connector is not a hybrid
@@ -12278,6 +12284,11 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// refresh interval is set to the same value as the incremental refresh
 	// interval, incremental sync will be disabled.
 	RefreshInterval string `json:"refreshInterval,omitempty"`
+	// RemoveParamKeys: Optional. Specifies keys to be removed from the 'params'
+	// field. This is only active when 'params' is included in the 'update_mask' in
+	// an UpdateDataConnectorRequest. Deletion takes precedence if a key is both in
+	// 'remove_param_keys' and present in the 'params' field of the request.
+	RemoveParamKeys []string `json:"removeParamKeys,omitempty"`
 	// State: Output only. State of the connector.
 	//
 	// Possible values:
@@ -12361,6 +12372,32 @@ type GoogleCloudDiscoveryengineV1alphaDataConnectorEndUserConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDataConnectorEndUserConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorEndUserConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataConnectorFederatedConfig: Any params
+// and credentials used specifically for hybrid connectors supporting FEDERATED
+// mode.
+type GoogleCloudDiscoveryengineV1alphaDataConnectorFederatedConfig struct {
+	// AdditionalParams: Optional. Any additional parameters needed for FEDERATED.
+	AdditionalParams googleapi.RawMessage `json:"additionalParams,omitempty"`
+	// AuthParams: Optional. Any authentication parameters specific to FEDERATED.
+	AuthParams googleapi.RawMessage `json:"authParams,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalParams") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalParams") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataConnectorFederatedConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorFederatedConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -23720,6 +23757,9 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfigAssistantSettings struct {
 	// disabled by default on UI. End users can still enable web grounding in the
 	// UI if web grounding is enabled.
 	DefaultWebGroundingToggleOff bool `json:"defaultWebGroundingToggleOff,omitempty"`
+	// DisableLocationContext: Optional. Output only. Whether to disable user
+	// location context.
+	DisableLocationContext bool `json:"disableLocationContext,omitempty"`
 	// GoogleSearchGroundingEnabled: Whether or not the Google search grounding
 	// toggle is shown. Deprecated. Use web_grounding_type instead.
 	GoogleSearchGroundingEnabled bool `json:"googleSearchGroundingEnabled,omitempty"`
@@ -29286,7 +29326,7 @@ type GoogleCloudNotebooklmV1alphaAccountAndRole struct {
 	// Role: Required. The role in the notebook.
 	//
 	// Possible values:
-	//   "PROJECT_ROLE_UNKNOWN" - Unknown role - do not use.
+	//   "PROJECT_ROLE_UNKNOWN" - Unknown role.
 	//   "PROJECT_ROLE_OWNER" - The user owns the project.
 	//   "PROJECT_ROLE_WRITER" - The user has writer permissions on the project.
 	//   "PROJECT_ROLE_READER" - The user has reader permissions on the project.
@@ -29344,8 +29384,7 @@ type GoogleCloudNotebooklmV1alphaAudioOverview struct {
 	// AudioOverviewId: Output only. Unique ID of the audio overview.
 	AudioOverviewId string `json:"audioOverviewId,omitempty"`
 	// LanguageCode: The language code of the generated audio overview. Use the BCP
-	// 47 language code (e.g. "en", "es", "hi", etc.). Examples:
-	// google3/i18n/identifiers/tools/language_code_constants.txt
+	// 47 language code (e.g. "en", "es", "hi", etc.).
 	LanguageCode string `json:"languageCode,omitempty"`
 	// MimeType: The mime type of the audio overview.
 	//
@@ -29591,6 +29630,270 @@ func (s GoogleCloudNotebooklmV1alphaCreateAudioOverviewResponse) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudNotebooklmV1alphaFailureReason: Failure reason containing details
+// about why a source failed to ingest.
+type GoogleCloudNotebooklmV1alphaFailureReason struct {
+	// AudioTranscriptionError: An audio file transcription specific error.
+	AudioTranscriptionError *GoogleCloudNotebooklmV1alphaFailureReasonAudioTranscriptionError `json:"audioTranscriptionError,omitempty"`
+	// DomainBlocked: Error if the user tries to add a source from a blocked
+	// domain.
+	DomainBlocked *GoogleCloudNotebooklmV1alphaFailureReasonDomainBlocked `json:"domainBlocked,omitempty"`
+	// GoogleDriveError: A google drive specific error.
+	GoogleDriveError *GoogleCloudNotebooklmV1alphaFailureReasonGoogleDriveError `json:"googleDriveError,omitempty"`
+	// IngestionError: Indicates an error occurred while ingesting the source.
+	IngestionError *GoogleCloudNotebooklmV1alphaFailureReasonIngestionError `json:"ingestionError,omitempty"`
+	// PaywallError: Indicates that the source is paywalled and cannot be ingested.
+	PaywallError *GoogleCloudNotebooklmV1alphaFailureReasonPaywallError `json:"paywallError,omitempty"`
+	// SourceEmpty: Indicates that the source is empty.
+	SourceEmpty *GoogleCloudNotebooklmV1alphaFailureReasonSourceEmpty `json:"sourceEmpty,omitempty"`
+	// SourceLimitExceeded: Error if the user tries to update beyond their limits.
+	SourceLimitExceeded *GoogleCloudNotebooklmV1alphaFailureReasonSourceLimitExceeded `json:"sourceLimitExceeded,omitempty"`
+	// SourceTooLong: Indicates source word count exceeded the user's limit.
+	SourceTooLong *GoogleCloudNotebooklmV1alphaFailureReasonSourceTooLong `json:"sourceTooLong,omitempty"`
+	// SourceUnreachable: Indicates that the source is unreachable.
+	SourceUnreachable *GoogleCloudNotebooklmV1alphaFailureReasonSourceUnreachable `json:"sourceUnreachable,omitempty"`
+	// Unknown: Indicates an unknown error occurred.
+	Unknown *GoogleCloudNotebooklmV1alphaFailureReasonUnknown `json:"unknown,omitempty"`
+	// UploadError: Indicates an error occurred while uploading the source.
+	UploadError *GoogleCloudNotebooklmV1alphaFailureReasonUploadError `json:"uploadError,omitempty"`
+	// YoutubeError: A youtube specific error.
+	YoutubeError *GoogleCloudNotebooklmV1alphaFailureReasonYoutubeError `json:"youtubeError,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AudioTranscriptionError") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AudioTranscriptionError") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaFailureReason) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaFailureReason
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonAudioTranscriptionError: An audio
+// file transcription specific error.
+type GoogleCloudNotebooklmV1alphaFailureReasonAudioTranscriptionError struct {
+	// LanguageDetectionFailed: Could not detect language of the file (it may not
+	// be speech).
+	LanguageDetectionFailed *GoogleCloudNotebooklmV1alphaFailureReasonAudioTranscriptionErrorLanguageDetectionFailed `json:"languageDetectionFailed,omitempty"`
+	// NoAudioDetected: No audio was detected in the input file (it may have been a
+	// video).
+	NoAudioDetected *GoogleCloudNotebooklmV1alphaFailureReasonAudioTranscriptionErrorNoAudioDetected `json:"noAudioDetected,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LanguageDetectionFailed") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LanguageDetectionFailed") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaFailureReasonAudioTranscriptionError) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaFailureReasonAudioTranscriptionError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonAudioTranscriptionErrorLanguageDetec
+// tionFailed: Could not detect language of the file (it may not be speech).
+type GoogleCloudNotebooklmV1alphaFailureReasonAudioTranscriptionErrorLanguageDetectionFailed struct {
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonAudioTranscriptionErrorNoAudioDetect
+// ed: No audio was detected in the input file.
+type GoogleCloudNotebooklmV1alphaFailureReasonAudioTranscriptionErrorNoAudioDetected struct {
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonDomainBlocked: Error to indicate
+// that the source was removed because the domain was blocked.
+type GoogleCloudNotebooklmV1alphaFailureReasonDomainBlocked struct {
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonGoogleDriveError: A google drive
+// specific error.
+type GoogleCloudNotebooklmV1alphaFailureReasonGoogleDriveError struct {
+	// DownloadPrevented: The user was prevented from downloading the file.
+	DownloadPrevented *GoogleCloudNotebooklmV1alphaFailureReasonGoogleDriveErrorDownloadPrevented `json:"downloadPrevented,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DownloadPrevented") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DownloadPrevented") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaFailureReasonGoogleDriveError) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaFailureReasonGoogleDriveError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonGoogleDriveErrorDownloadPrevented:
+// The user was prevented from downloading the file.
+type GoogleCloudNotebooklmV1alphaFailureReasonGoogleDriveErrorDownloadPrevented struct {
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonIngestionError: Indicates an error
+// occurred while ingesting the source.
+type GoogleCloudNotebooklmV1alphaFailureReasonIngestionError struct {
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonPaywallError: Indicates that the
+// source is paywalled and cannot be ingested.
+type GoogleCloudNotebooklmV1alphaFailureReasonPaywallError struct {
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonSourceEmpty: Indicates that the
+// source is empty.
+type GoogleCloudNotebooklmV1alphaFailureReasonSourceEmpty struct {
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonSourceLimitExceeded: Indicates that
+// the user does not have space for this source.
+type GoogleCloudNotebooklmV1alphaFailureReasonSourceLimitExceeded struct {
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonSourceTooLong: Indicates source
+// word count exceeded the user's limit.
+type GoogleCloudNotebooklmV1alphaFailureReasonSourceTooLong struct {
+	// WordCount: The number of words in the source.
+	WordCount int64 `json:"wordCount,omitempty"`
+	// WordLimit: The word count limit for the current user at the time of the
+	// upload.
+	WordLimit int64 `json:"wordLimit,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WordCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WordCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaFailureReasonSourceTooLong) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaFailureReasonSourceTooLong
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonSourceUnreachable: Indicates that
+// the source is unreachable. This is primarily used for sources that are added
+// via URL.
+type GoogleCloudNotebooklmV1alphaFailureReasonSourceUnreachable struct {
+	// ErrorDetails: Describes why the source is unreachable.
+	//
+	// Possible values:
+	//   "ERROR_REASON_UNSPECIFIED" - Default
+	//   "ERROR_REASON_INVALID_URL" - The source URL is invalid.
+	//   "ERROR_REASON_NOT_ACCESSIBLE" - The source URL is not accessible.
+	//   "ERROR_REASON_NOT_REACHABLE" - The source URL is not reachable.
+	//   "ERROR_REASON_URL_NOT_FOUND" - The source URL returned 404.
+	//   "ERROR_REASON_TRANSIENT_ERROR" - The source URL not reachable due to a
+	// transient network error or host timeout etc.
+	//   "ERROR_REASON_FETCH_FAILED" - The source URL could not be fetched due to
+	// an internal error.
+	//   "ERROR_REASON_NOT_SUPPORTED" - The URL is not yet supported. Examples
+	// include: the fetched content exceeds the trawler fetch max size, the fetched
+	// content is a type we do not yet support, etc.
+	ErrorDetails string `json:"errorDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorDetails") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaFailureReasonSourceUnreachable) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaFailureReasonSourceUnreachable
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonUnknown: Indicates an unknown error
+// occurred.
+type GoogleCloudNotebooklmV1alphaFailureReasonUnknown struct {
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonUploadError: Indicates an error
+// occurred while uploading the source.
+type GoogleCloudNotebooklmV1alphaFailureReasonUploadError struct {
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonYoutubeError: A youtube specific
+// error.
+type GoogleCloudNotebooklmV1alphaFailureReasonYoutubeError struct {
+	// VideoDeleted: Error to indicate that the source was removed because the
+	// video was deleted.
+	VideoDeleted *GoogleCloudNotebooklmV1alphaFailureReasonYoutubeErrorVideoDeleted `json:"videoDeleted,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "VideoDeleted") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "VideoDeleted") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaFailureReasonYoutubeError) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaFailureReasonYoutubeError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaFailureReasonYoutubeErrorVideoDeleted: Error to
+// indicate that the source was removed because the video was deleted.
+type GoogleCloudNotebooklmV1alphaFailureReasonYoutubeErrorVideoDeleted struct {
+}
+
+// GoogleCloudNotebooklmV1alphaGoogleDocsSourceMetadata: Metadata about a
+// google doc source.
+type GoogleCloudNotebooklmV1alphaGoogleDocsSourceMetadata struct {
+	// DocumentId: Output only. The document id of the google doc.
+	DocumentId string `json:"documentId,omitempty"`
+	// RevisionId: Output only. Revision id for the doc.
+	RevisionId string `json:"revisionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocumentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaGoogleDocsSourceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaGoogleDocsSourceMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudNotebooklmV1alphaListRecentlyViewedNotebooksResponse: Response
 // for NotebookService.ListRecentlyViewedNotebooks method.
 type GoogleCloudNotebooklmV1alphaListRecentlyViewedNotebooksResponse struct {
@@ -29626,14 +29929,14 @@ type GoogleCloudNotebooklmV1alphaNotebook struct {
 	CmekConfig *GoogleCloudNotebooklmV1alphaCmekConfig `json:"cmekConfig,omitempty"`
 	// Emoji: Output only. The emoji of the notebook.
 	Emoji string `json:"emoji,omitempty"`
-	// Metadata: The metadata of the notebook.
+	// Metadata: Output only. The metadata of the notebook.
 	Metadata *GoogleCloudNotebooklmV1alphaNotebookMetadata `json:"metadata,omitempty"`
 	// Name: Identifier. The identifier of the notebook. Format:
 	// `projects/{project}/locations/{location}/notebooks/{notebook_id}`. This
 	// field must be a UTF-8 encoded string.
 	Name string `json:"name,omitempty"`
-	// NotebookId: Optional. Notebook id, which is the last segment of the
-	// notebook's resource name. This is to make it similar with notebooklm API.
+	// NotebookId: Output only. Notebook id, which is the last segment of the
+	// notebook's resource name.
 	NotebookId string `json:"notebookId,omitempty"`
 	// Title: Optional. The title of the notebook.
 	Title string `json:"title,omitempty"`
@@ -29724,15 +30027,17 @@ type GoogleCloudNotebooklmV1alphaShareNotebookResponse struct {
 // GoogleCloudNotebooklmV1alphaSource: Source represents a single source of
 // content.
 type GoogleCloudNotebooklmV1alphaSource struct {
-	// Metadata: Metadata about the source.
+	// Metadata: Output only. Metadata about the source.
 	Metadata *GoogleCloudNotebooklmV1alphaSourceMetadata `json:"metadata,omitempty"`
 	// Name: Identifier. The full resource name of the source. Format:
 	// `projects/{project}/locations/{location}/notebooks/{notebook}/sources/{source
 	// _id}`. This field must be a UTF-8 encoded string with a length limit of 1024
 	// characters.
 	Name string `json:"name,omitempty"`
-	// SourceId: Optional. Source id, which is the last segment of the source's
-	// resource name. This is to make it similar with notebooklm API.
+	// Settings: Output only. Status of the source, and any failure reasons.
+	Settings *GoogleCloudNotebooklmV1alphaSourceSettings `json:"settings,omitempty"`
+	// SourceId: Optional. Output only. Source id, which is the last segment of the
+	// source's resource name.
 	SourceId *GoogleCloudNotebooklmV1alphaSourceId `json:"sourceId,omitempty"`
 	// Title: Optional. Title of the source.
 	Title string `json:"title,omitempty"`
@@ -29785,12 +30090,16 @@ func (s GoogleCloudNotebooklmV1alphaSourceId) MarshalJSON() ([]byte, error) {
 type GoogleCloudNotebooklmV1alphaSourceMetadata struct {
 	// AgentspaceMetadata: Metadata for an agentspace source.
 	AgentspaceMetadata *GoogleCloudNotebooklmV1alphaAgentspaceMetadata `json:"agentspaceMetadata,omitempty"`
+	// GoogleDocsMetadata: Metadata for a google doc source.
+	GoogleDocsMetadata *GoogleCloudNotebooklmV1alphaGoogleDocsSourceMetadata `json:"googleDocsMetadata,omitempty"`
 	// SourceAddedTimestamp: The timestamp the source was added.
 	SourceAddedTimestamp string `json:"sourceAddedTimestamp,omitempty"`
 	// TokenCount: The number of tokens in the source.
 	TokenCount int64 `json:"tokenCount,omitempty"`
 	// WordCount: The word count of the source.
 	WordCount int64 `json:"wordCount,omitempty"`
+	// YoutubeMetadata: Metadata for a youtube video source.
+	YoutubeMetadata *GoogleCloudNotebooklmV1alphaYoutubeMetadata `json:"youtubeMetadata,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AgentspaceMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -29806,6 +30115,42 @@ type GoogleCloudNotebooklmV1alphaSourceMetadata struct {
 
 func (s GoogleCloudNotebooklmV1alphaSourceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudNotebooklmV1alphaSourceMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaSourceSettings: Allows extension of Source
+// Settings in the BatchCreateSources (Formerly AddSource request).
+type GoogleCloudNotebooklmV1alphaSourceSettings struct {
+	// FailureReason: Failure reason containing details about why a source failed
+	// to ingest.
+	FailureReason *GoogleCloudNotebooklmV1alphaFailureReason `json:"failureReason,omitempty"`
+	// Status: Status of the source.
+	//
+	// Possible values:
+	//   "SOURCE_STATUS_UNSPECIFIED" - Unspecified status.
+	//   "SOURCE_STATUS_PENDING" - The source is pending addition.
+	//   "SOURCE_STATUS_COMPLETE" - Source addition is complete and successful.
+	//   "SOURCE_STATUS_ERROR" - Source addition has permanently failed.
+	//   "SOURCE_STATUS_PENDING_DELETION" - The source is pending deletion.
+	//   "SOURCE_STATUS_TENTATIVE" - The user is attempting to add a source, but we
+	// have not yet uploaded it or checked user limits. Does not count towards the
+	// user's source limit.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FailureReason") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailureReason") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaSourceSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaSourceSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -29929,9 +30274,11 @@ type GoogleCloudNotebooklmV1alphaUserContentGoogleDriveContent struct {
 	// DocumentId: The document id of the selected document.
 	DocumentId string `json:"documentId,omitempty"`
 	// MimeType: The mime type of the selected document. This can be used to
-	// differentiate type of content selected in the drive picker.
+	// differentiate type of content selected in the drive picker. Use
+	// application/vnd.google-apps.document for Google Docs or
+	// application/vnd.google-apps.presentation for Google Slides.
 	MimeType string `json:"mimeType,omitempty"`
-	// SourceName: Should track this from Drive Picker.
+	// SourceName: Name to be displayed for the source.
 	SourceName string `json:"sourceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DocumentId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -29954,9 +30301,9 @@ func (s GoogleCloudNotebooklmV1alphaUserContentGoogleDriveContent) MarshalJSON()
 // GoogleCloudNotebooklmV1alphaUserContentTextContent: The text content
 // uploaded as source.
 type GoogleCloudNotebooklmV1alphaUserContentTextContent struct {
-	// Content: The content of the text source.
+	// Content: Name to be displayed for the source.
 	Content string `json:"content,omitempty"`
-	// SourceName: The name of the text source.
+	// SourceName: The display name of the text source.
 	SourceName string `json:"sourceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -30002,7 +30349,7 @@ func (s GoogleCloudNotebooklmV1alphaUserContentVideoContent) MarshalJSON() ([]by
 // GoogleCloudNotebooklmV1alphaUserContentWebContent: The web content uploaded
 // as source.
 type GoogleCloudNotebooklmV1alphaUserContentWebContent struct {
-	// SourceName: The name of the web source.
+	// SourceName: Name to be displayed for the source.
 	SourceName string `json:"sourceName,omitempty"`
 	// Url: If URL is supplied, will fetch the webpage in the backend.
 	Url string `json:"url,omitempty"`
@@ -30021,6 +30368,31 @@ type GoogleCloudNotebooklmV1alphaUserContentWebContent struct {
 
 func (s GoogleCloudNotebooklmV1alphaUserContentWebContent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudNotebooklmV1alphaUserContentWebContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudNotebooklmV1alphaYoutubeMetadata: Metadata about a youtube video
+// source.
+type GoogleCloudNotebooklmV1alphaYoutubeMetadata struct {
+	// ChannelName: Output only. The channel name of the youtube video.
+	ChannelName string `json:"channelName,omitempty"`
+	// VideoId: Output only. The id of the youtube video.
+	VideoId string `json:"videoId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChannelName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChannelName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudNotebooklmV1alphaYoutubeMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudNotebooklmV1alphaYoutubeMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -61805,8 +62177,7 @@ type ProjectsLocationsNotebooksBatchDeleteCall struct {
 	header_                                                 http.Header
 }
 
-// BatchDelete: Batch deletes Notebooks. Needs a side channel with the user's
-// EUC.
+// BatchDelete: Batch deletes Notebooks.
 //
 //   - parent: The parent branch resource name, such as
 //     `projects/{project}/locations/{location}`.
@@ -61911,7 +62282,7 @@ type ProjectsLocationsNotebooksCreateCall struct {
 	header_                              http.Header
 }
 
-// Create: Creates a notebook. Needs a side channel with the user's EUC.
+// Create: Creates a notebook.
 //
 //   - parent: The parent resource name, such as
 //     `projects/{project}/locations/{location}`.
@@ -62016,7 +62387,7 @@ type ProjectsLocationsNotebooksGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a notebook. Needs a side channel with the user's EUC.
+// Get: Gets a notebook.
 //
 //   - name: Full resource name of Notebook, such as
 //     `projects/{project}/locations/{location}/notebooks/{notebook_id}`.
@@ -62127,8 +62498,7 @@ type ProjectsLocationsNotebooksListRecentlyViewedCall struct {
 	header_      http.Header
 }
 
-// ListRecentlyViewed: Lists the recently viewed notebooks. Needs a side
-// channel with the user's EUC.
+// ListRecentlyViewed: Lists the notebooks ordered by last view time.
 //
 //   - parent: The parent branch resource name, such as
 //     `projects/{project}/locations/{location}`.
@@ -62275,8 +62645,7 @@ type ProjectsLocationsNotebooksShareCall struct {
 	header_                                          http.Header
 }
 
-// Share: Shares a notebook to other accounts. Needs a side channel with the
-// user's EUC.
+// Share: Shares a notebook to other accounts.
 //
 //   - name: Full resource name of Notebook, such as
 //     `projects/{project}/locations/{location}/notebooks/{notebook_id}`.
@@ -62381,8 +62750,7 @@ type ProjectsLocationsNotebooksAudioOverviewsCreateCall struct {
 	header_                                                http.Header
 }
 
-// Create: Generates a new audio overview. Needs a side channel with the user's
-// EUC.
+// Create: Generates a new audio overview.
 //
 //   - parent: The parent resource where this notebook will be created. Format:
 //     projects/{project}/locations/{location}/notebooks/{notebook}.
@@ -62486,7 +62854,7 @@ type ProjectsLocationsNotebooksAudioOverviewsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an audio overview. Needs a side channel with the user's EUC.
+// Delete: Deletes an audio overview.
 //
 //   - name: The full resource name of the AudioOverview, such as
 //     `projects/{project}/locations/{location}/notebooks/{notebook}/audioOverview

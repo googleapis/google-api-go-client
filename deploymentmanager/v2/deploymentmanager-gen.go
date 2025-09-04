@@ -831,8 +831,9 @@ type GlobalSetPolicyRequest struct {
 	// size of the policy is limited to a few 10s of KB. An empty policy is in
 	// general a valid policy but certain services (like Projects) might reject
 	// them.
-	Policy     *Policy `json:"policy,omitempty"`
-	UpdateMask string  `json:"updateMask,omitempty"`
+	Policy *Policy `json:"policy,omitempty"`
+	// UpdateMask: Update mask for the policy.
+	UpdateMask string `json:"updateMask,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Bindings") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

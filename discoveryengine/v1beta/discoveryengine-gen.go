@@ -8155,6 +8155,8 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// IPs.
 	//   "ALLOWLIST_IN_SERVICE_ATTACHMENT" - Connector requires customer to
 	// allowlist our project in their service attachment.
+	//   "ALLOWLIST_SERVICE_ACCOUNT" - Connector requires customer to allowlist
+	// service account in their project.
 	BlockingReasons []string `json:"blockingReasons,omitempty"`
 	// ConnectorModes: Optional. The modes enabled for this connector. Default
 	// state is CONNECTOR_MODE_UNSPECIFIED.
@@ -8211,6 +8213,10 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// Errors: Output only. The errors from initialization or from the latest
 	// connector run.
 	Errors []*GoogleRpcStatus `json:"errors,omitempty"`
+	// FederatedConfig: Optional. Any params and credentials used specifically for
+	// hybrid connectors supporting FEDERATED mode. This field should only be set
+	// if the connector is a hybrid connector and we want to enable FEDERATED mode.
+	FederatedConfig *GoogleCloudDiscoveryengineV1alphaDataConnectorFederatedConfig `json:"federatedConfig,omitempty"`
 	// HybridIngestionDisabled: Optional. If the connector is a hybrid connector,
 	// determines whether ingestion is enabled and appropriate resources are
 	// provisioned during connector creation. If the connector is not a hybrid
@@ -8320,6 +8326,11 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// refresh interval is set to the same value as the incremental refresh
 	// interval, incremental sync will be disabled.
 	RefreshInterval string `json:"refreshInterval,omitempty"`
+	// RemoveParamKeys: Optional. Specifies keys to be removed from the 'params'
+	// field. This is only active when 'params' is included in the 'update_mask' in
+	// an UpdateDataConnectorRequest. Deletion takes precedence if a key is both in
+	// 'remove_param_keys' and present in the 'params' field of the request.
+	RemoveParamKeys []string `json:"removeParamKeys,omitempty"`
 	// State: Output only. State of the connector.
 	//
 	// Possible values:
@@ -8400,6 +8411,32 @@ type GoogleCloudDiscoveryengineV1alphaDataConnectorEndUserConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDataConnectorEndUserConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorEndUserConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataConnectorFederatedConfig: Any params
+// and credentials used specifically for hybrid connectors supporting FEDERATED
+// mode.
+type GoogleCloudDiscoveryengineV1alphaDataConnectorFederatedConfig struct {
+	// AdditionalParams: Optional. Any additional parameters needed for FEDERATED.
+	AdditionalParams googleapi.RawMessage `json:"additionalParams,omitempty"`
+	// AuthParams: Optional. Any authentication parameters specific to FEDERATED.
+	AuthParams googleapi.RawMessage `json:"authParams,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalParams") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalParams") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataConnectorFederatedConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorFederatedConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -5423,7 +5423,8 @@ type CoursesAnnouncementsModifyAssigneesCall struct {
 // This method returns the following error codes: * `PERMISSION_DENIED` if the
 // requesting user is not permitted to access the requested course or course
 // work or for access errors. * `INVALID_ARGUMENT` if the request is malformed.
-// * `NOT_FOUND` if the requested course or course work does not exist.
+// * `NOT_FOUND` if the requested course or course work does not exist. *
+// `FAILED_PRECONDITION` for the following request error: * EmptyAssignees
 //
 //   - courseId: Identifier of the course. This identifier can be either the
 //     Classroom-assigned identifier or an alias.
@@ -7035,7 +7036,8 @@ type CoursesCourseWorkModifyAssigneesCall struct {
 // This method returns the following error codes: * `PERMISSION_DENIED` if the
 // requesting user is not permitted to access the requested course or course
 // work or for access errors. * `INVALID_ARGUMENT` if the request is malformed.
-// * `NOT_FOUND` if the requested course or course work does not exist.
+// * `NOT_FOUND` if the requested course or course work does not exist. *
+// `FAILED_PRECONDITION` for the following request error: * EmptyAssignees
 //
 //   - courseId: Identifier of the course. This identifier can be either the
 //     Classroom-assigned identifier or an alias.

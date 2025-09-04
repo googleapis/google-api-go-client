@@ -6651,9 +6651,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -20641,10 +20641,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
 // resources. For a search query that will match a large number of resources,
 // you can avoiding using the special synchronous index by including an
 // additional `_sort` parameter in your query. Use `_sort=-_lastUpdated` if you
-// want to keep the default sorting order. Note: The special synchronous
-// identifier index are currently disabled for DocumentReference and
-// DocumentManifest searches. For samples and detailed information, see
-// Searching for FHIR resources
+// want to keep the default sorting order. For samples and detailed
+// information, see Searching for FHIR resources
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and Advanced
 // FHIR search features
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).
@@ -20779,10 +20777,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
 // resources. For a search query that will match a large number of resources,
 // you can avoiding using the special synchronous index by including an
 // additional `_sort` parameter in your query. Use `_sort=-_lastUpdated` if you
-// want to keep the default sorting order. Note: The special synchronous
-// identifier index are currently disabled for DocumentReference and
-// DocumentManifest searches. For samples and detailed information, see
-// Searching for FHIR resources
+// want to keep the default sorting order. For samples and detailed
+// information, see Searching for FHIR resources
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and Advanced
 // FHIR search features
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).

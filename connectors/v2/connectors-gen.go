@@ -1967,6 +1967,8 @@ func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 
 // Tool: Message representing a single tool.
 type Tool struct {
+	// DependsOn: List of tool names that this tool depends on.
+	DependsOn []string `json:"dependsOn,omitempty"`
 	// Description: Description of the tool.
 	Description string `json:"description,omitempty"`
 	// InputSchema: JSON schema for the input parameters of the tool.
@@ -1975,13 +1977,13 @@ type Tool struct {
 	Name string `json:"name,omitempty"`
 	// OutputSchema: JSON schema for the output of the tool.
 	OutputSchema *JsonSchema `json:"outputSchema,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Description") to
+	// ForceSendFields is a list of field names (e.g. "DependsOn") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Description") to include in API
+	// NullFields is a list of field names (e.g. "DependsOn") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

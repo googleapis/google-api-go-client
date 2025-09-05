@@ -2386,6 +2386,37 @@ func (s CancelOneTimeProductOfferRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CancelSubscriptionPurchaseRequest: Request for the
+// purchases.subscriptionsv2.cancel API.
+type CancelSubscriptionPurchaseRequest struct {
+	// CancellationContext: Required. Additional details around the subscription
+	// revocation.
+	CancellationContext *CancellationContext `json:"cancellationContext,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CancellationContext") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CancellationContext") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CancelSubscriptionPurchaseRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelSubscriptionPurchaseRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CancelSubscriptionPurchaseResponse: Response for the
+// purchases.subscriptionsv2.cancel API.
+type CancelSubscriptionPurchaseResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // CancelSurveyResult: Result of the cancel survey when the subscription was
 // canceled by the user.
 type CancelSurveyResult struct {
@@ -2450,6 +2481,44 @@ type CanceledStateContext struct {
 
 func (s CanceledStateContext) MarshalJSON() ([]byte, error) {
 	type NoMethod CanceledStateContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CancellationContext: Cancellation context of the
+// purchases.subscriptionsv2.cancel API.
+type CancellationContext struct {
+	// CancellationType: Required. The type of cancellation for the purchased
+	// subscription.
+	//
+	// Possible values:
+	//   "CANCELLATION_TYPE_UNSPECIFIED" - Cancellation type unspecified.
+	//   "USER_REQUESTED_STOP_RENEWALS" - Cancellation requested by the user, and
+	// the subscription can be restored. It only stops the subscription's next
+	// renewal. For an installment subscription, users still need to finish the
+	// commitment period. For more details on renewals and payments, see
+	// https://developer.android.com/google/play/billing/subscriptions#installments
+	//   "DEVELOPER_REQUESTED_STOP_PAYMENTS" - Cancellation requested by the
+	// developer, and the subscription cannot be restored. It stops the
+	// subscription's next payment. For an installment subscription, users will not
+	// need to pay the next payment and finish the commitment period. For more
+	// details on renewals and payments, see
+	// https://developer.android.com/google/play/billing/subscriptions#installments
+	CancellationType string `json:"cancellationType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CancellationType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CancellationType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CancellationContext) MarshalJSON() ([]byte, error) {
+	type NoMethod CancellationContext
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -23978,6 +24047,116 @@ func (c *PurchasesSubscriptionsRevokeCall) Do(opts ...googleapi.CallOption) erro
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptions.revoke", "response", internallog.HTTPResponse(res, nil))
 	return nil
+}
+
+type PurchasesSubscriptionsv2CancelCall struct {
+	s                                 *Service
+	packageName                       string
+	token                             string
+	cancelsubscriptionpurchaserequest *CancelSubscriptionPurchaseRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Cancel: Cancel a subscription purchase for the user.
+//
+//   - packageName: The package of the application for which this subscription
+//     was purchased (for example, 'com.some.thing').
+//   - token: The token provided to the user's device when the subscription was
+//     purchased.
+func (r *PurchasesSubscriptionsv2Service) Cancel(packageName string, token string, cancelsubscriptionpurchaserequest *CancelSubscriptionPurchaseRequest) *PurchasesSubscriptionsv2CancelCall {
+	c := &PurchasesSubscriptionsv2CancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.token = token
+	c.cancelsubscriptionpurchaserequest = cancelsubscriptionpurchaserequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PurchasesSubscriptionsv2CancelCall) Fields(s ...googleapi.Field) *PurchasesSubscriptionsv2CancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PurchasesSubscriptionsv2CancelCall) Context(ctx context.Context) *PurchasesSubscriptionsv2CancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PurchasesSubscriptionsv2CancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PurchasesSubscriptionsv2CancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cancelsubscriptionpurchaserequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"token":       c.token,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptionsv2.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.purchases.subscriptionsv2.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CancelSubscriptionPurchaseResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PurchasesSubscriptionsv2CancelCall) Do(opts ...googleapi.CallOption) (*CancelSubscriptionPurchaseResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CancelSubscriptionPurchaseResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptionsv2.cancel", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type PurchasesSubscriptionsv2GetCall struct {

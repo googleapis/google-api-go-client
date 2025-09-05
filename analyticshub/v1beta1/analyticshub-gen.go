@@ -567,6 +567,10 @@ type DestinationDataset struct {
 	// See https://cloud.google.com/bigquery/docs/locations for supported
 	// locations.
 	Location string `json:"location,omitempty"`
+	// ReplicaLocations: Optional. The geographic locations where the dataset
+	// should be replicated. See BigQuery locations
+	// (https://cloud.google.com/bigquery/docs/locations) for supported locations.
+	ReplicaLocations []string `json:"replicaLocations,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatasetReference") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

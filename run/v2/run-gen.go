@@ -2389,10 +2389,10 @@ type GoogleCloudRunV2SecretVolumeSource struct {
 	// a result, other mode bits could be set.
 	DefaultMode int64 `json:"defaultMode,omitempty"`
 	// Items: If unspecified, the volume will expose a file whose name is the
-	// secret, relative to VolumeMount.mount_path. If specified, the key will be
-	// used as the version to fetch from Cloud Secret Manager and the path will be
-	// the name of the file exposed in the volume. When items are defined, they
-	// must specify a path and a version.
+	// secret, relative to VolumeMount.mount_path + VolumeMount.sub_path. If
+	// specified, the key will be used as the version to fetch from Cloud Secret
+	// Manager and the path will be the name of the file exposed in the volume.
+	// When items are defined, they must specify a path and a version.
 	Items []*GoogleCloudRunV2VersionToPath `json:"items,omitempty"`
 	// Secret: Required. The name of the secret in Cloud Secret Manager. Format:
 	// {secret} if the secret is in the same project.
@@ -4709,7 +4709,9 @@ func (s GoogleDevtoolsCloudbuildV1MavenArtifact) MarshalJSON() ([]byte, error) {
 // GoogleDevtoolsCloudbuildV1NpmPackage: Npm package to upload to Artifact
 // Registry upon successful completion of all build steps.
 type GoogleDevtoolsCloudbuildV1NpmPackage struct {
-	// PackagePath: Path to the package.json. e.g. workspace/path/to/package
+	// PackagePath: Optional. Path to the package.json. e.g.
+	// workspace/path/to/package Only one of `archive` or `package_path` can be
+	// specified.
 	PackagePath string `json:"packagePath,omitempty"`
 	// Repository: Artifact Registry repository, in the form
 	// "https://$REGION-npm.pkg.dev/$PROJECT/$REPOSITORY" Npm package in the

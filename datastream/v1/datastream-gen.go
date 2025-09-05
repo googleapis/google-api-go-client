@@ -1261,6 +1261,29 @@ func (s LookupStreamObjectRequest) MarshalJSON() ([]byte, error) {
 type Merge struct {
 }
 
+// MongodbChangeStreamPosition: MongoDB change stream position
+type MongodbChangeStreamPosition struct {
+	// StartTime: Required. The timestamp (in epoch seconds) to start change stream
+	// from.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StartTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StartTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MongodbChangeStreamPosition) MarshalJSON() ([]byte, error) {
+	type NoMethod MongodbChangeStreamPosition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MongodbCluster: MongoDB Cluster structure.
 type MongodbCluster struct {
 	// Databases: MongoDB databases in the cluster.
@@ -2970,6 +2993,9 @@ func (s SourceObjectIdentifier) MarshalJSON() ([]byte, error) {
 // SpecificStartPosition: CDC strategy to start replicating from a specific
 // position in the source.
 type SpecificStartPosition struct {
+	// MongodbChangeStreamPosition: MongoDB change stream position to start
+	// replicating from.
+	MongodbChangeStreamPosition *MongodbChangeStreamPosition `json:"mongodbChangeStreamPosition,omitempty"`
 	// MysqlGtidPosition: MySQL GTID set to start replicating from.
 	MysqlGtidPosition *MysqlGtidPosition `json:"mysqlGtidPosition,omitempty"`
 	// MysqlLogPosition: MySQL specific log position to start replicating from.
@@ -2978,15 +3004,15 @@ type SpecificStartPosition struct {
 	OracleScnPosition *OracleScnPosition `json:"oracleScnPosition,omitempty"`
 	// SqlServerLsnPosition: SqlServer LSN to start replicating from.
 	SqlServerLsnPosition *SqlServerLsnPosition `json:"sqlServerLsnPosition,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MysqlGtidPosition") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "MongodbChangeStreamPosition") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MysqlGtidPosition") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "MongodbChangeStreamPosition") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

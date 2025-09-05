@@ -652,6 +652,10 @@ type SynthesisInput struct {
 	// MultiSpeakerMarkup: The multi-speaker input to be synthesized. Only
 	// applicable for multi-speaker synthesis.
 	MultiSpeakerMarkup *MultiSpeakerMarkup `json:"multiSpeakerMarkup,omitempty"`
+	// Prompt: This is system instruction supported only for controllable voice
+	// models. If used, we will pass text to Flash TTS as is. Can only used with
+	// Flash TTS. What AI Studio calls Style Instructions.
+	Prompt string `json:"prompt,omitempty"`
 	// Ssml: The SSML document to be synthesized. The SSML document must be valid
 	// and well-formed. Otherwise the RPC will fail and return
 	// google.rpc.Code.INVALID_ARGUMENT. For more information, see SSML

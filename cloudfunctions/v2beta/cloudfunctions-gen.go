@@ -1972,7 +1972,9 @@ type UpgradeInfo struct {
 	//   "UPGRADE_STATE_UNSPECIFIED" - Unspecified state. Most functions are in
 	// this upgrade state.
 	//   "ELIGIBLE_FOR_2ND_GEN_UPGRADE" - Functions in this state are eligible for
-	// 1st Gen -> 2nd Gen upgrade.
+	// 1st Gen upgrade.
+	//   "INELIGIBLE_FOR_UPGRADE_UNTIL_REDEPLOYMENT" - Functions in this state are
+	// ineligible for 1st Gen upgrade until redeployment with newer runtime.
 	//   "UPGRADE_OPERATION_IN_PROGRESS" - An upgrade related operation is in
 	// progress.
 	//   "SETUP_FUNCTION_UPGRADE_CONFIG_SUCCESSFUL" - SetupFunctionUpgradeConfig

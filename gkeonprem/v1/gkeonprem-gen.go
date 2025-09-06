@@ -3938,6 +3938,8 @@ type VmwareAdminCluster struct {
 	PreparedSecrets *VmwareAdminPreparedSecretsConfig `json:"preparedSecrets,omitempty"`
 	// PrivateRegistryConfig: Configuration for registry.
 	PrivateRegistryConfig *VmwareAdminPrivateRegistryConfig `json:"privateRegistryConfig,omitempty"`
+	// Proxy: Configuration for proxy.
+	Proxy *VmwareAdminProxy `json:"proxy,omitempty"`
 	// Reconciling: Output only. If set, there are currently changes in flight to
 	// the VMware admin cluster.
 	Reconciling bool `json:"reconciling,omitempty"`
@@ -4249,6 +4251,34 @@ type VmwareAdminPrivateRegistryConfig struct {
 
 func (s VmwareAdminPrivateRegistryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminPrivateRegistryConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VmwareAdminProxy: VmwareAdminProxy represents configuration for admin
+// cluster proxy.
+type VmwareAdminProxy struct {
+	// NoProxy: A comma-separated list of IP addresses, IP address ranges, host
+	// names, and domain names that should not go through the proxy server. When
+	// Google Distributed Cloud sends a request to one of these addresses, hosts,
+	// or domains, the request is sent directly.
+	NoProxy string `json:"noProxy,omitempty"`
+	// Url: The HTTP address of proxy server.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NoProxy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NoProxy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VmwareAdminProxy) MarshalJSON() ([]byte, error) {
+	type NoMethod VmwareAdminProxy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

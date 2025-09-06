@@ -4900,8 +4900,14 @@ type SqlServerConnectionProfile struct {
 	// CloudSqlId: If the source is a Cloud SQL database, use this field to provide
 	// the Cloud SQL instance ID of the source.
 	CloudSqlId string `json:"cloudSqlId,omitempty"`
+	// CloudSqlProjectId: Optional. The project id of the Cloud SQL instance. If
+	// not provided, the project id of the connection profile will be used.
+	CloudSqlProjectId string `json:"cloudSqlProjectId,omitempty"`
 	// Database: Required. The name of the specific database within the host.
 	Database string `json:"database,omitempty"`
+	// DbmPort: Optional. The Database Mirroring (DBM) port of the source SQL
+	// Server instance.
+	DbmPort int64 `json:"dbmPort,omitempty"`
 	// ForwardSshConnectivity: Forward SSH tunnel connectivity.
 	ForwardSshConnectivity *ForwardSshTunnelConnectivity `json:"forwardSshConnectivity,omitempty"`
 	// Host: Required. The IP or hostname of the source SQL Server database.
@@ -4945,6 +4951,33 @@ type SqlServerConnectionProfile struct {
 
 func (s SqlServerConnectionProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlServerConnectionProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerDagConfig: Configuration for distributed availability group (DAG)
+// for the SQL Server homogeneous migration.
+type SqlServerDagConfig struct {
+	// LinkedServer: Required. The name of the linked server that points to the
+	// source SQL Server instance. Only used by DAG migrations.
+	LinkedServer string `json:"linkedServer,omitempty"`
+	// SourceAg: Required. The name of the source availability group. Only used by
+	// DAG migrations.
+	SourceAg string `json:"sourceAg,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LinkedServer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LinkedServer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlServerDagConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerDagConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5019,6 +5052,9 @@ type SqlServerHomogeneousMigrationJobConfig struct {
 	// Capture group set #2 timestamp - unix timestamp Example: For backup file
 	// TestDB.1691448254.trn, use pattern: (?.*)\.(?\d*).trn or (?.*)\.(?\d*).trn
 	BackupFilePattern string `json:"backupFilePattern,omitempty"`
+	// DagConfig: Optional. Configuration for distributed availability group (DAG)
+	// for the SQL Server homogeneous migration.
+	DagConfig *SqlServerDagConfig `json:"dagConfig,omitempty"`
 	// DatabaseBackups: Required. Backup details per database in Cloud Storage.
 	DatabaseBackups []*SqlServerDatabaseBackup `json:"databaseBackups,omitempty"`
 	// PromoteWhenReady: Optional. Promote databases when ready.

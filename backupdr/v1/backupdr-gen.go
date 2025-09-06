@@ -3630,6 +3630,7 @@ type LocationMetadata struct {
 	//   "FEATURE_UNSPECIFIED"
 	//   "MANAGEMENT_SERVER"
 	//   "COMPUTE_INSTANCE"
+	//   "PROTECTION_SUMMARY"
 	UnsupportedFeatures []string `json:"unsupportedFeatures,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "UnsupportedFeatures") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4256,6 +4257,8 @@ type ResourceBackupConfig struct {
 	//   "RESOURCE_TYPE_UNSPECIFIED" - Resource type not set.
 	//   "CLOUD_SQL_INSTANCE" - Cloud SQL instance.
 	//   "COMPUTE_ENGINE_VM" - Compute Engine VM.
+	//   "COMPUTE_ENGINE_DISK" - Compute Engine Disk.
+	//   "COMPUTE_ENGINE_REGIONAL_DISK" - Compute Engine Regional Disk.
 	TargetResourceType string `json:"targetResourceType,omitempty"`
 	// Uid: Output only. The unique identifier of the resource backup config.
 	Uid string `json:"uid,omitempty"`

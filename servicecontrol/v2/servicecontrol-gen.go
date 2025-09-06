@@ -374,6 +374,8 @@ type Auth struct {
 	// 'jsmith@example.com', 'iat': 1353601026, 'exp': 1353604926} SAML assertions
 	// are similarly specified, but with an identity provider dependent structure.
 	Claims googleapi.RawMessage `json:"claims,omitempty"`
+	// Oauth: Attributes of the OAuth token associated with the request.
+	Oauth *Oauth `json:"oauth,omitempty"`
 	// Presenter: The authorized presenter of the credential. Reflects the optional
 	// Authorized Presenter (`azp`) claim within a JWT or the OAuth client id. For
 	// example, a Google Cloud Platform client id looks as follows:
@@ -408,6 +410,15 @@ type AuthenticationInfo struct {
 	// any. It is not guaranteed that the principal was allowed to use this
 	// authority.
 	AuthoritySelector string `json:"authoritySelector,omitempty"`
+	// LoggableShortLivedCredential: Converted from
+	// "identity_cloudgaia.AuditLoggableShortLivedCredential" proto. This message
+	// will be used by security, detection and response team. For context please
+	// refer to go/cg:short-lived-credential-logging. When the JSON object
+	// represented here has a proto equivalent, the proto name will be indicated in
+	// the `@type` property.
+	LoggableShortLivedCredential googleapi.RawMessage `json:"loggableShortLivedCredential,omitempty"`
+	// OauthInfo: OAuth authentication information such as the OAuth client ID.
+	OauthInfo *OAuthInfo `json:"oauthInfo,omitempty"`
 	// PrincipalEmail: The email address of the authenticated user (or service
 	// account on behalf of third party principal) making the request. For third
 	// party identity callers, the `principal_subject` field is populated instead
@@ -594,6 +605,54 @@ type FirstPartyPrincipal struct {
 
 func (s FirstPartyPrincipal) MarshalJSON() ([]byte, error) {
 	type NoMethod FirstPartyPrincipal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OAuthInfo: OAuth related information about the request.
+type OAuthInfo struct {
+	// OauthClientId: The OAuth client ID of the 1P or 3P application acting on
+	// behalf of the user.
+	OauthClientId string `json:"oauthClientId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OauthClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OauthClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OAuthInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod OAuthInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Oauth: This message defines attributes associated with OAuth credentials.
+type Oauth struct {
+	// ClientId: The optional OAuth client ID. This is the unique public identifier
+	// issued by an authorization server to a registered client application. Empty
+	// string is equivalent to no oauth client id. WARNING: This is for MCP
+	// tools/call and tools/list authorization and not for general use.
+	ClientId string `json:"clientId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Oauth) MarshalJSON() ([]byte, error) {
+	type NoMethod Oauth
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1674,9 +1733,8 @@ type ServicesReportCall struct {
 // operations that have occurred on a service. It must be called after the
 // operations have been executed. For more information, see Telemetry Reporting
 // (https://cloud.google.com/service-infrastructure/docs/telemetry-reporting).
-// NOTE: The telemetry reporting has a hard limit of 1000 operations and 1MB
-// per Report call. It is recommended to have no more than 100 operations per
-// call. This method requires the `servicemanagement.services.report`
+// NOTE: The telemetry reporting has a hard limit of 100 operations and 1MB per
+// Report call. This method requires the `servicemanagement.services.report`
 // permission on the specified service. For more information, see Service
 // Control API Access Control
 // (https://cloud.google.com/service-infrastructure/docs/service-control/access-control).

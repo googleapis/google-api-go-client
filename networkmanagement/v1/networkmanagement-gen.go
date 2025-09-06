@@ -1240,6 +1240,13 @@ type DropInfo struct {
 	// destination IP address.
 	//   "CLOUD_NAT_PROTOCOL_UNSUPPORTED" - Packet is dropped by Cloud NAT due to
 	// using an unsupported protocol.
+	//   "L2_INTERCONNECT_UNSUPPORTED_PROTOCOL" - Packet is dropped due to using an
+	// unsupported protocol (any other than UDP) for L2 Interconnect.
+	//   "L2_INTERCONNECT_UNSUPPORTED_PORT" - Packet is dropped due to using an
+	// unsupported port (any other than 6081) for L2 Interconnect.
+	//   "L2_INTERCONNECT_DESTINATION_IP_MISMATCH" - Packet is dropped due to
+	// destination IP not matching the appliance mapping IPs configured on the L2
+	// Interconnect attachment.
 	Cause string `json:"cause,omitempty"`
 	// DestinationGeolocationCode: Geolocation (region code) of the destination IP
 	// address (if relevant).
@@ -1845,6 +1852,33 @@ func (s Host) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// HybridSubnetInfo: For display only. Metadata associated with a hybrid
+// subnet.
+type HybridSubnetInfo struct {
+	// DisplayName: Name of a hybrid subnet.
+	DisplayName string `json:"displayName,omitempty"`
+	// Region: Name of a Google Cloud region where the hybrid subnet is configured.
+	Region string `json:"region,omitempty"`
+	// Uri: URI of a hybrid subnet.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HybridSubnetInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod HybridSubnetInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InstanceInfo: For display only. Metadata associated with a Compute Engine
 // instance.
 type InstanceInfo struct {
@@ -1905,9 +1939,22 @@ type InterconnectAttachmentInfo struct {
 	// InterconnectUri: URI of the Interconnect where the Interconnect attachment
 	// is configured.
 	InterconnectUri string `json:"interconnectUri,omitempty"`
+	// L2AttachmentMatchedIpAddress: Appliance IP address that was matched for
+	// L2_DEDICATED attachments.
+	L2AttachmentMatchedIpAddress string `json:"l2AttachmentMatchedIpAddress,omitempty"`
 	// Region: Name of a Google Cloud region where the Interconnect attachment is
 	// configured.
 	Region string `json:"region,omitempty"`
+	// Type: The type of interconnect attachment this is.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified type.
+	//   "DEDICATED" - Attachment to a dedicated interconnect.
+	//   "PARTNER" - Attachment to a partner interconnect, created by the customer.
+	//   "PARTNER_PROVIDER" - Attachment to a partner interconnect, created by the
+	// partner.
+	//   "L2_DEDICATED" - Attachment to a L2 interconnect, created by the customer.
+	Type string `json:"type,omitempty"`
 	// Uri: URI of an Interconnect attachment.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudRouterUri") to
@@ -3549,6 +3596,8 @@ type Step struct {
 	GkeMaster *GKEMasterInfo `json:"gkeMaster,omitempty"`
 	// GoogleService: Display information of a Google service
 	GoogleService *GoogleServiceInfo `json:"googleService,omitempty"`
+	// HybridSubnet: Display information of a hybrid subnet.
+	HybridSubnet *HybridSubnetInfo `json:"hybridSubnet,omitempty"`
 	// Instance: Display information of a Compute Engine instance.
 	Instance *InstanceInfo `json:"instance,omitempty"`
 	// InterconnectAttachment: Display information of an interconnect attachment.
@@ -3641,6 +3690,8 @@ type Step struct {
 	// Compute Engine internal load balancer.
 	//   "ARRIVE_AT_EXTERNAL_LOAD_BALANCER" - Forwarding state: arriving at a
 	// Compute Engine external load balancer.
+	//   "ARRIVE_AT_HYBRID_SUBNET" - Forwarding state: arriving at a hybrid subnet.
+	// Appropriate routing configuration will be determined here.
 	//   "ARRIVE_AT_VPN_GATEWAY" - Forwarding state: arriving at a Cloud VPN
 	// gateway.
 	//   "ARRIVE_AT_VPN_TUNNEL" - Forwarding state: arriving at a Cloud VPN tunnel.

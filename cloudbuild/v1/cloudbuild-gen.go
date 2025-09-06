@@ -3221,7 +3221,9 @@ func (s NetworkConfig) MarshalJSON() ([]byte, error) {
 // NpmPackage: Npm package to upload to Artifact Registry upon successful
 // completion of all build steps.
 type NpmPackage struct {
-	// PackagePath: Path to the package.json. e.g. workspace/path/to/package
+	// PackagePath: Optional. Path to the package.json. e.g.
+	// workspace/path/to/package Only one of `archive` or `package_path` can be
+	// specified.
 	PackagePath string `json:"packagePath,omitempty"`
 	// Repository: Artifact Registry repository, in the form
 	// "https://$REGION-npm.pkg.dev/$PROJECT/$REPOSITORY" Npm package in the

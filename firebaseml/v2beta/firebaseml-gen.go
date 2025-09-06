@@ -1741,11 +1741,11 @@ type GoogleCloudAiplatformV1beta1GroundingChunkMaps struct {
 	// PlaceId: This Place's resource name, in `places/{place_id}` format. Can be
 	// used to look up the Place.
 	PlaceId string `json:"placeId,omitempty"`
-	// Text: Text of the chunk.
+	// Text: Text of the place answer.
 	Text string `json:"text,omitempty"`
-	// Title: Title of the chunk.
+	// Title: Title of the place.
 	Title string `json:"title,omitempty"`
-	// Uri: URI reference of the chunk.
+	// Uri: URI reference of the place.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PlaceAnswerSources") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1768,18 +1768,15 @@ func (s GoogleCloudAiplatformV1beta1GroundingChunkMaps) MarshalJSON() ([]byte, e
 // GoogleCloudAiplatformV1beta1GroundingChunkMapsPlaceAnswerSources: Sources
 // used to generate the place answer.
 type GoogleCloudAiplatformV1beta1GroundingChunkMapsPlaceAnswerSources struct {
-	// FlagContentUri: A link where users can flag a problem with the generated
-	// answer.
-	FlagContentUri string `json:"flagContentUri,omitempty"`
 	// ReviewSnippets: Snippets of reviews that are used to generate the answer.
 	ReviewSnippets []*GoogleCloudAiplatformV1beta1GroundingChunkMapsPlaceAnswerSourcesReviewSnippet `json:"reviewSnippets,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FlagContentUri") to
+	// ForceSendFields is a list of field names (e.g. "ReviewSnippets") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FlagContentUri") to include in
+	// NullFields is a list of field names (e.g. "ReviewSnippets") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1791,58 +1788,24 @@ func (s GoogleCloudAiplatformV1beta1GroundingChunkMapsPlaceAnswerSources) Marsha
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAiplatformV1beta1GroundingChunkMapsPlaceAnswerSourcesAuthorAttribu
-// tion: Author attribution for a photo or review.
-type GoogleCloudAiplatformV1beta1GroundingChunkMapsPlaceAnswerSourcesAuthorAttribution struct {
-	// DisplayName: Name of the author of the Photo or Review.
-	DisplayName string `json:"displayName,omitempty"`
-	// PhotoUri: Profile photo URI of the author of the Photo or Review.
-	PhotoUri string `json:"photoUri,omitempty"`
-	// Uri: URI of the author of the Photo or Review.
-	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisplayName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudAiplatformV1beta1GroundingChunkMapsPlaceAnswerSourcesAuthorAttribution) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1beta1GroundingChunkMapsPlaceAnswerSourcesAuthorAttribution
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudAiplatformV1beta1GroundingChunkMapsPlaceAnswerSourcesReviewSnippet
 // : Encapsulates a review snippet.
 type GoogleCloudAiplatformV1beta1GroundingChunkMapsPlaceAnswerSourcesReviewSnippet struct {
-	// AuthorAttribution: This review's author.
-	AuthorAttribution *GoogleCloudAiplatformV1beta1GroundingChunkMapsPlaceAnswerSourcesAuthorAttribution `json:"authorAttribution,omitempty"`
-	// FlagContentUri: A link where users can flag a problem with the review.
-	FlagContentUri string `json:"flagContentUri,omitempty"`
 	// GoogleMapsUri: A link to show the review on Google Maps.
 	GoogleMapsUri string `json:"googleMapsUri,omitempty"`
-	// RelativePublishTimeDescription: A string of formatted recent time,
-	// expressing the review time relative to the current time in a form
-	// appropriate for the language and country.
-	RelativePublishTimeDescription string `json:"relativePublishTimeDescription,omitempty"`
-	// Review: A reference representing this place review which may be used to look
-	// up this place review again.
-	Review string `json:"review,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AuthorAttribution") to
+	// ReviewId: Id of the review referencing the place.
+	ReviewId string `json:"reviewId,omitempty"`
+	// Title: Title of the review.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GoogleMapsUri") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AuthorAttribution") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "GoogleMapsUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1931,6 +1894,9 @@ type GoogleCloudAiplatformV1beta1GroundingMetadata struct {
 	// SearchEntryPoint: Optional. Google search entry for the following-up web
 	// searches.
 	SearchEntryPoint *GoogleCloudAiplatformV1beta1SearchEntryPoint `json:"searchEntryPoint,omitempty"`
+	// SourceFlaggingUris: Optional. Output only. List of source flagging uris.
+	// This is currently populated only for Google Maps grounding.
+	SourceFlaggingUris []*GoogleCloudAiplatformV1beta1GroundingMetadataSourceFlaggingUri `json:"sourceFlaggingUris,omitempty"`
 	// WebSearchQueries: Optional. Web search queries for the following-up web
 	// search.
 	WebSearchQueries []string `json:"webSearchQueries,omitempty"`
@@ -1949,6 +1915,33 @@ type GoogleCloudAiplatformV1beta1GroundingMetadata struct {
 
 func (s GoogleCloudAiplatformV1beta1GroundingMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1GroundingMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1GroundingMetadataSourceFlaggingUri: Source
+// content flagging uri for a place or review. This is currently populated only
+// for Google Maps grounding.
+type GoogleCloudAiplatformV1beta1GroundingMetadataSourceFlaggingUri struct {
+	// FlagContentUri: A link where users can flag a problem with the source (place
+	// or review).
+	FlagContentUri string `json:"flagContentUri,omitempty"`
+	// SourceId: Id of the place or review.
+	SourceId string `json:"sourceId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FlagContentUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FlagContentUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1GroundingMetadataSourceFlaggingUri) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1GroundingMetadataSourceFlaggingUri
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

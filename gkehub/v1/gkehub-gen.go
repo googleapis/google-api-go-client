@@ -957,9 +957,6 @@ type ClusterUpgradeUpgradeStatus struct {
 	// doesn't finish within a certain limit, despite it's actual status.
 	//   "COMPLETE" - The upgrade has passed all post conditions (soaking). At the
 	// scope level, this means all eligible clusters are in COMPLETE status.
-	//   "FORCED_COMPLETE" - The upgrade was forced into soaking and the soaking
-	// time has passed. This is the equivalent of COMPLETE status for upgrades that
-	// were forced into soaking.
 	Code string `json:"code,omitempty"`
 	// Reason: Reason for this status.
 	Reason string `json:"reason,omitempty"`

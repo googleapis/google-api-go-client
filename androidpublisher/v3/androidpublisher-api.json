@@ -5555,7 +5555,7 @@
       }
     }
   },
-  "revision": "20250903",
+  "revision": "20250904",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -6207,6 +6207,10 @@
         "priceChangeDetails": {
           "$ref": "SubscriptionItemPriceChangeDetails",
           "description": "The information of the last price change for the item since subscription signup."
+        },
+        "priceStepUpConsentDetails": {
+          "$ref": "PriceStepUpConsentDetails",
+          "description": "The information of the latest price step-up consent."
         },
         "recurringPrice": {
           "$ref": "Money",
@@ -9898,6 +9902,39 @@
         },
         "priceMicros": {
           "description": "Price in 1/million of the currency base unit, represented as a string.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PriceStepUpConsentDetails": {
+      "description": "Information related to a price step-up that requires user consent.",
+      "id": "PriceStepUpConsentDetails",
+      "properties": {
+        "consentDeadlineTime": {
+          "description": "The deadline by which the user must provide consent. If consent is not provided by this time, the subscription will be canceled.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "newPrice": {
+          "$ref": "Money",
+          "description": "The new price which requires user consent."
+        },
+        "state": {
+          "description": "Output only. The state of the price step-up consent.",
+          "enum": [
+            "CONSENT_STATE_UNSPECIFIED",
+            "PENDING",
+            "CONFIRMED",
+            "COMPLETED"
+          ],
+          "enumDescriptions": [
+            "Unspecified consent state.",
+            "The user has not yet provided consent.",
+            "The user has consented, and the new price is waiting to take effect.",
+            "The user has consented, and the new price has taken effect."
+          ],
+          "readOnly": true,
           "type": "string"
         }
       },

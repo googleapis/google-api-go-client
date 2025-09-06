@@ -1455,6 +1455,9 @@ type AutoRenewingPlan struct {
 	// PriceChangeDetails: The information of the last price change for the item
 	// since subscription signup.
 	PriceChangeDetails *SubscriptionItemPriceChangeDetails `json:"priceChangeDetails,omitempty"`
+	// PriceStepUpConsentDetails: The information of the latest price step-up
+	// consent.
+	PriceStepUpConsentDetails *PriceStepUpConsentDetails `json:"priceStepUpConsentDetails,omitempty"`
 	// RecurringPrice: The current recurring price of the auto renewing plan. Note
 	// that the price does not take into account discounts and does not include
 	// taxes for tax-exclusive pricing, please call orders.get API instead if
@@ -6437,6 +6440,41 @@ type Price struct {
 
 func (s Price) MarshalJSON() ([]byte, error) {
 	type NoMethod Price
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PriceStepUpConsentDetails: Information related to a price step-up that
+// requires user consent.
+type PriceStepUpConsentDetails struct {
+	// ConsentDeadlineTime: The deadline by which the user must provide consent. If
+	// consent is not provided by this time, the subscription will be canceled.
+	ConsentDeadlineTime string `json:"consentDeadlineTime,omitempty"`
+	// NewPrice: The new price which requires user consent.
+	NewPrice *Money `json:"newPrice,omitempty"`
+	// State: Output only. The state of the price step-up consent.
+	//
+	// Possible values:
+	//   "CONSENT_STATE_UNSPECIFIED" - Unspecified consent state.
+	//   "PENDING" - The user has not yet provided consent.
+	//   "CONFIRMED" - The user has consented, and the new price is waiting to take
+	// effect.
+	//   "COMPLETED" - The user has consented, and the new price has taken effect.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConsentDeadlineTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsentDeadlineTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PriceStepUpConsentDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PriceStepUpConsentDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -660,6 +660,7 @@ type Instance struct {
 	//   "DISABLED_REASON_UNSPECIFIED" - This is an unknown reason for disabling.
 	//   "KMS_KEY_ISSUE" - The KMS key used by the instance is either revoked or
 	// denied access to
+	//   "PROJECT_STATE_OFF" - The consumer project is in a non-ACTIVE state.
 	DisabledReason []string `json:"disabledReason,omitempty"`
 	// DisplayName: Optional. Display name for an instance.
 	DisplayName string `json:"displayName,omitempty"`
@@ -732,6 +733,7 @@ type Instance struct {
 	//   "AUTO_UPDATING" - Instance is being auto-updated
 	//   "AUTO_UPGRADING" - Instance is being auto-upgraded
 	//   "DISABLED" - Instance is disabled
+	//   "ENABLING" - Instance is being enabled.
 	State string `json:"state,omitempty"`
 	// StateMessage: Output only. Additional information about the current state of
 	// this Data Fusion instance if available.
@@ -1775,9 +1777,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

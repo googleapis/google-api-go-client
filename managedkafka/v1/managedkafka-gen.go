@@ -823,6 +823,9 @@ type Cluster struct {
 	State string `json:"state,omitempty"`
 	// TlsConfig: Optional. TLS configuration for the Kafka cluster.
 	TlsConfig *TlsConfig `json:"tlsConfig,omitempty"`
+	// UpdateOptions: Optional. UpdateOptions represents options that control how
+	// updates to the cluster are applied.
+	UpdateOptions *UpdateOptions `json:"updateOptions,omitempty"`
 	// UpdateTime: Output only. The time when the cluster was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -2267,6 +2270,38 @@ type TrustConfig struct {
 
 func (s TrustConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TrustConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateOptions: UpdateOptions specifies options that influence how a cluster
+// update is applied. These options control the behavior of the update process,
+// rather than defining the desired end-state of a cluster.
+type UpdateOptions struct {
+	// AllowBrokerDownscaleOnClusterUpscale: Optional. If true, allows an update
+	// operation that increases the total vCPU and/or memory allocation of the
+	// cluster to significantly decrease the per-broker vCPU and/or memory
+	// allocation. This can result in reduced performance and availability. By
+	// default, the update operation will fail if an upscale request results in a
+	// vCPU or memory allocation for the brokers that is smaller than 90% of the
+	// current broker size.
+	AllowBrokerDownscaleOnClusterUpscale bool `json:"allowBrokerDownscaleOnClusterUpscale,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowBrokerDownscaleOnClusterUpscale") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "AllowBrokerDownscaleOnClusterUpscale") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

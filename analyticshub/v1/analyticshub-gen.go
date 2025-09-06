@@ -440,6 +440,13 @@ type BigQueryDatasetSource struct {
 	// Dataset: Optional. Resource name of the dataset source for this listing.
 	// e.g. `projects/myproject/datasets/123`
 	Dataset string `json:"dataset,omitempty"`
+	// EffectiveReplicas: Output only. Server-owned effective state of replicas.
+	// Contains both primary and secondary replicas. Each replica includes a
+	// system-computed (output-only) state and primary designation.
+	EffectiveReplicas []*Replica `json:"effectiveReplicas,omitempty"`
+	// ReplicaLocations: Optional. A list of regions where the publisher has
+	// created shared dataset replicas.
+	ReplicaLocations []string `json:"replicaLocations,omitempty"`
 	// RestrictedExportPolicy: Optional. If set, restricted export policy will be
 	// propagated and enforced on the linked dataset.
 	RestrictedExportPolicy *RestrictedExportPolicy `json:"restrictedExportPolicy,omitempty"`
@@ -824,6 +831,10 @@ type DestinationDataset struct {
 	// See https://cloud.google.com/bigquery/docs/locations for supported
 	// locations.
 	Location string `json:"location,omitempty"`
+	// ReplicaLocations: Optional. The geographic locations where the dataset
+	// should be replicated. See BigQuery locations
+	// (https://cloud.google.com/bigquery/docs/locations) for supported locations.
+	ReplicaLocations []string `json:"replicaLocations,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatasetReference") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2073,6 +2084,49 @@ type RefreshSubscriptionResponse struct {
 
 func (s RefreshSubscriptionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RefreshSubscriptionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Replica: Represents the state of a replica of a shared dataset. It includes
+// the geographic location of the replica and system-computed, output-only
+// fields indicating its replication state and whether it is the primary
+// replica.
+type Replica struct {
+	// Location: Output only. The geographic location where the replica resides.
+	// See BigQuery locations (https://cloud.google.com/bigquery/docs/locations)
+	// for supported locations. Eg. "us-central1".
+	Location string `json:"location,omitempty"`
+	// PrimaryState: Output only. Indicates that this replica is the primary
+	// replica.
+	//
+	// Possible values:
+	//   "PRIMARY_STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "PRIMARY_REPLICA" - The replica is the primary replica.
+	PrimaryState string `json:"primaryState,omitempty"`
+	// ReplicaState: Output only. Assigned by Analytics Hub based on real BigQuery
+	// replication state.
+	//
+	// Possible values:
+	//   "REPLICA_STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "READY_TO_USE" - The replica is backfilled and ready to use.
+	//   "UNAVAILABLE" - The replica is unavailable, does not exist, or has not
+	// been backfilled yet.
+	ReplicaState string `json:"replicaState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Location") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Replica) MarshalJSON() ([]byte, error) {
+	type NoMethod Replica
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -742,6 +742,8 @@ type Cluster struct {
 	// KmsKey: Optional. The KMS key used to encrypt the at-rest data of the
 	// cluster.
 	KmsKey string `json:"kmsKey,omitempty"`
+	// Labels: Optional. Labels to represent user-provided metadata.
+	Labels map[string]string `json:"labels,omitempty"`
 	// MaintenancePolicy: Optional. ClusterMaintenancePolicy determines when to
 	// allow or deny updates.
 	MaintenancePolicy *ClusterMaintenancePolicy `json:"maintenancePolicy,omitempty"`
@@ -1677,6 +1679,7 @@ type DatabaseResourceMetadata struct {
 	// edition enum.
 	//   "EDITION_ENTERPRISE" - Represents the enterprise edition.
 	//   "EDITION_ENTERPRISE_PLUS" - Represents the enterprise plus edition.
+	//   "EDITION_STANDARD" - Represents the standard edition.
 	Edition string `json:"edition,omitempty"`
 	// Entitlements: Entitlements associated with the resource
 	Entitlements []*Entitlement `json:"entitlements,omitempty"`

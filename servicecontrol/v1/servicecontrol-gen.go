@@ -431,6 +431,8 @@ type Auth struct {
 	// 'jsmith@example.com', 'iat': 1353601026, 'exp': 1353604926} SAML assertions
 	// are similarly specified, but with an identity provider dependent structure.
 	Claims googleapi.RawMessage `json:"claims,omitempty"`
+	// Oauth: Attributes of the OAuth token associated with the request.
+	Oauth *Oauth `json:"oauth,omitempty"`
 	// Presenter: The authorized presenter of the credential. Reflects the optional
 	// Authorized Presenter (`azp`) claim within a JWT or the OAuth client id. For
 	// example, a Google Cloud Platform client id looks as follows:
@@ -465,6 +467,15 @@ type AuthenticationInfo struct {
 	// any. It is not guaranteed that the principal was allowed to use this
 	// authority.
 	AuthoritySelector string `json:"authoritySelector,omitempty"`
+	// LoggableShortLivedCredential: Converted from
+	// "identity_cloudgaia.AuditLoggableShortLivedCredential" proto. This message
+	// will be used by security, detection and response team. For context please
+	// refer to go/cg:short-lived-credential-logging. When the JSON object
+	// represented here has a proto equivalent, the proto name will be indicated in
+	// the `@type` property.
+	LoggableShortLivedCredential googleapi.RawMessage `json:"loggableShortLivedCredential,omitempty"`
+	// OauthInfo: OAuth authentication information such as the OAuth client ID.
+	OauthInfo *OAuthInfo `json:"oauthInfo,omitempty"`
 	// PrincipalEmail: The email address of the authenticated user (or service
 	// account on behalf of third party principal) making the request. For third
 	// party identity callers, the `principal_subject` field is populated instead
@@ -570,7 +581,8 @@ type CheckError struct {
 	// Code: The error code.
 	//
 	// Possible values:
-	//   "ERROR_CODE_UNSPECIFIED" - This is never used in `CheckResponse`.
+	//   "ERROR_CODE_UNSPECIFIED" - This is the default value if error code is not
+	// explicitly set. It should not be used directly.
 	//   "NOT_FOUND" - The consumer's project id, network container, or resource
 	// container was not found. Same as google.rpc.Code.NOT_FOUND.
 	//   "PERMISSION_DENIED" - The consumer doesn't have access to the specified
@@ -680,6 +692,9 @@ type CheckInfo struct {
 	ApiKeyUid string `json:"apiKeyUid,omitempty"`
 	// ConsumerInfo: Consumer info of this check.
 	ConsumerInfo *ConsumerInfo `json:"consumerInfo,omitempty"`
+	// IgnoreApiKeyUidAsCredentialId: Whether or not the api key should be ignored
+	// in the credential_id during reporting.
+	IgnoreApiKeyUidAsCredentialId bool `json:"ignoreApiKeyUidAsCredentialId,omitempty"`
 	// UnusedArguments: A list of fields and label keys that are ignored by the
 	// server. The client doesn't need to send them for following requests to
 	// improve performance and allow better aggregation.
@@ -1433,6 +1448,54 @@ type Money struct {
 
 func (s Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OAuthInfo: OAuth related information about the request.
+type OAuthInfo struct {
+	// OauthClientId: The OAuth client ID of the 1P or 3P application acting on
+	// behalf of the user.
+	OauthClientId string `json:"oauthClientId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OauthClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OauthClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OAuthInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod OAuthInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Oauth: This message defines attributes associated with OAuth credentials.
+type Oauth struct {
+	// ClientId: The optional OAuth client ID. This is the unique public identifier
+	// issued by an authorization server to a registered client application. Empty
+	// string is equivalent to no oauth client id. WARNING: This is for MCP
+	// tools/call and tools/list authorization and not for general use.
+	ClientId string `json:"clientId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Oauth) MarshalJSON() ([]byte, error) {
+	type NoMethod Oauth
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC.
+// Copyright 2025 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -57,11 +57,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2/internallog"
 	googleapi "google.golang.org/api/googleapi"
 	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
@@ -85,6 +87,7 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 var _ = internal.Version
+var _ = internallog.New
 
 const apiId = "cloudcommerceprocurement:v1"
 const apiName = "cloudcommerceprocurement"
@@ -115,10 +118,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	if err != nil {
 		return nil, err
 	}
-	s, err := New(client)
-	if err != nil {
-		return nil, err
-	}
+	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
+	s.Providers = NewProvidersService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -134,13 +135,12 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client, BasePath: basePath}
-	s.Providers = NewProvidersService(s)
-	return s, nil
+	return NewService(context.TODO(), option.WithHTTPClient(client))
 }
 
 type Service struct {
 	client    *http.Client
+	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
@@ -243,9 +243,9 @@ type Account struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Account) MarshalJSON() ([]byte, error) {
+func (s Account) MarshalJSON() ([]byte, error) {
 	type NoMethod Account
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Approval: An approval for some action on an account.
@@ -281,9 +281,9 @@ type Approval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Approval) MarshalJSON() ([]byte, error) {
+func (s Approval) MarshalJSON() ([]byte, error) {
 	type NoMethod Approval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApproveAccountRequest: Request message for
@@ -313,9 +313,9 @@ type ApproveAccountRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApproveAccountRequest) MarshalJSON() ([]byte, error) {
+func (s ApproveAccountRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApproveAccountRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApproveEntitlementPlanChangeRequest: Request message for
@@ -336,9 +336,9 @@ type ApproveEntitlementPlanChangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApproveEntitlementPlanChangeRequest) MarshalJSON() ([]byte, error) {
+func (s ApproveEntitlementPlanChangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApproveEntitlementPlanChangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApproveEntitlementRequest: Request message for
@@ -366,9 +366,9 @@ type ApproveEntitlementRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApproveEntitlementRequest) MarshalJSON() ([]byte, error) {
+func (s ApproveEntitlementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApproveEntitlementRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Consumer: A resource using (consuming) this entitlement.
@@ -388,9 +388,9 @@ type Consumer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Consumer) MarshalJSON() ([]byte, error) {
+func (s Consumer) MarshalJSON() ([]byte, error) {
 	type NoMethod Consumer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -588,9 +588,9 @@ type Entitlement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Entitlement) MarshalJSON() ([]byte, error) {
+func (s Entitlement) MarshalJSON() ([]byte, error) {
 	type NoMethod Entitlement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccountsResponse: Response message for
@@ -616,9 +616,9 @@ type ListAccountsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAccountsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccountsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEntitlementsResponse: Response message for
@@ -644,9 +644,9 @@ type ListEntitlementsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListEntitlementsResponse) MarshalJSON() ([]byte, error) {
+func (s ListEntitlementsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEntitlementsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RejectAccountRequest: Request message for
@@ -673,9 +673,9 @@ type RejectAccountRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RejectAccountRequest) MarshalJSON() ([]byte, error) {
+func (s RejectAccountRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RejectAccountRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RejectEntitlementPlanChangeRequest: Request message for
@@ -699,9 +699,9 @@ type RejectEntitlementPlanChangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RejectEntitlementPlanChangeRequest) MarshalJSON() ([]byte, error) {
+func (s RejectEntitlementPlanChangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RejectEntitlementPlanChangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RejectEntitlementRequest: Request message for
@@ -723,9 +723,9 @@ type RejectEntitlementRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RejectEntitlementRequest) MarshalJSON() ([]byte, error) {
+func (s RejectEntitlementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RejectEntitlementRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResetAccountRequest: Request message for
@@ -752,9 +752,9 @@ type SuspendEntitlementRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SuspendEntitlementRequest) MarshalJSON() ([]byte, error) {
+func (s SuspendEntitlementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SuspendEntitlementRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProvidersAccountsApproveCall struct {
@@ -802,8 +802,7 @@ func (c *ProvidersAccountsApproveCall) Header() http.Header {
 
 func (c *ProvidersAccountsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.approveaccountrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.approveaccountrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -819,6 +818,7 @@ func (c *ProvidersAccountsApproveCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.accounts.approve", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -853,9 +853,11 @@ func (c *ProvidersAccountsApproveCall) Do(opts ...googleapi.CallOption) (*Empty,
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.accounts.approve", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -913,12 +915,11 @@ func (c *ProvidersAccountsGetCall) doRequest(alt string) (*http.Response, error)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -926,6 +927,7 @@ func (c *ProvidersAccountsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.accounts.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -960,9 +962,11 @@ func (c *ProvidersAccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.accounts.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1035,12 +1039,11 @@ func (c *ProvidersAccountsListCall) doRequest(alt string) (*http.Response, error
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/accounts")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1048,6 +1051,7 @@ func (c *ProvidersAccountsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.accounts.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1083,9 +1087,11 @@ func (c *ProvidersAccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccou
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.accounts.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1154,8 +1160,7 @@ func (c *ProvidersAccountsRejectCall) Header() http.Header {
 
 func (c *ProvidersAccountsRejectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rejectaccountrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.rejectaccountrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -1171,6 +1176,7 @@ func (c *ProvidersAccountsRejectCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.accounts.reject", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1205,9 +1211,11 @@ func (c *ProvidersAccountsRejectCall) Do(opts ...googleapi.CallOption) (*Empty, 
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.accounts.reject", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1256,8 +1264,7 @@ func (c *ProvidersAccountsResetCall) Header() http.Header {
 
 func (c *ProvidersAccountsResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resetaccountrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.resetaccountrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -1273,6 +1280,7 @@ func (c *ProvidersAccountsResetCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.accounts.reset", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1307,9 +1315,11 @@ func (c *ProvidersAccountsResetCall) Do(opts ...googleapi.CallOption) (*Empty, e
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.accounts.reset", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1360,8 +1370,7 @@ func (c *ProvidersEntitlementsApproveCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.approveentitlementrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.approveentitlementrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -1377,6 +1386,7 @@ func (c *ProvidersEntitlementsApproveCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.approve", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1411,9 +1421,11 @@ func (c *ProvidersEntitlementsApproveCall) Do(opts ...googleapi.CallOption) (*Em
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.approve", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1464,8 +1476,7 @@ func (c *ProvidersEntitlementsApprovePlanChangeCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsApprovePlanChangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.approveentitlementplanchangerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.approveentitlementplanchangerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -1481,6 +1492,7 @@ func (c *ProvidersEntitlementsApprovePlanChangeCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.approvePlanChange", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1515,9 +1527,11 @@ func (c *ProvidersEntitlementsApprovePlanChangeCall) Do(opts ...googleapi.CallOp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.approvePlanChange", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1575,12 +1589,11 @@ func (c *ProvidersEntitlementsGetCall) doRequest(alt string) (*http.Response, er
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1588,6 +1601,7 @@ func (c *ProvidersEntitlementsGetCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1622,9 +1636,11 @@ func (c *ProvidersEntitlementsGetCall) Do(opts ...googleapi.CallOption) (*Entitl
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1654,7 +1670,7 @@ func (r *ProvidersEntitlementsService) List(parent string) *ProvidersEntitlement
 // `customer_billing_account` with value in the format of:
 // `billingAccounts/{id}` * `product_external_name` * `quote_external_name` *
 // `offer` * `new_pending_offer` * `plan` * `newPendingPlan` or
-// `new_pending_plan` * `state` * `consumers.project` *
+// `new_pending_plan` * `state` * `services` * `consumers.project` *
 // `change_history.new_offer` Note that the consumers and
 // change_history.new_offer match works on repeated structures, so equality
 // (`consumers.project=projects/123456789`) is not supported. Set membership
@@ -1729,12 +1745,11 @@ func (c *ProvidersEntitlementsListCall) doRequest(alt string) (*http.Response, e
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
-	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entitlements")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1742,6 +1757,7 @@ func (c *ProvidersEntitlementsListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1777,9 +1793,11 @@ func (c *ProvidersEntitlementsListCall) Do(opts ...googleapi.CallOption) (*ListE
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1857,8 +1875,7 @@ func (c *ProvidersEntitlementsPatchCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entitlement)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.entitlement)
 	if err != nil {
 		return nil, err
 	}
@@ -1874,6 +1891,7 @@ func (c *ProvidersEntitlementsPatchCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -1908,9 +1926,11 @@ func (c *ProvidersEntitlementsPatchCall) Do(opts ...googleapi.CallOption) (*Enti
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -1960,8 +1980,7 @@ func (c *ProvidersEntitlementsRejectCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsRejectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rejectentitlementrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.rejectentitlementrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -1977,6 +1996,7 @@ func (c *ProvidersEntitlementsRejectCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.reject", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2011,9 +2031,11 @@ func (c *ProvidersEntitlementsRejectCall) Do(opts ...googleapi.CallOption) (*Emp
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.reject", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2064,8 +2086,7 @@ func (c *ProvidersEntitlementsRejectPlanChangeCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsRejectPlanChangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rejectentitlementplanchangerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.rejectentitlementplanchangerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2081,6 +2102,7 @@ func (c *ProvidersEntitlementsRejectPlanChangeCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.rejectPlanChange", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2115,9 +2137,11 @@ func (c *ProvidersEntitlementsRejectPlanChangeCall) Do(opts ...googleapi.CallOpt
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.rejectPlanChange", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2166,8 +2190,7 @@ func (c *ProvidersEntitlementsSuspendCall) Header() http.Header {
 
 func (c *ProvidersEntitlementsSuspendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.suspendentitlementrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.suspendentitlementrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -2183,6 +2206,7 @@ func (c *ProvidersEntitlementsSuspendCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.suspend", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2217,8 +2241,10 @@ func (c *ProvidersEntitlementsSuspendCall) Do(opts ...googleapi.CallOption) (*Em
 		},
 	}
 	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
 		return nil, err
 	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudcommerceprocurement.providers.entitlements.suspend", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

@@ -692,41 +692,6 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ReconciliationOperationMetadata: Operation metadata returned by the CLH
-// during resource state reconciliation.
-type ReconciliationOperationMetadata struct {
-	// DeleteResource: DEPRECATED. Use exclusive_action instead.
-	DeleteResource bool `json:"deleteResource,omitempty"`
-	// ExclusiveAction: Excluisive action returned by the CLH.
-	//
-	// Possible values:
-	//   "UNKNOWN_REPAIR_ACTION" - Unknown repair action.
-	//   "DELETE" - The resource has to be deleted. When using this bit, the CLH
-	// should fail the operation. DEPRECATED. Instead use DELETE_RESOURCE
-	// OperationSignal in SideChannel.
-	//   "RETRY" - This resource could not be repaired but the repair should be
-	// tried again at a later time. This can happen if there is a dependency that
-	// needs to be resolved first- e.g. if a parent resource must be repaired
-	// before a child resource.
-	ExclusiveAction string `json:"exclusiveAction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DeleteResource") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DeleteResource") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ReconciliationOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod ReconciliationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the `resource`. The
@@ -969,9 +934,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

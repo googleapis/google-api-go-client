@@ -1234,6 +1234,38 @@ func (s GoogleFirebaseAppcheckV1ListServicesResponse) MarshalJSON() ([]byte, err
 // the Firebase Console or programmatically via the Firebase Management Service
 // (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects.androidApps.sha/create).
 type GoogleFirebaseAppcheckV1PlayIntegrityConfig struct {
+	// AccountDetails: Specifies account requirements for Android devices running
+	// your app. These settings correspond to requirements on the **account
+	// details** field
+	// (https://developer.android.com/google/play/integrity/verdicts#account-details-field)
+	// obtained from the Play Integrity API. See the default responses table
+	// (https://developer.android.com/google/play/integrity/setup#default) for a
+	// quick summary. The default values for these settings work for most apps, and
+	// are recommended.
+	AccountDetails *GoogleFirebaseAppcheckV1PlayIntegrityConfigAccountDetails `json:"accountDetails,omitempty"`
+	// AppIntegrity: Specifies application integrity requirements for Android
+	// devices running your app. These settings correspond to requirements on the
+	// **application integrity** field
+	// (https://developer.android.com/google/play/integrity/verdicts#application-integrity-field)
+	// obtained from the Play Integrity API. See the default responses table
+	// (https://developer.android.com/google/play/integrity/setup#default) for a
+	// quick summary. The default values for these settings work for most apps, and
+	// are recommended.
+	AppIntegrity *GoogleFirebaseAppcheckV1PlayIntegrityConfigAppIntegrity `json:"appIntegrity,omitempty"`
+	// DeviceIntegrity: Specifies device integrity requirements for Android devices
+	// running your app. These settings correspond to requirements on the **device
+	// integrity** field
+	// (https://developer.android.com/google/play/integrity/verdicts#device-integrity-field)
+	// obtained from the Play Integrity API. See the default responses table
+	// (https://developer.android.com/google/play/integrity/setup#default) for a
+	// quick summary. Warning: There are also conditional
+	// (https://developer.android.com/google/play/integrity/setup#conditional) as
+	// well as optional
+	// (https://developer.android.com/google/play/integrity/setup#optional_device_information)
+	// responses that you can receive, but requires additional explicit opt-in from
+	// you. The App Check API is **not** responsible for any such opt-ins. The
+	// default values for these settings work for most apps, and are recommended.
+	DeviceIntegrity *GoogleFirebaseAppcheckV1PlayIntegrityConfigDeviceIntegrity `json:"deviceIntegrity,omitempty"`
 	// Name: Required. The relative resource name of the Play Integrity
 	// configuration object, in the format: ```
 	// projects/{project_number}/apps/{app_id}/playIntegrityConfig ```
@@ -1245,21 +1277,178 @@ type GoogleFirebaseAppcheckV1PlayIntegrityConfig struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AccountDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "AccountDetails") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleFirebaseAppcheckV1PlayIntegrityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1PlayIntegrityConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1PlayIntegrityConfigAccountDetails: A settings object
+// specifying account requirements for Android devices running your app. These
+// settings correspond to requirements on the **account details** field
+// (https://developer.android.com/google/play/integrity/verdicts#account-details-field)
+// obtained from the Play Integrity API. See the default responses table
+// (https://developer.android.com/google/play/integrity/setup#default) for a
+// quick summary. The default values for these settings work for most apps, and
+// are recommended.
+type GoogleFirebaseAppcheckV1PlayIntegrityConfigAccountDetails struct {
+	// RequireLicensed: Specifies whether the caller must have received the
+	// `LICENSED` verdict
+	// (https://developer.android.com/google/play/integrity/verdicts#account-details-field).
+	// For additional details about scenarios where your users will receive this
+	// `LICENSED` label, see the default responses table
+	// (https://developer.android.com/google/play/integrity/setup#default). If set
+	// to `true`, apps without the `LICENSED` app licensing verdict will be
+	// rejected. If set to `false`, any app licensing verdict is allowed. The
+	// default value is `false`.
+	RequireLicensed bool `json:"requireLicensed,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequireLicensed") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequireLicensed") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1PlayIntegrityConfigAccountDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1PlayIntegrityConfigAccountDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1PlayIntegrityConfigAppIntegrity: A settings object
+// specifying application integrity requirements for Android devices running
+// your app. These settings correspond to requirements on the **application
+// integrity** field
+// (https://developer.android.com/google/play/integrity/verdicts#application-integrity-field)
+// obtained from the Play Integrity API. See the default responses table
+// (https://developer.android.com/google/play/integrity/setup#default) for a
+// quick summary. The default values for these settings work for most apps, and
+// are recommended.
+type GoogleFirebaseAppcheckV1PlayIntegrityConfigAppIntegrity struct {
+	// AllowUnrecognizedVersion: Specifies whether your running app is allowed to
+	// have the `UNRECOGNIZED_VERSION` app recognition verdict
+	// (https://developer.android.com/google/play/integrity/verdicts#application-integrity-field).
+	// Note that the app recognition verdict `PLAY_RECOGNIZED` is a strong,
+	// comprehensive integrity signal that takes into account various other
+	// signals, including conditional and optional device integrity responses that
+	// you have opted into. If your app is published off-Play, this field should be
+	// set to `true` to allow instances of your app installed from off-Play sources
+	// to function. If set to `false`, only `PLAY_RECOGNIZED` verdicts are allowed,
+	// and both `UNRECOGNIZED_VERSION` and `UNEVALUATED` will be rejected. If set
+	// to `true`, any app recognition verdict is allowed. The default value is
+	// `false`.
+	AllowUnrecognizedVersion bool `json:"allowUnrecognizedVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowUnrecognizedVersion")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowUnrecognizedVersion") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1PlayIntegrityConfigAppIntegrity) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1PlayIntegrityConfigAppIntegrity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1PlayIntegrityConfigDeviceIntegrity: A settings
+// object specifying device integrity requirements for Android devices running
+// your app. These settings correspond to requirements on the **device
+// integrity** field
+// (https://developer.android.com/google/play/integrity/verdicts#device-integrity-field)
+// obtained from the Play Integrity API. See the default responses table
+// (https://developer.android.com/google/play/integrity/setup#default) for a
+// quick summary. Warning: There are also conditional
+// (https://developer.android.com/google/play/integrity/setup#conditional) as
+// well as optional
+// (https://developer.android.com/google/play/integrity/setup#optional_device_information)
+// responses that you can receive, but requires additional explicit opt-in from
+// you. The App Check API is **not** responsible for any such opt-ins. The
+// default values for these settings work for most apps, and are recommended.
+type GoogleFirebaseAppcheckV1PlayIntegrityConfigDeviceIntegrity struct {
+	// MinDeviceRecognitionLevel: Specifies the minimum device integrity level in
+	// order for the device to be considered valid. Any device with a device
+	// recognition verdict lower than this level will be rejected. If this is
+	// unspecified, the default level is `NO_INTEGRITY`.
+	//
+	// Possible values:
+	//   "DEVICE_RECOGNITION_LEVEL_UNSPECIFIED" - Default value. Do not specify
+	// this value directly. When this default value is detected in a configuration,
+	// the `NO_INTEGRITY` default level takes effect.
+	//   "NO_INTEGRITY" - If this level is set, no explicit device integrity label
+	// requirements will be checked. However, because Play Integrity's other
+	// features may perform (and require) their own intrinsic device integrity
+	// checks, your `app_integrity` and `account_details` settings may still cause
+	// some device integrity checks to be performed.
+	//   "MEETS_BASIC_INTEGRITY" - This level corresponds to the
+	// `MEETS_BASIC_INTEGRITY` [optional device recognition
+	// label](https://developer.android.com/google/play/integrity/verdicts#optional-
+	// device-labels). This value represents the most basic level of device
+	// integrity, and is the minimum allowed in App Check's standard implementation
+	// of Play Integrity. Warning: Because this is an optional response, you
+	// **must** first explicitly [opt in your app in the Play
+	// Console](https://developer.android.com/google/play/integrity/setup#optional)
+	// in order to receive this label. Without this opt-in, **your app may break**
+	// for any user whose device is eligible for `MEETS_BASIC_INTEGRITY` but not
+	// `MEETS_DEVICE_INTEGRITY`. This API is **not** responsible for any such
+	// opt-ins.
+	//   "MEETS_DEVICE_INTEGRITY" - This level corresponds to the
+	// `MEETS_DEVICE_INTEGRITY` [device recognition
+	// verdict](https://developer.android.com/google/play/integrity/verdicts#device-
+	// integrity-field). Any app integrated with Play Integrity will automatically
+	// be eligible to receive this label without any additional action from you. At
+	// this level, devices that have the `MEETS_BASIC_INTEGRITY` label but **not**
+	// the `MEETS_DEVICE_INTEGRITY` label will be rejected.
+	//   "MEETS_STRONG_INTEGRITY" - This level corresponds to the
+	// `MEETS_STRONG_INTEGRITY` [optional device recognition
+	// label](https://developer.android.com/google/play/integrity/verdicts#optional-
+	// device-labels). This value represents the highest level of device integrity.
+	// At this level, devices that have the `MEETS_BASIC_INTEGRITY` or
+	// `MEETS_DEVICE_INTEGRITY` but **not** the `MEETS_STRONG_INTEGRITY` label will
+	// be rejected. Warning: Because this is an optional response, you **must**
+	// first explicitly [opt in your app in the Play
+	// Console](https://developer.android.com/google/play/integrity/setup#optional)
+	// in order to receive this label. Without this opt-in, **your app may break**
+	// for any user whose device is eligible for `MEETS_STRONG_INTEGRITY`. This API
+	// is **not** responsible for any such opt-ins.
+	MinDeviceRecognitionLevel string `json:"minDeviceRecognitionLevel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MinDeviceRecognitionLevel")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MinDeviceRecognitionLevel") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1PlayIntegrityConfigDeviceIntegrity) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1PlayIntegrityConfigDeviceIntegrity
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1343,6 +1532,13 @@ type GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig struct {
 	// configuration object, in the format: ```
 	// projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ```
 	Name string `json:"name,omitempty"`
+	// RiskAnalysis: Specifies risk tolerance and requirements for your
+	// application. These settings correspond to requirements on the
+	// **`riskAnalysis`**
+	// (https://cloud.google.com/recaptcha/docs/interpret-assessment-website#interpret_assessment)
+	// tuple in the assessment obtained from reCAPTCHA Enterprise. The default
+	// values for these settings work for most apps, and are recommended.
+	RiskAnalysis *GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfigRiskAnalysis `json:"riskAnalysis,omitempty"`
 	// SiteKey: The score-based site key created in reCAPTCHA Enterprise
 	// (https://cloud.google.com/recaptcha-enterprise/docs/create-key#creating_a_site_key)
 	// used to invoke reCAPTCHA and generate the reCAPTCHA tokens
@@ -1375,12 +1571,61 @@ func (s GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfigRiskAnalysis: A settings
+// object specifying risk tolerance and requirements for your application.
+// These settings correspond to requirements on the **`riskAnalysis`**
+// (https://cloud.google.com/recaptcha/docs/interpret-assessment-website#interpret_assessment)
+// tuple in the assessment obtained from reCAPTCHA Enterprise. The default
+// values for these settings work for most apps, and are recommended.
+type GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfigRiskAnalysis struct {
+	// MinValidScore: Specifies a minimum score required for a reCAPTCHA token to
+	// be considered valid. If its score is greater than or equal to this value, it
+	// will be accepted; otherwise, it will be rejected. The value must be between
+	// 0.0 and 1.0. The default value is 0.5.
+	MinValidScore float64 `json:"minValidScore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MinValidScore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MinValidScore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfigRiskAnalysis) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfigRiskAnalysis
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfigRiskAnalysis) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfigRiskAnalysis
+	var s1 struct {
+		MinValidScore gensupport.JSONFloat64 `json:"minValidScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MinValidScore = float64(s1.MinValidScore)
+	return nil
+}
+
 // GoogleFirebaseAppcheckV1RecaptchaV3Config: An app's reCAPTCHA v3
 // configuration object. This configuration is used by ExchangeRecaptchaV3Token
 // to validate reCAPTCHA tokens issued to apps by reCAPTCHA v3. It also
 // controls certain properties of the returned `AppCheckToken`, such as its
 // ttl.
 type GoogleFirebaseAppcheckV1RecaptchaV3Config struct {
+	// MinValidScore: Specifies a minimum score required for a reCAPTCHA token to
+	// be considered valid. If its score is greater than or equal to this value, it
+	// will be accepted; otherwise, it will be rejected. The value must be between
+	// 0.0 and 1.0. The default value is 0.5.
+	MinValidScore float64 `json:"minValidScore,omitempty"`
 	// Name: Required. The relative resource name of the reCAPTCHA v3 configuration
 	// object, in the format: ```
 	// projects/{project_number}/apps/{app_id}/recaptchaV3Config ```
@@ -1400,15 +1645,15 @@ type GoogleFirebaseAppcheckV1RecaptchaV3Config struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "MinValidScore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "MinValidScore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1416,6 +1661,20 @@ type GoogleFirebaseAppcheckV1RecaptchaV3Config struct {
 func (s GoogleFirebaseAppcheckV1RecaptchaV3Config) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1RecaptchaV3Config
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleFirebaseAppcheckV1RecaptchaV3Config) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleFirebaseAppcheckV1RecaptchaV3Config
+	var s1 struct {
+		MinValidScore gensupport.JSONFloat64 `json:"minValidScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MinValidScore = float64(s1.MinValidScore)
+	return nil
 }
 
 // GoogleFirebaseAppcheckV1ResourcePolicy: App Check enforcement policy for a

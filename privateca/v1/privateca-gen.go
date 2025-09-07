@@ -589,6 +589,10 @@ func (s CaOptions) MarshalJSON() ([]byte, error) {
 // more CertificateAuthority resources and to rotate CA certificates in and out
 // of the trust anchor.
 type CaPool struct {
+	// EncryptionSpec: Optional. When EncryptionSpec is provided, the Subject,
+	// SubjectAltNames, and the PEM-encoded certificate fields will be encrypted at
+	// rest.
+	EncryptionSpec *EncryptionSpec `json:"encryptionSpec,omitempty"`
 	// IssuancePolicy: Optional. The IssuancePolicy to control how Certificates
 	// will be issued from this CaPool.
 	IssuancePolicy *IssuancePolicy `json:"issuancePolicy,omitempty"`
@@ -610,13 +614,13 @@ type CaPool struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "IssuancePolicy") to
+	// ForceSendFields is a list of field names (e.g. "EncryptionSpec") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IssuancePolicy") to include in
+	// NullFields is a list of field names (e.g. "EncryptionSpec") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1329,6 +1333,29 @@ type EnableCertificateAuthorityRequest struct {
 
 func (s EnableCertificateAuthorityRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EnableCertificateAuthorityRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EncryptionSpec: The configuration used for encrypting data at rest.
+type EncryptionSpec struct {
+	// CloudKmsKey: The resource name for a Cloud KMS key in the format
+	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+	CloudKmsKey string `json:"cloudKmsKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudKmsKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudKmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EncryptionSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2343,41 +2370,6 @@ func (s PublishingOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ReconciliationOperationMetadata: Operation metadata returned by the CLH
-// during resource state reconciliation.
-type ReconciliationOperationMetadata struct {
-	// DeleteResource: DEPRECATED. Use exclusive_action instead.
-	DeleteResource bool `json:"deleteResource,omitempty"`
-	// ExclusiveAction: Excluisive action returned by the CLH.
-	//
-	// Possible values:
-	//   "UNKNOWN_REPAIR_ACTION" - Unknown repair action.
-	//   "DELETE" - The resource has to be deleted. When using this bit, the CLH
-	// should fail the operation. DEPRECATED. Instead use DELETE_RESOURCE
-	// OperationSignal in SideChannel.
-	//   "RETRY" - This resource could not be repaired but the repair should be
-	// tried again at a later time. This can happen if there is a dependency that
-	// needs to be resolved first- e.g. if a parent resource must be repaired
-	// before a child resource.
-	ExclusiveAction string `json:"exclusiveAction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DeleteResource") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DeleteResource") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ReconciliationOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod ReconciliationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // RelativeDistinguishedName: RelativeDistinguishedName specifies a relative
 // distinguished name which will be used to build a distinguished name.
 type RelativeDistinguishedName struct {
@@ -3140,9 +3132,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

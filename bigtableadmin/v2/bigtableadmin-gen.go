@@ -3239,17 +3239,19 @@ func (s LogicalView) MarshalJSON() ([]byte, error) {
 // queries.
 type MaterializedView struct {
 	// DeletionProtection: Set to true to make the MaterializedView protected
-	// against deletion.
+	// against deletion. Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.
 	DeletionProtection bool `json:"deletionProtection,omitempty"`
 	// Etag: Optional. The etag for this materialized view. This may be sent on
 	// update requests to ensure that the client has an up-to-date value before
-	// proceeding. The server returns an ABORTED error on a mismatched etag.
+	// proceeding. The server returns an ABORTED error on a mismatched etag. Views:
+	// `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.
 	Etag string `json:"etag,omitempty"`
 	// Name: Identifier. The unique name of the materialized view. Format:
 	// `projects/{project}/instances/{instance}/materializedViews/{materialized_view
-	// }`
+	// }` Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.
 	Name string `json:"name,omitempty"`
-	// Query: Required. Immutable. The materialized view's select query.
+	// Query: Required. Immutable. The materialized view's select query. Views:
+	// `SCHEMA_VIEW`, `FULL`.
 	Query string `json:"query,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -9944,7 +9946,7 @@ type ProjectsInstancesMaterializedViewsPatchCall struct {
 //
 //   - name: Identifier. The unique name of the materialized view. Format:
 //     `projects/{project}/instances/{instance}/materializedViews/{materialized_vi
-//     ew}`.
+//     ew}` Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.
 func (r *ProjectsInstancesMaterializedViewsService) Patch(name string, materializedview *MaterializedView) *ProjectsInstancesMaterializedViewsPatchCall {
 	c := &ProjectsInstancesMaterializedViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -361,8 +361,59 @@ func (s AttachedDisk) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BootDiskConfig: Sets the boot disk configuration for the TPU node.
+type BootDiskConfig struct {
+	// CustomerEncryptionKey: Optional. Customer encryption key for boot disk.
+	CustomerEncryptionKey *CustomerEncryptionKey `json:"customerEncryptionKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomerEncryptionKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomerEncryptionKey") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BootDiskConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BootDiskConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CreatingData: Further data for the creating state.
 type CreatingData struct {
+}
+
+// CustomerEncryptionKey: Defines the customer encryption key for disk
+// encryption.
+type CustomerEncryptionKey struct {
+	// KmsKeyName: The name of the encryption key that is stored in Google Cloud
+	// KMS. For example: "kmsKeyName":
+	// "projects/KMS_PROJECT_ID/locations/REGION/keyRings/KEY_REGION/cryptoKeys/KEY
+	// The fully-qualifed key name may be returned for resource GET requests. For
+	// example: "kmsKeyName":
+	// "projects/KMS_PROJECT_ID/locations/REGION/keyRings/KEY_REGION/cryptoKeys/KEY/
+	// cryptoKeyVersions/1
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomerEncryptionKey) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerEncryptionKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeletingData: Further data for the deleting state.
@@ -930,6 +981,8 @@ type Node struct {
 	//   "V2_ALPHA1" - TPU API V2Alpha1 version.
 	//   "V2" - TPU API V2 version.
 	ApiVersion string `json:"apiVersion,omitempty"`
+	// BootDiskConfig: Optional. Boot disk configuration.
+	BootDiskConfig *BootDiskConfig `json:"bootDiskConfig,omitempty"`
 	// CidrBlock: The CIDR block that the TPU node will use when selecting an IP
 	// address. This CIDR block must be a /29 block; the Compute Engine networks
 	// API forbids a smaller block, and using a larger block would be wasteful (a
@@ -1849,9 +1902,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

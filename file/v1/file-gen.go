@@ -1330,6 +1330,9 @@ type NetworkConfig struct {
 	//   "PRIVATE_SERVICE_ACCESS" - Connect to your Filestore instance using
 	// Private Service Access. Private services access provides an IP address range
 	// for multiple Google Cloud services, including Filestore.
+	//   "PRIVATE_SERVICE_CONNECT" - Connect to your Filestore instance using
+	// Private Service Connect. A connection policy must exist in the region for
+	// the VPC network and the google-cloud-filestore service class.
 	ConnectMode string `json:"connectMode,omitempty"`
 	// IpAddresses: Output only. IPv4 addresses in the format
 	// `{octet1}.{octet2}.{octet3}.{octet4}` or IPv6 addresses in the format
@@ -1345,6 +1348,9 @@ type NetworkConfig struct {
 	// Network: The name of the Google Compute Engine VPC network
 	// (https://cloud.google.com/vpc/docs/vpc) to which the instance is connected.
 	Network string `json:"network,omitempty"`
+	// PscConfig: Optional. Private Service Connect configuration. Should only be
+	// set when connect_mode is PRIVATE_SERVICE_CONNECT.
+	PscConfig *PscConfig `json:"pscConfig,omitempty"`
 	// ReservedIpRange: Optional, reserved_ip_range can have one of the following
 	// two types of values. * CIDR range value when using DIRECT_PEERING connect
 	// mode. * Allocated IP address range
@@ -1405,6 +1411,10 @@ type NfsExportOptions struct {
 	// NfsExportOptions. An error will be returned. The limit is 64 IP
 	// ranges/addresses for each FileShareConfig among all NfsExportOptions.
 	IpRanges []string `json:"ipRanges,omitempty"`
+	// Network: Optional. The source VPC network for ip_ranges. Required for
+	// instances using Private Service Connect, optional otherwise. If provided,
+	// must be the same network specified in the `NetworkConfig.network` field.
+	Network string `json:"network,omitempty"`
 	// SquashMode: Either NO_ROOT_SQUASH, for allowing root access on the exported
 	// directory, or ROOT_SQUASH, for not allowing root access. The default is
 	// NO_ROOT_SQUASH.
@@ -1619,6 +1629,31 @@ type PromoteReplicaRequest struct {
 
 func (s PromoteReplicaRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PromoteReplicaRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PscConfig: Private Service Connect configuration.
+type PscConfig struct {
+	// EndpointProject: Optional. Consumer service project in which the Private
+	// Service Connect endpoint would be set up. This is optional, and only
+	// relevant in case the network is a shared VPC. If this is not specified, the
+	// endpoint would be setup in the VPC host project.
+	EndpointProject string `json:"endpointProject,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndpointProject") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndpointProject") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

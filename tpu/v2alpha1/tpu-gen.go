@@ -403,6 +403,9 @@ type BootDiskConfig struct {
 	// specified, the default image for the runtime version will be used. Example:
 	// `projects/$PROJECT_ID/global/images/$IMAGE_NAME`.
 	SourceImage string `json:"sourceImage,omitempty"`
+	// StoragePool: Optional. The storage pool in which the boot disk is created.
+	// You can provide this as a partial or full URL to the resource.
+	StoragePool string `json:"storagePool,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomerEncryptionKey") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2179,9 +2182,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

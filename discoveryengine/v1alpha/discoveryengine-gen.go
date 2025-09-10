@@ -2843,6 +2843,9 @@ func (s GoogleCloudDiscoveryengineV1Assistant) MarshalJSON() ([]byte, error) {
 type GoogleCloudDiscoveryengineV1AssistantCustomerPolicy struct {
 	// BannedPhrases: Optional. List of banned phrases.
 	BannedPhrases []*GoogleCloudDiscoveryengineV1AssistantCustomerPolicyBannedPhrase `json:"bannedPhrases,omitempty"`
+	// ModelArmorConfig: Optional. Model Armor configuration to be used for
+	// sanitizing user prompts and assistant responses.
+	ModelArmorConfig *GoogleCloudDiscoveryengineV1AssistantCustomerPolicyModelArmorConfig `json:"modelArmorConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BannedPhrases") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2897,6 +2900,49 @@ type GoogleCloudDiscoveryengineV1AssistantCustomerPolicyBannedPhrase struct {
 
 func (s GoogleCloudDiscoveryengineV1AssistantCustomerPolicyBannedPhrase) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1AssistantCustomerPolicyBannedPhrase
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1AssistantCustomerPolicyModelArmorConfig:
+// Configuration for customer defined Model Armor templates to be used for
+// sanitizing user prompts and assistant responses.
+type GoogleCloudDiscoveryengineV1AssistantCustomerPolicyModelArmorConfig struct {
+	// FailureMode: Optional. Defines the failure mode for Model Armor
+	// sanitization.
+	//
+	// Possible values:
+	//   "FAILURE_MODE_UNSPECIFIED" - Unspecified failure mode, default behavior is
+	// `FAIL_CLOSED`.
+	//   "FAIL_OPEN" - In case of a Model Armor processing failure, the request is
+	// allowed to proceed without any changes.
+	//   "FAIL_CLOSED" - In case of a Model Armor processing failure, the request
+	// is rejected.
+	FailureMode string `json:"failureMode,omitempty"`
+	// ResponseTemplate: Optional. The resource name of the Model Armor template
+	// for sanitizing assistant responses. Format:
+	// `projects/{project}/locations/{location}/templates/{template_id}` If not
+	// specified, no sanitization will be applied to the assistant response.
+	ResponseTemplate string `json:"responseTemplate,omitempty"`
+	// UserPromptTemplate: Optional. The resource name of the Model Armor template
+	// for sanitizing user prompts. Format:
+	// `projects/{project}/locations/{location}/templates/{template_id}` If not
+	// specified, no sanitization will be applied to the user prompt.
+	UserPromptTemplate string `json:"userPromptTemplate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FailureMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailureMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AssistantCustomerPolicyModelArmorConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AssistantCustomerPolicyModelArmorConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8918,6 +8964,11 @@ type GoogleCloudDiscoveryengineV1alphaAssistAnswer struct {
 	// to answer because of a customer policy violation (e.g., the query or the
 	// answer contained a banned phrase).
 	AssistSkippedReasons []string `json:"assistSkippedReasons,omitempty"`
+	// CustomerPolicyEnforcementResult: Optional. The field contains information
+	// about the various policy checks' results like the banned phrases or the
+	// Model Armor checks. This field is populated only if the assist call was
+	// skipped due to a policy violation.
+	CustomerPolicyEnforcementResult *GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResult `json:"customerPolicyEnforcementResult,omitempty"`
 	// Name: Immutable. Identifier. Resource name of the `AssistAnswer`. Format:
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}/sessions/{session}/assistAnswers/{assist_answer}` This field must be a
@@ -8949,6 +9000,122 @@ type GoogleCloudDiscoveryengineV1alphaAssistAnswer struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaAssistAnswer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaAssistAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResult:
+//
+//	Customer policy enforcement results. Contains the results of the various
+//
+// policy checks, like the banned phrases or the Model Armor checks.
+type GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResult struct {
+	// PolicyResults: Customer policy enforcement results. Populated only if the
+	// assist call was skipped due to a policy violation. It contains results from
+	// those filters that blocked the processing of the query.
+	PolicyResults []*GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultPolicyEnforcementResult `json:"policyResults,omitempty"`
+	// Verdict: Final verdict of the customer policy enforcement. If only one
+	// policy blocked the processing, the verdict is BLOCK.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Unknown value.
+	//   "ALLOW" - There was no policy violation.
+	//   "BLOCK" - Processing was blocked by the customer policy.
+	Verdict string `json:"verdict,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PolicyResults") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PolicyResults") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultB
+// annedPhraseEnforcementResult: Customer policy enforcement result for the
+// banned phrase policy.
+type GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultBannedPhraseEnforcementResult struct {
+	// BannedPhrases: The banned phrases that were found in the query or the
+	// answer.
+	BannedPhrases []string `json:"bannedPhrases,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BannedPhrases") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BannedPhrases") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultBannedPhraseEnforcementResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultBannedPhraseEnforcementResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultM
+// odelArmorEnforcementResult: Customer policy enforcement result for the Model
+// Armor policy.
+type GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultModelArmorEnforcementResult struct {
+	// Error: The error returned by Model Armor if the policy enforcement failed
+	// for some reason.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// ModelArmorViolation: The Model Armor violation that was found.
+	ModelArmorViolation string `json:"modelArmorViolation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultModelArmorEnforcementResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultModelArmorEnforcementResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultP
+// olicyEnforcementResult: Customer policy enforcement result for a single
+// policy type.
+type GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultPolicyEnforcementResult struct {
+	// BannedPhraseEnforcementResult: The policy enforcement result for the banned
+	// phrase policy.
+	BannedPhraseEnforcementResult *GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultBannedPhraseEnforcementResult `json:"bannedPhraseEnforcementResult,omitempty"`
+	// ModelArmorEnforcementResult: The policy enforcement result for the Model
+	// Armor policy.
+	ModelArmorEnforcementResult *GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultModelArmorEnforcementResult `json:"modelArmorEnforcementResult,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "BannedPhraseEnforcementResult") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BannedPhraseEnforcementResult")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultPolicyEnforcementResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultPolicyEnforcementResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9203,6 +9370,9 @@ func (s GoogleCloudDiscoveryengineV1alphaAssistantContentFile) MarshalJSON() ([]
 type GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicy struct {
 	// BannedPhrases: Optional. List of banned phrases.
 	BannedPhrases []*GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicyBannedPhrase `json:"bannedPhrases,omitempty"`
+	// ModelArmorConfig: Optional. Model Armor configuration to be used for
+	// sanitizing user prompts and assistant responses.
+	ModelArmorConfig *GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicyModelArmorConfig `json:"modelArmorConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BannedPhrases") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9257,6 +9427,49 @@ type GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicyBannedPhrase struct
 
 func (s GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicyBannedPhrase) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicyBannedPhrase
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicyModelArmorConfig:
+// Configuration for customer defined Model Armor templates to be used for
+// sanitizing user prompts and assistant responses.
+type GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicyModelArmorConfig struct {
+	// FailureMode: Optional. Defines the failure mode for Model Armor
+	// sanitization.
+	//
+	// Possible values:
+	//   "FAILURE_MODE_UNSPECIFIED" - Unspecified failure mode, default behavior is
+	// `FAIL_CLOSED`.
+	//   "FAIL_OPEN" - In case of a Model Armor processing failure, the request is
+	// allowed to proceed without any changes.
+	//   "FAIL_CLOSED" - In case of a Model Armor processing failure, the request
+	// is rejected.
+	FailureMode string `json:"failureMode,omitempty"`
+	// ResponseTemplate: Optional. The resource name of the Model Armor template
+	// for sanitizing assistant responses. Format:
+	// `projects/{project}/locations/{location}/templates/{template_id}` If not
+	// specified, no sanitization will be applied to the assistant response.
+	ResponseTemplate string `json:"responseTemplate,omitempty"`
+	// UserPromptTemplate: Optional. The resource name of the Model Armor template
+	// for sanitizing user prompts. Format:
+	// `projects/{project}/locations/{location}/templates/{template_id}` If not
+	// specified, no sanitization will be applied to the user prompt.
+	UserPromptTemplate string `json:"userPromptTemplate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FailureMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailureMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicyModelArmorConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAssistantCustomerPolicyModelArmorConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -23878,6 +24091,17 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfigDataStoreComponent struct {
 	//   "GOOGLE_WORKSPACE" - The data store is used for workspace search. Details
 	// of workspace data store are specified in the WorkspaceConfig.
 	ContentConfig string `json:"contentConfig,omitempty"`
+	// DataStoreConfigType: Output only. The type of the data store config.
+	//
+	// Possible values:
+	//   "DATA_STORE_CONFIG_TYPE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "ALLOW_DB_CONFIG" - The data store is connected to AlloyDB
+	//   "THIRD_PARTY_OAUTH_CONFIG" - The data store is a connected to a third
+	// party data source.
+	//   "NOTEBOOKLM_CONFIG" - The data store is a connected to NotebookLM
+	// Enterprise.
+	DataStoreConfigType string `json:"dataStoreConfigType,omitempty"`
 	// DisplayName: The display name of the data store.
 	DisplayName string `json:"displayName,omitempty"`
 	// EntityName: The name of the entity, retrieved from
@@ -29938,6 +30162,9 @@ type GoogleCloudNotebooklmV1alphaNotebook struct {
 	// NotebookId: Output only. Notebook id, which is the last segment of the
 	// notebook's resource name.
 	NotebookId string `json:"notebookId,omitempty"`
+	// Sources: Output only. List of sources in the notebook. This is an output
+	// only field.
+	Sources []*GoogleCloudNotebooklmV1alphaSource `json:"sources,omitempty"`
 	// Title: Optional. The title of the notebook.
 	Title string `json:"title,omitempty"`
 
@@ -30278,7 +30505,7 @@ type GoogleCloudNotebooklmV1alphaUserContentGoogleDriveContent struct {
 	// application/vnd.google-apps.document for Google Docs or
 	// application/vnd.google-apps.presentation for Google Slides.
 	MimeType string `json:"mimeType,omitempty"`
-	// SourceName: Name to be displayed for the source.
+	// SourceName: The name to be displayed for the source.
 	SourceName string `json:"sourceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DocumentId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -30301,7 +30528,7 @@ func (s GoogleCloudNotebooklmV1alphaUserContentGoogleDriveContent) MarshalJSON()
 // GoogleCloudNotebooklmV1alphaUserContentTextContent: The text content
 // uploaded as source.
 type GoogleCloudNotebooklmV1alphaUserContentTextContent struct {
-	// Content: Name to be displayed for the source.
+	// Content: The name to be displayed for the source.
 	Content string `json:"content,omitempty"`
 	// SourceName: The display name of the text source.
 	SourceName string `json:"sourceName,omitempty"`
@@ -30349,7 +30576,7 @@ func (s GoogleCloudNotebooklmV1alphaUserContentVideoContent) MarshalJSON() ([]by
 // GoogleCloudNotebooklmV1alphaUserContentWebContent: The web content uploaded
 // as source.
 type GoogleCloudNotebooklmV1alphaUserContentWebContent struct {
-	// SourceName: Name to be displayed for the source.
+	// SourceName: The name to be displayed for the source.
 	SourceName string `json:"sourceName,omitempty"`
 	// Url: If URL is supplied, will fetch the webpage in the backend.
 	Url string `json:"url,omitempty"`
@@ -62509,7 +62736,7 @@ func (r *ProjectsLocationsNotebooksService) ListRecentlyViewed(parent string) *P
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of Notebooks
-// to return. If unspecified, defaults to "200". The maximum allowed value is
+// to return. If unspecified, defaults to "500". The maximum allowed value is
 // "500". If this field is negative, will use the default value.
 func (c *ProjectsLocationsNotebooksListRecentlyViewedCall) PageSize(pageSize int64) *ProjectsLocationsNotebooksListRecentlyViewedCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))

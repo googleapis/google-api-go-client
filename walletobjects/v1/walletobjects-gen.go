@@ -5364,6 +5364,9 @@ type MediaRequestInfo struct {
 	// requests are just for informational purposes, the response does not need to
 	// contain anything.
 	NotificationType string `json:"notificationType,omitempty"`
+	// PhysicalHeaders: The physical headers provided by RequestReceivedParameters
+	// in Scotty request. type is uploader_service.KeyValuePairs.
+	PhysicalHeaders string `json:"physicalHeaders,omitempty"`
 	// RequestId: The Scotty request ID.
 	RequestId string `json:"requestId,omitempty"`
 	// RequestReceivedParamsServingInfo: The partition of the Scotty server

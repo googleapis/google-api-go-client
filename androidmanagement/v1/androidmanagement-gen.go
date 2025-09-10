@@ -2422,9 +2422,12 @@ type Device struct {
 	// the device's policy.
 	ApplicationReports []*ApplicationReport `json:"applicationReports,omitempty"`
 	// AppliedPasswordPolicies: The password requirements currently applied to the
-	// device. The applied requirements may be slightly different from those
-	// specified in passwordPolicies in some cases. fieldPath is set based on
-	// passwordPolicies.
+	// device. This field exists because the applied requirements may be slightly
+	// different from those specified in passwordPolicies in some cases. Note that
+	// this field does not provide information about password compliance. For
+	// non-compliance information, see nonComplianceDetails.
+	// NonComplianceDetail.fieldPath, is set based on passwordPolicies, not based
+	// on this field.
 	AppliedPasswordPolicies []*PasswordRequirements `json:"appliedPasswordPolicies,omitempty"`
 	// AppliedPolicyName: The name of the policy currently applied to the device.
 	AppliedPolicyName string `json:"appliedPolicyName,omitempty"`

@@ -2950,6 +2950,15 @@ func (s AliasIpRange) MarshalJSON() ([]byte, error) {
 // instance SKUs. In other words, one can create instances of varying shapes
 // against this reservation.
 type AllocationAggregateReservation struct {
+	// HostCount: Count of reserved hosts of specified VM family. The host has
+	// fixed number of accelerators based on the accelerator/vm-family selected.
+	HostCount int64 `json:"hostCount,omitempty"`
+	// InUseHostCount: Number of hosts currently in use. If there is one or more
+	// Instances running on the host, it is considered in use.
+	InUseHostCount int64 `json:"inUseHostCount,omitempty"`
+	// InUseInstanceCount: Number of instances currently in use in this
+	// reservation.
+	InUseInstanceCount int64 `json:"inUseInstanceCount,omitempty"`
 	// InUseResources: [Output only] List of resources currently in use.
 	InUseResources []*AllocationAggregateReservationReservedResourceInfo `json:"inUseResources,omitempty"`
 	// ReservedResources: List of reserved resources (CPUs, memory, accelerators).
@@ -2976,15 +2985,15 @@ type AllocationAggregateReservation struct {
 	// such as ML inference.
 	//   "UNSPECIFIED"
 	WorkloadType string `json:"workloadType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InUseResources") to
+	// ForceSendFields is a list of field names (e.g. "HostCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InUseResources") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "HostCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4994,9 +5003,8 @@ type BackendBucketCdnPolicy struct {
 	// caching headers. By default, Cloud CDN will apply the following default TTLs
 	// to these status codes: HTTP 300 (Multiple Choice), 301, 308 (Permanent
 	// Redirects): 10m HTTP 404 (Not Found), 410 (Gone), 451 (Unavailable For Legal
-	// Reasons): 120s HTTP 405 (Method Not Found), 421 (Misdirected Request), 501
-	// (Not Implemented): 60s. These defaults can be overridden in
-	// negative_caching_policy.
+	// Reasons): 120s HTTP 405 (Method Not Found), 501 (Not Implemented): 60s.
+	// These defaults can be overridden in negative_caching_policy.
 	NegativeCaching bool `json:"negativeCaching,omitempty"`
 	// NegativeCachingPolicy: Sets a cache TTL for the specified HTTP status code.
 	// negative_caching must be enabled to configure negative_caching_policy.
@@ -6285,9 +6293,8 @@ type BackendServiceCdnPolicy struct {
 	// caching headers. By default, Cloud CDN will apply the following default TTLs
 	// to these status codes: HTTP 300 (Multiple Choice), 301, 308 (Permanent
 	// Redirects): 10m HTTP 404 (Not Found), 410 (Gone), 451 (Unavailable For Legal
-	// Reasons): 120s HTTP 405 (Method Not Found), 421 (Misdirected Request), 501
-	// (Not Implemented): 60s. These defaults can be overridden in
-	// negative_caching_policy.
+	// Reasons): 120s HTTP 405 (Method Not Found), 501 (Not Implemented): 60s.
+	// These defaults can be overridden in negative_caching_policy.
 	NegativeCaching bool `json:"negativeCaching,omitempty"`
 	// NegativeCachingPolicy: Sets a cache TTL for the specified HTTP status code.
 	// negative_caching must be enabled to configure negative_caching_policy.
@@ -7965,6 +7972,10 @@ type BgpRouteAsPath struct {
 	// Asns: [Output only] ASNs in the path segment. When type is SEQUENCE, these
 	// are ordered.
 	Asns []int64 `json:"asns,omitempty"`
+	// Asns32: [Output only] ASNs in the path segment. This field is for better
+	// support of 32 bit ASNs as the other asns field suffers from overflow when
+	// the ASN is larger. When type is SEQUENCE, these are ordered.
+	Asns32 []int64 `json:"asns32,omitempty"`
 	// Type: [Output only] Type of AS-PATH segment (SEQUENCE or SET)
 	//
 	// Possible values:
@@ -12934,6 +12945,13 @@ type FirewallPolicy struct {
 	// Parent: [Output Only] The parent of the firewall policy. This field is not
 	// applicable to network firewall policies.
 	Parent string `json:"parent,omitempty"`
+	// PolicySource: [Output Only] Source of this Firewall Policy. USER_DEFINED if
+	// created by a Cloud user, or SYSTEM if created by managed services like GKE.
+	//
+	// Possible values:
+	//   "SYSTEM"
+	//   "USER_DEFINED"
+	PolicySource string `json:"policySource,omitempty"`
 	// PolicyType: The type of the firewall policy. This field can be either
 	// VPC_POLICY or RDMA_ROCE_POLICY. Note: if not specified then VPC_POLICY will
 	// be used.
@@ -13236,6 +13254,16 @@ type FirewallPolicyRule struct {
 	// Must be specified if action is one of 'apply_security_profile_group' or
 	// 'mirror'. Cannot be specified for other actions.
 	SecurityProfileGroup string `json:"securityProfileGroup,omitempty"`
+	// TargetForwardingRules: A list of forwarding rules to which this rule
+	// applies. This field allows you to control which load balancers get this
+	// rule. For example, the following are valid values: -
+	// https://www.googleapis.com/compute/v1/projects/project
+	// /global/forwardingRules/forwardingRule -
+	// https://www.googleapis.com/compute/v1/projects/project/regions/region
+	// /forwardingRules/forwardingRule - projects/project/global/
+	// forwardingRules/forwardingRule -
+	// projects/project/regions/region/forwardingRules/ forwardingRule
+	TargetForwardingRules []string `json:"targetForwardingRules,omitempty"`
 	// TargetResources: A list of network resource URLs to which this rule applies.
 	// This field allows you to control which network's VMs get this rule. If this
 	// field is left blank, all VMs within the organization will receive the rule.
@@ -13252,6 +13280,13 @@ type FirewallPolicyRule struct {
 	// TargetServiceAccounts: A list of service accounts indicating the sets of
 	// instances that are applied with this rule.
 	TargetServiceAccounts []string `json:"targetServiceAccounts,omitempty"`
+	// TargetType: Target types of the firewall policy rule. Default value is
+	// INSTANCES.
+	//
+	// Possible values:
+	//   "INSTANCES"
+	//   "INTERNAL_MANAGED_LB"
+	TargetType string `json:"targetType,omitempty"`
 	// TlsInspect: Boolean flag indicating if the traffic should be TLS decrypted.
 	// Can be set only if action = 'apply_security_profile_group' and cannot be set
 	// for other actions.
@@ -14450,6 +14485,20 @@ type FutureReservation struct {
 	//   "PLANNING_STATUS_UNSPECIFIED"
 	//   "SUBMITTED" - Future Reservation has been submitted for evaluation by GCP.
 	PlanningStatus string `json:"planningStatus,omitempty"`
+	// ProtectionTier: Protection tier for the workload.
+	//
+	// Possible values:
+	//   "CAPACITY_OPTIMIZED" - CAPACITY_OPTIMIZED capacity leverages redundancies
+	// (e.g. power, cooling) at the data center during normal operating conditions.
+	// In the event of infrastructure failures at data center (e.g. power and/or
+	// cooling failures), this workload may be disrupted. As a consequence, it has
+	// a weaker availability SLO than STANDARD.
+	//   "PROTECTION_TIER_UNSPECIFIED" - Unspecified protection tier.
+	//   "STANDARD" - STANDARD protection for workload that should be protected by
+	// redundancies (e.g. power, cooling) at the data center level. In the event of
+	// infrastructure failures at data center (e.g. power and/or cooling failures),
+	// this workload is expected to continue as normal using the redundancies.
+	ProtectionTier string `json:"protectionTier,omitempty"`
 	// ReservationMode: The reservation mode which determines
 	// reservation-termination behavior and expected pricing.
 	//
@@ -19221,6 +19270,8 @@ type Instance struct {
 	//   "DEPROVISIONING" - The instance is halted and we are performing tear down
 	// tasks like network deprogramming, releasing quota, IP, tearing down disks
 	// etc.
+	//   "PENDING" - For Flex Start provisioning instance is waiting for available
+	// capacity from Dynamic Workload Scheduler (DWS).
 	//   "PENDING_STOP" - The instance is gracefully shutting down.
 	//   "PROVISIONING" - Resources are being allocated for the instance.
 	//   "REPAIRING" - The instance is in repair.
@@ -23302,20 +23353,23 @@ func (s InstanceMoveRequest) MarshalJSON() ([]byte, error) {
 
 // InstanceParams: Additional instance params.
 type InstanceParams struct {
+	// RequestValidForDuration: Relative deadline for waiting for capacity.
+	// Relevant only for Instances.Insert API.
+	RequestValidForDuration *Duration `json:"requestValidForDuration,omitempty"`
 	// ResourceManagerTags: Resource manager tags to be bound to the instance. Tag
 	// keys and values have the same definition as resource manager tags. Keys must
 	// be in the format `tagKeys/{tag_key_id}`, and values are in the format
 	// `tagValues/456`. The field is ignored (both PUT & PATCH) when empty.
 	ResourceManagerTags map[string]string `json:"resourceManagerTags,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ResourceManagerTags") to
+	// ForceSendFields is a list of field names (e.g. "RequestValidForDuration") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ResourceManagerTags") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "RequestValidForDuration") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -24118,6 +24172,8 @@ type InstanceWithNamedPorts struct {
 	//   "DEPROVISIONING" - The instance is halted and we are performing tear down
 	// tasks like network deprogramming, releasing quota, IP, tearing down disks
 	// etc.
+	//   "PENDING" - For Flex Start provisioning instance is waiting for available
+	// capacity from Dynamic Workload Scheduler (DWS).
 	//   "PENDING_STOP" - The instance is gracefully shutting down.
 	//   "PROVISIONING" - Resources are being allocated for the instance.
 	//   "REPAIRING" - The instance is in repair.
@@ -26776,8 +26832,6 @@ type InterconnectAttachmentGroupsOperationalStatusAttachmentStatus struct {
 	//   "UNSPECIFIED"
 	IsActive string `json:"isActive,omitempty"`
 	// Status: Whether this Attachment is active, and if so, whether BGP is up.
-	// This is based on the statuses available in the Pantheon UI here:
-	// http://google3/java/com/google/cloud/boq/clientapi/gce/hybrid/api/interconnect_models.proto
 	//
 	// Possible values:
 	//   "ATTACHMENT_STATUS_UNKNOWN"
@@ -28925,6 +28979,10 @@ type InterconnectRemoteLocation struct {
 	// supported in a link aggregation group (LAG). When linkType is 10 Gbps,
 	// requestedLinkCount cannot exceed max_lag_size_10_gbps.
 	MaxLagSize10Gbps int64 `json:"maxLagSize10Gbps,omitempty"`
+	// MaxLagSize400Gbps: [Output Only] The maximum number of 400 Gbps ports
+	// supported in a link aggregation group (LAG). When linkType is 400 Gbps,
+	// requestedLinkCount cannot exceed max_lag_size_400_gbps.
+	MaxLagSize400Gbps int64 `json:"maxLagSize400Gbps,omitempty"`
 	// Name: [Output Only] Name of the resource.
 	Name string `json:"name,omitempty"`
 	// PeeringdbFacilityId: [Output Only] The peeringdb identifier for this
@@ -30701,6 +30759,8 @@ type ManagedInstance struct {
 	//   "DEPROVISIONING" - The instance is halted and we are performing tear down
 	// tasks like network deprogramming, releasing quota, IP, tearing down disks
 	// etc.
+	//   "PENDING" - For Flex Start provisioning instance is waiting for available
+	// capacity from Dynamic Workload Scheduler (DWS).
 	//   "PENDING_STOP" - The instance is gracefully shutting down.
 	//   "PROVISIONING" - Resources are being allocated for the instance.
 	//   "REPAIRING" - The instance is in repair.
@@ -34610,6 +34670,8 @@ type NetworkProfile struct {
 	Location *NetworkProfileLocation `json:"location,omitempty"`
 	// Name: [Output Only] Name of the resource.
 	Name string `json:"name,omitempty"`
+	// ProfileType: [Output Only] Type of the network profile.
+	ProfileType *NetworkProfileProfileType `json:"profileType,omitempty"`
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 	// SelfLinkWithId: [Output Only] Server-defined URL for this resource with the
@@ -34889,6 +34951,41 @@ type NetworkProfileNetworkFeatures struct {
 
 func (s NetworkProfileNetworkFeatures) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkProfileNetworkFeatures
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type NetworkProfileProfileType struct {
+	// Possible values:
+	//   "RDMA" - RDMA network.
+	//   "ULL" - ULL network.
+	//   "VPC" - VPC network.
+	NetworkType string `json:"networkType,omitempty"`
+	// Possible values:
+	//   "FALCON" - RDMA over Falcon.
+	//   "ROCE" - RDMA over Converged Ethernet (RoCE).
+	RdmaSubtype string `json:"rdmaSubtype,omitempty"`
+	// Possible values:
+	//   "OPERATOR" - Exchange operator.
+	//   "PARTICIPANT" - Exchange participant.
+	UllSubtype string `json:"ullSubtype,omitempty"`
+	// Possible values:
+	//   "REGIONAL" - Regionally bound VPC network.
+	VpcSubtype string `json:"vpcSubtype,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NetworkType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NetworkType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NetworkProfileProfileType) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkProfileProfileType
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -44342,6 +44439,9 @@ type ReservationBlock struct {
 	// InUseCount: [Output Only] The number of instances that are currently in use
 	// on this reservation block.
 	InUseCount int64 `json:"inUseCount,omitempty"`
+	// InUseHostCount: Number of hosts currently in use. If there is one or more
+	// Instances running on the host, it is considered in use.
+	InUseHostCount int64 `json:"inUseHostCount,omitempty"`
 	// Kind: [Output Only] Type of the resource. Always compute#reservationBlock
 	// for reservation blocks.
 	Kind string `json:"kind,omitempty"`
@@ -44857,6 +44957,9 @@ type ReservationSubBlock struct {
 	// InUseCount: [Output Only] The number of instances that are currently in use
 	// on this reservation subBlock.
 	InUseCount int64 `json:"inUseCount,omitempty"`
+	// InUseHostCount: Number of hosts currently in use. If there is one or more
+	// Instances running on the host, it is considered in use.
+	InUseHostCount int64 `json:"inUseHostCount,omitempty"`
 	// Kind: [Output Only] Type of the resource. Always compute#reservationSubBlock
 	// for reservation subBlocks.
 	Kind string `json:"kind,omitempty"`
@@ -48303,11 +48406,10 @@ func (s RouterNatSubnetworkToNat64) MarshalJSON() ([]byte, error) {
 
 // RouterParams: Additional router parameters.
 type RouterParams struct {
-	// ResourceManagerTags: Tag keys/values directly bound to this resource. Tag
-	// keys and values have the same definition as resource manager tags. The field
-	// is allowed for INSERT only. The keys/values to set on the resource should be
-	// specified in either ID { : } or Namespaced format { : }. For example the
-	// following are valid inputs: * {"tagKeys/333" : "tagValues/444",
+	// ResourceManagerTags: Tag keys/values directly bound to this resource. The
+	// field is allowed for INSERT only. The keys/values to set on the resource
+	// should be specified in either ID { : } or Namespaced format { : }. For
+	// example the following are valid inputs: * {"tagKeys/333" : "tagValues/444",
 	// "tagKeys/123" : "tagValues/456"} * {"123/environment" : "production",
 	// "345/abc" : "xyz"} Note: * Invalid combinations of ID & namespaced format is
 	// not supported. For instance: {"123/environment" : "tagValues/444"} is
@@ -50729,10 +50831,10 @@ type SecurityPolicyRuleMatcher struct {
 	// Expr: User defined CEVAL expression. A CEVAL expression is used to specify
 	// match criteria such as origin.ip, source.region_code and contents in the
 	// request header. Expressions containing `evaluateThreatIntelligence` require
-	// Cloud Armor Managed Protection Plus tier and are not supported in Edge
-	// Policies nor in Regional Policies. Expressions containing
-	// `evaluatePreconfiguredExpr('sourceiplist-*')` require Cloud Armor Managed
-	// Protection Plus tier and are only supported in Global Security Policies.
+	// a Cloud Armor Enterprise subscription and are not supported in Edge Policies
+	// nor in Regional Policies. Expressions containing
+	// `evaluatePreconfiguredExpr('sourceiplist-*')` require a Cloud Armor
+	// Enterprise subscription and are only supported in Global Security Policies.
 	Expr *Expr `json:"expr,omitempty"`
 	// ExprOptions: The configuration options available when specifying a user
 	// defined CEVAL expression (i.e., 'expr').
@@ -51748,6 +51850,9 @@ type ServiceAttachmentConnectedEndpoint struct {
 	ConsumerNetwork string `json:"consumerNetwork,omitempty"`
 	// Endpoint: The url of a connected endpoint.
 	Endpoint string `json:"endpoint,omitempty"`
+	// NatIps: NAT IPs of the connected PSC endpoint and those of other endpoints
+	// propagated from it.
+	NatIps []string `json:"natIps,omitempty"`
 	// PropagatedConnectionCount: The number of consumer Network Connectivity
 	// Center spokes that the connected Private Service Connect endpoint has
 	// propagated to.
@@ -61860,6 +61965,10 @@ type UpcomingMaintenance struct {
 	// Possible values:
 	//   "FAILURE_DISK" - Maintenance due to disk errors.
 	//   "FAILURE_GPU" - Maintenance due to GPU errors.
+	//   "FAILURE_GPU_MULTIPLE_FAULTY_HOSTS_CUSTOMER_REPORTED" - Maintenance due to
+	// customer reported multiple faulty hosts via R&R Subblock API.
+	//   "FAILURE_GPU_NVLINK_SWITCH_CUSTOMER_REPORTED" - Maintenance due to
+	// customer reported NVLink switch failure via R&R Subblock API.
 	//   "FAILURE_GPU_TEMPERATURE" - Maintenance due to high GPU temperature.
 	//   "FAILURE_GPU_XID" - Maintenance due to GPU xid failure.
 	//   "FAILURE_INFRA" - Maintenance due to infrastructure errors.
@@ -65291,6 +65400,24 @@ func (s WireGroupTopologyEndpoint) MarshalJSON() ([]byte, error) {
 
 // WireProperties: The properties of a wire.
 type WireProperties struct {
+	// BandwidthAllocation: The configuration of the bandwidth allocation, one of
+	// the following: - ALLOCATE_PER_WIRE: configures a separate unmetered
+	// bandwidth allocation (and associated charges) for each wire in the group. -
+	// SHARED_WITH_WIRE_GROUP: this is the default behavior, which configures one
+	// unmetered bandwidth allocation for the wire group. The unmetered bandwidth
+	// is divided equally across each wire in the group, but dynamic throttling
+	// reallocates unused unmetered bandwidth from unused or underused wires to
+	// other wires in the group.
+	//
+	// Possible values:
+	//   "ALLOCATE_PER_WIRE" - Configures a separate unmetered bandwidth allocation
+	// (and associated charges) for each wire in the group.
+	//   "SHARED_WITH_WIRE_GROUP" - This is the default behavior. Configures one
+	// unmetered bandwidth allocation for the wire group. The unmetered bandwidth
+	// is divided equally across each wire in the group, but dynamic throttling
+	// reallocates unused unmetered bandwidth from unused or underused wires to
+	// other wires in the group.
+	BandwidthAllocation string `json:"bandwidthAllocation,omitempty"`
 	// BandwidthUnmetered: The unmetered bandwidth in Gigabits per second, using
 	// decimal units. `10` is 10 Gbps, `100` is 100 Gbps.
 	BandwidthUnmetered int64 `json:"bandwidthUnmetered,omitempty,string"`
@@ -65303,13 +65430,13 @@ type WireProperties struct {
 	// a fault. This setting is only permitted on port mode pseudowires.
 	//   "NONE" - Default.
 	FaultResponse string `json:"faultResponse,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BandwidthUnmetered") to
+	// ForceSendFields is a list of field names (e.g. "BandwidthAllocation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BandwidthUnmetered") to include
+	// NullFields is a list of field names (e.g. "BandwidthAllocation") to include
 	// in API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

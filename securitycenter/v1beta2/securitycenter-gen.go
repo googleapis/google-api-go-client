@@ -5992,14 +5992,10 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	BackupDisasterRecovery *GoogleCloudSecuritycenterV2BackupDisasterRecovery `json:"backupDisasterRecovery,omitempty"`
 	// CanonicalName: Output only. The canonical name of the finding. The following
 	// list shows some examples: +
-	// `organizations/{organization_id}/sources/{source_id}/findings/{finding_id}`
-	// +
 	// `organizations/{organization_id}/sources/{source_id}/locations/{location_id}/
 	// findings/{finding_id}` +
-	// `folders/{folder_id}/sources/{source_id}/findings/{finding_id}` +
 	// `folders/{folder_id}/sources/{source_id}/locations/{location_id}/findings/{fi
 	// nding_id}` +
-	// `projects/{project_id}/sources/{source_id}/findings/{finding_id}` +
 	// `projects/{project_id}/sources/{source_id}/locations/{location_id}/findings/{
 	// finding_id}` The prefix is the closest CRM ancestor of the resource
 	// associated with the finding.
@@ -6782,6 +6778,9 @@ func (s GoogleCloudSecuritycenterV2IssueMute) MarshalJSON() ([]byte, error) {
 // GoogleCloudSecuritycenterV2IssueResource: A resource associated with the an
 // issue.
 type GoogleCloudSecuritycenterV2IssueResource struct {
+	// Application: The AppHub application associated with the resource, if any.
+	// Only populated for the primary resource.
+	Application *GoogleCloudSecuritycenterV2IssueResourceApplication `json:"application,omitempty"`
 	// AwsMetadata: The AWS metadata of the resource associated with the issue.
 	// Only populated for AWS resources.
 	AwsMetadata *GoogleCloudSecuritycenterV2IssueResourceAwsMetadata `json:"awsMetadata,omitempty"`
@@ -6806,13 +6805,13 @@ type GoogleCloudSecuritycenterV2IssueResource struct {
 	Name string `json:"name,omitempty"`
 	// Type: The type of the resource associated with the issue.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AwsMetadata") to
+	// ForceSendFields is a list of field names (e.g. "Application") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AwsMetadata") to include in API
+	// NullFields is a list of field names (e.g. "Application") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -6821,6 +6820,31 @@ type GoogleCloudSecuritycenterV2IssueResource struct {
 
 func (s GoogleCloudSecuritycenterV2IssueResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2IssueResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2IssueResourceApplication: The AppHub application
+// associated with the resource, if any.
+type GoogleCloudSecuritycenterV2IssueResourceApplication struct {
+	// Name: The resource name of an Application. Format:
+	// `projects/{host-project-id}/locations/{location}/applications/{application-id
+	// }`
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2IssueResourceApplication) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2IssueResourceApplication
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

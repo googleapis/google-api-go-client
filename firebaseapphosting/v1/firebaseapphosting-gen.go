@@ -247,6 +247,40 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+// ArchiveSource: The URI of an storage archive or a signed URL to use as the
+// build source.
+type ArchiveSource struct {
+	// Author: Optional. The author contained in the metadata of a version control
+	// change.
+	Author *SourceUserMetadata `json:"author,omitempty"`
+	// Description: Optional. An optional message that describes the uploaded
+	// version of the source code.
+	Description string `json:"description,omitempty"`
+	// ExternalSignedUri: Signed URL to an archive in a storage bucket.
+	ExternalSignedUri string `json:"externalSignedUri,omitempty"`
+	// RootDirectory: Optional. Relative path in the archive.
+	RootDirectory string `json:"rootDirectory,omitempty"`
+	// UserStorageUri: URI to an archive in Cloud Storage. The object must be a
+	// zipped (.zip) or gzipped archive file (.tar.gz) containing source to deploy.
+	UserStorageUri string `json:"userStorageUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Author") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Author") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ArchiveSource) MarshalJSON() ([]byte, error) {
+	type NoMethod ArchiveSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Backend: A backend is the primary resource of App Hosting.
 type Backend struct {
 	// Annotations: Optional. Unstructured key value map that may be set by
@@ -286,6 +320,10 @@ type Backend struct {
 	// Reconciling: Output only. A field that, if true, indicates that the system
 	// is working to make adjustments to the backend during a LRO.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// RequestLogsDisabled: Optional. A field that, if true, indicates that
+	// incoming request logs are disabled for this backend. Incoming request logs
+	// are enabled by default.
+	RequestLogsDisabled bool `json:"requestLogsDisabled,omitempty"`
 	// ServiceAccount: Required. The name of the service account used for Cloud
 	// Build and Cloud Run. Should have the role
 	// roles/firebaseapphosting.computeRunner or equivalent permissions.
@@ -426,17 +464,19 @@ func (s Build) MarshalJSON() ([]byte, error) {
 
 // BuildSource: The source for the build.
 type BuildSource struct {
+	// Archive: An archive source.
+	Archive *ArchiveSource `json:"archive,omitempty"`
 	// Codebase: A codebase source.
 	Codebase *CodebaseSource `json:"codebase,omitempty"`
 	// Container: An Artifact Registry container image source.
 	Container *ContainerSource `json:"container,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Codebase") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Archive") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Codebase") to include in API
+	// NullFields is a list of field names (e.g. "Archive") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1551,9 +1591,9 @@ type Rollout struct {
 	// external tools to store and arbitrary metadata. They are not queryable and
 	// should be preserved when modifying objects.
 	Annotations map[string]string `json:"annotations,omitempty"`
-	// Build: Immutable. The name of a build that already exists. It doesn't have
-	// to be built; a rollout will wait for a build to be ready before updating
-	// traffic.
+	// Build: Required. Immutable. The name of a build that already exists. It
+	// doesn't have to be built; a rollout will wait for a build to be ready before
+	// updating traffic.
 	Build string `json:"build,omitempty"`
 	// CreateTime: Output only. Time at which the rollout was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1760,6 +1800,34 @@ type ServingBehavior struct {
 
 func (s ServingBehavior) MarshalJSON() ([]byte, error) {
 	type NoMethod ServingBehavior
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SourceUserMetadata: Metadata for the user who started the build.
+type SourceUserMetadata struct {
+	// DisplayName: Output only. The user-chosen displayname. May be empty.
+	DisplayName string `json:"displayName,omitempty"`
+	// Email: Output only. The account email linked to the EUC that created the
+	// build. May be a service account or other robot account.
+	Email string `json:"email,omitempty"`
+	// ImageUri: Output only. The URI of a profile photo associated with the user
+	// who created the build.
+	ImageUri string `json:"imageUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SourceUserMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod SourceUserMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2059,9 +2127,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

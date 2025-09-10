@@ -1605,9 +1605,9 @@ type Rollout struct {
 	// external tools to store and arbitrary metadata. They are not queryable and
 	// should be preserved when modifying objects.
 	Annotations map[string]string `json:"annotations,omitempty"`
-	// Build: Immutable. The name of a build that already exists. It doesn't have
-	// to be built; a rollout will wait for a build to be ready before updating
-	// traffic.
+	// Build: Required. Immutable. The name of a build that already exists. It
+	// doesn't have to be built; a rollout will wait for a build to be ready before
+	// updating traffic.
 	Build string `json:"build,omitempty"`
 	// CreateTime: Output only. Time at which the rollout was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2141,9 +2141,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

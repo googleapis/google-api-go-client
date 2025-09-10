@@ -1293,24 +1293,30 @@ func (s GoogleCloudAiplatformV1beta1GenerateContentResponse) MarshalJSON() ([]by
 }
 
 // GoogleCloudAiplatformV1beta1GenerateContentResponsePromptFeedback: Content
-// filter results for a prompt sent in the request.
+// filter results for a prompt sent in the request. Note: This is sent only in
+// the first stream chunk and only if no candidates were generated due to
+// content violations.
 type GoogleCloudAiplatformV1beta1GenerateContentResponsePromptFeedback struct {
-	// BlockReason: Output only. Blocked reason.
+	// BlockReason: Output only. The reason why the prompt was blocked.
 	//
 	// Possible values:
-	//   "BLOCKED_REASON_UNSPECIFIED" - Unspecified blocked reason.
-	//   "SAFETY" - Candidates blocked due to safety.
-	//   "OTHER" - Candidates blocked due to other reason.
-	//   "BLOCKLIST" - Candidates blocked due to the terms which are included from
-	// the terminology blocklist.
-	//   "PROHIBITED_CONTENT" - Candidates blocked due to prohibited content.
-	//   "MODEL_ARMOR" - The user prompt was blocked by Model Armor.
-	//   "IMAGE_SAFETY" - Candidates blocked due to unsafe image generation
-	// content.
+	//   "BLOCKED_REASON_UNSPECIFIED" - The blocked reason is unspecified.
+	//   "SAFETY" - The prompt was blocked for safety reasons.
+	//   "OTHER" - The prompt was blocked for other reasons. For example, it may be
+	// due to the prompt's language, or because it contains other harmful content.
+	//   "BLOCKLIST" - The prompt was blocked because it contains a term from the
+	// terminology blocklist.
+	//   "PROHIBITED_CONTENT" - The prompt was blocked because it contains
+	// prohibited content.
+	//   "MODEL_ARMOR" - The prompt was blocked by Model Armor.
+	//   "IMAGE_SAFETY" - The prompt was blocked because it contains content that
+	// is unsafe for image generation.
 	BlockReason string `json:"blockReason,omitempty"`
-	// BlockReasonMessage: Output only. A readable block reason message.
+	// BlockReasonMessage: Output only. A readable message that explains the reason
+	// why the prompt was blocked.
 	BlockReasonMessage string `json:"blockReasonMessage,omitempty"`
-	// SafetyRatings: Output only. Safety ratings.
+	// SafetyRatings: Output only. A list of safety ratings for the prompt. There
+	// is one rating per category.
 	SafetyRatings []*GoogleCloudAiplatformV1beta1SafetyRating `json:"safetyRatings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BlockReason") to
 	// unconditionally include in API requests. By default, fields with empty or

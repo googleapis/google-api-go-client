@@ -1024,9 +1024,9 @@ func (s GoogleChannelConfig) MarshalJSON() ([]byte, error) {
 type GoogleCloudEventarcV1PipelineDestination struct {
 	// AuthenticationConfig: Optional. An authentication config used to
 	// authenticate message requests, such that destinations can verify the source.
-	// For example, this can be used with private GCP destinations that require GCP
-	// credentials to access like Cloud Run. This field is optional and should be
-	// set only by users interested in authenticated push
+	// For example, this can be used with private Google Cloud destinations that
+	// require Google Cloud credentials for access like Cloud Run. This field is
+	// optional and should be set only by users interested in authenticated push.
 	AuthenticationConfig *GoogleCloudEventarcV1PipelineDestinationAuthenticationConfig `json:"authenticationConfig,omitempty"`
 	// HttpEndpoint: Optional. An HTTP endpoint destination described by an URI. If
 	// a DNS FQDN is provided as the endpoint, Pipeline will create a peering zone
@@ -1078,7 +1078,7 @@ func (s GoogleCloudEventarcV1PipelineDestination) MarshalJSON() ([]byte, error) 
 // config used to authenticate message requests.
 type GoogleCloudEventarcV1PipelineDestinationAuthenticationConfig struct {
 	// GoogleOidc: Optional. This authenticate method will apply Google OIDC tokens
-	// signed by a GCP service account to the requests.
+	// signed by a Google Cloud service account to the requests.
 	GoogleOidc *GoogleCloudEventarcV1PipelineDestinationAuthenticationConfigOidcToken `json:"googleOidc,omitempty"`
 	// OauthToken: Optional. If specified, an OAuth token
 	// (https://developers.google.com/identity/protocols/OAuth2) will be generated
@@ -1143,8 +1143,9 @@ func (s GoogleCloudEventarcV1PipelineDestinationAuthenticationConfigOAuthToken) 
 
 // GoogleCloudEventarcV1PipelineDestinationAuthenticationConfigOidcToken:
 // Represents a config used to authenticate with a Google OIDC token using a
-// GCP service account. Use this authentication method to invoke your Cloud Run
-// and Cloud Functions destinations or HTTP endpoints that support Google OIDC.
+// Google Cloud service account. Use this authentication method to invoke your
+// Cloud Run and Cloud Functions destinations or HTTP endpoints that support
+// Google OIDC.
 type GoogleCloudEventarcV1PipelineDestinationAuthenticationConfigOidcToken struct {
 	// Audience: Optional. Audience to be used to generate the OIDC Token. The
 	// audience claim identifies the recipient that the JWT is intended for. If
@@ -2937,9 +2938,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

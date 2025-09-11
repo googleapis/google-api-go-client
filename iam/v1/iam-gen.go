@@ -3869,8 +3869,8 @@ type WorkforcePoolProvider struct {
 	// DisplayName: Optional. A user-specified display name for the provider.
 	// Cannot exceed 32 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// ExpireTime: Output only. Time after which the workload pool provider will be
-	// permanently purged and cannot be recovered.
+	// ExpireTime: Output only. Time after which the workforce identity pool
+	// provider will be permanently purged and cannot be recovered.
 	ExpireTime string `json:"expireTime,omitempty"`
 	// ExtendedAttributesOauth2Client: Optional. The configuration for OAuth 2.0
 	// client used to get the extended group memberships for user identities. Only

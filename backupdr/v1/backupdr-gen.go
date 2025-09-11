@@ -1384,7 +1384,9 @@ type BackupRule struct {
 	// will be kept. It is defined in “days”. The value should be greater than
 	// or equal to minimum enforced retention of the backup vault. Minimum value is
 	// 1 and maximum value is 36159 for custom retention on-demand backup. Minimum
-	// and maximum values are workload specific for all other rules.
+	// and maximum values are workload specific for all other rules. Note: Longer
+	// retention can lead to higher storage costs post introductory trial. We
+	// recommend starting with a short duration of 3 days or less.
 	BackupRetentionDays int64 `json:"backupRetentionDays,omitempty"`
 	// RuleId: Required. Immutable. The unique id of this `BackupRule`. The
 	// `rule_id` is unique per `BackupPlan`.The `rule_id` must start with a
@@ -1439,7 +1441,9 @@ type BackupVault struct {
 	BackupCount int64 `json:"backupCount,omitempty,string"`
 	// BackupMinimumEnforcedRetentionDuration: Required. The default and minimum
 	// enforced retention for each backup within the backup vault. The enforced
-	// retention for each backup can be extended.
+	// retention for each backup can be extended. Note: Longer minimum enforced
+	// retention period impacts potential storage costs post introductory trial. We
+	// recommend starting with a short duration of 3 days or less.
 	BackupMinimumEnforcedRetentionDuration string `json:"backupMinimumEnforcedRetentionDuration,omitempty"`
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -4852,6 +4856,14 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 
 // Trial: Represents a Trial for a project.
 type Trial struct {
+	// EndReason: Output only. The reason for ending the trial.
+	//
+	// Possible values:
+	//   "END_REASON_UNSPECIFIED" - End reason not set.
+	//   "MOVE_TO_PAID" - Trial is deliberately ended by the user to transition to
+	// paid usage.
+	//   "DISCONTINUED" - Trial is discontinued before expiration.
+	EndReason string `json:"endReason,omitempty"`
 	// EndTime: Output only. The time when the trial will expire.
 	EndTime string `json:"endTime,omitempty"`
 	// Name: Identifier. The resource name of the trial. Format:
@@ -4872,13 +4884,13 @@ type Trial struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "EndReason") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// NullFields is a list of field names (e.g. "EndReason") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

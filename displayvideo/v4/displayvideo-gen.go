@@ -2372,6 +2372,7 @@ type AppAssignedTargetingOptionDetails struct {
 	// not explicitly listed elsewhere.
 	//   "APP_PLATFORM_LG_TV" - The app platform is LG TV.
 	//   "APP_PLATFORM_VIZIO_TV" - The app platform is VIZIO TV.
+	//   "APP_PLATFORM_VIDAA" - The app platform is Vidaa.
 	AppPlatform string `json:"appPlatform,omitempty"`
 	// DisplayName: Output only. The display name of the app.
 	DisplayName string `json:"displayName,omitempty"`

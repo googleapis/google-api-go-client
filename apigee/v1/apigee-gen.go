@@ -204,6 +204,7 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs.OptimizedHostStats = NewOrganizationsOptimizedHostStatsService(s)
 	rs.Reports = NewOrganizationsReportsService(s)
 	rs.SecurityAssessmentResults = NewOrganizationsSecurityAssessmentResultsService(s)
+	rs.SecurityFeedback = NewOrganizationsSecurityFeedbackService(s)
 	rs.SecurityMonitoringConditions = NewOrganizationsSecurityMonitoringConditionsService(s)
 	rs.SecurityProfiles = NewOrganizationsSecurityProfilesService(s)
 	rs.SecurityProfilesV2 = NewOrganizationsSecurityProfilesV2Service(s)
@@ -257,6 +258,8 @@ type OrganizationsService struct {
 	Reports *OrganizationsReportsService
 
 	SecurityAssessmentResults *OrganizationsSecurityAssessmentResultsService
+
+	SecurityFeedback *OrganizationsSecurityFeedbackService
 
 	SecurityMonitoringConditions *OrganizationsSecurityMonitoringConditionsService
 
@@ -1156,6 +1159,15 @@ type OrganizationsSecurityAssessmentResultsService struct {
 	s *Service
 }
 
+func NewOrganizationsSecurityFeedbackService(s *Service) *OrganizationsSecurityFeedbackService {
+	rs := &OrganizationsSecurityFeedbackService{s: s}
+	return rs
+}
+
+type OrganizationsSecurityFeedbackService struct {
+	s *Service
+}
+
 func NewOrganizationsSecurityMonitoringConditionsService(s *Service) *OrganizationsSecurityMonitoringConditionsService {
 	rs := &OrganizationsSecurityMonitoringConditionsService{s: s}
 	return rs
@@ -1587,6 +1599,10 @@ type GoogleCloudApigeeV1AdjustDeveloperBalanceRequest struct {
 	// balance of the developer will decrease. * A negative value of `adjustment`
 	// means that that the API provider wants to adjust the balance for an
 	// over-charged developer i.e. the balance of the developer will increase.
+	// NOTE: An adjustment cannot increase the balance of the developer beyond the
+	// balance as of the most recent credit. For example, if a developer's balance
+	// is updated to be $100, and they spend $10, a negative adjustment can only
+	// increase the balance of the developer to $100.
 	Adjustment *GoogleTypeMoney `json:"adjustment,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Adjustment") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2867,7 +2883,7 @@ type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest struct {
 	PageToken string `json:"pageToken,omitempty"`
 	// Profile: Required. Name of the profile that is used for computation.
 	Profile string `json:"profile,omitempty"`
-	// Scope: Required. Scope of the resources for the computation. For Apigee, the
+	// Scope: Optional. Scope of the resources for the computation. For Apigee, the
 	// environment is the scope of the resources.
 	Scope string `json:"scope,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Include") to unconditionally
@@ -6980,6 +6996,36 @@ func (s GoogleCloudApigeeV1ListSecurityActionsResponse) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ListSecurityFeedbackResponse: Response for
+// ListSecurityFeedback
+type GoogleCloudApigeeV1ListSecurityFeedbackResponse struct {
+	// NextPageToken: A token that can be sent as `page_token` in
+	// `ListSecurityFeedbackRequest` to retrieve the next page. If this field is
+	// omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SecurityFeedback: List of SecurityFeedback reports.
+	SecurityFeedback []*GoogleCloudApigeeV1SecurityFeedback `json:"securityFeedback,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1ListSecurityFeedbackResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListSecurityFeedbackResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1ListSecurityIncidentsResponse: Response for
 // ListSecurityIncidents.
 type GoogleCloudApigeeV1ListSecurityIncidentsResponse struct {
@@ -10134,6 +10180,97 @@ func (s GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecomm
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1SecurityFeedback: Represents a feedback report from an
+// Advanced API Security customer.
+type GoogleCloudApigeeV1SecurityFeedback struct {
+	// Comment: Optional. Optional text the user can provide for additional,
+	// unstructured context.
+	Comment string `json:"comment,omitempty"`
+	// CreateTime: Output only. The time when this specific feedback id was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Optional. The display name of the feedback.
+	DisplayName string `json:"displayName,omitempty"`
+	// FeedbackContexts: Required. One or more attribute/value pairs for
+	// constraining the feedback.
+	FeedbackContexts []*GoogleCloudApigeeV1SecurityFeedbackFeedbackContext `json:"feedbackContexts,omitempty"`
+	// FeedbackType: Required. The type of feedback being submitted.
+	//
+	// Possible values:
+	//   "FEEDBACK_TYPE_UNSPECIFIED" - Unspecified feedback type.
+	//   "EXCLUDED_DETECTION" - Feedback identifying attributes to be excluded from
+	// detections.
+	FeedbackType string `json:"feedbackType,omitempty"`
+	// Name: Output only. Identifier. The feedback name is intended to be a
+	// system-generated uuid.
+	Name string `json:"name,omitempty"`
+	// Reason: Optional. The reason for the feedback.
+	//
+	// Possible values:
+	//   "REASON_UNSPECIFIED" - Unspecified reason.
+	//   "INTERNAL_SYSTEM" - The feedback is created for an internal system.
+	//   "NON_RISK_CLIENT" - The feedback is created for a non-risk client.
+	//   "NAT" - The feedback is created for to label NAT.
+	//   "PENETRATION_TEST" - The feedback is created for a penetration test.
+	//   "OTHER" - The feedback is created for other reasons.
+	Reason string `json:"reason,omitempty"`
+	// UpdateTime: Output only. The time when this specific feedback id was
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Comment") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Comment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1SecurityFeedback) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityFeedback
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityFeedbackFeedbackContext: FeedbackContext captures
+// the intent of the submitted feedback.
+type GoogleCloudApigeeV1SecurityFeedbackFeedbackContext struct {
+	// Attribute: Required. The attribute the user is providing feedback about.
+	//
+	// Possible values:
+	//   "ATTRIBUTE_UNSPECIFIED" - Unspecified attribute.
+	//   "ATTRIBUTE_ENVIRONMENTS" - Values will be a list of environments.
+	//   "ATTRIBUTE_IP_ADDRESS_RANGES" - Values will be a list of IP addresses.
+	// This could be either IPv4 or IPv6.
+	//   "ATTRIBUTE_API_KEYS" - Values will be a list of API keys.
+	Attribute string `json:"attribute,omitempty"`
+	// Values: Required. The values of the attribute the user is providing feedback
+	// about.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attribute") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attribute") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1SecurityFeedbackFeedbackContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityFeedbackFeedbackContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1SecurityIncident: Represents an SecurityIncident
 // resource.
 type GoogleCloudApigeeV1SecurityIncident struct {
@@ -10215,7 +10352,7 @@ type GoogleCloudApigeeV1SecurityMonitoringCondition struct {
 	// Profile: Required. ID of security profile of the security monitoring
 	// condition.
 	Profile string `json:"profile,omitempty"`
-	// Scope: Required. Scope of the security monitoring condition. For Apigee, the
+	// Scope: Optional. Scope of the security monitoring condition. For Apigee, the
 	// environment is the scope of the resources.
 	Scope string `json:"scope,omitempty"`
 	// TotalDeployedResources: Output only. Total number of deployed resources
@@ -47597,6 +47734,596 @@ func (c *OrganizationsSecurityAssessmentResultsBatchComputeCall) Pages(ctx conte
 		}
 		c.googlecloudapigeev1batchcomputesecurityassessmentresultsrequest.PageToken = x.NextPageToken
 	}
+}
+
+type OrganizationsSecurityFeedbackCreateCall struct {
+	s                                   *Service
+	parent                              string
+	googlecloudapigeev1securityfeedback *GoogleCloudApigeeV1SecurityFeedback
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// Create: Creates a new report containing customer feedback.
+//
+//   - parent: Name of the organization. Use the following structure in your
+//     request: `organizations/{org}`.
+func (r *OrganizationsSecurityFeedbackService) Create(parent string, googlecloudapigeev1securityfeedback *GoogleCloudApigeeV1SecurityFeedback) *OrganizationsSecurityFeedbackCreateCall {
+	c := &OrganizationsSecurityFeedbackCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1securityfeedback = googlecloudapigeev1securityfeedback
+	return c
+}
+
+// SecurityFeedbackId sets the optional parameter "securityFeedbackId": The id
+// for this feedback report. If not provided, it will be set to a
+// system-generated UUID.
+func (c *OrganizationsSecurityFeedbackCreateCall) SecurityFeedbackId(securityFeedbackId string) *OrganizationsSecurityFeedbackCreateCall {
+	c.urlParams_.Set("securityFeedbackId", securityFeedbackId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSecurityFeedbackCreateCall) Fields(s ...googleapi.Field) *OrganizationsSecurityFeedbackCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSecurityFeedbackCreateCall) Context(ctx context.Context) *OrganizationsSecurityFeedbackCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSecurityFeedbackCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityFeedbackCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securityfeedback)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityFeedback")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.securityFeedback.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityFeedback.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1SecurityFeedback.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSecurityFeedbackCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityFeedback, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityFeedback{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.securityFeedback.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsSecurityFeedbackDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a specific feedback report. Used for "undo" of a feedback
+// submission.
+//
+//   - name: Name of the SecurityFeedback to delete. Use the following structure
+//     in your request: `organizations/{org}/securityFeedback/{feedback_id}`.
+func (r *OrganizationsSecurityFeedbackService) Delete(name string) *OrganizationsSecurityFeedbackDeleteCall {
+	c := &OrganizationsSecurityFeedbackDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSecurityFeedbackDeleteCall) Fields(s ...googleapi.Field) *OrganizationsSecurityFeedbackDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSecurityFeedbackDeleteCall) Context(ctx context.Context) *OrganizationsSecurityFeedbackDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSecurityFeedbackDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityFeedbackDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.securityFeedback.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityFeedback.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityFeedbackDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.securityFeedback.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsSecurityFeedbackGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a specific customer feedback report.
+//
+//   - name: Name of the SecurityFeedback. Format:
+//     `organizations/{org}/securityFeedback/{feedback_id}` Example:
+//     organizations/apigee-organization-name/securityFeedback/feedback-id.
+func (r *OrganizationsSecurityFeedbackService) Get(name string) *OrganizationsSecurityFeedbackGetCall {
+	c := &OrganizationsSecurityFeedbackGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSecurityFeedbackGetCall) Fields(s ...googleapi.Field) *OrganizationsSecurityFeedbackGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsSecurityFeedbackGetCall) IfNoneMatch(entityTag string) *OrganizationsSecurityFeedbackGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSecurityFeedbackGetCall) Context(ctx context.Context) *OrganizationsSecurityFeedbackGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSecurityFeedbackGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityFeedbackGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.securityFeedback.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityFeedback.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1SecurityFeedback.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSecurityFeedbackGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityFeedback, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityFeedback{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.securityFeedback.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsSecurityFeedbackListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all feedback reports which have already been submitted.
+//
+//   - parent: Name of the organization. Format: `organizations/{org}`. Example:
+//     organizations/apigee-organization-name/securityFeedback.
+func (r *OrganizationsSecurityFeedbackService) List(parent string) *OrganizationsSecurityFeedbackListCall {
+	c := &OrganizationsSecurityFeedbackListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// feedback reports to return. The service may return fewer than this value.
+// LINT.IfChange(documented_page_size_limits) If unspecified, at most 10
+// feedback reports will be returned. The maximum value is 100; values above
+// 100 will be coerced to 100. LINT.ThenChange(
+// //depot/google3/edge/sense/boq/service/v1/securityfeedback/securityfeedback_r
+// pc.go:page_size_limits )
+func (c *OrganizationsSecurityFeedbackListCall) PageSize(pageSize int64) *OrganizationsSecurityFeedbackListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListSecurityFeedback` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListSecurityFeedback` must match the call that provided the page token.
+func (c *OrganizationsSecurityFeedbackListCall) PageToken(pageToken string) *OrganizationsSecurityFeedbackListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSecurityFeedbackListCall) Fields(s ...googleapi.Field) *OrganizationsSecurityFeedbackListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsSecurityFeedbackListCall) IfNoneMatch(entityTag string) *OrganizationsSecurityFeedbackListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSecurityFeedbackListCall) Context(ctx context.Context) *OrganizationsSecurityFeedbackListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSecurityFeedbackListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityFeedbackListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityFeedback")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.securityFeedback.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityFeedback.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1ListSecurityFeedbackResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSecurityFeedbackListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListSecurityFeedbackResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ListSecurityFeedbackResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.securityFeedback.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSecurityFeedbackListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListSecurityFeedbackResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsSecurityFeedbackPatchCall struct {
+	s                                   *Service
+	name                                string
+	googlecloudapigeev1securityfeedback *GoogleCloudApigeeV1SecurityFeedback
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// Patch: Updates a specific feedback report.
+//
+//   - name: Output only. Identifier. The feedback name is intended to be a
+//     system-generated uuid.
+func (r *OrganizationsSecurityFeedbackService) Patch(name string, googlecloudapigeev1securityfeedback *GoogleCloudApigeeV1SecurityFeedback) *OrganizationsSecurityFeedbackPatchCall {
+	c := &OrganizationsSecurityFeedbackPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1securityfeedback = googlecloudapigeev1securityfeedback
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *OrganizationsSecurityFeedbackPatchCall) UpdateMask(updateMask string) *OrganizationsSecurityFeedbackPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSecurityFeedbackPatchCall) Fields(s ...googleapi.Field) *OrganizationsSecurityFeedbackPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSecurityFeedbackPatchCall) Context(ctx context.Context) *OrganizationsSecurityFeedbackPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSecurityFeedbackPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityFeedbackPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1securityfeedback)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.securityFeedback.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityFeedback.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1SecurityFeedback.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSecurityFeedbackPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityFeedback, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityFeedback{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.securityFeedback.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type OrganizationsSecurityMonitoringConditionsCreateCall struct {

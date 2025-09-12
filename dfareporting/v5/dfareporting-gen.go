@@ -9149,6 +9149,9 @@ type Placement struct {
 	// AdvertiserIdDimensionValue: Dimension value for the ID of the advertiser.
 	// This is a read-only, auto-generated field.
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
+	// AllowOnYoutube: Optional. Whether the placement is enabled for YouTube
+	// integration.
+	AllowOnYoutube bool `json:"allowOnYoutube,omitempty"`
 	// CampaignId: Campaign ID of this placement. This field is a required field on
 	// insertion.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
@@ -9338,6 +9341,9 @@ type Placement struct {
 	VpaidAdapterChoice string `json:"vpaidAdapterChoice,omitempty"`
 	// WrappingOptOut: Whether this placement opts out of tag wrapping.
 	WrappingOptOut bool `json:"wrappingOptOut,omitempty"`
+	// YoutubeSettings: Optional. YouTube settings for the placement. The placement
+	// must be enabled for YouTube to use this field.
+	YoutubeSettings *YoutubeSettings `json:"youtubeSettings,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -12820,6 +12826,69 @@ type VideoSettings struct {
 
 func (s VideoSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// YoutubeSettings: Contains the YouTube settings.
+type YoutubeSettings struct {
+	// BusinessLogoCreativeIds: Optional. The IDs of the creatives to use for the
+	// business logo. Currently only one creative is supported.
+	BusinessLogoCreativeIds googleapi.Int64s `json:"businessLogoCreativeIds,omitempty"`
+	// BusinessName: Optional. The business name.
+	BusinessName string `json:"businessName,omitempty"`
+	// CallToActions: Optional. The call to actions. Currently only one call to
+	// action is supported.
+	//
+	// Possible values:
+	//   "CALL_TO_ACTION_UNKNOWN"
+	//   "CALL_TO_ACTION_LEARN_MORE"
+	//   "CALL_TO_ACTION_GET_QUOTE"
+	//   "CALL_TO_ACTION_APPLY_NOW"
+	//   "CALL_TO_ACTION_SIGN_UP"
+	//   "CALL_TO_ACTION_CONTACT_US"
+	//   "CALL_TO_ACTION_SUBSCRIBE"
+	//   "CALL_TO_ACTION_DOWNLOAD"
+	//   "CALL_TO_ACTION_BOOK_NOW"
+	//   "CALL_TO_ACTION_GET_OFFER"
+	//   "CALL_TO_ACTION_SHOP_NOW"
+	//   "CALL_TO_ACTION_VISIT_STORE"
+	//   "CALL_TO_ACTION_CALL_NOW"
+	//   "CALL_TO_ACTION_VIEW_MENU"
+	//   "CALL_TO_ACTION_TEST_DRIVE"
+	//   "CALL_TO_ACTION_SCHEDULE_NOW"
+	//   "CALL_TO_ACTION_BUY_NOW"
+	//   "CALL_TO_ACTION_DONATE_NOW"
+	//   "CALL_TO_ACTION_ORDER_NOW"
+	//   "CALL_TO_ACTION_PLAY_NOW"
+	//   "CALL_TO_ACTION_SEE_MORE"
+	//   "CALL_TO_ACTION_START_NOW"
+	//   "CALL_TO_ACTION_VISIT_SITE"
+	//   "CALL_TO_ACTION_WATCH_NOW"
+	CallToActions []string `json:"callToActions,omitempty"`
+	// Descriptions: Optional. The descriptions. Currently only one description is
+	// supported.
+	Descriptions []string `json:"descriptions,omitempty"`
+	// Headlines: Optional. The headlines associated with the call to actions.
+	// Currently only one headline is supported.
+	Headlines []string `json:"headlines,omitempty"`
+	// LongHeadlines: Optional. The long headlines. Currently only one long
+	// headline is supported.
+	LongHeadlines []string `json:"longHeadlines,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BusinessLogoCreativeIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BusinessLogoCreativeIds") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s YoutubeSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

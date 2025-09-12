@@ -1277,6 +1277,134 @@ func (s EdgeLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// EffectiveVpcFlowLogsConfig: A configuration to generate a response for
+// GetEffectiveVpcFlowLogsConfig request.
+type EffectiveVpcFlowLogsConfig struct {
+	// AggregationInterval: The aggregation interval for the logs. Default value is
+	// INTERVAL_5_SEC.
+	//
+	// Possible values:
+	//   "AGGREGATION_INTERVAL_UNSPECIFIED" - If not specified, will default to
+	// INTERVAL_5_SEC.
+	//   "INTERVAL_5_SEC" - Aggregate logs in 5s intervals.
+	//   "INTERVAL_30_SEC" - Aggregate logs in 30s intervals.
+	//   "INTERVAL_1_MIN" - Aggregate logs in 1m intervals.
+	//   "INTERVAL_5_MIN" - Aggregate logs in 5m intervals.
+	//   "INTERVAL_10_MIN" - Aggregate logs in 10m intervals.
+	//   "INTERVAL_15_MIN" - Aggregate logs in 15m intervals.
+	AggregationInterval string `json:"aggregationInterval,omitempty"`
+	// CrossProjectMetadata: Determines whether to include cross project
+	// annotations in the logs. This field is available only for organization
+	// configurations. If not specified in org configs will be set to
+	// CROSS_PROJECT_METADATA_ENABLED.
+	//
+	// Possible values:
+	//   "CROSS_PROJECT_METADATA_UNSPECIFIED" - If not specified, the default is
+	// CROSS_PROJECT_METADATA_ENABLED.
+	//   "CROSS_PROJECT_METADATA_ENABLED" - When CROSS_PROJECT_METADATA_ENABLED,
+	// metadata from other projects will be included in the logs.
+	//   "CROSS_PROJECT_METADATA_DISABLED" - When CROSS_PROJECT_METADATA_DISABLED,
+	// metadata from other projects will not be included in the logs.
+	CrossProjectMetadata string `json:"crossProjectMetadata,omitempty"`
+	// FilterExpr: Export filter used to define which VPC Flow Logs should be
+	// logged.
+	FilterExpr string `json:"filterExpr,omitempty"`
+	// FlowSampling: The value of the field must be in (0, 1]. The sampling rate of
+	// VPC Flow Logs where 1.0 means all collected logs are reported. Setting the
+	// sampling rate to 0.0 is not allowed. If you want to disable VPC Flow Logs,
+	// use the state field instead. Default value is 1.0.
+	FlowSampling float64 `json:"flowSampling,omitempty"`
+	// InterconnectAttachment: Traffic will be logged from the Interconnect
+	// Attachment. Format:
+	// projects/{project_id}/regions/{region}/interconnectAttachments/{name}
+	InterconnectAttachment string `json:"interconnectAttachment,omitempty"`
+	// Metadata: Configures whether all, none or a subset of metadata fields should
+	// be added to the reported VPC flow logs. Default value is
+	// INCLUDE_ALL_METADATA.
+	//
+	// Possible values:
+	//   "METADATA_UNSPECIFIED" - If not specified, will default to
+	// INCLUDE_ALL_METADATA.
+	//   "INCLUDE_ALL_METADATA" - Include all metadata fields.
+	//   "EXCLUDE_ALL_METADATA" - Exclude all metadata fields.
+	//   "CUSTOM_METADATA" - Include only custom fields (specified in
+	// metadata_fields).
+	Metadata string `json:"metadata,omitempty"`
+	// MetadataFields: Custom metadata fields to include in the reported VPC flow
+	// logs. Can only be specified if "metadata" was set to CUSTOM_METADATA.
+	MetadataFields []string `json:"metadataFields,omitempty"`
+	// Name: Unique name of the configuration. The name can have one of the
+	// following forms: - For project-level configurations:
+	// `projects/{project_id}/locations/global/vpcFlowLogsConfigs/{vpc_flow_logs_con
+	// fig_id}` - For organization-level configurations:
+	// `organizations/{organization_id}/locations/global/vpcFlowLogsConfigs/{vpc_flo
+	// w_logs_config_id}` - For a Compute config, the name will be the path of the
+	// subnet: `projects/{project_id}/regions/{region}/subnetworks/{subnet_id}`
+	Name string `json:"name,omitempty"`
+	// Network: Traffic will be logged from VMs, VPN tunnels and Interconnect
+	// Attachments within the network. Format:
+	// projects/{project_id}/global/networks/{name}
+	Network string `json:"network,omitempty"`
+	// Scope: Specifies the scope of the config (e.g., SUBNET, NETWORK,
+	// ORGANIZATION..).
+	//
+	// Possible values:
+	//   "SCOPE_UNSPECIFIED" - Scope is unspecified.
+	//   "SUBNET" - Target resource is a subnet (Network Management API).
+	//   "COMPUTE_API_SUBNET" - Target resource is a subnet, and the config
+	// originates from the Compute API.
+	//   "NETWORK" - Target resource is a network.
+	//   "VPN_TUNNEL" - Target resource is a VPN tunnel.
+	//   "INTERCONNECT_ATTACHMENT" - Target resource is an interconnect attachment.
+	//   "ORGANIZATION" - Configuration applies to an entire organization.
+	Scope string `json:"scope,omitempty"`
+	// State: The state of the VPC Flow Log configuration. Default value is
+	// ENABLED. When creating a new configuration, it must be enabled. Setting
+	// state=DISABLED will pause the log generation for this config.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - If not specified, will default to ENABLED.
+	//   "ENABLED" - When ENABLED, this configuration will generate logs.
+	//   "DISABLED" - When DISABLED, this configuration will not generate logs.
+	State string `json:"state,omitempty"`
+	// Subnet: Traffic will be logged from VMs within the subnetwork. Format:
+	// projects/{project_id}/regions/{region}/subnetworks/{name}
+	Subnet string `json:"subnet,omitempty"`
+	// VpnTunnel: Traffic will be logged from the VPN Tunnel. Format:
+	// projects/{project_id}/regions/{region}/vpnTunnels/{name}
+	VpnTunnel string `json:"vpnTunnel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AggregationInterval") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AggregationInterval") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EffectiveVpcFlowLogsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EffectiveVpcFlowLogsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *EffectiveVpcFlowLogsConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod EffectiveVpcFlowLogsConfig
+	var s1 struct {
+		FlowSampling gensupport.JSONFloat64 `json:"flowSampling"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FlowSampling = float64(s1.FlowSampling)
+	return nil
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -1332,6 +1460,9 @@ type Endpoint struct {
 	// plane
 	// (https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture).
 	GkeMasterCluster string `json:"gkeMasterCluster,omitempty"`
+	// GkePod: A GKE Pod
+	// (https://cloud.google.com/kubernetes-engine/docs/concepts/pod) URI.
+	GkePod string `json:"gkePod,omitempty"`
 	// Instance: A Compute Engine instance URI.
 	Instance string `json:"instance,omitempty"`
 	// IpAddress: The IP address of the endpoint, which can be an external or
@@ -2299,6 +2430,7 @@ type NatInfo struct {
 	// to internal address.
 	//   "CLOUD_NAT" - Cloud NAT Gateway.
 	//   "PRIVATE_SERVICE_CONNECT" - Private service connect NAT.
+	//   "GKE_POD_IP_MASQUERADING" - GKE Pod IP address masquerading.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NatGatewayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3012,6 +3144,37 @@ func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ShowEffectiveFlowLogsConfigsResponse: Response for the
+// `ShowEffectiveFlowLogsConfigs` method.
+type ShowEffectiveFlowLogsConfigsResponse struct {
+	// EffectiveFlowLogsConfigs: List of Effective Vpc Flow Logs configurations.
+	EffectiveFlowLogsConfigs []*EffectiveVpcFlowLogsConfig `json:"effectiveFlowLogsConfigs,omitempty"`
+	// NextPageToken: Page token to fetch the next set of configurations.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached (when querying all
+	// locations with `-`).
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EffectiveFlowLogsConfigs")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveFlowLogsConfigs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ShowEffectiveFlowLogsConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ShowEffectiveFlowLogsConfigsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SingleEdgeResponse: Probing results for a single edge device.
 type SingleEdgeResponse struct {
 	// DestinationEgressLocation: The EdgeLocation from which a packet, destined to
@@ -3244,7 +3407,8 @@ type Step struct {
 	//   "SERVERLESS_EXTERNAL_CONNECTION" - Forwarding state: for packets
 	// originating from a serverless endpoint forwarded through public (external)
 	// connectivity.
-	//   "NAT" - Transition state: packet header translated.
+	//   "NAT" - Transition state: packet header translated. The `nat` field is
+	// populated with the translation information.
 	//   "PROXY_CONNECTION" - Transition state: original connection is terminated
 	// and a new proxied connection is initiated.
 	//   "DELIVER" - Final state: packet could be delivered.
@@ -3770,9 +3934,9 @@ func (r *OrganizationsLocationsService) List(name string) *OrganizationsLocation
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *OrganizationsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *OrganizationsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -5143,9 +5307,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -7608,6 +7772,171 @@ func (c *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall) Do(o
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsVpcFlowLogsConfigsQueryOrgVpcFlowLogsConfigsCall) Pages(ctx context.Context, f func(*QueryOrgVpcFlowLogsConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ShowEffectiveFlowLogsConfigs: ShowEffectiveFlowLogsConfigs returns a list of
+// all VPC Flow Logs configurations applicable to a specified resource.
+//
+//   - parent: The parent resource of the VpcFlowLogsConfig, specified in the
+//     following format: `projects/{project_id}/locations/global`.
+func (r *ProjectsLocationsVpcFlowLogsConfigsService) ShowEffectiveFlowLogsConfigs(parent string) *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall {
+	c := &ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Lists the
+// `EffectiveVpcFlowLogsConfigs` that match the filter expression. A filter
+// expression must use the supported [CEL logic operators]
+// (https://cloud.google.com/vpc/docs/about-flow-logs-records#supported_cel_logic_operators).
+func (c *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall) Filter(filter string) *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of
+// `EffectiveVpcFlowLogsConfigs` to return. Default is 30.
+func (c *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall) PageSize(pageSize int64) *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token from an
+// earlier query, as returned in `next_page_token`.
+func (c *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall) PageToken(pageToken string) *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Resource sets the optional parameter "resource": Required. The resource to
+// get the effective VPC Flow Logs configuration for. The resource must belong
+// to the same project as the parent. The resource must be a network,
+// subnetwork, interconnect attachment, VPN tunnel, or a project.
+func (c *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall) Resource(resource string) *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall {
+	c.urlParams_.Set("resource", resource)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall) Fields(s ...googleapi.Field) *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall) IfNoneMatch(entityTag string) *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall) Context(ctx context.Context) *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/vpcFlowLogsConfigs:showEffectiveFlowLogsConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.vpcFlowLogsConfigs.showEffectiveFlowLogsConfigs", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkmanagement.projects.locations.vpcFlowLogsConfigs.showEffectiveFlowLogsConfigs" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ShowEffectiveFlowLogsConfigsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall) Do(opts ...googleapi.CallOption) (*ShowEffectiveFlowLogsConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ShowEffectiveFlowLogsConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.projects.locations.vpcFlowLogsConfigs.showEffectiveFlowLogsConfigs", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsVpcFlowLogsConfigsShowEffectiveFlowLogsConfigsCall) Pages(ctx context.Context, f func(*ShowEffectiveFlowLogsConfigsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

@@ -1928,6 +1928,9 @@ type SimpleExportPolicyRule struct {
 	AccessType string `json:"accessType,omitempty"`
 	// AllowedClients: Comma separated list of allowed clients IP addresses
 	AllowedClients string `json:"allowedClients,omitempty"`
+	// AnonUid: Optional. An integer representing the anonymous user ID. Range is 0
+	// to 4294967295. Required when squash_mode is ROOT_SQUASH or ALL_SQUASH.
+	AnonUid int64 `json:"anonUid,omitempty,string"`
 	// HasRootAccess: Whether Unix root access will be granted.
 	HasRootAccess string `json:"hasRootAccess,omitempty"`
 	// Kerberos5ReadOnly: If enabled (true) the rule defines a read only access for
@@ -1961,6 +1964,18 @@ type SimpleExportPolicyRule struct {
 	Nfsv3 bool `json:"nfsv3,omitempty"`
 	// Nfsv4: NFS V4 protocol.
 	Nfsv4 bool `json:"nfsv4,omitempty"`
+	// SquashMode: Optional. Defines how user identity squashing is applied for
+	// this export rule. This field is the preferred way to configure squashing
+	// behavior and takes precedence over `has_root_access` if both are provided.
+	//
+	// Possible values:
+	//   "SQUASH_MODE_UNSPECIFIED" - Defaults to NO_ROOT_SQUASH.
+	//   "NO_ROOT_SQUASH" - The root user (UID 0) retains full access. Other users
+	// are unaffected.
+	//   "ROOT_SQUASH" - The root user (UID 0) is squashed to anonymous user ID.
+	// Other users are unaffected.
+	//   "ALL_SQUASH" - All users are squashed to anonymous user ID.
+	SquashMode string `json:"squashMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2836,9 +2851,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

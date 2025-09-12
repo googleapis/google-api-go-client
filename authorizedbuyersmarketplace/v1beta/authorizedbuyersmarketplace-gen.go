@@ -182,9 +182,8 @@ type ActivateDataSegmentRequest struct {
 // targeted by curators or media planners in the deals or auction packages UI.
 // Curation of inventory is done by curators on external platforms.
 type DataSegment struct {
-	// CpmFee: Required. This will be charged when other accounts use this data
-	// segment. For example, when other accounts add this data segment to a deal or
-	// auction package. Once set, the currency code cannot be changed.
+	// CpmFee: Optional. A fixed fee charged per thousand impressions. Once set,
+	// the currency code cannot be changed.
 	CpmFee *Money `json:"cpmFee,omitempty"`
 	// CreateTime: Output only. Time the data segment was created.
 	CreateTime string `json:"createTime,omitempty"`

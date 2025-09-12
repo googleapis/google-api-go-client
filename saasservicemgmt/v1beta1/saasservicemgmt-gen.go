@@ -960,7 +960,7 @@ type Rollout struct {
 	RolloutKind string `json:"rolloutKind,omitempty"`
 	// RolloutOrchestrationStrategy: Optional. The strategy used for executing this
 	// Rollout. This strategy will override whatever strategy is specified in the
-	// RolloutType. If not specified on creation, the strategy from RolloutType
+	// RolloutKind. If not specified on creation, the strategy from RolloutKind
 	// will be used. There are two supported values strategies which are used to
 	// control - "Google.Cloud.Simple.AllAtOnce" -
 	// "Google.Cloud.Simple.OneLocationAtATime" A rollout with one of these simple
@@ -1007,7 +1007,7 @@ type Rollout struct {
 	// UnitFilter: Optional. CEL(https://github.com/google/cel-spec) formatted
 	// filter string against Unit. The filter will be applied to determine the
 	// eligible unit population. This filter can only reduce, but not expand the
-	// scope of the rollout. If not provided, the unit_filter from the RolloutType
+	// scope of the rollout. If not provided, the unit_filter from the RolloutKind
 	// will be used.
 	UnitFilter string `json:"unitFilter,omitempty"`
 	// UpdateTime: Output only. The timestamp when the resource was last updated.

@@ -5452,9 +5452,14 @@ type ResourceOptions struct {
 	// connect_resources. Defaults to the latest GKE Connect version. The version
 	// must be a currently supported version, obsolete versions will be rejected.
 	ConnectVersion string `json:"connectVersion,omitempty"`
-	// K8sVersion: Optional. Major version of the Kubernetes cluster. This is only
-	// used to determine which version to use for the CustomResourceDefinition
-	// resources, `apiextensions/v1beta1` or`apiextensions/v1`.
+	// K8sGitVersion: Optional. Git version of the Kubernetes cluster. This is only
+	// used to gate the Connect Agent migration to svc.id.goog on GDC-SO 1.33.100
+	// patch and above.
+	K8sGitVersion string `json:"k8sGitVersion,omitempty"`
+	// K8sVersion: Optional. Major and minor version of the Kubernetes cluster.
+	// This is only used to determine which version to use for the
+	// CustomResourceDefinition resources, `apiextensions/v1beta1`
+	// or`apiextensions/v1`.
 	K8sVersion string `json:"k8sVersion,omitempty"`
 	// V1beta1Crd: Optional. Use `apiextensions/v1beta1` instead of
 	// `apiextensions/v1` for CustomResourceDefinition resources. This option
@@ -6385,9 +6390,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

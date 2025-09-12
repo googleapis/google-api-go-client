@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20250908",
+  "revision": "20250909",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -844,7 +844,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Required. The name of the function to call. Matches [FunctionDeclaration.name].",
+          "description": "Optional. The name of the function to call. Matches [FunctionDeclaration.name].",
           "type": "string"
         }
       },

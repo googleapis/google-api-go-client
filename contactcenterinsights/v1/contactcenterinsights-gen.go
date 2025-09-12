@@ -5436,6 +5436,10 @@ type GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig struct
 	//   "CONVERSATION_OUTCOME_ESCALATION_INITIATOR_ROLE" - A prebuilt classifier
 	// classfying the initiator of the conversation escalation. For example, if it
 	// was initiated by the customer or the agent.
+	//   "CONVERSATION_OUTCOME_CUSTOMER_SATISFACTION" - A prebuilt classifier
+	// classfying whether the customer is satisfied with the agent's response.
+	//   "CONVERSATION_OUTCOME_AGENT_HELPFULNESS" - A prebuilt classifier
+	// classfying whether the agent is helpful to the customer.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

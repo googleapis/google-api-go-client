@@ -1035,7 +1035,7 @@ type GoogleCloudAiplatformV1beta1FunctionCall struct {
 	// to execute the `function_call` and return the response with the matching
 	// `id`.
 	Id string `json:"id,omitempty"`
-	// Name: Required. The name of the function to call. Matches
+	// Name: Optional. The name of the function to call. Matches
 	// [FunctionDeclaration.name].
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally

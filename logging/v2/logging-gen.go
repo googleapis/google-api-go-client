@@ -3228,8 +3228,9 @@ type LogScope struct {
 	// available in the global location. For
 	// example:projects/my-project/locations/global/logScopes/my-log-scope
 	Name string `json:"name,omitempty"`
-	// ResourceNames: Required. Names of one or more parent resources:
-	// projects/[PROJECT_ID]May alternatively be one or more views:
+	// ResourceNames: Required. Names of one or more parent resources
+	// (organizations and folders are not supported.): projects/[PROJECT_ID]May
+	// alternatively be one or more views:
 	// projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW
 	// _ID]A log scope can include a maximum of 5 projects and a maximum of 100
 	// resources in total.
@@ -5711,9 +5712,9 @@ func (r *BillingAccountsLocationsService) List(name string) *BillingAccountsLoca
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *BillingAccountsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *BillingAccountsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -12461,9 +12462,9 @@ func (r *FoldersLocationsService) List(name string) *FoldersLocationsListCall {
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *FoldersLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *FoldersLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -15162,8 +15163,10 @@ type FoldersLocationsLogScopesCreateCall struct {
 
 // Create: Creates a log scope.
 //
-//   - parent: The parent project in which to create the log scope
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
+//   - parent: The parent resource in which to create the log scope:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For
 //     example:"projects/my-project/locations/global".
 func (r *FoldersLocationsLogScopesService) Create(parent string, logscope *LogScope) *FoldersLocationsLogScopesCreateCall {
 	c := &FoldersLocationsLogScopesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -15276,8 +15279,10 @@ type FoldersLocationsLogScopesDeleteCall struct {
 // Delete: Deletes a log scope.
 //
 //   - name: The resource name of the log scope to delete:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/logScopes/[LOG_SCOPE_ID]"
-//     For example:"projects/my-project/locations/global/logScopes/my-log-scope".
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For
+//     example:"projects/my-project/locations/global/logScopes/my-log-scope".
 func (r *FoldersLocationsLogScopesService) Delete(name string) *FoldersLocationsLogScopesDeleteCall {
 	c := &FoldersLocationsLogScopesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15376,8 +15381,10 @@ type FoldersLocationsLogScopesGetCall struct {
 // Get: Gets a log scope.
 //
 //   - name: The resource name of the log scope:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/logScopes/[LOG_SCOPE_ID]"
-//     For example:"projects/my-project/locations/global/logScopes/my-log-scope".
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For
+//     example:"projects/my-project/locations/global/logScopes/my-log-scope".
 func (r *FoldersLocationsLogScopesService) Get(name string) *FoldersLocationsLogScopesGetCall {
 	c := &FoldersLocationsLogScopesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18149,9 +18156,9 @@ func (r *LocationsService) List(name string) *LocationsListCall {
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *LocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *LocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -22682,9 +22689,9 @@ func (r *OrganizationsLocationsService) List(name string) *OrganizationsLocation
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *OrganizationsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *OrganizationsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -25383,8 +25390,10 @@ type OrganizationsLocationsLogScopesCreateCall struct {
 
 // Create: Creates a log scope.
 //
-//   - parent: The parent project in which to create the log scope
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
+//   - parent: The parent resource in which to create the log scope:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For
 //     example:"projects/my-project/locations/global".
 func (r *OrganizationsLocationsLogScopesService) Create(parent string, logscope *LogScope) *OrganizationsLocationsLogScopesCreateCall {
 	c := &OrganizationsLocationsLogScopesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -25497,8 +25506,10 @@ type OrganizationsLocationsLogScopesDeleteCall struct {
 // Delete: Deletes a log scope.
 //
 //   - name: The resource name of the log scope to delete:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/logScopes/[LOG_SCOPE_ID]"
-//     For example:"projects/my-project/locations/global/logScopes/my-log-scope".
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For
+//     example:"projects/my-project/locations/global/logScopes/my-log-scope".
 func (r *OrganizationsLocationsLogScopesService) Delete(name string) *OrganizationsLocationsLogScopesDeleteCall {
 	c := &OrganizationsLocationsLogScopesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25597,8 +25608,10 @@ type OrganizationsLocationsLogScopesGetCall struct {
 // Get: Gets a log scope.
 //
 //   - name: The resource name of the log scope:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/logScopes/[LOG_SCOPE_ID]"
-//     For example:"projects/my-project/locations/global/logScopes/my-log-scope".
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For
+//     example:"projects/my-project/locations/global/logScopes/my-log-scope".
 func (r *OrganizationsLocationsLogScopesService) Get(name string) *OrganizationsLocationsLogScopesGetCall {
 	c := &OrganizationsLocationsLogScopesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29207,9 +29220,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -31908,8 +31921,10 @@ type ProjectsLocationsLogScopesCreateCall struct {
 
 // Create: Creates a log scope.
 //
-//   - parent: The parent project in which to create the log scope
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
+//   - parent: The parent resource in which to create the log scope:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For
 //     example:"projects/my-project/locations/global".
 func (r *ProjectsLocationsLogScopesService) Create(parent string, logscope *LogScope) *ProjectsLocationsLogScopesCreateCall {
 	c := &ProjectsLocationsLogScopesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -32022,8 +32037,10 @@ type ProjectsLocationsLogScopesDeleteCall struct {
 // Delete: Deletes a log scope.
 //
 //   - name: The resource name of the log scope to delete:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/logScopes/[LOG_SCOPE_ID]"
-//     For example:"projects/my-project/locations/global/logScopes/my-log-scope".
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For
+//     example:"projects/my-project/locations/global/logScopes/my-log-scope".
 func (r *ProjectsLocationsLogScopesService) Delete(name string) *ProjectsLocationsLogScopesDeleteCall {
 	c := &ProjectsLocationsLogScopesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32122,8 +32139,10 @@ type ProjectsLocationsLogScopesGetCall struct {
 // Get: Gets a log scope.
 //
 //   - name: The resource name of the log scope:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/logScopes/[LOG_SCOPE_ID]"
-//     For example:"projects/my-project/locations/global/logScopes/my-log-scope".
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For
+//     example:"projects/my-project/locations/global/logScopes/my-log-scope".
 func (r *ProjectsLocationsLogScopesService) Get(name string) *ProjectsLocationsLogScopesGetCall {
 	c := &ProjectsLocationsLogScopesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

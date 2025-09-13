@@ -727,6 +727,34 @@ func (s GraphqlResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ImpersonateRequest: The Impersonate request to Firebase Data Connect.
+type ImpersonateRequest struct {
+	// Extensions: Optional. Additional GraphQL request information.
+	Extensions *GraphqlRequestExtensions `json:"extensions,omitempty"`
+	// OperationName: Required. The name of the GraphQL operation name. Required
+	// because all Connector operations must be named. See
+	// https://graphql.org/learn/queries/#operation-name.
+	OperationName string `json:"operationName,omitempty"`
+	// Variables: Optional. Values for GraphQL variables provided in this request.
+	Variables googleapi.RawMessage `json:"variables,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Extensions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Extensions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ImpersonateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ImpersonateRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Impersonation: Impersonation configures the Firebase Auth context to
 // impersonate.
 type Impersonation struct {
@@ -1420,9 +1448,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -2644,6 +2672,117 @@ func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Se
 	return ret, nil
 }
 
+type ProjectsLocationsServicesIntrospectGraphqlCall struct {
+	s              *APIService
+	name           string
+	graphqlrequest *GraphqlRequest
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// IntrospectGraphql: Execute introspection query against the Firebase Data
+// Connect's generated GraphQL schema. GraphQL introspection query provides
+// metadata such as what tables the schema have, what queries and mutations can
+// be performed on the schema, and so on. Read more at
+// https://graphql.org/learn/introspection. IntrospectGraphql can read schema
+// metadata but cannot read rows from Cloud SQL instance, which can be done via
+// ExecuteGraphqlRead.
+//
+//   - name: The relative resource name of Firebase Data Connect service, in the
+//     format: ``` projects/{project}/locations/{location}/services/{service} ```.
+func (r *ProjectsLocationsServicesService) IntrospectGraphql(name string, graphqlrequest *GraphqlRequest) *ProjectsLocationsServicesIntrospectGraphqlCall {
+	c := &ProjectsLocationsServicesIntrospectGraphqlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.graphqlrequest = graphqlrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServicesIntrospectGraphqlCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesIntrospectGraphqlCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServicesIntrospectGraphqlCall) Context(ctx context.Context) *ProjectsLocationsServicesIntrospectGraphqlCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServicesIntrospectGraphqlCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesIntrospectGraphqlCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.graphqlrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:introspectGraphql")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.introspectGraphql", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasedataconnect.projects.locations.services.introspectGraphql" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GraphqlResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsServicesIntrospectGraphqlCall) Do(opts ...googleapi.CallOption) (*GraphqlResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GraphqlResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.introspectGraphql", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsServicesListCall struct {
 	s            *APIService
 	parent       string
@@ -3558,6 +3697,226 @@ func (c *ProjectsLocationsServicesConnectorsGetCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsServicesConnectorsImpersonateMutationCall struct {
+	s                  *APIService
+	name               string
+	impersonaterequest *ImpersonateRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// ImpersonateMutation: Impersonate a mutation defined on a Firebase Data
+// Connect connector. It grants the admin SDK access to mutations defined in
+// the given connector. The caller can choose to impersonate a particular
+// Firebase Auth user, or skip @auth completely.
+//
+//   - name: The resource name of the connector to find the predefined
+//     query/mutation, in the format: ```
+//     projects/{project}/locations/{location}/services/{service}/connectors/{conn
+//     ector} ```.
+func (r *ProjectsLocationsServicesConnectorsService) ImpersonateMutation(name string, impersonaterequest *ImpersonateRequest) *ProjectsLocationsServicesConnectorsImpersonateMutationCall {
+	c := &ProjectsLocationsServicesConnectorsImpersonateMutationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.impersonaterequest = impersonaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServicesConnectorsImpersonateMutationCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesConnectorsImpersonateMutationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServicesConnectorsImpersonateMutationCall) Context(ctx context.Context) *ProjectsLocationsServicesConnectorsImpersonateMutationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServicesConnectorsImpersonateMutationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesConnectorsImpersonateMutationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.impersonaterequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:impersonateMutation")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.impersonateMutation", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasedataconnect.projects.locations.services.connectors.impersonateMutation" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GraphqlResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsServicesConnectorsImpersonateMutationCall) Do(opts ...googleapi.CallOption) (*GraphqlResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GraphqlResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.impersonateMutation", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsServicesConnectorsImpersonateQueryCall struct {
+	s                  *APIService
+	name               string
+	impersonaterequest *ImpersonateRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// ImpersonateQuery: Impersonate a query defined on a Firebase Data Connect
+// connector. It grants the admin SDK access to queries defined in the given
+// connector. The caller can choose to impersonate a particular Firebase Auth
+// user, or skip @auth completely.
+//
+//   - name: The resource name of the connector to find the predefined
+//     query/mutation, in the format: ```
+//     projects/{project}/locations/{location}/services/{service}/connectors/{conn
+//     ector} ```.
+func (r *ProjectsLocationsServicesConnectorsService) ImpersonateQuery(name string, impersonaterequest *ImpersonateRequest) *ProjectsLocationsServicesConnectorsImpersonateQueryCall {
+	c := &ProjectsLocationsServicesConnectorsImpersonateQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.impersonaterequest = impersonaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServicesConnectorsImpersonateQueryCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesConnectorsImpersonateQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServicesConnectorsImpersonateQueryCall) Context(ctx context.Context) *ProjectsLocationsServicesConnectorsImpersonateQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServicesConnectorsImpersonateQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesConnectorsImpersonateQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.impersonaterequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:impersonateQuery")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.impersonateQuery", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasedataconnect.projects.locations.services.connectors.impersonateQuery" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GraphqlResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsServicesConnectorsImpersonateQueryCall) Do(opts ...googleapi.CallOption) (*GraphqlResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GraphqlResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.impersonateQuery", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

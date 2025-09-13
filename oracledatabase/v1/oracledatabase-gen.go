@@ -2729,6 +2729,10 @@ type OdbNetwork struct {
 	// EntitlementId: Output only. The ID of the subscription entitlement
 	// associated with the OdbNetwork.
 	EntitlementId string `json:"entitlementId,omitempty"`
+	// GcpOracleZone: Optional. The GCP Oracle zone where OdbNetwork is hosted.
+	// Example: us-east4-b-r2. If not specified, the system will pick a zone based
+	// on availability.
+	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
 	// Labels: Optional. Labels or tags associated with the resource.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. The name of the OdbNetwork resource in the following
@@ -3266,9 +3270,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -5400,6 +5404,20 @@ func (r *ProjectsLocationsCloudExadataInfrastructuresService) List(parent string
 	return c
 }
 
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request.
+func (c *ProjectsLocationsCloudExadataInfrastructuresListCall) Filter(filter string) *ProjectsLocationsCloudExadataInfrastructuresListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An expression for ordering
+// the results of the request.
+func (c *ProjectsLocationsCloudExadataInfrastructuresListCall) OrderBy(orderBy string) *ProjectsLocationsCloudExadataInfrastructuresListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of items
 // to return. If unspecified, at most 50 Exadata infrastructures will be
 // returned. The maximum value is 1000; values above 1000 will be coerced to
@@ -6353,6 +6371,14 @@ func (r *ProjectsLocationsDbSystemShapesService) List(parent string) *ProjectsLo
 	return c
 }
 
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. Only the gcp_oracle_zone_id field is supported in
+// this format: `gcp_oracle_zone_id="{gcp_oracle_zone_id}".
+func (c *ProjectsLocationsDbSystemShapesListCall) Filter(filter string) *ProjectsLocationsDbSystemShapesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of items
 // to return. If unspecified, at most 50 database system shapes will be
 // returned. The maximum value is 1000; values above 1000 will be coerced to
@@ -6650,8 +6676,8 @@ func (r *ProjectsLocationsGiVersionsService) List(parent string) *ProjectsLocati
 }
 
 // Filter sets the optional parameter "filter": An expression for filtering the
-// results of the request. Only the shape and gi_version fields are supported
-// in this format: `shape="{shape}".
+// results of the request. Only the shape, gcp_oracle_zone and gi_version
+// fields are supported in this format: `shape="{shape}".
 func (c *ProjectsLocationsGiVersionsListCall) Filter(filter string) *ProjectsLocationsGiVersionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

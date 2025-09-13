@@ -1307,8 +1307,11 @@ type CommonEventObject struct {
 	//   "DRAWINGS" - The add-on launches from Google Drawings.
 	//   "CHAT" - A Google Chat app. Not used for Google Workspace add-ons.
 	HostApp string `json:"hostApp,omitempty"`
-	// InvokedFunction: Name of the invoked function associated with the widget.
-	// Only set for Chat apps.
+	// InvokedFunction: Name of the function to invoke. This field doesn't populate
+	// for Google Workspace Add-ons that extend Google Chat. Instead, to receive
+	// function data like identifiers, add-ons that extend Chat should use the
+	// `parameters` field. See Build interactive interfaces for Chat apps
+	// (https://developers.google.com/workspace/add-ons/chat/build).
 	InvokedFunction string `json:"invokedFunction,omitempty"`
 	// Parameters: Any additional parameters you supply to an action using
 	// `actionParameters`
@@ -1675,7 +1678,7 @@ type DeprecatedEvent struct {
 	// Possible values:
 	//   "UNSPECIFIED" - Default value for the enum. DO NOT USE.
 	//   "MESSAGE" - A user sends the Chat app a message, or invokes the Chat app
-	// in a space, such as any of the following examples: * Any message in a direct
+	// in a space. Examples of message events include: * Any message in a direct
 	// message (DM) space with the Chat app. * A message in a multi-person space
 	// where a person @mentions the Chat app, or uses one of its [slash
 	// commands](https://developers.google.com/workspace/chat/commands#types). * If
@@ -1710,8 +1713,11 @@ type DeprecatedEvent struct {
 	// [`DialogEventType`](https://developers.google.com/workspace/chat/api/referenc
 	// e/rest/v1/DialogEventType).
 	//   "WIDGET_UPDATED" - A user updates a widget in a card message or dialog.
-	//   "APP_COMMAND" - A user uses a Chat app [quick
-	// command](https://developers.google.com/workspace/chat/commands#types).
+	// This event is triggered when a user interacts with a widget that has an
+	// associated action.
+	//   "APP_COMMAND" - A user uses a Chat app
+	// [command](https://developers.google.com/workspace/chat/commands#types),
+	// including slash commands and quick commands.
 	Type string `json:"type,omitempty"`
 	// User: The user that interacted with the Chat app.
 	User *User `json:"user,omitempty"`

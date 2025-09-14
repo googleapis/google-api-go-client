@@ -1731,9 +1731,9 @@ func (s UpdateFailureState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ValueMatcher: Specifies the way to match a ProtobufWkt::Value. Primitive
-// values and ListValue are supported. StructValue is not supported and is
-// always not matched. [#next-free-field: 8]
+// ValueMatcher: Specifies the way to match a Protobuf::Value. Primitive values
+// and ListValue are supported. StructValue is not supported and is always not
+// matched. [#next-free-field: 8]
 type ValueMatcher struct {
 	// BoolMatch: If specified, a match occurs if and only if the target value is a
 	// bool value and is equal to this field.

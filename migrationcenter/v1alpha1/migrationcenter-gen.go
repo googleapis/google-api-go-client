@@ -696,6 +696,31 @@ type Asset struct {
 	AssignedGroups []string `json:"assignedGroups,omitempty"`
 	// Attributes: Generic asset attributes.
 	Attributes map[string]string `json:"attributes,omitempty"`
+	// AwsCloudFrontDistributionDetails: Output only. Asset information specific
+	// for AWS CloudFront distributions.
+	AwsCloudFrontDistributionDetails *AwsCloudFrontDistributionDetails `json:"awsCloudFrontDistributionDetails,omitempty"`
+	// AwsEcsClusterDetails: Output only. Asset information specific for AWS ECS
+	// clusters.
+	AwsEcsClusterDetails *AwsEcsClusterDetails `json:"awsEcsClusterDetails,omitempty"`
+	// AwsEfsFileSystemDetails: Output only. Asset information specific for AWS EFS
+	// file systems.
+	AwsEfsFileSystemDetails *AwsEfsFileSystemDetails `json:"awsEfsFileSystemDetails,omitempty"`
+	// AwsEksClusterDetails: Output only. Asset information specific for AWS EKS
+	// clusters.
+	AwsEksClusterDetails *AwsEksClusterDetails `json:"awsEksClusterDetails,omitempty"`
+	// AwsElbLoadBalancerDetails: Output only. Asset information specific for AWS
+	// Load Balancers.
+	AwsElbLoadBalancerDetails *AwsElbLoadBalancerDetails `json:"awsElbLoadBalancerDetails,omitempty"`
+	// AwsLambdaFunctionDetails: Output only. Asset information specific for AWS
+	// Lambda functions.
+	AwsLambdaFunctionDetails *AwsLambdaFunctionDetails `json:"awsLambdaFunctionDetails,omitempty"`
+	// AwsRedshiftDetails: Output only. Asset information specific for AWS Redshift
+	AwsRedshiftDetails *AwsRedshiftDetails `json:"awsRedshiftDetails,omitempty"`
+	// AwsS3BucketDetails: Output only. Asset information specific for AWS S3
+	// buckets.
+	AwsS3BucketDetails *AwsS3BucketDetails `json:"awsS3BucketDetails,omitempty"`
+	// AwsVpcDetails: Output only. Asset information specific for AWS VPCs.
+	AwsVpcDetails *AwsVpcDetails `json:"awsVpcDetails,omitempty"`
 	// CreateTime: Output only. The timestamp when the asset was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DatabaseDeploymentDetails: Output only. Asset information specific for
@@ -710,6 +735,9 @@ type Asset struct {
 	HideReason string `json:"hideReason,omitempty"`
 	// HideTime: Output only. The timestamp when the asset was marked as hidden.
 	HideTime string `json:"hideTime,omitempty"`
+	// HostingProviderDetails: Output only. Details about the hosting provider of
+	// the asset.
+	HostingProviderDetails *HostingProviderDetails `json:"hostingProviderDetails,omitempty"`
 	// InsightList: Output only. The list of insights associated with the asset.
 	InsightList *InsightList `json:"insightList,omitempty"`
 	// Labels: Labels as key value pairs.
@@ -723,6 +751,8 @@ type Asset struct {
 	PerformanceData *AssetPerformanceData `json:"performanceData,omitempty"`
 	// Sources: Output only. The list of sources contributing to the asset.
 	Sources []string `json:"sources,omitempty"`
+	// StructuredAttributes: Optional. Generic structured asset attributes.
+	StructuredAttributes googleapi.RawMessage `json:"structuredAttributes,omitempty"`
 	// Title: Output only. Server generated human readable name of the asset.
 	Title string `json:"title,omitempty"`
 	// UpdateTime: Output only. The timestamp when the asset was last updated.
@@ -755,6 +785,28 @@ func (s Asset) MarshalJSON() ([]byte, error) {
 type AssetFrame struct {
 	// Attributes: Generic asset attributes.
 	Attributes map[string]string `json:"attributes,omitempty"`
+	// AwsCloudFrontDistributionDetails: Asset information specific for AWS
+	// CloudFront distributions.
+	AwsCloudFrontDistributionDetails *AwsCloudFrontDistributionDetails `json:"awsCloudFrontDistributionDetails,omitempty"`
+	// AwsEcsClusterDetails: Asset information specific for AWS ECS clusters.
+	AwsEcsClusterDetails *AwsEcsClusterDetails `json:"awsEcsClusterDetails,omitempty"`
+	// AwsEfsFileSystemDetails: Asset information specific for AWS EFS file
+	// systems.
+	AwsEfsFileSystemDetails *AwsEfsFileSystemDetails `json:"awsEfsFileSystemDetails,omitempty"`
+	// AwsEksClusterDetails: Asset information specific for AWS EKS clusters.
+	AwsEksClusterDetails *AwsEksClusterDetails `json:"awsEksClusterDetails,omitempty"`
+	// AwsElbLoadBalancerDetails: Asset information specific for AWS Load
+	// Balancers.
+	AwsElbLoadBalancerDetails *AwsElbLoadBalancerDetails `json:"awsElbLoadBalancerDetails,omitempty"`
+	// AwsLambdaFunctionDetails: Asset information specific for AWS Lambda
+	// functions.
+	AwsLambdaFunctionDetails *AwsLambdaFunctionDetails `json:"awsLambdaFunctionDetails,omitempty"`
+	// AwsRedshiftDetails: Asset information specific for AWS Redshift clusters.
+	AwsRedshiftDetails *AwsRedshiftDetails `json:"awsRedshiftDetails,omitempty"`
+	// AwsS3BucketDetails: Asset information specific for AWS S3 buckets.
+	AwsS3BucketDetails *AwsS3BucketDetails `json:"awsS3BucketDetails,omitempty"`
+	// AwsVpcDetails: Asset information specific for AWS VPCs.
+	AwsVpcDetails *AwsVpcDetails `json:"awsVpcDetails,omitempty"`
 	// CollectionType: Optional. Frame collection type, if not specified the
 	// collection type will be based on the source type of the source the frame was
 	// reported on.
@@ -772,6 +824,9 @@ type AssetFrame struct {
 	DatabaseDeploymentDetails *DatabaseDeploymentDetails `json:"databaseDeploymentDetails,omitempty"`
 	// DatabaseDetails: Asset information specific for logical databases.
 	DatabaseDetails *DatabaseDetails `json:"databaseDetails,omitempty"`
+	// HostingProviderDetails: Optional. Details about the hosting provider of the
+	// asset.
+	HostingProviderDetails *HostingProviderDetails `json:"hostingProviderDetails,omitempty"`
 	// Labels: Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 	// MachineDetails: Asset information specific for virtual and physical
@@ -782,6 +837,8 @@ type AssetFrame struct {
 	PerformanceSamples []*PerformanceSample `json:"performanceSamples,omitempty"`
 	// ReportTime: The time the data was reported.
 	ReportTime string `json:"reportTime,omitempty"`
+	// StructuredAttributes: Optional. Generic structured asset attributes.
+	StructuredAttributes googleapi.RawMessage `json:"structuredAttributes,omitempty"`
 	// TraceToken: Optional. Trace token is optionally provided to assist with
 	// debugging and traceability.
 	TraceToken string `json:"traceToken,omitempty"`
@@ -1042,6 +1099,10 @@ func (s AssetsExportJobPerformanceData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AwsCloudFrontDistributionDetails: Details of an AWS CloudFront distribution.
+type AwsCloudFrontDistributionDetails struct {
+}
+
 // AwsEc2PlatformDetails: AWS EC2 specific details.
 type AwsEc2PlatformDetails struct {
 	// Hyperthreading: Optional. Whether the machine is hyperthreaded.
@@ -1075,8 +1136,168 @@ func (s AwsEc2PlatformDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AwsEcsClusterDetails: Details of an AWS ECS cluster.
+type AwsEcsClusterDetails struct {
+}
+
+// AwsEfsFileSystemDetails: Details of an AWS EFS file system.
+type AwsEfsFileSystemDetails struct {
+}
+
+// AwsEksClusterDetails: Asset information specific for AWS EKS clusters.
+type AwsEksClusterDetails struct {
+}
+
+// AwsElbLoadBalancerDetails: Asset information specific for AWS Load
+// Balancers.
+type AwsElbLoadBalancerDetails struct {
+}
+
+// AwsLambdaFunctionDetails: Asset information specific for AWS Lambda
+// functions.
+type AwsLambdaFunctionDetails struct {
+}
+
 // AwsRds: Specific details for an AWS RDS database deployment.
 type AwsRds struct {
+}
+
+// AwsRedshiftDetails: Details of an AWS Redshift cluster.
+type AwsRedshiftDetails struct {
+}
+
+// AwsS3BucketDetails: Asset information specific for AWS S3 buckets.
+type AwsS3BucketDetails struct {
+	// ObjectsMetadata: Optional. The metadata of the objects in the bucket.
+	ObjectsMetadata *AwsS3BucketDetailsObjectsMetadata `json:"objectsMetadata,omitempty"`
+	// StorageClasses: Optional. The storage classes in the bucket.
+	StorageClasses []*AwsS3BucketDetailsStorageClass `json:"storageClasses,omitempty"`
+	// Versioning: Optional. Versioning configuration of the bucket.
+	Versioning *AwsS3BucketDetailsVersioning `json:"versioning,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObjectsMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObjectsMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AwsS3BucketDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsS3BucketDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AwsS3BucketDetailsObjectsMetadata: The metadata of the objects in the
+// bucket.
+type AwsS3BucketDetailsObjectsMetadata struct {
+	// TotalObjects: Optional. The total number of objects in the bucket.
+	TotalObjects *AwsS3BucketDetailsObjectsMetadataTotalObjects `json:"totalObjects,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TotalObjects") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TotalObjects") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AwsS3BucketDetailsObjectsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsS3BucketDetailsObjectsMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AwsS3BucketDetailsObjectsMetadataTotalObjects: Information about the total
+// number of objects in the bucket.
+type AwsS3BucketDetailsObjectsMetadataTotalObjects struct {
+	// Value: Optional. The total number of objects in the bucket.
+	Value int64 `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AwsS3BucketDetailsObjectsMetadataTotalObjects) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsS3BucketDetailsObjectsMetadataTotalObjects
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AwsS3BucketDetailsStorageClass: Details about storage class.
+type AwsS3BucketDetailsStorageClass struct {
+	// TotalBytes: Optional. The total size of the storage class in bytes.
+	TotalBytes int64 `json:"totalBytes,omitempty,string"`
+	// Type: Required. Type of the storage class.
+	//
+	// Possible values:
+	//   "STORAGE_CLASS_TYPE_UNSPECIFIED" - Unspecified storage class type.
+	//   "STANDARD" - General Purpose
+	//   "INTELLIGENT_TIERING" - Represents Intelligent-Tiering's auto-tiering
+	//   "STANDARD_IA" - Standard-Infrequent Access
+	//   "ONE_ZONE_IA" - One Zone-Infrequent Access
+	//   "GLACIER" - S3 Glacier Flexible Retrieval
+	//   "DEEP_ARCHIVE" - S3 Glacier Deep Archive
+	//   "GLACIER_IR" - S3 Glacier Instant Retrieval
+	//   "REDUCED_REDUNDANCY" - S3 Reduced Redundancy Storage (Legacy)
+	//   "EXPRESS_ONEZONE" - S3 Express One Zone
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TotalBytes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TotalBytes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AwsS3BucketDetailsStorageClass) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsS3BucketDetailsStorageClass
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AwsS3BucketDetailsVersioning: Versioning configuration of the bucket.
+type AwsS3BucketDetailsVersioning struct {
+	// Enabled: Optional. Whether versioning is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AwsS3BucketDetailsVersioning) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsS3BucketDetailsVersioning
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AwsVpcDetails: Asset information specific for AWS VPCs.
+type AwsVpcDetails struct {
 }
 
 // AzureVmPlatformDetails: Azure VM specific details.
@@ -3356,6 +3577,61 @@ type GuestRuntimeDetails struct {
 
 func (s GuestRuntimeDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GuestRuntimeDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HostingProviderDetails: Details about the hosting platform of the asset.
+type HostingProviderDetails struct {
+	// Aws: Optional. The AWS platform details.
+	Aws *HostingProviderDetailsAws `json:"aws,omitempty"`
+	// CreateTime: Optional. The timestamp when resource was created in the hosting
+	// provider.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Optional. Display name of the asset.
+	DisplayName string `json:"displayName,omitempty"`
+	// Location: Optional. Location of the asset.
+	Location *ResourceLocation `json:"location,omitempty"`
+	// OriginalId: Optional. Unique identifier for the asset in the hosting
+	// provider.
+	OriginalId string `json:"originalId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Aws") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Aws") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HostingProviderDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod HostingProviderDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HostingProviderDetailsAws: Details for AWS platform.
+type HostingProviderDetailsAws struct {
+	// OwningAccountId: Optional. The AWS account ID owning the resource
+	// represented by this asset.
+	OwningAccountId string `json:"owningAccountId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OwningAccountId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OwningAccountId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HostingProviderDetailsAws) MarshalJSON() ([]byte, error) {
+	type NoMethod HostingProviderDetailsAws
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6386,6 +6662,28 @@ type ReportSummaryVMWareNodeAllocation struct {
 
 func (s ReportSummaryVMWareNodeAllocation) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportSummaryVMWareNodeAllocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResourceLocation: Location of a resource.
+type ResourceLocation struct {
+	// Region: Optional. The name of the region.
+	Region string `json:"region,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Region") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Region") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceLocation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

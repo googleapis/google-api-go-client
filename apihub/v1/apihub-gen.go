@@ -2994,6 +2994,55 @@ func (s GoogleCloudApihubV1LookupRuntimeProjectAttachmentResponse) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApihubV1ManagePluginInstanceSourceDataRequest: The
+// ManagePluginInstanceSourceData method's request.
+type GoogleCloudApihubV1ManagePluginInstanceSourceDataRequest struct {
+	// Action: Required. Action to be performed.
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED" - Default unspecified action.
+	//   "UPLOAD" - Upload or upsert data.
+	//   "DELETE" - Delete data.
+	Action string `json:"action,omitempty"`
+	// Data: Required. Data to be managed.
+	Data string `json:"data,omitempty"`
+	// DataType: Required. Type of data to be managed.
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Default unspecified type.
+	//   "PROXY_DEPLOYMENT_MANIFEST" - Proxy deployment manifest.
+	//   "ENVIRONMENT_MANIFEST" - Environment manifest.
+	//   "PROXY_BUNDLE" - Proxy bundle.
+	//   "SHARED_FLOW_BUNDLE" - Shared flow bundle.
+	DataType string `json:"dataType,omitempty"`
+	// RelativePath: Required. Relative path of data being managed for a given
+	// plugin instance.
+	RelativePath string `json:"relativePath,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1ManagePluginInstanceSourceDataRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1ManagePluginInstanceSourceDataRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1ManagePluginInstanceSourceDataResponse: The
+// ManagePluginInstanceSourceData method's response.
+type GoogleCloudApihubV1ManagePluginInstanceSourceDataResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // GoogleCloudApihubV1MatchResult: MatchResult represents the result of
 // matching a discovered API operation with a catalog API operation.
 type GoogleCloudApihubV1MatchResult struct {
@@ -3310,8 +3359,9 @@ func (s GoogleCloudApihubV1PathParam) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudApihubV1Plugin: A plugin resource in the API Hub.
 type GoogleCloudApihubV1Plugin struct {
-	// ActionsConfig: Required. The configuration of actions supported by the
-	// plugin.
+	// ActionsConfig: Optional. The configuration of actions supported by the
+	// plugin. **REQUIRED**: This field must be provided when creating or updating
+	// a Plugin. The server will reject requests if this field is missing.
 	ActionsConfig []*GoogleCloudApihubV1PluginActionConfig `json:"actionsConfig,omitempty"`
 	// ConfigTemplate: Optional. The configuration template for the plugin.
 	ConfigTemplate *GoogleCloudApihubV1ConfigTemplate `json:"configTemplate,omitempty"`
@@ -4912,9 +4962,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -5420,7 +5470,9 @@ type ProjectsLocationsApiHubInstancesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the API hub instance.
+// Delete: Deletes the API hub instance. Deleting the API hub instance will
+// also result in the removal of all associated runtime project attachments and
+// the host project registration.
 //
 //   - name: The name of the Api Hub instance to delete. Format:
 //     `projects/{project}/locations/{location}/apiHubInstances/{apiHubInstance}`.
@@ -15111,6 +15163,113 @@ func (c *ProjectsLocationsPluginsInstancesListCall) Pages(ctx context.Context, f
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsPluginsInstancesManageSourceDataCall struct {
+	s                                                        *Service
+	name                                                     string
+	googlecloudapihubv1manageplugininstancesourcedatarequest *GoogleCloudApihubV1ManagePluginInstanceSourceDataRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// ManageSourceData: Manages data for a given plugin instance.
+//
+//   - name: The name of the plugin instance for which data needs to be managed.
+//     Format:
+//     `projects/{project}/locations/{location}/plugins/{plugin}/instances/{instan
+//     ce}`.
+func (r *ProjectsLocationsPluginsInstancesService) ManageSourceData(name string, googlecloudapihubv1manageplugininstancesourcedatarequest *GoogleCloudApihubV1ManagePluginInstanceSourceDataRequest) *ProjectsLocationsPluginsInstancesManageSourceDataCall {
+	c := &ProjectsLocationsPluginsInstancesManageSourceDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapihubv1manageplugininstancesourcedatarequest = googlecloudapihubv1manageplugininstancesourcedatarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPluginsInstancesManageSourceDataCall) Fields(s ...googleapi.Field) *ProjectsLocationsPluginsInstancesManageSourceDataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPluginsInstancesManageSourceDataCall) Context(ctx context.Context) *ProjectsLocationsPluginsInstancesManageSourceDataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPluginsInstancesManageSourceDataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPluginsInstancesManageSourceDataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapihubv1manageplugininstancesourcedatarequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:manageSourceData")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apihub.projects.locations.plugins.instances.manageSourceData", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apihub.projects.locations.plugins.instances.manageSourceData" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApihubV1ManagePluginInstanceSourceDataResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPluginsInstancesManageSourceDataCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApihubV1ManagePluginInstanceSourceDataResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApihubV1ManagePluginInstanceSourceDataResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.plugins.instances.manageSourceData", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsPluginsInstancesPatchCall struct {

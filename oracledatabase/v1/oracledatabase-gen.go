@@ -174,11 +174,17 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.AutonomousDbVersions = NewProjectsLocationsAutonomousDbVersionsService(s)
 	rs.CloudExadataInfrastructures = NewProjectsLocationsCloudExadataInfrastructuresService(s)
 	rs.CloudVmClusters = NewProjectsLocationsCloudVmClustersService(s)
+	rs.DatabaseCharacterSets = NewProjectsLocationsDatabaseCharacterSetsService(s)
+	rs.Databases = NewProjectsLocationsDatabasesService(s)
+	rs.DbSystemInitialStorageSizes = NewProjectsLocationsDbSystemInitialStorageSizesService(s)
 	rs.DbSystemShapes = NewProjectsLocationsDbSystemShapesService(s)
+	rs.DbSystems = NewProjectsLocationsDbSystemsService(s)
+	rs.DbVersions = NewProjectsLocationsDbVersionsService(s)
 	rs.Entitlements = NewProjectsLocationsEntitlementsService(s)
 	rs.GiVersions = NewProjectsLocationsGiVersionsService(s)
 	rs.OdbNetworks = NewProjectsLocationsOdbNetworksService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.PluggableDatabases = NewProjectsLocationsPluggableDatabasesService(s)
 	return rs
 }
 
@@ -197,7 +203,17 @@ type ProjectsLocationsService struct {
 
 	CloudVmClusters *ProjectsLocationsCloudVmClustersService
 
+	DatabaseCharacterSets *ProjectsLocationsDatabaseCharacterSetsService
+
+	Databases *ProjectsLocationsDatabasesService
+
+	DbSystemInitialStorageSizes *ProjectsLocationsDbSystemInitialStorageSizesService
+
 	DbSystemShapes *ProjectsLocationsDbSystemShapesService
+
+	DbSystems *ProjectsLocationsDbSystemsService
+
+	DbVersions *ProjectsLocationsDbVersionsService
 
 	Entitlements *ProjectsLocationsEntitlementsService
 
@@ -206,6 +222,8 @@ type ProjectsLocationsService struct {
 	OdbNetworks *ProjectsLocationsOdbNetworksService
 
 	Operations *ProjectsLocationsOperationsService
+
+	PluggableDatabases *ProjectsLocationsPluggableDatabasesService
 }
 
 func NewProjectsLocationsAutonomousDatabaseBackupsService(s *Service) *ProjectsLocationsAutonomousDatabaseBackupsService {
@@ -286,12 +304,57 @@ type ProjectsLocationsCloudVmClustersDbNodesService struct {
 	s *Service
 }
 
+func NewProjectsLocationsDatabaseCharacterSetsService(s *Service) *ProjectsLocationsDatabaseCharacterSetsService {
+	rs := &ProjectsLocationsDatabaseCharacterSetsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatabaseCharacterSetsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDatabasesService(s *Service) *ProjectsLocationsDatabasesService {
+	rs := &ProjectsLocationsDatabasesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatabasesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDbSystemInitialStorageSizesService(s *Service) *ProjectsLocationsDbSystemInitialStorageSizesService {
+	rs := &ProjectsLocationsDbSystemInitialStorageSizesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDbSystemInitialStorageSizesService struct {
+	s *Service
+}
+
 func NewProjectsLocationsDbSystemShapesService(s *Service) *ProjectsLocationsDbSystemShapesService {
 	rs := &ProjectsLocationsDbSystemShapesService{s: s}
 	return rs
 }
 
 type ProjectsLocationsDbSystemShapesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDbSystemsService(s *Service) *ProjectsLocationsDbSystemsService {
+	rs := &ProjectsLocationsDbSystemsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDbSystemsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDbVersionsService(s *Service) *ProjectsLocationsDbVersionsService {
+	rs := &ProjectsLocationsDbVersionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDbVersionsService struct {
 	s *Service
 }
 
@@ -340,6 +403,15 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsPluggableDatabasesService(s *Service) *ProjectsLocationsPluggableDatabasesService {
+	rs := &ProjectsLocationsPluggableDatabasesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsPluggableDatabasesService struct {
 	s *Service
 }
 
@@ -1207,6 +1279,36 @@ func (s AutonomousDbVersion) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BackupDestinationDetails: The details of the database backup destination.
+type BackupDestinationDetails struct {
+	// Type: Optional. The type of the database backup destination.
+	//
+	// Possible values:
+	//   "BACKUP_DESTINATION_TYPE_UNSPECIFIED" - Default unspecified value.
+	//   "NFS" - Backup destination type is NFS.
+	//   "RECOVERY_APPLIANCE" - Backup destination type is Recovery Appliance.
+	//   "OBJECT_STORE" - Backup destination type is Object Store.
+	//   "LOCAL" - Backup destination type is Local.
+	//   "DBRS" - Backup destination type is DBRS.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupDestinationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupDestinationDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
@@ -1680,6 +1782,140 @@ func (s DataCollectionOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DataCollectionOptionsDbSystem: Data collection options for DbSystem.
+type DataCollectionOptionsDbSystem struct {
+	// IsDiagnosticsEventsEnabled: Optional. Indicates whether to enable data
+	// collection for diagnostics.
+	IsDiagnosticsEventsEnabled bool `json:"isDiagnosticsEventsEnabled,omitempty"`
+	// IsIncidentLogsEnabled: Optional. Indicates whether to enable incident logs
+	// and trace collection.
+	IsIncidentLogsEnabled bool `json:"isIncidentLogsEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsDiagnosticsEventsEnabled")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsDiagnosticsEventsEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataCollectionOptionsDbSystem) MarshalJSON() ([]byte, error) {
+	type NoMethod DataCollectionOptionsDbSystem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Database: Details of the Database resource.
+// https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/Database/
+type Database struct {
+	// AdminPassword: Required. The password for the default ADMIN user.
+	AdminPassword string `json:"adminPassword,omitempty"`
+	// CharacterSet: Optional. The character set for the database. The default is
+	// AL32UTF8.
+	CharacterSet string `json:"characterSet,omitempty"`
+	// CreateTime: Output only. The date and time that the Database was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DatabaseId: Optional. The database ID of the Database.
+	DatabaseId string `json:"databaseId,omitempty"`
+	// DbHomeName: Optional. The name of the DbHome resource associated with the
+	// Database.
+	DbHomeName string `json:"dbHomeName,omitempty"`
+	// DbName: Optional. The database name. The name must begin with an alphabetic
+	// character and can contain a maximum of eight alphanumeric characters.
+	// Special characters are not permitted.
+	DbName string `json:"dbName,omitempty"`
+	// DbUniqueName: Optional. The DB_UNIQUE_NAME of the Oracle Database being
+	// backed up.
+	DbUniqueName string `json:"dbUniqueName,omitempty"`
+	// GcpOracleZone: Output only. The GCP Oracle zone where the Database is
+	// created.
+	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
+	// Name: Identifier. The name of the Database resource in the following format:
+	// projects/{project}/locations/{region}/databases/{database}
+	Name string `json:"name,omitempty"`
+	// NcharacterSet: Optional. The national character set for the database. The
+	// default is AL16UTF16.
+	NcharacterSet string `json:"ncharacterSet,omitempty"`
+	// OciUrl: Output only. HTTPS link to OCI resources exposed to Customer via UI
+	// Interface.
+	OciUrl string `json:"ociUrl,omitempty"`
+	// OpsInsightsStatus: Output only. The Status of Operations Insights for this
+	// Database.
+	//
+	// Possible values:
+	//   "OPERATIONS_INSIGHTS_STATUS_UNSPECIFIED" - Default unspecified value.
+	//   "ENABLING" - Indicates that the operations insights are being enabled.
+	//   "ENABLED" - Indicates that the operations insights are enabled.
+	//   "DISABLING" - Indicates that the operations insights are being disabled.
+	//   "NOT_ENABLED" - Indicates that the operations insights are not enabled.
+	//   "FAILED_ENABLING" - Indicates that the operations insights failed to
+	// enable.
+	//   "FAILED_DISABLING" - Indicates that the operations insights failed to
+	// disable.
+	OpsInsightsStatus string `json:"opsInsightsStatus,omitempty"`
+	// Properties: Optional. The properties of the Database.
+	Properties *DatabaseProperties `json:"properties,omitempty"`
+	// TdeWalletPassword: Optional. The TDE wallet password for the database.
+	TdeWalletPassword string `json:"tdeWalletPassword,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AdminPassword") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdminPassword") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Database) MarshalJSON() ([]byte, error) {
+	type NoMethod Database
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseCharacterSet: Details of the Database character set resource.
+type DatabaseCharacterSet struct {
+	// CharacterSet: Output only. The character set name for the Database which is
+	// the ID in the resource name.
+	CharacterSet string `json:"characterSet,omitempty"`
+	// CharacterSetType: Output only. The character set type for the Database.
+	//
+	// Possible values:
+	//   "CHARACTER_SET_TYPE_UNSPECIFIED" - Character set type is not specified.
+	//   "DATABASE" - Character set type is set to database.
+	//   "NATIONAL" - Character set type is set to national.
+	CharacterSetType string `json:"characterSetType,omitempty"`
+	// Name: Identifier. The name of the Database Character Set resource in the
+	// following format:
+	// projects/{project}/locations/{region}/databaseCharacterSets/{database_charact
+	// er_set}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CharacterSet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CharacterSet") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseCharacterSet) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseCharacterSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DatabaseConnectionStringProfile: The connection string profile to allow
 // clients to group.
 // https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/datatypes/DatabaseConnectionStringProfile
@@ -1755,6 +1991,212 @@ type DatabaseConnectionStringProfile struct {
 
 func (s DatabaseConnectionStringProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseConnectionStringProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseManagementConfig: The configuration of the Database Management
+// service.
+type DatabaseManagementConfig struct {
+	// ManagementState: Output only. The status of the Database Management service.
+	//
+	// Possible values:
+	//   "MANAGEMENT_STATE_UNSPECIFIED" - The status is not specified.
+	//   "ENABLING" - The Database Management service is enabling.
+	//   "ENABLED" - The Database Management service is enabled.
+	//   "DISABLING" - The Database Management service is disabling.
+	//   "DISABLED" - The Database Management service is disabled.
+	//   "UPDATING" - The Database Management service is updating.
+	//   "FAILED_ENABLING" - The Database Management service failed to enable.
+	//   "FAILED_DISABLING" - The Database Management service failed to disable.
+	//   "FAILED_UPDATING" - The Database Management service failed to update.
+	ManagementState string `json:"managementState,omitempty"`
+	// ManagementType: Output only. The Database Management type.
+	//
+	// Possible values:
+	//   "MANAGEMENT_TYPE_UNSPECIFIED" - The type is not specified.
+	//   "BASIC" - Basic Database Management.
+	//   "ADVANCED" - Advanced Database Management.
+	ManagementType string `json:"managementType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ManagementState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ManagementState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseManagementConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseManagementConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseProperties: The properties of a Database.
+type DatabaseProperties struct {
+	// DatabaseManagementConfig: Output only. The Database Management config.
+	DatabaseManagementConfig *DatabaseManagementConfig `json:"databaseManagementConfig,omitempty"`
+	// DbBackupConfig: Optional. Backup options for the Database.
+	DbBackupConfig *DbBackupConfig `json:"dbBackupConfig,omitempty"`
+	// DbVersion: Required. The Oracle Database version.
+	DbVersion string `json:"dbVersion,omitempty"`
+	// State: Output only. State of the Database.
+	//
+	// Possible values:
+	//   "DATABASE_LIFECYCLE_STATE_UNSPECIFIED" - Default unspecified value.
+	//   "PROVISIONING" - Indicates that the resource is in provisioning state.
+	//   "AVAILABLE" - Indicates that the resource is in available state.
+	//   "UPDATING" - Indicates that the resource is in updating state.
+	//   "BACKUP_IN_PROGRESS" - Indicates that the resource is in backup in
+	// progress state.
+	//   "UPGRADING" - Indicates that the resource is in upgrading state.
+	//   "CONVERTING" - Indicates that the resource is in converting state.
+	//   "TERMINATING" - Indicates that the resource is in terminating state.
+	//   "TERMINATED" - Indicates that the resource is in terminated state.
+	//   "RESTORE_FAILED" - Indicates that the resource is in restore failed state.
+	//   "FAILED" - Indicates that the resource is in failed state.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatabaseManagementConfig")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatabaseManagementConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DbBackupConfig: Backup Options for the Database.
+type DbBackupConfig struct {
+	// AutoBackupEnabled: Optional. If set to true, enables automatic backups on
+	// the database.
+	AutoBackupEnabled bool `json:"autoBackupEnabled,omitempty"`
+	// AutoFullBackupDay: Optional. The day of the week on which the full backup
+	// should be performed on the database. If no value is provided, it will
+	// default to Sunday.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	AutoFullBackupDay string `json:"autoFullBackupDay,omitempty"`
+	// AutoFullBackupWindow: Optional. The window in which the full backup should
+	// be performed on the database. If no value is provided, the default is
+	// anytime.
+	//
+	// Possible values:
+	//   "BACKUP_WINDOW_UNSPECIFIED" - Default unspecified value.
+	//   "SLOT_ONE" - 12:00 AM - 2:00 AM
+	//   "SLOT_TWO" - 2:00 AM - 4:00 AM
+	//   "SLOT_THREE" - 4:00 AM - 6:00 AM
+	//   "SLOT_FOUR" - 6:00 AM - 8:00 AM
+	//   "SLOT_FIVE" - 8:00 AM - 10:00 AM
+	//   "SLOT_SIX" - 10:00 AM - 12:00 PM
+	//   "SLOT_SEVEN" - 12:00 PM - 2:00 PM
+	//   "SLOT_EIGHT" - 2:00 PM - 4:00 PM
+	//   "SLOT_NINE" - 4:00 PM - 6:00 PM
+	//   "SLOT_TEN" - 6:00 PM - 8:00 PM
+	//   "SLOT_ELEVEN" - 8:00 PM - 10:00 PM
+	//   "SLOT_TWELVE" - 10:00 PM - 12:00 AM
+	AutoFullBackupWindow string `json:"autoFullBackupWindow,omitempty"`
+	// AutoIncrementalBackupWindow: Optional. The window in which the incremental
+	// backup should be performed on the database. If no value is provided, the
+	// default is anytime except the auto full backup day.
+	//
+	// Possible values:
+	//   "BACKUP_WINDOW_UNSPECIFIED" - Default unspecified value.
+	//   "SLOT_ONE" - 12:00 AM - 2:00 AM
+	//   "SLOT_TWO" - 2:00 AM - 4:00 AM
+	//   "SLOT_THREE" - 4:00 AM - 6:00 AM
+	//   "SLOT_FOUR" - 6:00 AM - 8:00 AM
+	//   "SLOT_FIVE" - 8:00 AM - 10:00 AM
+	//   "SLOT_SIX" - 10:00 AM - 12:00 PM
+	//   "SLOT_SEVEN" - 12:00 PM - 2:00 PM
+	//   "SLOT_EIGHT" - 2:00 PM - 4:00 PM
+	//   "SLOT_NINE" - 4:00 PM - 6:00 PM
+	//   "SLOT_TEN" - 6:00 PM - 8:00 PM
+	//   "SLOT_ELEVEN" - 8:00 PM - 10:00 PM
+	//   "SLOT_TWELVE" - 10:00 PM - 12:00 AM
+	AutoIncrementalBackupWindow string `json:"autoIncrementalBackupWindow,omitempty"`
+	// BackupDeletionPolicy: Optional. This defines when the backups will be
+	// deleted after Database termination.
+	//
+	// Possible values:
+	//   "BACKUP_DELETION_POLICY_UNSPECIFIED" - Default unspecified value.
+	//   "DELETE_IMMEDIATELY" - Keeps the backup for predefined time i.e. 72 hours
+	// and then delete permanently.
+	//   "DELETE_AFTER_RETENTION_PERIOD" - Keeps the backups as per the policy
+	// defined for database backups.
+	BackupDeletionPolicy string `json:"backupDeletionPolicy,omitempty"`
+	// BackupDestinationDetails: Optional. Details of the database backup
+	// destinations.
+	BackupDestinationDetails []*BackupDestinationDetails `json:"backupDestinationDetails,omitempty"`
+	// RetentionPeriodDays: Optional. The number of days an automatic backup is
+	// retained before being automatically deleted. This value determines the
+	// earliest point in time to which a database can be restored. Min: 1, Max: 60.
+	RetentionPeriodDays int64 `json:"retentionPeriodDays,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AutoBackupEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoBackupEnabled") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DbBackupConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DbBackupConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DbHome: Details of the Database Home resource.
+type DbHome struct {
+	// Database: Required. The Database resource.
+	Database *Database `json:"database,omitempty"`
+	// DbVersion: Required. A valid Oracle Database version. For a list of
+	// supported versions, use the ListDbVersions operation.
+	DbVersion string `json:"dbVersion,omitempty"`
+	// DisplayName: Optional. The display name for the Database Home. The name does
+	// not have to be unique within your project.
+	DisplayName string `json:"displayName,omitempty"`
+	// IsUnifiedAuditingEnabled: Optional. Whether unified auditing is enabled for
+	// the Database Home.
+	IsUnifiedAuditingEnabled bool `json:"isUnifiedAuditingEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Database") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DbHome) MarshalJSON() ([]byte, error) {
+	type NoMethod DbHome
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1916,6 +2358,251 @@ func (s DbServerProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DbSystem: Details of the DbSystem (BaseDB) resource.
+// https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/DbSystem/
+type DbSystem struct {
+	// CreateTime: Output only. The date and time that the DbSystem was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Required. The display name for the System db. The name does not
+	// have to be unique within your project.
+	DisplayName string `json:"displayName,omitempty"`
+	// EntitlementId: Output only. The ID of the subscription entitlement
+	// associated with the DbSystem
+	EntitlementId string `json:"entitlementId,omitempty"`
+	// GcpOracleZone: Optional. The GCP Oracle zone where Oracle DbSystem is
+	// hosted. Example: us-east4-b-r2. If not specified, the system will pick a
+	// zone based on availability.
+	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
+	// Labels: Optional. The labels or tags associated with the DbSystem.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The name of the DbSystem resource in the following format:
+	// projects/{project}/locations/{region}/dbSystems/{db_system}
+	Name string `json:"name,omitempty"`
+	// OciUrl: Output only. HTTPS link to OCI resources exposed to Customer via UI
+	// Interface.
+	OciUrl string `json:"ociUrl,omitempty"`
+	// OdbNetwork: Optional. The name of the OdbNetwork associated with the
+	// DbSystem. Format:
+	// projects/{project}/locations/{location}/odbNetworks/{odb_network} It is
+	// optional but if specified, this should match the parent ODBNetwork of the
+	// OdbSubnet.
+	OdbNetwork string `json:"odbNetwork,omitempty"`
+	// OdbSubnet: Required. The name of the OdbSubnet associated with the DbSystem
+	// for IP allocation. Format:
+	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/
+	// {odb_subnet}
+	OdbSubnet string `json:"odbSubnet,omitempty"`
+	// Properties: Optional. The properties of the DbSystem.
+	Properties *DbSystemProperties `json:"properties,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DbSystem) MarshalJSON() ([]byte, error) {
+	type NoMethod DbSystem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DbSystemInitialStorageSize: Summary of the DbSystem initial storage size.
+type DbSystemInitialStorageSize struct {
+	// Name: Output only. The name of the resource.
+	Name string `json:"name,omitempty"`
+	// Properties: Output only. The properties of the DbSystem initial storage size
+	// summary.
+	Properties *DbSystemInitialStorageSizeProperties `json:"properties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DbSystemInitialStorageSize) MarshalJSON() ([]byte, error) {
+	type NoMethod DbSystemInitialStorageSize
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DbSystemInitialStorageSizeProperties: The properties of a DbSystem initial
+// storage size summary.
+type DbSystemInitialStorageSizeProperties struct {
+	// LaunchFromBackupStorageSizeDetails: Output only. List of storage disk
+	// details available for launches from backup.
+	LaunchFromBackupStorageSizeDetails []*StorageSizeDetails `json:"launchFromBackupStorageSizeDetails,omitempty"`
+	// ShapeType: Output only. VM shape platform type
+	//
+	// Possible values:
+	//   "SHAPE_TYPE_UNSPECIFIED" - Unspecified shape type.
+	//   "STANDARD_X86" - Standard X86.
+	ShapeType string `json:"shapeType,omitempty"`
+	// StorageManagement: Output only. The storage option used in DB system.
+	//
+	// Possible values:
+	//   "STORAGE_MANAGEMENT_UNSPECIFIED" - Unspecified storage management.
+	//   "ASM" - Automatic Storage Management.
+	//   "LVM" - Logical Volume Management.
+	StorageManagement string `json:"storageManagement,omitempty"`
+	// StorageSizeDetails: Output only. List of storage disk details.
+	StorageSizeDetails []*StorageSizeDetails `json:"storageSizeDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "LaunchFromBackupStorageSizeDetails") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "LaunchFromBackupStorageSizeDetails") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DbSystemInitialStorageSizeProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DbSystemInitialStorageSizeProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DbSystemOptions: Details of the DbSystem Options.
+type DbSystemOptions struct {
+	// StorageManagement: Optional. The storage option used in DB system.
+	//
+	// Possible values:
+	//   "STORAGE_MANAGEMENT_UNSPECIFIED" - The storage management is unspecified.
+	//   "ASM" - Automatic storage management.
+	//   "LVM" - Logical Volume management.
+	StorageManagement string `json:"storageManagement,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StorageManagement") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StorageManagement") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DbSystemOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod DbSystemOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DbSystemProperties: The properties of a DbSystem.
+type DbSystemProperties struct {
+	// ComputeCount: Required. The number of CPU cores to enable for the DbSystem.
+	ComputeCount int64 `json:"computeCount,omitempty"`
+	// ComputeModel: Optional. The compute model of the DbSystem.
+	//
+	// Possible values:
+	//   "COMPUTE_MODEL_UNSPECIFIED" - The compute model is unspecified.
+	//   "ECPU" - The compute model is virtual.
+	//   "OCPU" - The compute model is physical.
+	ComputeModel string `json:"computeModel,omitempty"`
+	// DataCollectionOptions: Optional. Data collection options for diagnostics.
+	DataCollectionOptions *DataCollectionOptionsDbSystem `json:"dataCollectionOptions,omitempty"`
+	// DataStorageSizeGb: Optional. The data storage size in GB that is currently
+	// available to DbSystems.
+	DataStorageSizeGb int64 `json:"dataStorageSizeGb,omitempty"`
+	// DatabaseEdition: Required. The database edition of the DbSystem.
+	//
+	// Possible values:
+	//   "DB_SYSTEM_DATABASE_EDITION_UNSPECIFIED" - The database edition is
+	// unspecified.
+	//   "STANDARD_EDITION" - The database edition is Standard.
+	//   "ENTERPRISE_EDITION" - The database edition is Enterprise.
+	//   "ENTERPRISE_EDITION_HIGH_PERFORMANCE" - The database edition is Enterprise
+	// Edition.
+	DatabaseEdition string `json:"databaseEdition,omitempty"`
+	// DbHome: Optional. Details for creating a Database Home.
+	DbHome *DbHome `json:"dbHome,omitempty"`
+	// DbSystemOptions: Optional. The options for the DbSystem.
+	DbSystemOptions *DbSystemOptions `json:"dbSystemOptions,omitempty"`
+	// Domain: Optional. The host domain name of the DbSystem.
+	Domain string `json:"domain,omitempty"`
+	// Hostname: Output only. The hostname of the DbSystem.
+	Hostname string `json:"hostname,omitempty"`
+	// HostnamePrefix: Optional. Prefix for DB System host names.
+	HostnamePrefix string `json:"hostnamePrefix,omitempty"`
+	// InitialDataStorageSizeGb: Required. The initial data storage size in GB.
+	InitialDataStorageSizeGb int64 `json:"initialDataStorageSizeGb,omitempty"`
+	// LicenseModel: Required. The license model of the DbSystem.
+	//
+	// Possible values:
+	//   "LICENSE_MODEL_UNSPECIFIED" - The license model is unspecified.
+	//   "LICENSE_INCLUDED" - The license model is included.
+	//   "BRING_YOUR_OWN_LICENSE" - The license model is bring your own license.
+	LicenseModel string `json:"licenseModel,omitempty"`
+	// LifecycleState: Output only. State of the DbSystem.
+	//
+	// Possible values:
+	//   "DB_SYSTEM_LIFECYCLE_STATE_UNSPECIFIED" - Default unspecified value.
+	//   "PROVISIONING" - Indicates that the resource is in provisioning state.
+	//   "AVAILABLE" - Indicates that the resource is in available state.
+	//   "UPDATING" - Indicates that the resource is in updating state.
+	//   "TERMINATING" - Indicates that the resource is in terminating state.
+	//   "TERMINATED" - Indicates that the resource is in terminated state.
+	//   "FAILED" - Indicates that the resource is in failed state.
+	//   "MIGRATED" - Indicates that the resource has been migrated.
+	//   "MAINTENANCE_IN_PROGRESS" - Indicates that the resource is in maintenance
+	// in progress state.
+	//   "NEEDS_ATTENTION" - Indicates that the resource needs attention.
+	//   "UPGRADING" - Indicates that the resource is upgrading.
+	LifecycleState string `json:"lifecycleState,omitempty"`
+	// MemorySizeGb: Optional. The memory size in GB.
+	MemorySizeGb int64 `json:"memorySizeGb,omitempty"`
+	// NodeCount: Optional. The number of nodes in the DbSystem.
+	NodeCount int64 `json:"nodeCount,omitempty"`
+	// Ocid: Output only. OCID of the DbSystem.
+	Ocid string `json:"ocid,omitempty"`
+	// PrivateIp: Optional. The private IP address of the DbSystem.
+	PrivateIp string `json:"privateIp,omitempty"`
+	// RecoStorageSizeGb: Optional. The reco/redo storage size in GB.
+	RecoStorageSizeGb int64 `json:"recoStorageSizeGb,omitempty"`
+	// Shape: Required. Shape of DB System.
+	Shape string `json:"shape,omitempty"`
+	// SshPublicKeys: Required. SSH public keys to be stored with the DbSystem.
+	SshPublicKeys []string `json:"sshPublicKeys,omitempty"`
+	// TimeZone: Optional. Time zone of the DbSystem.
+	TimeZone *TimeZone `json:"timeZone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ComputeCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComputeCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DbSystemProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DbSystemProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DbSystemShape: Details of the Database System Shapes resource.
 // https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/DbSystemShapeSummary/
 type DbSystemShape struct {
@@ -1962,6 +2649,87 @@ type DbSystemShape struct {
 
 func (s DbSystemShape) MarshalJSON() ([]byte, error) {
 	type NoMethod DbSystemShape
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DbVersion: A valid Oracle Database version.
+type DbVersion struct {
+	// Name: Output only. The name of the DbVersion resource in the following
+	// format: projects/{project}/locations/{region}/dbVersions/{db_version}
+	Name string `json:"name,omitempty"`
+	// Properties: Output only. The properties of the DbVersion.
+	Properties *DbVersionProperties `json:"properties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DbVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod DbVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DbVersionProperties: The properties of a DbVersion.
+type DbVersionProperties struct {
+	// IsLatestForMajorVersion: Output only. True if this version of the Oracle
+	// Database software is the latest version for a release.
+	IsLatestForMajorVersion bool `json:"isLatestForMajorVersion,omitempty"`
+	// IsPreviewDbVersion: Output only. True if this version of the Oracle Database
+	// software is the preview version.
+	IsPreviewDbVersion bool `json:"isPreviewDbVersion,omitempty"`
+	// IsUpgradeSupported: Output only. True if this version of the Oracle Database
+	// software is supported for Upgrade.
+	IsUpgradeSupported bool `json:"isUpgradeSupported,omitempty"`
+	// SupportsPdb: Output only. True if this version of the Oracle Database
+	// software supports pluggable databases.
+	SupportsPdb bool `json:"supportsPdb,omitempty"`
+	// Version: Output only. A valid Oracle Database version.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsLatestForMajorVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsLatestForMajorVersion") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DbVersionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DbVersionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DefinedTagValue: Wrapper message for the value of a defined tag.
+type DefinedTagValue struct {
+	// Tags: The tags within the namespace.
+	Tags map[string]string `json:"tags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Tags") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Tags") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DefinedTagValue) MarshalJSON() ([]byte, error) {
+	type NoMethod DefinedTagValue
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2309,6 +3077,63 @@ func (s ListCloudVmClustersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListDatabaseCharacterSetsResponse: The response for
+// `DatabaseCharacterSet.List`.
+type ListDatabaseCharacterSetsResponse struct {
+	// DatabaseCharacterSets: The list of DatabaseCharacterSets.
+	DatabaseCharacterSets []*DatabaseCharacterSet `json:"databaseCharacterSets,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DatabaseCharacterSets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatabaseCharacterSets") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListDatabaseCharacterSetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDatabaseCharacterSetsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListDatabasesResponse: The response for `Database.List`.
+type ListDatabasesResponse struct {
+	// Databases: The list of Databases.
+	Databases []*Database `json:"databases,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Databases") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Databases") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListDatabasesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDatabasesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListDbNodesResponse: The response for `DbNode.List`.
 type ListDbNodesResponse struct {
 	// DbNodes: The list of DB Nodes
@@ -2364,6 +3189,35 @@ func (s ListDbServersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListDbSystemInitialStorageSizesResponse: The response for
+// `DbSystemInitialStorageSizes.List`.
+type ListDbSystemInitialStorageSizesResponse struct {
+	// DbSystemInitialStorageSizes: The list of DbSystemInitialStorageSizes.
+	DbSystemInitialStorageSizes []*DbSystemInitialStorageSize `json:"dbSystemInitialStorageSizes,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DbSystemInitialStorageSizes") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DbSystemInitialStorageSizes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListDbSystemInitialStorageSizesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDbSystemInitialStorageSizesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListDbSystemShapesResponse: The response for `DbSystemShape.List`.
 type ListDbSystemShapesResponse struct {
 	// DbSystemShapes: The list of Database System shapes.
@@ -2389,6 +3243,62 @@ type ListDbSystemShapesResponse struct {
 
 func (s ListDbSystemShapesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDbSystemShapesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListDbSystemsResponse: The response for `DbSystem.List`.
+type ListDbSystemsResponse struct {
+	// DbSystems: The list of DbSystems.
+	DbSystems []*DbSystem `json:"dbSystems,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DbSystems") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DbSystems") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListDbSystemsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDbSystemsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListDbVersionsResponse: The response for `DbVersions.List`.
+type ListDbVersionsResponse struct {
+	// DbVersions: The list of DbVersions.
+	DbVersions []*DbVersion `json:"dbVersions,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DbVersions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DbVersions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListDbVersionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDbVersionsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2563,6 +3473,34 @@ type ListOperationsResponse struct {
 
 func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListPluggableDatabasesResponse: The response for `PluggableDatabase.List`.
+type ListPluggableDatabasesResponse struct {
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// PluggableDatabases: The list of PluggableDatabases.
+	PluggableDatabases []*PluggableDatabase `json:"pluggableDatabases,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListPluggableDatabasesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPluggableDatabasesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2923,6 +3861,186 @@ func (s *OperationMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// PluggableDatabase: The PluggableDatabase resource.
+// https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/PluggableDatabase/
+type PluggableDatabase struct {
+	// CreateTime: Output only. The date and time that the PluggableDatabase was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Name: Identifier. The name of the PluggableDatabase resource in the
+	// following format:
+	// projects/{project}/locations/{region}/pluggableDatabases/{pluggable_database}
+	Name string `json:"name,omitempty"`
+	// OciUrl: Output only. HTTPS link to OCI resources exposed to Customer via UI
+	// Interface.
+	OciUrl string `json:"ociUrl,omitempty"`
+	// Properties: Optional. The properties of the PluggableDatabase.
+	Properties *PluggableDatabaseProperties `json:"properties,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PluggableDatabase) MarshalJSON() ([]byte, error) {
+	type NoMethod PluggableDatabase
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PluggableDatabaseConnectionStrings: The connection strings used to connect
+// to the Oracle Database.
+type PluggableDatabaseConnectionStrings struct {
+	// AllConnectionStrings: Optional. All connection strings to use to connect to
+	// the pluggable database.
+	AllConnectionStrings map[string]string `json:"allConnectionStrings,omitempty"`
+	// PdbDefault: Optional. The default connection string to use to connect to the
+	// pluggable database.
+	PdbDefault string `json:"pdbDefault,omitempty"`
+	// PdbIpDefault: Optional. The default connection string to use to connect to
+	// the pluggable database using IP.
+	PdbIpDefault string `json:"pdbIpDefault,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllConnectionStrings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllConnectionStrings") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PluggableDatabaseConnectionStrings) MarshalJSON() ([]byte, error) {
+	type NoMethod PluggableDatabaseConnectionStrings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PluggableDatabaseNodeLevelDetails: The Pluggable Database Node Level
+// Details.
+type PluggableDatabaseNodeLevelDetails struct {
+	// NodeName: Required. The Node name of the Database home.
+	NodeName string `json:"nodeName,omitempty"`
+	// OpenMode: Required. The mode that the pluggable database is in to open it.
+	//
+	// Possible values:
+	//   "PLUGGABLE_DATABASE_OPEN_MODE_UNSPECIFIED" - The open mode is unspecified.
+	//   "READ_ONLY" - The pluggable database is opened in read-only mode.
+	//   "READ_WRITE" - The pluggable database is opened in read-write mode.
+	//   "MOUNTED" - The pluggable database is mounted.
+	//   "MIGRATE" - The pluggable database is migrated.
+	OpenMode string `json:"openMode,omitempty"`
+	// PluggableDatabaseId: Required. The OCID of the Pluggable Database.
+	PluggableDatabaseId string `json:"pluggableDatabaseId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NodeName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NodeName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PluggableDatabaseNodeLevelDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PluggableDatabaseNodeLevelDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PluggableDatabaseProperties: The properties of a PluggableDatabase.
+type PluggableDatabaseProperties struct {
+	// CompartmentId: Required. The OCID of the compartment.
+	CompartmentId string `json:"compartmentId,omitempty"`
+	// ConnectionStrings: Optional. The Connection strings used to connect to the
+	// Oracle Database.
+	ConnectionStrings *PluggableDatabaseConnectionStrings `json:"connectionStrings,omitempty"`
+	// ContainerDatabaseOcid: Required. The OCID of the CDB.
+	ContainerDatabaseOcid string `json:"containerDatabaseOcid,omitempty"`
+	// DatabaseManagementConfig: Output only. The configuration of the Database
+	// Management service.
+	DatabaseManagementConfig *DatabaseManagementConfig `json:"databaseManagementConfig,omitempty"`
+	// DefinedTags: Optional. Defined tags for this resource. Each key is
+	// predefined and scoped to a namespace.
+	DefinedTags map[string]DefinedTagValue `json:"definedTags,omitempty"`
+	// FreeformTags: Optional. Free-form tags for this resource. Each tag is a
+	// simple key-value pair with no predefined name, type, or namespace.
+	FreeformTags map[string]string `json:"freeformTags,omitempty"`
+	// IsRestricted: Optional. The restricted mode of the pluggable database. If a
+	// pluggable database is opened in restricted mode, the user needs both create
+	// a session and have restricted session privileges to connect to it.
+	IsRestricted bool `json:"isRestricted,omitempty"`
+	// LifecycleDetails: Output only. Additional information about the current
+	// lifecycle state.
+	LifecycleDetails string `json:"lifecycleDetails,omitempty"`
+	// LifecycleState: Output only. The current state of the pluggable database.
+	//
+	// Possible values:
+	//   "PLUGGABLE_DATABASE_LIFECYCLE_STATE_UNSPECIFIED" - The lifecycle state is
+	// unspecified.
+	//   "PROVISIONING" - The pluggable database is provisioning.
+	//   "AVAILABLE" - The pluggable database is available.
+	//   "TERMINATING" - The pluggable database is terminating.
+	//   "TERMINATED" - The pluggable database is terminated.
+	//   "UPDATING" - The pluggable database is updating.
+	//   "FAILED" - The pluggable database is in a failed state.
+	//   "RELOCATING" - The pluggable database is relocating.
+	//   "RELOCATED" - The pluggable database is relocated.
+	//   "REFRESHING" - The pluggable database is refreshing.
+	//   "RESTORE_IN_PROGRESS" - The pluggable database is restoring.
+	//   "RESTORE_FAILED" - The pluggable database restore failed.
+	//   "BACKUP_IN_PROGRESS" - The pluggable database is backing up.
+	//   "DISABLED" - The pluggable database is disabled.
+	LifecycleState string `json:"lifecycleState,omitempty"`
+	// Ocid: Output only. The OCID of the pluggable database.
+	Ocid string `json:"ocid,omitempty"`
+	// OperationsInsightsState: Output only. The status of Operations Insights for
+	// this Database.
+	//
+	// Possible values:
+	//   "OPERATIONS_INSIGHTS_STATE_UNSPECIFIED" - The status is not specified.
+	//   "ENABLING" - Operations Insights is enabling.
+	//   "ENABLED" - Operations Insights is enabled.
+	//   "DISABLING" - Operations Insights is disabling.
+	//   "NOT_ENABLED" - Operations Insights is not enabled.
+	//   "FAILED_ENABLING" - Operations Insights failed to enable.
+	//   "FAILED_DISABLING" - Operations Insights failed to disable.
+	OperationsInsightsState string `json:"operationsInsightsState,omitempty"`
+	// PdbName: Required. The database name.
+	PdbName string `json:"pdbName,omitempty"`
+	// PdbNodeLevelDetails: Optional. Pluggable Database Node Level Details
+	PdbNodeLevelDetails []*PluggableDatabaseNodeLevelDetails `json:"pdbNodeLevelDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CompartmentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CompartmentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PluggableDatabaseProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod PluggableDatabaseProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RestartAutonomousDatabaseRequest: The request for
 // `AutonomousDatabase.Restart`.
 type RestartAutonomousDatabaseRequest struct {
@@ -3056,6 +4174,33 @@ func (s Status) MarshalJSON() ([]byte, error) {
 
 // StopAutonomousDatabaseRequest: The request for `AutonomousDatabase.Stop`.
 type StopAutonomousDatabaseRequest struct {
+}
+
+// StorageSizeDetails: The initial storage size, in gigabytes, that is
+// applicable for virtual machine DBSystem.
+type StorageSizeDetails struct {
+	// DataStorageSizeInGbs: Output only. The data storage size, in gigabytes, that
+	// is applicable for virtual machine DBSystem.
+	DataStorageSizeInGbs int64 `json:"dataStorageSizeInGbs,omitempty"`
+	// RecoStorageSizeInGbs: Output only. The RECO/REDO storage size, in gigabytes,
+	// that is applicable for virtual machine DBSystem.
+	RecoStorageSizeInGbs int64 `json:"recoStorageSizeInGbs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStorageSizeInGbs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStorageSizeInGbs") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StorageSizeDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageSizeDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SwitchoverAutonomousDatabaseRequest: The request for
@@ -6351,6 +7496,582 @@ func (c *ProjectsLocationsCloudVmClustersDbNodesListCall) Pages(ctx context.Cont
 	}
 }
 
+type ProjectsLocationsDatabaseCharacterSetsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List DatabaseCharacterSets for the given project and location.
+//
+//   - parent: The parent value for DatabaseCharacterSets in the following
+//     format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsDatabaseCharacterSetsService) List(parent string) *ProjectsLocationsDatabaseCharacterSetsListCall {
+	c := &ProjectsLocationsDatabaseCharacterSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. Only the **character_set_type** field is supported
+// in the following format: `character_set_type="{characterSetType}". Accepted
+// values include `DATABASE` and `NATIONAL`.
+func (c *ProjectsLocationsDatabaseCharacterSetsListCall) Filter(filter string) *ProjectsLocationsDatabaseCharacterSetsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// DatabaseCharacterSets to return. The service may return fewer than this
+// value. If unspecified, at most 50 DatabaseCharacterSets will be returned.
+// The maximum value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsDatabaseCharacterSetsListCall) PageSize(pageSize int64) *ProjectsLocationsDatabaseCharacterSetsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListDatabaseCharacterSets` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListDatabaseCharacterSets` must match the call that provided the page
+// token.
+func (c *ProjectsLocationsDatabaseCharacterSetsListCall) PageToken(pageToken string) *ProjectsLocationsDatabaseCharacterSetsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatabaseCharacterSetsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatabaseCharacterSetsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatabaseCharacterSetsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatabaseCharacterSetsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatabaseCharacterSetsListCall) Context(ctx context.Context) *ProjectsLocationsDatabaseCharacterSetsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatabaseCharacterSetsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatabaseCharacterSetsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/databaseCharacterSets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseCharacterSets.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.databaseCharacterSets.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDatabaseCharacterSetsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatabaseCharacterSetsListCall) Do(opts ...googleapi.CallOption) (*ListDatabaseCharacterSetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDatabaseCharacterSetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseCharacterSets.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDatabaseCharacterSetsListCall) Pages(ctx context.Context, f func(*ListDatabaseCharacterSetsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsDatabasesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single Database.
+//
+//   - name: The name of the Database resource in the following format:
+//     projects/{project}/locations/{region}/databases/{database}.
+func (r *ProjectsLocationsDatabasesService) Get(name string) *ProjectsLocationsDatabasesGetCall {
+	c := &ProjectsLocationsDatabasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatabasesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatabasesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatabasesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatabasesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatabasesGetCall) Context(ctx context.Context) *ProjectsLocationsDatabasesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatabasesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatabasesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databases.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.databases.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Database.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatabasesGetCall) Do(opts ...googleapi.CallOption) (*Database, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Database{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databases.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDatabasesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the Databases for the given project, location and DbSystem.
+//
+//   - parent: The parent resource name in the following format:
+//     projects/{project}/locations/{region}.
+func (r *ProjectsLocationsDatabasesService) List(parent string) *ProjectsLocationsDatabasesListCall {
+	c := &ProjectsLocationsDatabasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. list for container databases is supported only with
+// a valid dbSystem (full resource name) filter in this format:
+// `dbSystem="projects/{project}/locations/{location}/dbSystems/{dbSystemId}"
+func (c *ProjectsLocationsDatabasesListCall) Filter(filter string) *ProjectsLocationsDatabasesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If unspecified, a maximum of 50 System Versions will be returned.
+// The maximum value is 1000; values above 1000 will be reset to 1000.
+func (c *ProjectsLocationsDatabasesListCall) PageSize(pageSize int64) *ProjectsLocationsDatabasesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying the
+// requested page of results to return. All fields except the filter should
+// remain the same as in the request that provided this page token.
+func (c *ProjectsLocationsDatabasesListCall) PageToken(pageToken string) *ProjectsLocationsDatabasesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatabasesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatabasesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatabasesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatabasesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatabasesListCall) Context(ctx context.Context) *ProjectsLocationsDatabasesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatabasesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatabasesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/databases")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databases.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.databases.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDatabasesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDatabasesListCall) Do(opts ...googleapi.CallOption) (*ListDatabasesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDatabasesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databases.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDatabasesListCall) Pages(ctx context.Context, f func(*ListDatabasesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsDbSystemInitialStorageSizesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the DbSystemInitialStorageSizes for the given project and
+// location.
+//
+//   - parent: The parent value for the DbSystemInitialStorageSize resource with
+//     the format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsDbSystemInitialStorageSizesService) List(parent string) *ProjectsLocationsDbSystemInitialStorageSizesListCall {
+	c := &ProjectsLocationsDbSystemInitialStorageSizesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If unspecified, a maximum of 50 System Versions will be returned.
+// The maximum value is 1000; values above 1000 will be reset to 1000.
+func (c *ProjectsLocationsDbSystemInitialStorageSizesListCall) PageSize(pageSize int64) *ProjectsLocationsDbSystemInitialStorageSizesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying the
+// requested page of results to return. All fields except the filter should
+// remain the same as in the request that provided this page token.
+func (c *ProjectsLocationsDbSystemInitialStorageSizesListCall) PageToken(pageToken string) *ProjectsLocationsDbSystemInitialStorageSizesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDbSystemInitialStorageSizesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDbSystemInitialStorageSizesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDbSystemInitialStorageSizesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDbSystemInitialStorageSizesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDbSystemInitialStorageSizesListCall) Context(ctx context.Context) *ProjectsLocationsDbSystemInitialStorageSizesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDbSystemInitialStorageSizesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDbSystemInitialStorageSizesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbSystemInitialStorageSizes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbSystemInitialStorageSizes.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.dbSystemInitialStorageSizes.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDbSystemInitialStorageSizesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDbSystemInitialStorageSizesListCall) Do(opts ...googleapi.CallOption) (*ListDbSystemInitialStorageSizesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDbSystemInitialStorageSizesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbSystemInitialStorageSizes.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDbSystemInitialStorageSizesListCall) Pages(ctx context.Context, f func(*ListDbSystemInitialStorageSizesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type ProjectsLocationsDbSystemShapesListCall struct {
 	s            *Service
 	parent       string
@@ -6491,6 +8212,675 @@ func (c *ProjectsLocationsDbSystemShapesListCall) Do(opts ...googleapi.CallOptio
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsDbSystemShapesListCall) Pages(ctx context.Context, f func(*ListDbSystemShapesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsDbSystemsCreateCall struct {
+	s          *Service
+	parent     string
+	dbsystem   *DbSystem
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new DbSystem in a given project and location.
+//
+//   - parent: The value for parent of the DbSystem in the following format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsDbSystemsService) Create(parent string, dbsystem *DbSystem) *ProjectsLocationsDbSystemsCreateCall {
+	c := &ProjectsLocationsDbSystemsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.dbsystem = dbsystem
+	return c
+}
+
+// DbSystemId sets the optional parameter "dbSystemId": Required. The ID of the
+// DbSystem to create. This value is restricted to (^a-z
+// ([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of 63 characters in
+// length. The value must start with a letter and end with a letter or a
+// number.
+func (c *ProjectsLocationsDbSystemsCreateCall) DbSystemId(dbSystemId string) *ProjectsLocationsDbSystemsCreateCall {
+	c.urlParams_.Set("dbSystemId", dbSystemId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDbSystemsCreateCall) RequestId(requestId string) *ProjectsLocationsDbSystemsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDbSystemsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDbSystemsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDbSystemsCreateCall) Context(ctx context.Context) *ProjectsLocationsDbSystemsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDbSystemsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDbSystemsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.dbsystem)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbSystems")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbSystems.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.dbSystems.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDbSystemsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbSystems.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDbSystemsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single DbSystem.
+//
+//   - name: The name of the DbSystem in the following format:
+//     projects/{project}/locations/{location}/dbSystems/{db_system}.
+func (r *ProjectsLocationsDbSystemsService) Delete(name string) *ProjectsLocationsDbSystemsDeleteCall {
+	c := &ProjectsLocationsDbSystemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDbSystemsDeleteCall) RequestId(requestId string) *ProjectsLocationsDbSystemsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDbSystemsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDbSystemsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDbSystemsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDbSystemsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDbSystemsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDbSystemsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbSystems.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.dbSystems.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDbSystemsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbSystems.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDbSystemsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single DbSystem.
+//
+//   - name: The name of the DbSystem in the following format:
+//     projects/{project}/locations/{location}/dbSystems/{db_system}.
+func (r *ProjectsLocationsDbSystemsService) Get(name string) *ProjectsLocationsDbSystemsGetCall {
+	c := &ProjectsLocationsDbSystemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDbSystemsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDbSystemsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDbSystemsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDbSystemsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDbSystemsGetCall) Context(ctx context.Context) *ProjectsLocationsDbSystemsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDbSystemsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDbSystemsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbSystems.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.dbSystems.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DbSystem.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDbSystemsGetCall) Do(opts ...googleapi.CallOption) (*DbSystem, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DbSystem{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbSystems.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDbSystemsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the DbSystems for the given project and location.
+//
+//   - parent: The parent value for DbSystems in the following format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsDbSystemsService) List(parent string) *ProjectsLocationsDbSystemsListCall {
+	c := &ProjectsLocationsDbSystemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request.
+func (c *ProjectsLocationsDbSystemsListCall) Filter(filter string) *ProjectsLocationsDbSystemsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An expression for ordering
+// the results of the request.
+func (c *ProjectsLocationsDbSystemsListCall) OrderBy(orderBy string) *ProjectsLocationsDbSystemsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If unspecified, at most 50 DbSystems will be returned. The
+// maximum value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsDbSystemsListCall) PageSize(pageSize int64) *ProjectsLocationsDbSystemsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsDbSystemsListCall) PageToken(pageToken string) *ProjectsLocationsDbSystemsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDbSystemsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDbSystemsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDbSystemsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDbSystemsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDbSystemsListCall) Context(ctx context.Context) *ProjectsLocationsDbSystemsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDbSystemsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDbSystemsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbSystems")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbSystems.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.dbSystems.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDbSystemsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDbSystemsListCall) Do(opts ...googleapi.CallOption) (*ListDbSystemsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDbSystemsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbSystems.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDbSystemsListCall) Pages(ctx context.Context, f func(*ListDbSystemsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsDbVersionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List DbVersions for the given project and location.
+//
+//   - parent: The parent value for the DbVersion resource with the format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsDbVersionsService) List(parent string) *ProjectsLocationsDbVersionsListCall {
+	c := &ProjectsLocationsDbVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression that matches
+// a subset of the DbVersions to show. The supported filter for dbSystem
+// creation is `db_system_shape = {db_system_shape} AND storage_management =
+// {storage_management}`. If no filter is provided, all DbVersions will be
+// returned.
+func (c *ProjectsLocationsDbVersionsListCall) Filter(filter string) *ProjectsLocationsDbVersionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If unspecified, a maximum of 50 System Versions will be returned.
+// The maximum value is 1000; values above 1000 will be reset to 1000.
+func (c *ProjectsLocationsDbVersionsListCall) PageSize(pageSize int64) *ProjectsLocationsDbVersionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying the
+// requested page of results to return. All fields except the filter should
+// remain the same as in the request that provided this page token.
+func (c *ProjectsLocationsDbVersionsListCall) PageToken(pageToken string) *ProjectsLocationsDbVersionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDbVersionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDbVersionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDbVersionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDbVersionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDbVersionsListCall) Context(ctx context.Context) *ProjectsLocationsDbVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDbVersionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDbVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbVersions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbVersions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.dbVersions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDbVersionsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDbVersionsListCall) Do(opts ...googleapi.CallOption) (*ListDbVersionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDbVersionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbVersions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDbVersionsListCall) Pages(ctx context.Context, f func(*ListDbVersionsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -8285,6 +10675,276 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsPluggableDatabasesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single PluggableDatabase.
+//
+//   - name: The name of the PluggableDatabase resource in the following format:
+//     projects/{project}/locations/{region}/pluggableDatabases/{pluggable_databas
+//     e}.
+func (r *ProjectsLocationsPluggableDatabasesService) Get(name string) *ProjectsLocationsPluggableDatabasesGetCall {
+	c := &ProjectsLocationsPluggableDatabasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPluggableDatabasesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsPluggableDatabasesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsPluggableDatabasesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsPluggableDatabasesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPluggableDatabasesGetCall) Context(ctx context.Context) *ProjectsLocationsPluggableDatabasesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPluggableDatabasesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPluggableDatabasesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.pluggableDatabases.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.pluggableDatabases.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *PluggableDatabase.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsPluggableDatabasesGetCall) Do(opts ...googleapi.CallOption) (*PluggableDatabase, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PluggableDatabase{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.pluggableDatabases.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPluggableDatabasesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the PluggableDatabases for the given project, location and
+// Container Database.
+//
+//   - parent: The parent, which owns this collection of PluggableDatabases.
+//     Format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsPluggableDatabasesService) List(parent string) *ProjectsLocationsPluggableDatabasesListCall {
+	c := &ProjectsLocationsPluggableDatabasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. List for pluggable databases is supported only with
+// a valid container database (full resource name) filter in this format:
+// `database="projects/{project}/locations/{location}/databases/{database}"
+func (c *ProjectsLocationsPluggableDatabasesListCall) Filter(filter string) *ProjectsLocationsPluggableDatabasesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// PluggableDatabases to return. The service may return fewer than this value.
+func (c *ProjectsLocationsPluggableDatabasesListCall) PageSize(pageSize int64) *ProjectsLocationsPluggableDatabasesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListPluggableDatabases` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListPluggableDatabases` must match the call that provided the page token.
+func (c *ProjectsLocationsPluggableDatabasesListCall) PageToken(pageToken string) *ProjectsLocationsPluggableDatabasesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPluggableDatabasesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPluggableDatabasesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsPluggableDatabasesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPluggableDatabasesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPluggableDatabasesListCall) Context(ctx context.Context) *ProjectsLocationsPluggableDatabasesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPluggableDatabasesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPluggableDatabasesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/pluggableDatabases")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.pluggableDatabases.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.pluggableDatabases.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPluggableDatabasesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPluggableDatabasesListCall) Do(opts ...googleapi.CallOption) (*ListPluggableDatabasesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListPluggableDatabasesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.pluggableDatabases.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsPluggableDatabasesListCall) Pages(ctx context.Context, f func(*ListPluggableDatabasesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

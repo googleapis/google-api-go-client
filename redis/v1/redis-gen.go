@@ -1196,7 +1196,7 @@ func (s CustomMetadataData) MarshalJSON() ([]byte, error) {
 
 // DatabaseResourceFeed: DatabaseResourceFeed is the top level proto to be used
 // to ingest different database resource level events into Condor platform.
-// Next ID: 11
+// Next ID: 13
 type DatabaseResourceFeed struct {
 	// BackupdrMetadata: BackupDR metadata is used to ingest metadata from
 	// BackupDR.
@@ -1204,6 +1204,9 @@ type DatabaseResourceFeed struct {
 	// ConfigBasedSignalData: Config based signal data is used to ingest signals
 	// that are generated based on the configuration of the database resource.
 	ConfigBasedSignalData *ConfigBasedSignalData `json:"configBasedSignalData,omitempty"`
+	// DatabaseResourceSignalData: Database resource signal data is used to ingest
+	// signals from database resource signal feeds.
+	DatabaseResourceSignalData *DatabaseResourceSignalData `json:"databaseResourceSignalData,omitempty"`
 	// FeedTimestamp: Required. Timestamp when feed is generated.
 	FeedTimestamp string `json:"feedTimestamp,omitempty"`
 	// FeedType: Required. Type feed to be ingested into condor
@@ -1217,6 +1220,7 @@ type DatabaseResourceFeed struct {
 	// data
 	//   "CONFIG_BASED_SIGNAL_DATA" - Database config based signal data
 	//   "BACKUPDR_METADATA" - Database resource metadata from BackupDR
+	//   "DATABASE_RESOURCE_SIGNAL_DATA" - Database resource signal data
 	FeedType                 string                                    `json:"feedType,omitempty"`
 	ObservabilityMetricData  *ObservabilityMetricData                  `json:"observabilityMetricData,omitempty"`
 	RecommendationSignalData *DatabaseResourceRecommendationSignalData `json:"recommendationSignalData,omitempty"`
@@ -1644,7 +1648,7 @@ func (s DatabaseResourceId) MarshalJSON() ([]byte, error) {
 }
 
 // DatabaseResourceMetadata: Common model for database resource instance
-// metadata. Next ID: 26
+// metadata. Next ID: 27
 type DatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *AvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -1762,6 +1766,9 @@ type DatabaseResourceMetadata struct {
 	UpdationTime string `json:"updationTime,omitempty"`
 	// UserLabelSet: User-provided labels associated with the resource
 	UserLabelSet *UserLabels `json:"userLabelSet,omitempty"`
+	// Zone: The resource zone. This is only applicable for zonal resources and
+	// will be empty for regional and multi-regional resources.
+	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AvailabilityConfiguration")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2069,6 +2076,60 @@ type DatabaseResourceRecommendationSignalData struct {
 
 func (s DatabaseResourceRecommendationSignalData) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseResourceRecommendationSignalData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseResourceSignalData: Database resource signal data. This is used to
+// send signals to Condor which are based on the DB/Instance/Fleet level
+// configurations. These will be used to send signals for all inventory types.
+// Next ID: 7
+type DatabaseResourceSignalData struct {
+	// FullResourceName: Required. Full Resource name of the source resource.
+	FullResourceName string `json:"fullResourceName,omitempty"`
+	// LastRefreshTime: Required. Last time signal was refreshed
+	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
+	// ResourceId: Database resource id.
+	ResourceId *DatabaseResourceId `json:"resourceId,omitempty"`
+	// SignalBoolValue: Signal data for boolean signals.
+	SignalBoolValue bool `json:"signalBoolValue,omitempty"`
+	// SignalState: Required. Output only. Signal state of the signal
+	//
+	// Possible values:
+	//   "SIGNAL_STATE_UNSPECIFIED" - Unspecified signal state.
+	//   "ACTIVE" - Signal is active and requires attention.
+	//   "INACTIVE" - Signal is inactive and does not require attention.
+	//   "DISMISSED" - Signal is dismissed by the user and should not be shown to
+	// the user again.
+	SignalState string `json:"signalState,omitempty"`
+	// SignalType: Required. Signal type of the signal
+	//
+	// Possible values:
+	//   "SIGNAL_TYPE_UNSPECIFIED" - Unspecified signal type.
+	//   "SIGNAL_TYPE_OUTDATED_MINOR_VERSION" - Outdated Minor Version
+	//   "SIGNAL_TYPE_DATABASE_AUDITING_DISABLED" - Represents database auditing is
+	// disabled.
+	//   "SIGNAL_TYPE_NO_ROOT_PASSWORD" - Represents if a database has a password
+	// configured for the root account or not.
+	//   "SIGNAL_TYPE_EXPOSED_TO_PUBLIC_ACCESS" - Represents if a resource is
+	// exposed to public access.
+	//   "SIGNAL_TYPE_UNENCRYPTED_CONNECTIONS" - Represents if a resources requires
+	// all incoming connections to use SSL or not.
+	SignalType string `json:"signalType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FullResourceName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseResourceSignalData) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseResourceSignalData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4429,9 +4490,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

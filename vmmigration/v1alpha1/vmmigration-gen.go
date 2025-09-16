@@ -359,6 +359,32 @@ func (s AccessKeyCredentials) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AdaptationModifier: AdaptationModifier a modifier to be used for
+// configuration of the OS adaptation process.
+type AdaptationModifier struct {
+	// Modifier: Optional. The modifier name.
+	Modifier string `json:"modifier,omitempty"`
+	// Value: Optional. The value of the modifier. The actual value depends on the
+	// modifier and can also be empty.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Modifier") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Modifier") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdaptationModifier) MarshalJSON() ([]byte, error) {
+	type NoMethod AdaptationModifier
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AdaptingOSStep: AdaptingOSStep contains specific step details.
 type AdaptingOSStep struct {
 }
@@ -1282,6 +1308,9 @@ func (s ComputeEngineDisksTargetDetails) MarshalJSON() ([]byte, error) {
 // ComputeEngineTargetDefaults: ComputeEngineTargetDefaults is a collection of
 // details for creating a VM in a target Compute Engine project.
 type ComputeEngineTargetDefaults struct {
+	// AdaptationModifiers: Optional. AdaptationModifiers are the set of modifiers
+	// used during OS adaptation.
+	AdaptationModifiers []*AdaptationModifier `json:"adaptationModifiers,omitempty"`
 	// AdditionalLicenses: Additional licenses to assign to the VM.
 	AdditionalLicenses []string `json:"additionalLicenses,omitempty"`
 	// AppliedLicense: Output only. The OS license returned from the adaptation
@@ -1372,13 +1401,13 @@ type ComputeEngineTargetDefaults struct {
 	VmName string `json:"vmName,omitempty"`
 	// Zone: The zone in which to create the VM.
 	Zone string `json:"zone,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AdditionalLicenses") to
+	// ForceSendFields is a list of field names (e.g. "AdaptationModifiers") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AdditionalLicenses") to include
+	// NullFields is a list of field names (e.g. "AdaptationModifiers") to include
 	// in API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1393,6 +1422,9 @@ func (s ComputeEngineTargetDefaults) MarshalJSON() ([]byte, error) {
 // ComputeEngineTargetDetails: ComputeEngineTargetDetails is a collection of
 // details for creating a VM in a target Compute Engine project.
 type ComputeEngineTargetDetails struct {
+	// AdaptationModifiers: Optional. Modifiers to be used as configuration of the
+	// OS adaptation process.
+	AdaptationModifiers []*AdaptationModifier `json:"adaptationModifiers,omitempty"`
 	// AdditionalLicenses: Additional licenses to assign to the VM.
 	AdditionalLicenses []string `json:"additionalLicenses,omitempty"`
 	// AppliedLicense: The OS license returned from the adaptation module report.
@@ -1479,13 +1511,13 @@ type ComputeEngineTargetDetails struct {
 	VmName string `json:"vmName,omitempty"`
 	// Zone: The zone in which to create the VM.
 	Zone string `json:"zone,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AdditionalLicenses") to
+	// ForceSendFields is a list of field names (e.g. "AdaptationModifiers") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AdditionalLicenses") to include
+	// NullFields is a list of field names (e.g. "AdaptationModifiers") to include
 	// in API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2410,6 +2442,9 @@ func (s ImageImportJob) MarshalJSON() ([]byte, error) {
 // ImageImportOsAdaptationParameters: Parameters affecting the OS adaptation
 // process.
 type ImageImportOsAdaptationParameters struct {
+	// AdaptationModifiers: Optional. Modifiers to be used as configuration of the
+	// OS adaptation process.
+	AdaptationModifiers []*AdaptationModifier `json:"adaptationModifiers,omitempty"`
 	// BootConversion: Optional. By default the image will keep its existing boot
 	// option. Setting this property will trigger an internal process which will
 	// convert the image from using the existing boot option to another. The size
@@ -2437,15 +2472,15 @@ type ImageImportOsAdaptationParameters struct {
 	//   "COMPUTE_ENGINE_LICENSE_TYPE_BYOL" - The license type is Bring Your Own
 	// License type.
 	LicenseType string `json:"licenseType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BootConversion") to
+	// ForceSendFields is a list of field names (e.g. "AdaptationModifiers") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BootConversion") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdaptationModifiers") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -6262,7 +6297,7 @@ type ProjectsLocationsImageImportsImageImportJobsCancelCall struct {
 	header_                     http.Header
 }
 
-// Cancel: Initiates the cancellation of a running clone job.
+// Cancel: Initiates the cancellation of a running ImageImportJob.
 //
 // - name: The image import job id.
 func (r *ProjectsLocationsImageImportsImageImportJobsService) Cancel(name string, cancelimageimportjobrequest *CancelImageImportJobRequest) *ProjectsLocationsImageImportsImageImportJobsCancelCall {

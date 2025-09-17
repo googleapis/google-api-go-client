@@ -1528,7 +1528,7 @@
       }
     }
   },
-  "revision": "20250909",
+  "revision": "20250911",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessSettings": {
@@ -2754,7 +2754,7 @@
       "type": "object"
     },
     "GoogleAppsCardV1Carousel": {
-      "description": "[Developer Preview](https://developers.google.com/workspace/preview): A carousel, also known as a slider, rotates and displays a list of widgets in a slideshow format, with buttons navigating to the previous or next widget. For example, this is a JSON representation of a carousel that contains three text paragraph widgets. ``` { \"carouselCards\": [ { \"widgets\": [ { \"textParagraph\": { \"text\": \"First text paragraph in carousel\", } } ] }, { \"widgets\": [ { \"textParagraph\": { \"text\": \"Second text paragraph in carousel\", } } ] }, { \"widgets\": [ { \"textParagraph\": { \"text\": \"Third text paragraph in carousel\", } } ] } ] } ``` [Google Chat apps](https://developers.google.com/workspace/chat):",
+      "description": "A carousel, also known as a slider, rotates and displays a list of widgets in a slideshow format, with buttons navigating to the previous or next widget. For example, this is a JSON representation of a carousel that contains three text paragraph widgets. ``` { \"carouselCards\": [ { \"widgets\": [ { \"textParagraph\": { \"text\": \"First text paragraph in carousel\", } } ] }, { \"widgets\": [ { \"textParagraph\": { \"text\": \"Second text paragraph in carousel\", } } ] }, { \"widgets\": [ { \"textParagraph\": { \"text\": \"Third text paragraph in carousel\", } } ] } ] } ``` [Google Chat apps](https://developers.google.com/workspace/chat):",
       "id": "GoogleAppsCardV1Carousel",
       "properties": {
         "carouselCards": {
@@ -2768,7 +2768,7 @@
       "type": "object"
     },
     "GoogleAppsCardV1CarouselCard": {
-      "description": "[Developer Preview](https://developers.google.com/workspace/preview): A card that can be displayed as a carousel item. [Google Chat apps](https://developers.google.com/workspace/chat):",
+      "description": "A card that can be displayed as a carousel item. [Google Chat apps](https://developers.google.com/workspace/chat):",
       "id": "GoogleAppsCardV1CarouselCard",
       "properties": {
         "footerWidgets": {
@@ -3368,7 +3368,7 @@
       "type": "object"
     },
     "GoogleAppsCardV1NestedWidget": {
-      "description": "[Developer Preview](https://developers.google.com/workspace/preview): A list of widgets that can be displayed in a containing layout, such as a `CarouselCard`. [Google Chat apps](https://developers.google.com/workspace/chat):",
+      "description": "A list of widgets that can be displayed in a containing layout, such as a `CarouselCard`. [Google Chat apps](https://developers.google.com/workspace/chat):",
       "id": "GoogleAppsCardV1NestedWidget",
       "properties": {
         "buttonList": {

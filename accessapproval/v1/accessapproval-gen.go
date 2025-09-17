@@ -268,11 +268,12 @@ type AccessApprovalSettings struct {
 	// active_key_version (this field will always be unset for the organization
 	// since organizations do not have ancestors).
 	AncestorHasActiveKeyVersion bool `json:"ancestorHasActiveKeyVersion,omitempty"`
-	// ApprovalPolicy: Optional. Policy for approval. This contains all policies.
+	// ApprovalPolicy: Optional. Policy configuration for Access Approval that sets
+	// the operating mode. The available policies are Transparency, Streamlined
+	// Support, and Approval Required.
 	ApprovalPolicy *CustomerApprovalApprovalPolicy `json:"approvalPolicy,omitempty"`
-	// EffectiveApprovalPolicy: Output only. Policy for approval included inherited
-	// settings to understand the exact policy applied to this resource. This is a
-	// read-only field.
+	// EffectiveApprovalPolicy: Output only. Effective policy applied for Access
+	// Approval, inclusive of inheritance.
 	EffectiveApprovalPolicy *CustomerApprovalApprovalPolicy `json:"effectiveApprovalPolicy,omitempty"`
 	// EnrolledAncestor: Output only. This field is read only (not settable via
 	// UpdateAccessApprovalSettings method). If the field is true, that indicates
@@ -287,8 +288,7 @@ type AccessApprovalSettings struct {
 	// be done for individual services. If name refers to a folder or project,
 	// enrollment can only be done on an all or nothing basis. If a cloud_product
 	// is repeated in this list, the first entry will be honored and all following
-	// entries will be discarded. A maximum of 10 enrolled services will be
-	// enforced, to be expanded as the set of supported services is expanded.
+	// entries will be discarded.
 	EnrolledServices []*EnrolledService `json:"enrolledServices,omitempty"`
 	// InvalidKeyVersion: Output only. This field is read only (not settable via
 	// UpdateAccessApprovalSettings method). If the field is true, that indicates
@@ -308,23 +308,29 @@ type AccessApprovalSettings struct {
 	// resource will be sent to all emails in the settings of ancestor resources of
 	// that resource. A maximum of 50 email addresses are allowed.
 	NotificationEmails []string `json:"notificationEmails,omitempty"`
-	// NotificationPubsubTopic: Optional. A pubsub topic to which notifications
-	// relating to approval requests should be sent.
+	// NotificationPubsubTopic: Optional. A pubsub topic that notifications
+	// relating to access approval are published to. Notifications include
+	// pre-approved accesses.
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
-	// PreferNoBroadApprovalRequests: This preference is communicated to Google
-	// personnel when sending an approval request but can be overridden if
-	// necessary.
+	// PreferNoBroadApprovalRequests: This field is used to set a preference for
+	// granularity of an access approval request. If true, Google personnel will be
+	// asked to send resource-level requests when possible. If false, Google
+	// personnel will be asked to send requests at the project level.
 	PreferNoBroadApprovalRequests bool `json:"preferNoBroadApprovalRequests,omitempty"`
-	// PreferredRequestExpirationDays: This preference is shared with Google
-	// personnel, but can be overridden if said personnel deems necessary. The
-	// approver ultimately can set the expiration at approval time.
+	// PreferredRequestExpirationDays: Set the default access approval request
+	// expiration time. This value is able to be set directly by the customer at
+	// the time of approval, overriding this suggested value. We recommend setting
+	// this value to 30 days.
 	PreferredRequestExpirationDays int64 `json:"preferredRequestExpirationDays,omitempty"`
-	// RequestScopeMaxWidthPreference: Optional. A setting to indicate the maximum
-	// width of an Access Approval request.
+	// RequestScopeMaxWidthPreference: Optional. A setting that indicates the
+	// maximum scope of an Access Approval request: either organization, folder, or
+	// project. Google administrators will be asked to send requests no broader
+	// than the configured scope.
 	//
 	// Possible values:
-	//   "REQUEST_SCOPE_MAX_WIDTH_PREFERENCE_UNSPECIFIED" - Default value for
-	// proto, shouldn't be used.
+	//   "REQUEST_SCOPE_MAX_WIDTH_PREFERENCE_UNSPECIFIED" - Default value, defaults
+	// to ORGANIZATION if not set. This value is not able to be configured by the
+	// user, do not use.
 	//   "ORGANIZATION" - This is the widest scope possible. It means the customer
 	// has no scope restriction when it comes to Access Approval requests.
 	//   "FOLDER" - Customer allows the scope of Access Approval requests as broad
@@ -332,8 +338,10 @@ type AccessApprovalSettings struct {
 	//   "PROJECT" - Customer allows the scope of Access Approval requests as broad
 	// as the Project level.
 	RequestScopeMaxWidthPreference string `json:"requestScopeMaxWidthPreference,omitempty"`
-	// RequireCustomerVisibleJustification: Optional. A setting to require approval
-	// request justifications to be customer visible.
+	// RequireCustomerVisibleJustification: Optional. When enabled, Google will
+	// only be able to send approval requests for access reasons with a customer
+	// accessible case ID in the reason detail. Also known as "Require customer
+	// initiated support case justification"
 	RequireCustomerVisibleJustification bool `json:"requireCustomerVisibleJustification,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -356,21 +364,23 @@ func (s AccessApprovalSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AccessLocations: Home office and physical location of the principal.
+// AccessLocations: Physical assigned office and physical location of the
+// Google administrator performing the access.
 type AccessLocations struct {
-	// PrincipalOfficeCountry: The "home office" location of the principal. A
-	// two-letter country code (ISO 3166-1 alpha-2), such as "US", "DE" or "GB" or
-	// a region code. In some limited situations Google systems may refer refer to
-	// a region code instead of a country code. Possible Region Codes: * ASI: Asia
-	// * EUR: Europe * OCE: Oceania * AFR: Africa * NAM: North America * SAM: South
-	// America * ANT: Antarctica * ANY: Any location
+	// PrincipalOfficeCountry: The "home office" location of the Google
+	// administrator. A two-letter country code (ISO 3166-1 alpha-2), such as "US",
+	// "DE" or "GB" or a region code. In some limited situations Google systems may
+	// refer refer to a region code instead of a country code. Possible Region
+	// Codes: * ASI: Asia * EUR: Europe * OCE: Oceania * AFR: Africa * NAM: North
+	// America * SAM: South America * ANT: Antarctica * ANY: Any location
 	PrincipalOfficeCountry string `json:"principalOfficeCountry,omitempty"`
-	// PrincipalPhysicalLocationCountry: Physical location of the principal at the
-	// time of the access. A two-letter country code (ISO 3166-1 alpha-2), such as
-	// "US", "DE" or "GB" or a region code. In some limited situations Google
-	// systems may refer refer to a region code instead of a country code. Possible
-	// Region Codes: * ASI: Asia * EUR: Europe * OCE: Oceania * AFR: Africa * NAM:
-	// North America * SAM: South America * ANT: Antarctica * ANY: Any location
+	// PrincipalPhysicalLocationCountry: Physical location of the Google
+	// administrator at the time of the access. A two-letter country code (ISO
+	// 3166-1 alpha-2), such as "US", "DE" or "GB" or a region code. In some
+	// limited situations Google systems may refer refer to a region code instead
+	// of a country code. Possible Region Codes: * ASI: Asia * EUR: Europe * OCE:
+	// Oceania * AFR: Africa * NAM: North America * SAM: South America * ANT:
+	// Antarctica * ANY: Any location
 	PrincipalPhysicalLocationCountry string `json:"principalPhysicalLocationCountry,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PrincipalOfficeCountry") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -394,10 +404,10 @@ type AccessReason struct {
 	// Detail: More detail about certain reason types. See comments for each type
 	// above.
 	Detail string `json:"detail,omitempty"`
-	// Type: Type of access justification.
+	// Type: Type of access reason.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value for proto, shouldn't be used.
+	//   "TYPE_UNSPECIFIED" - This value is not used.
 	//   "CUSTOMER_INITIATED_SUPPORT" - Customer made a request or raised an issue
 	// that required the principal to access customer data. `detail` is of the form
 	// ("#####" is the issue ID): * "Feedback Report: #####" * "Case Number: #####"
@@ -459,7 +469,7 @@ type ApprovalRequest struct {
 	RequestedExpiration string `json:"requestedExpiration,omitempty"`
 	// RequestedLocations: The locations for which approval is being requested.
 	RequestedLocations *AccessLocations `json:"requestedLocations,omitempty"`
-	// RequestedReason: The justification for which approval is being requested.
+	// RequestedReason: The access reason for which approval is being requested.
 	RequestedReason *AccessReason `json:"requestedReason,omitempty"`
 	// RequestedResourceName: The resource for which approval is being requested.
 	// The format of the resource name is defined at
@@ -552,6 +562,7 @@ func (s ApproveDecision) MarshalJSON() ([]byte, error) {
 }
 
 // AugmentedInfo: This field contains the augmented information of the request.
+// Requires augmented administrative access to be enabled.
 type AugmentedInfo struct {
 	// Command: For command-line tools, the full command-line exactly as entered by
 	// the actor without adding any additional characters (such as quotation
@@ -582,16 +593,20 @@ type CustomerApprovalApprovalPolicy struct {
 	// justification given.
 	//
 	// Possible values:
-	//   "JUSTIFICATION_BASED_APPROVAL_POLICY_UNSPECIFIED" - Default value for
-	// proto.
-	//   "JUSTIFICATION_BASED_APPROVAL_ENABLED_ALL" - Instant approval is enabled
-	// for all accesses.
-	//   "JUSTIFICATION_BASED_APPROVAL_ENABLED_EXTERNAL_JUSTIFICATIONS" - Instant
-	// approval is enabled for external justifications.
-	//   "JUSTIFICATION_BASED_APPROVAL_NOT_ENABLED" - Instant approval is not
-	// enabled for any accesses.
-	//   "JUSTIFICATION_BASED_APPROVAL_INHERITED" - Instant approval is inherited
-	// from the parent.
+	//   "JUSTIFICATION_BASED_APPROVAL_POLICY_UNSPECIFIED" - Default value,
+	// defaults to JUSTIFICATION_BASED_APPROVAL_NOT_ENABLED if not set. This value
+	// is not able to be configured by the user, do not use.
+	//   "JUSTIFICATION_BASED_APPROVAL_ENABLED_ALL" - Audit-only mode. All accesses
+	// are pre-approved instantly.
+	//   "JUSTIFICATION_BASED_APPROVAL_ENABLED_EXTERNAL_JUSTIFICATIONS" - Customer
+	// initiated support access reasons are pre-approved instantly. All other
+	// accesses require customer approval.
+	//   "JUSTIFICATION_BASED_APPROVAL_NOT_ENABLED" - All access approval requests
+	// require customer approval. This is the default value if the policy is not
+	// set.
+	//   "JUSTIFICATION_BASED_APPROVAL_INHERITED" - Defer configuration to parent
+	// settings. This is the default value if the policy is not set and the parent
+	// has a value set.
 	JustificationBasedApprovalPolicy string `json:"justificationBasedApprovalPolicy,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "JustificationBasedApprovalPolicy") to unconditionally include in API
@@ -657,16 +672,39 @@ type Empty struct {
 // specific service.
 type EnrolledService struct {
 	// CloudProduct: The product for which Access Approval will be enrolled.
-	// Allowed values are listed below (case-sensitive): * all * GA * App Engine *
-	// Artifact Registry * BigQuery * Certificate Authority Service * Cloud
-	// Bigtable * Cloud Key Management Service * Compute Engine * Cloud Composer *
-	// Cloud Dataflow * Cloud Dataproc * Cloud DLP * Cloud EKM * Cloud Firestore *
-	// Cloud HSM * Cloud Identity and Access Management * Cloud Logging * Cloud NAT
-	// * Cloud Pub/Sub * Cloud Spanner * Cloud SQL * Cloud Storage * Eventarc *
-	// Google Kubernetes Engine * Organization Policy Serivice * Persistent Disk *
-	// Resource Manager * Secret Manager * Speaker ID Note: These values are
-	// supported as input for legacy purposes, but will not be returned from the
-	// API. * all * ga-only * appengine.googleapis.com *
+	// Allowed values are listed below (case-sensitive): * all * GA * Access
+	// Context Manager * Anthos Identity Service * AlloyDB for PostgreSQL * Apigee
+	// * Application Integration * App Hub * Artifact Registry * Anthos Service
+	// Mesh * Access Transparency * BigQuery * Certificate Authority Service *
+	// Cloud Bigtable * CCAI Assist and Knowledge * Cloud Dataflow * Cloud Dataproc
+	// * CEP Security Gateway * Compliance Evaluation Service * Cloud Firestore *
+	// Cloud Healthcare API * Chronicle * Cloud AI Companion Gateway - Titan *
+	// Google Cloud Armor * Cloud Asset Inventory * Cloud Asset Search * Cloud
+	// Deploy * Cloud DNS * Cloud Latency * Cloud Memorystore for Redis * CloudNet
+	// Control * Cloud Riptide * Cloud Tasks * Cloud Trace * Cloud Data Transfer *
+	// Cloud Composer * Integration Connectors * Contact Center AI Insights * Cloud
+	// Pub/Sub * Cloud Run * Resource Manager * Cloud Spanner * Database Center *
+	// Cloud Dataform * Cloud Data Fusion * Dataplex * Dialogflow Customer
+	// Experience Edition * Cloud DLP * Document AI * Edge Container * Edge Network
+	// * Cloud EKM * Eventarc * Firebase Data Connect * Firebase Rules * App Engine
+	// * Cloud Build * Compute Engine * Cloud Functions (2nd Gen) * Cloud Filestore
+	// * Cloud Interconnect * Cloud NetApp Volumes * Cloud Storage * Generative AI
+	// App Builder * Google Kubernetes Engine * Backup for GKE API * GKE Connect *
+	// GKE Hub * Hoverboard * Cloud HSM * Cloud Identity and Access Management *
+	// Cloud Identity-Aware Proxy * Infrastructure Manager * Identity Storage
+	// Service * Key Access Justifications * Cloud Key Management Service * Cloud
+	// Logging * Looker (Google Cloud core) * Looker Studio * Management Hub *
+	// Model Armor * Cloud Monitoring * Cloud NAT * Connectivity Hub * External
+	// passthrough Network Load Balancer * OIDC One * Organization Policy Service *
+	// Org Lifecycle * Persistent Disk * Parameter Manager * Private Services
+	// Access * Regional Internal Application Load Balancer * Storage Batch
+	// Operations * Cloud Security Command Center * Secure Source Manager * Seeker
+	// * Service Provisioning * Speaker ID * Secret Manager * Cloud SQL * Cloud
+	// Speech-to-Text * Traffic Director * Cloud Text-to-Speech * USPS Andromeda *
+	// Vertex AI * Virtual Private Cloud (VPC) * VPC Access * VPC Service Controls
+	// Troubleshooter * VPC virtnet * Cloud Workstations * Web Risk Note: These
+	// values are supported as input for legacy purposes, but will not be returned
+	// from the API. * all * ga-only * appengine.googleapis.com *
 	// artifactregistry.googleapis.com * bigquery.googleapis.com *
 	// bigtable.googleapis.com * container.googleapis.com * cloudkms.googleapis.com
 	// * cloudresourcemanager.googleapis.com * cloudsql.googleapis.com *
@@ -684,8 +722,8 @@ type EnrolledService struct {
 	// EnrollmentLevel: The enrollment level of the service.
 	//
 	// Possible values:
-	//   "ENROLLMENT_LEVEL_UNSPECIFIED" - Default value for proto, shouldn't be
-	// used.
+	//   "ENROLLMENT_LEVEL_UNSPECIFIED" - Default value if not set, defaults to
+	// "BLOCK_ALL". This value is not available to be set by the user, do not use.
 	//   "BLOCK_ALL" - Service is enrolled in Access Approval for all requests
 	EnrollmentLevel string `json:"enrollmentLevel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudProduct") to
@@ -880,10 +918,9 @@ type FoldersDeleteAccessApprovalSettingsCall struct {
 
 // DeleteAccessApprovalSettings: Deletes the settings associated with a
 // project, folder, or organization. This will have the effect of disabling
-// Access Approval for the project, folder, or organization, but only if all
-// ancestors also have Access Approval disabled. If Access Approval is enabled
-// at a higher level of the hierarchy, then Access Approval will still be
-// enabled at this level as the settings are inherited.
+// Access Approval for the resource. Access Approval may remain active based on
+// parent resource settings. To confirm the effective settings, call
+// GetAccessApprovalSettings and verify effective setting is disabled.
 //
 // - name: Name of the AccessApprovalSettings to delete.
 func (r *FoldersService) DeleteAccessApprovalSettings(name string) *FoldersDeleteAccessApprovalSettingsCall {
@@ -981,8 +1018,8 @@ type FoldersGetAccessApprovalSettingsCall struct {
 	header_      http.Header
 }
 
-// GetAccessApprovalSettings: Gets the settings associated with a project,
-// folder, or organization.
+// GetAccessApprovalSettings: Gets the Access Approval settings associated with
+// a project, folder, or organization.
 //
 //   - name: The name of the AccessApprovalSettings to retrieve. Format:
 //     "{projects|folders|organizations}/{id}/accessApprovalSettings".
@@ -1434,10 +1471,10 @@ type FoldersApprovalRequestsDismissCall struct {
 }
 
 // Dismiss: Dismisses a request. Returns the updated ApprovalRequest. NOTE:
-// This does not deny access to the resource if another request has been made
-// and approved. It is equivalent in effect to ignoring the request altogether.
-// Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION
-// if the request exists but is not in a pending state.
+// When a request is dismissed, it is considered ignored. Dismissing a request
+// does not prevent access granted by other Access Approval requests. Returns
+// NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the
+// request exists but is not in a pending state.
 //
 // - name: Name of the ApprovalRequest to dismiss.
 func (r *FoldersApprovalRequestsService) Dismiss(name string, dismissapprovalrequestmessage *DismissApprovalRequestMessage) *FoldersApprovalRequestsDismissCall {
@@ -1654,10 +1691,10 @@ type FoldersApprovalRequestsInvalidateCall struct {
 }
 
 // Invalidate: Invalidates an existing ApprovalRequest. Returns the updated
-// ApprovalRequest. NOTE: This does not deny access to the resource if another
-// request has been made and approved. It only invalidates a single approval.
-// Returns FAILED_PRECONDITION if the request exists but is not in an approved
-// state.
+// ApprovalRequest. NOTE: This action revokes Google access based on this
+// approval request. If the resource has other active approvals, access will
+// remain granted. Returns FAILED_PRECONDITION if the request exists but is not
+// in an approved state.
 //
 // - name: Name of the ApprovalRequest to invalidate.
 func (r *FoldersApprovalRequestsService) Invalidate(name string, invalidateapprovalrequestmessage *InvalidateApprovalRequestMessage) *FoldersApprovalRequestsInvalidateCall {
@@ -1922,10 +1959,9 @@ type OrganizationsDeleteAccessApprovalSettingsCall struct {
 
 // DeleteAccessApprovalSettings: Deletes the settings associated with a
 // project, folder, or organization. This will have the effect of disabling
-// Access Approval for the project, folder, or organization, but only if all
-// ancestors also have Access Approval disabled. If Access Approval is enabled
-// at a higher level of the hierarchy, then Access Approval will still be
-// enabled at this level as the settings are inherited.
+// Access Approval for the resource. Access Approval may remain active based on
+// parent resource settings. To confirm the effective settings, call
+// GetAccessApprovalSettings and verify effective setting is disabled.
 //
 // - name: Name of the AccessApprovalSettings to delete.
 func (r *OrganizationsService) DeleteAccessApprovalSettings(name string) *OrganizationsDeleteAccessApprovalSettingsCall {
@@ -2023,8 +2059,8 @@ type OrganizationsGetAccessApprovalSettingsCall struct {
 	header_      http.Header
 }
 
-// GetAccessApprovalSettings: Gets the settings associated with a project,
-// folder, or organization.
+// GetAccessApprovalSettings: Gets the Access Approval settings associated with
+// a project, folder, or organization.
 //
 //   - name: The name of the AccessApprovalSettings to retrieve. Format:
 //     "{projects|folders|organizations}/{id}/accessApprovalSettings".
@@ -2476,10 +2512,10 @@ type OrganizationsApprovalRequestsDismissCall struct {
 }
 
 // Dismiss: Dismisses a request. Returns the updated ApprovalRequest. NOTE:
-// This does not deny access to the resource if another request has been made
-// and approved. It is equivalent in effect to ignoring the request altogether.
-// Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION
-// if the request exists but is not in a pending state.
+// When a request is dismissed, it is considered ignored. Dismissing a request
+// does not prevent access granted by other Access Approval requests. Returns
+// NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the
+// request exists but is not in a pending state.
 //
 // - name: Name of the ApprovalRequest to dismiss.
 func (r *OrganizationsApprovalRequestsService) Dismiss(name string, dismissapprovalrequestmessage *DismissApprovalRequestMessage) *OrganizationsApprovalRequestsDismissCall {
@@ -2696,10 +2732,10 @@ type OrganizationsApprovalRequestsInvalidateCall struct {
 }
 
 // Invalidate: Invalidates an existing ApprovalRequest. Returns the updated
-// ApprovalRequest. NOTE: This does not deny access to the resource if another
-// request has been made and approved. It only invalidates a single approval.
-// Returns FAILED_PRECONDITION if the request exists but is not in an approved
-// state.
+// ApprovalRequest. NOTE: This action revokes Google access based on this
+// approval request. If the resource has other active approvals, access will
+// remain granted. Returns FAILED_PRECONDITION if the request exists but is not
+// in an approved state.
 //
 // - name: Name of the ApprovalRequest to invalidate.
 func (r *OrganizationsApprovalRequestsService) Invalidate(name string, invalidateapprovalrequestmessage *InvalidateApprovalRequestMessage) *OrganizationsApprovalRequestsInvalidateCall {
@@ -2964,10 +3000,9 @@ type ProjectsDeleteAccessApprovalSettingsCall struct {
 
 // DeleteAccessApprovalSettings: Deletes the settings associated with a
 // project, folder, or organization. This will have the effect of disabling
-// Access Approval for the project, folder, or organization, but only if all
-// ancestors also have Access Approval disabled. If Access Approval is enabled
-// at a higher level of the hierarchy, then Access Approval will still be
-// enabled at this level as the settings are inherited.
+// Access Approval for the resource. Access Approval may remain active based on
+// parent resource settings. To confirm the effective settings, call
+// GetAccessApprovalSettings and verify effective setting is disabled.
 //
 // - name: Name of the AccessApprovalSettings to delete.
 func (r *ProjectsService) DeleteAccessApprovalSettings(name string) *ProjectsDeleteAccessApprovalSettingsCall {
@@ -3065,8 +3100,8 @@ type ProjectsGetAccessApprovalSettingsCall struct {
 	header_      http.Header
 }
 
-// GetAccessApprovalSettings: Gets the settings associated with a project,
-// folder, or organization.
+// GetAccessApprovalSettings: Gets the Access Approval settings associated with
+// a project, folder, or organization.
 //
 //   - name: The name of the AccessApprovalSettings to retrieve. Format:
 //     "{projects|folders|organizations}/{id}/accessApprovalSettings".
@@ -3518,10 +3553,10 @@ type ProjectsApprovalRequestsDismissCall struct {
 }
 
 // Dismiss: Dismisses a request. Returns the updated ApprovalRequest. NOTE:
-// This does not deny access to the resource if another request has been made
-// and approved. It is equivalent in effect to ignoring the request altogether.
-// Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION
-// if the request exists but is not in a pending state.
+// When a request is dismissed, it is considered ignored. Dismissing a request
+// does not prevent access granted by other Access Approval requests. Returns
+// NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the
+// request exists but is not in a pending state.
 //
 // - name: Name of the ApprovalRequest to dismiss.
 func (r *ProjectsApprovalRequestsService) Dismiss(name string, dismissapprovalrequestmessage *DismissApprovalRequestMessage) *ProjectsApprovalRequestsDismissCall {
@@ -3738,10 +3773,10 @@ type ProjectsApprovalRequestsInvalidateCall struct {
 }
 
 // Invalidate: Invalidates an existing ApprovalRequest. Returns the updated
-// ApprovalRequest. NOTE: This does not deny access to the resource if another
-// request has been made and approved. It only invalidates a single approval.
-// Returns FAILED_PRECONDITION if the request exists but is not in an approved
-// state.
+// ApprovalRequest. NOTE: This action revokes Google access based on this
+// approval request. If the resource has other active approvals, access will
+// remain granted. Returns FAILED_PRECONDITION if the request exists but is not
+// in an approved state.
 //
 // - name: Name of the ApprovalRequest to invalidate.
 func (r *ProjectsApprovalRequestsService) Invalidate(name string, invalidateapprovalrequestmessage *InvalidateApprovalRequestMessage) *ProjectsApprovalRequestsInvalidateCall {

@@ -2405,16 +2405,14 @@ func (s GoogleAppsCardV1CardHeader) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1Carousel: Developer Preview
-// (https://developers.google.com/workspace/preview): A carousel, also known as
-// a slider, rotates and displays a list of widgets in a slideshow format, with
-// buttons navigating to the previous or next widget. For example, this is a
-// JSON representation of a carousel that contains three text paragraph
-// widgets. ``` { "carouselCards": [ { "widgets": [ { "textParagraph": {
-// "text": "First text paragraph in carousel", } } ] }, { "widgets": [ {
-// "textParagraph": { "text": "Second text paragraph in carousel", } } ] }, {
-// "widgets": [ { "textParagraph": { "text": "Third text paragraph in
-// carousel", } } ] } ] } ``` Google Chat apps
+// GoogleAppsCardV1Carousel: A carousel, also known as a slider, rotates and
+// displays a list of widgets in a slideshow format, with buttons navigating to
+// the previous or next widget. For example, this is a JSON representation of a
+// carousel that contains three text paragraph widgets. ``` { "carouselCards":
+// [ { "widgets": [ { "textParagraph": { "text": "First text paragraph in
+// carousel", } } ] }, { "widgets": [ { "textParagraph": { "text": "Second text
+// paragraph in carousel", } } ] }, { "widgets": [ { "textParagraph": { "text":
+// "Third text paragraph in carousel", } } ] } ] } ``` Google Chat apps
 // (https://developers.google.com/workspace/chat):
 type GoogleAppsCardV1Carousel struct {
 	// CarouselCards: A list of cards included in the carousel.
@@ -2437,10 +2435,8 @@ func (s GoogleAppsCardV1Carousel) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1CarouselCard: Developer Preview
-// (https://developers.google.com/workspace/preview): A card that can be
-// displayed as a carousel item. Google Chat apps
-// (https://developers.google.com/workspace/chat):
+// GoogleAppsCardV1CarouselCard: A card that can be displayed as a carousel
+// item. Google Chat apps (https://developers.google.com/workspace/chat):
 type GoogleAppsCardV1CarouselCard struct {
 	// FooterWidgets: A list of widgets displayed at the bottom of the carousel
 	// card. The widgets are displayed in the order that they are specified.
@@ -3302,10 +3298,9 @@ func (s GoogleAppsCardV1MaterialIcon) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1NestedWidget: Developer Preview
-// (https://developers.google.com/workspace/preview): A list of widgets that
-// can be displayed in a containing layout, such as a `CarouselCard`. Google
-// Chat apps (https://developers.google.com/workspace/chat):
+// GoogleAppsCardV1NestedWidget: A list of widgets that can be displayed in a
+// containing layout, such as a `CarouselCard`. Google Chat apps
+// (https://developers.google.com/workspace/chat):
 type GoogleAppsCardV1NestedWidget struct {
 	// ButtonList: A button list widget.
 	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`

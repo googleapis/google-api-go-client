@@ -79,6 +79,8 @@ var skipAPIGeneration = map[string]bool{
 	"integrations:v1":      true,
 	"sql:v1beta4":          true,
 	"datalineage:v1":       true,
+	// Restore aiplatform:v1beta1 after b/446965637 is resolved.
+	"aiplatform:v1beta1": true,
 }
 
 var apisToSplit = map[string]bool{

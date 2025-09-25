@@ -493,23 +493,24 @@ func (s AboutTeamDriveThemes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AccessProposal: The Access Proposal resource for outstanding access
-// proposals on a file
+// AccessProposal: Manage outstanding access proposals on a file.
 type AccessProposal struct {
-	// CreateTime: The creation time
+	// CreateTime: The creation time.
 	CreateTime string `json:"createTime,omitempty"`
-	// FileId: The file id that the proposal for access is on
+	// FileId: The file ID that the proposal for access is on.
 	FileId string `json:"fileId,omitempty"`
-	// ProposalId: The id of the access proposal
+	// ProposalId: The ID of the access proposal.
 	ProposalId string `json:"proposalId,omitempty"`
 	// RecipientEmailAddress: The email address of the user that will receive
-	// permissions if accepted
+	// permissions, if accepted.
 	RecipientEmailAddress string `json:"recipientEmailAddress,omitempty"`
-	// RequestMessage: The message that the requester added to the proposal
+	// RequestMessage: The message that the requester added to the proposal.
 	RequestMessage string `json:"requestMessage,omitempty"`
-	// RequesterEmailAddress: The email address of the requesting user
+	// RequesterEmailAddress: The email address of the requesting user.
 	RequesterEmailAddress string `json:"requesterEmailAddress,omitempty"`
-	// RolesAndViews: A wrapper for the role and view of an access proposal.
+	// RolesAndViews: A wrapper for the role and view of an access proposal. For
+	// more information, see Roles and permissions
+	// (https://developers.google.com/workspace/drive/api/guides/ref-roles).
 	RolesAndViews []*AccessProposalRoleAndView `json:"rolesAndViews,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -533,14 +534,14 @@ func (s AccessProposal) MarshalJSON() ([]byte, error) {
 }
 
 // AccessProposalRoleAndView: A wrapper for the role and view of an access
-// proposal.
+// proposal. For more information, see Roles and permissions
+// (https://developers.google.com/workspace/drive/api/guides/ref-roles).
 type AccessProposalRoleAndView struct {
-	// Role: The role that was proposed by the requester New values may be added in
-	// the future, but the following are currently possible: * `writer` *
-	// `commenter` * `reader`
+	// Role: The role that was proposed by the requester. The supported values are:
+	// * `writer` * `commenter` * `reader`
 	Role string `json:"role,omitempty"`
 	// View: Indicates the view for this access proposal. Only populated for
-	// proposals that belong to a view. `published` is the only supported value.
+	// proposals that belong to a view. Only `published` is supported.
 	View string `json:"view,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Role") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2319,11 +2320,11 @@ func (s LabelModification) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListAccessProposalsResponse: The response to an Access Proposal list
+// ListAccessProposalsResponse: The response to an access proposal list
 // request.
 type ListAccessProposalsResponse struct {
-	// AccessProposals: The list of Access Proposals. This field is only populated
-	// in v3 and v3beta.
+	// AccessProposals: The list of access proposals. This field is only populated
+	// in Drive API v3.
 	AccessProposals []*AccessProposal `json:"accessProposals,omitempty"`
 	// NextPageToken: The continuation token for the next page of results. This
 	// will be absent if the end of the results list has been reached. If the token
@@ -2735,23 +2736,25 @@ func (s ReplyList) MarshalJSON() ([]byte, error) {
 // ResolveAccessProposalRequest: Request message for resolving an
 // AccessProposal on a file.
 type ResolveAccessProposalRequest struct {
-	// Action: Required. The action to take on the AccessProposal.
+	// Action: Required. The action to take on the access proposal.
 	//
 	// Possible values:
 	//   "ACTION_UNSPECIFIED" - Unspecified action
-	//   "ACCEPT" - The user accepts the proposal. Note: If this action is used,
-	// the `role` field must have at least one value.
-	//   "DENY" - The user denies the proposal
+	//   "ACCEPT" - The user accepts the access proposal. Note: If this action is
+	// used, the `role` field must have at least one value.
+	//   "DENY" - The user denies the access proposal.
 	Action string `json:"action,omitempty"`
-	// Role: Optional. The roles the approver has allowed, if any. Note: This field
-	// is required for the `ACCEPT` action.
+	// Role: Optional. The roles that the approver has allowed, if any. For more
+	// information, see Roles and permissions
+	// (https://developers.google.com/workspace/drive/api/guides/ref-roles). Note:
+	// This field is required for the `ACCEPT` action.
 	Role []string `json:"role,omitempty"`
 	// SendNotification: Optional. Whether to send an email to the requester when
-	// the AccessProposal is denied or accepted.
+	// the access proposal is denied or accepted.
 	SendNotification bool `json:"sendNotification,omitempty"`
 	// View: Optional. Indicates the view for this access proposal. This should
-	// only be set when the proposal belongs to a view. `published` is the only
-	// supported value.
+	// only be set when the proposal belongs to a view. Only `published` is
+	// supported.
 	View string `json:"view,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3378,10 +3381,12 @@ type AccessproposalsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves an AccessProposal by ID.
+// Get: Retrieves an access proposal by ID. For more information, see Manage
+// pending access proposals
+// (https://developers.google.com/workspace/drive/api/guides/pending-access).
 //
-// - fileId: The id of the item the request is on.
-// - proposalId: The id of the access proposal to resolve.
+// - fileId: The ID of the item the request is on.
+// - proposalId: The ID of the access proposal to resolve.
 func (r *AccessproposalsService) Get(fileId string, proposalId string) *AccessproposalsGetCall {
 	c := &AccessproposalsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -3490,11 +3495,13 @@ type AccessproposalsListCall struct {
 	header_      http.Header
 }
 
-// List: List the AccessProposals on a file. Note: Only approvers are able to
-// list AccessProposals on a file. If the user is not an approver, returns a
-// 403.
+// List: List the access proposals on a file. For more information, see Manage
+// pending access proposals
+// (https://developers.google.com/workspace/drive/api/guides/pending-access).
+// Note: Only approvers are able to list access proposals on a file. If the
+// user isn't an approver, a 403 error is returned.
 //
-// - fileId: The id of the item the request is on.
+// - fileId: The ID of the item the request is on.
 func (r *AccessproposalsService) List(fileId string) *AccessproposalsListCall {
 	c := &AccessproposalsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -3502,7 +3509,7 @@ func (r *AccessproposalsService) List(fileId string) *AccessproposalsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The number of results per
-// page
+// page.
 func (c *AccessproposalsListCall) PageSize(pageSize int64) *AccessproposalsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3638,10 +3645,12 @@ type AccessproposalsResolveCall struct {
 	header_                      http.Header
 }
 
-// Resolve: Used to approve or deny an Access Proposal.
+// Resolve: Approves or denies an access proposal. For more information, see
+// Manage pending access proposals
+// (https://developers.google.com/workspace/drive/api/guides/pending-access).
 //
-// - fileId: The id of the item the request is on.
-// - proposalId: The id of the access proposal to resolve.
+// - fileId: The ID of the item the request is on.
+// - proposalId: The ID of the access proposal to resolve.
 func (r *AccessproposalsService) Resolve(fileId string, proposalId string, resolveaccessproposalrequest *ResolveAccessProposalRequest) *AccessproposalsResolveCall {
 	c := &AccessproposalsResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId

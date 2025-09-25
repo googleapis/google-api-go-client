@@ -649,7 +649,7 @@ type CreateTaskRequest struct {
 	// Explicitly specifying a task ID enables task de-duplication. If a task's ID
 	// is identical to that of an existing task or a task that was deleted or
 	// executed recently then the call will fail with ALREADY_EXISTS. The IDs of
-	// deleted tasks are not immediately available for reuse. It can take up to 4
+	// deleted tasks are not immediately available for reuse. It can take up to 24
 	// hours (or 9 days if the task's queue was created using a queue.yaml or
 	// queue.xml) for the task ID to be released and made available again. Because
 	// there is an extra lookup cost to identify duplicate task names, these
@@ -2077,10 +2077,10 @@ type UriOverride struct {
 	// segment.
 	PathOverride *PathOverride `json:"pathOverride,omitempty"`
 	// Port: Port override. When specified, replaces the port part of the task URI.
-	// For instance, for a URI http://www.google.com/foo and port=123, the
-	// overridden URI becomes http://www.google.com:123/foo. Note that the port
-	// value must be a positive integer. Setting the port to 0 (Zero) clears the
-	// URI port.
+	// For instance, for a URI "https://www.example.com/example" and port=123, the
+	// overridden URI becomes "https://www.example.com:123/example". Note that the
+	// port value must be a positive integer. Setting the port to 0 (Zero) clears
+	// the URI port.
 	Port int64 `json:"port,omitempty,string"`
 	// QueryOverride: URI Query. When specified, replaces the query part of the
 	// task URI. Setting the query value to an empty string clears the URI query
@@ -2091,10 +2091,10 @@ type UriOverride struct {
 	//
 	// Possible values:
 	//   "SCHEME_UNSPECIFIED" - Scheme unspecified. Defaults to HTTPS.
-	//   "HTTP" - Convert the scheme to HTTP, e.g., https://www.google.ca will
-	// change to http://www.google.ca.
-	//   "HTTPS" - Convert the scheme to HTTPS, e.g., http://www.google.ca will
-	// change to https://www.google.ca.
+	//   "HTTP" - Convert the scheme to HTTP, e.g., "https://www.example.com" will
+	// change to "http://www.example.com".
+	//   "HTTPS" - Convert the scheme to HTTPS, e.g., "http://www.example.com" will
+	// change to "https://www.example.com".
 	Scheme string `json:"scheme,omitempty"`
 	// UriOverrideEnforceMode: URI Override Enforce Mode When specified, determines
 	// the Target UriOverride mode. If not specified, it defaults to ALWAYS.
@@ -2364,9 +2364,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -4251,7 +4251,9 @@ type ProjectsLocationsQueuesTasksGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a task.
+// Get: Gets a task. After a task is successfully executed or has exhausted its
+// retry attempts, the task is deleted. A `GetTask` request for a deleted task
+// returns a `NOT_FOUND` error.
 //
 //   - name: The task name. For example:
 //     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`.

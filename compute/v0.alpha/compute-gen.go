@@ -41622,8 +41622,12 @@ type NetworkPeeringConnectionStatusConsensusState struct {
 	//   "DELETE_ACKNOWLEDGED" - Both network admins have agreed this consensus
 	// peering connection can be deleted.
 	//   "DELETE_STATUS_UNSPECIFIED"
+	//   "LOCAL_CANCEL_REQUESTED" - The local network admin requested to cancel
+	// their delete request after DELETE_ACKNOWLEDGED.
 	//   "LOCAL_DELETE_REQUESTED" - Network admin has requested deletion of this
 	// peering connection.
+	//   "PEER_CANCEL_REQUESTED" - The peer network admin requested to cancel their
+	// delete request after DELETE_ACKNOWLEDGED.
 	//   "PEER_DELETE_REQUESTED" - The peer network admin has requested deletion of
 	// this peering connection.
 	DeleteStatus string `json:"deleteStatus,omitempty"`
@@ -43087,6 +43091,27 @@ type NetworksAddPeeringRequest struct {
 
 func (s NetworksAddPeeringRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworksAddPeeringRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type NetworksCancelRequestRemovePeeringRequest struct {
+	// Name: Name of the peering, which should conform to RFC1035.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NetworksCancelRequestRemovePeeringRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworksCancelRequestRemovePeeringRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -58328,6 +58353,11 @@ type RouterBgpPeer struct {
 	// Ipv6NexthopAddress: IPv6 address of the interface inside Google Cloud
 	// Platform.
 	Ipv6NexthopAddress string `json:"ipv6NexthopAddress,omitempty"`
+	// LinkedCustomHardware: The linked custom hardware resource. The URI of the
+	// custom hardware link attachment is where you will establish the BGP session
+	// from the Cloud Router. This link attachment must reside in the same
+	// subnetwork as the associated router interface.
+	LinkedCustomHardware string `json:"linkedCustomHardware,omitempty"`
 	// ManagementType: [Output Only] The resource that configures and manages this
 	// BGP peer. - MANAGED_BY_USER is the default value and can be managed by you
 	// or other users - MANAGED_BY_ATTACHMENT is a BGP peer that is configured and
@@ -59184,6 +59214,10 @@ type RouterStatusBgpPeerStatus struct {
 	Ipv4NexthopAddress string `json:"ipv4NexthopAddress,omitempty"`
 	// Ipv6NexthopAddress: IPv6 address of the local BGP interface.
 	Ipv6NexthopAddress string `json:"ipv6NexthopAddress,omitempty"`
+	// LinkedCustomHardware: The URI of the linked custom hardware resource,
+	// CustomHardwareLinkAttachment. This CustomHardwareLinkAttachment resource is
+	// the one that will establish the BGP session from the Cloud Router.
+	LinkedCustomHardware string `json:"linkedCustomHardware,omitempty"`
 	// LinkedVpnTunnel: URL of the VPN tunnel that this BGP peer controls.
 	LinkedVpnTunnel string `json:"linkedVpnTunnel,omitempty"`
 	// Md5AuthEnabled: Informs whether MD5 authentication is enabled on this BGP

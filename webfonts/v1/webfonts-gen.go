@@ -193,6 +193,44 @@ func (s *Axis) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Tag: Metadata for a tag.
+type Tag struct {
+	// Name: The name of the tag.
+	Name string `json:"name,omitempty"`
+	// Weight: The weight of the tag.
+	Weight float64 `json:"weight,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Tag) MarshalJSON() ([]byte, error) {
+	type NoMethod Tag
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *Tag) UnmarshalJSON(data []byte) error {
+	type NoMethod Tag
+	var s1 struct {
+		Weight gensupport.JSONFloat64 `json:"weight"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Weight = float64(s1.Weight)
+	return nil
+}
+
 // Webfont: Metadata describing a family of fonts.
 type Webfont struct {
 	// Axes: Axis for variable fonts.
@@ -216,6 +254,8 @@ type Webfont struct {
 	Menu string `json:"menu,omitempty"`
 	// Subsets: The scripts supported by the font.
 	Subsets []string `json:"subsets,omitempty"`
+	// Tags: The tags that apply to this family.
+	Tags []*Tag `json:"tags,omitempty"`
 	// Variants: The available variants for the font.
 	Variants []string `json:"variants,omitempty"`
 	// Version: The font version.
@@ -292,6 +332,10 @@ func (r *WebfontsService) List() *WebfontsListCall {
 //	"VF" - Prefer variable font files instead of static fonts instantiated at
 //
 // standard weights.
+//
+//	"FAMILY_TAGS" - Include tags that apply to the entire family in the
+//
+// response.
 func (c *WebfontsListCall) Capability(capability ...string) *WebfontsListCall {
 	c.urlParams_.SetMulti("capability", append([]string{}, capability...))
 	return c

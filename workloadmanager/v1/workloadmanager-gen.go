@@ -997,6 +997,9 @@ type Insight struct {
 	AgentStatus *AgentStatus `json:"agentStatus,omitempty"`
 	// InstanceId: Optional. The instance id where the insight is generated from
 	InstanceId string `json:"instanceId,omitempty"`
+	// OpenShiftValidation: The insights data for the OpenShift workload
+	// validation.
+	OpenShiftValidation *OpenShiftValidation `json:"openShiftValidation,omitempty"`
 	// SapDiscovery: The insights data for SAP system discovery. This is a copy of
 	// SAP System proto and should get updated whenever that one changes.
 	SapDiscovery *SapDiscovery `json:"sapDiscovery,omitempty"`
@@ -1357,6 +1360,11 @@ type Notice struct {
 func (s Notice) MarshalJSON() ([]byte, error) {
 	type NoMethod Notice
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OpenShiftValidation: A presentation of OpenShift workload insight. The
+// schema of OpenShift workloads validation related data.
+type OpenShiftValidation struct {
 }
 
 // Operation: This resource represents a long-running operation that is the

@@ -952,6 +952,13 @@ type GoogleApiSource struct {
 	// Name: Identifier. Resource name of the form
 	// projects/{project}/locations/{location}/googleApiSources/{google_api_source}
 	Name string `json:"name,omitempty"`
+	// OrganizationSubscription: Optional. Config to enable subscribing to events
+	// from all projects in the GoogleApiSource's org.
+	OrganizationSubscription *OrganizationSubscription `json:"organizationSubscription,omitempty"`
+	// ProjectSubscriptions: Optional. Config to enable subscribing to all events
+	// from a list of projects. All the projects must be in the same org as the
+	// GoogleApiSource.
+	ProjectSubscriptions *ProjectSubscriptions `json:"projectSubscriptions,omitempty"`
 	// Uid: Output only. Server assigned unique identifier for the channel. The
 	// value is a UUID4 string and guaranteed to remain unchanged until the
 	// resource is deleted.
@@ -2182,6 +2189,29 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OrganizationSubscription: Config to enabled subscribing to events from other
+// projects in the org.
+type OrganizationSubscription struct {
+	// Enabled: Required. Enable org level subscription.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OrganizationSubscription) MarshalJSON() ([]byte, error) {
+	type NoMethod OrganizationSubscription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Pipeline: A representation of the Pipeline resource.
 type Pipeline struct {
 	// Annotations: Optional. User-defined annotations. See
@@ -2352,6 +2382,33 @@ type Policy struct {
 
 func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProjectSubscriptions: Config to enable subscribing to all events from a list
+// of projects.
+type ProjectSubscriptions struct {
+	// List: Required. A list of projects to receive events from. All the projects
+	// must be in the same org. The listed projects should have the format
+	// project/{identifier} where identifier can be either the project id for
+	// project number. A single list may contain both formats. At most 100 projects
+	// can be listed.
+	List []string `json:"list,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "List") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "List") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProjectSubscriptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ProjectSubscriptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -1246,8 +1246,9 @@ type ApplicationPolicy struct {
 	Disabled bool `json:"disabled,omitempty"`
 	// ExtensionConfig: Configuration to enable this app as an extension app, with
 	// the capability of interacting with Android Device Policy offline.This field
-	// can be set for at most one app.The signing key certificate fingerprint of
-	// the app on the device must match one of the entries in
+	// can be set for at most one app. If there is any app with COMPANION_APP role,
+	// this field cannot be set.The signing key certificate fingerprint of the app
+	// on the device must match one of the entries in
 	// ApplicationPolicy.signingKeyCerts or
 	// ExtensionConfig.signingKeyFingerprintsSha256 (deprecated) or the signing key
 	// certificate fingerprints obtained from Play Store for the app to be able to
@@ -1286,7 +1287,8 @@ type ApplicationPolicy struct {
 	// won't complete until the app is installed. After installation, users won't
 	// be able to remove the app. You can only set this installType for one app per
 	// policy. When this is present in the policy, status bar will be automatically
-	// disabled.
+	// disabled.If there is any app with KIOSK role, then this install type cannot
+	// be set for any app.
 	//   "CUSTOM" - The app can only be installed and updated via AMAPI SDK command
 	// (https://developers.google.com/android/management/extensibility-sdk-integration).Note:
 	// This only affects fully managed devices. Play related fields
@@ -1355,17 +1357,40 @@ type ApplicationPolicy struct {
 	//   "PREFERENTIAL_NETWORK_ID_FOUR" - Preferential network identifier 4.
 	//   "PREFERENTIAL_NETWORK_ID_FIVE" - Preferential network identifier 5.
 	PreferentialNetworkId string `json:"preferentialNetworkId,omitempty"`
+	// Roles: Optional. Roles the app has.Apps having certain roles can be exempted
+	// from power and background execution restrictions, suspension and hibernation
+	// on Android 14 and above. The user control can also be disallowed for apps
+	// with certain roles on Android 11 and above. Refer to the documentation of
+	// each RoleType for more details.The app is notified about the roles that are
+	// set for it if the app has a notification receiver service with . The app is
+	// notified whenever its roles are updated or after the app is installed when
+	// it has nonempty list of roles. The app can use this notification to
+	// bootstrap itself after the installation. See Integrate with the AMAPI SDK
+	// (https://developers.google.com/android/management/sdk-integration) and
+	// Manage app roles
+	// (https://developers.google.com/android/management/app-roles) guides for more
+	// details on the requirements for the service.For the exemptions to be applied
+	// and the app to be notified about the roles, the signing key certificate
+	// fingerprint of the app on the device must match one of the signing key
+	// certificate fingerprints obtained from Play Store or one of the entries in
+	// ApplicationPolicy.signingKeyCerts. Otherwise, a NonComplianceDetail with
+	// APP_SIGNING_CERT_MISMATCH is reported.There must not be duplicate roles with
+	// the same roleType. Multiple apps cannot hold a role with the same roleType.
+	// A role with type ROLE_TYPE_UNSPECIFIED is not allowed.
+	Roles []*Role `json:"roles,omitempty"`
 	// SigningKeyCerts: Optional. Signing key certificates of the app.This field is
 	// required in the following cases: The app has installType set to CUSTOM (i.e.
-	// a custom app). The app has extensionConfig set (i.e. an extension app) but
-	// ExtensionConfig.signingKeyFingerprintsSha256 (deprecated) is not set and the
-	// app does not exist on the Play Store.If this field is not set for a custom
-	// app, the policy is rejected. If it is not set when required for a non-custom
-	// app, a NonComplianceDetail with INVALID_VALUE is reported.For other cases,
-	// this field is optional and the signing key certificates obtained from Play
-	// Store are used.See following policy settings to see how this field is used:
-	// choosePrivateKeyRules ApplicationPolicy.InstallType.CUSTOM
-	// ApplicationPolicy.extensionConfig
+	// a custom app). The app has roles set to a nonempty list and the app does not
+	// exist on the Play Store. The app has extensionConfig set (i.e. an extension
+	// app) but ExtensionConfig.signingKeyFingerprintsSha256 (deprecated) is not
+	// set and the app does not exist on the Play Store.If this field is not set
+	// for a custom app, the policy is rejected. If it is not set when required for
+	// a non-custom app, a NonComplianceDetail with INVALID_VALUE is reported.For
+	// other cases, this field is optional and the signing key certificates
+	// obtained from Play Store are used.See following policy settings to see how
+	// this field is used: choosePrivateKeyRules
+	// ApplicationPolicy.InstallType.CUSTOM ApplicationPolicy.extensionConfig
+	// ApplicationPolicy.roles
 	SigningKeyCerts []*ApplicationSigningKeyCert `json:"signingKeyCerts,omitempty"`
 	// UserControlSettings: Optional. Specifies whether user control is permitted
 	// for the app. User control includes user actions like force-stopping and
@@ -1377,12 +1402,15 @@ type ApplicationPolicy struct {
 	// app to determine if user control is allowed or disallowed. User control is
 	// allowed by default for most apps but disallowed for following types of apps:
 	// extension apps (see extensionConfig for more details) kiosk apps (see KIOSK
-	// install type for more details) other critical system apps
+	// install type for more details) apps with roles set to a nonempty list other
+	// critical system apps
 	//   "USER_CONTROL_ALLOWED" - User control is allowed for the app. Kiosk apps
 	// can use this to allow user control. For extension apps (see extensionConfig
-	// for more details), user control is disallowed even if this value is set. For
-	// kiosk apps (see KIOSK install type for more details), this value can be used
-	// to allow user control.
+	// for more details), user control is disallowed even if this value is set.For
+	// apps with roles set to a nonempty list (except roles containing only KIOSK
+	// role), this value cannot be set.For kiosk apps (see KIOSK install type and
+	// KIOSK role type for more details), this value can be used to allow user
+	// control.
 	//   "USER_CONTROL_DISALLOWED" - User control is disallowed for the app. This
 	// is supported on Android 11 and above. A NonComplianceDetail with API_LEVEL
 	// is reported if the Android version is less than 11.
@@ -6950,6 +6978,64 @@ type RequestDeviceInfoStatus struct {
 
 func (s RequestDeviceInfoStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod RequestDeviceInfoStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Role: Role an app can have.
+type Role struct {
+	// RoleType: Required. The type of the role an app can have.
+	//
+	// Possible values:
+	//   "ROLE_TYPE_UNSPECIFIED" - The role type is unspecified. This value must
+	// not be used.
+	//   "COMPANION_APP" - The role type for companion apps. This role enables the
+	// app as a companion app with the capability of interacting with Android
+	// Device Policy offline. This is the recommended way to configure an app as a
+	// companion app. For legacy way, see extensionConfig.On Android 14 and above,
+	// the app with this role is exempted from power and background execution
+	// restrictions, suspension and hibernation. On Android 11 and above, the user
+	// control is disallowed for the app with this role. userControlSettings cannot
+	// be set to USER_CONTROL_ALLOWED for the app with this role.Android Device
+	// Policy notifies the companion app of any local command status updates if the
+	// app has a service with . See Integrate with the AMAPI SDK
+	// (https://developers.google.com/android/management/sdk-integration) guide for
+	// more details on the requirements for the service.
+	//   "KIOSK" - The role type for kiosk apps. An app can have this role only if
+	// it has installType set to REQUIRED_FOR_SETUP or CUSTOM. Before adding this
+	// role to an app with CUSTOM install type, the app must already be installed
+	// on the device.The app having this role type is set as the preferred home
+	// intent and allowlisted for lock task mode. When there is an app with this
+	// role type, status bar will be automatically disabled.This is preferable to
+	// setting installType to KIOSK.On Android 11 and above, the user control is
+	// disallowed but userControlSettings can be set to USER_CONTROL_ALLOWED to
+	// allow user control for the app with this role.
+	//   "MOBILE_THREAT_DEFENSE_ENDPOINT_DETECTION_RESPONSE" - The role type for
+	// Mobile Threat Defense (MTD) / Endpoint Detection & Response (EDR) apps.On
+	// Android 14 and above, the app with this role is exempted from power and
+	// background execution restrictions, suspension and hibernation. On Android 11
+	// and above, the user control is disallowed and userControlSettings cannot be
+	// set to USER_CONTROL_ALLOWED for the app with this role.
+	//   "SYSTEM_HEALTH_MONITORING" - The role type for system health monitoring
+	// apps.On Android 14 and above, the app with this role is exempted from power
+	// and background execution restrictions, suspension and hibernation. On
+	// Android 11 and above, the user control is disallowed and userControlSettings
+	// cannot be set to USER_CONTROL_ALLOWED for the app with this role.
+	RoleType string `json:"roleType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RoleType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RoleType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Role) MarshalJSON() ([]byte, error) {
+	type NoMethod Role
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

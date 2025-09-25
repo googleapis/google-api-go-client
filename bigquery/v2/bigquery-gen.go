@@ -3476,9 +3476,9 @@ func (s *ExternalRuntimeOptions) UnmarshalJSON(data []byte) error {
 // dollars. Services may not directly correlate to these metrics, but these are
 // the equivalents for billing purposes. Output only.
 type ExternalServiceCost struct {
-	// BillingMethod: The billing method used for the external job. This field is
-	// only used when billed on the services sku, set to "SERVICES_SKU". Otherwise,
-	// it is unspecified for backward compatibility.
+	// BillingMethod: The billing method used for the external job. This field, set
+	// to `SERVICES_SKU`, is only used when billing under the services SKU.
+	// Otherwise, it is unspecified for backward compatibility.
 	BillingMethod string `json:"billingMethod,omitempty"`
 	// BytesBilled: External service cost in terms of bigquery bytes billed.
 	BytesBilled int64 `json:"bytesBilled,omitempty,string"`
@@ -4048,6 +4048,70 @@ func (s *HparamTuningTrial) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// IncrementalResultStats: Statistics related to Incremental Query Results.
+// Populated as part of JobStatistics2. This feature is not yet available.
+type IncrementalResultStats struct {
+	// DisabledReason: Reason why incremental query results are/were not written by
+	// the query.
+	//
+	// Possible values:
+	//   "DISABLED_REASON_UNSPECIFIED" - Disabled reason not specified.
+	//   "OTHER" - Some other reason.
+	DisabledReason string `json:"disabledReason,omitempty"`
+	// ResultSetLastModifyTime: The time at which the result table's contents were
+	// modified. May be absent if no results have been written or the query has
+	// completed.
+	ResultSetLastModifyTime string `json:"resultSetLastModifyTime,omitempty"`
+	// ResultSetLastReplaceTime: The time at which the result table's contents were
+	// completely replaced. May be absent if no results have been written or the
+	// query has completed.
+	ResultSetLastReplaceTime string `json:"resultSetLastReplaceTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisabledReason") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisabledReason") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IncrementalResultStats) MarshalJSON() ([]byte, error) {
+	type NoMethod IncrementalResultStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IndexPruningStats: Statistics for index pruning.
+type IndexPruningStats struct {
+	// BaseTable: The base table reference.
+	BaseTable *TableReference `json:"baseTable,omitempty"`
+	// PostIndexPruningParallelInputCount: The number of parallel inputs after
+	// index pruning.
+	PostIndexPruningParallelInputCount int64 `json:"postIndexPruningParallelInputCount,omitempty,string"`
+	// PreIndexPruningParallelInputCount: The number of parallel inputs before
+	// index pruning.
+	PreIndexPruningParallelInputCount int64 `json:"preIndexPruningParallelInputCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "BaseTable") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseTable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IndexPruningStats) MarshalJSON() ([]byte, error) {
+	type NoMethod IndexPruningStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // IndexUnusedReason: Reason about why no search index was used in the search
 // query (or sub-query).
 type IndexUnusedReason struct {
@@ -4425,11 +4489,11 @@ type JobConfiguration struct {
 	DryRun bool `json:"dryRun,omitempty"`
 	// Extract: [Pick one] Configures an extract job.
 	Extract *JobConfigurationExtract `json:"extract,omitempty"`
-	// JobTimeoutMs: Optional. Job timeout in milliseconds. If this time limit is
-	// exceeded, BigQuery will attempt to stop a longer job, but may not always
-	// succeed in canceling it before the job completes. For example, a job that
-	// takes more than 60 seconds to complete has a better chance of being stopped
-	// than a job that takes 10 seconds to complete.
+	// JobTimeoutMs: Optional. Job timeout in milliseconds relative to the job
+	// creation time. If this time limit is exceeded, BigQuery attempts to stop the
+	// job, but might not always succeed in canceling it before the job completes.
+	// For example, a job that takes more than 60 seconds to complete has a better
+	// chance of being stopped than a job that takes 10 seconds to complete.
 	JobTimeoutMs int64 `json:"jobTimeoutMs,omitempty,string"`
 	// JobType: Output only. The type of the job. Can be QUERY, LOAD, EXTRACT, COPY
 	// or UNKNOWN.
@@ -4764,13 +4828,14 @@ type JobConfigurationLoad struct {
 	// SchemaUpdateOptions: Allows the schema of the destination table to be
 	// updated as a side effect of the load job if a schema is autodetected or
 	// supplied in the job configuration. Schema update options are supported in
-	// two cases: when writeDisposition is WRITE_APPEND; when writeDisposition is
-	// WRITE_TRUNCATE and the destination table is a partition of a table,
-	// specified by partition decorators. For normal tables, WRITE_TRUNCATE will
-	// always overwrite the schema. One or more of the following values are
-	// specified: * ALLOW_FIELD_ADDITION: allow adding a nullable field to the
-	// schema. * ALLOW_FIELD_RELAXATION: allow relaxing a required field in the
-	// original schema to nullable.
+	// three cases: when writeDisposition is WRITE_APPEND; when writeDisposition is
+	// WRITE_TRUNCATE_DATA; when writeDisposition is WRITE_TRUNCATE and the
+	// destination table is a partition of a table, specified by partition
+	// decorators. For normal tables, WRITE_TRUNCATE will always overwrite the
+	// schema. One or more of the following values are specified: *
+	// ALLOW_FIELD_ADDITION: allow adding a nullable field to the schema. *
+	// ALLOW_FIELD_RELAXATION: allow relaxing a required field in the original
+	// schema to nullable.
 	SchemaUpdateOptions []string `json:"schemaUpdateOptions,omitempty"`
 	// SkipLeadingRows: Optional. The number of rows at the top of a CSV file that
 	// BigQuery will skip when loading the data. The default value is 0. This
@@ -4954,13 +5019,14 @@ type JobConfigurationQuery struct {
 	RangePartitioning *RangePartitioning `json:"rangePartitioning,omitempty"`
 	// SchemaUpdateOptions: Allows the schema of the destination table to be
 	// updated as a side effect of the query job. Schema update options are
-	// supported in two cases: when writeDisposition is WRITE_APPEND; when
-	// writeDisposition is WRITE_TRUNCATE and the destination table is a partition
-	// of a table, specified by partition decorators. For normal tables,
-	// WRITE_TRUNCATE will always overwrite the schema. One or more of the
-	// following values are specified: * ALLOW_FIELD_ADDITION: allow adding a
-	// nullable field to the schema. * ALLOW_FIELD_RELAXATION: allow relaxing a
-	// required field in the original schema to nullable.
+	// supported in three cases: when writeDisposition is WRITE_APPEND; when
+	// writeDisposition is WRITE_TRUNCATE_DATA; when writeDisposition is
+	// WRITE_TRUNCATE and the destination table is a partition of a table,
+	// specified by partition decorators. For normal tables, WRITE_TRUNCATE will
+	// always overwrite the schema. One or more of the following values are
+	// specified: * ALLOW_FIELD_ADDITION: allow adding a nullable field to the
+	// schema. * ALLOW_FIELD_RELAXATION: allow relaxing a required field in the
+	// original schema to nullable.
 	SchemaUpdateOptions []string `json:"schemaUpdateOptions,omitempty"`
 	// ScriptOptions: Options controlling the execution of scripts.
 	ScriptOptions *ScriptOptions `json:"scriptOptions,omitempty"`
@@ -5436,6 +5502,9 @@ type JobStatistics2 struct {
 	// ExternalServiceCosts: Output only. Job cost breakdown as bigquery internal
 	// cost and external service costs.
 	ExternalServiceCosts []*ExternalServiceCost `json:"externalServiceCosts,omitempty"`
+	// IncrementalResultStats: Output only. Statistics related to incremental query
+	// results, if enabled for the query. This feature is not yet available.
+	IncrementalResultStats *IncrementalResultStats `json:"incrementalResultStats,omitempty"`
 	// LoadQueryStatistics: Output only. Statistics for a LOAD query.
 	LoadQueryStatistics *LoadQueryStatistics `json:"loadQueryStatistics,omitempty"`
 	// MaterializedViewStatistics: Output only. Statistics of materialized views of
@@ -5581,8 +5650,8 @@ type JobStatistics2 struct {
 	// TotalPartitionsProcessed: Output only. Total number of partitions processed
 	// from all partitioned tables referenced in the job.
 	TotalPartitionsProcessed int64 `json:"totalPartitionsProcessed,omitempty,string"`
-	// TotalServicesSkuSlotMs: Output only. Total slot-milliseconds for the job
-	// that run on external services and billed on the service SKU. This field is
+	// TotalServicesSkuSlotMs: Output only. Total slot milliseconds for the job
+	// that ran on external services and billed on the services SKU. This field is
 	// only populated for jobs that have external service costs, and is the total
 	// of the usage for costs whose billing method is "SERVICES_SKU".
 	TotalServicesSkuSlotMs int64 `json:"totalServicesSkuSlotMs,omitempty,string"`
@@ -6954,6 +7023,34 @@ func (s ProjectReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PruningStats: The column metadata index pruning statistics.
+type PruningStats struct {
+	// PostCmetaPruningParallelInputCount: The number of parallel inputs matched.
+	PostCmetaPruningParallelInputCount int64 `json:"postCmetaPruningParallelInputCount,omitempty,string"`
+	// PostCmetaPruningPartitionCount: The number of partitions matched.
+	PostCmetaPruningPartitionCount int64 `json:"postCmetaPruningPartitionCount,omitempty,string"`
+	// PreCmetaPruningParallelInputCount: The number of parallel inputs scanned.
+	PreCmetaPruningParallelInputCount int64 `json:"preCmetaPruningParallelInputCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g.
+	// "PostCmetaPruningParallelInputCount") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "PostCmetaPruningParallelInputCount") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PruningStats) MarshalJSON() ([]byte, error) {
+	type NoMethod PruningStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PythonOptions: Options for a user-defined Python function.
 type PythonOptions struct {
 	// EntryPoint: Required. The name of the function defined in Python code as the
@@ -8183,6 +8280,11 @@ func (s ScriptStatistics) MarshalJSON() ([]byte, error) {
 // SearchStatistics: Statistics for a search query. Populated as part of
 // JobStatistics2.
 type SearchStatistics struct {
+	// IndexPruningStats: Search index pruning statistics, one for each base table
+	// that has a search index. If a base table does not have a search index or the
+	// index does not help with pruning on the base table, then there is no pruning
+	// statistics for that table.
+	IndexPruningStats []*IndexPruningStats `json:"indexPruningStats,omitempty"`
 	// IndexUnusedReasons: When `indexUsageMode` is `UNUSED` or `PARTIALLY_USED`,
 	// this field explains why indexes were not used in all or part of the search
 	// query. If `indexUsageMode` is `FULLY_USED`, this field is not populated.
@@ -8201,15 +8303,15 @@ type SearchStatistics struct {
 	// of the query did not use search indexes.
 	//   "FULLY_USED" - The entire search query used search indexes.
 	IndexUsageMode string `json:"indexUsageMode,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IndexUnusedReasons") to
+	// ForceSendFields is a list of field names (e.g. "IndexPruningStats") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IndexUnusedReasons") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "IndexPruningStats") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -9682,6 +9784,8 @@ type TableMetadataCacheUsage struct {
 	// Explanation: Free form human-readable reason metadata caching was unused for
 	// the job.
 	Explanation string `json:"explanation,omitempty"`
+	// PruningStats: The column metadata index pruning statistics.
+	PruningStats *PruningStats `json:"pruningStats,omitempty"`
 	// Staleness: Duration since last refresh as of this job for managed tables
 	// (indicates metadata cache staleness as seen by this job).
 	Staleness string `json:"staleness,omitempty"`
@@ -10068,6 +10172,9 @@ type TrainingOptions struct {
 	EarlyStop bool `json:"earlyStop,omitempty"`
 	// EnableGlobalExplain: If true, enable global explanation during training.
 	EnableGlobalExplain bool `json:"enableGlobalExplain,omitempty"`
+	// EndpointIdleTtl: The idle TTL of the endpoint before the resources get
+	// destroyed. The default value is 6.5 hours.
+	EndpointIdleTtl string `json:"endpointIdleTtl,omitempty"`
 	// FeedbackType: Feedback type that specifies which algorithm to run for matrix
 	// factorization.
 	//
@@ -10277,6 +10384,9 @@ type TrainingOptions struct {
 	// Gain.
 	//   "AVERAGE_RANK" - Average Rank.
 	HparamTuningObjectives []string `json:"hparamTuningObjectives,omitempty"`
+	// HuggingFaceModelId: The id of a Hugging Face model. For example,
+	// `google/gemma-2-2b-it`.
+	HuggingFaceModelId string `json:"huggingFaceModelId,omitempty"`
 	// IncludeDrift: Include drift when fitting an ARIMA model.
 	IncludeDrift bool `json:"includeDrift,omitempty"`
 	// InitialLearnRate: Specifies the initial learning rate for the line search
@@ -10336,11 +10446,16 @@ type TrainingOptions struct {
 	//   "MEAN_SQUARED_LOSS" - Mean squared loss, used for linear regression.
 	//   "MEAN_LOG_LOSS" - Mean log loss, used for logistic regression.
 	LossType string `json:"lossType,omitempty"`
+	// MachineType: The type of the machine used to deploy and serve the model.
+	MachineType string `json:"machineType,omitempty"`
 	// MaxIterations: The maximum number of iterations in training. Used only for
 	// iterative training algorithms.
 	MaxIterations int64 `json:"maxIterations,omitempty,string"`
 	// MaxParallelTrials: Maximum number of trials to run in parallel.
 	MaxParallelTrials int64 `json:"maxParallelTrials,omitempty,string"`
+	// MaxReplicaCount: The maximum number of machine replicas that will be
+	// deployed on an endpoint. The default value is equal to min_replica_count.
+	MaxReplicaCount int64 `json:"maxReplicaCount,omitempty,string"`
 	// MaxTimeSeriesLength: The maximum number of time points in a time series that
 	// can be used in modeling the trend component of the time series. Don't use
 	// this option with the `timeSeriesLengthFraction` or `minTimeSeriesLength`
@@ -10355,6 +10470,10 @@ type TrainingOptions struct {
 	// improvement is less than 'min_relative_progress'. Used only for iterative
 	// training algorithms.
 	MinRelativeProgress float64 `json:"minRelativeProgress,omitempty"`
+	// MinReplicaCount: The minimum number of machine replicas that will be always
+	// deployed on an endpoint. This value must be greater than or equal to 1. The
+	// default value is 1.
+	MinReplicaCount int64 `json:"minReplicaCount,omitempty,string"`
 	// MinSplitLoss: Minimum split loss for boosted tree models.
 	MinSplitLoss float64 `json:"minSplitLoss,omitempty"`
 	// MinTimeSeriesLength: The minimum number of time points in a time series that
@@ -10369,6 +10488,9 @@ type TrainingOptions struct {
 	// MinTreeChildWeight: Minimum sum of instance weight needed in a child for
 	// boosted tree models.
 	MinTreeChildWeight int64 `json:"minTreeChildWeight,omitempty,string"`
+	// ModelGardenModelName: The name of a Vertex model garden publisher model.
+	// Format is `publishers/{publisher}/models/{model}@{optional_version_id}`.
+	ModelGardenModelName string `json:"modelGardenModelName,omitempty"`
 	// ModelRegistry: The model registry.
 	//
 	// Possible values:
@@ -10417,6 +10539,24 @@ type TrainingOptions struct {
 	//   "RANDOMIZED" - Randomized SVD.
 	//   "AUTO" - Auto.
 	PcaSolver string `json:"pcaSolver,omitempty"`
+	// ReservationAffinityKey: Corresponds to the label key of a reservation
+	// resource used by Vertex AI. To target a SPECIFIC_RESERVATION by name, use
+	// `compute.googleapis.com/reservation-name` as the key and specify the name of
+	// your reservation as its value.
+	ReservationAffinityKey string `json:"reservationAffinityKey,omitempty"`
+	// ReservationAffinityType: Specifies the reservation affinity type used to
+	// configure a Vertex AI resource. The default value is `NO_RESERVATION`.
+	//
+	// Possible values:
+	//   "RESERVATION_AFFINITY_TYPE_UNSPECIFIED" - Default value.
+	//   "NO_RESERVATION" - No reservation.
+	//   "ANY_RESERVATION" - Any reservation.
+	//   "SPECIFIC_RESERVATION" - Specific reservation.
+	ReservationAffinityType string `json:"reservationAffinityType,omitempty"`
+	// ReservationAffinityValues: Corresponds to the label values of a reservation
+	// resource used by Vertex AI. This must be the full resource name of the
+	// reservation or reservation block.
+	ReservationAffinityValues []string `json:"reservationAffinityValues,omitempty"`
 	// SampledShapleyNumPaths: Number of paths for the sampled Shapley explain
 	// method.
 	SampledShapleyNumPaths int64 `json:"sampledShapleyNumPaths,omitempty,string"`

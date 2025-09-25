@@ -1311,6 +1311,7 @@ type GoogleCloudAiplatformV1beta1GenerateContentResponsePromptFeedback struct {
 	//   "MODEL_ARMOR" - The prompt was blocked by Model Armor.
 	//   "IMAGE_SAFETY" - The prompt was blocked because it contains content that
 	// is unsafe for image generation.
+	//   "JAILBREAK" - The prompt was blocked as a jailbreak attempt.
 	BlockReason string `json:"blockReason,omitempty"`
 	// BlockReasonMessage: Output only. A readable message that explains the reason
 	// why the prompt was blocked.
@@ -2585,6 +2586,7 @@ type GoogleCloudAiplatformV1beta1SafetyRating struct {
 	//   "HARM_CATEGORY_IMAGE_HARASSMENT" - The harm category is image harassment.
 	//   "HARM_CATEGORY_IMAGE_SEXUALLY_EXPLICIT" - The harm category is image
 	// sexually explicit content.
+	//   "HARM_CATEGORY_JAILBREAK" - The harm category is for jailbreak prompts.
 	Category string `json:"category,omitempty"`
 	// OverwrittenThreshold: Output only. The overwritten threshold for the safety
 	// category of Gemini 2.0 image out. If minors are detected in the output
@@ -2675,6 +2677,7 @@ type GoogleCloudAiplatformV1beta1SafetySetting struct {
 	//   "HARM_CATEGORY_IMAGE_HARASSMENT" - The harm category is image harassment.
 	//   "HARM_CATEGORY_IMAGE_SEXUALLY_EXPLICIT" - The harm category is image
 	// sexually explicit content.
+	//   "HARM_CATEGORY_JAILBREAK" - The harm category is for jailbreak prompts.
 	Category string `json:"category,omitempty"`
 	// Method: Optional. Specify if the threshold is used for probability or
 	// severity score. If not specified, the threshold is used for probability

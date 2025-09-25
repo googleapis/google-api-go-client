@@ -28453,6 +28453,11 @@ type InterconnectLocation struct {
 	RegionInfos []*InterconnectLocationRegionInfo `json:"regionInfos,omitempty"`
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
+	// SingleRegionProductionCriticalPeerLocations: [Output Only] URLs of the other
+	// locations that can pair up with this location to support Single-Region
+	// 99.99% SLA. E.g. iad-zone1-1 and iad-zone2-5467 are Single-Region 99.99%
+	// peer locations of each other.
+	SingleRegionProductionCriticalPeerLocations []string `json:"singleRegionProductionCriticalPeerLocations,omitempty"`
 	// Status: [Output Only] The status of this InterconnectLocation, which can
 	// take one of the following values: - CLOSED: The InterconnectLocation is
 	// closed and is unavailable for provisioning new Interconnects. - AVAILABLE:

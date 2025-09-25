@@ -181,6 +181,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.DbSystems = NewProjectsLocationsDbSystemsService(s)
 	rs.DbVersions = NewProjectsLocationsDbVersionsService(s)
 	rs.Entitlements = NewProjectsLocationsEntitlementsService(s)
+	rs.ExadbVmClusters = NewProjectsLocationsExadbVmClustersService(s)
+	rs.ExascaleDbStorageVaults = NewProjectsLocationsExascaleDbStorageVaultsService(s)
 	rs.GiVersions = NewProjectsLocationsGiVersionsService(s)
 	rs.OdbNetworks = NewProjectsLocationsOdbNetworksService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
@@ -216,6 +218,10 @@ type ProjectsLocationsService struct {
 	DbVersions *ProjectsLocationsDbVersionsService
 
 	Entitlements *ProjectsLocationsEntitlementsService
+
+	ExadbVmClusters *ProjectsLocationsExadbVmClustersService
+
+	ExascaleDbStorageVaults *ProjectsLocationsExascaleDbStorageVaultsService
 
 	GiVersions *ProjectsLocationsGiVersionsService
 
@@ -367,12 +373,42 @@ type ProjectsLocationsEntitlementsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsExadbVmClustersService(s *Service) *ProjectsLocationsExadbVmClustersService {
+	rs := &ProjectsLocationsExadbVmClustersService{s: s}
+	return rs
+}
+
+type ProjectsLocationsExadbVmClustersService struct {
+	s *Service
+}
+
+func NewProjectsLocationsExascaleDbStorageVaultsService(s *Service) *ProjectsLocationsExascaleDbStorageVaultsService {
+	rs := &ProjectsLocationsExascaleDbStorageVaultsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsExascaleDbStorageVaultsService struct {
+	s *Service
+}
+
 func NewProjectsLocationsGiVersionsService(s *Service) *ProjectsLocationsGiVersionsService {
 	rs := &ProjectsLocationsGiVersionsService{s: s}
+	rs.MinorVersions = NewProjectsLocationsGiVersionsMinorVersionsService(s)
 	return rs
 }
 
 type ProjectsLocationsGiVersionsService struct {
+	s *Service
+
+	MinorVersions *ProjectsLocationsGiVersionsMinorVersionsService
+}
+
+func NewProjectsLocationsGiVersionsMinorVersionsService(s *Service) *ProjectsLocationsGiVersionsMinorVersionsService {
+	rs := &ProjectsLocationsGiVersionsMinorVersionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGiVersionsMinorVersionsService struct {
 	s *Service
 }
 
@@ -1782,6 +1818,36 @@ func (s DataCollectionOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DataCollectionOptionsCommon: Data collection options for diagnostics.
+// https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/datatypes/DataCollectionOptions
+type DataCollectionOptionsCommon struct {
+	// IsDiagnosticsEventsEnabled: Optional. Indicates whether to enable data
+	// collection for diagnostics.
+	IsDiagnosticsEventsEnabled bool `json:"isDiagnosticsEventsEnabled,omitempty"`
+	// IsHealthMonitoringEnabled: Optional. Indicates whether to enable health
+	// monitoring.
+	IsHealthMonitoringEnabled bool `json:"isHealthMonitoringEnabled,omitempty"`
+	// IsIncidentLogsEnabled: Optional. Indicates whether to enable incident logs
+	// and trace collection.
+	IsIncidentLogsEnabled bool `json:"isIncidentLogsEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsDiagnosticsEventsEnabled")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsDiagnosticsEventsEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataCollectionOptionsCommon) MarshalJSON() ([]byte, error) {
+	type NoMethod DataCollectionOptionsCommon
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DataCollectionOptionsDbSystem: Data collection options for DbSystem.
 type DataCollectionOptionsDbSystem struct {
 	// IsDiagnosticsEventsEnabled: Optional. Indicates whether to enable data
@@ -2781,6 +2847,359 @@ func (s Entitlement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExadbVmCluster: ExadbVmCluster represents a cluster of VMs that are used to
+// run Exadata workloads.
+// https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/ExadbVmCluster/
+type ExadbVmCluster struct {
+	// BackupOdbSubnet: Required. Immutable. The name of the backup OdbSubnet
+	// associated with the ExadbVmCluster. Format:
+	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/
+	// {odb_subnet}
+	BackupOdbSubnet string `json:"backupOdbSubnet,omitempty"`
+	// CreateTime: Output only. The date and time that the ExadbVmCluster was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Required. Immutable. The display name for the ExadbVmCluster.
+	// The name does not have to be unique within your project. The name must be
+	// 1-255 characters long and can only contain alphanumeric characters.
+	DisplayName string `json:"displayName,omitempty"`
+	// EntitlementId: Output only. The ID of the subscription entitlement
+	// associated with the ExadbVmCluster.
+	EntitlementId string `json:"entitlementId,omitempty"`
+	// GcpOracleZone: Output only. Immutable. The GCP Oracle zone where Oracle
+	// ExadbVmCluster is hosted. Example: us-east4-b-r2. During creation, the
+	// system will pick the zone assigned to the ExascaleDbStorageVault.
+	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
+	// Labels: Optional. The labels or tags associated with the ExadbVmCluster.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The name of the ExadbVmCluster resource in the following
+	// format:
+	// projects/{project}/locations/{region}/exadbVmClusters/{exadb_vm_cluster}
+	Name string `json:"name,omitempty"`
+	// OdbNetwork: Optional. Immutable. The name of the OdbNetwork associated with
+	// the ExadbVmCluster. Format:
+	// projects/{project}/locations/{location}/odbNetworks/{odb_network} It is
+	// optional but if specified, this should match the parent ODBNetwork of the
+	// OdbSubnet.
+	OdbNetwork string `json:"odbNetwork,omitempty"`
+	// OdbSubnet: Required. Immutable. The name of the OdbSubnet associated with
+	// the ExadbVmCluster for IP allocation. Format:
+	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/
+	// {odb_subnet}
+	OdbSubnet string `json:"odbSubnet,omitempty"`
+	// Properties: Required. The properties of the ExadbVmCluster.
+	Properties *ExadbVmClusterProperties `json:"properties,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BackupOdbSubnet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupOdbSubnet") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExadbVmCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod ExadbVmCluster
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExadbVmClusterProperties: The properties of an ExadbVmCluster.
+type ExadbVmClusterProperties struct {
+	// AdditionalEcpuCountPerNode: Optional. Immutable. The number of additional
+	// ECPUs per node for an Exadata VM cluster on exascale infrastructure.
+	AdditionalEcpuCountPerNode int64 `json:"additionalEcpuCountPerNode,omitempty"`
+	// ClusterName: Optional. Immutable. The cluster name for Exascale vm cluster.
+	// The cluster name must begin with an alphabetic character and may contain
+	// hyphens(-) but can not contain underscores(_). It should be not more than 11
+	// characters and is not case sensitive. OCI Cluster name.
+	ClusterName string `json:"clusterName,omitempty"`
+	// DataCollectionOptions: Optional. Immutable. Indicates user preference for
+	// data collection options.
+	DataCollectionOptions *DataCollectionOptionsCommon `json:"dataCollectionOptions,omitempty"`
+	// EnabledEcpuCountPerNode: Required. Immutable. The number of ECPUs enabled
+	// per node for an exadata vm cluster on exascale infrastructure.
+	EnabledEcpuCountPerNode int64 `json:"enabledEcpuCountPerNode,omitempty"`
+	// ExascaleDbStorageVault: Required. Immutable. The name of
+	// ExascaleDbStorageVault associated with the ExadbVmCluster. It can refer to
+	// an existing ExascaleDbStorageVault. Or a new one can be created during the
+	// ExadbVmCluster creation (requires storage_vault_properties to be set).
+	// Format:
+	// projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_db_
+	// storage_vault}
+	ExascaleDbStorageVault string `json:"exascaleDbStorageVault,omitempty"`
+	// GiVersion: Output only. The Oracle Grid Infrastructure (GI) software
+	// version.
+	GiVersion string `json:"giVersion,omitempty"`
+	// GridImageId: Required. Immutable. Grid Infrastructure Version.
+	GridImageId string `json:"gridImageId,omitempty"`
+	// Hostname: Output only. The hostname of the ExadbVmCluster.
+	Hostname string `json:"hostname,omitempty"`
+	// HostnamePrefix: Required. Immutable. Prefix for VM cluster host names.
+	HostnamePrefix string `json:"hostnamePrefix,omitempty"`
+	// LicenseModel: Optional. Immutable. The license type of the ExadbVmCluster.
+	//
+	// Possible values:
+	//   "LICENSE_MODEL_UNSPECIFIED" - Unspecified.
+	//   "LICENSE_INCLUDED" - Default is license included.
+	//   "BRING_YOUR_OWN_LICENSE" - Bring your own license.
+	LicenseModel string `json:"licenseModel,omitempty"`
+	// LifecycleState: Output only. State of the cluster.
+	//
+	// Possible values:
+	//   "EXADB_VM_CLUSTER_LIFECYCLE_STATE_UNSPECIFIED" - Default unspecified
+	// value.
+	//   "PROVISIONING" - Indicates that the resource is in provisioning state.
+	//   "AVAILABLE" - Indicates that the resource is in available state.
+	//   "UPDATING" - Indicates that the resource is in updating state.
+	//   "TERMINATING" - Indicates that the resource is in terminating state.
+	//   "TERMINATED" - Indicates that the resource is in terminated state.
+	//   "FAILED" - Indicates that the resource is in failed state.
+	//   "MAINTENANCE_IN_PROGRESS" - Indicates that the resource is in maintenance
+	// in progress state.
+	LifecycleState string `json:"lifecycleState,omitempty"`
+	// MemorySizeGb: Output only. Memory per VM (GB) (Read-only): Shows the amount
+	// of memory allocated to each VM. Memory is calculated based on 2.75 GB per
+	// Total ECPUs.
+	MemorySizeGb int64 `json:"memorySizeGb,omitempty"`
+	// NodeCount: Required. The number of nodes/VMs in the ExadbVmCluster.
+	NodeCount int64 `json:"nodeCount,omitempty"`
+	// OciUri: Output only. Deep link to the OCI console to view this resource.
+	OciUri string `json:"ociUri,omitempty"`
+	// ScanListenerPortTcp: Optional. Immutable. SCAN listener port - TCP
+	ScanListenerPortTcp int64 `json:"scanListenerPortTcp,omitempty"`
+	// ShapeAttribute: Required. Immutable. The shape attribute of the VM cluster.
+	// The type of Exascale storage used for Exadata VM cluster. The default is
+	// SMART_STORAGE which supports Oracle Database 23ai and later
+	//
+	// Possible values:
+	//   "SHAPE_ATTRIBUTE_UNSPECIFIED" - Default unspecified value.
+	//   "SMART_STORAGE" - Indicates that the resource is in smart storage.
+	//   "BLOCK_STORAGE" - Indicates that the resource is in block storage.
+	ShapeAttribute string `json:"shapeAttribute,omitempty"`
+	// SshPublicKeys: Required. Immutable. The SSH public keys for the
+	// ExadbVmCluster.
+	SshPublicKeys []string `json:"sshPublicKeys,omitempty"`
+	// TimeZone: Optional. Immutable. The time zone of the ExadbVmCluster.
+	TimeZone *TimeZone `json:"timeZone,omitempty"`
+	// VmFileSystemStorage: Required. Immutable. Total storage details for the
+	// ExadbVmCluster.
+	VmFileSystemStorage *ExadbVmClusterStorageDetails `json:"vmFileSystemStorage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalEcpuCountPerNode")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalEcpuCountPerNode") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExadbVmClusterProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod ExadbVmClusterProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExadbVmClusterStorageDetails: The storage allocation for the exadbvmcluster,
+// in gigabytes (GB).
+type ExadbVmClusterStorageDetails struct {
+	// SizeInGbsPerNode: Required. The storage allocation for the exadbvmcluster
+	// per node, in gigabytes (GB). This field is used to calculate the total
+	// storage allocation for the exadbvmcluster.
+	SizeInGbsPerNode int64 `json:"sizeInGbsPerNode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SizeInGbsPerNode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SizeInGbsPerNode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExadbVmClusterStorageDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ExadbVmClusterStorageDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExascaleDbStorageDetails: The storage details of the ExascaleDbStorageVault.
+type ExascaleDbStorageDetails struct {
+	// AvailableSizeGbs: Output only. The available storage capacity for the
+	// ExascaleDbStorageVault, in gigabytes (GB).
+	AvailableSizeGbs int64 `json:"availableSizeGbs,omitempty"`
+	// TotalSizeGbs: Required. The total storage allocation for the
+	// ExascaleDbStorageVault, in gigabytes (GB).
+	TotalSizeGbs int64 `json:"totalSizeGbs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AvailableSizeGbs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AvailableSizeGbs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExascaleDbStorageDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ExascaleDbStorageDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExascaleDbStorageVault: ExascaleDbStorageVault represents a storage vault
+// exadb vm cluster resource.
+// https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/ExascaleDbStorageVault/
+type ExascaleDbStorageVault struct {
+	// CreateTime: Output only. The date and time when the ExascaleDbStorageVault
+	// was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Required. The display name for the ExascaleDbStorageVault. The
+	// name does not have to be unique within your project. The name must be 1-255
+	// characters long and can only contain alphanumeric characters.
+	DisplayName string `json:"displayName,omitempty"`
+	// EntitlementId: Output only. The ID of the subscription entitlement
+	// associated with the ExascaleDbStorageVault.
+	EntitlementId string `json:"entitlementId,omitempty"`
+	// GcpOracleZone: Optional. The GCP Oracle zone where Oracle
+	// ExascaleDbStorageVault is hosted. Example: us-east4-b-r2. If not specified,
+	// the system will pick a zone based on availability.
+	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
+	// Labels: Optional. The labels or tags associated with the
+	// ExascaleDbStorageVault.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The resource name of the ExascaleDbStorageVault. Format:
+	// projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_db_
+	// storage_vault}
+	Name string `json:"name,omitempty"`
+	// Properties: Required. The properties of the ExascaleDbStorageVault.
+	Properties *ExascaleDbStorageVaultProperties `json:"properties,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExascaleDbStorageVault) MarshalJSON() ([]byte, error) {
+	type NoMethod ExascaleDbStorageVault
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExascaleDbStorageVaultProperties: The properties of the
+// ExascaleDbStorageVault. next ID: 12
+type ExascaleDbStorageVaultProperties struct {
+	// AdditionalFlashCachePercent: Optional. The size of additional flash cache in
+	// percentage of high capacity database storage.
+	AdditionalFlashCachePercent int64 `json:"additionalFlashCachePercent,omitempty"`
+	// AttachedShapeAttributes: Output only. The shape attributes of the VM
+	// clusters attached to the ExascaleDbStorageVault.
+	//
+	// Possible values:
+	//   "SHAPE_ATTRIBUTE_UNSPECIFIED" - Default unspecified value.
+	//   "SMART_STORAGE" - Indicates that the resource is in smart storage.
+	//   "BLOCK_STORAGE" - Indicates that the resource is in block storage.
+	AttachedShapeAttributes []string `json:"attachedShapeAttributes,omitempty"`
+	// AvailableShapeAttributes: Output only. The shape attributes available for
+	// the VM clusters to be attached to the ExascaleDbStorageVault.
+	//
+	// Possible values:
+	//   "SHAPE_ATTRIBUTE_UNSPECIFIED" - Default unspecified value.
+	//   "SMART_STORAGE" - Indicates that the resource is in smart storage.
+	//   "BLOCK_STORAGE" - Indicates that the resource is in block storage.
+	AvailableShapeAttributes []string `json:"availableShapeAttributes,omitempty"`
+	// Description: Optional. The description of the ExascaleDbStorageVault.
+	Description string `json:"description,omitempty"`
+	// ExascaleDbStorageDetails: Required. The storage details of the
+	// ExascaleDbStorageVault.
+	ExascaleDbStorageDetails *ExascaleDbStorageDetails `json:"exascaleDbStorageDetails,omitempty"`
+	// OciUri: Output only. Deep link to the OCI console to view this resource.
+	OciUri string `json:"ociUri,omitempty"`
+	// Ocid: Output only. The OCID for the ExascaleDbStorageVault.
+	Ocid string `json:"ocid,omitempty"`
+	// State: Output only. The state of the ExascaleDbStorageVault.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state of the ExascaleDbStorageVault is
+	// unspecified.
+	//   "PROVISIONING" - The ExascaleDbStorageVault is being provisioned.
+	//   "AVAILABLE" - The ExascaleDbStorageVault is available.
+	//   "UPDATING" - The ExascaleDbStorageVault is being updated.
+	//   "TERMINATING" - The ExascaleDbStorageVault is being deleted.
+	//   "TERMINATED" - The ExascaleDbStorageVault has been deleted.
+	//   "FAILED" - The ExascaleDbStorageVault has failed.
+	State string `json:"state,omitempty"`
+	// TimeZone: Output only. The time zone of the ExascaleDbStorageVault.
+	TimeZone *TimeZone `json:"timeZone,omitempty"`
+	// VmClusterCount: Output only. The number of VM clusters associated with the
+	// ExascaleDbStorageVault.
+	VmClusterCount int64 `json:"vmClusterCount,omitempty"`
+	// VmClusterIds: Output only. The list of VM cluster OCIDs associated with the
+	// ExascaleDbStorageVault.
+	VmClusterIds []string `json:"vmClusterIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalFlashCachePercent") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalFlashCachePercent") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExascaleDbStorageVaultProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod ExascaleDbStorageVaultProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FailoverAutonomousDatabaseRequest: The request for
+// `OracleDatabase.FailoverAutonomousDatabase`.
+type FailoverAutonomousDatabaseRequest struct {
+	// PeerAutonomousDatabase: Required. The peer database name to fail over to.
+	PeerAutonomousDatabase string `json:"peerAutonomousDatabase,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PeerAutonomousDatabase") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PeerAutonomousDatabase") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FailoverAutonomousDatabaseRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod FailoverAutonomousDatabaseRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GenerateAutonomousDatabaseWalletRequest: The request for
 // `AutonomousDatabase.GenerateWallet`.
 type GenerateAutonomousDatabaseWalletRequest struct {
@@ -3330,6 +3749,65 @@ func (s ListEntitlementsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListExadbVmClustersResponse: The response for `ExadbVmCluster.List`.
+type ListExadbVmClustersResponse struct {
+	// ExadbVmClusters: The list of ExadbVmClusters.
+	ExadbVmClusters []*ExadbVmCluster `json:"exadbVmClusters,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ExadbVmClusters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExadbVmClusters") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListExadbVmClustersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListExadbVmClustersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListExascaleDbStorageVaultsResponse: The response for
+// `ExascaleDbStorageVault.List`.
+type ListExascaleDbStorageVaultsResponse struct {
+	// ExascaleDbStorageVaults: The ExascaleDbStorageVaults.
+	ExascaleDbStorageVaults []*ExascaleDbStorageVault `json:"exascaleDbStorageVaults,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return. If present, the next page token can be provided to a subsequent
+	// ListExascaleDbStorageVaults call to list the next page. If empty, there are
+	// no more pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ExascaleDbStorageVaults") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExascaleDbStorageVaults") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListExascaleDbStorageVaultsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListExascaleDbStorageVaultsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListGiVersionsResponse: The response for `GiVersion.List`.
 type ListGiVersionsResponse struct {
 	// GiVersions: The list of Oracle Grid Infrastructure (GI) versions.
@@ -3383,6 +3861,34 @@ type ListLocationsResponse struct {
 
 func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListMinorVersionsResponse: The response for `MinorVersion.List`.
+type ListMinorVersionsResponse struct {
+	// MinorVersions: The list of MinorVersions.
+	MinorVersions []*MinorVersion `json:"minorVersions,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "MinorVersions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MinorVersions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListMinorVersionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMinorVersionsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3657,6 +4163,35 @@ type MaintenanceWindow struct {
 
 func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MinorVersion: MinorVersion represents a minor version of a GI.
+// https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/GiMinorVersionSummary/
+type MinorVersion struct {
+	// GridImageId: Optional. The ID of the Grid Image.
+	GridImageId string `json:"gridImageId,omitempty"`
+	// Name: Identifier. The name of the MinorVersion resource with the format:
+	// projects/{project}/locations/{region}/giVersions/{gi_version}/minorVersions/{
+	// minor_version}
+	Name string `json:"name,omitempty"`
+	// Version: Optional. The valid Oracle grid infrastructure software version.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GridImageId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GridImageId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MinorVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod MinorVersion
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4038,6 +4573,38 @@ type PluggableDatabaseProperties struct {
 
 func (s PluggableDatabaseProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod PluggableDatabaseProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemoveVirtualMachineExadbVmClusterRequest: The request for
+// `ExadbVmCluster.RemoveVirtualMachine`.
+type RemoveVirtualMachineExadbVmClusterRequest struct {
+	// Hostnames: Required. The list of host names of db nodes to be removed from
+	// the ExadbVmCluster.
+	Hostnames []string `json:"hostnames,omitempty"`
+	// RequestId: Optional. An optional ID to identify the request. This value is
+	// used to identify duplicate requests. If you make a request with the same
+	// request ID and the original request is still in progress or completed, the
+	// server ignores the second request. This prevents clients from accidentally
+	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// exception that zero UUID is not supported
+	// (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hostnames") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hostnames") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoveVirtualMachineExadbVmClusterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveVirtualMachineExadbVmClusterRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5112,6 +5679,112 @@ func (c *ProjectsLocationsAutonomousDatabasesDeleteCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.autonomousDatabases.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutonomousDatabasesFailoverCall struct {
+	s                                 *Service
+	name                              string
+	failoverautonomousdatabaserequest *FailoverAutonomousDatabaseRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Failover: Initiates a failover to target autonomous database from the
+// associated primary database.
+//
+//   - name: The name of the Autonomous Database in the following format:
+//     projects/{project}/locations/{location}/autonomousDatabases/{autonomous_dat
+//     abase}.
+func (r *ProjectsLocationsAutonomousDatabasesService) Failover(name string, failoverautonomousdatabaserequest *FailoverAutonomousDatabaseRequest) *ProjectsLocationsAutonomousDatabasesFailoverCall {
+	c := &ProjectsLocationsAutonomousDatabasesFailoverCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.failoverautonomousdatabaserequest = failoverautonomousdatabaserequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutonomousDatabasesFailoverCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutonomousDatabasesFailoverCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutonomousDatabasesFailoverCall) Context(ctx context.Context) *ProjectsLocationsAutonomousDatabasesFailoverCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutonomousDatabasesFailoverCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutonomousDatabasesFailoverCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.failoverautonomousdatabaserequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:failover")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.autonomousDatabases.failover", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.autonomousDatabases.failover" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutonomousDatabasesFailoverCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.autonomousDatabases.failover", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9045,6 +9718,1268 @@ func (c *ProjectsLocationsEntitlementsListCall) Pages(ctx context.Context, f fun
 	}
 }
 
+type ProjectsLocationsExadbVmClustersCreateCall struct {
+	s              *Service
+	parent         string
+	exadbvmcluster *ExadbVmCluster
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Creates a new Exadb (Exascale) VM Cluster resource.
+//
+//   - parent: The value for parent of the ExadbVmCluster in the following
+//     format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsExadbVmClustersService) Create(parent string, exadbvmcluster *ExadbVmCluster) *ProjectsLocationsExadbVmClustersCreateCall {
+	c := &ProjectsLocationsExadbVmClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.exadbvmcluster = exadbvmcluster
+	return c
+}
+
+// ExadbVmClusterId sets the optional parameter "exadbVmClusterId": Required.
+// The ID of the ExadbVmCluster to create. This value is restricted to (^a-z
+// ([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of 63 characters in
+// length. The value must start with a letter and end with a letter or a
+// number.
+func (c *ProjectsLocationsExadbVmClustersCreateCall) ExadbVmClusterId(exadbVmClusterId string) *ProjectsLocationsExadbVmClustersCreateCall {
+	c.urlParams_.Set("exadbVmClusterId", exadbVmClusterId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsExadbVmClustersCreateCall) RequestId(requestId string) *ProjectsLocationsExadbVmClustersCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExadbVmClustersCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsExadbVmClustersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExadbVmClustersCreateCall) Context(ctx context.Context) *ProjectsLocationsExadbVmClustersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExadbVmClustersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExadbVmClustersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.exadbvmcluster)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/exadbVmClusters")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.exadbVmClusters.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsExadbVmClustersCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsExadbVmClustersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single Exadb (Exascale) VM Cluster.
+//
+//   - name: The name of the ExadbVmCluster in the following format:
+//     projects/{project}/locations/{location}/exadbVmClusters/{exadb_vm_cluster}.
+func (r *ProjectsLocationsExadbVmClustersService) Delete(name string) *ProjectsLocationsExadbVmClustersDeleteCall {
+	c := &ProjectsLocationsExadbVmClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsExadbVmClustersDeleteCall) RequestId(requestId string) *ProjectsLocationsExadbVmClustersDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExadbVmClustersDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsExadbVmClustersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExadbVmClustersDeleteCall) Context(ctx context.Context) *ProjectsLocationsExadbVmClustersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExadbVmClustersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExadbVmClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.exadbVmClusters.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsExadbVmClustersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsExadbVmClustersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single Exadb (Exascale) VM Cluster.
+//
+//   - name: The name of the ExadbVmCluster in the following format:
+//     projects/{project}/locations/{location}/exadbVmClusters/{exadb_vm_cluster}.
+func (r *ProjectsLocationsExadbVmClustersService) Get(name string) *ProjectsLocationsExadbVmClustersGetCall {
+	c := &ProjectsLocationsExadbVmClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExadbVmClustersGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsExadbVmClustersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsExadbVmClustersGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsExadbVmClustersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExadbVmClustersGetCall) Context(ctx context.Context) *ProjectsLocationsExadbVmClustersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExadbVmClustersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExadbVmClustersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.exadbVmClusters.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ExadbVmCluster.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsExadbVmClustersGetCall) Do(opts ...googleapi.CallOption) (*ExadbVmCluster, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExadbVmCluster{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsExadbVmClustersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the Exadb (Exascale) VM Clusters for the given project and
+// location.
+//
+//   - parent: The parent value for ExadbVmClusters in the following format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsExadbVmClustersService) List(parent string) *ProjectsLocationsExadbVmClustersListCall {
+	c := &ProjectsLocationsExadbVmClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request.
+func (c *ProjectsLocationsExadbVmClustersListCall) Filter(filter string) *ProjectsLocationsExadbVmClustersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An expression for ordering
+// the results of the request.
+func (c *ProjectsLocationsExadbVmClustersListCall) OrderBy(orderBy string) *ProjectsLocationsExadbVmClustersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If unspecified, at most 50 ExadbVmClusters will be returned. The
+// maximum value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsExadbVmClustersListCall) PageSize(pageSize int64) *ProjectsLocationsExadbVmClustersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsExadbVmClustersListCall) PageToken(pageToken string) *ProjectsLocationsExadbVmClustersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExadbVmClustersListCall) Fields(s ...googleapi.Field) *ProjectsLocationsExadbVmClustersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsExadbVmClustersListCall) IfNoneMatch(entityTag string) *ProjectsLocationsExadbVmClustersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExadbVmClustersListCall) Context(ctx context.Context) *ProjectsLocationsExadbVmClustersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExadbVmClustersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExadbVmClustersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/exadbVmClusters")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.exadbVmClusters.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListExadbVmClustersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsExadbVmClustersListCall) Do(opts ...googleapi.CallOption) (*ListExadbVmClustersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListExadbVmClustersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsExadbVmClustersListCall) Pages(ctx context.Context, f func(*ListExadbVmClustersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsExadbVmClustersPatchCall struct {
+	s              *Service
+	name           string
+	exadbvmcluster *ExadbVmCluster
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Patch: Updates a single Exadb (Exascale) VM Cluster. To add virtual machines
+// to existing exadb vm cluster, only pass the node count.
+//
+//   - name: Identifier. The name of the ExadbVmCluster resource in the following
+//     format:
+//     projects/{project}/locations/{region}/exadbVmClusters/{exadb_vm_cluster}.
+func (r *ProjectsLocationsExadbVmClustersService) Patch(name string, exadbvmcluster *ExadbVmCluster) *ProjectsLocationsExadbVmClustersPatchCall {
+	c := &ProjectsLocationsExadbVmClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.exadbvmcluster = exadbvmcluster
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsExadbVmClustersPatchCall) RequestId(requestId string) *ProjectsLocationsExadbVmClustersPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A mask specifying which
+// fields in th VM Cluster should be updated. A field specified in the mask is
+// overwritten. If a mask isn't provided then all the fields in the VM Cluster
+// are overwritten.
+func (c *ProjectsLocationsExadbVmClustersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsExadbVmClustersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExadbVmClustersPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsExadbVmClustersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExadbVmClustersPatchCall) Context(ctx context.Context) *ProjectsLocationsExadbVmClustersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExadbVmClustersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExadbVmClustersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.exadbvmcluster)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.exadbVmClusters.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsExadbVmClustersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsExadbVmClustersRemoveVirtualMachineCall struct {
+	s                                         *Service
+	name                                      string
+	removevirtualmachineexadbvmclusterrequest *RemoveVirtualMachineExadbVmClusterRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// RemoveVirtualMachine: Removes virtual machines from an existing exadb vm
+// cluster.
+//
+//   - name: The name of the ExadbVmCluster in the following format:
+//     projects/{project}/locations/{location}/exadbVmClusters/{exadb_vm_cluster}.
+func (r *ProjectsLocationsExadbVmClustersService) RemoveVirtualMachine(name string, removevirtualmachineexadbvmclusterrequest *RemoveVirtualMachineExadbVmClusterRequest) *ProjectsLocationsExadbVmClustersRemoveVirtualMachineCall {
+	c := &ProjectsLocationsExadbVmClustersRemoveVirtualMachineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.removevirtualmachineexadbvmclusterrequest = removevirtualmachineexadbvmclusterrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExadbVmClustersRemoveVirtualMachineCall) Fields(s ...googleapi.Field) *ProjectsLocationsExadbVmClustersRemoveVirtualMachineCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExadbVmClustersRemoveVirtualMachineCall) Context(ctx context.Context) *ProjectsLocationsExadbVmClustersRemoveVirtualMachineCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExadbVmClustersRemoveVirtualMachineCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExadbVmClustersRemoveVirtualMachineCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.removevirtualmachineexadbvmclusterrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:removeVirtualMachine")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.removeVirtualMachine", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.exadbVmClusters.removeVirtualMachine" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsExadbVmClustersRemoveVirtualMachineCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exadbVmClusters.removeVirtualMachine", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsExascaleDbStorageVaultsCreateCall struct {
+	s                      *Service
+	parent                 string
+	exascaledbstoragevault *ExascaleDbStorageVault
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Create: Creates a new ExascaleDB Storage Vault resource.
+//
+//   - parent: The value for parent of the ExascaleDbStorageVault in the
+//     following format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsExascaleDbStorageVaultsService) Create(parent string, exascaledbstoragevault *ExascaleDbStorageVault) *ProjectsLocationsExascaleDbStorageVaultsCreateCall {
+	c := &ProjectsLocationsExascaleDbStorageVaultsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.exascaledbstoragevault = exascaledbstoragevault
+	return c
+}
+
+// ExascaleDbStorageVaultId sets the optional parameter
+// "exascaleDbStorageVaultId": Required. The ID of the ExascaleDbStorageVault
+// to create. This value is restricted to (^a-z ([a-z0-9-]{0,61}[a-z0-9])?$)
+// and must be a maximum of 63 characters in length. The value must start with
+// a letter and end with a letter or a number.
+func (c *ProjectsLocationsExascaleDbStorageVaultsCreateCall) ExascaleDbStorageVaultId(exascaleDbStorageVaultId string) *ProjectsLocationsExascaleDbStorageVaultsCreateCall {
+	c.urlParams_.Set("exascaleDbStorageVaultId", exascaleDbStorageVaultId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsExascaleDbStorageVaultsCreateCall) RequestId(requestId string) *ProjectsLocationsExascaleDbStorageVaultsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExascaleDbStorageVaultsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsExascaleDbStorageVaultsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExascaleDbStorageVaultsCreateCall) Context(ctx context.Context) *ProjectsLocationsExascaleDbStorageVaultsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExascaleDbStorageVaultsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExascaleDbStorageVaultsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.exascaledbstoragevault)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/exascaleDbStorageVaults")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exascaleDbStorageVaults.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.exascaleDbStorageVaults.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsExascaleDbStorageVaultsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exascaleDbStorageVaults.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsExascaleDbStorageVaultsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single ExascaleDB Storage Vault.
+//
+//   - name: The name of the ExascaleDbStorageVault in the following format:
+//     projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_d
+//     b_storage_vault}.
+func (r *ProjectsLocationsExascaleDbStorageVaultsService) Delete(name string) *ProjectsLocationsExascaleDbStorageVaultsDeleteCall {
+	c := &ProjectsLocationsExascaleDbStorageVaultsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsExascaleDbStorageVaultsDeleteCall) RequestId(requestId string) *ProjectsLocationsExascaleDbStorageVaultsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExascaleDbStorageVaultsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsExascaleDbStorageVaultsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExascaleDbStorageVaultsDeleteCall) Context(ctx context.Context) *ProjectsLocationsExascaleDbStorageVaultsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExascaleDbStorageVaultsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExascaleDbStorageVaultsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exascaleDbStorageVaults.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.exascaleDbStorageVaults.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsExascaleDbStorageVaultsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exascaleDbStorageVaults.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsExascaleDbStorageVaultsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single ExascaleDB Storage Vault.
+//
+//   - name: The name of the ExascaleDbStorageVault in the following format:
+//     projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_d
+//     b_storage_vault}.
+func (r *ProjectsLocationsExascaleDbStorageVaultsService) Get(name string) *ProjectsLocationsExascaleDbStorageVaultsGetCall {
+	c := &ProjectsLocationsExascaleDbStorageVaultsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExascaleDbStorageVaultsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsExascaleDbStorageVaultsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsExascaleDbStorageVaultsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsExascaleDbStorageVaultsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExascaleDbStorageVaultsGetCall) Context(ctx context.Context) *ProjectsLocationsExascaleDbStorageVaultsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExascaleDbStorageVaultsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExascaleDbStorageVaultsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exascaleDbStorageVaults.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.exascaleDbStorageVaults.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ExascaleDbStorageVault.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsExascaleDbStorageVaultsGetCall) Do(opts ...googleapi.CallOption) (*ExascaleDbStorageVault, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExascaleDbStorageVault{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exascaleDbStorageVaults.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsExascaleDbStorageVaultsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the ExascaleDB Storage Vaults for the given project and
+// location.
+//
+//   - parent: The parent value for ExascaleDbStorageVault in the following
+//     format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsExascaleDbStorageVaultsService) List(parent string) *ProjectsLocationsExascaleDbStorageVaultsListCall {
+	c := &ProjectsLocationsExascaleDbStorageVaultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. Filter the list as specified in
+// https://google.aip.dev/160.
+func (c *ProjectsLocationsExascaleDbStorageVaultsListCall) Filter(filter string) *ProjectsLocationsExascaleDbStorageVaultsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An expression for ordering
+// the results of the request. Order results as specified in
+// https://google.aip.dev/132.
+func (c *ProjectsLocationsExascaleDbStorageVaultsListCall) OrderBy(orderBy string) *ProjectsLocationsExascaleDbStorageVaultsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If unspecified, at most 50 ExascaleDbStorageVaults will be
+// returned. The maximum value is 1000; values above 1000 will be coerced to
+// 1000.
+func (c *ProjectsLocationsExascaleDbStorageVaultsListCall) PageSize(pageSize int64) *ProjectsLocationsExascaleDbStorageVaultsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsExascaleDbStorageVaultsListCall) PageToken(pageToken string) *ProjectsLocationsExascaleDbStorageVaultsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExascaleDbStorageVaultsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsExascaleDbStorageVaultsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsExascaleDbStorageVaultsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsExascaleDbStorageVaultsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExascaleDbStorageVaultsListCall) Context(ctx context.Context) *ProjectsLocationsExascaleDbStorageVaultsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExascaleDbStorageVaultsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExascaleDbStorageVaultsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/exascaleDbStorageVaults")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exascaleDbStorageVaults.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.exascaleDbStorageVaults.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListExascaleDbStorageVaultsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsExascaleDbStorageVaultsListCall) Do(opts ...googleapi.CallOption) (*ListExascaleDbStorageVaultsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListExascaleDbStorageVaultsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exascaleDbStorageVaults.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsExascaleDbStorageVaultsListCall) Pages(ctx context.Context, f func(*ListExascaleDbStorageVaultsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type ProjectsLocationsGiVersionsListCall struct {
 	s            *Service
 	parent       string
@@ -9185,6 +11120,164 @@ func (c *ProjectsLocationsGiVersionsListCall) Do(opts ...googleapi.CallOption) (
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsGiVersionsListCall) Pages(ctx context.Context, f func(*ListGiVersionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsGiVersionsMinorVersionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the valid minor versions for the given project, location, gi
+// version and shape family.
+//
+//   - parent: The parent value for the MinorVersion resource with the format:
+//     projects/{project}/locations/{location}/giVersions/{gi_version}.
+func (r *ProjectsLocationsGiVersionsMinorVersionsService) List(parent string) *ProjectsLocationsGiVersionsMinorVersionsListCall {
+	c := &ProjectsLocationsGiVersionsMinorVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. Only shapeFamily and gcp_oracle_zone_id are
+// supported in this format: `shape_family="{shapeFamily}" AND
+// gcp_oracle_zone_id="{gcp_oracle_zone_id}".
+func (c *ProjectsLocationsGiVersionsMinorVersionsListCall) Filter(filter string) *ProjectsLocationsGiVersionsMinorVersionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If unspecified, a maximum of 50 System Versions will be returned.
+// The maximum value is 1000; values above 1000 will be reset to 1000.
+func (c *ProjectsLocationsGiVersionsMinorVersionsListCall) PageSize(pageSize int64) *ProjectsLocationsGiVersionsMinorVersionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying the
+// requested page of results to return. All fields except the filter should
+// remain the same as in the request that provided this page token.
+func (c *ProjectsLocationsGiVersionsMinorVersionsListCall) PageToken(pageToken string) *ProjectsLocationsGiVersionsMinorVersionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGiVersionsMinorVersionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGiVersionsMinorVersionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGiVersionsMinorVersionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGiVersionsMinorVersionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGiVersionsMinorVersionsListCall) Context(ctx context.Context) *ProjectsLocationsGiVersionsMinorVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGiVersionsMinorVersionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGiVersionsMinorVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/minorVersions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.giVersions.minorVersions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.giVersions.minorVersions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMinorVersionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGiVersionsMinorVersionsListCall) Do(opts ...googleapi.CallOption) (*ListMinorVersionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMinorVersionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.giVersions.minorVersions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGiVersionsMinorVersionsListCall) Pages(ctx context.Context, f func(*ListMinorVersionsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

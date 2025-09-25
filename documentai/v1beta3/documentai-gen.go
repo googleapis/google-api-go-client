@@ -3604,6 +3604,8 @@ func (s GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLay
 // GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTe
 // xtBlock: Represents a text type block.
 type GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTextBlock struct {
+	// Annotations: Annotation of the text block.
+	Annotations *GoogleCloudDocumentaiV1beta3DocumentAnnotations `json:"annotations,omitempty"`
 	// Blocks: A text block could further have child blocks. Repeated blocks
 	// support further hierarchies and nested blocks.
 	Blocks []*GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlock `json:"blocks,omitempty"`
@@ -3613,13 +3615,13 @@ type GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayout
 	// `subtitle`, `heading-1`, `heading-2`, `heading-3`, `heading-4`, `heading-5`,
 	// `header`, `footer`.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Blocks") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Blocks") to include in API
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -6197,8 +6199,7 @@ type GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest struct {
 	ExternalProcessorVersionSource *GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequestExternalProcessorVersionSource `json:"externalProcessorVersionSource,omitempty"`
 	// ProcessorVersionSource: The source processor version to import from. The
 	// source processor version and destination processor need to be in the same
-	// environment and region. Note that ProcessorVersions with `model_type`
-	// `MODEL_TYPE_LLM` are not supported.
+	// environment and region.
 	ProcessorVersionSource string `json:"processorVersionSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "ExternalProcessorVersionSource") to unconditionally include in API
@@ -6829,6 +6830,11 @@ func (s GoogleCloudDocumentaiV1beta3ProcessResponse) MarshalJSON() ([]byte, erro
 // AI. Each processor defines how to extract structural information from a
 // document.
 type GoogleCloudDocumentaiV1beta3Processor struct {
+	// ActiveSchemaVersion: Optional. SchemaVersion used by the Processor. It is
+	// the same as Processor's DatasetSchema.schema_version Format is
+	// `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{sch
+	// ema_version}
+	ActiveSchemaVersion string `json:"activeSchemaVersion,omitempty"`
 	// CreateTime: Output only. The time the processor was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DefaultProcessorVersion: The default processor version.
@@ -6878,15 +6884,15 @@ type GoogleCloudDocumentaiV1beta3Processor struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "ActiveSchemaVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ActiveSchemaVersion") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -7615,7 +7621,7 @@ func (s GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest) MarshalJSON() 
 // ionOptions: Options to control the training of the Custom Document
 // Extraction (CDE) Processor.
 type GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestCustomDocumentExtractionOptions struct {
-	// TrainingMethod: Training method to use for CDE training.
+	// TrainingMethod: Optional. Training method to use for CDE training.
 	//
 	// Possible values:
 	//   "TRAINING_METHOD_UNSPECIFIED"

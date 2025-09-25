@@ -1719,7 +1719,8 @@ type ChromeOsDevice struct {
 	OsUpdateStatus *OsUpdateStatus `json:"osUpdateStatus,omitempty"`
 	// OsVersion: The Chrome device's operating system version.
 	OsVersion string `json:"osVersion,omitempty"`
-	// OsVersionCompliance: Output only. Compliance status of the OS version.
+	// OsVersionCompliance: Output only. Device policy compliance status of the OS
+	// version.
 	//
 	// Possible values:
 	//   "complianceUnspecified" - Compliance status unspecified.
@@ -10237,8 +10238,8 @@ func (c *GroupsListCall) PageToken(pageToken string) *GroupsListCall {
 }
 
 // Query sets the optional parameter "query": Query string search. Should be of
-// the form "". Complete documentation is at https:
-// //developers.google.com/admin-sdk/directory/v1/guides/search-groups
+// the form "". Complete documentation is at
+// https://developers.google.com/workspace/admin/directory/v1/guides/search-groups
 func (c *GroupsListCall) Query(query string) *GroupsListCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -18456,8 +18457,8 @@ func (c *UsersWatchCall) Projection(projection string) *UsersWatchCall {
 }
 
 // Query sets the optional parameter "query": Query string search. Should be of
-// the form "". Complete documentation is at https:
-// //developers.google.com/admin-sdk/directory/v1/guides/search-users
+// the form "". Complete documentation is at
+// https://developers.google.com/workspace/admin/directory/v1/guides/search-users
 func (c *UsersWatchCall) Query(query string) *UsersWatchCall {
 	c.urlParams_.Set("query", query)
 	return c

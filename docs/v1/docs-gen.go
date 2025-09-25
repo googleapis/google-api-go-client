@@ -3525,11 +3525,11 @@ func (s Person) MarshalJSON() ([]byte, error) {
 
 // PersonProperties: Properties specific to a linked Person.
 type PersonProperties struct {
-	// Email: Output only. The email address linked to this Person. This field is
-	// always present.
+	// Email: The email address linked to this Person. This field is always
+	// present.
 	Email string `json:"email,omitempty"`
-	// Name: Output only. The name of the person if it's displayed in the link text
-	// instead of the person's email address.
+	// Name: The name of the person if it's displayed in the link text instead of
+	// the person's email address.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

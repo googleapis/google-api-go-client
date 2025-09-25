@@ -63509,6 +63509,131 @@ func (c *NetworksAddPeeringCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	return ret, nil
 }
 
+type NetworksCancelRequestRemovePeeringCall struct {
+	s                                         *Service
+	project                                   string
+	network                                   string
+	networkscancelrequestremovepeeringrequest *NetworksCancelRequestRemovePeeringRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// CancelRequestRemovePeering: Cancel requests to remove a peering from the
+// specified network. Applicable only for PeeringConnection with
+// update_strategy=CONSENSUS. Cancels a request to remove a peering from the
+// specified network.
+//
+// - network: Name of the network resource to remove peering from.
+// - project: Project ID for this request.
+func (r *NetworksService) CancelRequestRemovePeering(project string, network string, networkscancelrequestremovepeeringrequest *NetworksCancelRequestRemovePeeringRequest) *NetworksCancelRequestRemovePeeringCall {
+	c := &NetworksCancelRequestRemovePeeringCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.network = network
+	c.networkscancelrequestremovepeeringrequest = networkscancelrequestremovepeeringrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported ( 00000000-0000-0000-0000-000000000000).
+func (c *NetworksCancelRequestRemovePeeringCall) RequestId(requestId string) *NetworksCancelRequestRemovePeeringCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *NetworksCancelRequestRemovePeeringCall) Fields(s ...googleapi.Field) *NetworksCancelRequestRemovePeeringCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *NetworksCancelRequestRemovePeeringCall) Context(ctx context.Context) *NetworksCancelRequestRemovePeeringCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *NetworksCancelRequestRemovePeeringCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *NetworksCancelRequestRemovePeeringCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.networkscancelrequestremovepeeringrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/networks/{network}/cancelRequestRemovePeering")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"network": c.network,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.networks.cancelRequestRemovePeering", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.networks.cancelRequestRemovePeering" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *NetworksCancelRequestRemovePeeringCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.networks.cancelRequestRemovePeering", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type NetworksDeleteCall struct {
 	s          *Service
 	project    string
@@ -71069,6 +71194,13 @@ func (c *OrganizationSecurityPoliciesPatchCall) RequestId(requestId string) *Org
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": Indicates fields to be
+// cleared as part of this request.
+func (c *OrganizationSecurityPoliciesPatchCall) UpdateMask(updateMask string) *OrganizationSecurityPoliciesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -71193,6 +71325,13 @@ func (c *OrganizationSecurityPoliciesPatchRuleCall) Priority(priority int64) *Or
 // supported ( 00000000-0000-0000-0000-000000000000).
 func (c *OrganizationSecurityPoliciesPatchRuleCall) RequestId(requestId string) *OrganizationSecurityPoliciesPatchRuleCall {
 	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Indicates fields to be
+// cleared as part of this request.
+func (c *OrganizationSecurityPoliciesPatchRuleCall) UpdateMask(updateMask string) *OrganizationSecurityPoliciesPatchRuleCall {
+	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
@@ -74123,7 +74262,14 @@ type ProjectsMoveDiskCall struct {
 	header_         http.Header
 }
 
-// MoveDisk: Moves a persistent disk from one zone to another.
+// MoveDisk: Starting September 29, 2025, you can't use the moveDisk API on new
+// projects. To move a disk to a different region or zone, follow the steps in
+// Change the location of a disk
+// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/disks/migrate-to-hyperdisk#migrate-to-hd).
+// Projects that already use the moveDisk API can continue usage until
+// September 29, 2026. Starting November 1, 2025, API responses will include a
+// warning message in the response body about the upcoming deprecation. You can
+// skip the message to continue using the service without interruption.
 //
 // - project: Project ID for this request.
 func (r *ProjectsService) MoveDisk(project string, diskmoverequest *DiskMoveRequest) *ProjectsMoveDiskCall {

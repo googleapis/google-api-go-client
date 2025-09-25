@@ -5577,6 +5577,15 @@ type GooglePrivacyDlpV2FileStoreCollection struct {
 	// IncludeRegexes: Optional. A collection of regular expressions to match a
 	// file store against.
 	IncludeRegexes *GooglePrivacyDlpV2FileStoreRegexes `json:"includeRegexes,omitempty"`
+	// IncludeTags: Optional. To be included in the collection, a resource must
+	// meet all of the following requirements: - If tag filters are provided, match
+	// all provided tag filters. - If one or more patterns are specified, match at
+	// least one pattern. For a resource to match the tag filters, the resource
+	// must have all of the provided tags attached. Tags refer to Resource Manager
+	// tags bound to the resource or its ancestors. See
+	// https://cloud.google.com/sensitive-data-protection/docs/profile-project-cloud-storage#manage-schedules
+	// to learn more.
+	IncludeTags *GooglePrivacyDlpV2TagFilters `json:"includeTags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IncludeRegexes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8434,6 +8443,14 @@ type GooglePrivacyDlpV2OutputStorageConfig struct {
 	// BigQuery.
 	//   "ALL_COLUMNS" - Schema containing all columns.
 	OutputSchema string `json:"outputSchema,omitempty"`
+	// StoragePath: Store findings in an existing Cloud Storage bucket. Files will
+	// be generated with the job ID and file part number as the filename, and will
+	// contain findings in textproto format as SaveToGcsFindingsOutput. The file
+	// name will use the naming convention -, for example: my-job-id-2. Supported
+	// for Inspect jobs. The bucket must not be the same as the bucket being
+	// inspected. If storing findings to Cloud Storage, the output schema field
+	// should not be set. If set, it will be ignored.
+	StoragePath *GooglePrivacyDlpV2CloudStoragePath `json:"storagePath,omitempty"`
 	// Table: Store findings in an existing table or a new table in an existing
 	// dataset. If table_id is not set a new one will be generated for you with the
 	// following format: dlp_googleapis_yyyy_mm_dd_[dlp_job_id]. Pacific time zone
@@ -10499,6 +10516,58 @@ type GooglePrivacyDlpV2TagCondition struct {
 
 func (s GooglePrivacyDlpV2TagCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TagCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2TagFilter: A single tag to filter against.
+type GooglePrivacyDlpV2TagFilter struct {
+	// NamespacedTagKey: The namespaced name for the tag key. Must be in the format
+	// `{parent_id}/{tag_key_short_name}`, for example, "123456/sensitive" for an
+	// organization parent, or "my-project/sensitive" for a project parent.
+	NamespacedTagKey string `json:"namespacedTagKey,omitempty"`
+	// NamespacedTagValue: The namespaced name for the tag value. Must be in the
+	// format `{parent_id}/{tag_key_short_name}/{short_name}`, for example,
+	// "123456/environment/prod" for an organization parent, or
+	// "my-project/environment/prod" for a project parent.
+	NamespacedTagValue string `json:"namespacedTagValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NamespacedTagKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NamespacedTagKey") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2TagFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2TagFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2TagFilters: Tags to match against for filtering.
+type GooglePrivacyDlpV2TagFilters struct {
+	// TagFilters: Required. A resource must match ALL of the specified tag filters
+	// to be included in the collection.
+	TagFilters []*GooglePrivacyDlpV2TagFilter `json:"tagFilters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TagFilters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TagFilters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2TagFilters) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2TagFilters
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

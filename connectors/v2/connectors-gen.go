@@ -1967,6 +1967,8 @@ func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 
 // Tool: Message representing a single tool.
 type Tool struct {
+	// Annotations: Annotations for the tool.
+	Annotations *ToolAnnotations `json:"annotations,omitempty"`
 	// DependsOn: List of tool names that this tool depends on.
 	DependsOn []string `json:"dependsOn,omitempty"`
 	// Description: Description of the tool.
@@ -1977,13 +1979,13 @@ type Tool struct {
 	Name string `json:"name,omitempty"`
 	// OutputSchema: JSON schema for the output of the tool.
 	OutputSchema *JsonSchema `json:"outputSchema,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DependsOn") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DependsOn") to include in API
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1992,6 +1994,43 @@ type Tool struct {
 
 func (s Tool) MarshalJSON() ([]byte, error) {
 	type NoMethod Tool
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ToolAnnotations: ToolAnnotations holds annotations for a tool.
+type ToolAnnotations struct {
+	// DestructiveHint: If true, the tool may perform destructive updates to its
+	// environment. If false, the tool performs only additive updates. (This
+	// property is meaningful only when `read_only_hint == false`)
+	DestructiveHint bool `json:"destructiveHint,omitempty"`
+	// IdempotentHint: If true, calling the tool repeatedly with the same arguments
+	// will have no additional effect on the environment. (This property is
+	// meaningful only when `read_only_hint == false`)
+	IdempotentHint bool `json:"idempotentHint,omitempty"`
+	// OpenWorldHint: If true, this tool may interact with an "open world" of
+	// external entities. If false, the tool's domain of interaction is closed. For
+	// example, the world of a web search tool is open, whereas that of a memory
+	// tool is not.
+	OpenWorldHint bool `json:"openWorldHint,omitempty"`
+	// ReadOnlyHint: If true, the tool does not modify its environment.
+	ReadOnlyHint bool `json:"readOnlyHint,omitempty"`
+	// Title: A human-readable title for the tool.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestructiveHint") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestructiveHint") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ToolAnnotations) MarshalJSON() ([]byte, error) {
+	type NoMethod ToolAnnotations
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

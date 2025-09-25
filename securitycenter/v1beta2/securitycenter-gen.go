@@ -623,6 +623,8 @@ type AiModel struct {
 	//   "DEPLOYMENT_PLATFORM_UNSPECIFIED" - Unspecified deployment platform.
 	//   "VERTEX_AI" - Vertex AI.
 	//   "GKE" - Google Kubernetes Engine.
+	//   "GCE" - Google Compute Engine.
+	//   "FINE_TUNED_MODEL" - Fine tuned model.
 	DeploymentPlatform string `json:"deploymentPlatform,omitempty"`
 	// DisplayName: The user defined display name of model. Ex.
 	// baseline-classification-model
@@ -1952,6 +1954,10 @@ type DataRetentionDeletionEvent struct {
 	//   "EVENT_TYPE_UNSPECIFIED" - Unspecified event type.
 	//   "EVENT_TYPE_MAX_TTL_EXCEEDED" - The maximum retention time has been
 	// exceeded.
+	//   "EVENT_TYPE_MAX_TTL_FROM_CREATION" - Max TTL from the asset's creation
+	// time.
+	//   "EVENT_TYPE_MAX_TTL_FROM_LAST_MODIFICATION" - Max TTL from the asset's
+	// last modification time.
 	EventType string `json:"eventType,omitempty"`
 	// MaxRetentionAllowed: Maximum duration of retention allowed from the DRD
 	// control. This comes from the DRD control where users set a max TTL for their
@@ -4157,6 +4163,8 @@ type GoogleCloudSecuritycenterV2AiModel struct {
 	//   "DEPLOYMENT_PLATFORM_UNSPECIFIED" - Unspecified deployment platform.
 	//   "VERTEX_AI" - Vertex AI.
 	//   "GKE" - Google Kubernetes Engine.
+	//   "GCE" - Google Compute Engine.
+	//   "FINE_TUNED_MODEL" - Fine tuned model.
 	DeploymentPlatform string `json:"deploymentPlatform,omitempty"`
 	// DisplayName: The user defined display name of model. Ex.
 	// baseline-classification-model
@@ -5503,6 +5511,10 @@ type GoogleCloudSecuritycenterV2DataRetentionDeletionEvent struct {
 	//   "EVENT_TYPE_UNSPECIFIED" - Unspecified event type.
 	//   "EVENT_TYPE_MAX_TTL_EXCEEDED" - The maximum retention time has been
 	// exceeded.
+	//   "EVENT_TYPE_MAX_TTL_FROM_CREATION" - Max TTL from the asset's creation
+	// time.
+	//   "EVENT_TYPE_MAX_TTL_FROM_LAST_MODIFICATION" - Max TTL from the asset's
+	// last modification time.
 	EventType string `json:"eventType,omitempty"`
 	// MaxRetentionAllowed: Maximum duration of retention allowed from the DRD
 	// control. This comes from the DRD control where users set a max TTL for their

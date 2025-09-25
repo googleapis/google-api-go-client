@@ -419,8 +419,15 @@ func (s AnalyzeConsumerPolicyResponse) MarshalJSON() ([]byte, error) {
 // opposed to simply a description of methods and bindings. They are also
 // sometimes simply referred to as "APIs" in other contexts, such as the name
 // of this message itself. See https://cloud.google.com/apis/design/glossary
-// for detailed terminology.
+// for detailed terminology. New usages of this message as an alternative to
+// ServiceDescriptorProto are strongly discouraged. This message does not
+// reliability preserve all information necessary to model the schema and
+// preserve semantics. Instead make use of FileDescriptorSet which preserves
+// the necessary information.
 type Api struct {
+	// Edition: The source edition string, only valid when syntax is
+	// SYNTAX_EDITIONS.
+	Edition string `json:"edition,omitempty"`
 	// Methods: The methods of this interface, in unspecified order.
 	Methods []*Method `json:"methods,omitempty"`
 	// Mixins: Included interfaces. See Mixin.
@@ -455,13 +462,13 @@ type Api struct {
 	// be omitted. Zero major versions must only be used for experimental, non-GA
 	// interfaces.
 	Version string `json:"version,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Methods") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Edition") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Methods") to include in API
+	// NullFields is a list of field names (e.g. "Edition") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -730,6 +737,8 @@ type BackendRule struct {
 	// OverridesByRequestProtocol: The map between request protocol and the backend
 	// address.
 	OverridesByRequestProtocol map[string]BackendRule `json:"overridesByRequestProtocol,omitempty"`
+	// PathTranslation: no-lint
+	//
 	// Possible values:
 	//   "PATH_TRANSLATION_UNSPECIFIED"
 	//   "CONSTANT_ADDRESS" - Use the backend address as-is, with no modification
@@ -1335,6 +1344,57 @@ func (s ConsumerQuotaMetric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ContentSecurity: ContentSecurity defines the content security related fields
+// of a MCP policy.
+type ContentSecurity struct {
+	// ContentSecurityProviders: List of content security providers that are
+	// enabled for content scanning.
+	ContentSecurityProviders []*ContentSecurityProvider `json:"contentSecurityProviders,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentSecurityProviders")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentSecurityProviders") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContentSecurity) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentSecurity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContentSecurityProvider: ContentSecurityProvider contains the name of
+// content security provider.
+type ContentSecurityProvider struct {
+	// Name: Name of security service for content scanning, such as Google Cloud
+	// Model Armor or supported third-party ISV solutions. If it is Google 1P
+	// service, the name should be prefixed with `services/`. If it is a 3P
+	// service, the format needs to be documented. The currently supported values
+	// are: - `services/modelarmor.googleapis.com` for Google Cloud Model Armor.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContentSecurityProvider) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentSecurityProvider
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Context: `Context` defines which contexts an API requests. Example: context:
 // rules: - selector: "*" requested: - google.rpc.context.ProjectContext -
 // google.rpc.context.OriginContext The above specifies that all methods in the
@@ -1894,7 +1954,11 @@ func (s Endpoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Enum: Enum type definition.
+// Enum: Enum type definition. New usages of this message as an alternative to
+// EnumDescriptorProto are strongly discouraged. This message does not
+// reliability preserve all information necessary to model the schema and
+// preserve semantics. Instead make use of FileDescriptorSet which preserves
+// the necessary information.
 type Enum struct {
 	// Edition: The source edition string, only valid when syntax is
 	// SYNTAX_EDITIONS.
@@ -1932,7 +1996,11 @@ func (s Enum) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// EnumValue: Enum value definition.
+// EnumValue: Enum value definition. New usages of this message as an
+// alternative to EnumValueDescriptorProto are strongly discouraged. This
+// message does not reliability preserve all information necessary to model the
+// schema and preserve semantics. Instead make use of FileDescriptorSet which
+// preserves the necessary information.
 type EnumValue struct {
 	// Name: Enum value name.
 	Name string `json:"name,omitempty"`
@@ -1995,7 +2063,11 @@ func (s ExperimentalFeatures) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Field: A single field of a message type.
+// Field: A single field of a message type. New usages of this message as an
+// alternative to FieldDescriptorProto are strongly discouraged. This message
+// does not reliability preserve all information necessary to model the schema
+// and preserve semantics. Instead make use of FileDescriptorSet which
+// preserves the necessary information.
 type Field struct {
 	// Cardinality: The field cardinality.
 	//
@@ -2148,8 +2220,8 @@ type GoSettings struct {
 	Common *CommonLanguageSettings `json:"common,omitempty"`
 	// RenamedServices: Map of service names to renamed services. Keys are the
 	// package relative service names and values are the name to be used for the
-	// service client and call options. publishing: go_settings: renamed_services:
-	// Publisher: TopicAdmin
+	// service client and call options. Example: publishing: go_settings:
+	// renamed_services: Publisher: TopicAdmin
 	RenamedServices map[string]string `json:"renamedServices,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Common") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2653,8 +2725,8 @@ type GoogleApiServiceusageV2betaConsumerPolicy struct {
 	// There can currently be at most one `EnableRule`. This restriction will be
 	// lifted in later releases.
 	EnableRules []*GoogleApiServiceusageV2betaEnableRule `json:"enableRules,omitempty"`
-	// Etag: Output only. An opaque tag indicating the current version of the
-	// policy, used for concurrency control.
+	// Etag: An opaque tag indicating the current version of the policy, used for
+	// concurrency control.
 	Etag string `json:"etag,omitempty"`
 	// Name: Output only. The resource name of the policy. Only the `default`
 	// policy is supported: `projects/12345/consumerPolicies/default`,
@@ -2720,6 +2792,11 @@ type GoogleApiServiceusageV2betaImpact struct {
 	//   "DEPENDENCY_MISSING_DEPENDENCIES" - Block 1 - Impact Type of
 	// ANALYSIS_TYPE_DEPENDENCY
 	ImpactType string `json:"impactType,omitempty"`
+	// MissingDependency: Output only. This field will be populated only for the
+	// `DEPENDENCY_MISSING_DEPENDENCIES` impact type. Example:
+	// `services/compute.googleapis.com`. Impact.detail will be in format :
+	// `missing service dependency: {missing_dependency}.`
+	MissingDependency string `json:"missingDependency,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Detail") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3582,8 +3659,103 @@ func (s *LongRunning) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Method: Method represents a method of an API interface.
+// McpEnableRule: McpEnableRule contains MCP enablement related rules.
+type McpEnableRule struct {
+	// McpServices: List of enabled MCP services.
+	McpServices []*McpService `json:"mcpServices,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "McpServices") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "McpServices") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s McpEnableRule) MarshalJSON() ([]byte, error) {
+	type NoMethod McpEnableRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// McpPolicy: MCP Consumer Policy is a set of rules that define MCP related
+// policy for a cloud resource hierarchy.
+type McpPolicy struct {
+	// ContentSecurity: ContentSecurity contains the content security related
+	// fields of a MCP policy.
+	ContentSecurity *ContentSecurity `json:"contentSecurity,omitempty"`
+	// CreateTime: Output only. The time the policy was created. For singleton
+	// policies (such as the `default` policy), this is the first touch of the
+	// policy.
+	CreateTime string `json:"createTime,omitempty"`
+	// Etag: An opaque tag indicating the current version of the policy, used for
+	// concurrency control.
+	Etag string `json:"etag,omitempty"`
+	// McpEnableRules: McpEnableRules contains MCP enablement related rules.
+	McpEnableRules []*McpEnableRule `json:"mcpEnableRules,omitempty"`
+	// Name: Output only. The resource name of the policy. Only the `default`
+	// policy is supported. We allow the following formats:
+	// `projects/{PROJECT_NUMBER}/mcpPolicies/default`,
+	// `projects/{PROJECT_ID}/mcpPolicies/default`,
+	// `folders/{FOLDER_ID}/mcpPolicies/default`,
+	// `organizations/{ORG_ID}/mcpPolicies/default`.
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. The time the policy was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentSecurity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentSecurity") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s McpPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod McpPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// McpService: McpService contains the service names that are enabled for MCP.
+type McpService struct {
+	// Service: The names of the services that are enabled for MCP. Example:
+	// `services/library-example.googleapis.com`
+	Service string `json:"service,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Service") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Service") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s McpService) MarshalJSON() ([]byte, error) {
+	type NoMethod McpService
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Method: Method represents a method of an API interface. New usages of this
+// message as an alternative to MethodDescriptorProto are strongly discouraged.
+// This message does not reliability preserve all information necessary to
+// model the schema and preserve semantics. Instead make use of
+// FileDescriptorSet which preserves the necessary information.
 type Method struct {
+	// Edition: The source edition string, only valid when syntax is
+	// SYNTAX_EDITIONS. This field should be ignored, instead the edition should be
+	// inherited from Api. This is similar to Field and EnumValue.
+	Edition string `json:"edition,omitempty"`
 	// Name: The simple name of this method.
 	Name string `json:"name,omitempty"`
 	// Options: Any metadata attached to the method.
@@ -3596,22 +3768,24 @@ type Method struct {
 	ResponseStreaming bool `json:"responseStreaming,omitempty"`
 	// ResponseTypeUrl: The URL of the output message type.
 	ResponseTypeUrl string `json:"responseTypeUrl,omitempty"`
-	// Syntax: The source syntax of this method.
+	// Syntax: The source syntax of this method. This field should be ignored,
+	// instead the syntax should be inherited from Api. This is similar to Field
+	// and EnumValue.
 	//
 	// Possible values:
 	//   "SYNTAX_PROTO2" - Syntax `proto2`.
 	//   "SYNTAX_PROTO3" - Syntax `proto3`.
 	//   "SYNTAX_EDITIONS" - Syntax `editions`.
 	Syntax string `json:"syntax,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Edition") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "Edition") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4325,7 +4499,9 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // Option: A protocol buffer option, which can be attached to a message, field,
-// enumeration, etc.
+// enumeration, etc. New usages of this message as an alternative to
+// FileOptions, MessageOptions, FieldOptions, EnumOptions, EnumValueOptions,
+// ServiceOptions, or MethodOptions are strongly discouraged.
 type Option struct {
 	// Name: The option's name. For protobuf built-in options (options defined in
 	// descriptor.proto), this is the short name. For example, "map_entry". For
@@ -5226,7 +5402,11 @@ func (s SystemParameters) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Type: A protocol buffer message type.
+// Type: A protocol buffer message type. New usages of this message as an
+// alternative to DescriptorProto are strongly discouraged. This message does
+// not reliability preserve all information necessary to model the schema and
+// preserve semantics. Instead make use of FileDescriptorSet which preserves
+// the necessary information.
 type Type struct {
 	// Edition: The source edition string, only valid when syntax is
 	// SYNTAX_EDITIONS.
@@ -5275,6 +5455,10 @@ type UpdateAdminQuotaPolicyMetadata struct {
 // UpdateConsumerPolicyMetadata: Metadata for the `UpdateConsumerPolicy`
 // method.
 type UpdateConsumerPolicyMetadata struct {
+}
+
+// UpdateMcpPolicyMetadata: Metadata for the `UpdateMcpPolicy` method.
+type UpdateMcpPolicyMetadata struct {
 }
 
 // Usage: Configuration controlling usage of a service.

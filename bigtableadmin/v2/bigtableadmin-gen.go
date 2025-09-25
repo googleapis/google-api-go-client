@@ -1326,12 +1326,19 @@ func (s CreateAuthorizedViewRequest) MarshalJSON() ([]byte, error) {
 // CreateBackup.
 type CreateBackupMetadata struct {
 	// EndTime: If set, the time at which this operation finished or was cancelled.
+	// DEPRECATED: Use finish_time instead.
 	EndTime string `json:"endTime,omitempty"`
+	// FinishTime: The time at which the operation failed or was completed
+	// successfully.
+	FinishTime string `json:"finishTime,omitempty"`
 	// Name: The name of the backup being created.
 	Name string `json:"name,omitempty"`
+	// RequestTime: The time at which the original request was received.
+	RequestTime string `json:"requestTime,omitempty"`
 	// SourceTable: The name of the table the backup is created from.
 	SourceTable string `json:"sourceTable,omitempty"`
-	// StartTime: The time at which this operation started.
+	// StartTime: The time at which this operation started. DEPRECATED: Use
+	// request_time instead.
 	StartTime string `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1485,12 +1492,17 @@ func (s CreateInstanceRequest) MarshalJSON() ([]byte, error) {
 // CreateLogicalViewMetadata: The metadata for the Operation returned by
 // CreateLogicalView.
 type CreateLogicalViewMetadata struct {
-	// EndTime: If set, the time at which this operation finished or was canceled.
+	// EndTime: DEPRECATED: Use finish_time instead.
 	EndTime string `json:"endTime,omitempty"`
+	// FinishTime: The time at which the operation failed or was completed
+	// successfully.
+	FinishTime string `json:"finishTime,omitempty"`
 	// OriginalRequest: The request that prompted the initiation of this
 	// CreateLogicalView operation.
 	OriginalRequest *CreateLogicalViewRequest `json:"originalRequest,omitempty"`
-	// StartTime: The time at which this operation started.
+	// RequestTime: The time at which the original request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+	// StartTime: DEPRECATED: Use request_time instead.
 	StartTime string `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1543,11 +1555,18 @@ func (s CreateLogicalViewRequest) MarshalJSON() ([]byte, error) {
 // CreateMaterializedView.
 type CreateMaterializedViewMetadata struct {
 	// EndTime: If set, the time at which this operation finished or was canceled.
+	// DEPRECATED: Use finish_time instead.
 	EndTime string `json:"endTime,omitempty"`
+	// FinishTime: The time at which the operation failed or was completed
+	// successfully.
+	FinishTime string `json:"finishTime,omitempty"`
 	// OriginalRequest: The request that prompted the initiation of this
 	// CreateMaterializedView operation.
 	OriginalRequest *CreateMaterializedViewRequest `json:"originalRequest,omitempty"`
-	// StartTime: The time at which this operation started.
+	// RequestTime: The time at which the original request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+	// StartTime: The time at which this operation started. DEPRECATED: Use
+	// request_time instead.
 	StartTime string `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1599,21 +1618,22 @@ func (s CreateMaterializedViewRequest) MarshalJSON() ([]byte, error) {
 // CreateSchemaBundleMetadata: The metadata for the Operation returned by
 // CreateSchemaBundle.
 type CreateSchemaBundleMetadata struct {
-	// EndTime: If set, the time at which this operation finished or was canceled.
-	EndTime string `json:"endTime,omitempty"`
+	// FinishTime: The time at which the operation failed or was completed
+	// successfully.
+	FinishTime string `json:"finishTime,omitempty"`
 	// Name: The unique name identifying this schema bundle. Values are of the form
 	// `projects/{project}/instances/{instance}/tables/{table}/schemaBundles/{schema
 	// _bundle}`
 	Name string `json:"name,omitempty"`
-	// StartTime: The time at which this operation started.
-	StartTime string `json:"startTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// RequestTime: The time at which the original request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FinishTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// NullFields is a list of field names (e.g. "FinishTime") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2174,7 +2194,7 @@ func (s GoogleBigtableAdminV2TypeBytesEncoding) MarshalJSON() ([]byte, error) {
 type GoogleBigtableAdminV2TypeBytesEncodingRaw struct {
 	// EscapeNulls: If set, allows NULL values to be encoded as the empty string
 	// "". The actual empty string, or any value which only contains the null byte
-	// 0x00, has one more null byte appended.
+	// `0x00`, has one more null byte appended.
 	EscapeNulls bool `json:"escapeNulls,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EscapeNulls") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2429,8 +2449,8 @@ type GoogleBigtableAdminV2TypeStringEncodingUtf8Bytes struct {
 	// values. If set, allows NULL values to be encoded as the empty string "". The
 	// actual empty string, or any value where every character equals
 	// `null_escape_char`, has one more `null_escape_char` appended. If
-	// `null_escape_char` is set and does not equal the ASCII null character 0x00,
-	// then the encoding will not support sorted mode. .
+	// `null_escape_char` is set and does not equal the ASCII null character
+	// `0x00`, then the encoding will not support sorted mode. .
 	NullEscapeChar string `json:"nullEscapeChar,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NullEscapeChar") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2515,8 +2535,9 @@ func (s GoogleBigtableAdminV2TypeStructEncoding) MarshalJSON() ([]byte, error) {
 // mode: - Fields are encoded in sorted mode. - Encoded field values must not
 // contain any bytes <= `delimiter[0]` - Element-wise order is preserved: `A <
 // B` if `A[0] < B[0]`, or if `A[0] == B[0] && A[1] < B[1]`, etc. Strict
-// prefixes sort first. Distinct mode: - Fields are encoded in distinct mode. -
-// Encoded field values must not contain `delimiter[0]`.
+// prefixes sort first. - This encoding does not support `DESC` field ordering.
+// Distinct mode: - Fields are encoded in distinct mode. - Encoded field values
+// must not contain `delimiter[0]`.
 type GoogleBigtableAdminV2TypeStructEncodingDelimitedBytes struct {
 	// Delimiter: Byte sequence used to delimit concatenated fields. The delimiter
 	// must contain at least 1 character and at most 50 characters.
@@ -2540,21 +2561,29 @@ func (s GoogleBigtableAdminV2TypeStructEncodingDelimitedBytes) MarshalJSON() ([]
 }
 
 // GoogleBigtableAdminV2TypeStructEncodingOrderedCodeBytes: Fields are encoded
-// independently and concatenated with the fixed byte pair {0x00, 0x01} in
-// between. Any null (0x00) byte in an encoded field is replaced by the fixed
-// byte pair {0x00, 0xFF}. Fields that encode to the empty string "" have
-// special handling: - If *every* field encodes to "", or if the STRUCT has no
-// fields defined, then the STRUCT is encoded as the fixed byte pair {0x00,
-// 0x00}. - Otherwise, the STRUCT only encodes until the last non-empty field,
-// omitting any trailing empty fields. Any empty fields that aren't omitted are
-// replaced with the fixed byte pair {0x00, 0x00}. Examples: - STRUCT() ->
-// "\00\00" - STRUCT("") -> "\00\00" - STRUCT("", "") -> "\00\00" - STRUCT("",
-// "B") -> "\00\00" + "\00\01" + "B" - STRUCT("A", "") -> "A" - STRUCT("", "B",
-// "") -> "\00\00" + "\00\01" + "B" - STRUCT("A", "", "C") -> "A" + "\00\01" +
-// "\00\00" + "\00\01" + "C" Since null bytes are always escaped, this encoding
+// independently, then escaped and delimited by appling the following rules in
+// order: - While the last remaining field is `ASC` or `UNSPECIFIED`, and
+// encodes to the empty string "", remove it. - In each remaining field,
+// replace all null bytes `0x00` with the fixed byte pair `{0x00, 0xFF}`. - If
+// any remaining field encodes to the empty string "", replace it with the
+// fixed byte pair `{0x00, 0x00}`. - Append the fixed byte pair `{0x00, 0x01}`
+// to each remaining field, except for the last remaining field if it is `ASC`.
+// - Bitwise negate all `DESC` fields. - Concatenate the results, or emit the
+// fixed byte pair `{0x00, 0x00}` if there are no remaining fields to
+// concatenate. Examples: ``` - STRUCT() -> "\00\00" - STRUCT("") -> "\00\00" -
+// STRUCT("", "") -> "\00\00" - STRUCT("", "B") -> "\00\00" + "\00\01" + "B" -
+// STRUCT("A", "") -> "A" - STRUCT("", "B", "") -> "\00\00" + "\00\01" + "B" -
+// STRUCT("A", "", "C") -> "A" + "\00\01" + "\00\00" + "\00\01" + "C" ```
+// Examples for struct with `DESC` fields: ``` - STRUCT("" DESC) -> "\xFF\xFF"
+// + "\xFF\xFE" - STRUCT("" DESC, "") -> "\xFF\xFF" + "\xFF\xFE" - STRUCT(""
+// DESC, "", "") -> "\xFF\xFF" + "\xFF\xFE" - STRUCT("" DESC, "A") ->
+// "\xFF\xFF" + "\xFF\xFE" + "A" - STRUCT("A", "" DESC, "") -> "A" + "\00\01" +
+// "\xFF\xFF" + "\xFF\xFE" - STRUCT("", "A" DESC) -> "\x00\x00" + "\x00\x01" +
+// "\xBE" + "\xFF\xFE" ``` Since null bytes are always escaped, this encoding
 // can cause size blowup for encodings like `Int64.BigEndianBytes` that are
 // likely to produce many such bytes. Sorted mode: - Fields are encoded in
-// sorted mode. - All values supported by the field encodings are allowed -
+// sorted mode. - All values supported by the field encodings are allowed. -
+// Fields with unset or `UNSPECIFIED` order are treated as `ASC`. -
 // Element-wise order is preserved: `A < B` if `A[0] < B[0]`, or if `A[0] ==
 // B[0] && A[1] < B[1]`, etc. Strict prefixes sort first. Distinct mode: -
 // Fields are encoded in distinct mode. - All values supported by the field
@@ -2563,7 +2592,8 @@ type GoogleBigtableAdminV2TypeStructEncodingOrderedCodeBytes struct {
 }
 
 // GoogleBigtableAdminV2TypeStructEncodingSingleton: Uses the encoding of
-// `fields[0].type` as-is. Only valid if `fields.size == 1`.
+// `fields[0].type` as-is. Only valid if `fields.size == 1`. This encoding does
+// not support `DESC` field ordering.
 type GoogleBigtableAdminV2TypeStructEncodingSingleton struct {
 }
 
@@ -4286,7 +4316,7 @@ func (s TieredStorageRule) MarshalJSON() ([]byte, error) {
 // This is useful anywhere sort order is important, for example when encoding
 // keys. - Distinct: In this mode, Bigtable guarantees that if `X != Y` then
 // `Encode(X) != Encode(Y)`. However, the converse is not guaranteed. For
-// example, both "{'foo': '1', 'bar': '2'}" and "{'bar': '2', 'foo': '1'}" are
+// example, both `{'foo': '1', 'bar': '2'}` and `{'bar': '2', 'foo': '1'}` are
 // valid encodings of the same JSON value. The API clearly documents which mode
 // is used wherever an encoding can be configured. Each encoding also documents
 // which values are supported in which modes. For example, when encoding INT64
@@ -4343,10 +4373,17 @@ func (s Type) MarshalJSON() ([]byte, error) {
 // google.bigtable.admin.v2.BigtableTableAdmin.UndeleteTable.
 type UndeleteTableMetadata struct {
 	// EndTime: If set, the time at which this operation finished or was cancelled.
+	// DEPRECATED: Use finish_time instead.
 	EndTime string `json:"endTime,omitempty"`
+	// FinishTime: The time at which the operation failed or was completed
+	// successfully.
+	FinishTime string `json:"finishTime,omitempty"`
 	// Name: The name of the table being restored.
 	Name string `json:"name,omitempty"`
-	// StartTime: The time at which this operation started.
+	// RequestTime: The time at which the original request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+	// StartTime: The time at which this operation started. DEPRECATED: Use
+	// request_time instead.
 	StartTime string `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4524,12 +4561,17 @@ func (s UpdateInstanceMetadata) MarshalJSON() ([]byte, error) {
 // UpdateLogicalViewMetadata: The metadata for the Operation returned by
 // UpdateLogicalView.
 type UpdateLogicalViewMetadata struct {
-	// EndTime: If set, the time at which this operation finished or was canceled.
+	// EndTime: DEPRECATED: Use finish_time instead.
 	EndTime string `json:"endTime,omitempty"`
+	// FinishTime: The time at which the operation failed or was completed
+	// successfully.
+	FinishTime string `json:"finishTime,omitempty"`
 	// OriginalRequest: The request that prompted the initiation of this
 	// UpdateLogicalView operation.
 	OriginalRequest *UpdateLogicalViewRequest `json:"originalRequest,omitempty"`
-	// StartTime: The time at which this operation was started.
+	// RequestTime: The time at which the original request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+	// StartTime: DEPRECATED: Use request_time instead.
 	StartTime string `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4579,21 +4621,22 @@ func (s UpdateLogicalViewRequest) MarshalJSON() ([]byte, error) {
 // UpdateSchemaBundleMetadata: The metadata for the Operation returned by
 // UpdateSchemaBundle.
 type UpdateSchemaBundleMetadata struct {
-	// EndTime: If set, the time at which this operation finished or was canceled.
-	EndTime string `json:"endTime,omitempty"`
+	// FinishTime: The time at which the operation failed or was completed
+	// successfully.
+	FinishTime string `json:"finishTime,omitempty"`
 	// Name: The unique name identifying this schema bundle. Values are of the form
 	// `projects/{project}/instances/{instance}/tables/{table}/schemaBundles/{schema
 	// _bundle}`
 	Name string `json:"name,omitempty"`
-	// StartTime: The time at which this operation started.
-	StartTime string `json:"startTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// RequestTime: The time at which the original request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FinishTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// NullFields is a list of field names (e.g. "FinishTime") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4609,10 +4652,17 @@ func (s UpdateSchemaBundleMetadata) MarshalJSON() ([]byte, error) {
 // UpdateTable.
 type UpdateTableMetadata struct {
 	// EndTime: If set, the time at which this operation finished or was canceled.
+	// DEPRECATED: Use finish_time instead.
 	EndTime string `json:"endTime,omitempty"`
+	// FinishTime: The time at which the operation failed or was completed
+	// successfully.
+	FinishTime string `json:"finishTime,omitempty"`
 	// Name: The name of the table being updated.
 	Name string `json:"name,omitempty"`
-	// StartTime: The time at which this operation started.
+	// RequestTime: The time at which the original request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+	// StartTime: The time at which this operation started. DEPRECATED: Use
+	// request_time instead.
 	StartTime string `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -13824,9 +13874,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

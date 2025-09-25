@@ -4044,6 +4044,13 @@ func (r *ProjectsAppsTestCasesService) Patch(name string, googlefirebaseappdistr
 	return c
 }
 
+// AllowMissing sets the optional parameter "allowMissing": If set to true, and
+// the test case is not found, a new test case will be created.
+func (c *ProjectsAppsTestCasesPatchCall) AllowMissing(allowMissing bool) *ProjectsAppsTestCasesPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.

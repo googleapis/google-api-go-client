@@ -3776,10 +3776,11 @@ type FoldersGetAutokeyConfigCall struct {
 	header_      http.Header
 }
 
-// GetAutokeyConfig: Returns the AutokeyConfig for a folder.
+// GetAutokeyConfig: Returns the AutokeyConfig for a folder or project.
 //
 //   - name: Name of the AutokeyConfig resource, e.g.
-//     `folders/{FOLDER_NUMBER}/autokeyConfig`.
+//     `folders/{FOLDER_NUMBER}/autokeyConfig` or
+//     `projects/{PROJECT_NUMBER}/autokeyConfig`.
 func (r *FoldersService) GetAutokeyConfig(name string) *FoldersGetAutokeyConfigCall {
 	c := &FoldersGetAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4443,6 +4444,117 @@ func (c *OrganizationsUpdateKajPolicyConfigCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 }
 
+type ProjectsGetAutokeyConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetAutokeyConfig: Returns the AutokeyConfig for a folder or project.
+//
+//   - name: Name of the AutokeyConfig resource, e.g.
+//     `folders/{FOLDER_NUMBER}/autokeyConfig` or
+//     `projects/{PROJECT_NUMBER}/autokeyConfig`.
+func (r *ProjectsService) GetAutokeyConfig(name string) *ProjectsGetAutokeyConfigCall {
+	c := &ProjectsGetAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsGetAutokeyConfigCall) Fields(s ...googleapi.Field) *ProjectsGetAutokeyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsGetAutokeyConfigCall) IfNoneMatch(entityTag string) *ProjectsGetAutokeyConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsGetAutokeyConfigCall) Context(ctx context.Context) *ProjectsGetAutokeyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsGetAutokeyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetAutokeyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.getAutokeyConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.getAutokeyConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AutokeyConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsGetAutokeyConfigCall) Do(opts ...googleapi.CallOption) (*AutokeyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AutokeyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.getAutokeyConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsGetKajPolicyConfigCall struct {
 	s            *Service
 	name         string
@@ -4890,6 +5002,122 @@ func (c *ProjectsShowEffectiveKeyAccessJustificationsPolicyConfigCall) Do(opts .
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.showEffectiveKeyAccessJustificationsPolicyConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsUpdateAutokeyConfigCall struct {
+	s             *Service
+	name          string
+	autokeyconfig *AutokeyConfig
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// UpdateAutokeyConfig: Updates the AutokeyConfig for a folder. The caller must
+// have both `cloudkms.autokeyConfigs.update` permission on the parent folder
+// and `cloudkms.cryptoKeys.setIamPolicy` permission on the provided key
+// project. A KeyHandle creation in the folder's descendant projects will use
+// this configuration to determine where to create the resulting CryptoKey.
+//
+//   - name: Identifier. Name of the AutokeyConfig resource, e.g.
+//     `folders/{FOLDER_NUMBER}/autokeyConfig`
+//     `projects/{PROJECT_NUMBER}/autokeyConfig`.
+func (r *ProjectsService) UpdateAutokeyConfig(name string, autokeyconfig *AutokeyConfig) *ProjectsUpdateAutokeyConfigCall {
+	c := &ProjectsUpdateAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.autokeyconfig = autokeyconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Masks which
+// fields of the AutokeyConfig to update, e.g. `keyProject`.
+func (c *ProjectsUpdateAutokeyConfigCall) UpdateMask(updateMask string) *ProjectsUpdateAutokeyConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsUpdateAutokeyConfigCall) Fields(s ...googleapi.Field) *ProjectsUpdateAutokeyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsUpdateAutokeyConfigCall) Context(ctx context.Context) *ProjectsUpdateAutokeyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsUpdateAutokeyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsUpdateAutokeyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.autokeyconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.updateAutokeyConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.updateAutokeyConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AutokeyConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsUpdateAutokeyConfigCall) Do(opts ...googleapi.CallOption) (*AutokeyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AutokeyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.updateAutokeyConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5350,9 +5578,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

@@ -835,10 +835,10 @@ type AuthzPolicyAuthzRuleFromRequestSource struct {
 	// value is matched against a list of URI SANs, DNS Name SANs, or the common
 	// name in the client's certificate. A match happens when any principal matches
 	// with the rule. Limited to 50 principals per Authorization Policy for
-	// Regional Internal Application Load Balancer, Regional External Application
-	// Load Balancer, Cross-region Internal Application Load Balancer, and Cloud
-	// Service Mesh. Limited to 25 principals per Authorization Policy for Global
-	// External Application Load Balancer.
+	// regional internal Application Load Balancers, regional external Application
+	// Load Balancers, cross-region internal Application Load Balancers, and Cloud
+	// Service Mesh. This field is not supported for global external Application
+	// Load Balancers.
 	Principals []*AuthzPolicyAuthzRulePrincipal `json:"principals,omitempty"`
 	// Resources: Optional. A list of resources to match against the resource of
 	// the source VM of a request. Limited to 10 resources per Authorization
@@ -941,9 +941,9 @@ type AuthzPolicyAuthzRulePrincipal struct {
 	// multiple common names in the client certificate will be rejected if
 	// CLIENT_CERT_COMMON_NAME is set as the principal selector. A match happens
 	// when there is an exact common name value match. This is only applicable for
-	// Application Load Balancers except for classic Global External Application
-	// load balancer. CLIENT_CERT_COMMON_NAME is not supported for
-	// INTERNAL_SELF_MANAGED load balancing scheme.
+	// Application Load Balancers except for global external Application Load
+	// Balancer and classic Application Load Balancer. CLIENT_CERT_COMMON_NAME is
+	// not supported for INTERNAL_SELF_MANAGED load balancing scheme.
 	PrincipalSelector string `json:"principalSelector,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Principal") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8455,9 +8455,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

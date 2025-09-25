@@ -7462,9 +7462,9 @@ type NamespacesJobsGetCall struct {
 
 // Get: Get information about a job.
 //
-//   - name: The name of the job to retrieve. Replace {namespace} with the
-//     project ID or number. It takes the form namespaces/{namespace}. For
-//     example: namespaces/PROJECT_ID.
+//   - name: The name of the job to retrieve. It takes the form
+//     namespaces/{namespace}/jobs/{job_name} and the `endpoint` must be
+//     regional. Replace {namespace} with the project ID or number.
 func (r *NamespacesJobsService) Get(name string) *NamespacesJobsGetCall {
 	c := &NamespacesJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

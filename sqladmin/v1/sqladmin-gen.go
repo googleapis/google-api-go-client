@@ -6,7 +6,7 @@
 
 // Package sqladmin provides access to the Cloud SQL Admin API.
 //
-// For product documentation, see: https://developers.google.com/cloud-sql/
+// For product documentation, see: https://cloud.google.com/sql/docs
 //
 // # Library status
 //
@@ -454,7 +454,7 @@ func (s AvailableDatabaseVersion) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Backup: A backup resource. Next ID: 30
+// Backup: A backup resource.
 type Backup struct {
 	// BackupInterval: Output only. This output contains the following values:
 	// start_time: All database writes up to this time are available. end_time: Any
@@ -3344,6 +3344,31 @@ func (s InstancesListServerCertificatesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InstancesPreCheckMajorVersionUpgradeRequest: Request for Pre-checks for MVU
+type InstancesPreCheckMajorVersionUpgradeRequest struct {
+	// PreCheckMajorVersionUpgradeContext: Required. Contains details about the
+	// pre-check major version upgrade operation.
+	PreCheckMajorVersionUpgradeContext *PreCheckMajorVersionUpgradeContext `json:"preCheckMajorVersionUpgradeContext,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "PreCheckMajorVersionUpgradeContext") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "PreCheckMajorVersionUpgradeContext") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstancesPreCheckMajorVersionUpgradeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InstancesPreCheckMajorVersionUpgradeRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InstancesReencryptRequest: Database Instance reencrypt request.
 type InstancesReencryptRequest struct {
 	// BackupReencryptionConfig: Configuration specific to backup re-encryption
@@ -3776,6 +3801,33 @@ func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Message: Represents a notice or warning message from the database.
+type Message struct {
+	// Message: The full message string. For PostgreSQL, this is a formatted string
+	// that may include severity, code, and the notice/warning message. For MySQL,
+	// this contains the warning message.
+	Message string `json:"message,omitempty"`
+	// Severity: The severity of the message (e.g., "NOTICE" for PostgreSQL,
+	// "WARNING" for MySQL).
+	Severity string `json:"severity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Message) MarshalJSON() ([]byte, error) {
+	type NoMethod Message
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Metadata: The additional metadata information regarding the execution of the
 // SQL statements.
 type Metadata struct {
@@ -4045,6 +4097,12 @@ type Operation struct {
 	// in the read pool.
 	//   "CREATE_READ_POOL" - Creates a Cloud SQL read pool instance.
 	OperationType string `json:"operationType,omitempty"`
+	// PreCheckMajorVersionUpgradeContext: This field is only populated when the
+	// operation_type is PRE_CHECK_MAJOR_VERSION_UPGRADE. The
+	// PreCheckMajorVersionUpgradeContext message itself contains the details for
+	// that pre-check, such as the target database version for the upgrade and the
+	// results of the check (including any warnings or errors found).
+	PreCheckMajorVersionUpgradeContext *PreCheckMajorVersionUpgradeContext `json:"preCheckMajorVersionUpgradeContext,omitempty"`
 	// SelfLink: The URI of this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 	// StartTime: The time this operation actually started in UTC timezone in RFC
@@ -4398,6 +4456,149 @@ func (s PoolNodeConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PreCheckMajorVersionUpgradeContext: Pre-check major version upgrade context.
+type PreCheckMajorVersionUpgradeContext struct {
+	// Kind: Optional. This is always `sql#preCheckMajorVersionUpgradeContext`.
+	Kind string `json:"kind,omitempty"`
+	// PreCheckResponse: Output only. The responses from the precheck operation.
+	PreCheckResponse []*PreCheckResponse `json:"preCheckResponse,omitempty"`
+	// TargetDatabaseVersion: Required. The target database version to upgrade to.
+	//
+	// Possible values:
+	//   "SQL_DATABASE_VERSION_UNSPECIFIED" - This is an unknown database version.
+	//   "MYSQL_5_1" - The database version is MySQL 5.1.
+	//   "MYSQL_5_5" - The database version is MySQL 5.5.
+	//   "MYSQL_5_6" - The database version is MySQL 5.6.
+	//   "MYSQL_5_7" - The database version is MySQL 5.7.
+	//   "MYSQL_8_0" - The database version is MySQL 8.
+	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the minor
+	// version is 18.
+	//   "MYSQL_8_0_26" - The database major version is MySQL 8.0 and the minor
+	// version is 26.
+	//   "MYSQL_8_0_27" - The database major version is MySQL 8.0 and the minor
+	// version is 27.
+	//   "MYSQL_8_0_28" - The database major version is MySQL 8.0 and the minor
+	// version is 28.
+	//   "MYSQL_8_0_29" - The database major version is MySQL 8.0 and the minor
+	// version is 29.
+	//   "MYSQL_8_0_30" - The database major version is MySQL 8.0 and the minor
+	// version is 30.
+	//   "MYSQL_8_0_31" - The database major version is MySQL 8.0 and the minor
+	// version is 31.
+	//   "MYSQL_8_0_32" - The database major version is MySQL 8.0 and the minor
+	// version is 32.
+	//   "MYSQL_8_0_33" - The database major version is MySQL 8.0 and the minor
+	// version is 33.
+	//   "MYSQL_8_0_34" - The database major version is MySQL 8.0 and the minor
+	// version is 34.
+	//   "MYSQL_8_0_35" - The database major version is MySQL 8.0 and the minor
+	// version is 35.
+	//   "MYSQL_8_0_36" - The database major version is MySQL 8.0 and the minor
+	// version is 36.
+	//   "MYSQL_8_0_37" - The database major version is MySQL 8.0 and the minor
+	// version is 37.
+	//   "MYSQL_8_0_39" - The database major version is MySQL 8.0 and the minor
+	// version is 39.
+	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
+	// version is 40.
+	//   "MYSQL_8_0_41" - The database major version is MySQL 8.0 and the minor
+	// version is 41.
+	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
+	// version is 42.
+	//   "MYSQL_8_0_43" - The database major version is MySQL 8.0 and the minor
+	// version is 43.
+	//   "MYSQL_8_0_44" - The database major version is MySQL 8.0 and the minor
+	// version is 44.
+	//   "MYSQL_8_0_45" - The database major version is MySQL 8.0 and the minor
+	// version is 45.
+	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
+	// version is 46.
+	//   "MYSQL_8_4" - The database version is MySQL 8.4.
+	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
+	// Standard.
+	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server 2017
+	// Enterprise.
+	//   "SQLSERVER_2017_EXPRESS" - The database version is SQL Server 2017
+	// Express.
+	//   "SQLSERVER_2017_WEB" - The database version is SQL Server 2017 Web.
+	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
+	//   "POSTGRES_10" - The database version is PostgreSQL 10.
+	//   "POSTGRES_11" - The database version is PostgreSQL 11.
+	//   "POSTGRES_12" - The database version is PostgreSQL 12.
+	//   "POSTGRES_13" - The database version is PostgreSQL 13.
+	//   "POSTGRES_14" - The database version is PostgreSQL 14.
+	//   "POSTGRES_15" - The database version is PostgreSQL 15.
+	//   "POSTGRES_16" - The database version is PostgreSQL 16.
+	//   "POSTGRES_17" - The database version is PostgreSQL 17.
+	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
+	// Standard.
+	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
+	// Enterprise.
+	//   "SQLSERVER_2019_EXPRESS" - The database version is SQL Server 2019
+	// Express.
+	//   "SQLSERVER_2019_WEB" - The database version is SQL Server 2019 Web.
+	//   "SQLSERVER_2022_STANDARD" - The database version is SQL Server 2022
+	// Standard.
+	//   "SQLSERVER_2022_ENTERPRISE" - The database version is SQL Server 2022
+	// Enterprise.
+	//   "SQLSERVER_2022_EXPRESS" - The database version is SQL Server 2022
+	// Express.
+	//   "SQLSERVER_2022_WEB" - The database version is SQL Server 2022 Web.
+	TargetDatabaseVersion string `json:"targetDatabaseVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PreCheckMajorVersionUpgradeContext) MarshalJSON() ([]byte, error) {
+	type NoMethod PreCheckMajorVersionUpgradeContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PreCheckResponse: Structured PreCheckResponse containing message, type, and
+// required actions.
+type PreCheckResponse struct {
+	// ActionsRequired: The actions that the user needs to take. Use repeated for
+	// multiple actions.
+	ActionsRequired []string `json:"actionsRequired,omitempty"`
+	// Message: The message to be displayed to the user.
+	Message string `json:"message,omitempty"`
+	// MessageType: The type of message whether it is an info, warning, or error.
+	//
+	// Possible values:
+	//   "MESSAGE_TYPE_UNSPECIFIED" - Default unspecified value to prevent
+	// unintended behavior changes.
+	//   "INFO" - General informational messages that don't require action.
+	//   "WARNING" - Warnings that might impact the upgrade but don't block it.
+	//   "ERROR" - Errors that a user must resolve before proceeding with the
+	// upgrade.
+	MessageType string `json:"messageType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActionsRequired") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActionsRequired") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PreCheckResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod PreCheckResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PscAutoConnectionConfig: Settings for an automatically-setup Private Service
 // Connect consumer endpoint that is used to connect to a Cloud SQL instance.
 type PscAutoConnectionConfig struct {
@@ -4500,6 +4701,41 @@ type QueryResult struct {
 
 func (s QueryResult) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReadPoolAutoScaleConfig: The read pool auto-scale configuration.
+type ReadPoolAutoScaleConfig struct {
+	// DisableScaleIn: Indicates whether read pool auto scaling supports scale in
+	// operations (removing nodes).
+	DisableScaleIn bool `json:"disableScaleIn,omitempty"`
+	// Enabled: Indicates whether read pool auto scaling is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// MaxNodeCount: Maximum number of read pool nodes to be maintained.
+	MaxNodeCount int64 `json:"maxNodeCount,omitempty"`
+	// MinNodeCount: Minimum number of read pool nodes to be maintained.
+	MinNodeCount int64 `json:"minNodeCount,omitempty"`
+	// ScaleInCooldownSeconds: The cooldown period for scale-in operations.
+	ScaleInCooldownSeconds int64 `json:"scaleInCooldownSeconds,omitempty"`
+	// ScaleOutCooldownSeconds: The cooldown period for scale-out operations.
+	ScaleOutCooldownSeconds int64 `json:"scaleOutCooldownSeconds,omitempty"`
+	// TargetMetrics: Optional. Target metrics for read pool auto scaling.
+	TargetMetrics []*TargetMetric `json:"targetMetrics,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisableScaleIn") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisableScaleIn") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReadPoolAutoScaleConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ReadPoolAutoScaleConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4893,6 +5129,9 @@ type Settings struct {
 	//   "PACKAGE" - The instance is billed at a monthly flat rate.
 	//   "PER_USE" - The instance is billed per usage.
 	PricingPlan string `json:"pricingPlan,omitempty"`
+	// ReadPoolAutoScaleConfig: Optional. The read pool auto-scale configuration
+	// for the instance.
+	ReadPoolAutoScaleConfig *ReadPoolAutoScaleConfig `json:"readPoolAutoScaleConfig,omitempty"`
 	// ReplicationLagMaxSeconds: Optional. Configuration value for recreation of
 	// replica after certain replication lag
 	ReplicationLagMaxSeconds int64 `json:"replicationLagMaxSeconds,omitempty"`
@@ -5134,6 +5373,9 @@ type SqlExternalSyncSettingError struct {
 	//   "WILL_DELETE_EXISTING" - The migration will delete existing data in the
 	// replica; replica_overwrite_enabled was set in the request acknowledging
 	// this. This is a warning rather than an error. MySQL only.
+	//   "PG_DDL_REPLICATION_INSUFFICIENT_PRIVILEGE" - The replication user is
+	// missing specific privileges to setup DDL replication. (e.g. CREATE EVENT
+	// TRIGGER, CREATE SCHEMA) for PostgreSQL.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Detail") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5181,6 +5423,12 @@ func (s SqlInstancesAcquireSsrsLeaseResponse) MarshalJSON() ([]byte, error) {
 
 // SqlInstancesExecuteSqlResponse: Execute SQL statements response.
 type SqlInstancesExecuteSqlResponse struct {
+	// Messages: A list of notices and warnings generated during query execution.
+	// For PostgreSQL, this includes all notices and warnings. For MySQL, this
+	// includes warnings generated by the last executed statement. To retrieve all
+	// warnings for a multi-statement query, `SHOW WARNINGS` must be executed after
+	// each statement.
+	Messages []*Message `json:"messages,omitempty"`
 	// Metadata: The additional metadata information regarding the execution of the
 	// SQL statements.
 	Metadata *Metadata `json:"metadata,omitempty"`
@@ -5189,13 +5437,13 @@ type SqlInstancesExecuteSqlResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// ForceSendFields is a list of field names (e.g. "Messages") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// NullFields is a list of field names (e.g. "Messages") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5863,6 +6111,44 @@ func (s SyncFlags) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TargetMetric: Target metric for read pool auto scaling.
+type TargetMetric struct {
+	// Metric: The metric name to be used for auto scaling.
+	Metric string `json:"metric,omitempty"`
+	// TargetValue: The target value for the metric.
+	TargetValue float64 `json:"targetValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Metric") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Metric") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TargetMetric) MarshalJSON() ([]byte, error) {
+	type NoMethod TargetMetric
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *TargetMetric) UnmarshalJSON(data []byte) error {
+	type NoMethod TargetMetric
+	var s1 struct {
+		TargetValue gensupport.JSONFloat64 `json:"targetValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TargetValue = float64(s1.TargetValue)
+	return nil
+}
+
 // Tier: A Google Cloud SQL service tier resource.
 type Tier struct {
 	// DiskQuota: The maximum disk size of this tier in bytes.
@@ -5966,6 +6252,19 @@ type User struct {
 	// after insertion. For a MySQL instance, it's required; for a PostgreSQL or
 	// SQL Server instance, it's optional.
 	Host string `json:"host,omitempty"`
+	// IamStatus: Indicates if a group is active or inactive for IAM database
+	// authentication.
+	//
+	// Possible values:
+	//   "IAM_STATUS_UNSPECIFIED" - The default value for users that are not of
+	// type CLOUD_IAM_GROUP. Only CLOUD_IAM_GROUP users will be inactive or active.
+	// Users with an IamStatus of IAM_STATUS_UNSPECIFIED will not display whether
+	// they are active or inactive as that is not applicable to them.
+	//   "INACTIVE" - INACTIVE indicates a group is not available for IAM database
+	// authentication.
+	//   "ACTIVE" - ACTIVE indicates a group is available for IAM database
+	// authentication.
+	IamStatus string `json:"iamStatus,omitempty"`
 	// Instance: The name of the Cloud SQL instance. This does not include the
 	// project ID. Can be omitted for `update` because it is already specified on
 	// the URL.
@@ -10363,6 +10662,113 @@ func (c *InstancesPointInTimeRestoreCall) Do(opts ...googleapi.CallOption) (*Ope
 	return ret, nil
 }
 
+type InstancesPreCheckMajorVersionUpgradeCall struct {
+	s                                           *Service
+	project                                     string
+	instance                                    string
+	instancesprecheckmajorversionupgraderequest *InstancesPreCheckMajorVersionUpgradeRequest
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// PreCheckMajorVersionUpgrade: Execute MVU Pre-checks
+//
+// - instance: Cloud SQL instance ID. This does not include the project ID.
+// - project: Project ID of the project that contains the instance.
+func (r *InstancesService) PreCheckMajorVersionUpgrade(project string, instance string, instancesprecheckmajorversionupgraderequest *InstancesPreCheckMajorVersionUpgradeRequest) *InstancesPreCheckMajorVersionUpgradeCall {
+	c := &InstancesPreCheckMajorVersionUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.instance = instance
+	c.instancesprecheckmajorversionupgraderequest = instancesprecheckmajorversionupgraderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InstancesPreCheckMajorVersionUpgradeCall) Fields(s ...googleapi.Field) *InstancesPreCheckMajorVersionUpgradeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InstancesPreCheckMajorVersionUpgradeCall) Context(ctx context.Context) *InstancesPreCheckMajorVersionUpgradeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InstancesPreCheckMajorVersionUpgradeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstancesPreCheckMajorVersionUpgradeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.instancesprecheckmajorversionupgraderequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{project}/instances/{instance}/preCheckMajorVersionUpgrade")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"instance": c.instance,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.preCheckMajorVersionUpgrade", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sql.instances.preCheckMajorVersionUpgrade" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *InstancesPreCheckMajorVersionUpgradeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "sql.instances.preCheckMajorVersionUpgrade", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type InstancesPromoteReplicaCall struct {
 	s          *Service
 	project    string
@@ -10708,6 +11114,21 @@ func (r *InstancesService) ResetSslConfig(project string, instance string) *Inst
 	c := &InstancesResetSslConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
+	return c
+}
+
+// Mode sets the optional parameter "mode": Reset SSL mode to use.
+//
+// Possible values:
+//
+//	"RESET_SSL_MODE_UNSPECIFIED" - Reset SSL mode is not specified.
+//	"ALL" - Refresh all TLS configs. This is the default behaviour.
+//	"SYNC_FROM_PRIMARY" - Refreshes the replication-related TLS configuration
+//
+// settings provided by the primary instance. Not applicable to on-premises
+// replication instances.
+func (c *InstancesResetSslConfigCall) Mode(mode string) *InstancesResetSslConfigCall {
+	c.urlParams_.Set("mode", mode)
 	return c
 }
 

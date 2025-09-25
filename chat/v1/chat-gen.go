@@ -2834,8 +2834,16 @@ func (s GoogleAppsCardV1DateTimePicker) MarshalJSON() ([]byte, error) {
 type GoogleAppsCardV1DecoratedText struct {
 	// BottomLabel: The text that appears below `text`. Always wraps.
 	BottomLabel string `json:"bottomLabel,omitempty"`
+	// BottomLabelText: `TextParagraph` equivalent of `bottom_label`. Always wraps.
+	// Allows for more complex formatting than `bottom_label`. Google Chat apps
+	// (https://developers.google.com/workspace/chat):
+	BottomLabelText *GoogleAppsCardV1TextParagraph `json:"bottomLabelText,omitempty"`
 	// Button: A button that a user can click to trigger an action.
 	Button *GoogleAppsCardV1Button `json:"button,omitempty"`
+	// ContentText: `TextParagraph` equivalent of `text`. Allows for more complex
+	// formatting than `text`. Google Chat apps
+	// (https://developers.google.com/workspace/chat):
+	ContentText *GoogleAppsCardV1TextParagraph `json:"contentText,omitempty"`
 	// EndIcon: An icon displayed after the text. Supports built-in
 	// (https://developers.google.com/workspace/chat/format-messages#builtinicons)
 	// and custom
@@ -2849,6 +2857,16 @@ type GoogleAppsCardV1DecoratedText struct {
 	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
 	// StartIcon: The icon displayed in front of the text.
 	StartIcon *GoogleAppsCardV1Icon `json:"startIcon,omitempty"`
+	// StartIconVerticalAlignment: Optional. Vertical alignment of the start icon.
+	// If not set, the icon will be vertically centered. Google Chat apps
+	// (https://developers.google.com/workspace/chat):
+	//
+	// Possible values:
+	//   "VERTICAL_ALIGNMENT_UNSPECIFIED" - Unspecified type. Do not use.
+	//   "TOP" - Alignment to the top position.
+	//   "MIDDLE" - Alignment to the middle position.
+	//   "BOTTOM" - Alignment to the bottom position.
+	StartIconVerticalAlignment string `json:"startIconVerticalAlignment,omitempty"`
 	// SwitchControl: A switch widget that a user can click to change its state and
 	// trigger an action.
 	SwitchControl *GoogleAppsCardV1SwitchControl `json:"switchControl,omitempty"`
@@ -2860,6 +2878,10 @@ type GoogleAppsCardV1DecoratedText struct {
 	Text string `json:"text,omitempty"`
 	// TopLabel: The text that appears above `text`. Always truncates.
 	TopLabel string `json:"topLabel,omitempty"`
+	// TopLabelText: `TextParagraph` equivalent of `top_label`. Always truncates.
+	// Allows for more complex formatting than `top_label`. Google Chat apps
+	// (https://developers.google.com/workspace/chat):
+	TopLabelText *GoogleAppsCardV1TextParagraph `json:"topLabelText,omitempty"`
 	// WrapText: The wrap text setting. If `true`, the text wraps and displays on
 	// multiple lines. Otherwise, the text is truncated. Only applies to `text`,
 	// not `topLabel` and `bottomLabel`.
@@ -3921,6 +3943,14 @@ type GoogleAppsCardV1TextParagraph struct {
 	MaxLines int64 `json:"maxLines,omitempty"`
 	// Text: The text that's shown in the widget.
 	Text string `json:"text,omitempty"`
+	// TextSyntax: The syntax of the text. If not set, the text is rendered as
+	// HTML. Google Chat apps (https://developers.google.com/workspace/chat):
+	//
+	// Possible values:
+	//   "TEXT_SYNTAX_UNSPECIFIED" - The text is rendered as HTML if unspecified.
+	//   "HTML" - The text is rendered as HTML. This is the default value.
+	//   "MARKDOWN" - The text is rendered as Markdown.
+	TextSyntax string `json:"textSyntax,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MaxLines") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

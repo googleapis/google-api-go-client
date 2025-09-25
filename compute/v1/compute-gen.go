@@ -25408,6 +25408,11 @@ type InterconnectLocation struct {
 	RegionInfos []*InterconnectLocationRegionInfo `json:"regionInfos,omitempty"`
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
+	// SingleRegionProductionCriticalPeerLocations: [Output Only] URLs of the other
+	// locations that can pair up with this location to support Single-Region
+	// 99.99% SLA. E.g. iad-zone1-1 and iad-zone2-5467 are Single-Region 99.99%
+	// peer locations of each other.
+	SingleRegionProductionCriticalPeerLocations []string `json:"singleRegionProductionCriticalPeerLocations,omitempty"`
 	// Status: [Output Only] The status of this InterconnectLocation, which can
 	// take one of the following values: - CLOSED: The InterconnectLocation is
 	// closed and is unavailable for provisioning new Interconnects. - AVAILABLE:
@@ -25908,6 +25913,10 @@ type InterconnectRemoteLocation struct {
 	// supported in a link aggregation group (LAG). When linkType is 10 Gbps,
 	// requestedLinkCount cannot exceed max_lag_size_10_gbps.
 	MaxLagSize10Gbps int64 `json:"maxLagSize10Gbps,omitempty"`
+	// MaxLagSize400Gbps: [Output Only] The maximum number of 400 Gbps ports
+	// supported in a link aggregation group (LAG). When linkType is 400 Gbps,
+	// requestedLinkCount cannot exceed max_lag_size_400_gbps.
+	MaxLagSize400Gbps int64 `json:"maxLagSize400Gbps,omitempty"`
 	// Name: [Output Only] Name of the resource.
 	Name string `json:"name,omitempty"`
 	// PeeringdbFacilityId: [Output Only] The peeringdb identifier for this
@@ -39644,6 +39653,9 @@ type RequestMirrorPolicy struct {
 	// matched in the URL map. Serverless NEG backends are not currently supported
 	// as a mirrored backend service.
 	BackendService string `json:"backendService,omitempty"`
+	// MirrorPercent: The percentage of requests to be mirrored to
+	// `backend_service`.
+	MirrorPercent float64 `json:"mirrorPercent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackendService") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -39660,6 +39672,20 @@ type RequestMirrorPolicy struct {
 func (s RequestMirrorPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod RequestMirrorPolicy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *RequestMirrorPolicy) UnmarshalJSON(data []byte) error {
+	type NoMethod RequestMirrorPolicy
+	var s1 struct {
+		MirrorPercent gensupport.JSONFloat64 `json:"mirrorPercent"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MirrorPercent = float64(s1.MirrorPercent)
+	return nil
 }
 
 // Reservation: Represents a reservation resource. A reservation ensures that
@@ -51307,6 +51333,10 @@ type Subnetwork struct {
 	// internal IPv6 network ranges reserved from the subnetwork's internal IPv6
 	// range for system use.
 	SystemReservedInternalIpv6Ranges []string `json:"systemReservedInternalIpv6Ranges,omitempty"`
+	// UtilizationDetails: Output only. [Output Only] The current IP utilization of
+	// all subnetwork ranges. Contains the total number of allocated and free IPs
+	// in each range.
+	UtilizationDetails *SubnetworkUtilizationDetails `json:"utilizationDetails,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -51779,6 +51809,85 @@ type SubnetworkSecondaryRange struct {
 
 func (s SubnetworkSecondaryRange) MarshalJSON() ([]byte, error) {
 	type NoMethod SubnetworkSecondaryRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SubnetworkUtilizationDetails: The current IP utilization of all subnetwork
+// ranges. Contains the total number of allocated and free IPs in each range.
+type SubnetworkUtilizationDetails struct {
+	// ExternalIpv6InstanceUtilization: Utilizations of external IPV6 IP range.
+	ExternalIpv6InstanceUtilization *SubnetworkUtilizationDetailsIPV6Utilization `json:"externalIpv6InstanceUtilization,omitempty"`
+	// ExternalIpv6LbUtilization: Utilizations of external IPV6 IP range for NetLB.
+	ExternalIpv6LbUtilization *SubnetworkUtilizationDetailsIPV6Utilization `json:"externalIpv6LbUtilization,omitempty"`
+	// InternalIpv6Utilization: Utilizations of internal IPV6 IP range.
+	InternalIpv6Utilization *SubnetworkUtilizationDetailsIPV6Utilization `json:"internalIpv6Utilization,omitempty"`
+	// Ipv4Utilizations: Utilizations of all IPV4 IP ranges. For primary ranges,
+	// the range name will be empty.
+	Ipv4Utilizations []*SubnetworkUtilizationDetailsIPV4Utilization `json:"ipv4Utilizations,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ExternalIpv6InstanceUtilization") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExternalIpv6InstanceUtilization")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SubnetworkUtilizationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SubnetworkUtilizationDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SubnetworkUtilizationDetailsIPV4Utilization: The IPV4 utilization of a
+// single IP range.
+type SubnetworkUtilizationDetailsIPV4Utilization struct {
+	// RangeName: Will be set for secondary range. Empty for primary IPv4 range.
+	RangeName        string `json:"rangeName,omitempty"`
+	TotalAllocatedIp int64  `json:"totalAllocatedIp,omitempty,string"`
+	TotalFreeIp      int64  `json:"totalFreeIp,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "RangeName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RangeName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SubnetworkUtilizationDetailsIPV4Utilization) MarshalJSON() ([]byte, error) {
+	type NoMethod SubnetworkUtilizationDetailsIPV4Utilization
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SubnetworkUtilizationDetailsIPV6Utilization: The IPV6 utilization of a
+// single IP range.
+type SubnetworkUtilizationDetailsIPV6Utilization struct {
+	TotalAllocatedIp *Uint128 `json:"totalAllocatedIp,omitempty"`
+	TotalFreeIp      *Uint128 `json:"totalFreeIp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TotalAllocatedIp") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TotalAllocatedIp") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SubnetworkUtilizationDetailsIPV6Utilization) MarshalJSON() ([]byte, error) {
+	type NoMethod SubnetworkUtilizationDetailsIPV6Utilization
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

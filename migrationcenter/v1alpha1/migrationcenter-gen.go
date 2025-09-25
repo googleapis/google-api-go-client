@@ -1426,8 +1426,16 @@ type BiosDetails struct {
 	BiosReleaseDate string `json:"biosReleaseDate,omitempty"`
 	// BiosVersion: BIOS version.
 	BiosVersion string `json:"biosVersion,omitempty"`
+	// Id: BIOS ID.
+	Id string `json:"id,omitempty"`
+	// Manufacturer: BIOS manufacturer.
+	Manufacturer string `json:"manufacturer,omitempty"`
+	// ReleaseTime: BIOS release date.
+	ReleaseTime string `json:"releaseTime,omitempty"`
 	// SmbiosUuid: SMBIOS UUID.
 	SmbiosUuid string `json:"smbiosUuid,omitempty"`
+	// Version: BIOS version.
+	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BiosManufacturer") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2867,10 +2875,14 @@ func (s DiscoveryClientDiscoveryClientRecommendedVersion) MarshalJSON() ([]byte,
 
 // DiskEntry: Single disk entry.
 type DiskEntry struct {
+	// CapacityBytes: Disk capacity.
+	CapacityBytes int64 `json:"capacityBytes,omitempty,string"`
 	// DiskLabel: Disk label.
 	DiskLabel string `json:"diskLabel,omitempty"`
 	// DiskLabelType: Disk label type (e.g. BIOS/GPT)
 	DiskLabelType string `json:"diskLabelType,omitempty"`
+	// FreeSpaceBytes: Disk free space.
+	FreeSpaceBytes int64 `json:"freeSpaceBytes,omitempty,string"`
 	// HwAddress: Disk hardware address (e.g. 0:1 for SCSI).
 	HwAddress string `json:"hwAddress,omitempty"`
 	// InterfaceType: Disks interface type (e.g. SATA/SCSI)
@@ -2883,13 +2895,13 @@ type DiskEntry struct {
 	TotalCapacityBytes int64 `json:"totalCapacityBytes,omitempty,string"`
 	// TotalFreeBytes: Disk free space.
 	TotalFreeBytes int64 `json:"totalFreeBytes,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "DiskLabel") to
+	// ForceSendFields is a list of field names (e.g. "CapacityBytes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DiskLabel") to include in API
+	// NullFields is a list of field names (e.g. "CapacityBytes") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3448,6 +3460,14 @@ type GuestConfigDetails struct {
 	NfsExports *NfsExportList `json:"nfsExports,omitempty"`
 	// Selinux: SELinux details.
 	Selinux *Selinux `json:"selinux,omitempty"`
+	// SelinuxMode: Security-Enhanced Linux (SELinux) mode.
+	//
+	// Possible values:
+	//   "SE_LINUX_MODE_UNSPECIFIED" - SELinux mode unknown or unspecified.
+	//   "SE_LINUX_MODE_DISABLED" - SELinux is disabled.
+	//   "SE_LINUX_MODE_PERMISSIVE" - SELinux permissive mode.
+	//   "SE_LINUX_MODE_ENFORCING" - SELinux enforcing mode.
+	SelinuxMode string `json:"selinuxMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Fstab") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3468,6 +3488,10 @@ func (s GuestConfigDetails) MarshalJSON() ([]byte, error) {
 
 // GuestInstalledApplication: Guest installed application information.
 type GuestInstalledApplication struct {
+	// ApplicationName: Installed application name.
+	ApplicationName string `json:"applicationName,omitempty"`
+	// InstallTime: The time when the application was installed.
+	InstallTime string `json:"installTime,omitempty"`
 	// Licenses: License strings associated with the installed application.
 	Licenses []string `json:"licenses,omitempty"`
 	// Name: Installed application name.
@@ -3480,15 +3504,15 @@ type GuestInstalledApplication struct {
 	Vendor string `json:"vendor,omitempty"`
 	// Version: Installed application version.
 	Version string `json:"version,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Licenses") to
+	// ForceSendFields is a list of field names (e.g. "ApplicationName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Licenses") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ApplicationName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3524,8 +3548,20 @@ func (s GuestInstalledApplicationList) MarshalJSON() ([]byte, error) {
 type GuestOsDetails struct {
 	// Config: OS and app configuration.
 	Config *GuestConfigDetails `json:"config,omitempty"`
+	// Family: What family the OS belong to, if known.
+	//
+	// Possible values:
+	//   "OS_FAMILY_UNKNOWN"
+	//   "OS_FAMILY_WINDOWS" - Microsoft Windows Server and Desktop.
+	//   "OS_FAMILY_LINUX" - Various Linux flavors.
+	//   "OS_FAMILY_UNIX" - Non-Linux Unix flavors.
+	Family string `json:"family,omitempty"`
+	// OsName: The name of the operating system.
+	OsName string `json:"osName,omitempty"`
 	// Runtime: Runtime information.
 	Runtime *GuestRuntimeDetails `json:"runtime,omitempty"`
+	// Version: The version of the operating system.
+	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3550,6 +3586,8 @@ type GuestRuntimeDetails struct {
 	Domain string `json:"domain,omitempty"`
 	// InstalledApps: Installed applications information.
 	InstalledApps *GuestInstalledApplicationList `json:"installedApps,omitempty"`
+	// LastBootTime: Last time the OS was booted.
+	LastBootTime string `json:"lastBootTime,omitempty"`
 	// LastUptime: Date since last booted (last uptime date).
 	LastUptime *Date `json:"lastUptime,omitempty"`
 	// MachineName: Machine name.
@@ -5075,17 +5113,19 @@ func (s NetworkAdapterDetails) MarshalJSON() ([]byte, error) {
 
 // NetworkAdapterList: List of network adapters.
 type NetworkAdapterList struct {
+	// Entries: Network adapter entries.
+	Entries []*NetworkAdapterDetails `json:"entries,omitempty"`
 	// NetworkAdapters: Network adapter descriptions.
 	NetworkAdapters []*NetworkAdapterDetails `json:"networkAdapters,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "NetworkAdapters") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Entries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "NetworkAdapters") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Entries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5134,6 +5174,8 @@ func (s NetworkAddress) MarshalJSON() ([]byte, error) {
 type NetworkAddressList struct {
 	// Addresses: Network address entries.
 	Addresses []*NetworkAddress `json:"addresses,omitempty"`
+	// Entries: Network address entries.
+	Entries []*NetworkAddress `json:"entries,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Addresses") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6449,7 +6491,8 @@ func (s ReportSummaryHistogramChartDataBucket) MarshalJSON() ([]byte, error) {
 type ReportSummaryMachineFinding struct {
 	// AllocatedAssetCount: Count of assets which were allocated.
 	AllocatedAssetCount int64 `json:"allocatedAssetCount,omitempty,string"`
-	// AllocatedDiskTypes: Set of disk types allocated to assets.
+	// AllocatedDiskTypes: @deprecated. Use storage_allocations instead. Set of
+	// disk types allocated to assets.
 	//
 	// Possible values:
 	//   "PERSISTENT_DISK_TYPE_UNSPECIFIED" - Unspecified. Fallback to default
@@ -6807,15 +6850,17 @@ func (s RunningProcess) MarshalJSON() ([]byte, error) {
 
 // RunningProcessList: List of running guest OS processes.
 type RunningProcessList struct {
+	// Entries: Running process entries.
+	Entries []*RunningProcess `json:"entries,omitempty"`
 	// Processes: Running process entries.
 	Processes []*RunningProcess `json:"processes,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Processes") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Entries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Processes") to include in API
+	// NullFields is a list of field names (e.g. "Entries") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -6837,6 +6882,8 @@ type RunningService struct {
 	Name string `json:"name,omitempty"`
 	// Pid: Service pid.
 	Pid int64 `json:"pid,omitempty,string"`
+	// ServiceName: Service name.
+	ServiceName string `json:"serviceName,omitempty"`
 	// StartMode: Service start mode (raw, OS-agnostic).
 	StartMode string `json:"startMode,omitempty"`
 	// State: Service state (raw, OS-agnostic).
@@ -6863,15 +6910,17 @@ func (s RunningService) MarshalJSON() ([]byte, error) {
 
 // RunningServiceList: List of running guest OS services.
 type RunningServiceList struct {
+	// Entries: Running service entries.
+	Entries []*RunningService `json:"entries,omitempty"`
 	// Services: Running service entries.
 	Services []*RunningService `json:"services,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Services") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Entries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Services") to include in API
+	// NullFields is a list of field names (e.g. "Entries") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -6891,6 +6940,13 @@ type RuntimeNetworkInfo struct {
 	Netstat string `json:"netstat,omitempty"`
 	// NetstatTime: Netstat time collected.
 	NetstatTime *DateTime `json:"netstatTime,omitempty"`
+	// RawScanResult: Raw network scan result. This field is intended for human
+	// inspection. The format of this field may be netstat output or any another
+	// raw output. The exact format may change without notice and should not be
+	// relied upon.
+	RawScanResult string `json:"rawScanResult,omitempty"`
+	// ScanTime: Time of the last network scan.
+	ScanTime string `json:"scanTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Connections") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8064,8 +8120,14 @@ type VmwarePlatformDetails struct {
 	// Osid: VMware os enum -
 	// https://vdc-repo.vmware.com/vmwb-repository/dcr-public/da47f910-60ac-438b-8b9b-6122f4d14524/16b7274a-bf8b-4b4c-a05e-746f2aa93c8c/doc/vim.vm.GuestOsDescriptor.GuestOsIdentifier.html.
 	Osid string `json:"osid,omitempty"`
+	// VcenterFolder: Folder name in vCenter where asset resides.
+	VcenterFolder string `json:"vcenterFolder,omitempty"`
+	// VcenterUri: vCenter URI used in collection.
+	VcenterUri string `json:"vcenterUri,omitempty"`
 	// VcenterVersion: vCenter version.
 	VcenterVersion string `json:"vcenterVersion,omitempty"`
+	// VcenterVmId: vCenter VM ID.
+	VcenterVmId string `json:"vcenterVmId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EsxHyperthreading") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

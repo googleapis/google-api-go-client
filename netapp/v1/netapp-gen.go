@@ -684,6 +684,88 @@ func (s BackupVault) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CacheConfig: Configuration of the cache volume.
+type CacheConfig struct {
+	// CifsChangeNotifyEnabled: Optional. Flag indicating whether a CIFS change
+	// notification is enabled for the FlexCache volume.
+	CifsChangeNotifyEnabled bool `json:"cifsChangeNotifyEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CifsChangeNotifyEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CifsChangeNotifyEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CacheConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CacheConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CacheParameters: Cache Parameters for the volume.
+type CacheParameters struct {
+	// CacheConfig: Optional. Configuration of the cache volume.
+	CacheConfig *CacheConfig `json:"cacheConfig,omitempty"`
+	// CacheState: Output only. State of the cache volume indicating the peering
+	// status.
+	//
+	// Possible values:
+	//   "CACHE_STATE_UNSPECIFIED" - Default unspecified state.
+	//   "PENDING_CLUSTER_PEERING" - State indicating waiting for cluster peering
+	// to be established.
+	//   "PENDING_SVM_PEERING" - State indicating waiting for SVM peering to be
+	// established.
+	//   "PEERED" - State indicating successful establishment of peering with
+	// origin volumes's ONTAP cluster.
+	//   "ERROR" - Terminal state wherein peering with origin volume's ONTAP
+	// cluster has failed.
+	CacheState string `json:"cacheState,omitempty"`
+	// Command: Output only. Copy-paste-able commands to be used on user's ONTAP to
+	// accept peering requests.
+	Command string `json:"command,omitempty"`
+	// EnableGlobalFileLock: Optional. Field indicating whether cache volume as
+	// global file lock enabled.
+	EnableGlobalFileLock bool `json:"enableGlobalFileLock,omitempty"`
+	// Passphrase: Output only. Temporary passphrase generated to accept cluster
+	// peering command.
+	Passphrase string `json:"passphrase,omitempty"`
+	// PeerClusterName: Required. Name of the origin volume's ONTAP cluster.
+	PeerClusterName string `json:"peerClusterName,omitempty"`
+	// PeerIpAddresses: Required. List of IC LIF addresses of the origin volume's
+	// ONTAP cluster.
+	PeerIpAddresses []string `json:"peerIpAddresses,omitempty"`
+	// PeerSvmName: Required. Name of the origin volume's SVM.
+	PeerSvmName string `json:"peerSvmName,omitempty"`
+	// PeerVolumeName: Required. Name of the origin volume for the cache volume.
+	PeerVolumeName string `json:"peerVolumeName,omitempty"`
+	// PeeringCommandExpiryTime: Optional. Expiration time for the peering command
+	// to be executed on user's ONTAP.
+	PeeringCommandExpiryTime string `json:"peeringCommandExpiryTime,omitempty"`
+	// StateDetails: Output only. Detailed description of the current cache state.
+	StateDetails string `json:"stateDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CacheConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CacheConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CacheParameters) MarshalJSON() ([]byte, error) {
+	type NoMethod CacheParameters
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
@@ -1850,6 +1932,37 @@ func (s Replication) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RestoreBackupFilesRequest: RestoreBackupFilesRequest restores files from a
+// backup to a volume.
+type RestoreBackupFilesRequest struct {
+	// Backup: Required. The backup resource name, in the format
+	// `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}/ba
+	// ckups/{backup_id}`
+	Backup string `json:"backup,omitempty"`
+	// FileList: Required. List of files to be restored in the form of their
+	// absolute path as in source volume.
+	FileList []string `json:"fileList,omitempty"`
+	// RestoreDestinationPath: Optional. Absolute directory path in the destination
+	// volume.
+	RestoreDestinationPath string `json:"restoreDestinationPath,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RestoreBackupFilesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreBackupFilesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RestoreParameters: The RestoreParameters if volume is created from a
 // snapshot or backup.
 type RestoreParameters struct {
@@ -2484,6 +2597,8 @@ type Volume struct {
 	ActiveDirectory string `json:"activeDirectory,omitempty"`
 	// BackupConfig: BackupConfig of the volume.
 	BackupConfig *BackupConfig `json:"backupConfig,omitempty"`
+	// CacheParameters: Optional. Cache parameters for the volume.
+	CacheParameters *CacheParameters `json:"cacheParameters,omitempty"`
 	// CapacityGib: Required. Capacity in GIB of the volume
 	CapacityGib int64 `json:"capacityGib,omitempty,string"`
 	// ColdTierSizeGib: Output only. Size of the volume cold tier data rounded down
@@ -8069,6 +8184,110 @@ func (c *ProjectsLocationsVolumesPatchCall) Do(opts ...googleapi.CallOption) (*O
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "netapp.projects.locations.volumes.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsVolumesRestoreCall struct {
+	s                         *Service
+	name                      string
+	restorebackupfilesrequest *RestoreBackupFilesRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Restore: Restore files from a backup to a volume.
+//
+//   - name: The volume resource name, in the format
+//     `projects/{project_id}/locations/{location}/volumes/{volume_id}`.
+func (r *ProjectsLocationsVolumesService) Restore(name string, restorebackupfilesrequest *RestoreBackupFilesRequest) *ProjectsLocationsVolumesRestoreCall {
+	c := &ProjectsLocationsVolumesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.restorebackupfilesrequest = restorebackupfilesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsVolumesRestoreCall) Fields(s ...googleapi.Field) *ProjectsLocationsVolumesRestoreCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsVolumesRestoreCall) Context(ctx context.Context) *ProjectsLocationsVolumesRestoreCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsVolumesRestoreCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsVolumesRestoreCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.restorebackupfilesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:restore")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "netapp.projects.locations.volumes.restore", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "netapp.projects.locations.volumes.restore" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsVolumesRestoreCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "netapp.projects.locations.volumes.restore", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -1325,6 +1325,10 @@ type GoogleMapsPlacesV1Place struct {
 	//   "CLOSED_TEMPORARILY" - The establishment is temporarily closed.
 	//   "CLOSED_PERMANENTLY" - The establishment is permanently closed.
 	BusinessStatus string `json:"businessStatus,omitempty"`
+	// ConsumerAlert: The consumer alert message for the place when we detect
+	// suspicious review activity on a business or a business violates our
+	// policies.
+	ConsumerAlert *GoogleMapsPlacesV1PlaceConsumerAlert `json:"consumerAlert,omitempty"`
 	// ContainingPlaces: List of places in which the current place is located.
 	ContainingPlaces []*GoogleMapsPlacesV1PlaceContainingPlace `json:"containingPlaces,omitempty"`
 	// CurbsidePickup: Specifies if the business supports curbside pickup.
@@ -1652,6 +1656,88 @@ type GoogleMapsPlacesV1PlaceAttribution struct {
 
 func (s GoogleMapsPlacesV1PlaceAttribution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlaceAttribution
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1PlaceConsumerAlert: The consumer alert message for the
+// place when we detect suspicious review activity on a business or a business
+// violates our policies.
+type GoogleMapsPlacesV1PlaceConsumerAlert struct {
+	// Details: The details of the consumer alert message.ƒ
+	Details *GoogleMapsPlacesV1PlaceConsumerAlertDetails `json:"details,omitempty"`
+	// LanguageCode: The language code of the consumer alert message. This is a BCP
+	// 47 language code.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// Overview: The overview of the consumer alert message.
+	Overview string `json:"overview,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Details") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1PlaceConsumerAlert) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1PlaceConsumerAlert
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1PlaceConsumerAlertDetails: The details of the consumer
+// alert message.
+type GoogleMapsPlacesV1PlaceConsumerAlertDetails struct {
+	// AboutLink: The link to show together with the description to provide more
+	// information.
+	AboutLink *GoogleMapsPlacesV1PlaceConsumerAlertDetailsLink `json:"aboutLink,omitempty"`
+	// Description: The description of the consumer alert message.
+	Description string `json:"description,omitempty"`
+	// Title: The title to show together with the description.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AboutLink") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AboutLink") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1PlaceConsumerAlertDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1PlaceConsumerAlertDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1PlaceConsumerAlertDetailsLink: The link to show together
+// with the description to provide more information.
+type GoogleMapsPlacesV1PlaceConsumerAlertDetailsLink struct {
+	// Title: The title to show for the link.
+	Title string `json:"title,omitempty"`
+	// Uri: The uri of the link.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Title") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Title") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1PlaceConsumerAlertDetailsLink) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1PlaceConsumerAlertDetailsLink
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2218,6 +2304,9 @@ type GoogleMapsPlacesV1Review struct {
 	RelativePublishTimeDescription string `json:"relativePublishTimeDescription,omitempty"`
 	// Text: The localized text of the review.
 	Text *GoogleTypeLocalizedText `json:"text,omitempty"`
+	// VisitDate: The date when the author visited the place. This is trucated to
+	// the year and month of the visit.
+	VisitDate *GoogleTypeDate `json:"visitDate,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthorAttribution") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

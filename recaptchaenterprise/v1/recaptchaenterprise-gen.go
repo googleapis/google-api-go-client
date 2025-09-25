@@ -417,6 +417,10 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// `CreateAssessment`, for example when a stable account identifier is not yet
 	// known in the initial request.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
+	// PhoneAuthenticationEvent: Optional. If using an external multi-factor
+	// authentication provider, provide phone authentication details for fraud
+	// detection purposes.
+	PhoneAuthenticationEvent *GoogleCloudRecaptchaenterpriseV1PhoneAuthenticationEvent `json:"phoneAuthenticationEvent,omitempty"`
 	// Reasons: Optional. Reasons for the annotation that are assigned to the
 	// event.
 	//
@@ -1625,6 +1629,33 @@ type GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest struct {
 
 func (s GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1PhoneAuthenticationEvent: Details on a phone
+// authentication event
+type GoogleCloudRecaptchaenterpriseV1PhoneAuthenticationEvent struct {
+	// EventTime: Optional. The time at which the multi-factor authentication event
+	// (challenge or verification) occurred.
+	EventTime string `json:"eventTime,omitempty"`
+	// PhoneNumber: Required. Phone number in E.164 format for which a multi-factor
+	// authentication challenge was initiated, succeeded, or failed.
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1PhoneAuthenticationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1PhoneAuthenticationEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

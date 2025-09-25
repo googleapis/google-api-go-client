@@ -2166,7 +2166,7 @@ type ListRemoteTransportProfilesResponse struct {
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// RemoteTransportProfiles: The list of RemoteTransportProfiles
+	// RemoteTransportProfiles: The list of RemoteTransportProfiles.
 	RemoteTransportProfiles []*RemoteTransportProfile `json:"remoteTransportProfiles,omitempty"`
 	// Unreachable: Unordered list. Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
@@ -2410,12 +2410,12 @@ func (s ListSpokesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListTransportsResponse: Message for response to listing Transports
+// ListTransportsResponse: Message for response to listing Transports.
 type ListTransportsResponse struct {
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Transports: The list of Transport
+	// Transports: The list of Transport.
 	Transports []*Transport `json:"transports,omitempty"`
 	// Unreachable: Unordered list. Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
@@ -3400,15 +3400,75 @@ func (s RejectSpokeUpdateRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemoteTransportProfile: Message describing RemoteTransportProfile object
+// RemoteTransportProfile: Message describing RemoteTransportProfile object.
 type RemoteTransportProfile struct {
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. [Output only] Create time stamp.
 	CreateTime string `json:"createTime,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Description: Output only. Description of the profile.
+	Description string `json:"description,omitempty"`
+	// Flow: Output only. [Output only] Type of provisioning flows supported by
+	// this profile.
+	//
+	// Possible values:
+	//   "KEY_PROVISIONING_FLOW_UNSPECIFIED" - Unspecified key provisioning flow.
+	//   "INPUT_ONLY" - The activationKey field on the Transport must be included
+	// in a create or patch request to establish connectivity.
+	//   "OUTPUT_ONLY" - The generatedActivationKey field is populated and must be
+	// read from the resource and passed into the other provider.
+	//   "INPUT_OR_OUTPUT" - Both activation key fields are allowed for
+	// establishing connectivity. If a key is input, the generated key is still
+	// present after provisioning is finished.
+	Flow string `json:"flow,omitempty"`
+	// Labels: Output only. Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Identifier. name of resource
+	// Name: Identifier. Name of the resource in the format of $provider-$site.
 	Name string `json:"name,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// OrderState: Output only. [Output only] Order state for this profile.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "CLOSED" - Not enough capacity for customers to order.
+	//   "OPEN" - Enough capacity to fulfill an order.
+	OrderState string `json:"orderState,omitempty"`
+	// Provider: Output only. Name of the provider on the other end of this
+	// profile. E.g. “Amazon Web Services” or “Microsoft Azure”.
+	Provider string `json:"provider,omitempty"`
+	// ProviderSite: Output only. If the profile is a Cloud Service Provider with
+	// compute resources, this is populated with the region where connectivity is
+	// being established. If the profile provides facility-level selection, this is
+	// an identity of the facility any connections on this profile are going
+	// through.
+	ProviderSite string `json:"providerSite,omitempty"`
+	// Region: Output only. GCP Region where this profile is available.
+	Region string `json:"region,omitempty"`
+	// Sla: Output only. [Output only] Availability class that will be configured
+	// for this particular RemoteTransportProfile.
+	//
+	// Possible values:
+	//   "SERVICE_LEVEL_AVAILABILITY_UNSPECIFIED" - Unspecified service level
+	// availability.
+	//   "HIGH" - This represents a 99.9% service level on the availability of the
+	// configured connectivity.
+	//   "MAXIMUM" - This represents a 99.99% service level on the availability of
+	// the configured connectivity.
+	Sla string `json:"sla,omitempty"`
+	// SupportedBandwidths: Output only. List of bandwidth enum values that are
+	// supported by this profile.
+	//
+	// Possible values:
+	//   "BANDWIDTH_UNSPECIFIED" - Unspecified bandwidth.
+	//   "BPS_50M" - 50 Megabits per second.
+	//   "BPS_100M" - 100 Megabits per second.
+	//   "BPS_200M" - 200 Megabits per second.
+	//   "BPS_300M" - 300 Megabits per second.
+	//   "BPS_400M" - 400 Megabits per second.
+	//   "BPS_500M" - 500 Megabits per second.
+	//   "BPS_1G" - 1 Gigabit per second.
+	//   "BPS_2G" - 2 Gigabits per second.
+	//   "BPS_5G" - 5 Gigabits per second.
+	//   "BPS_10G" - 10 Gigabits per second.
+	SupportedBandwidths []string `json:"supportedBandwidths,omitempty"`
+	// UpdateTime: Output only. [Output only] Update time stamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4333,26 +4393,103 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Transport: Message describing Transport object
+// Transport: Message describing Transport object.
 type Transport struct {
-	// CreateTime: Output only. [Output only] Create time stamp
+	// AdminEnabled: Optional. Administrative state of the underlying connectivity.
+	// If set to true (default), connectivity should be available between your
+	// environments. If set to false, the connectivity over these links is
+	// disabled. Disabling your Transport does not affect billing, and retains the
+	// underlying network bandwidth associated with the connectivity.
+	AdminEnabled bool `json:"adminEnabled,omitempty"`
+	// AdvertisedRoutes: Optional. [Preview only] List of IP Prefixes that will be
+	// advertised to the remote provider. Both IPv4 and IPv6 addresses are
+	// supported.
+	AdvertisedRoutes string `json:"advertisedRoutes,omitempty"`
+	// Bandwidth: Required. Bandwidth of the Transport. This must be one of the
+	// supported bandwidths for the remote profile.
+	//
+	// Possible values:
+	//   "BANDWIDTH_UNSPECIFIED" - Unspecified bandwidth.
+	//   "BPS_50M" - 50 Megabits per second.
+	//   "BPS_100M" - 100 Megabits per second.
+	//   "BPS_200M" - 200 Megabits per second.
+	//   "BPS_300M" - 300 Megabits per second.
+	//   "BPS_400M" - 400 Megabits per second.
+	//   "BPS_500M" - 500 Megabits per second.
+	//   "BPS_1G" - 1 Gigabit per second.
+	//   "BPS_2G" - 2 Gigabits per second.
+	//   "BPS_5G" - 5 Gigabits per second.
+	//   "BPS_10G" - 10 Gigabits per second.
+	Bandwidth string `json:"bandwidth,omitempty"`
+	// CreateTime: Output only. [Output only] Create time stamp.
 	CreateTime string `json:"createTime,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Description: Optional. Description of the Transport.
+	Description string `json:"description,omitempty"`
+	// GeneratedActivationKey: Output only. [Output only] Google-generated
+	// activation key. This is only output if the selected profile supports an
+	// OUTPUT key flow. Inputting this to the provider is only valid while the
+	// resource is in a PENDING_KEY state. Once the provider has accepted the key,
+	// the resource will move to the CONFIGURING state.
+	GeneratedActivationKey string `json:"generatedActivationKey,omitempty"`
+	// Labels: Optional. Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Identifier. name of resource
+	// MtuLimit: Output only. [Output only] The maximum transmission unit (MTU) of
+	// a packet that can be sent over this transport.
+	MtuLimit int64 `json:"mtuLimit,omitempty"`
+	// Name: Identifier. Name of the resource, see google.aip.dev/122 for resource
+	// naming.
 	Name string `json:"name,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// Network: Required. [Preview only] Resource URL of the Network that will be
+	// peered with this Transport. This field must be provided during resource
+	// creation and cannot be changed.
+	Network string `json:"network,omitempty"`
+	// ProvidedActivationKey: Optional. Key used for establishing a connection with
+	// the remote transport. This key can only be provided if the profile supports
+	// an INPUT key flow and the resource is in the PENDING_KEY state.
+	ProvidedActivationKey string `json:"providedActivationKey,omitempty"`
+	// Region: Required. GCP Region where this Transport is located.
+	Region string `json:"region,omitempty"`
+	// RemoteProfile: Required. Resource URL of the remoteTransportProfile that
+	// this Transport is connecting to. Format:
+	// projects/{project}/locations/{location}/remoteTransportProfiles/{remote_trans
+	// port_profile}
+	RemoteProfile string `json:"remoteProfile,omitempty"`
+	// StackType: Optional. IP version stack for the established connectivity.
+	//
+	// Possible values:
+	//   "STACK_TYPE_UNSPECIFIED" - Unspecified stack type.
+	//   "IPV4_ONLY" - Only IPv4 is supported. (default)
+	//   "IPV4_IPV6" - Both IPv4 and IPv6 are supported.
+	StackType string `json:"stackType,omitempty"`
+	// State: Output only. [Output only] State of the underlying connectivity.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "CREATING" - The resource exists locally and is being created / associated
+	// with the resource on the remote provider’s end of the underlying
+	// connectivity.
+	//   "PENDING_CONFIG" - The Transport exists on both sides of the connection,
+	// and is waiting for configuration to finalize and be verified as operational.
+	//   "PENDING_KEY" - The Transport was created in GCP. Depending on the
+	// profile’s key provisioning flow, this is either waiting for an activation
+	// key to be input (the key will be validated that it uses remote resources
+	// that match the Transport), or for the generated key to be input to the
+	// provider for finalizing. The configured bandwidth is not yet guaranteed.
+	//   "ACTIVE" - The Transport is configured and the underlying connectivity is
+	// considered operational.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. [Output only] Update time stamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "AdminEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// NullFields is a list of field names (e.g. "AdminEnabled") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4555,9 +4692,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -12316,14 +12453,14 @@ func (r *ProjectsLocationsRemoteTransportProfilesService) List(parent string) *P
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsRemoteTransportProfilesListCall) Filter(filter string) *ProjectsLocationsRemoteTransportProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// results.
 func (c *ProjectsLocationsRemoteTransportProfilesListCall) OrderBy(orderBy string) *ProjectsLocationsRemoteTransportProfilesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -17267,14 +17404,14 @@ func (r *ProjectsLocationsTransportsService) List(parent string) *ProjectsLocati
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsTransportsListCall) Filter(filter string) *ProjectsLocationsTransportsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// results.
 func (c *ProjectsLocationsTransportsListCall) OrderBy(orderBy string) *ProjectsLocationsTransportsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -17419,7 +17556,8 @@ type ProjectsLocationsTransportsPatchCall struct {
 
 // Patch: Updates the parameters of a single Transport.
 //
-// - name: Identifier. name of resource.
+//   - name: Identifier. Name of the resource, see google.aip.dev/122 for
+//     resource naming.
 func (r *ProjectsLocationsTransportsService) Patch(name string, transport *Transport) *ProjectsLocationsTransportsPatchCall {
 	c := &ProjectsLocationsTransportsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

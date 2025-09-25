@@ -317,6 +317,8 @@ type Backend struct {
 	// Name: Identifier. The resource name of the backend. Format:
 	// `projects/{project}/locations/{locationId}/backends/{backendId}`.
 	Name string `json:"name,omitempty"`
+	// OverrideEnv: Optional. Override environment variables for this Backend.
+	OverrideEnv []*EnvironmentVariable `json:"overrideEnv,omitempty"`
 	// Reconciling: Output only. A field that, if true, indicates that the system
 	// is working to make adjustments to the backend during a LRO.
 	Reconciling bool `json:"reconciling,omitempty"`

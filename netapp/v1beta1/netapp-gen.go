@@ -1974,7 +1974,7 @@ type RestoreBackupFilesRequest struct {
 	// FileList: Required. List of files to be restored in the form of their
 	// absolute path as in source volume.
 	FileList []string `json:"fileList,omitempty"`
-	// RestoreDestinationPath: Required. Absolute directory path in the destination
+	// RestoreDestinationPath: Optional. Absolute directory path in the destination
 	// volume.
 	RestoreDestinationPath string `json:"restoreDestinationPath,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally

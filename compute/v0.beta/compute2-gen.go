@@ -65565,6 +65565,13 @@ func (c *OrganizationSecurityPoliciesPatchCall) RequestId(requestId string) *Org
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": Indicates fields to be
+// cleared as part of this request.
+func (c *OrganizationSecurityPoliciesPatchCall) UpdateMask(updateMask string) *OrganizationSecurityPoliciesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -65689,6 +65696,13 @@ func (c *OrganizationSecurityPoliciesPatchRuleCall) Priority(priority int64) *Or
 // supported ( 00000000-0000-0000-0000-000000000000).
 func (c *OrganizationSecurityPoliciesPatchRuleCall) RequestId(requestId string) *OrganizationSecurityPoliciesPatchRuleCall {
 	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Indicates fields to be
+// cleared as part of this request.
+func (c *OrganizationSecurityPoliciesPatchRuleCall) UpdateMask(updateMask string) *OrganizationSecurityPoliciesPatchRuleCall {
+	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
@@ -68619,7 +68633,14 @@ type ProjectsMoveDiskCall struct {
 	header_         http.Header
 }
 
-// MoveDisk: Moves a persistent disk from one zone to another.
+// MoveDisk: Starting September 29, 2025, you can't use the moveDisk API on new
+// projects. To move a disk to a different region or zone, follow the steps in
+// Change the location of a disk
+// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/disks/migrate-to-hyperdisk#migrate-to-hd).
+// Projects that already use the moveDisk API can continue usage until
+// September 29, 2026. Starting November 1, 2025, API responses will include a
+// warning message in the response body about the upcoming deprecation. You can
+// skip the message to continue using the service without interruption.
 //
 // - project: Project ID for this request.
 func (r *ProjectsService) MoveDisk(project string, diskmoverequest *DiskMoveRequest) *ProjectsMoveDiskCall {

@@ -3793,6 +3793,7 @@ type GoogleCloudDataplexV1DataScanEvent struct {
 	//   "TRIGGER_UNSPECIFIED" - An unspecified trigger type.
 	//   "ON_DEMAND" - Data scan triggers on demand.
 	//   "SCHEDULE" - Data scan triggers as per schedule.
+	//   "ONE_TIME" - Data scan is run one time on creation.
 	Trigger string `json:"trigger,omitempty"`
 	// Type: The type of the data scan.
 	//
@@ -7012,12 +7013,12 @@ type GoogleCloudDataplexV1MetadataJobImportJobSpecImportJobScope struct {
 	// aspects.The location of an aspect type must either match the location of the
 	// job, or the aspect type must be global.
 	AspectTypes []string `json:"aspectTypes,omitempty"`
-	// EntryGroups: Required. The entry group that is in scope for the import job,
-	// specified as a relative resource name in the format
+	// EntryGroups: Required. The entry groups that are in scope for the import
+	// job, specified as relative resource names in the format
 	// projects/{project_number_or_id}/locations/{location_id}/entryGroups/{entry_gr
-	// oup_id}. Only entries and aspects that belong to the specified entry group
-	// are affected by the job.Must contain exactly one element. The entry group
-	// and the job must be in the same location.
+	// oup_id}. Only entries and aspects that belong to the specified entry groups
+	// are affected by the job.The entry groups and the job must be in the same
+	// location.
 	EntryGroups []string `json:"entryGroups,omitempty"`
 	// EntryLinkTypes: Optional. The entry link types that are in scope for the
 	// import job, specified as relative resource names in the format
@@ -10837,7 +10838,10 @@ type ProjectsLocationsLookupEntryCall struct {
 }
 
 // LookupEntry: Looks up an entry by name using the permission on the source
-// system.
+// system. Caution: The Vertex AI, Bigtable, Spanner, Pub/Sub, Dataform, and
+// Dataproc Metastore metadata that is stored in Dataplex Universal Catalog is
+// changing. For more information, see Changes to metadata stored in Dataplex
+// Universal Catalog (https://cloud.google.com/dataplex/docs/metadata-changes).
 //
 //   - name: The project to which the request should be attributed in the
 //     following form: projects/{project}/locations/{location}.
@@ -18323,7 +18327,11 @@ type ProjectsLocationsEntryGroupsEntriesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets an Entry.
+// Get: Gets an Entry. Caution: The Vertex AI, Bigtable, Spanner, Pub/Sub,
+// Dataform, and Dataproc Metastore metadata that is stored in Dataplex
+// Universal Catalog is changing. For more information, see Changes to metadata
+// stored in Dataplex Universal Catalog
+// (https://cloud.google.com/dataplex/docs/metadata-changes).
 //
 //   - name: The resource name of the Entry:
 //     projects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{
@@ -18473,7 +18481,11 @@ type ProjectsLocationsEntryGroupsEntriesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Entries within an EntryGroup.
+// List: Lists Entries within an EntryGroup. Caution: The Vertex AI, Bigtable,
+// Spanner, Pub/Sub, Dataform, and Dataproc Metastore metadata that is stored
+// in Dataplex Universal Catalog is changing. For more information, see Changes
+// to metadata stored in Dataplex Universal Catalog
+// (https://cloud.google.com/dataplex/docs/metadata-changes).
 //
 //   - parent: The resource name of the parent Entry Group:
 //     projects/{project}/locations/{location}/entryGroups/{entry_group}.

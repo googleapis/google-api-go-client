@@ -6654,10 +6654,10 @@ type DevicesDeviceUsersLookupCall struct {
 // properties are provided, only DeviceUsers having all of these properties are
 // considered as matches - i.e. the query behaves like an AND. Different
 // platforms require different amounts of information from the caller to ensure
-// that the DeviceUser is uniquely identified. - iOS: No properties need to be
-// passed, the caller's credentials are sufficient to identify the
-// corresponding DeviceUser. - Android: Specifying the 'android_id' field is
-// required. - Desktop: Specifying the 'raw_resource_id' field is required.
+// that the DeviceUser is uniquely identified. - iOS: Specifying the 'partner'
+// and 'ios_device_id' fields is required. - Android: Specifying the
+// 'android_id' field is required. - Desktop: Specifying the 'raw_resource_id'
+// field is required.
 //
 //   - parent: Must be set to "devices/-/deviceUsers" to search across all
 //     DeviceUser belonging to the user.
@@ -6675,6 +6675,15 @@ func (c *DevicesDeviceUsersLookupCall) AndroidId(androidId string) *DevicesDevic
 	return c
 }
 
+// IosDeviceId sets the optional parameter "iosDeviceId": The partner-specified
+// device identifier assigned to the iOS device that initiated the Lookup API
+// call. This string must match the value of the iosDeviceId key in the app
+// config dictionary provided to Google Workspace apps.
+func (c *DevicesDeviceUsersLookupCall) IosDeviceId(iosDeviceId string) *DevicesDeviceUsersLookupCall {
+	c.urlParams_.Set("iosDeviceId", iosDeviceId)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // DeviceUsers to return. If unspecified, at most 20 DeviceUsers will be
 // returned. The maximum value is 20; values above 20 will be coerced to 20.
@@ -6689,6 +6698,14 @@ func (c *DevicesDeviceUsersLookupCall) PageSize(pageSize int64) *DevicesDeviceUs
 // `LookupDeviceUsers` must match the call that provided the page token.
 func (c *DevicesDeviceUsersLookupCall) PageToken(pageToken string) *DevicesDeviceUsersLookupCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Partner sets the optional parameter "partner": The partner ID of the calling
+// iOS app. This string must match the value of the partner key within the app
+// configuration dictionary provided to Google Workspace apps.
+func (c *DevicesDeviceUsersLookupCall) Partner(partner string) *DevicesDeviceUsersLookupCall {
+	c.urlParams_.Set("partner", partner)
 	return c
 }
 

@@ -9572,6 +9572,13 @@ type TableFieldSchema struct {
 	RoundingMode string `json:"roundingMode,omitempty"`
 	// Scale: Optional. See documentation for precision.
 	Scale int64 `json:"scale,omitempty,string"`
+	// TimestampPrecision: Optional. Precision (maximum number of total digits in
+	// base 10) for seconds of TIMESTAMP type. Possible values include: * 6
+	// (Default, for TIMESTAMP type with microsecond precision) * 12 (For TIMESTAMP
+	// type with picosecond precision)
+	//
+	// Default: 6
+	TimestampPrecision *int64 `json:"timestampPrecision,omitempty,string"`
 	// Type: Required. The field data type. Possible values include: * STRING *
 	// BYTES * INTEGER (or INT64) * FLOAT (or FLOAT64) * BOOLEAN (or BOOL) *
 	// TIMESTAMP * DATE * TIME * DATETIME * GEOGRAPHY * NUMERIC * BIGNUMERIC * JSON

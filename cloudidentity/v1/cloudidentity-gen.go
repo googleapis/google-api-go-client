@@ -5720,10 +5720,10 @@ type DevicesDeviceUsersLookupCall struct {
 // properties are provided, only DeviceUsers having all of these properties are
 // considered as matches - i.e. the query behaves like an AND. Different
 // platforms require different amounts of information from the caller to ensure
-// that the DeviceUser is uniquely identified. - iOS: No properties need to be
-// passed, the caller's credentials are sufficient to identify the
-// corresponding DeviceUser. - Android: Specifying the 'android_id' field is
-// required. - Desktop: Specifying the 'raw_resource_id' field is required.
+// that the DeviceUser is uniquely identified. - iOS: Specifying the 'partner'
+// and 'ios_device_id' fields is required. - Android: Specifying the
+// 'android_id' field is required. - Desktop: Specifying the 'raw_resource_id'
+// field is required.
 //
 //   - parent: Must be set to "devices/-/deviceUsers" to search across all
 //     DeviceUser belonging to the user.
@@ -5738,6 +5738,15 @@ func (r *DevicesDeviceUsersService) Lookup(parent string) *DevicesDeviceUsersLoo
 // (https://developer.android.com/reference/android/provider/Settings.Secure.html#ANDROID_ID).
 func (c *DevicesDeviceUsersLookupCall) AndroidId(androidId string) *DevicesDeviceUsersLookupCall {
 	c.urlParams_.Set("androidId", androidId)
+	return c
+}
+
+// IosDeviceId sets the optional parameter "iosDeviceId": The partner-specified
+// device identifier assigned to the iOS device that initiated the Lookup API
+// call. This string must match the value of the iosDeviceId key in the app
+// config dictionary provided to Google Workspace apps.
+func (c *DevicesDeviceUsersLookupCall) IosDeviceId(iosDeviceId string) *DevicesDeviceUsersLookupCall {
+	c.urlParams_.Set("iosDeviceId", iosDeviceId)
 	return c
 }
 
@@ -5758,13 +5767,21 @@ func (c *DevicesDeviceUsersLookupCall) PageToken(pageToken string) *DevicesDevic
 	return c
 }
 
+// Partner sets the optional parameter "partner": The partner ID of the calling
+// iOS app. This string must match the value of the partner key within the app
+// configuration dictionary provided to Google Workspace apps.
+func (c *DevicesDeviceUsersLookupCall) Partner(partner string) *DevicesDeviceUsersLookupCall {
+	c.urlParams_.Set("partner", partner)
+	return c
+}
+
 // RawResourceId sets the optional parameter "rawResourceId": Raw Resource Id
 // used by Google Endpoint Verification. If the user is enrolled into Google
 // Endpoint Verification, this id will be saved as the 'device_resource_id'
-// field in the following platform dependent files. * macOS:
-// ~/.secureConnect/context_aware_config.json * Windows:
-// %USERPROFILE%\AppData\Local\Google\Endpoint Verification\accounts.json *
-// Linux: ~/.secureConnect/context_aware_config.json
+// field in the following platform dependent files. Mac:
+// ~/.secureConnect/context_aware_config.json Windows:
+// C:\Users\%USERPROFILE%\.secureConnect\context_aware_config.json Linux:
+// ~/.secureConnect/context_aware_config.json
 func (c *DevicesDeviceUsersLookupCall) RawResourceId(rawResourceId string) *DevicesDeviceUsersLookupCall {
 	c.urlParams_.Set("rawResourceId", rawResourceId)
 	return c

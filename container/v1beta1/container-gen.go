@@ -457,8 +457,8 @@ type AddonsConfig struct {
 	// only be enabled at cluster creation time.
 	CloudRunConfig *CloudRunConfig `json:"cloudRunConfig,omitempty"`
 	// ConfigConnectorConfig: Configuration for the ConfigConnector add-on, a
-	// Kubernetes extension to manage hosted GCP services through the Kubernetes
-	// API
+	// Kubernetes extension to manage hosted Google Cloud services through the
+	// Kubernetes API.
 	ConfigConnectorConfig *ConfigConnectorConfig `json:"configConnectorConfig,omitempty"`
 	// DnsCacheConfig: Configuration for NodeLocalDNS, a dns cache running on
 	// cluster nodes
@@ -466,7 +466,7 @@ type AddonsConfig struct {
 	// GcePersistentDiskCsiDriverConfig: Configuration for the Compute Engine
 	// Persistent Disk CSI driver.
 	GcePersistentDiskCsiDriverConfig *GcePersistentDiskCsiDriverConfig `json:"gcePersistentDiskCsiDriverConfig,omitempty"`
-	// GcpFilestoreCsiDriverConfig: Configuration for the GCP Filestore CSI driver.
+	// GcpFilestoreCsiDriverConfig: Configuration for the Filestore CSI driver.
 	GcpFilestoreCsiDriverConfig *GcpFilestoreCsiDriverConfig `json:"gcpFilestoreCsiDriverConfig,omitempty"`
 	// GcsFuseCsiDriverConfig: Configuration for the Cloud Storage Fuse CSI driver.
 	GcsFuseCsiDriverConfig *GcsFuseCsiDriverConfig `json:"gcsFuseCsiDriverConfig,omitempty"`
@@ -1206,8 +1206,7 @@ type CertificateAuthorityDomainConfig struct {
 	// supported. Wildcards are NOT supported. Examples: - my.customdomain.com -
 	// 10.0.1.2:5000
 	Fqdns []string `json:"fqdns,omitempty"`
-	// GcpSecretManagerCertificateConfig: Google Secret Manager (GCP) certificate
-	// configuration.
+	// GcpSecretManagerCertificateConfig: Secret Manager certificate configuration.
 	GcpSecretManagerCertificateConfig *GCPSecretManagerCertificateConfig `json:"gcpSecretManagerCertificateConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Fqdns") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1419,7 +1418,8 @@ type Cluster struct {
 	// `https://username:password@endpoint/`. See the `masterAuth` property of this
 	// resource for username and password information.
 	Endpoint string `json:"endpoint,omitempty"`
-	// EnterpriseConfig: GKE Enterprise Configuration.
+	// EnterpriseConfig: GKE Enterprise Configuration. Deprecated: GKE Enterprise
+	// features are now available without an Enterprise tier.
 	EnterpriseConfig *EnterpriseConfig `json:"enterpriseConfig,omitempty"`
 	// Etag: This checksum is computed by the server based on the value of cluster
 	// fields, and may be sent on update requests to ensure the client has an
@@ -1668,7 +1668,7 @@ type Cluster struct {
 	// certificates to Kubernetes pods.
 	WorkloadCertificates *WorkloadCertificates `json:"workloadCertificates,omitempty"`
 	// WorkloadIdentityConfig: Configuration for the use of Kubernetes Service
-	// Accounts in GCP IAM policies.
+	// Accounts in IAM policies.
 	WorkloadIdentityConfig *WorkloadIdentityConfig `json:"workloadIdentityConfig,omitempty"`
 	// Zone: Output only. The name of the Google Compute Engine zone
 	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
@@ -1879,7 +1879,8 @@ type ClusterUpdate struct {
 	// enable_private_endpoint is false, then enable_public_endpoint will be true.
 	DesiredEnablePrivateEndpoint bool `json:"desiredEnablePrivateEndpoint,omitempty"`
 	// DesiredEnterpriseConfig: The desired enterprise configuration for the
-	// cluster.
+	// cluster. Deprecated: GKE Enterprise features are now available without an
+	// Enterprise tier.
 	DesiredEnterpriseConfig *DesiredEnterpriseConfig `json:"desiredEnterpriseConfig,omitempty"`
 	// DesiredFleet: The desired fleet configuration for the cluster.
 	DesiredFleet *Fleet `json:"desiredFleet,omitempty"`
@@ -2559,9 +2560,15 @@ func (s DNSConfig) MarshalJSON() ([]byte, error) {
 // DNSEndpointConfig: Describes the configuration of a DNS endpoint.
 type DNSEndpointConfig struct {
 	// AllowExternalTraffic: Controls whether user traffic is allowed over this
-	// endpoint. Note that GCP-managed services may still use the endpoint even if
-	// this is false.
+	// endpoint. Note that Google-managed services may still use the endpoint even
+	// if this is false.
 	AllowExternalTraffic bool `json:"allowExternalTraffic,omitempty"`
+	// EnableK8sCertsViaDns: Controls whether the k8s certs auth is allowed via
+	// DNS.
+	EnableK8sCertsViaDns bool `json:"enableK8sCertsViaDns,omitempty"`
+	// EnableK8sTokensViaDns: Controls whether the k8s token auth is allowed via
+	// DNS.
+	EnableK8sTokensViaDns bool `json:"enableK8sTokensViaDns,omitempty"`
 	// Endpoint: Output only. The cluster's DNS endpoint configuration. A DNS
 	// format address. This is accessible from the public internet. Ex:
 	// uid.us-central1.gke.goog. Always present, but the behavior may change
@@ -2778,7 +2785,8 @@ func (s DesiredAdditionalIPRangesConfig) MarshalJSON() ([]byte, error) {
 }
 
 // DesiredEnterpriseConfig: DesiredEnterpriseConfig is a wrapper used for
-// updating enterprise_config.
+// updating enterprise_config. Deprecated: GKE Enterprise features are now
+// available without an Enterprise tier.
 type DesiredEnterpriseConfig struct {
 	// DesiredTier: desired_tier specifies the desired tier of the cluster.
 	//
@@ -2838,6 +2846,8 @@ type Empty struct {
 }
 
 // EnterpriseConfig: EnterpriseConfig is the cluster enterprise configuration.
+// Deprecated: GKE Enterprise features are now available without an Enterprise
+// tier.
 type EnterpriseConfig struct {
 	// ClusterTier: Output only. cluster_tier indicates the effective tier of the
 	// cluster.
@@ -3366,9 +3376,9 @@ func (s GcfsConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GcpFilestoreCsiDriverConfig: Configuration for the GCP Filestore CSI driver.
+// GcpFilestoreCsiDriverConfig: Configuration for the Filestore CSI driver.
 type GcpFilestoreCsiDriverConfig struct {
-	// Enabled: Whether the GCP Filestore CSI driver is enabled for this cluster.
+	// Enabled: Whether the Filestore CSI driver is enabled for this cluster.
 	Enabled bool `json:"enabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4195,8 +4205,8 @@ type LinuxNodeConfig struct {
 	// and compact memory in an effort to allocate a THP immediately.
 	//   "TRANSPARENT_HUGEPAGE_DEFRAG_DEFER" - It means that an application will
 	// wake kswapd in the background to reclaim pages and wake kcompactd to compact
-	// memory so that THP is available in the near future. It’s the
-	// responsibility of khugepaged to then install the THP pages later.
+	// memory so that THP is available in the near future. It's the responsibility
+	// of khugepaged to then install the THP pages later.
 	//   "TRANSPARENT_HUGEPAGE_DEFRAG_DEFER_WITH_MADVISE" - It means that an
 	// application will enter direct reclaim and compaction like always, but only
 	// for regions that have used madvise(MADV_HUGEPAGE); all other regions will
@@ -7179,7 +7189,7 @@ func (s ReservationAffinity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ResourceLabels: Collection of GCP labels
+// ResourceLabels: Collection of Resource Manager labels
 // (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-labels).
 type ResourceLabels struct {
 	// Labels: Map of node label keys and node label values.
@@ -9424,7 +9434,7 @@ func (s WorkloadConfig) MarshalJSON() ([]byte, error) {
 }
 
 // WorkloadIdentityConfig: Configuration for the use of Kubernetes Service
-// Accounts in GCP IAM policies.
+// Accounts in IAM policies.
 type WorkloadIdentityConfig struct {
 	// IdentityNamespace: IAM Identity Namespace to attach all Kubernetes Service
 	// Accounts to.

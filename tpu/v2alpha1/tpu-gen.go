@@ -570,6 +570,31 @@ func (s GetGuestAttributesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GetMaintenanceInfoResponse: Response for GetMaintenanceInfo.
+type GetMaintenanceInfoResponse struct {
+	// NodeUpcomingMaintenances: The list of upcoming maintenance entries.
+	NodeUpcomingMaintenances []*NodeUpcomingMaintenanceInfo `json:"nodeUpcomingMaintenances,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NodeUpcomingMaintenances")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NodeUpcomingMaintenances") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetMaintenanceInfoResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GetMaintenanceInfoResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Guaranteed: Guaranteed tier definition.
 type Guaranteed struct {
 	// MinDuration: Optional. Defines the minimum duration of the guarantee. If
@@ -1211,6 +1236,33 @@ type NodeSpec struct {
 
 func (s NodeSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NodeUpcomingMaintenanceInfo: A tuple containing node name / ID and
+// maintenance info.
+type NodeUpcomingMaintenanceInfo struct {
+	// NodeName: Unqualified node name.
+	NodeName string `json:"nodeName,omitempty"`
+	// NodeUid: UID of this node.
+	NodeUid int64 `json:"nodeUid,omitempty,string"`
+	// UpcomingMaintenance: Upcoming maintenance info for this node.
+	UpcomingMaintenance *UpcomingMaintenance `json:"upcomingMaintenance,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NodeName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NodeName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NodeUpcomingMaintenanceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeUpcomingMaintenanceInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4497,6 +4549,116 @@ func (c *ProjectsLocationsQueuedResourcesGetCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tpu.projects.locations.queuedResources.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsQueuedResourcesGetMaintenanceInfoCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetMaintenanceInfo: Gets the maintenance info for a queued resource.
+//
+// - name: The QueuedResource name.
+func (r *ProjectsLocationsQueuedResourcesService) GetMaintenanceInfo(name string) *ProjectsLocationsQueuedResourcesGetMaintenanceInfoCall {
+	c := &ProjectsLocationsQueuedResourcesGetMaintenanceInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsQueuedResourcesGetMaintenanceInfoCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuedResourcesGetMaintenanceInfoCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsQueuedResourcesGetMaintenanceInfoCall) IfNoneMatch(entityTag string) *ProjectsLocationsQueuedResourcesGetMaintenanceInfoCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsQueuedResourcesGetMaintenanceInfoCall) Context(ctx context.Context) *ProjectsLocationsQueuedResourcesGetMaintenanceInfoCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsQueuedResourcesGetMaintenanceInfoCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsQueuedResourcesGetMaintenanceInfoCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha1/{+name}:getMaintenanceInfo")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tpu.projects.locations.queuedResources.getMaintenanceInfo", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tpu.projects.locations.queuedResources.getMaintenanceInfo" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GetMaintenanceInfoResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsQueuedResourcesGetMaintenanceInfoCall) Do(opts ...googleapi.CallOption) (*GetMaintenanceInfoResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GetMaintenanceInfoResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tpu.projects.locations.queuedResources.getMaintenanceInfo", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

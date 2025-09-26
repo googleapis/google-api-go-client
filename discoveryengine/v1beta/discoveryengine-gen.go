@@ -2982,6 +2982,9 @@ type GoogleCloudDiscoveryengineV1CmekConfig struct {
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
 	//   "DELETED" - The KMS key is soft deleted. Some cleanup policy will
 	// eventually be applied.
+	//   "EXPIRED" - The KMS key is expired, meaning the key has been disabled for
+	// 30+ days. The customer can call DeleteCmekConfig to change the state to
+	// DELETED.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IsDefault") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8152,6 +8155,9 @@ type GoogleCloudDiscoveryengineV1alphaCmekConfig struct {
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
 	//   "DELETED" - The KMS key is soft deleted. Some cleanup policy will
 	// eventually be applied.
+	//   "EXPIRED" - The KMS key is expired, meaning the key has been disabled for
+	// 30+ days. The customer can call DeleteCmekConfig to change the state to
+	// DELETED.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IsDefault") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -19085,6 +19091,9 @@ type GoogleCloudDiscoveryengineV1betaCmekConfig struct {
 	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
 	//   "DELETED" - The KMS key is soft deleted. Some cleanup policy will
 	// eventually be applied.
+	//   "EXPIRED" - The KMS key is expired, meaning the key has been disabled for
+	// 30+ days. The customer can call DeleteCmekConfig to change the state to
+	// DELETED.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -29137,13 +29146,12 @@ type GoogleCloudDiscoveryengineV1betaUserEvent struct {
 	// `search`: Search for Documents. * `view-item`: Detailed page view of a
 	// Document. * `view-item-list`: View of a panel or ordered list of Documents.
 	// * `view-home-page`: View of the home page. * `view-category-page`: View of a
-	// category page, e.g. Home > Men > Jeans * `add-feedback`: Add a user
-	// feedback. Retail-related values: * `add-to-cart`: Add an item(s) to cart,
-	// e.g. in Retail online shopping * `purchase`: Purchase an item(s)
-	// Media-related values: * `media-play`: Start/resume watching a video, playing
-	// a song, etc. * `media-complete`: Finished or stopped midway through a video,
-	// song, etc. Custom conversion value: * `conversion`: Customer defined
-	// conversion event.
+	// category page, e.g. Home > Men > Jeans Retail-related values: *
+	// `add-to-cart`: Add an item(s) to cart, e.g. in Retail online shopping *
+	// `purchase`: Purchase an item(s) Media-related values: * `media-play`:
+	// Start/resume watching a video, playing a song, etc. * `media-complete`:
+	// Finished or stopped midway through a video, song, etc. Custom conversion
+	// value: * `conversion`: Customer defined conversion event.
 	EventType string `json:"eventType,omitempty"`
 	// Filter: The filter syntax consists of an expression language for
 	// constructing a predicate from one or more fields of the documents being
@@ -29371,6 +29379,11 @@ type GoogleLongrunningListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -31421,6 +31434,19 @@ func (c *ProjectsLocationsCollectionsDataConnectorOperationsListCall) PageSize(p
 // token.
 func (c *ProjectsLocationsCollectionsDataConnectorOperationsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsDataConnectorOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsCollectionsDataConnectorOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsDataConnectorOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -33798,6 +33824,19 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesOperationsListCall) PageT
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsDataStoresBranchesOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -35813,6 +35852,19 @@ func (c *ProjectsLocationsCollectionsDataStoresModelsOperationsListCall) PageTok
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsCollectionsDataStoresModelsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsDataStoresModelsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -36074,6 +36126,19 @@ func (c *ProjectsLocationsCollectionsDataStoresOperationsListCall) PageSize(page
 // token.
 func (c *ProjectsLocationsCollectionsDataStoresOperationsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsDataStoresOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsCollectionsDataStoresOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsDataStoresOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -36931,6 +36996,19 @@ func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) PageSi
 // token.
 func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -39482,6 +39560,19 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCal
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -40761,6 +40852,19 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperat
 // token.
 func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -44507,6 +44611,19 @@ func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) PageToken(pageTo
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsEnginesOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -46470,6 +46587,19 @@ func (c *ProjectsLocationsCollectionsOperationsListCall) PageSize(pageSize int64
 // token.
 func (c *ProjectsLocationsCollectionsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsCollectionsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -48740,6 +48870,19 @@ func (c *ProjectsLocationsDataStoresBranchesOperationsListCall) PageToken(pageTo
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsDataStoresBranchesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsDataStoresBranchesOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -50642,6 +50785,19 @@ func (c *ProjectsLocationsDataStoresModelsOperationsListCall) PageToken(pageToke
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsDataStoresModelsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsDataStoresModelsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -50903,6 +51059,19 @@ func (c *ProjectsLocationsDataStoresOperationsListCall) PageSize(pageSize int64)
 // token.
 func (c *ProjectsLocationsDataStoresOperationsListCall) PageToken(pageToken string) *ProjectsLocationsDataStoresOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsDataStoresOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsDataStoresOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -57101,6 +57270,19 @@ func (c *ProjectsLocationsIdentityMappingStoresOperationsListCall) PageToken(pag
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsIdentityMappingStoresOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsIdentityMappingStoresOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -57362,6 +57544,19 @@ func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -59920,6 +60115,19 @@ func (c *ProjectsOperationsListCall) PageSize(pageSize int64) *ProjectsOperation
 // token.
 func (c *ProjectsOperationsListCall) PageToken(pageToken string) *ProjectsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

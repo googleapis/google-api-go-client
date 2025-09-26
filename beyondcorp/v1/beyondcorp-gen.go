@@ -1578,13 +1578,22 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1Application struct {
 	// application. A combination of hostname and ports as endpoint matchers is
 	// used to match the application. Match conditions for OR logic. An array of
 	// match conditions to allow for multiple matching criteria. The rule is
-	// considered a match if one of the conditions is met. The conditions can be
-	// one of the following combinations (Hostname), (Hostname & Ports) EXAMPLES:
-	// Hostname - ("*.example.com"), ("xyz.example.com") Hostname and Ports -
-	// ("example.com" and "22"), ("example.com" and "22,33") etc
+	// considered a match if one of the conditions is met. The conditions should be
+	// the following combination: (Hostname & Ports) EXAMPLES: Hostname and Ports -
+	// ("*.example.com", "443"), ("example.com" and "22"), ("example.com" and
+	// "22,33") etc
 	EndpointMatchers []*GoogleCloudBeyondcorpSecuritygatewaysV1EndpointMatcher `json:"endpointMatchers,omitempty"`
 	// Name: Identifier. Name of the resource.
 	Name string `json:"name,omitempty"`
+	// Schema: Optional. Type of the external application.
+	//
+	// Possible values:
+	//   "SCHEMA_UNSPECIFIED" - Default value. This value is unused.
+	//   "PROXY_GATEWAY" - Proxy which routes traffic to actual applications, like
+	// Netscaler Gateway.
+	//   "API_GATEWAY" - Service Discovery API endpoint when Service Discovery is
+	// enabled in Gateway.
+	Schema string `json:"schema,omitempty"`
 	// UpdateTime: Output only. Timestamp when the resource was last modified.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// Upstreams: Optional. Which upstream resources to forward traffic to.
@@ -1615,8 +1624,13 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1Application) MarshalJSON() ([]byt
 type GoogleCloudBeyondcorpSecuritygatewaysV1ApplicationUpstream struct {
 	// EgressPolicy: Optional. Routing policy information.
 	EgressPolicy *GoogleCloudBeyondcorpSecuritygatewaysV1EgressPolicy `json:"egressPolicy,omitempty"`
+	// External: List of the external endpoints to forward traffic to.
+	External *GoogleCloudBeyondcorpSecuritygatewaysV1ApplicationUpstreamExternal `json:"external,omitempty"`
 	// Network: Network to forward traffic to.
 	Network *GoogleCloudBeyondcorpSecuritygatewaysV1ApplicationUpstreamNetwork `json:"network,omitempty"`
+	// ProxyProtocol: Optional. Enables proxy protocol configuration for the
+	// upstream.
+	ProxyProtocol *GoogleCloudBeyondcorpSecuritygatewaysV1ProxyProtocolConfig `json:"proxyProtocol,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EgressPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1632,6 +1646,29 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1ApplicationUpstream struct {
 
 func (s GoogleCloudBeyondcorpSecuritygatewaysV1ApplicationUpstream) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1ApplicationUpstream
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1ApplicationUpstreamExternal:
+// Endpoints to forward traffic to.
+type GoogleCloudBeyondcorpSecuritygatewaysV1ApplicationUpstreamExternal struct {
+	// Endpoints: Required. List of the endpoints to forward traffic to.
+	Endpoints []*GoogleCloudBeyondcorpSecuritygatewaysV1Endpoint `json:"endpoints,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Endpoints") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Endpoints") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1ApplicationUpstreamExternal) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1ApplicationUpstreamExternal
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1659,6 +1696,128 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1ApplicationUpstreamNetwork) Marsh
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeaders: Contextual headers
+// configuration.
+type GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeaders struct {
+	// DeviceInfo: Optional. Device info configuration.
+	DeviceInfo *GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDeviceInfo `json:"deviceInfo,omitempty"`
+	// GroupInfo: Optional. Group info configuration.
+	GroupInfo *GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedGroupInfo `json:"groupInfo,omitempty"`
+	// OutputType: Optional. Default output type for all enabled headers.
+	//
+	// Possible values:
+	//   "OUTPUT_TYPE_UNSPECIFIED" - Unspecified output type.
+	//   "PROTOBUF" - Protobuf output type.
+	//   "JSON" - JSON output type.
+	//   "NONE" - Explicitly disable header output.
+	OutputType string `json:"outputType,omitempty"`
+	// UserInfo: Optional. User info configuration.
+	UserInfo *GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedUserInfo `json:"userInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeviceInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeviceInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeaders) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeaders
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDeviceInfo:
+// Delegated device info configuration.
+type GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDeviceInfo struct {
+	// OutputType: Optional. The output type of the delegated device info.
+	//
+	// Possible values:
+	//   "OUTPUT_TYPE_UNSPECIFIED" - Unspecified output type.
+	//   "PROTOBUF" - Protobuf output type.
+	//   "JSON" - JSON output type.
+	//   "NONE" - Explicitly disable header output.
+	OutputType string `json:"outputType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OutputType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OutputType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDeviceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDeviceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedGroupInfo:
+// Delegated group info configuration.
+type GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedGroupInfo struct {
+	// OutputType: Optional. The output type of the delegated group info.
+	//
+	// Possible values:
+	//   "OUTPUT_TYPE_UNSPECIFIED" - Unspecified output type.
+	//   "PROTOBUF" - Protobuf output type.
+	//   "JSON" - JSON output type.
+	//   "NONE" - Explicitly disable header output.
+	OutputType string `json:"outputType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OutputType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OutputType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedGroupInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedGroupInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedUserInfo:
+// Delegated user info configuration.
+type GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedUserInfo struct {
+	// OutputType: Optional. The output type of the delegated user info.
+	//
+	// Possible values:
+	//   "OUTPUT_TYPE_UNSPECIFIED" - Unspecified output type.
+	//   "PROTOBUF" - Protobuf output type.
+	//   "JSON" - JSON output type.
+	//   "NONE" - Explicitly disable header output.
+	OutputType string `json:"outputType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OutputType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OutputType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedUserInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedUserInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudBeyondcorpSecuritygatewaysV1EgressPolicy: Routing policy
 // information.
 type GoogleCloudBeyondcorpSecuritygatewaysV1EgressPolicy struct {
@@ -1682,12 +1841,37 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1EgressPolicy) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBeyondcorpSecuritygatewaysV1Endpoint: Internet Gateway endpoint
+// to forward traffic to.
+type GoogleCloudBeyondcorpSecuritygatewaysV1Endpoint struct {
+	// Hostname: Required. Hostname of the endpoint.
+	Hostname string `json:"hostname,omitempty"`
+	// Port: Required. Port of the endpoint.
+	Port int64 `json:"port,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hostname") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hostname") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1Endpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1Endpoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudBeyondcorpSecuritygatewaysV1EndpointMatcher: EndpointMatcher
 // contains the information of the endpoint that will match the application.
 type GoogleCloudBeyondcorpSecuritygatewaysV1EndpointMatcher struct {
 	// Hostname: Required. Hostname of the application.
 	Hostname string `json:"hostname,omitempty"`
-	// Ports: Optional. Ports of the application.
+	// Ports: Required. Ports of the application.
 	Ports []int64 `json:"ports,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Hostname") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1815,6 +1999,47 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1ListSecurityGatewaysResponse) Mar
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBeyondcorpSecuritygatewaysV1ProxyProtocolConfig: The
+// configuration for the proxy.
+type GoogleCloudBeyondcorpSecuritygatewaysV1ProxyProtocolConfig struct {
+	// AllowedClientHeaders: Optional. List of the allowed client header names.
+	AllowedClientHeaders []string `json:"allowedClientHeaders,omitempty"`
+	// ClientIp: Optional. Client IP configuration. The client IP address is
+	// included if true.
+	ClientIp bool `json:"clientIp,omitempty"`
+	// ContextualHeaders: Optional. Configuration for the contextual headers.
+	ContextualHeaders *GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeaders `json:"contextualHeaders,omitempty"`
+	// GatewayIdentity: Optional. Gateway identity configuration.
+	//
+	// Possible values:
+	//   "GATEWAY_IDENTITY_UNSPECIFIED" - Unspecified gateway identity.
+	//   "RESOURCE_NAME" - Resource name for gateway identity, in the format:
+	// projects/{project_id}/locations/{location_id}/securityGateways/{security_gate
+	// way_id}
+	GatewayIdentity string `json:"gatewayIdentity,omitempty"`
+	// MetadataHeaders: Optional. Custom resource specific headers along with the
+	// values. The names should conform to RFC 9110: > Field names SHOULD constrain
+	// themselves to alphanumeric characters, "-", and ".", and SHOULD begin with a
+	// letter. Field values SHOULD contain only ASCII printable characters and tab.
+	MetadataHeaders map[string]string `json:"metadataHeaders,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedClientHeaders") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedClientHeaders") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1ProxyProtocolConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1ProxyProtocolConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway: The information
 // about a security gateway resource.
 type GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway struct {
@@ -1834,6 +2059,10 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway struct {
 	Hubs map[string]GoogleCloudBeyondcorpSecuritygatewaysV1Hub `json:"hubs,omitempty"`
 	// Name: Identifier. Name of the resource.
 	Name string `json:"name,omitempty"`
+	// ProxyProtocolConfig: Optional. Shared proxy configuration for all apps.
+	ProxyProtocolConfig *GoogleCloudBeyondcorpSecuritygatewaysV1ProxyProtocolConfig `json:"proxyProtocolConfig,omitempty"`
+	// ServiceDiscovery: Optional. Settings related to the Service Discovery.
+	ServiceDiscovery *GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscovery `json:"serviceDiscovery,omitempty"`
 	// State: Output only. The operational state of the SecurityGateway.
 	//
 	// Possible values:
@@ -1905,6 +2134,76 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGatewayOperationMetadata str
 
 func (s GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGatewayOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGatewayOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscovery: Settings related to
+// the Service Discovery.
+type GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscovery struct {
+	// ApiGateway: Required. External API configuration.
+	ApiGateway *GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGateway `json:"apiGateway,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiGateway") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiGateway") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscovery) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscovery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGateway: If
+// Service Discovery is done through API, defines its settings.
+type GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGateway struct {
+	// ResourceOverride: Required. Enables fetching resource model updates to alter
+	// service behavior per Chrome profile.
+	ResourceOverride *GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGatewayOperationDescriptor `json:"resourceOverride,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceOverride") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceOverride") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGateway) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGateway
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGatewayOperationDes
+// criptor: API operation descriptor.
+type GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGatewayOperationDescriptor struct {
+	// Path: Required. Contains uri path fragment where HTTP request is sent.
+	Path string `json:"path,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Path") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGatewayOperationDescriptor) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGatewayOperationDescriptor
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

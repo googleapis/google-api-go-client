@@ -831,6 +831,32 @@ func (s ConnectionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ConnectionPoolConfig: Configuration for Managed Connection Pool (MCP).
+type ConnectionPoolConfig struct {
+	// Enabled: Optional. Whether to enable Managed Connection Pool (MCP).
+	Enabled bool `json:"enabled,omitempty"`
+	// Flags: Optional. Connection Pool flags, as a list of "key": "value" pairs.
+	Flags map[string]string `json:"flags,omitempty"`
+	// PoolerCount: Output only. The number of running poolers per instance.
+	PoolerCount int64 `json:"poolerCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectionPoolConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectionPoolConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ContinuousBackupConfig: ContinuousBackupConfig describes the continuous
 // backups recovery configurations of a cluster.
 type ContinuousBackupConfig struct {
@@ -1507,6 +1533,9 @@ type Instance struct {
 	AvailabilityType string `json:"availabilityType,omitempty"`
 	// ClientConnectionConfig: Optional. Client connection specific configurations
 	ClientConnectionConfig *ClientConnectionConfig `json:"clientConnectionConfig,omitempty"`
+	// ConnectionPoolConfig: Optional. The configuration for Managed Connection
+	// Pool (MCP).
+	ConnectionPoolConfig *ConnectionPoolConfig `json:"connectionPoolConfig,omitempty"`
 	// CreateTime: Output only. Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
 	// DatabaseFlags: Database flags. Set at the instance level. They are copied
@@ -3306,7 +3335,7 @@ func (s StorageDatabasecenterPartnerapiV1mainCustomMetadataData) MarshalJSON() (
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed:
 // DatabaseResourceFeed is the top level proto to be used to ingest different
-// database resource level events into Condor platform. Next ID: 12
+// database resource level events into Condor platform. Next ID: 13
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	// BackupdrMetadata: BackupDR metadata is used to ingest metadata from
 	// BackupDR.
@@ -3330,6 +3359,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	// data
 	//   "CONFIG_BASED_SIGNAL_DATA" - Database config based signal data
 	//   "BACKUPDR_METADATA" - Database resource metadata from BackupDR
+	//   "DATABASE_RESOURCE_SIGNAL_DATA" - Database resource signal data
 	FeedType                 string                                                                         `json:"feedType,omitempty"`
 	ObservabilityMetricData  *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData                  `json:"observabilityMetricData,omitempty"`
 	RecommendationSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData `json:"recommendationSignalData,omitempty"`

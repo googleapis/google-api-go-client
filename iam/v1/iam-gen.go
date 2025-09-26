@@ -3731,15 +3731,15 @@ type WorkforcePool struct {
 	// restricted to given set of services or programmatic sign-in can be disabled
 	// for pool users.
 	AccessRestrictions *AccessRestrictions `json:"accessRestrictions,omitempty"`
-	// Description: Optional. A user-specified description of the pool. Cannot
-	// exceed 256 characters.
+	// Description: Optional. A description of the pool. Cannot exceed 256
+	// characters.
 	Description string `json:"description,omitempty"`
 	// Disabled: Optional. Disables the workforce pool. You cannot use a disabled
 	// pool to exchange tokens, or use existing tokens to access resources. If the
 	// pool is re-enabled, existing tokens grant access again.
 	Disabled bool `json:"disabled,omitempty"`
-	// DisplayName: Optional. A user-specified display name of the pool in Google
-	// Cloud Console. Cannot exceed 32 characters.
+	// DisplayName: Optional. A display name for the pool. Cannot exceed 32
+	// characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// ExpireTime: Output only. Time after which the workforce pool will be
 	// permanently purged and cannot be recovered.
@@ -3854,8 +3854,8 @@ type WorkforcePoolProvider struct {
 	// `sub` claim of the incoming credential to the `subject` attribute on a
 	// Google token: ``` {"google.subject": "assertion.sub"} ```
 	AttributeMapping map[string]string `json:"attributeMapping,omitempty"`
-	// Description: Optional. A user-specified description of the provider. Cannot
-	// exceed 256 characters.
+	// Description: Optional. A description of the provider. Cannot exceed 256
+	// characters.
 	Description string `json:"description,omitempty"`
 	// DetailedAuditLogging: Optional. If true, populates additional debug
 	// information in Cloud Audit Logs for this provider. Logged attribute mappings
@@ -3866,8 +3866,8 @@ type WorkforcePoolProvider struct {
 	// disabled provider to exchange tokens. However, existing tokens still grant
 	// access.
 	Disabled bool `json:"disabled,omitempty"`
-	// DisplayName: Optional. A user-specified display name for the provider.
-	// Cannot exceed 32 characters.
+	// DisplayName: Optional. A display name for the provider. Cannot exceed 32
+	// characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// ExpireTime: Output only. Time after which the workforce identity pool
 	// provider will be permanently purged and cannot be recovered.
@@ -3989,11 +3989,11 @@ type WorkforcePoolProviderScimTenant struct {
 	BaseUri string `json:"baseUri,omitempty"`
 	// ClaimMapping: Optional. Maps BYOID claims to SCIM claims.
 	ClaimMapping map[string]string `json:"claimMapping,omitempty"`
-	// Description: Optional. The user-specified description of the scim tenant.
-	// Cannot exceed 256 characters.
+	// Description: Optional. The description of the scim tenant. Cannot exceed 256
+	// characters.
 	Description string `json:"description,omitempty"`
-	// DisplayName: Optional. The user-specified display name of the scim tenant.
-	// Cannot exceed 32 characters.
+	// DisplayName: Optional. The display name of the scim tenant. Cannot exceed 32
+	// characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// Name: Identifier. The resource name of the SCIM Tenant. Format:
 	// `locations/{location}/workforcePools/{workforce_pool}/providers/
@@ -4036,8 +4036,8 @@ func (s WorkforcePoolProviderScimTenant) MarshalJSON() ([]byte, error) {
 // WorkforcePoolProviderScimTenant. Used for authenticating SCIM Provisioning
 // requests.
 type WorkforcePoolProviderScimToken struct {
-	// DisplayName: Optional. The user-specified display name of the scim token.
-	// Cannot exceed 32 characters.
+	// DisplayName: Optional. The display name of the scim token. Cannot exceed 32
+	// characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// Name: Identifier. The resource name of the SCIM Token. Format:
 	// `locations/{location}/workforcePools/{workforce_pool}/providers/

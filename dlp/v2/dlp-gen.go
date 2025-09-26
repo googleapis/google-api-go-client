@@ -683,6 +683,9 @@ type GooglePrivacyDlpV2Action struct {
 	PubSub *GooglePrivacyDlpV2PublishToPubSub `json:"pubSub,omitempty"`
 	// PublishFindingsToCloudDataCatalog: Publish findings to Cloud Datahub.
 	PublishFindingsToCloudDataCatalog *GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog `json:"publishFindingsToCloudDataCatalog,omitempty"`
+	// PublishFindingsToDataplexCatalog: Publish findings as an aspect to Dataplex
+	// Universal Catalog.
+	PublishFindingsToDataplexCatalog *GooglePrivacyDlpV2PublishFindingsToDataplexCatalog `json:"publishFindingsToDataplexCatalog,omitempty"`
 	// PublishSummaryToCscc: Publish summary to Cloud Security Command Center
 	// (Alpha).
 	PublishSummaryToCscc *GooglePrivacyDlpV2PublishSummaryToCscc `json:"publishSummaryToCscc,omitempty"`
@@ -8878,6 +8881,20 @@ func (s GooglePrivacyDlpV2PubSubNotification) MarshalJSON() ([]byte, error) {
 // this action can be specified. This action is allowed only if all resources
 // being scanned are BigQuery tables. Compatible with: Inspect
 type GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog struct {
+}
+
+// GooglePrivacyDlpV2PublishFindingsToDataplexCatalog: Publish findings of a
+// DlpJob to Dataplex Universal Catalog as a
+// `sensitive-data-protection-job-result` aspect. To learn more about aspects,
+// see Send inspection results to Dataplex Universal Catalog as aspects
+// (https://cloud.google.com/sensitive-data-protection/docs/add-aspects-inspection-job).
+// Aspects are persisted in Dataplex Universal Catalog storage and are governed
+// by service-specific policies for Dataplex Universal Catalog. For more
+// information, see Service Specific Terms
+// (https://cloud.google.com/terms/service-terms). Only a single instance of
+// this action can be specified. This action is allowed only if all resources
+// being scanned are BigQuery tables. Compatible with: Inspect
+type GooglePrivacyDlpV2PublishFindingsToDataplexCatalog struct {
 }
 
 // GooglePrivacyDlpV2PublishSummaryToCscc: Publish the result summary of a

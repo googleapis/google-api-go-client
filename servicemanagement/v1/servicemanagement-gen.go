@@ -260,8 +260,15 @@ func (s Advice) MarshalJSON() ([]byte, error) {
 // opposed to simply a description of methods and bindings. They are also
 // sometimes simply referred to as "APIs" in other contexts, such as the name
 // of this message itself. See https://cloud.google.com/apis/design/glossary
-// for detailed terminology.
+// for detailed terminology. New usages of this message as an alternative to
+// ServiceDescriptorProto are strongly discouraged. This message does not
+// reliability preserve all information necessary to model the schema and
+// preserve semantics. Instead make use of FileDescriptorSet which preserves
+// the necessary information.
 type Api struct {
+	// Edition: The source edition string, only valid when syntax is
+	// SYNTAX_EDITIONS.
+	Edition string `json:"edition,omitempty"`
 	// Methods: The methods of this interface, in unspecified order.
 	Methods []*Method `json:"methods,omitempty"`
 	// Mixins: Included interfaces. See Mixin.
@@ -296,13 +303,13 @@ type Api struct {
 	// be omitted. Zero major versions must only be used for experimental, non-GA
 	// interfaces.
 	Version string `json:"version,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Methods") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Edition") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Methods") to include in API
+	// NullFields is a list of field names (e.g. "Edition") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -647,6 +654,8 @@ type BackendRule struct {
 	// OverridesByRequestProtocol: The map between request protocol and the backend
 	// address.
 	OverridesByRequestProtocol map[string]BackendRule `json:"overridesByRequestProtocol,omitempty"`
+	// PathTranslation: no-lint
+	//
 	// Possible values:
 	//   "PATH_TRANSLATION_UNSPECIFIED"
 	//   "CONSTANT_ADDRESS" - Use the backend address as-is, with no modification
@@ -1740,7 +1749,11 @@ func (s Endpoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Enum: Enum type definition.
+// Enum: Enum type definition. New usages of this message as an alternative to
+// EnumDescriptorProto are strongly discouraged. This message does not
+// reliability preserve all information necessary to model the schema and
+// preserve semantics. Instead make use of FileDescriptorSet which preserves
+// the necessary information.
 type Enum struct {
 	// Edition: The source edition string, only valid when syntax is
 	// SYNTAX_EDITIONS.
@@ -1778,7 +1791,11 @@ func (s Enum) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// EnumValue: Enum value definition.
+// EnumValue: Enum value definition. New usages of this message as an
+// alternative to EnumValueDescriptorProto are strongly discouraged. This
+// message does not reliability preserve all information necessary to model the
+// schema and preserve semantics. Instead make use of FileDescriptorSet which
+// preserves the necessary information.
 type EnumValue struct {
 	// Name: Enum value name.
 	Name string `json:"name,omitempty"`
@@ -1889,7 +1906,11 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Field: A single field of a message type.
+// Field: A single field of a message type. New usages of this message as an
+// alternative to FieldDescriptorProto are strongly discouraged. This message
+// does not reliability preserve all information necessary to model the schema
+// and preserve semantics. Instead make use of FileDescriptorSet which
+// preserves the necessary information.
 type Field struct {
 	// Cardinality: The field cardinality.
 	//
@@ -2153,8 +2174,8 @@ type GoSettings struct {
 	Common *CommonLanguageSettings `json:"common,omitempty"`
 	// RenamedServices: Map of service names to renamed services. Keys are the
 	// package relative service names and values are the name to be used for the
-	// service client and call options. publishing: go_settings: renamed_services:
-	// Publisher: TopicAdmin
+	// service client and call options. Example: publishing: go_settings:
+	// renamed_services: Publisher: TopicAdmin
 	RenamedServices map[string]string `json:"renamedServices,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Common") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2793,8 +2814,16 @@ func (s ManagedService) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Method: Method represents a method of an API interface.
+// Method: Method represents a method of an API interface. New usages of this
+// message as an alternative to MethodDescriptorProto are strongly discouraged.
+// This message does not reliability preserve all information necessary to
+// model the schema and preserve semantics. Instead make use of
+// FileDescriptorSet which preserves the necessary information.
 type Method struct {
+	// Edition: The source edition string, only valid when syntax is
+	// SYNTAX_EDITIONS. This field should be ignored, instead the edition should be
+	// inherited from Api. This is similar to Field and EnumValue.
+	Edition string `json:"edition,omitempty"`
 	// Name: The simple name of this method.
 	Name string `json:"name,omitempty"`
 	// Options: Any metadata attached to the method.
@@ -2807,22 +2836,24 @@ type Method struct {
 	ResponseStreaming bool `json:"responseStreaming,omitempty"`
 	// ResponseTypeUrl: The URL of the output message type.
 	ResponseTypeUrl string `json:"responseTypeUrl,omitempty"`
-	// Syntax: The source syntax of this method.
+	// Syntax: The source syntax of this method. This field should be ignored,
+	// instead the syntax should be inherited from Api. This is similar to Field
+	// and EnumValue.
 	//
 	// Possible values:
 	//   "SYNTAX_PROTO2" - Syntax `proto2`.
 	//   "SYNTAX_PROTO3" - Syntax `proto3`.
 	//   "SYNTAX_EDITIONS" - Syntax `editions`.
 	Syntax string `json:"syntax,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Edition") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "Edition") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3578,7 +3609,9 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // Option: A protocol buffer option, which can be attached to a message, field,
-// enumeration, etc.
+// enumeration, etc. New usages of this message as an alternative to
+// FileOptions, MessageOptions, FieldOptions, EnumOptions, EnumValueOptions,
+// ServiceOptions, or MethodOptions are strongly discouraged.
 type Option struct {
 	// Name: The option's name. For protobuf built-in options (options defined in
 	// descriptor.proto), this is the short name. For example, "map_entry". For
@@ -3649,6 +3682,13 @@ func (s Page) MarshalJSON() ([]byte, error) {
 type PhpSettings struct {
 	// Common: Some settings.
 	Common *CommonLanguageSettings `json:"common,omitempty"`
+	// LibraryPackage: The package name to use in Php. Clobbers the php_namespace
+	// option set in the protobuf. This should be used **only** by APIs who have
+	// already set the language_settings.php.package_name" field in gapic.yaml. API
+	// teams should use the protobuf php_namespace option where possible. Example
+	// of a YAML configuration:: publishing: library_settings: php_settings:
+	// library_package: Google\Cloud\PubSub\V1
+	LibraryPackage string `json:"libraryPackage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Common") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -4045,8 +4085,6 @@ type Rollout struct {
 	// TrafficPercentStrategy: Google Service Control selects service
 	// configurations based on traffic percentage.
 	TrafficPercentStrategy *TrafficPercentStrategy `json:"trafficPercentStrategy,omitempty"`
-	// Universe: The TPC universe which the rollout will be rolled out to.
-	Universe string `json:"universe,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4366,7 +4404,7 @@ type Step struct {
 	// Status: The status code.
 	//
 	// Possible values:
-	//   "STATUS_UNSPECIFIED" - Unspecifed code.
+	//   "STATUS_UNSPECIFIED" - Unspecified code.
 	//   "DONE" - The operation or step has completed without errors.
 	//   "NOT_STARTED" - The operation or step has not started yet.
 	//   "IN_PROGRESS" - The operation or step is in progress.
@@ -4620,7 +4658,11 @@ func (s TrafficPercentStrategy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Type: A protocol buffer message type.
+// Type: A protocol buffer message type. New usages of this message as an
+// alternative to DescriptorProto are strongly discouraged. This message does
+// not reliability preserve all information necessary to model the schema and
+// preserve semantics. Instead make use of FileDescriptorSet which preserves
+// the necessary information.
 type Type struct {
 	// Edition: The source edition string, only valid when syntax is
 	// SYNTAX_EDITIONS.

@@ -2170,6 +2170,142 @@ func (s GoogleCloudDataplexV1DataDiscoverySpecStorageConfigJsonOptions) MarshalJ
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1DataDocumentationResult: The output of a
+// DataDocumentation scan.
+type GoogleCloudDataplexV1DataDocumentationResult struct {
+	// TableResult: Output only. Table result for insights.
+	TableResult *GoogleCloudDataplexV1DataDocumentationResultTableResult `json:"tableResult,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TableResult") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TableResult") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDocumentationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDocumentationResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataDocumentationResultField: Column of a table with
+// generated metadata and nested fields.
+type GoogleCloudDataplexV1DataDocumentationResultField struct {
+	// Description: Output only. Generated description for columns and fields.
+	Description string `json:"description,omitempty"`
+	// Fields: Output only. Nested fields.
+	Fields []*GoogleCloudDataplexV1DataDocumentationResultField `json:"fields,omitempty"`
+	// Name: Output only. The name of the column.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDocumentationResultField) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDocumentationResultField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataDocumentationResultQuery: A sample SQL query in
+// data documentation.
+type GoogleCloudDataplexV1DataDocumentationResultQuery struct {
+	// Description: Output only. The description for the query.
+	Description string `json:"description,omitempty"`
+	// Sql: Output only. The SQL query string which can be executed.
+	Sql string `json:"sql,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDocumentationResultQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDocumentationResultQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataDocumentationResultSchema: Schema of the table with
+// generated metadata of columns.
+type GoogleCloudDataplexV1DataDocumentationResultSchema struct {
+	// Fields: Output only. The list of columns.
+	Fields []*GoogleCloudDataplexV1DataDocumentationResultField `json:"fields,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDocumentationResultSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDocumentationResultSchema
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataDocumentationResultTableResult: Generated metadata
+// about the table.
+type GoogleCloudDataplexV1DataDocumentationResultTableResult struct {
+	// Name: Output only. The service-qualified full resource name of the cloud
+	// resource. Ex:
+	// bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tables/TABLE_
+	// ID
+	Name string `json:"name,omitempty"`
+	// Overview: Output only. Generated description of the table.
+	Overview string `json:"overview,omitempty"`
+	// Queries: Output only. Sample SQL queries for the table.
+	Queries []*GoogleCloudDataplexV1DataDocumentationResultQuery `json:"queries,omitempty"`
+	// Schema: Output only. Schema of the table with generated metadata of the
+	// columns in the schema.
+	Schema *GoogleCloudDataplexV1DataDocumentationResultSchema `json:"schema,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDocumentationResultTableResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDocumentationResultTableResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataDocumentationSpec: DataDocumentation scan related
+// spec.
+type GoogleCloudDataplexV1DataDocumentationSpec struct {
+}
+
 // GoogleCloudDataplexV1DataProfileResult: DataProfileResult defines the output
 // of DataProfileScan. Each field of the table will have field type specific
 // profile result.
@@ -3631,7 +3767,11 @@ func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigge
 // (https://cloud.google.com/dataplex/docs/data-profiling-overview). Data
 // discovery: scans data in Cloud Storage buckets to extract and then catalog
 // metadata. For more information, see Discover and catalog Cloud Storage data
-// (https://cloud.google.com/bigquery/docs/automatic-discovery).
+// (https://cloud.google.com/bigquery/docs/automatic-discovery). Data
+// documentation: analyzes the table details and generates insights including
+// descriptions and sample SQL queries for the table. For more information, see
+// Generate data insights in BigQuery
+// (https://cloud.google.com/bigquery/docs/data-insights).
 type GoogleCloudDataplexV1DataScan struct {
 	// CreateTime: Output only. The time when the scan was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3641,6 +3781,11 @@ type GoogleCloudDataplexV1DataScan struct {
 	DataDiscoveryResult *GoogleCloudDataplexV1DataDiscoveryResult `json:"dataDiscoveryResult,omitempty"`
 	// DataDiscoverySpec: Settings for a data discovery scan.
 	DataDiscoverySpec *GoogleCloudDataplexV1DataDiscoverySpec `json:"dataDiscoverySpec,omitempty"`
+	// DataDocumentationResult: Output only. The result of a data documentation
+	// scan.
+	DataDocumentationResult *GoogleCloudDataplexV1DataDocumentationResult `json:"dataDocumentationResult,omitempty"`
+	// DataDocumentationSpec: Settings for a data documentation scan.
+	DataDocumentationSpec *GoogleCloudDataplexV1DataDocumentationSpec `json:"dataDocumentationSpec,omitempty"`
 	// DataProfileResult: Output only. The result of a data profile scan.
 	DataProfileResult *GoogleCloudDataplexV1DataProfileResult `json:"dataProfileResult,omitempty"`
 	// DataProfileSpec: Settings for a data profile scan.
@@ -3684,6 +3829,7 @@ type GoogleCloudDataplexV1DataScan struct {
 	//   "DATA_QUALITY" - Data quality scan.
 	//   "DATA_PROFILE" - Data profile scan.
 	//   "DATA_DISCOVERY" - Data discovery scan.
+	//   "DATA_DOCUMENTATION" - Data documentation scan.
 	Type string `json:"type,omitempty"`
 	// Uid: Output only. System generated globally unique ID for the scan. This ID
 	// will be different if the scan is deleted and re-created with the same name.
@@ -4106,6 +4252,11 @@ type GoogleCloudDataplexV1DataScanJob struct {
 	DataDiscoveryResult *GoogleCloudDataplexV1DataDiscoveryResult `json:"dataDiscoveryResult,omitempty"`
 	// DataDiscoverySpec: Output only. Settings for a data discovery scan.
 	DataDiscoverySpec *GoogleCloudDataplexV1DataDiscoverySpec `json:"dataDiscoverySpec,omitempty"`
+	// DataDocumentationResult: Output only. The result of a data documentation
+	// scan.
+	DataDocumentationResult *GoogleCloudDataplexV1DataDocumentationResult `json:"dataDocumentationResult,omitempty"`
+	// DataDocumentationSpec: Output only. Settings for a data documentation scan.
+	DataDocumentationSpec *GoogleCloudDataplexV1DataDocumentationSpec `json:"dataDocumentationSpec,omitempty"`
 	// DataProfileResult: Output only. The result of a data profile scan.
 	DataProfileResult *GoogleCloudDataplexV1DataProfileResult `json:"dataProfileResult,omitempty"`
 	// DataProfileSpec: Output only. Settings for a data profile scan.
@@ -4144,6 +4295,7 @@ type GoogleCloudDataplexV1DataScanJob struct {
 	//   "DATA_QUALITY" - Data quality scan.
 	//   "DATA_PROFILE" - Data profile scan.
 	//   "DATA_DISCOVERY" - Data discovery scan.
+	//   "DATA_DOCUMENTATION" - Data documentation scan.
 	Type string `json:"type,omitempty"`
 	// Uid: Output only. System generated globally unique ID for the DataScanJob.
 	Uid string `json:"uid,omitempty"`
@@ -4179,7 +4331,8 @@ type GoogleCloudDataplexV1DataSource struct {
 	// resource for a DataScan job to scan against. The field could either be:
 	// Cloud Storage bucket for DataDiscoveryScan Format:
 	// //storage.googleapis.com/projects/PROJECT_ID/buckets/BUCKET_ID or BigQuery
-	// table of type "TABLE" for DataProfileScan/DataQualityScan Format:
+	// table of type "TABLE" for
+	// DataProfileScan/DataQualityScan/DataDocumentationScan Format:
 	// //bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tables/TABL
 	// E_ID
 	Resource string `json:"resource,omitempty"`

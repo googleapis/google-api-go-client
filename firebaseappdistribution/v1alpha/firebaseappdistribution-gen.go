@@ -1165,6 +1165,17 @@ func (s GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse) MarshalJSON() ([]
 // GoogleFirebaseAppdistroV1alphaGoalAction: An action taken by the AI agent
 // while attempting to accomplish a goal.
 type GoogleFirebaseAppdistroV1alphaGoalAction struct {
+	// CachingType: Output only. The type of caching used to determine the action.
+	//
+	// Possible values:
+	//   "CACHING_TYPE_UNSPECIFIED" - Caching type unspecified.
+	//   "NO_CACHING" - The model alone was used to determine the action with no
+	// caching.
+	//   "CACHE_AND_MODEL" - The model used information from a previous successful
+	// run to determine the action.
+	//   "CACHE_ONLY" - The action was replayed from a previous successful run
+	// without model input.
+	CachingType string `json:"cachingType,omitempty"`
 	// DebugInfo: Output only. Debug information explaining why the agent to the
 	// specific action.
 	DebugInfo *GoogleFirebaseAppdistroV1alphaGoalActionDebugInfo `json:"debugInfo,omitempty"`
@@ -1178,13 +1189,13 @@ type GoogleFirebaseAppdistroV1alphaGoalAction struct {
 	StartTime string `json:"startTime,omitempty"`
 	// TerminalAction: Output only. An action taken by the AI to end the goal.
 	TerminalAction *GoogleFirebaseAppdistroV1alphaTerminalAction `json:"terminalAction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DebugInfo") to
+	// ForceSendFields is a list of field names (e.g. "CachingType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DebugInfo") to include in API
+	// NullFields is a list of field names (e.g. "CachingType") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

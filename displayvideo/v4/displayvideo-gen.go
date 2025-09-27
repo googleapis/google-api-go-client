@@ -1946,6 +1946,7 @@ type AlgorithmRulesComparisonValue struct {
 	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
 	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
+	//   "EXCHANGE_SNAP" - Snap.
 	ExchangeValue string `json:"exchangeValue,omitempty"`
 	// Int64Value: Integer value.
 	Int64Value int64 `json:"int64Value,omitempty,string"`
@@ -5966,6 +5967,7 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_9" - SDF version 9. Read the [v9 migration
 	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_9_1" - SDF version 9.1.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7780,11 +7782,9 @@ type DuplicateLineItemRequest struct {
 	// `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` in the parent advertiser, then
 	// this field will be assigned `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` if
 	// not otherwise specified. This field can then be updated using the UI, API,
-	// or Structured Data Files. *Warning*: Starting **September 8, 2025**, this
-	// field must be set. If not, either the value
-	// `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` will be assigned to the line
-	// item if the parent advertiser has declared that it does not serve EU
-	// political ads, or **the request will fail**.
+	// or Structured Data Files. This field must be assigned when creating a new
+	// line item. Otherwise, **the `advertisers.lineItems.create` request will
+	// fail**.
 	//
 	// Possible values:
 	//   "EU_POLITICAL_ADVERTISING_STATUS_UNKNOWN" - Unknown.
@@ -8204,6 +8204,7 @@ type ExchangeAssignedTargetingOptionDetails struct {
 	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
 	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
+	//   "EXCHANGE_SNAP" - Snap.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8341,6 +8342,7 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
 	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
+	//   "EXCHANGE_SNAP" - Snap.
 	Exchange string `json:"exchange,omitempty"`
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager. The
 	// field is only relevant when Google Ad Manager is the enabled exchange.
@@ -8462,6 +8464,7 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
 	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
+	//   "EXCHANGE_SNAP" - Snap.
 	Exchange string `json:"exchange,omitempty"`
 	// Status: Status of the exchange review.
 	//
@@ -8586,6 +8589,7 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
 	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
+	//   "EXCHANGE_SNAP" - Snap.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9144,11 +9148,9 @@ type GenerateDefaultLineItemRequest struct {
 	// `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` in the parent advertiser, then
 	// this field will be assigned `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` if
 	// not otherwise specified. This field can then be updated using the UI, API,
-	// or Structured Data Files. *Warning*: Starting **September 8, 2025**, this
-	// field must be set. If not, either the value
-	// `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` will be assigned to the line
-	// item if the parent advertiser has declared that it does not serve EU
-	// political ads, or **the request will fail**.
+	// or Structured Data Files. This field must be assigned when creating a new
+	// line item. Otherwise, **the `advertisers.lineItems.create` request will
+	// fail**.
 	//
 	// Possible values:
 	//   "EU_POLITICAL_ADVERTISING_STATUS_UNKNOWN" - Unknown.
@@ -9665,6 +9667,7 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
 	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
+	//   "EXCHANGE_SNAP" - Snap.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Output only. The unique identifier of the guaranteed
 	// order. The guaranteed order IDs have the format
@@ -10474,6 +10477,7 @@ type InventorySource struct {
 	//   "EXCHANGE_COMMERCE_GRID" - Commerce Grid.
 	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
+	//   "EXCHANGE_SNAP" - Snap.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that this
 	// inventory source belongs to. Only applicable when commitment is
@@ -11158,11 +11162,9 @@ type LineItem struct {
 	// `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` in the parent advertiser, then
 	// this field will be assigned `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` if
 	// not otherwise specified. This field can then be updated using the UI, API,
-	// or Structured Data Files. *Warning*: Starting **September 8, 2025**, this
-	// field must be set when creating a new line item. If not, either the value
-	// `DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING` will be assigned if the parent
-	// advertiser has declared that it does not serve EU political ads, or **the
-	// `advertisers.lineItems.create` request will fail**.
+	// or Structured Data Files. This field must be assigned when creating a new
+	// line item. Otherwise, **the `advertisers.lineItems.create` request will
+	// fail**.
 	//
 	// Possible values:
 	//   "EU_POLITICAL_ADVERTISING_STATUS_UNKNOWN" - Unknown.
@@ -14695,6 +14697,7 @@ type SdfConfig struct {
 	//   "SDF_VERSION_9" - SDF version 9. Read the [v9 migration
 	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_9_1" - SDF version 9.1.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14777,6 +14780,7 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_9" - SDF version 9. Read the [v9 migration
 	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_9_1" - SDF version 9.1.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or

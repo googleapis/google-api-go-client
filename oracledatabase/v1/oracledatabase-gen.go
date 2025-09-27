@@ -957,6 +957,13 @@ type AutonomousDatabaseProperties struct {
 	// DisasterRecoveryRoleChangedTime: Output only. The date and time the Disaster
 	// Recovery role was changed for the standby Autonomous Database.
 	DisasterRecoveryRoleChangedTime string `json:"disasterRecoveryRoleChangedTime,omitempty"`
+	// EncryptionKey: Optional. The encryption key used to encrypt the Autonomous
+	// Database. Updating this field will add a new entry in the
+	// `encryption_key_history_entries` field with the former version.
+	EncryptionKey *EncryptionKey `json:"encryptionKey,omitempty"`
+	// EncryptionKeyHistoryEntries: Output only. The history of the encryption keys
+	// used to encrypt the Autonomous Database.
+	EncryptionKeyHistoryEntries []*EncryptionKeyHistoryEntry `json:"encryptionKeyHistoryEntries,omitempty"`
 	// FailedDataRecoveryDuration: Output only. This field indicates the number of
 	// seconds of data loss during a Data Guard failover.
 	FailedDataRecoveryDuration string `json:"failedDataRecoveryDuration,omitempty"`
@@ -1103,6 +1110,10 @@ type AutonomousDatabaseProperties struct {
 	ScheduledOperationDetails []*ScheduledOperationDetails `json:"scheduledOperationDetails,omitempty"`
 	// SecretId: Optional. The ID of the Oracle Cloud Infrastructure vault secret.
 	SecretId string `json:"secretId,omitempty"`
+	// ServiceAgentEmail: Output only. An Oracle-managed Google Cloud service
+	// account on which customers can grant roles to access resources in the
+	// customer project.
+	ServiceAgentEmail string `json:"serviceAgentEmail,omitempty"`
 	// SqlWebDeveloperUrl: Output only. The SQL Web Developer URL for the
 	// Autonomous Database.
 	SqlWebDeveloperUrl string `json:"sqlWebDeveloperUrl,omitempty"`
@@ -2808,6 +2819,67 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EncryptionKey: The encryption key used to encrypt the Autonomous Database.
+type EncryptionKey struct {
+	// KmsKey: Optional. The KMS key used to encrypt the Autonomous Database. This
+	// field is required if the provider is GOOGLE_MANAGED. The name of the KMS key
+	// resource in the following format:
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{cryp
+	// to_key}`.
+	KmsKey string `json:"kmsKey,omitempty"`
+	// Provider: Optional. The provider of the encryption key.
+	//
+	// Possible values:
+	//   "PROVIDER_UNSPECIFIED" - Default unspecified value.
+	//   "GOOGLE_MANAGED" - Google Managed KMS key, if selected, please provide the
+	// KMS key name.
+	//   "ORACLE_MANAGED" - Oracle Managed.
+	Provider string `json:"provider,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EncryptionKey) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EncryptionKeyHistoryEntry: The history of the encryption keys used to
+// encrypt the Autonomous Database.
+type EncryptionKeyHistoryEntry struct {
+	// ActivationTime: Output only. The date and time when the encryption key was
+	// activated on the Autonomous Database..
+	ActivationTime string `json:"activationTime,omitempty"`
+	// EncryptionKey: Output only. The encryption key used to encrypt the
+	// Autonomous Database.
+	EncryptionKey *EncryptionKey `json:"encryptionKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActivationTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActivationTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EncryptionKeyHistoryEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionKeyHistoryEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Entitlement: Details of the Entitlement resource.
 type Entitlement struct {
 	// CloudAccountDetails: Details of the OCI Cloud Account.
@@ -3961,6 +4033,11 @@ type ListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*Operation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -6165,6 +6242,134 @@ func (c *ProjectsLocationsAutonomousDatabasesListCall) Pages(ctx context.Context
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsAutonomousDatabasesPatchCall struct {
+	s                  *Service
+	name               string
+	autonomousdatabase *AutonomousDatabase
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Patch: Updates the parameters of a single Autonomous Database.
+//
+//   - name: Identifier. The name of the Autonomous Database resource in the
+//     following format:
+//     projects/{project}/locations/{region}/autonomousDatabases/{autonomous_datab
+//     ase}.
+func (r *ProjectsLocationsAutonomousDatabasesService) Patch(name string, autonomousdatabase *AutonomousDatabase) *ProjectsLocationsAutonomousDatabasesPatchCall {
+	c := &ProjectsLocationsAutonomousDatabasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.autonomousdatabase = autonomousdatabase
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsAutonomousDatabasesPatchCall) RequestId(requestId string) *ProjectsLocationsAutonomousDatabasesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the Exadata resource by the update.
+// The fields specified in the update_mask are relative to the resource, not
+// the full request. A field will be overwritten if it is in the mask. If the
+// user does not provide a mask then all fields will be overwritten.
+func (c *ProjectsLocationsAutonomousDatabasesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAutonomousDatabasesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutonomousDatabasesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutonomousDatabasesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutonomousDatabasesPatchCall) Context(ctx context.Context) *ProjectsLocationsAutonomousDatabasesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutonomousDatabasesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutonomousDatabasesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.autonomousdatabase)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.autonomousDatabases.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.autonomousDatabases.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutonomousDatabasesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.autonomousDatabases.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsAutonomousDatabasesRestartCall struct {
@@ -12669,6 +12874,19 @@ func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

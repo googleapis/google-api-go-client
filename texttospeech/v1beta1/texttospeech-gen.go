@@ -553,6 +553,60 @@ func (s MultiSpeakerMarkup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MultiSpeakerVoiceConfig: Configuration for a multi-speaker text-to-speech
+// setup. Enables the use of up to two distinct voices in a single synthesis
+// request.
+type MultiSpeakerVoiceConfig struct {
+	// SpeakerVoiceConfigs: Required. A list of configurations for the voices of
+	// the speakers. Exactly two speaker voice configurations must be provided.
+	SpeakerVoiceConfigs []*MultispeakerPrebuiltVoice `json:"speakerVoiceConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SpeakerVoiceConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SpeakerVoiceConfigs") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MultiSpeakerVoiceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiSpeakerVoiceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MultispeakerPrebuiltVoice: Configuration for a single speaker in a Gemini
+// TTS multi-speaker setup. Enables dialogue between two speakers.
+type MultispeakerPrebuiltVoice struct {
+	// SpeakerAlias: Required. The speaker alias of the voice. This is the
+	// user-chosen speaker name that is used in the multispeaker text input, such
+	// as "Speaker1".
+	SpeakerAlias string `json:"speakerAlias,omitempty"`
+	// SpeakerId: Required. The speaker ID of the voice. See
+	// https://cloud.google.com/text-to-speech/docs/gemini-tts#voice_options for
+	// available values.
+	SpeakerId string `json:"speakerId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SpeakerAlias") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SpeakerAlias") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MultispeakerPrebuiltVoice) MarshalJSON() ([]byte, error) {
+	type NoMethod MultispeakerPrebuiltVoice
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is the
 // result of a network API call.
 type Operation struct {
@@ -980,6 +1034,10 @@ type VoiceSelectionParams struct {
 	// ModelName: Optional. The name of the model. If set, the service will choose
 	// the model matching the specified configuration.
 	ModelName string `json:"modelName,omitempty"`
+	// MultiSpeakerVoiceConfig: Optional. The configuration for a Gemini
+	// multi-speaker text-to-speech setup. Enables the use of two distinct voices
+	// in a single synthesis request.
+	MultiSpeakerVoiceConfig *MultiSpeakerVoiceConfig `json:"multiSpeakerVoiceConfig,omitempty"`
 	// Name: The name of the voice. If both the name and the gender are not set,
 	// the service will choose a voice based on the other parameters such as
 	// language_code.

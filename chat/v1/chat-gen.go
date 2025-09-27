@@ -5298,8 +5298,8 @@ func (s MessageCreatedEventData) MarshalJSON() ([]byte, error) {
 // MessageDeletedEventData: Event payload for a deleted message. Event type:
 // `google.workspace.chat.message.v1.deleted`
 type MessageDeletedEventData struct {
-	// Message: The deleted message. Only the `name`, `createTime`, `deleteTime`,
-	// and `deletionMetadata` fields are populated.
+	// Message: The deleted message. Only the `name`, `createTime`, and
+	// `deletionMetadata` fields are populated.
 	Message *Message `json:"message,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -11319,12 +11319,21 @@ type SpacesSpaceEventsGetCall struct {
 // if you request an event about a new message but the message was later
 // updated, the server returns the updated `Message` resource in the event
 // payload. Note: The `permissionSettings` field is not returned in the Space
-// object of the Space event data for this request. Requires user
-// authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// with an authorization scope
+// object of the Space event data for this request. Supports the following
+// types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize) with
+// an authorization scope
 // (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes)
-// appropriate for reading the requested data: -
+// appropriate for reading the requested data: - App authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+// with administrator approval (https://support.google.com/a?p=chat-app-auth)
+// in Developer Preview (https://developers.google.com/workspace/preview) with
+// one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.app.spaces` -
+// `https://www.googleapis.com/auth/chat.app.messages.readonly` -
+// `https://www.googleapis.com/auth/chat.app.memberships` - User authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes: -
 // `https://www.googleapis.com/auth/chat.spaces.readonly` -
 // `https://www.googleapis.com/auth/chat.spaces` -
 // `https://www.googleapis.com/auth/chat.messages.readonly` -
@@ -11333,7 +11342,7 @@ type SpacesSpaceEventsGetCall struct {
 // `https://www.googleapis.com/auth/chat.messages.reactions` -
 // `https://www.googleapis.com/auth/chat.memberships.readonly` -
 // `https://www.googleapis.com/auth/chat.memberships` To get an event, the
-// authenticated user must be a member of the space. For an example, see Get
+// authenticated caller must be a member of the space. For an example, see Get
 // details about an event from a Google Chat space
 // (https://developers.google.com/workspace/chat/get-space-event).
 //
@@ -11451,11 +11460,20 @@ type SpacesSpaceEventsListCall struct {
 // list events about new space members, the server returns `Membership`
 // resources that contain the latest membership details. If new members were
 // removed during the requested period, the event payload contains an empty
-// `Membership` resource. Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// with an authorization scope
+// `Membership` resource. Supports the following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize) with
+// an authorization scope
 // (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes)
-// appropriate for reading the requested data: -
+// appropriate for reading the requested data: - App authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+// with administrator approval (https://support.google.com/a?p=chat-app-auth)
+// in Developer Preview (https://developers.google.com/workspace/preview) with
+// one of the following authorization scopes: -
+// `https://www.googleapis.com/auth/chat.app.spaces` -
+// `https://www.googleapis.com/auth/chat.app.messages.readonly` -
+// `https://www.googleapis.com/auth/chat.app.memberships` - User authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes: -
 // `https://www.googleapis.com/auth/chat.spaces.readonly` -
 // `https://www.googleapis.com/auth/chat.spaces` -
 // `https://www.googleapis.com/auth/chat.messages.readonly` -
@@ -11464,7 +11482,7 @@ type SpacesSpaceEventsListCall struct {
 // `https://www.googleapis.com/auth/chat.messages.reactions` -
 // `https://www.googleapis.com/auth/chat.memberships.readonly` -
 // `https://www.googleapis.com/auth/chat.memberships` To list events, the
-// authenticated user must be a member of the space. For an example, see List
+// authenticated caller must be a member of the space. For an example, see List
 // events from a Google Chat space
 // (https://developers.google.com/workspace/chat/list-space-events).
 //

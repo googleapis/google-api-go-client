@@ -5170,11 +5170,6 @@ func (s GoogleCloudDocumentaiV1ProcessResponse) MarshalJSON() ([]byte, error) {
 // Each processor defines how to extract structural information from a
 // document.
 type GoogleCloudDocumentaiV1Processor struct {
-	// ActiveSchemaVersion: Optional. SchemaVersion used by the Processor. It is
-	// the same as Processor's DatasetSchema.schema_version Format is
-	// `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{sch
-	// ema_version}
-	ActiveSchemaVersion string `json:"activeSchemaVersion,omitempty"`
 	// CreateTime: Output only. The time the processor was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DefaultProcessorVersion: The default processor version.
@@ -5224,15 +5219,15 @@ type GoogleCloudDocumentaiV1Processor struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ActiveSchemaVersion") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ActiveSchemaVersion") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

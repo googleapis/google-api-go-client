@@ -2170,6 +2170,12 @@ type GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo stru
 	// center.
 	//   "ANY_AGENT" - Participant is either a human or automated agent.
 	AgentType string `json:"agentType,omitempty"`
+	// DeploymentDisplayName: The agent's deployment display name. Only applicable
+	// to automated agents.
+	DeploymentDisplayName string `json:"deploymentDisplayName,omitempty"`
+	// DeploymentId: The agent's deployment ID. Only applicable to automated
+	// agents.
+	DeploymentId string `json:"deploymentId,omitempty"`
 	// DisplayName: The agent's name.
 	DisplayName string `json:"displayName,omitempty"`
 	// DispositionCode: A user-provided string indicating the outcome of the
@@ -2182,6 +2188,11 @@ type GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo stru
 	Team string `json:"team,omitempty"`
 	// Teams: User-specified strings representing the agent's teams.
 	Teams []string `json:"teams,omitempty"`
+	// VersionDisplayName: The agent's version display name. Only applicable to
+	// automated agents.
+	VersionDisplayName string `json:"versionDisplayName,omitempty"`
+	// VersionId: The agent's version ID. Only applicable to automated agents.
+	VersionId string `json:"versionId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AgentId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2877,6 +2888,8 @@ type GoogleCloudContactcenterinsightsV1Dimension struct {
 	//   "CONVERSATION_PROFILE_ID" - The dimension is keyed by the conversation
 	// profile ID.
 	//   "MEDIUM" - The dimension is keyed by the conversation medium.
+	//   "AGENT_VERSION_ID" - The dimension is keyed by the agent version ID.
+	//   "AGENT_DEPLOYMENT_ID" - The dimension is keyed by the agent deployment ID.
 	DimensionKey string `json:"dimensionKey,omitempty"`
 	// IssueDimensionMetadata: Output only. Metadata about the issue dimension.
 	IssueDimensionMetadata *GoogleCloudContactcenterinsightsV1DimensionIssueDimensionMetadata `json:"issueDimensionMetadata,omitempty"`
@@ -2910,21 +2923,40 @@ func (s GoogleCloudContactcenterinsightsV1Dimension) MarshalJSON() ([]byte, erro
 // GoogleCloudContactcenterinsightsV1DimensionAgentDimensionMetadata: Metadata
 // about the agent dimension.
 type GoogleCloudContactcenterinsightsV1DimensionAgentDimensionMetadata struct {
-	// AgentDisplayName: Optional. The agent's name
+	// AgentDeploymentDisplayName: Optional. The agent's deployment display name.
+	// Only applicable to automated agents. This will be populated for
+	// AGENT_DEPLOYMENT_ID dimensions.
+	AgentDeploymentDisplayName string `json:"agentDeploymentDisplayName,omitempty"`
+	// AgentDeploymentId: Optional. The agent's deployment ID. Only applicable to
+	// automated agents. This will be populated for AGENT and AGENT_DEPLOYMENT_ID
+	// dimensions.
+	AgentDeploymentId string `json:"agentDeploymentId,omitempty"`
+	// AgentDisplayName: Optional. The agent's name This will be populated for
+	// AGENT, AGENT_TEAM, AGENT_VERSION_ID, and AGENT_DEPLOYMENT_ID dimensions.
 	AgentDisplayName string `json:"agentDisplayName,omitempty"`
-	// AgentId: Optional. A user-specified string representing the agent.
+	// AgentId: Optional. A user-specified string representing the agent. This will
+	// be populated for AGENT, AGENT_TEAM, AGENT_VERSION_ID, and
+	// AGENT_DEPLOYMENT_ID dimensions.
 	AgentId string `json:"agentId,omitempty"`
 	// AgentTeam: Optional. A user-specified string representing the agent's team.
 	AgentTeam string `json:"agentTeam,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AgentDisplayName") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// AgentVersionDisplayName: Optional. The agent's version display name. Only
+	// applicable to automated agents. This will be populated for AGENT_VERSION_ID,
+	// and AGENT_DEPLOYMENT_ID dimensions.
+	AgentVersionDisplayName string `json:"agentVersionDisplayName,omitempty"`
+	// AgentVersionId: Optional. The agent's version ID. Only applicable to
+	// automated agents. This will be populated for AGENT_VERSION_ID, and
+	// AGENT_DEPLOYMENT_ID dimensions.
+	AgentVersionId string `json:"agentVersionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentDeploymentDisplayName")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AgentDisplayName") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentDeploymentDisplayName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -6090,8 +6122,11 @@ type GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointConvers
 	AverageCustomerSatisfactionRating float64 `json:"averageCustomerSatisfactionRating,omitempty"`
 	// AverageDuration: The average duration.
 	AverageDuration string `json:"averageDuration,omitempty"`
-	// AverageQaNormalizedScore: Average QA normalized score. Will exclude 0's in
-	// average calculation.
+	// AverageQaNormalizedScore: The average normalized QA score for a scorecard.
+	// When computing the average across a set of conversations, if a conversation
+	// has been evaluated with multiple revisions of a scorecard, only the latest
+	// revision results will be used. Will exclude 0's in average calculation. Will
+	// be only populated if the request specifies a dimension of QA_SCORECARD_ID.
 	AverageQaNormalizedScore float64 `json:"averageQaNormalizedScore,omitempty"`
 	// AverageQaQuestionNormalizedScore: Average QA normalized score averaged for
 	// questions averaged across all revisions of the parent scorecard. Will be
@@ -8131,6 +8166,12 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadataAgentInf
 	// center.
 	//   "ANY_AGENT" - Participant is either a human or automated agent.
 	AgentType string `json:"agentType,omitempty"`
+	// DeploymentDisplayName: The agent's deployment display name. Only applicable
+	// to automated agents.
+	DeploymentDisplayName string `json:"deploymentDisplayName,omitempty"`
+	// DeploymentId: The agent's deployment ID. Only applicable to automated
+	// agents.
+	DeploymentId string `json:"deploymentId,omitempty"`
 	// DisplayName: The agent's name.
 	DisplayName string `json:"displayName,omitempty"`
 	// DispositionCode: A user-provided string indicating the outcome of the
@@ -8143,6 +8184,11 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadataAgentInf
 	Team string `json:"team,omitempty"`
 	// Teams: User-specified strings representing the agent's teams.
 	Teams []string `json:"teams,omitempty"`
+	// VersionDisplayName: The agent's version display name. Only applicable to
+	// automated agents.
+	VersionDisplayName string `json:"versionDisplayName,omitempty"`
+	// VersionId: The agent's version ID. Only applicable to automated agents.
+	VersionId string `json:"versionId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AgentId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -8830,6 +8876,8 @@ type GoogleCloudContactcenterinsightsV1alpha1Dimension struct {
 	//   "CONVERSATION_PROFILE_ID" - The dimension is keyed by the conversation
 	// profile ID.
 	//   "MEDIUM" - The dimension is keyed by the conversation medium.
+	//   "AGENT_VERSION_ID" - The dimension is keyed by the agent version ID.
+	//   "AGENT_DEPLOYMENT_ID" - The dimension is keyed by the agent deployment ID.
 	DimensionKey string `json:"dimensionKey,omitempty"`
 	// IssueDimensionMetadata: Output only. Metadata about the issue dimension.
 	IssueDimensionMetadata *GoogleCloudContactcenterinsightsV1alpha1DimensionIssueDimensionMetadata `json:"issueDimensionMetadata,omitempty"`
@@ -8863,21 +8911,40 @@ func (s GoogleCloudContactcenterinsightsV1alpha1Dimension) MarshalJSON() ([]byte
 // GoogleCloudContactcenterinsightsV1alpha1DimensionAgentDimensionMetadata:
 // Metadata about the agent dimension.
 type GoogleCloudContactcenterinsightsV1alpha1DimensionAgentDimensionMetadata struct {
-	// AgentDisplayName: Optional. The agent's name
+	// AgentDeploymentDisplayName: Optional. The agent's deployment display name.
+	// Only applicable to automated agents. This will be populated for
+	// AGENT_DEPLOYMENT_ID dimensions.
+	AgentDeploymentDisplayName string `json:"agentDeploymentDisplayName,omitempty"`
+	// AgentDeploymentId: Optional. The agent's deployment ID. Only applicable to
+	// automated agents. This will be populated for AGENT and AGENT_DEPLOYMENT_ID
+	// dimensions.
+	AgentDeploymentId string `json:"agentDeploymentId,omitempty"`
+	// AgentDisplayName: Optional. The agent's name This will be populated for
+	// AGENT, AGENT_TEAM, AGENT_VERSION_ID, and AGENT_DEPLOYMENT_ID dimensions.
 	AgentDisplayName string `json:"agentDisplayName,omitempty"`
-	// AgentId: Optional. A user-specified string representing the agent.
+	// AgentId: Optional. A user-specified string representing the agent. This will
+	// be populated for AGENT, AGENT_TEAM, AGENT_VERSION_ID, and
+	// AGENT_DEPLOYMENT_ID dimensions.
 	AgentId string `json:"agentId,omitempty"`
 	// AgentTeam: Optional. A user-specified string representing the agent's team.
 	AgentTeam string `json:"agentTeam,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AgentDisplayName") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// AgentVersionDisplayName: Optional. The agent's version display name. Only
+	// applicable to automated agents. This will be populated for AGENT_VERSION_ID,
+	// and AGENT_DEPLOYMENT_ID dimensions.
+	AgentVersionDisplayName string `json:"agentVersionDisplayName,omitempty"`
+	// AgentVersionId: Optional. The agent's version ID. Only applicable to
+	// automated agents. This will be populated for AGENT_VERSION_ID, and
+	// AGENT_DEPLOYMENT_ID dimensions.
+	AgentVersionId string `json:"agentVersionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentDeploymentDisplayName")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AgentDisplayName") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentDeploymentDisplayName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -10817,8 +10884,11 @@ type GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointC
 	AverageCustomerSatisfactionRating float64 `json:"averageCustomerSatisfactionRating,omitempty"`
 	// AverageDuration: The average duration.
 	AverageDuration string `json:"averageDuration,omitempty"`
-	// AverageQaNormalizedScore: Average QA normalized score. Will exclude 0's in
-	// average calculation.
+	// AverageQaNormalizedScore: The average normalized QA score for a scorecard.
+	// When computing the average across a set of conversations, if a conversation
+	// has been evaluated with multiple revisions of a scorecard, only the latest
+	// revision results will be used. Will exclude 0's in average calculation. Will
+	// be only populated if the request specifies a dimension of QA_SCORECARD_ID.
 	AverageQaNormalizedScore float64 `json:"averageQaNormalizedScore,omitempty"`
 	// AverageQaQuestionNormalizedScore: Average QA normalized score averaged for
 	// questions averaged across all revisions of the parent scorecard. Will be
@@ -11935,6 +12005,11 @@ type GoogleLongrunningListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -19467,6 +19542,19 @@ func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) P
 // token.
 func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -28453,6 +28541,19 @@ func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

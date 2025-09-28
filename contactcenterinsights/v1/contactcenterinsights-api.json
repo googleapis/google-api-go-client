@@ -2117,6 +2117,11 @@
                               "description": "The standard list page token.",
                               "location": "query",
                               "type": "string"
+                            },
+                            "returnPartialSuccess": {
+                              "description": "When set to `true`, operations that are reachable are returned as normal, and those that are unreachable are returned in the [ListOperationsResponse.unreachable] field. This can only be `true` when reading across collections e.g. when `parent` is set to `\"projects/example/locations/-\"`. This field is not by default supported and will result in an `UNIMPLEMENTED` error if set unless explicitly documented otherwise in service or product specific documentation.",
+                              "location": "query",
+                              "type": "boolean"
                             }
                           },
                           "path": "v1/{+name}/operations",
@@ -4589,6 +4594,11 @@
                       "description": "The standard list page token.",
                       "location": "query",
                       "type": "string"
+                    },
+                    "returnPartialSuccess": {
+                      "description": "When set to `true`, operations that are reachable are returned as normal, and those that are unreachable are returned in the [ListOperationsResponse.unreachable] field. This can only be `true` when reading across collections e.g. when `parent` is set to `\"projects/example/locations/-\"`. This field is not by default supported and will result in an `UNIMPLEMENTED` error if set unless explicitly documented otherwise in service or product specific documentation.",
+                      "location": "query",
+                      "type": "boolean"
                     }
                   },
                   "path": "v1/{+name}/operations",
@@ -5638,7 +5648,7 @@
       }
     }
   },
-  "revision": "20250923",
+  "revision": "20250926",
   "rootUrl": "https://contactcenterinsights.googleapis.com/",
   "schemas": {
     "GoogleCloudContactcenterinsightsV1Analysis": {
@@ -7034,6 +7044,14 @@
           ],
           "type": "string"
         },
+        "deploymentDisplayName": {
+          "description": "The agent's deployment display name. Only applicable to automated agents.",
+          "type": "string"
+        },
+        "deploymentId": {
+          "description": "The agent's deployment ID. Only applicable to automated agents.",
+          "type": "string"
+        },
         "displayName": {
           "description": "The agent's name.",
           "type": "string"
@@ -7057,6 +7075,14 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "versionDisplayName": {
+          "description": "The agent's version display name. Only applicable to automated agents.",
+          "type": "string"
+        },
+        "versionId": {
+          "description": "The agent's version ID. Only applicable to automated agents.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -7537,7 +7563,9 @@
             "QA_QUESTION_ANSWER_VALUE",
             "QA_SCORECARD_ID",
             "CONVERSATION_PROFILE_ID",
-            "MEDIUM"
+            "MEDIUM",
+            "AGENT_VERSION_ID",
+            "AGENT_DEPLOYMENT_ID"
           ],
           "enumDescriptions": [
             "The key of the dimension is unspecified.",
@@ -7549,7 +7577,9 @@
             "The dimension is keyed by QaQuestionIds-Answer value pairs. Note that: We only group by the QuestionId and not the revision-id of the scorecard this question is a part of. This allows for showing distribution of answers per question across different scorecard revisions.",
             "The dimension is keyed by QaScorecardIds. Note that: We only group by the ScorecardId and not the revision-id of the scorecard. This allows for showing stats for the same scorecard across different revisions. This metric is mostly only useful if querying the average normalized score per scorecard.",
             "The dimension is keyed by the conversation profile ID.",
-            "The dimension is keyed by the conversation medium."
+            "The dimension is keyed by the conversation medium.",
+            "The dimension is keyed by the agent version ID.",
+            "The dimension is keyed by the agent deployment ID."
           ],
           "type": "string"
         },
@@ -7580,16 +7610,32 @@
       "description": "Metadata about the agent dimension.",
       "id": "GoogleCloudContactcenterinsightsV1DimensionAgentDimensionMetadata",
       "properties": {
+        "agentDeploymentDisplayName": {
+          "description": "Optional. The agent's deployment display name. Only applicable to automated agents. This will be populated for AGENT_DEPLOYMENT_ID dimensions.",
+          "type": "string"
+        },
+        "agentDeploymentId": {
+          "description": "Optional. The agent's deployment ID. Only applicable to automated agents. This will be populated for AGENT and AGENT_DEPLOYMENT_ID dimensions.",
+          "type": "string"
+        },
         "agentDisplayName": {
-          "description": "Optional. The agent's name",
+          "description": "Optional. The agent's name This will be populated for AGENT, AGENT_TEAM, AGENT_VERSION_ID, and AGENT_DEPLOYMENT_ID dimensions.",
           "type": "string"
         },
         "agentId": {
-          "description": "Optional. A user-specified string representing the agent.",
+          "description": "Optional. A user-specified string representing the agent. This will be populated for AGENT, AGENT_TEAM, AGENT_VERSION_ID, and AGENT_DEPLOYMENT_ID dimensions.",
           "type": "string"
         },
         "agentTeam": {
           "description": "Optional. A user-specified string representing the agent's team.",
+          "type": "string"
+        },
+        "agentVersionDisplayName": {
+          "description": "Optional. The agent's version display name. Only applicable to automated agents. This will be populated for AGENT_VERSION_ID, and AGENT_DEPLOYMENT_ID dimensions.",
+          "type": "string"
+        },
+        "agentVersionId": {
+          "description": "Optional. The agent's version ID. Only applicable to automated agents. This will be populated for AGENT_VERSION_ID, and AGENT_DEPLOYMENT_ID dimensions.",
           "type": "string"
         }
       },
@@ -9980,7 +10026,7 @@
           "type": "string"
         },
         "averageQaNormalizedScore": {
-          "description": "Average QA normalized score. Will exclude 0's in average calculation.",
+          "description": "The average normalized QA score for a scorecard. When computing the average across a set of conversations, if a conversation has been evaluated with multiple revisions of a scorecard, only the latest revision results will be used. Will exclude 0's in average calculation. Will be only populated if the request specifies a dimension of QA_SCORECARD_ID.",
           "format": "double",
           "type": "number"
         },
@@ -11557,6 +11603,14 @@
           ],
           "type": "string"
         },
+        "deploymentDisplayName": {
+          "description": "The agent's deployment display name. Only applicable to automated agents.",
+          "type": "string"
+        },
+        "deploymentId": {
+          "description": "The agent's deployment ID. Only applicable to automated agents.",
+          "type": "string"
+        },
         "displayName": {
           "description": "The agent's name.",
           "type": "string"
@@ -11580,6 +11634,14 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "versionDisplayName": {
+          "description": "The agent's version display name. Only applicable to automated agents.",
+          "type": "string"
+        },
+        "versionId": {
+          "description": "The agent's version ID. Only applicable to automated agents.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -12054,7 +12116,9 @@
             "QA_QUESTION_ANSWER_VALUE",
             "QA_SCORECARD_ID",
             "CONVERSATION_PROFILE_ID",
-            "MEDIUM"
+            "MEDIUM",
+            "AGENT_VERSION_ID",
+            "AGENT_DEPLOYMENT_ID"
           ],
           "enumDescriptions": [
             "The key of the dimension is unspecified.",
@@ -12066,7 +12130,9 @@
             "The dimension is keyed by QaQuestionIds-Answer value pairs. Note that: We only group by the QuestionId and not the revision-id of the scorecard this question is a part of. This allows for showing distribution of answers per question across different scorecard revisions.",
             "The dimension is keyed by QaScorecardIds. Note that: We only group by the ScorecardId and not the revision-id of the scorecard. This allows for showing stats for the same scorecard across different revisions. This metric is mostly only useful if querying the average normalized score per scorecard.",
             "The dimension is keyed by the conversation profile ID.",
-            "The dimension is keyed by the conversation medium."
+            "The dimension is keyed by the conversation medium.",
+            "The dimension is keyed by the agent version ID.",
+            "The dimension is keyed by the agent deployment ID."
           ],
           "type": "string"
         },
@@ -12097,16 +12163,32 @@
       "description": "Metadata about the agent dimension.",
       "id": "GoogleCloudContactcenterinsightsV1alpha1DimensionAgentDimensionMetadata",
       "properties": {
+        "agentDeploymentDisplayName": {
+          "description": "Optional. The agent's deployment display name. Only applicable to automated agents. This will be populated for AGENT_DEPLOYMENT_ID dimensions.",
+          "type": "string"
+        },
+        "agentDeploymentId": {
+          "description": "Optional. The agent's deployment ID. Only applicable to automated agents. This will be populated for AGENT and AGENT_DEPLOYMENT_ID dimensions.",
+          "type": "string"
+        },
         "agentDisplayName": {
-          "description": "Optional. The agent's name",
+          "description": "Optional. The agent's name This will be populated for AGENT, AGENT_TEAM, AGENT_VERSION_ID, and AGENT_DEPLOYMENT_ID dimensions.",
           "type": "string"
         },
         "agentId": {
-          "description": "Optional. A user-specified string representing the agent.",
+          "description": "Optional. A user-specified string representing the agent. This will be populated for AGENT, AGENT_TEAM, AGENT_VERSION_ID, and AGENT_DEPLOYMENT_ID dimensions.",
           "type": "string"
         },
         "agentTeam": {
           "description": "Optional. A user-specified string representing the agent's team.",
+          "type": "string"
+        },
+        "agentVersionDisplayName": {
+          "description": "Optional. The agent's version display name. Only applicable to automated agents. This will be populated for AGENT_VERSION_ID, and AGENT_DEPLOYMENT_ID dimensions.",
+          "type": "string"
+        },
+        "agentVersionId": {
+          "description": "Optional. The agent's version ID. Only applicable to automated agents. This will be populated for AGENT_VERSION_ID, and AGENT_DEPLOYMENT_ID dimensions.",
           "type": "string"
         }
       },
@@ -13608,7 +13690,7 @@
           "type": "string"
         },
         "averageQaNormalizedScore": {
-          "description": "Average QA normalized score. Will exclude 0's in average calculation.",
+          "description": "The average normalized QA score for a scorecard. When computing the average across a set of conversations, if a conversation has been evaluated with multiple revisions of a scorecard, only the latest revision results will be used. Will exclude 0's in average calculation. Will be only populated if the request specifies a dimension of QA_SCORECARD_ID.",
           "format": "double",
           "type": "number"
         },
@@ -14281,6 +14363,13 @@
           "description": "A list of operations that matches the specified filter in the request.",
           "items": {
             "$ref": "GoogleLongrunningOperation"
+          },
+          "type": "array"
+        },
+        "unreachable": {
+          "description": "Unordered list. Unreachable resources. Populated when the request sets `ListOperationsRequest.return_partial_success` and reads across collections e.g. when attempting to list all resources across all supported locations.",
+          "items": {
+            "type": "string"
           },
           "type": "array"
         }

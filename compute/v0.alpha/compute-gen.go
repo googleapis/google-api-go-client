@@ -2469,6 +2469,15 @@ type Address struct {
 	// Id: [Output Only] The unique identifier for the resource. This identifier is
 	// defined by the server.
 	Id uint64 `json:"id,omitempty,string"`
+	// IpCollection: Reference to the source of external IPv4 addresses, like a
+	// PublicDelegatedPrefix (PDP) for BYOIP. The PDP must support enhanced IPv4
+	// allocations. Use one of the following formats to specify a PDP when
+	// reserving an external IPv4 address using BYOIP. - Full resource URL, as in
+	// https://www.googleapis.com/compute/v1/projects/projectId/regions/region
+	// /publicDelegatedPrefixes/pdp-name - Partial URL, as in -
+	// projects/projectId/regions/region/publicDelegatedPrefixes/pdp-name -
+	// regions/region/publicDelegatedPrefixes/pdp-name
+	IpCollection string `json:"ipCollection,omitempty"`
 	// IpVersion: The IP version that will be used by this address. Valid options
 	// are IPV4 or IPV6.
 	//
@@ -15910,9 +15919,6 @@ type ForwardingRule struct {
 	// managed services, the target must be a service attachment. The target is not
 	// mutable once set as a service attachment.
 	Target string `json:"target,omitempty"`
-	// TrafficDisabled: [PSC for VPC-hosted services only] Determines if clients
-	// are allowed to access the producer service via this PSC endpoint.
-	TrafficDisabled bool `json:"trafficDisabled,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -38596,6 +38602,8 @@ func (s NamedPort) MarshalJSON() ([]byte, error) {
 }
 
 type NamedSet struct {
+	// Description: An optional description of named set.
+	Description string `json:"description,omitempty"`
 	// Elements: CEL expressions that are comparable to constructs of this set's
 	// type (see Policy Language).
 	Elements []*Expr `json:"elements,omitempty"`
@@ -38615,13 +38623,13 @@ type NamedSet struct {
 	//   "NAMED_SET_TYPE_COMMUNITY" - The Named Set is a Community Named Set.
 	//   "NAMED_SET_TYPE_PREFIX" - The Named Set is a Prefix Named Set.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Elements") to
+	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Elements") to include in API
+	// NullFields is a list of field names (e.g. "Description") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -41109,6 +41117,9 @@ type NetworkInterface struct {
 	// AliasIpRanges: An array of alias IP ranges for this network interface. You
 	// can only specify this field for network interfaces in VPC networks.
 	AliasIpRanges []*AliasIpRange `json:"aliasIpRanges,omitempty"`
+	// EnableVpcScopedDns: Optional. If true, DNS resolution will be enabled over
+	// this interface. Only valid with network_attachment.
+	EnableVpcScopedDns bool `json:"enableVpcScopedDns,omitempty"`
 	// Fingerprint: Fingerprint hash of contents stored in this network interface.
 	// This field will be ignored when inserting an Instance or adding a
 	// NetworkInterface. An up-to-date fingerprint must be provided in order to
@@ -42329,6 +42340,16 @@ func (s NetworkPolicyTrafficClassificationRule) MarshalJSON() ([]byte, error) {
 }
 
 type NetworkPolicyTrafficClassificationRuleAction struct {
+	// DscpMode: The traffic class that should be applied to the matching packet.
+	//
+	// Possible values:
+	//   "AUTO" - DSCP value will be automatically picked up based on configured
+	// traffic_class.
+	//   "CUSTOM" - Allows to specify custom DSCP value from selected traffic_class
+	// range.
+	DscpMode string `json:"dscpMode,omitempty"`
+	// DscpValue: Custom DSCP value from 0-63 range.
+	DscpValue int64 `json:"dscpValue,omitempty"`
 	// FieldType: The field type could be one of: TRAFFIC_CLASS or DSCP.
 	//
 	// Possible values:
@@ -42339,16 +42360,27 @@ type NetworkPolicyTrafficClassificationRuleAction struct {
 	// FieldValue: For field_type = TRAFFIC_CLASS: 1 to 6. For field_type = DSCP: 0
 	// to 63.
 	FieldValue int64 `json:"fieldValue,omitempty"`
+	// TrafficClass: The traffic class that should be applied to the matching
+	// packet.
+	//
+	// Possible values:
+	//   "TC1" - Traffic Class 1, corresponding to DSCP ranges (0-7) 000xxx.
+	//   "TC2" - Traffic Class 2, corresponding to DSCP ranges (8-15) 001xxx.
+	//   "TC3" - Traffic Class 3, corresponding to DSCP ranges (16-23) 010xxx.
+	//   "TC4" - Traffic Class 4, corresponding to DSCP ranges (24-31) 011xxx.
+	//   "TC5" - Traffic Class 5, corresponding to DSCP ranges (32-47) 10xxxx.
+	//   "TC6" - Traffic Class 6, corresponding to DSCP ranges (48-63) 11xxxx.
+	TrafficClass string `json:"trafficClass,omitempty"`
 	// Type: Always "apply_traffic_classification" for traffic classification
 	// rules.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FieldType") to
+	// ForceSendFields is a list of field names (e.g. "DscpMode") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FieldType") to include in API
+	// NullFields is a list of field names (e.g. "DscpMode") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -49132,6 +49164,9 @@ type PublicDelegatedPrefix struct {
 	// Description: An optional description of this resource. Provide this property
 	// when you create the resource.
 	Description string `json:"description,omitempty"`
+	// EnableEnhancedIpv4Allocation: [Output Only] Whether this PDP supports
+	// enhanced IPv4 allocations. Applicable for IPv4 PDPs only.
+	EnableEnhancedIpv4Allocation bool `json:"enableEnhancedIpv4Allocation,omitempty"`
 	// Fingerprint: Fingerprint of this resource. A hash of the contents stored in
 	// this object. This field is used in optimistic locking. This field will be
 	// ignored when inserting a new PublicDelegatedPrefix. An up-to-date
@@ -49598,6 +49633,9 @@ type PublicDelegatedPrefixPublicDelegatedSubPrefix struct {
 	// Description: An optional description of this resource. Provide this property
 	// when you create the resource.
 	Description string `json:"description,omitempty"`
+	// EnableEnhancedIpv4Allocation: [Output Only] Whether this PDP supports
+	// enhanced IPv4 allocations. Applicable for IPv4 PDPs only.
+	EnableEnhancedIpv4Allocation bool `json:"enableEnhancedIpv4Allocation,omitempty"`
 	// IpCidrRange: The IP address range, in CIDR format, represented by this sub
 	// public delegated prefix.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
@@ -63864,7 +63902,7 @@ func (s SignedUrlKey) MarshalJSON() ([]byte, error) {
 
 // Snapshot: Represents a Persistent Disk Snapshot resource. You can use
 // snapshots to back up data on a regular interval. For more information, read
-// Creating persistent disk snapshots. LINT.IfChange
+// Creating persistent disk snapshots.
 type Snapshot struct {
 	// Architecture: [Output Only] The architecture of the snapshot. Valid values
 	// are ARM64 or X86_64.

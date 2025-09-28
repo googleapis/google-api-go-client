@@ -286,6 +286,9 @@ func (s AllowlistedCertificate) MarshalJSON() ([]byte, error) {
 // AuthorizationAttemptInfo: State of the latest attempt to authorize a domain
 // for certificate issuance.
 type AuthorizationAttemptInfo struct {
+	// AttemptTime: Output only. The timestamp, when the authorization attempt was
+	// made.
+	AttemptTime string `json:"attemptTime,omitempty"`
 	// Details: Output only. Human readable explanation for reaching the state.
 	// Provided to help address the configuration issues. Not guaranteed to be
 	// stable. For programmatic access use FailureReason enum.
@@ -316,13 +319,17 @@ type AuthorizationAttemptInfo struct {
 	// Managed Certificate from being issued. See `failure_reason` and `details`
 	// fields for more information.
 	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// Troubleshooting: Output only. Troubleshooting information for the
+	// authorization attempt. This field is only populated if the authorization
+	// attempt failed.
+	Troubleshooting *Troubleshooting `json:"troubleshooting,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttemptTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Details") to include in API
+	// NullFields is a list of field names (e.g. "AttemptTime") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -331,6 +338,38 @@ type AuthorizationAttemptInfo struct {
 
 func (s AuthorizationAttemptInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthorizationAttemptInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CNAME: CNAME troubleshooting information.
+type CNAME struct {
+	// ExpectedData: Output only. The expected value of the CNAME record for the
+	// domain, equals to `dns_resource_record.data` in the corresponding
+	// `DnsAuthorization`.
+	ExpectedData string `json:"expectedData,omitempty"`
+	// Name: Output only. The name of the CNAME record for the domain, equals to
+	// `dns_resource_record.name` in the corresponding `DnsAuthorization`.
+	Name string `json:"name,omitempty"`
+	// ResolvedData: Output only. The resolved CNAME chain. Empty list if the CNAME
+	// record for `CNAME.name` is not found. Otherwise the first item is the value
+	// of the CNAME record for `CNAME.name`. If the CNAME chain is longer, the
+	// second item is the value of the CNAME record for the first item, and so on.
+	ResolvedData []string `json:"resolvedData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpectedData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpectedData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CNAME) MarshalJSON() ([]byte, error) {
+	type NoMethod CNAME
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -738,6 +777,35 @@ type GclbTarget struct {
 
 func (s GclbTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod GclbTarget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IPs: IPs troubleshooting information.
+type IPs struct {
+	// Resolved: Output only. The list of IP addresses resolved from the domain's
+	// A/AAAA records. Can contain both ipv4 and ipv6 addresses.
+	Resolved []string `json:"resolved,omitempty"`
+	// Serving: Output only. The list of IP addresses, where the certificate is
+	// attached and port 443 is open.
+	Serving []string `json:"serving,omitempty"`
+	// ServingOnAltPorts: Output only. The list of IP addresses, where the
+	// certificate is attached, but port 443 is not open.
+	ServingOnAltPorts []string `json:"servingOnAltPorts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Resolved") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Resolved") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IPs) MarshalJSON() ([]byte, error) {
+	type NoMethod IPs
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1314,6 +1382,45 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Troubleshooting: Troubleshooting information for the authorization attempt.
+type Troubleshooting struct {
+	// Cname: Output only. CNAME troubleshooting information.
+	Cname *CNAME `json:"cname,omitempty"`
+	// Ips: Output only. IPs troubleshooting information.
+	Ips *IPs `json:"ips,omitempty"`
+	// Issues: Output only. The list of issues discovered during the authorization
+	// attempt.
+	//
+	// Possible values:
+	//   "ISSUE_UNSPECIFIED" - Issue is unspecified.
+	//   "CNAME_MISMATCH" - The resolved CNAME value doesn't match the expected
+	// CNAME.
+	//   "RESOLVED_TO_NOT_SERVING" - Domain has A/AAAA records that point to IPs,
+	// where the certificate is not attached.
+	//   "RESOLVED_TO_SERVING_ON_ALT_PORTS" - Domain has A/AAAA records that point
+	// to IPs, where the certificate is attached, but port 443 is not open.
+	//   "NO_RESOLVED_IPS" - Domain doesn't have any A/AAAA records.
+	//   "CERTIFICATE_NOT_ATTACHED" - Certificate is not configured to be served
+	// from any IPs (e.g. Certificate is not attached to any load balancer).
+	Issues []string `json:"issues,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cname") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cname") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Troubleshooting) MarshalJSON() ([]byte, error) {
+	type NoMethod Troubleshooting
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

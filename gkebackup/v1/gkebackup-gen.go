@@ -1206,7 +1206,7 @@ type ExclusionWindow struct {
 	// SingleOccurrenceDate: No recurrence. The exclusion window occurs only once
 	// and on this date in UTC.
 	SingleOccurrenceDate *Date `json:"singleOccurrenceDate,omitempty"`
-	// StartTime: Required. Specifies the start time of the window using time of
+	// StartTime: Optional. Specifies the start time of the window using time of
 	// the day in UTC.
 	StartTime *TimeOfDay `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Daily") to unconditionally
@@ -3520,9 +3520,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
-// use this field. It is unsupported and is ignored unless explicitly
-// documented otherwise. This is primarily for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
+// explicitly documented otherwise, don't use this unsupported field which is
+// primarily intended for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

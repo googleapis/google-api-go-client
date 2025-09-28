@@ -1884,6 +1884,18 @@ type GoogleFirestoreAdminV1Database struct {
 	// fields, and may be sent on update and delete requests to ensure the client
 	// has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
+	// FirestoreDataAccessMode: Optional. The Firestore API data access mode to use
+	// for this database. If not set on write: - the default value is
+	// DATA_ACCESS_MODE_DISABLED for Enterprise Edition. - the default value is
+	// DATA_ACCESS_MODE_ENABLED for Standard Edition.
+	//
+	// Possible values:
+	//   "DATA_ACCESS_MODE_UNSPECIFIED" - Not Used.
+	//   "DATA_ACCESS_MODE_ENABLED" - Accessing the database through the API is
+	// allowed.
+	//   "DATA_ACCESS_MODE_DISABLED" - Accessing the database through the API is
+	// disallowed.
+	FirestoreDataAccessMode string `json:"firestoreDataAccessMode,omitempty"`
 	// FreeTier: Output only. Background: Free tier is the ability of a Firestore
 	// database to use a small amount of resources every day without being charged.
 	// Once usage exceeds the free tier limit further usage is charged. Whether
@@ -1902,6 +1914,18 @@ type GoogleFirestoreAdminV1Database struct {
 	// LocationId: The location of the database. Available locations are listed at
 	// https://cloud.google.com/firestore/docs/locations.
 	LocationId string `json:"locationId,omitempty"`
+	// MongodbCompatibleDataAccessMode: Optional. The MongoDB compatible API data
+	// access mode to use for this database. If not set on write, the default value
+	// is DATA_ACCESS_MODE_ENABLED for Enterprise Edition. The value is always
+	// DATA_ACCESS_MODE_DISABLED for Standard Edition.
+	//
+	// Possible values:
+	//   "DATA_ACCESS_MODE_UNSPECIFIED" - Not Used.
+	//   "DATA_ACCESS_MODE_ENABLED" - Accessing the database through the API is
+	// allowed.
+	//   "DATA_ACCESS_MODE_DISABLED" - Accessing the database through the API is
+	// disallowed.
+	MongodbCompatibleDataAccessMode string `json:"mongodbCompatibleDataAccessMode,omitempty"`
 	// Name: The resource name of the Database. Format:
 	// `projects/{project}/databases/{database}`
 	Name string `json:"name,omitempty"`
@@ -1921,6 +1945,17 @@ type GoogleFirestoreAdminV1Database struct {
 	// PreviousId: Output only. The database resource's prior database ID. This
 	// field is only populated for deleted databases.
 	PreviousId string `json:"previousId,omitempty"`
+	// RealtimeUpdatesMode: Immutable. The default Realtime Updates mode to use for
+	// this database.
+	//
+	// Possible values:
+	//   "REALTIME_UPDATES_MODE_UNSPECIFIED" - The Realtime Updates feature is not
+	// specified.
+	//   "REALTIME_UPDATES_ENABLED" - The Realtime Updates feature is enabled by
+	// default. This could potentially degrade write performance for the database.
+	//   "REALTIME_UPDATES_DISABLED" - The Realtime Updates feature is disabled by
+	// default.
+	RealtimeUpdatesMode string `json:"realtimeUpdatesMode,omitempty"`
 	// SourceInfo: Output only. Information about the provenance of this database.
 	SourceInfo *GoogleFirestoreAdminV1SourceInfo `json:"sourceInfo,omitempty"`
 	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to

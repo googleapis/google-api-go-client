@@ -22275,7 +22275,7 @@ type RegionNetworkPoliciesAggregatedListCall struct {
 }
 
 // AggregatedList: Retrieves an aggregated list of network policies. To prevent
-// failure, Google recommends that you set the `returnPartialSuccess` parameter
+// failure, it's recommended that you set the `returnPartialSuccess` parameter
 // to `true`.
 //
 // - project: Project ID for this request.
@@ -23474,8 +23474,9 @@ func (r *RegionNetworkPoliciesService) PatchTrafficClassificationRule(project st
 	return c
 }
 
-// Priority sets the optional parameter "priority": The priority of the rule to
-// patch.
+// Priority sets the optional parameter "priority": The priority of the traffic
+// classification rule to patch. Only rules with a priority value between 1 and
+// 2147482647 (inclusive) can be patched.
 func (c *RegionNetworkPoliciesPatchTrafficClassificationRuleCall) Priority(priority int64) *RegionNetworkPoliciesPatchTrafficClassificationRuleCall {
 	c.urlParams_.Set("priority", fmt.Sprint(priority))
 	return c

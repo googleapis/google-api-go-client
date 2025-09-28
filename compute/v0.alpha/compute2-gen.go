@@ -11617,7 +11617,7 @@ func (c *DisksUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	return ret, nil
 }
 
-type DisksUpdateKmskeyCall struct {
+type DisksUpdateKmsKeyCall struct {
 	s          *Service
 	project    string
 	zone       string
@@ -11627,14 +11627,14 @@ type DisksUpdateKmskeyCall struct {
 	header_    http.Header
 }
 
-// UpdateKmskey: Rotates the customer-managed encryption key to the latest
+// UpdateKmsKey: Rotates the customer-managed encryption key to the latest
 // version for the specified persistent disk.
 //
 // - disk: Name of the Disk resource, should conform to RFC1035.
 // - project: Project ID for this request.
 // - zone: The name of the zone for this request.
-func (r *DisksService) UpdateKmskey(project string, zone string, disk string) *DisksUpdateKmskeyCall {
-	c := &DisksUpdateKmskeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *DisksService) UpdateKmsKey(project string, zone string, disk string) *DisksUpdateKmsKeyCall {
+	c := &DisksUpdateKmsKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.zone = zone
 	c.disk = disk
@@ -11651,7 +11651,7 @@ func (r *DisksService) UpdateKmskey(project string, zone string, disk string) *D
 // prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported ( 00000000-0000-0000-0000-000000000000).
-func (c *DisksUpdateKmskeyCall) RequestId(requestId string) *DisksUpdateKmskeyCall {
+func (c *DisksUpdateKmsKeyCall) RequestId(requestId string) *DisksUpdateKmsKeyCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
@@ -11659,27 +11659,27 @@ func (c *DisksUpdateKmskeyCall) RequestId(requestId string) *DisksUpdateKmskeyCa
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *DisksUpdateKmskeyCall) Fields(s ...googleapi.Field) *DisksUpdateKmskeyCall {
+func (c *DisksUpdateKmsKeyCall) Fields(s ...googleapi.Field) *DisksUpdateKmsKeyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *DisksUpdateKmskeyCall) Context(ctx context.Context) *DisksUpdateKmskeyCall {
+func (c *DisksUpdateKmsKeyCall) Context(ctx context.Context) *DisksUpdateKmsKeyCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *DisksUpdateKmskeyCall) Header() http.Header {
+func (c *DisksUpdateKmsKeyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *DisksUpdateKmskeyCall) doRequest(alt string) (*http.Response, error) {
+func (c *DisksUpdateKmsKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -11695,16 +11695,16 @@ func (c *DisksUpdateKmskeyCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 		"disk":    c.disk,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.disks.updateKmskey", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.disks.updateKmsKey", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "compute.disks.updateKmskey" call.
+// Do executes the "compute.disks.updateKmsKey" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *Operation.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
-func (c *DisksUpdateKmskeyCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+func (c *DisksUpdateKmsKeyCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -11734,7 +11734,7 @@ func (c *DisksUpdateKmskeyCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.disks.updateKmskey", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.disks.updateKmsKey", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

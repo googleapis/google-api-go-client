@@ -198,6 +198,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Evaluations = NewProjectsLocationsEvaluationsService(s)
 	rs.GroundingConfigs = NewProjectsLocationsGroundingConfigsService(s)
 	rs.IdentityMappingStores = NewProjectsLocationsIdentityMappingStoresService(s)
+	rs.LicenseConfigs = NewProjectsLocationsLicenseConfigsService(s)
 	rs.Notebooks = NewProjectsLocationsNotebooksService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Podcasts = NewProjectsLocationsPodcastsService(s)
@@ -223,6 +224,8 @@ type ProjectsLocationsService struct {
 	GroundingConfigs *ProjectsLocationsGroundingConfigsService
 
 	IdentityMappingStores *ProjectsLocationsIdentityMappingStoresService
+
+	LicenseConfigs *ProjectsLocationsLicenseConfigsService
 
 	Notebooks *ProjectsLocationsNotebooksService
 
@@ -1072,6 +1075,15 @@ func NewProjectsLocationsIdentityMappingStoresOperationsService(s *Service) *Pro
 }
 
 type ProjectsLocationsIdentityMappingStoresOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsLicenseConfigsService(s *Service) *ProjectsLocationsLicenseConfigsService {
+	rs := &ProjectsLocationsLicenseConfigsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsLicenseConfigsService struct {
 	s *Service
 }
 
@@ -2803,6 +2815,72 @@ func (s GoogleCloudDiscoveryengineV1AlertPolicyConfigAlertEnrollment) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1AlertPolicyResourceConfig: The resource level
+// alert config. Used in: * UserLicense * EngineUserData The AlertPolicyConfig
+// in data connector is of same usage. No easy way to migrate.
+type GoogleCloudDiscoveryengineV1AlertPolicyResourceConfig struct {
+	// AlertEnrollments: Optional. The enrollment state of each alert.
+	AlertEnrollments []*GoogleCloudDiscoveryengineV1AlertPolicyResourceConfigAlertEnrollment `json:"alertEnrollments,omitempty"`
+	// AlertPolicy: Immutable. The fully qualified resource name of the
+	// AlertPolicy.
+	AlertPolicy string `json:"alertPolicy,omitempty"`
+	// ContactDetails: Optional. The contact details for each alert policy.
+	ContactDetails []*GoogleCloudDiscoveryengineV1ContactDetails `json:"contactDetails,omitempty"`
+	// LanguageCode: Optional. The language code used for notifications
+	LanguageCode string `json:"languageCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertEnrollments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertEnrollments") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AlertPolicyResourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AlertPolicyResourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1AlertPolicyResourceConfigAlertEnrollment: The
+// alert enrollment status.
+type GoogleCloudDiscoveryengineV1AlertPolicyResourceConfigAlertEnrollment struct {
+	// AlertId: Immutable. The id of an alert.
+	AlertId string `json:"alertId,omitempty"`
+	// EnrollState: Required. The enrollment status of a customer.
+	//
+	// Possible values:
+	//   "ENROLL_STATE_UNSPECIFIED" - Default value. Used for customers who have
+	// not responded to the alert policy.
+	//   "ENROLLED" - Customer is enrolled in this policy.
+	//   "DECLINED" - Customer declined this policy.
+	EnrollState string `json:"enrollState,omitempty"`
+	// NotificationParams: Optional. Parameters used to instantiate a notification.
+	// Used for notifications that are triggered when registered. Not stored. *
+	// Gemini Business welcome emails. * Gemini Business user invitation emails.
+	NotificationParams map[string]string `json:"notificationParams,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AlertPolicyResourceConfigAlertEnrollment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AlertPolicyResourceConfigAlertEnrollment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1AnswerGenerationSpec: The specification for
 // answer generation.
 type GoogleCloudDiscoveryengineV1AnswerGenerationSpec struct {
@@ -3467,6 +3545,30 @@ type GoogleCloudDiscoveryengineV1ConditionTimeRange struct {
 
 func (s GoogleCloudDiscoveryengineV1ConditionTimeRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1ConditionTimeRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ContactDetails: The contact info stored in
+// resource level. If both project level and resource level is populated, the
+// resource level contact info will override the project level contact info.
+type GoogleCloudDiscoveryengineV1ContactDetails struct {
+	// EmailAddress: Optional. The email address of the contact.
+	EmailAddress string `json:"emailAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EmailAddress") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ContactDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ContactDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4406,8 +4508,7 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	// CmekConfig: Output only. CMEK-related information for the DataStore.
 	CmekConfig *GoogleCloudDiscoveryengineV1CmekConfig `json:"cmekConfig,omitempty"`
 	// ConfigurableBillingApproach: Optional. Configuration for configurable
-	// billing approach. See go/vais-repricing-billing-dd for more details, only
-	// apply to non-Spark UCS Search.
+	// billing approach. See
 	//
 	// Possible values:
 	//   "CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED" - Default value. For Spark and
@@ -5138,7 +5239,7 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// CommonConfig: Common config spec that specifies the metadata of the engine.
 	CommonConfig *GoogleCloudDiscoveryengineV1EngineCommonConfig `json:"commonConfig,omitempty"`
 	// ConfigurableBillingApproach: Optional. Configuration for configurable
-	// billing approach. See go/vais-repricing-billing-dd for more details.
+	// billing approach.
 	//
 	// Possible values:
 	//   "CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED" - Default value. For Spark and
@@ -5167,8 +5268,10 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
-	// `personalization-memory` * `disable-image-generation` *
-	// `disable-video-generation` * `disable-onedrive-upload`
+	// `personalization-memory` * `disable-agent-sharing` *
+	// `disable-image-generation` * `disable-video-generation` *
+	// `disable-onedrive-upload` * `disable-talk-to-content` *
+	// `disable-google-drive-upload`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -6010,6 +6113,83 @@ type GoogleCloudDiscoveryengineV1ImportUserEventsResponse struct {
 
 func (s GoogleCloudDiscoveryengineV1ImportUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1ImportUserEventsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1LicenseConfig: Information about users'
+// licenses.
+type GoogleCloudDiscoveryengineV1LicenseConfig struct {
+	// AlertPolicyResourceConfig: Optional. The alert policy config for this
+	// license config.
+	AlertPolicyResourceConfig *GoogleCloudDiscoveryengineV1AlertPolicyResourceConfig `json:"alertPolicyResourceConfig,omitempty"`
+	// AutoRenew: Optional. Whether the license config should be auto renewed when
+	// it reaches the end date.
+	AutoRenew bool `json:"autoRenew,omitempty"`
+	// EndDate: Optional. The planed end date.
+	EndDate *GoogleTypeDate `json:"endDate,omitempty"`
+	// FreeTrial: Optional. Whether the license config is for free trial.
+	FreeTrial bool `json:"freeTrial,omitempty"`
+	// LicenseCount: Required. Number of licenses purchased.
+	LicenseCount int64 `json:"licenseCount,omitempty,string"`
+	// Name: Immutable. Identifier. The fully qualified resource name of the
+	// license config. Format:
+	// `projects/{project}/locations/{location}/licenseConfigs/{license_config}`
+	Name string `json:"name,omitempty"`
+	// StartDate: Required. The start date.
+	StartDate *GoogleTypeDate `json:"startDate,omitempty"`
+	// State: Output only. The state of the license config.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. The license config does not exist.
+	//   "ACTIVE" - The license config is effective and being used.
+	//   "EXPIRED" - The license config has expired.
+	//   "NOT_STARTED" - The license config has not started yet, and its start date
+	// is in the future.
+	State string `json:"state,omitempty"`
+	// SubscriptionTerm: Required. Subscription term.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TERM_UNSPECIFIED" - Default value, do not use.
+	//   "SUBSCRIPTION_TERM_ONE_MONTH" - 1 month.
+	//   "SUBSCRIPTION_TERM_ONE_YEAR" - 1 year.
+	//   "SUBSCRIPTION_TERM_THREE_YEARS" - 3 years.
+	SubscriptionTerm string `json:"subscriptionTerm,omitempty"`
+	// SubscriptionTier: Required. Subscription tier information for the license
+	// config.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TIER_UNSPECIFIED" - Default value.
+	//   "SUBSCRIPTION_TIER_SEARCH" - Search tier. Search tier can access VAIS
+	// search features and NotebookLM features.
+	//   "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT" - Search + assistant tier. Search
+	// + assistant tier can access VAIS search features, NotebookLM features and
+	// assistant features.
+	//   "SUBSCRIPTION_TIER_NOTEBOOK_LM" - NotebookLM tier. NotebookLM is a
+	// subscription tier can only access NotebookLM features.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_WORKER" - Frontline worker tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_STARTER" - Agentspace Starter tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS" - Agentspace Business tier.
+	//   "SUBSCRIPTION_TIER_ENTERPRISE" - Enterprise tier.
+	//   "SUBSCRIPTION_TIER_EDU" - EDU tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
+	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	SubscriptionTier string `json:"subscriptionTier,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertPolicyResourceConfig")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertPolicyResourceConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1LicenseConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1LicenseConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8027,6 +8207,73 @@ type GoogleCloudDiscoveryengineV1alphaAlertPolicyConfigAlertEnrollment struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaAlertPolicyConfigAlertEnrollment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaAlertPolicyConfigAlertEnrollment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlertPolicyResourceConfig: The resource
+// level alert config. Used in: * UserLicense * EngineUserData The
+// AlertPolicyConfig in data connector is of same usage. No easy way to
+// migrate.
+type GoogleCloudDiscoveryengineV1alphaAlertPolicyResourceConfig struct {
+	// AlertEnrollments: Optional. The enrollment state of each alert.
+	AlertEnrollments []*GoogleCloudDiscoveryengineV1alphaAlertPolicyResourceConfigAlertEnrollment `json:"alertEnrollments,omitempty"`
+	// AlertPolicy: Immutable. The fully qualified resource name of the
+	// AlertPolicy.
+	AlertPolicy string `json:"alertPolicy,omitempty"`
+	// ContactDetails: Optional. The contact details for each alert policy.
+	ContactDetails []*GoogleCloudDiscoveryengineV1alphaContactDetails `json:"contactDetails,omitempty"`
+	// LanguageCode: Optional. The language code used for notifications
+	LanguageCode string `json:"languageCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertEnrollments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertEnrollments") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlertPolicyResourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlertPolicyResourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAlertPolicyResourceConfigAlertEnrollment:
+// The alert enrollment status.
+type GoogleCloudDiscoveryengineV1alphaAlertPolicyResourceConfigAlertEnrollment struct {
+	// AlertId: Immutable. The id of an alert.
+	AlertId string `json:"alertId,omitempty"`
+	// EnrollState: Required. The enrollment status of a customer.
+	//
+	// Possible values:
+	//   "ENROLL_STATE_UNSPECIFIED" - Default value. Used for customers who have
+	// not responded to the alert policy.
+	//   "ENROLLED" - Customer is enrolled in this policy.
+	//   "DECLINED" - Customer declined this policy.
+	EnrollState string `json:"enrollState,omitempty"`
+	// NotificationParams: Optional. Parameters used to instantiate a notification.
+	// Used for notifications that are triggered when registered. Not stored. *
+	// Gemini Business welcome emails. * Gemini Business user invitation emails.
+	NotificationParams map[string]string `json:"notificationParams,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAlertPolicyResourceConfigAlertEnrollment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAlertPolicyResourceConfigAlertEnrollment
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12359,6 +12606,30 @@ func (s *GoogleCloudDiscoveryengineV1alphaConnectorRunEntityRunProgress) Unmarsh
 	return nil
 }
 
+// GoogleCloudDiscoveryengineV1alphaContactDetails: The contact info stored in
+// resource level. If both project level and resource level is populated, the
+// resource level contact info will override the project level contact info.
+type GoogleCloudDiscoveryengineV1alphaContactDetails struct {
+	// EmailAddress: Optional. The email address of the contact.
+	EmailAddress string `json:"emailAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EmailAddress") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaContactDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaContactDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaControl: Defines a conditioned behavior to
 // employ during serving. Must be attached to a ServingConfig to be considered
 // at serving time. Permitted actions dependent on `SolutionType`.
@@ -13681,8 +13952,7 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	// CmekConfig: Output only. CMEK-related information for the DataStore.
 	CmekConfig *GoogleCloudDiscoveryengineV1alphaCmekConfig `json:"cmekConfig,omitempty"`
 	// ConfigurableBillingApproach: Optional. Configuration for configurable
-	// billing approach. See go/vais-repricing-billing-dd for more details, only
-	// apply to non-Spark UCS Search.
+	// billing approach. See
 	//
 	// Possible values:
 	//   "CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED" - Default value. For Spark and
@@ -14820,7 +15090,7 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// CommonConfig: Common config spec that specifies the metadata of the engine.
 	CommonConfig *GoogleCloudDiscoveryengineV1alphaEngineCommonConfig `json:"commonConfig,omitempty"`
 	// ConfigurableBillingApproach: Optional. Configuration for configurable
-	// billing approach. See go/vais-repricing-billing-dd for more details.
+	// billing approach.
 	//
 	// Possible values:
 	//   "CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED" - Default value. For Spark and
@@ -14849,8 +15119,10 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
-	// `personalization-memory` * `disable-image-generation` *
-	// `disable-video-generation` * `disable-onedrive-upload`
+	// `personalization-memory` * `disable-agent-sharing` *
+	// `disable-image-generation` * `disable-video-generation` *
+	// `disable-onedrive-upload` * `disable-talk-to-content` *
+	// `disable-google-drive-upload`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -17424,6 +17696,86 @@ type GoogleCloudDiscoveryengineV1alphaLanguageInfo struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaLanguageInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaLanguageInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaLicenseConfig: Information about users'
+// licenses.
+type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
+	// AlertPolicyResourceConfig: Optional. The alert policy config for this
+	// license config.
+	AlertPolicyResourceConfig *GoogleCloudDiscoveryengineV1alphaAlertPolicyResourceConfig `json:"alertPolicyResourceConfig,omitempty"`
+	// AutoRenew: Optional. Whether the license config should be auto renewed when
+	// it reaches the end date.
+	AutoRenew bool `json:"autoRenew,omitempty"`
+	// EndDate: Optional. The planed end date.
+	EndDate *GoogleTypeDate `json:"endDate,omitempty"`
+	// FreeTrial: Optional. Whether the license config is for free trial.
+	FreeTrial bool `json:"freeTrial,omitempty"`
+	// LicenseCount: Required. Number of licenses purchased.
+	LicenseCount int64 `json:"licenseCount,omitempty,string"`
+	// Name: Immutable. Identifier. The fully qualified resource name of the
+	// license config. Format:
+	// `projects/{project}/locations/{location}/licenseConfigs/{license_config}`
+	Name string `json:"name,omitempty"`
+	// StartDate: Required. The start date.
+	StartDate *GoogleTypeDate `json:"startDate,omitempty"`
+	// State: Output only. The state of the license config.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. The license config does not exist.
+	//   "ACTIVE" - The license config is effective and being used.
+	//   "EXPIRED" - The license config has expired.
+	//   "NOT_STARTED" - The license config has not started yet, and its start date
+	// is in the future.
+	State string `json:"state,omitempty"`
+	// SubscriptionTerm: Required. Subscription term.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TERM_UNSPECIFIED" - Default value, do not use.
+	//   "SUBSCRIPTION_TERM_ONE_MONTH" - 1 month.
+	//   "SUBSCRIPTION_TERM_ONE_YEAR" - 1 year.
+	//   "SUBSCRIPTION_TERM_THREE_YEARS" - 3 years.
+	SubscriptionTerm string `json:"subscriptionTerm,omitempty"`
+	// SubscriptionTier: Required. Subscription tier information for the license
+	// config.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TIER_UNSPECIFIED" - Default value.
+	//   "SUBSCRIPTION_TIER_SEARCH" - Search tier. Search tier can access VAIS
+	// search features and NotebookLM features.
+	//   "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT" - Search + assistant tier. Search
+	// + assistant tier can access VAIS search features, NotebookLM features and
+	// assistant features.
+	//   "SUBSCRIPTION_TIER_NOTEBOOK_LM" - NotebookLM tier. NotebookLM is a
+	// subscription tier can only access NotebookLM features.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_WORKER" - Frontline worker tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_STARTER" - Agentspace Starter tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS" - Agentspace Business tier.
+	//   "SUBSCRIPTION_TIER_ENTERPRISE" - Enterprise tier.
+	//   "SUBSCRIPTION_TIER_EDU" - EDU tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
+	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	SubscriptionTier string `json:"subscriptionTier,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AlertPolicyResourceConfig")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertPolicyResourceConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaLicenseConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaLicenseConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -23264,6 +23616,10 @@ type GoogleCloudDiscoveryengineV1alphaSessionTurn struct {
 	// if GetSessionRequest.include_answer_details is set to true, this field will
 	// be populated when getting answer query session.
 	DetailedAnswer *GoogleCloudDiscoveryengineV1alphaAnswer `json:"detailedAnswer,omitempty"`
+	// DetailedAssistAnswer: Output only. In ConversationalSearchService.GetSession
+	// API, if GetSessionRequest.include_answer_details is set to true, this field
+	// will be populated when getting assistant session.
+	DetailedAssistAnswer *GoogleCloudDiscoveryengineV1alphaAssistAnswer `json:"detailedAssistAnswer,omitempty"`
 	// Query: Optional. The user query. May not be set if this turn is merely
 	// regenerating an answer to a different turn
 	Query *GoogleCloudDiscoveryengineV1alphaQuery `json:"query,omitempty"`
@@ -25504,8 +25860,10 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfigUiSettings struct {
 	// features. Supported keys: * `agent-gallery` * `no-code-agent-builder` *
 	// `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` *
 	// `people-search-org-chart` * `bi-directional-audio` * `feedback` *
-	// `session-sharing` * `personalization-memory` * `disable-image-generation` *
-	// `disable-video-generation` * `disable-onedrive-upload`
+	// `session-sharing` * `personalization-memory` * `disable-agent-sharing` *
+	// `disable-image-generation` * `disable-video-generation` *
+	// `disable-onedrive-upload` * `disable-talk-to-content` *
+	// `disable-google-drive-upload`
 	Features map[string]string `json:"features,omitempty"`
 	// GenerativeAnswerConfig: Describes generative answer configuration.
 	GenerativeAnswerConfig *GoogleCloudDiscoveryengineV1alphaWidgetConfigUiSettingsGenerativeAnswerConfig `json:"generativeAnswerConfig,omitempty"`
@@ -25700,6 +26058,73 @@ type GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfig: The resource
+// level alert config. Used in: * UserLicense * EngineUserData The
+// AlertPolicyConfig in data connector is of same usage. No easy way to
+// migrate.
+type GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfig struct {
+	// AlertEnrollments: Optional. The enrollment state of each alert.
+	AlertEnrollments []*GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfigAlertEnrollment `json:"alertEnrollments,omitempty"`
+	// AlertPolicy: Immutable. The fully qualified resource name of the
+	// AlertPolicy.
+	AlertPolicy string `json:"alertPolicy,omitempty"`
+	// ContactDetails: Optional. The contact details for each alert policy.
+	ContactDetails []*GoogleCloudDiscoveryengineV1betaContactDetails `json:"contactDetails,omitempty"`
+	// LanguageCode: Optional. The language code used for notifications
+	LanguageCode string `json:"languageCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertEnrollments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertEnrollments") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfigAlertEnrollment:
+// The alert enrollment status.
+type GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfigAlertEnrollment struct {
+	// AlertId: Immutable. The id of an alert.
+	AlertId string `json:"alertId,omitempty"`
+	// EnrollState: Required. The enrollment status of a customer.
+	//
+	// Possible values:
+	//   "ENROLL_STATE_UNSPECIFIED" - Default value. Used for customers who have
+	// not responded to the alert policy.
+	//   "ENROLLED" - Customer is enrolled in this policy.
+	//   "DECLINED" - Customer declined this policy.
+	EnrollState string `json:"enrollState,omitempty"`
+	// NotificationParams: Optional. Parameters used to instantiate a notification.
+	// Used for notifications that are triggered when registered. Not stored. *
+	// Gemini Business welcome emails. * Gemini Business user invitation emails.
+	NotificationParams map[string]string `json:"notificationParams,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfigAlertEnrollment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfigAlertEnrollment
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -25960,6 +26385,30 @@ type GoogleCloudDiscoveryengineV1betaConditionTimeRange struct {
 
 func (s GoogleCloudDiscoveryengineV1betaConditionTimeRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaConditionTimeRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaContactDetails: The contact info stored in
+// resource level. If both project level and resource level is populated, the
+// resource level contact info will override the project level contact info.
+type GoogleCloudDiscoveryengineV1betaContactDetails struct {
+	// EmailAddress: Optional. The email address of the contact.
+	EmailAddress string `json:"emailAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EmailAddress") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaContactDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaContactDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -26482,8 +26931,7 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	// CmekConfig: Output only. CMEK-related information for the DataStore.
 	CmekConfig *GoogleCloudDiscoveryengineV1betaCmekConfig `json:"cmekConfig,omitempty"`
 	// ConfigurableBillingApproach: Optional. Configuration for configurable
-	// billing approach. See go/vais-repricing-billing-dd for more details, only
-	// apply to non-Spark UCS Search.
+	// billing approach. See
 	//
 	// Possible values:
 	//   "CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED" - Default value. For Spark and
@@ -27146,7 +27594,7 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// CommonConfig: Common config spec that specifies the metadata of the engine.
 	CommonConfig *GoogleCloudDiscoveryengineV1betaEngineCommonConfig `json:"commonConfig,omitempty"`
 	// ConfigurableBillingApproach: Optional. Configuration for configurable
-	// billing approach. See go/vais-repricing-billing-dd for more details.
+	// billing approach.
 	//
 	// Possible values:
 	//   "CONFIGURABLE_BILLING_APPROACH_UNSPECIFIED" - Default value. For Spark and
@@ -27175,8 +27623,10 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
-	// `personalization-memory` * `disable-image-generation` *
-	// `disable-video-generation` * `disable-onedrive-upload`
+	// `personalization-memory` * `disable-agent-sharing` *
+	// `disable-image-generation` * `disable-video-generation` *
+	// `disable-onedrive-upload` * `disable-talk-to-content` *
+	// `disable-google-drive-upload`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -28234,6 +28684,83 @@ type GoogleCloudDiscoveryengineV1betaLanguageInfo struct {
 
 func (s GoogleCloudDiscoveryengineV1betaLanguageInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaLanguageInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaLicenseConfig: Information about users'
+// licenses.
+type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
+	// AlertPolicyResourceConfig: Optional. The alert policy config for this
+	// license config.
+	AlertPolicyResourceConfig *GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfig `json:"alertPolicyResourceConfig,omitempty"`
+	// AutoRenew: Optional. Whether the license config should be auto renewed when
+	// it reaches the end date.
+	AutoRenew bool `json:"autoRenew,omitempty"`
+	// EndDate: Optional. The planed end date.
+	EndDate *GoogleTypeDate `json:"endDate,omitempty"`
+	// FreeTrial: Optional. Whether the license config is for free trial.
+	FreeTrial bool `json:"freeTrial,omitempty"`
+	// LicenseCount: Required. Number of licenses purchased.
+	LicenseCount int64 `json:"licenseCount,omitempty,string"`
+	// Name: Immutable. Identifier. The fully qualified resource name of the
+	// license config. Format:
+	// `projects/{project}/locations/{location}/licenseConfigs/{license_config}`
+	Name string `json:"name,omitempty"`
+	// StartDate: Required. The start date.
+	StartDate *GoogleTypeDate `json:"startDate,omitempty"`
+	// State: Output only. The state of the license config.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. The license config does not exist.
+	//   "ACTIVE" - The license config is effective and being used.
+	//   "EXPIRED" - The license config has expired.
+	//   "NOT_STARTED" - The license config has not started yet, and its start date
+	// is in the future.
+	State string `json:"state,omitempty"`
+	// SubscriptionTerm: Required. Subscription term.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TERM_UNSPECIFIED" - Default value, do not use.
+	//   "SUBSCRIPTION_TERM_ONE_MONTH" - 1 month.
+	//   "SUBSCRIPTION_TERM_ONE_YEAR" - 1 year.
+	//   "SUBSCRIPTION_TERM_THREE_YEARS" - 3 years.
+	SubscriptionTerm string `json:"subscriptionTerm,omitempty"`
+	// SubscriptionTier: Required. Subscription tier information for the license
+	// config.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TIER_UNSPECIFIED" - Default value.
+	//   "SUBSCRIPTION_TIER_SEARCH" - Search tier. Search tier can access VAIS
+	// search features and NotebookLM features.
+	//   "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT" - Search + assistant tier. Search
+	// + assistant tier can access VAIS search features, NotebookLM features and
+	// assistant features.
+	//   "SUBSCRIPTION_TIER_NOTEBOOK_LM" - NotebookLM tier. NotebookLM is a
+	// subscription tier can only access NotebookLM features.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_WORKER" - Frontline worker tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_STARTER" - Agentspace Starter tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS" - Agentspace Business tier.
+	//   "SUBSCRIPTION_TIER_ENTERPRISE" - Enterprise tier.
+	//   "SUBSCRIPTION_TIER_EDU" - EDU tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
+	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	SubscriptionTier string `json:"subscriptionTier,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertPolicyResourceConfig")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertPolicyResourceConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaLicenseConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaLicenseConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -64609,6 +65136,348 @@ func (c *ProjectsLocationsIdentityMappingStoresOperationsListCall) Pages(ctx con
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsLicenseConfigsCreateCall struct {
+	s                                              *Service
+	parent                                         string
+	googleclouddiscoveryenginev1alphalicenseconfig *GoogleCloudDiscoveryengineV1alphaLicenseConfig
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Create: Creates a LicenseConfig
+//
+//   - parent: The parent resource name, such as
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsLicenseConfigsService) Create(parent string, googleclouddiscoveryenginev1alphalicenseconfig *GoogleCloudDiscoveryengineV1alphaLicenseConfig) *ProjectsLocationsLicenseConfigsCreateCall {
+	c := &ProjectsLocationsLicenseConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphalicenseconfig = googleclouddiscoveryenginev1alphalicenseconfig
+	return c
+}
+
+// LicenseConfigId sets the optional parameter "licenseConfigId": The ID to use
+// for the LicenseConfig, which will become the final component of the
+// LicenseConfig's resource name. We are using the tier (product edition) name
+// as the license config id such as `search` or `search_and_assistant`.
+func (c *ProjectsLocationsLicenseConfigsCreateCall) LicenseConfigId(licenseConfigId string) *ProjectsLocationsLicenseConfigsCreateCall {
+	c.urlParams_.Set("licenseConfigId", licenseConfigId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsLicenseConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsLicenseConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsLicenseConfigsCreateCall) Context(ctx context.Context) *ProjectsLocationsLicenseConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsLicenseConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsLicenseConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphalicenseconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/licenseConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.licenseConfigs.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.licenseConfigs.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaLicenseConfig.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsLicenseConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaLicenseConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaLicenseConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.licenseConfigs.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsLicenseConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a LicenseConfig.
+//
+//   - name: Full resource name of LicenseConfig, such as
+//     `projects/{project}/locations/{location}/licenseConfigs/*`. If the caller
+//     does not have permission to access the LicenseConfig, regardless of
+//     whether or not it exists, a PERMISSION_DENIED error is returned. If the
+//     requested LicenseConfig does not exist, a NOT_FOUND error is returned.
+func (r *ProjectsLocationsLicenseConfigsService) Get(name string) *ProjectsLocationsLicenseConfigsGetCall {
+	c := &ProjectsLocationsLicenseConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsLicenseConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsLicenseConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsLicenseConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsLicenseConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsLicenseConfigsGetCall) Context(ctx context.Context) *ProjectsLocationsLicenseConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsLicenseConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsLicenseConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.licenseConfigs.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.licenseConfigs.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaLicenseConfig.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsLicenseConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaLicenseConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaLicenseConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.licenseConfigs.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsLicenseConfigsPatchCall struct {
+	s                                              *Service
+	name                                           string
+	googleclouddiscoveryenginev1alphalicenseconfig *GoogleCloudDiscoveryengineV1alphaLicenseConfig
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Patch: Updates the LicenseConfig
+//
+//   - name: Immutable. Identifier. The fully qualified resource name of the
+//     license config. Format:
+//     `projects/{project}/locations/{location}/licenseConfigs/{license_config}`.
+func (r *ProjectsLocationsLicenseConfigsService) Patch(name string, googleclouddiscoveryenginev1alphalicenseconfig *GoogleCloudDiscoveryengineV1alphaLicenseConfig) *ProjectsLocationsLicenseConfigsPatchCall {
+	c := &ProjectsLocationsLicenseConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphalicenseconfig = googleclouddiscoveryenginev1alphalicenseconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Indicates which fields
+// in the provided LicenseConfig to update. If an unsupported or unknown field
+// is provided, an INVALID_ARGUMENT error is returned.
+func (c *ProjectsLocationsLicenseConfigsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsLicenseConfigsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsLicenseConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsLicenseConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsLicenseConfigsPatchCall) Context(ctx context.Context) *ProjectsLocationsLicenseConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsLicenseConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsLicenseConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphalicenseconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.licenseConfigs.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.licenseConfigs.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaLicenseConfig.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsLicenseConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaLicenseConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaLicenseConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.licenseConfigs.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsNotebooksBatchDeleteCall struct {

@@ -295,6 +295,8 @@ type AccountSuspensionDetails struct {
 	// harvesting.
 	//   "PAYMENTS_FRAUD" - This account is being suspended for payments fraud.
 	//   "UNWANTED_CONTENT" - This account is being suspended for unwanted content.
+	//   "UNQUALIFIED_EDU" - This account is being suspended for being an
+	// unqualified educational institution.
 	AbuseReason string `json:"abuseReason,omitempty"`
 	// ProductName: The name of the product being abused. This is restricted to
 	// only the following values: "Gmail" "Google Workspace" "Payments" "Voice"

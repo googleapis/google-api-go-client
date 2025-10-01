@@ -2280,6 +2280,37 @@ func (s InsertPageBreakRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InsertPersonRequest: Inserts a person mention.
+type InsertPersonRequest struct {
+	// EndOfSegmentLocation: Inserts the person at the end of a header, footer,
+	// footnote or the document body.
+	EndOfSegmentLocation *EndOfSegmentLocation `json:"endOfSegmentLocation,omitempty"`
+	// Location: Inserts the person at a specific index in the document. The person
+	// mention must be inserted inside the bounds of an existing Paragraph. For
+	// instance, it cannot be inserted at a table's start index (i.e. between the
+	// table and its preceding paragraph). People cannot be inserted inside an
+	// equation.
+	Location *Location `json:"location,omitempty"`
+	// PersonProperties: The properties of the person mention to insert.
+	PersonProperties *PersonProperties `json:"personProperties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndOfSegmentLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndOfSegmentLocation") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InsertPersonRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertPersonRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InsertSectionBreakRequest: Inserts a section break at the given location. A
 // newline character will be inserted before the section break.
 type InsertSectionBreakRequest struct {
@@ -3955,6 +3986,8 @@ type Request struct {
 	InsertInlineImage *InsertInlineImageRequest `json:"insertInlineImage,omitempty"`
 	// InsertPageBreak: Inserts a page break at the specified location.
 	InsertPageBreak *InsertPageBreakRequest `json:"insertPageBreak,omitempty"`
+	// InsertPerson: Inserts a person mention.
+	InsertPerson *InsertPersonRequest `json:"insertPerson,omitempty"`
 	// InsertSectionBreak: Inserts a section break at the specified location.
 	InsertSectionBreak *InsertSectionBreakRequest `json:"insertSectionBreak,omitempty"`
 	// InsertTable: Inserts a table at the specified location.

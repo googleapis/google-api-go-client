@@ -8695,6 +8695,7 @@ type FirstPartyAndPartnerAudience struct {
 	//   "THIRD_PARTY" - Audience has been licensed for use from a third party.
 	//   "COMMERCE" - Audience provided by commerce partners for a fee.
 	//   "LINEAR" - Audience for Linear TV content.
+	//   "AGENCY" - Audience provided by an agency.
 	AudienceType string `json:"audienceType,omitempty"`
 	// ContactInfoList: Input only. A list of contact information to define the
 	// initial audience members. Only applicable to audience_type

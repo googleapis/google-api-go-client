@@ -265,6 +265,8 @@ type CancelSubscriptionRequest struct {
 	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Used for notification only, do not
 	// use in Cancel API. The subscription is cancelled by Google automatically
 	// since it is no longer valid.
+	//   "CANCELLATION_REASON_BILLING_SYSTEM_SWITCH" - Cancellation due to a
+	// billing system switch.
 	//   "CANCELLATION_REASON_OTHER" - Other reason.
 	CancellationReason string `json:"cancellationReason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CancelImmediately") to
@@ -1413,6 +1415,8 @@ type SubscriptionCancellationDetails struct {
 	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Used for notification only, do not
 	// use in Cancel API. The subscription is cancelled by Google automatically
 	// since it is no longer valid.
+	//   "CANCELLATION_REASON_BILLING_SYSTEM_SWITCH" - Cancellation due to a
+	// billing system switch.
 	//   "CANCELLATION_REASON_OTHER" - Other reason.
 	Reason string `json:"reason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally

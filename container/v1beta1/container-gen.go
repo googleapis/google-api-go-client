@@ -936,6 +936,26 @@ func (s AutoprovisioningNodePoolDefaults) MarshalJSON() ([]byte, error) {
 // AutoscaledRolloutPolicy: Autoscaled rollout policy utilizes the cluster
 // autoscaler during blue-green upgrade to scale both the blue and green pools.
 type AutoscaledRolloutPolicy struct {
+	// WaitForDrainDuration: Optional. Time to wait after cordoning the blue pool
+	// before draining the nodes. Defaults to 3 days. The value can be set between
+	// 0 and 7 days, inclusive.
+	WaitForDrainDuration string `json:"waitForDrainDuration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WaitForDrainDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WaitForDrainDuration") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutoscaledRolloutPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscaledRolloutPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AvailableVersion: Deprecated.

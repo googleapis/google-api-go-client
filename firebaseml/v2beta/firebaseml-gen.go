@@ -864,18 +864,35 @@ func (s *GoogleCloudAiplatformV1beta1DynamicRetrievalConfig) UnmarshalJSON(data 
 // GoogleCloudAiplatformV1beta1EnterpriseWebSearch: Tool to search public web
 // data, powered by Vertex AI Search and Sec4 compliance.
 type GoogleCloudAiplatformV1beta1EnterpriseWebSearch struct {
+	// BlockingConfidence: Optional. Sites with confidence level chosen & above
+	// this value will be blocked from the search results.
+	//
+	// Possible values:
+	//   "PHISH_BLOCK_THRESHOLD_UNSPECIFIED" - Defaults to unspecified.
+	//   "BLOCK_LOW_AND_ABOVE" - Blocks Low and above confidence URL that is risky.
+	//   "BLOCK_MEDIUM_AND_ABOVE" - Blocks Medium and above confidence URL that is
+	// risky.
+	//   "BLOCK_HIGH_AND_ABOVE" - Blocks High and above confidence URL that is
+	// risky.
+	//   "BLOCK_HIGHER_AND_ABOVE" - Blocks Higher and above confidence URL that is
+	// risky.
+	//   "BLOCK_VERY_HIGH_AND_ABOVE" - Blocks Very high and above confidence URL
+	// that is risky.
+	//   "BLOCK_ONLY_EXTREMELY_HIGH" - Blocks Extremely high confidence URL that is
+	// risky.
+	BlockingConfidence string `json:"blockingConfidence,omitempty"`
 	// ExcludeDomains: Optional. List of domains to be excluded from the search
 	// results. The default limit is 2000 domains.
 	ExcludeDomains []string `json:"excludeDomains,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExcludeDomains") to
+	// ForceSendFields is a list of field names (e.g. "BlockingConfidence") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExcludeDomains") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BlockingConfidence") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3007,19 +3024,36 @@ func (s GoogleCloudAiplatformV1beta1ToolConfig) MarshalJSON() ([]byte, error) {
 // GoogleCloudAiplatformV1beta1ToolGoogleSearch: GoogleSearch tool type. Tool
 // to support Google Search in Model. Powered by Google.
 type GoogleCloudAiplatformV1beta1ToolGoogleSearch struct {
+	// BlockingConfidence: Optional. Sites with confidence level chosen & above
+	// this value will be blocked from the search results.
+	//
+	// Possible values:
+	//   "PHISH_BLOCK_THRESHOLD_UNSPECIFIED" - Defaults to unspecified.
+	//   "BLOCK_LOW_AND_ABOVE" - Blocks Low and above confidence URL that is risky.
+	//   "BLOCK_MEDIUM_AND_ABOVE" - Blocks Medium and above confidence URL that is
+	// risky.
+	//   "BLOCK_HIGH_AND_ABOVE" - Blocks High and above confidence URL that is
+	// risky.
+	//   "BLOCK_HIGHER_AND_ABOVE" - Blocks Higher and above confidence URL that is
+	// risky.
+	//   "BLOCK_VERY_HIGH_AND_ABOVE" - Blocks Very high and above confidence URL
+	// that is risky.
+	//   "BLOCK_ONLY_EXTREMELY_HIGH" - Blocks Extremely high confidence URL that is
+	// risky.
+	BlockingConfidence string `json:"blockingConfidence,omitempty"`
 	// ExcludeDomains: Optional. List of domains to be excluded from the search
 	// results. The default limit is 2000 domains. Example: ["amazon.com",
 	// "facebook.com"].
 	ExcludeDomains []string `json:"excludeDomains,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExcludeDomains") to
+	// ForceSendFields is a list of field names (e.g. "BlockingConfidence") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExcludeDomains") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BlockingConfidence") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

@@ -295,29 +295,103 @@ func (s CloudAiDocumentaiLabHifiaToolsValidationValidatorInput) MarshalJSON() ([
 }
 
 type CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRule struct {
+	ChildAlignmentRule *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleChildAlignmentRule `json:"childAlignmentRule,omitempty"`
 	// Description: Description of the validation rule. This has no use but for
 	// documentation
-	Description      string                                                                                `json:"description,omitempty"`
-	FieldOccurrences *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFieldOccurrences `json:"fieldOccurrences,omitempty"`
-	FieldRegex       *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFieldRegex       `json:"fieldRegex,omitempty"`
-	FormValidation   *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFormValidation   `json:"formValidation,omitempty"`
+	Description         string                                                                                   `json:"description,omitempty"`
+	EntityAlignmentRule *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleEntityAlignmentRule `json:"entityAlignmentRule,omitempty"`
+	FieldOccurrences    *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFieldOccurrences    `json:"fieldOccurrences,omitempty"`
+	FieldRegex          *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFieldRegex          `json:"fieldRegex,omitempty"`
+	FormValidation      *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFormValidation      `json:"formValidation,omitempty"`
 	// Name: Name of the validation rule.
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Description") to
+	// ForceSendFields is a list of field names (e.g. "ChildAlignmentRule") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Description") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ChildAlignmentRule") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRule) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleAlignment
+// Rule: A rule for checking field alignment. Horizontal alignment checks if
+// fields are on the same row by comparing y-coordinates of bounding box
+// centers, while vertical alignment checks if fields are on the same column by
+// comparing x-coordinates of bounding box centers.
+type CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleAlignmentRule struct {
+	// Possible values:
+	//   "ALIGNMENT_TYPE_UNSPECIFIED"
+	//   "ALIGNMENT_TYPE_HORIZONTAL"
+	//   "ALIGNMENT_TYPE_VERTICAL"
+	AlignmentType string `json:"alignmentType,omitempty"`
+	// Tolerance: The tolerance to use when comparing coordinates.
+	Tolerance float64 `json:"tolerance,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlignmentType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlignmentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleAlignmentRule) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleAlignmentRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleAlignmentRule) UnmarshalJSON(data []byte) error {
+	type NoMethod CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleAlignmentRule
+	var s1 struct {
+		Tolerance gensupport.JSONFloat64 `json:"tolerance"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Tolerance = float64(s1.Tolerance)
+	return nil
+}
+
+// CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleChildAlig
+// nmentRule: A rule that aligns specified child fields with a parent field.
+type CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleChildAlignmentRule struct {
+	// AlignmentRule: The alignment rule to apply to the child fields.
+	AlignmentRule *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleAlignmentRule `json:"alignmentRule,omitempty"`
+	// ChildFields: The child fields to be aligned within the parent field.
+	ChildFields []*CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleField `json:"childFields,omitempty"`
+	// ParentField: The full path of the parent field.
+	ParentField *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleField `json:"parentField,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlignmentRule") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlignmentRule") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleChildAlignmentRule) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleChildAlignmentRule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -356,6 +430,31 @@ func (s *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleCon
 	}
 	s.FloatValue = float64(s1.FloatValue)
 	return nil
+}
+
+// CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleEntityAli
+// gnmentRule: A rule that aligns specified fields with each other.
+type CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleEntityAlignmentRule struct {
+	// AlignmentRule: The alignment rule to apply to the fields.
+	AlignmentRule *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleAlignmentRule `json:"alignmentRule,omitempty"`
+	// Fields: The fields to be aligned.
+	Fields []*CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleField `json:"fields,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlignmentRule") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlignmentRule") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleEntityAlignmentRule) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleEntityAlignmentRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleField struct {
@@ -7117,6 +7216,11 @@ type GoogleLongrunningListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -8330,6 +8434,19 @@ func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

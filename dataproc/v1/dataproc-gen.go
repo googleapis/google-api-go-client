@@ -5858,12 +5858,6 @@ type RepairClusterRequest struct {
 	// ClusterUuid: Optional. Specifying the cluster_uuid means the RPC will fail
 	// (with error NOT_FOUND) if a cluster with the specified UUID does not exist.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
-	// DataprocSuperUser: Optional. Whether the request is submitted by Dataproc
-	// super user. If true, IAM will check 'dataproc.clusters.repair' permission
-	// instead of 'dataproc.clusters.update' permission. This is to give Dataproc
-	// superuser the ability to repair clusters without granting the overly broad
-	// update permission.
-	DataprocSuperUser bool `json:"dataprocSuperUser,omitempty"`
 	// GracefulDecommissionTimeout: Optional. Timeout for graceful YARN
 	// decommissioning. Graceful decommissioning facilitates the removal of cluster
 	// nodes without interrupting jobs in progress. The timeout specifies the
@@ -9046,6 +9040,8 @@ type UsageMetrics struct {
 	// seconds) (see Dataproc Serverless pricing
 	// (https://cloud.google.com/dataproc-serverless/pricing)).
 	MilliDcuSeconds int64 `json:"milliDcuSeconds,omitempty,string"`
+	// MilliSlotSeconds: Optional. Slot usage in (milliSlot x seconds).
+	MilliSlotSeconds int64 `json:"milliSlotSeconds,omitempty,string"`
 	// ShuffleStorageGbSeconds: Optional. Shuffle storage usage in (GB x seconds)
 	// (see Dataproc Serverless pricing
 	// (https://cloud.google.com/dataproc-serverless/pricing)).
@@ -9087,6 +9083,8 @@ type UsageSnapshot struct {
 	// (DCUs) charged at premium tier (see Dataproc Serverless pricing
 	// (https://cloud.google.com/dataproc-serverless/pricing)).
 	MilliDcuPremium int64 `json:"milliDcuPremium,omitempty,string"`
+	// MilliSlot: Optional. Milli (one-thousandth) Slot usage of the workload.
+	MilliSlot int64 `json:"milliSlot,omitempty,string"`
 	// ShuffleStorageGb: Optional. Shuffle Storage in gigabytes (GB). (see Dataproc
 	// Serverless pricing (https://cloud.google.com/dataproc-serverless/pricing))
 	ShuffleStorageGb int64 `json:"shuffleStorageGb,omitempty,string"`

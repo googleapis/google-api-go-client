@@ -782,6 +782,86 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CheckConsumerConfigRequest: Request for CheckConsumerConfig.
+type CheckConsumerConfigRequest struct {
+	// ConsumerNetwork: Required. Full resource name of the consumer network.
+	// Example: - projects/{project}/global/networks/{network}.
+	ConsumerNetwork string `json:"consumerNetwork,omitempty"`
+	// EndpointProject: The project number or ID where the PSC endpoint is to be
+	// created.
+	EndpointProject string `json:"endpointProject,omitempty"`
+	// RequestedIpVersion: The requested IP Version
+	//
+	// Possible values:
+	//   "IP_VERSION_UNSPECIFIED" - Default value. We will use IPv4 or IPv6
+	// depending on the IP version of first available subnetwork.
+	//   "IPV4" - Will use IPv4 only.
+	//   "IPV6" - Will use IPv6 only.
+	RequestedIpVersion string `json:"requestedIpVersion,omitempty"`
+	// ServiceClass: Required. The service class identifier of the producer.
+	ServiceClass string `json:"serviceClass,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConsumerNetwork") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsumerNetwork") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CheckConsumerConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckConsumerConfigRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CheckConsumerConfigResponse: Response for CheckConsumerConfig.
+type CheckConsumerConfigResponse struct {
+	// Errors: List of validation errors. If the list is empty, the consumer config
+	// is valid.
+	//
+	// Possible values:
+	//   "ERROR_UNSPECIFIED" - An invalid error as the default case.
+	//   "NETWORK_PROJECT_INVALID" - Invalid Network project.
+	//   "NETWORK_PROJECT_APIS_NOT_ENABLED" - Network Connectivity APIs not enabled
+	// in network project.
+	//   "NETWORK_INVALID" - Invalid network.
+	//   "CONNECTION_POLICY_MISSING" - No ServiceConnectionPolicy found for this
+	// network and ServiceClass.
+	//   "IP_VERSION_NOT_SUPPORTED" - IP version not supported in any of the
+	// subnetworks.
+	//   "NETWORK_PROJECT_SERVICE_AGENT_NOT_FOUND" - Service Agent missing for
+	// network project.
+	//   "ENDPOINT_PROJECT_INVALID" - Invalid endpoint project.
+	//   "ENDPOINT_PROJECT_API_NOT_ENABLED" - Network Connectivity API is not
+	// enabled in the endpoint project.
+	//   "ENDPOINT_PROJECT_IS_NOT_SERVICE_PROJECT" - Endpoint project is not a
+	// service project of the network project.
+	Errors []string `json:"errors,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Errors") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CheckConsumerConfigResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckConsumerConfigResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ConsumerPscConfig: Allow the producer to specify which consumers can connect
 // to it.
 type ConsumerPscConfig struct {
@@ -1149,6 +1229,11 @@ type GoogleLongrunningListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3265,16 +3350,16 @@ type RegionalEndpoint struct {
 	// `projects/{project}/locations/{location}/regionalEndpoints/^-a-z0-9
 	// (?:[-a-z0-9]{0,44})[a-z0-9]$`.
 	Name string `json:"name,omitempty"`
-	// Network: The name of the VPC network for this private regional endpoint.
-	// Format: `projects/{project}/global/networks/{network}`
+	// Network: Optional. The name of the VPC network for this private regional
+	// endpoint. Format: `projects/{project}/global/networks/{network}`
 	Network string `json:"network,omitempty"`
 	// PscForwardingRule: Output only. The resource reference of the PSC Forwarding
 	// Rule created on behalf of the customer. Format:
 	// `//compute.googleapis.com/projects/{project}/regions/{region}/forwardingRules
 	// /{forwarding_rule_name}`
 	PscForwardingRule string `json:"pscForwardingRule,omitempty"`
-	// Subnetwork: The name of the subnetwork from which the IP address will be
-	// allocated. Format:
+	// Subnetwork: Optional. The name of the subnetwork from which the IP address
+	// will be allocated. Format:
 	// `projects/{project}/regions/{region}/subnetworks/{subnetwork}`
 	Subnetwork string `json:"subnetwork,omitempty"`
 	// TargetGoogleApi: Required. The service endpoint this private regional
@@ -4404,7 +4489,7 @@ type Transport struct {
 	// AdvertisedRoutes: Optional. [Preview only] List of IP Prefixes that will be
 	// advertised to the remote provider. Both IPv4 and IPv6 addresses are
 	// supported.
-	AdvertisedRoutes string `json:"advertisedRoutes,omitempty"`
+	AdvertisedRoutes []string `json:"advertisedRoutes,omitempty"`
 	// Bandwidth: Required. Bandwidth of the Transport. This must be one of the
 	// supported bandwidths for the remote profile.
 	//
@@ -4563,6 +4648,118 @@ type Warnings struct {
 func (s Warnings) MarshalJSON() ([]byte, error) {
 	type NoMethod Warnings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ProjectsLocationsCheckConsumerConfigCall struct {
+	s                          *Service
+	location                   string
+	checkconsumerconfigrequest *CheckConsumerConfigRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// CheckConsumerConfig: CheckConsumerConfig validates the consumer network and
+// project for potential PSC connection creation. This method performs several
+// checks, including: - Validating the existence and permissions of the service
+// class. - Ensuring the consumer network exists and is accessible. - Verifying
+// XPN relationships if applicable. - Checking for compatible IP versions
+// between the consumer network and the requested version. This method performs
+// a dynamic IAM check for the `networkconnectivity.serviceClasses.use`
+// permission on the service class resource in the Prepare phase.
+//
+//   - location: The location resource path. Example: -
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsService) CheckConsumerConfig(location string, checkconsumerconfigrequest *CheckConsumerConfigRequest) *ProjectsLocationsCheckConsumerConfigCall {
+	c := &ProjectsLocationsCheckConsumerConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.location = location
+	c.checkconsumerconfigrequest = checkconsumerconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCheckConsumerConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsCheckConsumerConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCheckConsumerConfigCall) Context(ctx context.Context) *ProjectsLocationsCheckConsumerConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCheckConsumerConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCheckConsumerConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.checkconsumerconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+location}:checkConsumerConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"location": c.location,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.checkConsumerConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.checkConsumerConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CheckConsumerConfigResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCheckConsumerConfigCall) Do(opts ...googleapi.CallOption) (*CheckConsumerConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CheckConsumerConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.checkConsumerConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsGetCall struct {
@@ -11696,6 +11893,19 @@ func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

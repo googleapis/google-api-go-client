@@ -217,6 +217,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.AspectTypes = NewProjectsLocationsAspectTypesService(s)
+	rs.ChangeRequests = NewProjectsLocationsChangeRequestsService(s)
 	rs.DataAttributeBindings = NewProjectsLocationsDataAttributeBindingsService(s)
 	rs.DataProducts = NewProjectsLocationsDataProductsService(s)
 	rs.DataScans = NewProjectsLocationsDataScansService(s)
@@ -236,6 +237,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	AspectTypes *ProjectsLocationsAspectTypesService
+
+	ChangeRequests *ProjectsLocationsChangeRequestsService
 
 	DataAttributeBindings *ProjectsLocationsDataAttributeBindingsService
 
@@ -268,6 +271,15 @@ func NewProjectsLocationsAspectTypesService(s *Service) *ProjectsLocationsAspect
 }
 
 type ProjectsLocationsAspectTypesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsChangeRequestsService(s *Service) *ProjectsLocationsChangeRequestsService {
+	rs := &ProjectsLocationsChangeRequestsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsChangeRequestsService struct {
 	s *Service
 }
 
@@ -2273,8 +2285,8 @@ func (s GoogleCloudDataplexV1DataDocumentationResultSchema) MarshalJSON() ([]byt
 type GoogleCloudDataplexV1DataDocumentationResultTableResult struct {
 	// Name: Output only. The service-qualified full resource name of the cloud
 	// resource. Ex:
-	// bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tables/TABLE_
-	// ID
+	// //bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tables/TABL
+	// E_ID
 	Name string `json:"name,omitempty"`
 	// Overview: Output only. Generated description of the table.
 	Overview string `json:"overview,omitempty"`
@@ -4622,6 +4634,9 @@ type GoogleCloudDataplexV1EncryptionConfig struct {
 	// CreateTime: Output only. The time when the Encryption configuration was
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
+	// EnableMetastoreEncryption: Optional. Represent the state of CMEK opt-in for
+	// metastore.
+	EnableMetastoreEncryption bool `json:"enableMetastoreEncryption,omitempty"`
 	// EncryptionState: Output only. The state of encryption of the databases.
 	//
 	// Possible values:
@@ -9121,6 +9136,11 @@ type GoogleLongrunningListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets ListOperationsRequest.return_partial_success and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -10592,6 +10612,19 @@ func (c *OrganizationsLocationsOperationsListCall) PageSize(pageSize int64) *Org
 // token.
 func (c *OrganizationsLocationsOperationsListCall) PageToken(pageToken string) *OrganizationsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to true, operations that are reachable are returned as normal, and
+// those that are unreachable are returned in the
+// ListOperationsResponse.unreachable field.This can only be true when reading
+// across collections e.g. when parent is set to
+// "projects/example/locations/-".This field is not by default supported and
+// will result in an UNIMPLEMENTED error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *OrganizationsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OrganizationsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -12287,6 +12320,355 @@ func (c *ProjectsLocationsAspectTypesTestIamPermissionsCall) Do(opts ...googleap
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.aspectTypes.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsChangeRequestsGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. Returns an
+// empty policy if the resource exists and does not have a policy set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsChangeRequestsService) GetIamPolicy(resource string) *ProjectsLocationsChangeRequestsGetIamPolicyCall {
+	c := &ProjectsLocationsChangeRequestsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy.Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected.Requests for policies with any conditional
+// role bindings must specify version 3. Policies with no conditional role
+// bindings may specify any valid value or leave the field unset.The policy in
+// the response might use the policy version that you specified, or it might
+// use a lower policy version. For example, if you specify version 3, but the
+// policy has no conditional role bindings, the response uses version 1.To
+// learn which resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsChangeRequestsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsChangeRequestsGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsChangeRequestsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsChangeRequestsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsChangeRequestsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsChangeRequestsGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsChangeRequestsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsChangeRequestsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsChangeRequestsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsChangeRequestsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.changeRequests.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsChangeRequestsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsChangeRequestsSetIamPolicyCall struct {
+	s                              *Service
+	resource                       string
+	googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified resource.
+// Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and
+// PERMISSION_DENIED errors.
+//
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsChangeRequestsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsChangeRequestsSetIamPolicyCall {
+	c := &ProjectsLocationsChangeRequestsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1setiampolicyrequest = googleiamv1setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsChangeRequestsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsChangeRequestsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsChangeRequestsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsChangeRequestsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsChangeRequestsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsChangeRequestsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.changeRequests.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsChangeRequestsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.setIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsChangeRequestsTestIamPermissionsCall struct {
+	s                                    *Service
+	resource                             string
+	googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource. If the resource does not exist, this will return an empty set of
+// permissions, not a NOT_FOUND error.Note: This operation is designed to be
+// used for building permission-aware UIs and command-line tools, not for
+// authorization checking. This operation may "fail open" without warning.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
+func (r *ProjectsLocationsChangeRequestsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsChangeRequestsTestIamPermissionsCall {
+	c := &ProjectsLocationsChangeRequestsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1testiampermissionsrequest = googleiamv1testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsChangeRequestsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsChangeRequestsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsChangeRequestsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsChangeRequestsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsChangeRequestsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsChangeRequestsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.changeRequests.testIamPermissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1TestIamPermissionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsChangeRequestsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.changeRequests.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -33718,6 +34100,19 @@ func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to true, operations that are reachable are returned as normal, and
+// those that are unreachable are returned in the
+// ListOperationsResponse.unreachable field.This can only be true when reading
+// across collections e.g. when parent is set to
+// "projects/example/locations/-".This field is not by default supported and
+// will result in an UNIMPLEMENTED error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

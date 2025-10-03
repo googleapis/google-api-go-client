@@ -3888,7 +3888,7 @@ type FoldersGetKajPolicyConfigCall struct {
 }
 
 // GetKajPolicyConfig: Gets the KeyAccessJustificationsPolicyConfig for a given
-// organization/folder/projects.
+// organization, folder, or project.
 //
 // - name: The name of the KeyAccessJustificationsPolicyConfig to get.
 func (r *FoldersService) GetKajPolicyConfig(name string) *FoldersGetKajPolicyConfigCall {
@@ -4115,7 +4115,7 @@ type FoldersUpdateKajPolicyConfigCall struct {
 }
 
 // UpdateKajPolicyConfig: Updates the KeyAccessJustificationsPolicyConfig for a
-// given organization/folder/projects.
+// given organization, folder, or project.
 //
 //   - name: Identifier. The resource name for this
 //     KeyAccessJustificationsPolicyConfig in the format of
@@ -4229,7 +4229,7 @@ type OrganizationsGetKajPolicyConfigCall struct {
 }
 
 // GetKajPolicyConfig: Gets the KeyAccessJustificationsPolicyConfig for a given
-// organization/folder/projects.
+// organization, folder, or project.
 //
 // - name: The name of the KeyAccessJustificationsPolicyConfig to get.
 func (r *OrganizationsService) GetKajPolicyConfig(name string) *OrganizationsGetKajPolicyConfigCall {
@@ -4340,7 +4340,7 @@ type OrganizationsUpdateKajPolicyConfigCall struct {
 }
 
 // UpdateKajPolicyConfig: Updates the KeyAccessJustificationsPolicyConfig for a
-// given organization/folder/projects.
+// given organization, folder, or project.
 //
 //   - name: Identifier. The resource name for this
 //     KeyAccessJustificationsPolicyConfig in the format of
@@ -4565,7 +4565,7 @@ type ProjectsGetKajPolicyConfigCall struct {
 }
 
 // GetKajPolicyConfig: Gets the KeyAccessJustificationsPolicyConfig for a given
-// organization/folder/projects.
+// organization, folder, or project.
 //
 // - name: The name of the KeyAccessJustificationsPolicyConfig to get.
 func (r *ProjectsService) GetKajPolicyConfig(name string) *ProjectsGetKajPolicyConfigCall {
@@ -5131,7 +5131,7 @@ type ProjectsUpdateKajPolicyConfigCall struct {
 }
 
 // UpdateKajPolicyConfig: Updates the KeyAccessJustificationsPolicyConfig for a
-// given organization/folder/projects.
+// given organization, folder, or project.
 //
 //   - name: Identifier. The resource name for this
 //     KeyAccessJustificationsPolicyConfig in the format of

@@ -447,6 +447,10 @@ func (s AdaptMessageRequest) MarshalJSON() ([]byte, error) {
 
 // AdaptMessageResponse: Message sent by the adapter to the client.
 type AdaptMessageResponse struct {
+	// Last: Optional. Indicates whether this is the last AdaptMessageResponse in
+	// the stream. This field may be optionally set by the server. Clients should
+	// not rely on this field being set in all cases.
+	Last bool `json:"last,omitempty"`
 	// Payload: Optional. Uninterpreted bytes from the underlying wire protocol.
 	Payload string `json:"payload,omitempty"`
 	// StateUpdates: Optional. Opaque state updates to be applied by the client.
@@ -454,15 +458,15 @@ type AdaptMessageResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Payload") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Last") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Payload") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Last") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -755,9 +759,9 @@ type Backup struct {
 	// ordering of backups in the chain can be determined by ordering the backup
 	// `version_time`.
 	IncrementalBackupChainId string `json:"incrementalBackupChainId,omitempty"`
-	// InstancePartitions: Output only. The instance partition(s) storing the
-	// backup. This is the same as the list of the instance partition(s) that the
-	// database had footprint in at the backup's `version_time`.
+	// InstancePartitions: Output only. The instance partition storing the backup.
+	// This is the same as the list of the instance partitions that the database
+	// recorded at the backup's `version_time`.
 	InstancePartitions []*BackupInstancePartition `json:"instancePartitions,omitempty"`
 	// MaxExpireTime: Output only. The max allowed expiration time of the backup,
 	// with microseconds granularity. A backup's expiration time can be configured
@@ -1430,6 +1434,11 @@ type CommitResponse struct {
 	// PrecommitToken: If specified, transaction has not committed yet. You must
 	// retry the commit with the new precommit token.
 	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
+	// SnapshotTimestamp: If `TransactionOptions.isolation_level` is set to
+	// `IsolationLevel.REPEATABLE_READ`, then the snapshot timestamp is the
+	// timestamp at which all reads in the transaction ran. This timestamp is never
+	// returned.
+	SnapshotTimestamp string `json:"snapshotTimestamp,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1543,10 +1552,15 @@ type CopyBackupEncryptionConfig struct {
 	//   "GOOGLE_DEFAULT_ENCRYPTION" - Use Google default encryption.
 	//   "CUSTOMER_MANAGED_ENCRYPTION" - Use customer managed encryption. If
 	// specified, either `kms_key_name` or `kms_key_names` must contain valid Cloud
-	// KMS key(s).
+	// KMS keys.
 	EncryptionType string `json:"encryptionType,omitempty"`
-	// KmsKeyName: Optional. The Cloud KMS key that will be used to protect the
-	// backup. This field should be set only when encryption_type is
+	// KmsKeyName: Optional. This field is maintained for backwards compatibility.
+	// For new callers, we recommend using `kms_key_names` to specify the KMS key.
+	// Only use `kms_key_name` if the location of the KMS key matches the database
+	// instance's configuration (location) exactly. For example, if the KMS
+	// location is in `us-central1` or `nam3`, then the database instance must also
+	// be in `us-central1` or `nam3`. The Cloud KMS key that is used to encrypt and
+	// decrypt the restored database. Set this field only when encryption_type is
 	// `CUSTOMER_MANAGED_ENCRYPTION`. Values are of the form
 	// `projects//locations//keyRings//cryptoKeys/`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
@@ -1676,8 +1690,13 @@ type CreateBackupEncryptionConfig struct {
 	//   "CUSTOMER_MANAGED_ENCRYPTION" - Use customer managed encryption. If
 	// specified, `kms_key_name` must contain a valid Cloud KMS key.
 	EncryptionType string `json:"encryptionType,omitempty"`
-	// KmsKeyName: Optional. The Cloud KMS key that will be used to protect the
-	// backup. This field should be set only when encryption_type is
+	// KmsKeyName: Optional. This field is maintained for backwards compatibility.
+	// For new callers, we recommend using `kms_key_names` to specify the KMS key.
+	// Only use `kms_key_name` if the location of the KMS key matches the database
+	// instance's configuration (location) exactly. For example, if the KMS
+	// location is in `us-central1` or `nam3`, then the database instance must also
+	// be in `us-central1` or `nam3`. The Cloud KMS key that is used to encrypt and
+	// decrypt the restored database. Set this field only when encryption_type is
 	// `CUSTOMER_MANAGED_ENCRYPTION`. Values are of the form
 	// `projects//locations//keyRings//cryptoKeys/`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
@@ -2344,17 +2363,17 @@ func (s DatabaseRole) MarshalJSON() ([]byte, error) {
 // This proto is used to display the brief info of the DDL statement for the
 // operation UpdateDatabaseDdl.
 type DdlStatementActionInfo struct {
-	// Action: The action for the DDL statement, e.g. CREATE, ALTER, DROP, GRANT,
-	// etc. This field is a non-empty string.
+	// Action: The action for the DDL statement, for example, CREATE, ALTER, DROP,
+	// GRANT, etc. This field is a non-empty string.
 	Action string `json:"action,omitempty"`
-	// EntityNames: The entity name(s) being operated on the DDL statement. E.g. 1.
-	// For statement "CREATE TABLE t1(...)", `entity_names` = ["t1"]. 2. For
-	// statement "GRANT ROLE r1, r2 ...", `entity_names` = ["r1", "r2"]. 3. For
-	// statement "ANALYZE", `entity_names` = [].
+	// EntityNames: The entity names being operated on the DDL statement. For
+	// example, 1. For statement "CREATE TABLE t1(...)", `entity_names` = ["t1"].
+	// 2. For statement "GRANT ROLE r1, r2 ...", `entity_names` = ["r1", "r2"]. 3.
+	// For statement "ANALYZE", `entity_names` = [].
 	EntityNames []string `json:"entityNames,omitempty"`
-	// EntityType: The entity type for the DDL statement, e.g. TABLE, INDEX, VIEW,
-	// etc. This field can be empty string for some DDL statement, e.g. for
-	// statement "ANALYZE", `entity_type` = "".
+	// EntityType: The entity type for the DDL statement, for example, TABLE,
+	// INDEX, VIEW, etc. This field can be empty string for some DDL statement, for
+	// example, for statement "ANALYZE", `entity_type` = "".
 	EntityType string `json:"entityType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3473,11 +3492,11 @@ func (s InstanceConfig) MarshalJSON() ([]byte, error) {
 type InstanceEncryptionConfig struct {
 	// KmsKeyName: Optional. This field is maintained for backwards compatibility.
 	// For new callers, we recommend using `kms_key_names` to specify the KMS key.
-	// `kms_key_name` should only be used if the location of the KMS key matches
-	// the database instance’s configuration (location) exactly. E.g. The KMS
-	// location is in us-central1 or nam3 and the database instance is also in
-	// us-central1 or nam3. The Cloud KMS key to be used for encrypting and
-	// decrypting the database. Values are of the form
+	// Only use `kms_key_name` if the location of the KMS key matches the database
+	// instance's configuration (location) exactly. For example, if the KMS
+	// location is in `us-central1` or `nam3`, then the database instance must also
+	// be in `us-central1` or `nam3`. The Cloud KMS key that is used to encrypt and
+	// decrypt the restored database. Values are of the form
 	// `projects//locations//keyRings//cryptoKeys/`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// KmsKeyNames: Optional. Specifies the KMS configuration for one or more keys
@@ -3631,7 +3650,7 @@ func (s InstancePartition) MarshalJSON() ([]byte, error) {
 // InstanceReplicaSelection: ReplicaSelection identifies replicas with common
 // properties.
 type InstanceReplicaSelection struct {
-	// Location: Required. Name of the location of the replicas (e.g.,
+	// Location: Required. Name of the location of the replicas (for example,
 	// "us-central1").
 	Location string `json:"location,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Location") to
@@ -5960,8 +5979,13 @@ type RestoreDatabaseEncryptionConfig struct {
 	//   "CUSTOMER_MANAGED_ENCRYPTION" - Use customer managed encryption. If
 	// specified, `kms_key_name` must must contain a valid Cloud KMS key.
 	EncryptionType string `json:"encryptionType,omitempty"`
-	// KmsKeyName: Optional. The Cloud KMS key that will be used to encrypt/decrypt
-	// the restored database. This field should be set only when encryption_type is
+	// KmsKeyName: Optional. This field is maintained for backwards compatibility.
+	// For new callers, we recommend using `kms_key_names` to specify the KMS key.
+	// Only use `kms_key_name` if the location of the KMS key matches the database
+	// instance's configuration (location) exactly. For example, if the KMS
+	// location is in `us-central1` or `nam3`, then the database instance must also
+	// be in `us-central1` or `nam3`. The Cloud KMS key that is used to encrypt and
+	// decrypt the restored database. Set this field only when encryption_type is
 	// `CUSTOMER_MANAGED_ENCRYPTION`. Values are of the form
 	// `projects//locations//keyRings//cryptoKeys/`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
@@ -6416,7 +6440,7 @@ func (s ShortRepresentation) MarshalJSON() ([]byte, error) {
 
 // SingleRegionQuorum: Message type for a single-region quorum.
 type SingleRegionQuorum struct {
-	// ServingLocation: Required. The location of the serving region, e.g.
+	// ServingLocation: Required. The location of the serving region, for example,
 	// "us-central1". The location must be one of the regions within the
 	// dual-region instance configuration of your database. The list of valid
 	// locations is available using the GetInstanceConfig API. This should only be
@@ -6876,9 +6900,9 @@ type UpdateDatabaseDdlMetadata struct {
 	// Statements: For an update this list contains all the statements. For an
 	// individual statement, this list contains only that statement.
 	Statements []string `json:"statements,omitempty"`
-	// Throttled: Output only. When true, indicates that the operation is throttled
-	// e.g. due to resource constraints. When resources become available the
-	// operation will resume and this field will be false again.
+	// Throttled: Output only. When true, indicates that the operation is
+	// throttled, for example, due to resource constraints. When resources become
+	// available the operation will resume and this field will be false again.
 	Throttled bool `json:"throttled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Actions") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6902,13 +6926,14 @@ func (s UpdateDatabaseDdlMetadata) MarshalJSON() ([]byte, error) {
 // in order but not necessarily all at once, to the database schema at some
 // point (or points) in the future. The server checks that the statements are
 // executable (syntactically valid, name tables that exist, etc.) before
-// enqueueing them, but they may still fail upon later execution (e.g., if a
-// statement from another batch of statements is applied first and it conflicts
-// in some way, or if there is some data-related problem like a `NULL` value in
-// a column to which `NOT NULL` would be added). If a statement fails, all
-// subsequent statements in the batch are automatically cancelled. Each batch
-// of statements is assigned a name which can be used with the Operations API
-// to monitor progress. See the operation_id field for more details.
+// enqueueing them, but they may still fail upon later execution (for example,
+// if a statement from another batch of statements is applied first and it
+// conflicts in some way, or if there is some data-related problem like a
+// `NULL` value in a column to which `NOT NULL` would be added). If a statement
+// fails, all subsequent statements in the batch are automatically cancelled.
+// Each batch of statements is assigned a name which can be used with the
+// Operations API to monitor progress. See the operation_id field for more
+// details.
 type UpdateDatabaseDdlRequest struct {
 	// OperationId: If empty, the new update request is assigned an
 	// automatically-generated operation ID. Otherwise, `operation_id` is used to
@@ -10466,10 +10491,10 @@ type ProjectsInstancesBackupsCreateCall struct {
 // one pending backup creation per database. Backup creation of different
 // databases can run concurrently.
 //
-//   - parent: The name of the instance in which the backup will be created. This
-//     must be the same instance that contains the database the backup will be
-//     created from. The backup will be stored in the location(s) specified in
-//     the instance configuration of this instance. Values are of the form
+//   - parent: The name of the instance in which the backup is created. This must
+//     be the same instance that contains the database the backup is created
+//     from. The backup will be stored in the locations specified in the instance
+//     configuration of this instance. Values are of the form
 //     `projects//instances/`.
 func (r *ProjectsInstancesBackupsService) Create(parent string, backup *Backup) *ProjectsInstancesBackupsCreateCall {
 	c := &ProjectsInstancesBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10509,10 +10534,15 @@ func (c *ProjectsInstancesBackupsCreateCall) EncryptionConfigEncryptionType(encr
 }
 
 // EncryptionConfigKmsKeyName sets the optional parameter
-// "encryptionConfig.kmsKeyName": The Cloud KMS key that will be used to
-// protect the backup. This field should be set only when encryption_type is
-// `CUSTOMER_MANAGED_ENCRYPTION`. Values are of the form
-// `projects//locations//keyRings//cryptoKeys/`.
+// "encryptionConfig.kmsKeyName": This field is maintained for backwards
+// compatibility. For new callers, we recommend using `kms_key_names` to
+// specify the KMS key. Only use `kms_key_name` if the location of the KMS key
+// matches the database instance's configuration (location) exactly. For
+// example, if the KMS location is in `us-central1` or `nam3`, then the
+// database instance must also be in `us-central1` or `nam3`. The Cloud KMS key
+// that is used to encrypt and decrypt the restored database. Set this field
+// only when encryption_type is `CUSTOMER_MANAGED_ENCRYPTION`. Values are of
+// the form `projects//locations//keyRings//cryptoKeys/`.
 func (c *ProjectsInstancesBackupsCreateCall) EncryptionConfigKmsKeyName(encryptionConfigKmsKeyName string) *ProjectsInstancesBackupsCreateCall {
 	c.urlParams_.Set("encryptionConfig.kmsKeyName", encryptionConfigKmsKeyName)
 	return c
@@ -11145,11 +11175,11 @@ func (r *ProjectsInstancesBackupsService) Patch(nameid string, backup *Backup) *
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A mask
-// specifying which fields (e.g. `expire_time`) in the Backup resource should
-// be updated. This mask is relative to the Backup resource, not to the request
-// message. The field mask must always be specified; this prevents any future
-// fields from being erased accidentally by clients that do not know about
-// them.
+// specifying which fields (for example, `expire_time`) in the backup resource
+// should be updated. This mask is relative to the backup resource, not to the
+// request message. The field mask must always be specified; this prevents any
+// future fields from being erased accidentally by clients that do not know
+// about them.
 func (c *ProjectsInstancesBackupsPatchCall) UpdateMask(updateMask string) *ProjectsInstancesBackupsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -13657,8 +13687,8 @@ type ProjectsInstancesDatabasesUpdateDdlCall struct {
 // UpdateDdl: Updates the schema of a Cloud Spanner database by
 // creating/altering/dropping tables, columns, indexes, etc. The returned
 // long-running operation will have a name of the format `/operations/` and can
-// be used to track execution of the schema change(s). The metadata field type
-// is UpdateDatabaseDdlMetadata. The operation has no response.
+// be used to track execution of the schema changes. The metadata field type is
+// UpdateDatabaseDdlMetadata. The operation has no response.
 //
 // - database: The database to update.
 func (r *ProjectsInstancesDatabasesService) UpdateDdl(database string, updatedatabaseddlrequest *UpdateDatabaseDdlRequest) *ProjectsInstancesDatabasesUpdateDdlCall {

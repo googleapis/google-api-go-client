@@ -1877,7 +1877,7 @@ func (s GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse) Marshal
 // event.
 type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
 	// Challenge: Output only. Challenge information for POLICY_BASED_CHALLENGE and
-	// INVISIBLE keys
+	// INVISIBLE keys.
 	//
 	// Possible values:
 	//   "CHALLENGE_UNSPECIFIED" - Default unspecified type.

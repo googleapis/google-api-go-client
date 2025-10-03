@@ -2158,6 +2158,9 @@ type GoogleCloudApigeeV1ApiProduct struct {
 	// local counter for quota evaluation by all the operations, independent of
 	// proxy association. This behavior mimics the same as
 	// QUOTA_COUNTER_SCOPE_UNSPECIFIED.
+	//   "PRODUCT" - When quota is not explicitly defined for each
+	// operation(REST/GraphQL), the limits set at product level will be used as a
+	// global counter for quota evaluation by all the operations.
 	QuotaCounterScope string `json:"quotaCounterScope,omitempty"`
 	// QuotaInterval: Time interval over which the number of request messages is
 	// calculated.
@@ -5769,11 +5772,19 @@ type GoogleCloudApigeeV1Instance struct {
 	// firewall needs to allow traffic from Apigee. Input formats: `a.b.c.d/22` or
 	// `e.f.g.h/28` or `a.b.c.d/22,e.f.g.h/28`
 	IpRange string `json:"ipRange,omitempty"`
+	// IsVersionLocked: Output only. Indicates whether the instance is version
+	// locked. If true, the instance will not be updated by automated runtime
+	// rollouts. This is only supported for Apigee X instances.
+	IsVersionLocked bool `json:"isVersionLocked,omitempty"`
 	// LastModifiedAt: Output only. Time the instance was last modified in
 	// milliseconds since epoch.
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
 	// Location: Required. Compute Engine location where the instance resides.
 	Location string `json:"location,omitempty"`
+	// MaintenanceUpdatePolicy: Optional. Apigee customers can set the preferred
+	// window to perform maintenance on the instance (day of the week and time of
+	// day).
+	MaintenanceUpdatePolicy *GoogleCloudApigeeV1MaintenanceUpdatePolicy `json:"maintenanceUpdatePolicy,omitempty"`
 	// Name: Required. Resource ID of the instance. Values must match the regular
 	// expression `^a-z{0,30}[a-z\d]$`.
 	Name string `json:"name,omitempty"`
@@ -5798,6 +5809,11 @@ type GoogleCloudApigeeV1Instance struct {
 	// instance. The runtime system is the set of components that serve the API
 	// Proxy traffic in your Environments.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
+	// ScheduledMaintenance: Output only. Time and date of the scheduled
+	// maintenance for this instance. This field is only populated for instances
+	// that have opted into Maintenance Window and if there is an upcoming
+	// maintenance. Cleared once the maintenance is complete.
+	ScheduledMaintenance *GoogleCloudApigeeV1ScheduledMaintenance `json:"scheduledMaintenance,omitempty"`
 	// ServiceAttachment: Output only. Resource name of the service attachment
 	// created for the instance in the format:
 	// `projects/*/regions/*/serviceAttachments/*` Apigee customers can privately
@@ -7286,6 +7302,76 @@ type GoogleCloudApigeeV1ListTraceConfigOverridesResponse struct {
 
 func (s GoogleCloudApigeeV1ListTraceConfigOverridesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListTraceConfigOverridesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1MaintenanceUpdatePolicy: MaintenanceUpdatePolicy
+// specifies the preferred window to perform maintenance on the instance (day
+// of the week and time of day).
+type GoogleCloudApigeeV1MaintenanceUpdatePolicy struct {
+	// MaintenanceChannel: Optional. Maintenance channel to specify relative
+	// scheduling for maintenance.
+	//
+	// Possible values:
+	//   "MAINTENANCE_CHANNEL_UNSPECIFIED" - Unspecified maintenance channel.
+	//   "WEEK1" - Receive 1 weeks notice before maintenance occurs
+	//   "WEEK2" - Receive 2 weeks notice before maintenance occurs
+	MaintenanceChannel string `json:"maintenanceChannel,omitempty"`
+	// MaintenanceWindows: Optional. Preferred windows to perform maintenance.
+	// Currently limited to 1.
+	MaintenanceWindows []*GoogleCloudApigeeV1MaintenanceUpdatePolicyMaintenanceWindow `json:"maintenanceWindows,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaintenanceChannel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaintenanceChannel") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1MaintenanceUpdatePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1MaintenanceUpdatePolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1MaintenanceUpdatePolicyMaintenanceWindow:
+// MaintenanceWindow specifies the preferred day of the week and time of day to
+// perform maintenance.
+type GoogleCloudApigeeV1MaintenanceUpdatePolicyMaintenanceWindow struct {
+	// Day: Required. Preferred day of the week for maintenance, e.g. MONDAY,
+	// TUESDAY, etc.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	Day string `json:"day,omitempty"`
+	// StartTime: Required. The start time (UTC) of the maintenance window.
+	StartTime *GoogleTypeTimeOfDay `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1MaintenanceUpdatePolicyMaintenanceWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1MaintenanceUpdatePolicyMaintenanceWindow
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9515,6 +9601,29 @@ func (s *GoogleCloudApigeeV1RuntimeTraceSamplingConfig) UnmarshalJSON(data []byt
 	}
 	s.SamplingRate = float64(s1.SamplingRate)
 	return nil
+}
+
+// GoogleCloudApigeeV1ScheduledMaintenance: Scheduled maintenance information
+// for an instance.
+type GoogleCloudApigeeV1ScheduledMaintenance struct {
+	// StartTime: Output only. The start time (UTC) of the scheduled maintenance.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StartTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StartTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1ScheduledMaintenance) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ScheduledMaintenance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApigeeV1Schema: Response for Schema call
@@ -12190,6 +12299,11 @@ type GoogleLongrunningListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -12467,6 +12581,43 @@ type GoogleTypeMoney struct {
 
 func (s GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeMoney
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleTypeTimeOfDay: Represents a time of day. The date and time zone are
+// either not significant or are specified elsewhere. An API may choose to
+// allow leap seconds. Related types are google.type.Date and
+// `google.protobuf.Timestamp`.
+type GoogleTypeTimeOfDay struct {
+	// Hours: Hours of a day in 24 hour format. Must be greater than or equal to 0
+	// and typically must be less than or equal to 23. An API may choose to allow
+	// the value "24:00:00" for scenarios like business closing time.
+	Hours int64 `json:"hours,omitempty"`
+	// Minutes: Minutes of an hour. Must be greater than or equal to 0 and less
+	// than or equal to 59.
+	Minutes int64 `json:"minutes,omitempty"`
+	// Nanos: Fractions of seconds, in nanoseconds. Must be greater than or equal
+	// to 0 and less than or equal to 999,999,999.
+	Nanos int64 `json:"nanos,omitempty"`
+	// Seconds: Seconds of a minute. Must be greater than or equal to 0 and
+	// typically must be less than or equal to 59. An API may allow the value 60 if
+	// it allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hours") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleTypeTimeOfDay) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeTimeOfDay
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -46731,6 +46882,19 @@ func (c *OrganizationsOperationsListCall) PageSize(pageSize int64) *Organization
 // token.
 func (c *OrganizationsOperationsListCall) PageToken(pageToken string) *OrganizationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *OrganizationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OrganizationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

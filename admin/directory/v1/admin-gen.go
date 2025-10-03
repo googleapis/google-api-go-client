@@ -10237,9 +10237,10 @@ func (c *GroupsListCall) PageToken(pageToken string) *GroupsListCall {
 	return c
 }
 
-// Query sets the optional parameter "query": Query string search. Should be of
-// the form "". Complete documentation is at
-// https://developers.google.com/workspace/admin/directory/v1/guides/search-groups
+// Query sets the optional parameter "query": Query string search. Contains one
+// or more search clauses, each with a field, operator, and value. For complete
+// documentation, go to Search for groups
+// (https://developers.google.com/workspace/admin/directory/v1/guides/search-groups).
 func (c *GroupsListCall) Query(query string) *GroupsListCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -14059,13 +14060,13 @@ func (c *ResourcesCalendarsListCall) PageToken(pageToken string) *ResourcesCalen
 }
 
 // Query sets the optional parameter "query": String query used to filter
-// results. Should be of the form "field operator value" where field can be any
-// of supported fields and operators can be any of supported operations.
-// Operators include '=' for exact match, '!=' for mismatch and ':' for prefix
-// match or HAS match where applicable. For prefix match, the value should
-// always be followed by a *. Logical operators NOT and AND are supported (in
-// this order of precedence). Supported fields include `generatedResourceName`,
-// `name`, `buildingId`, `floor_name`, `capacity`,
+// results. Contains one or more search clauses, each with a field, operator,
+// and value. A field can be any of supported fields and operators can be any
+// of supported operations. Operators include '=' for exact match, '!=' for
+// mismatch and ':' for prefix match or HAS match where applicable. For prefix
+// match, the value should always be followed by a *. Logical operators NOT and
+// AND are supported (in this order of precedence). Supported fields include
+// `generatedResourceName`, `name`, `buildingId`, `floor_name`, `capacity`,
 // `featureInstances.feature.name`, `resourceEmail`, `resourceCategory`. For
 // example `buildingId=US-NYC-9TH AND featureInstances.feature.name:Phone`.
 func (c *ResourcesCalendarsListCall) Query(query string) *ResourcesCalendarsListCall {
@@ -18456,9 +18457,10 @@ func (c *UsersWatchCall) Projection(projection string) *UsersWatchCall {
 	return c
 }
 
-// Query sets the optional parameter "query": Query string search. Should be of
-// the form "". Complete documentation is at
-// https://developers.google.com/workspace/admin/directory/v1/guides/search-users
+// Query sets the optional parameter "query": Query string search. Contains one
+// or more search clauses, each with a field, operator, and value. For complete
+// documentation, go to Search for users
+// (https://developers.google.com/workspace/admin/directory/v1/guides/search-users).
 func (c *UsersWatchCall) Query(query string) *UsersWatchCall {
 	c.urlParams_.Set("query", query)
 	return c

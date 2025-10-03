@@ -534,7 +534,7 @@ type Action struct {
 	// CleanImageTag: Inspect image and transform sensitive burnt-in text. Doesn't
 	// apply to elements nested in a sequence, which revert to `Keep`. Supported
 	// tags
-	// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part06/chapter_6.html):
+	// (https://dicom.nema.org/medical/dicom/2018e/output/chtml/part06/chapter_6.html):
 	// PixelData
 	CleanImageTag *ImageConfig `json:"cleanImageTag,omitempty"`
 	// CleanTextTag: Inspect text and transform sensitive text. Configurable via
@@ -551,12 +551,12 @@ type Action struct {
 	Queries []string `json:"queries,omitempty"`
 	// RecurseTag: Recursively apply DICOM de-id to tags nested in a sequence.
 	// Supported [Value Representation]
-	// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
+	// (https://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
 	// SQ
 	RecurseTag *RecurseTag `json:"recurseTag,omitempty"`
 	// RegenUidTag: Replace UID with a new generated UID. Supported [Value
 	// Representation]
-	// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
+	// (https://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
 	// UI
 	RegenUidTag *RegenUidTag `json:"regenUidTag,omitempty"`
 	// RemoveTag: Replace with empty tag.
@@ -1418,11 +1418,11 @@ func (s CheckDataAccessResponse) MarshalJSON() ([]byte, error) {
 
 // CleanDescriptorsOption: This option is based on the DICOM Standard's Clean
 // Descriptors Option
-// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part15/sect_E.3.5.html),
+// (https://dicom.nema.org/medical/dicom/2018e/output/chtml/part15/sect_E.3.5.html),
 // and the `CleanText` `Action` is applied to all the specified fields. When
 // cleaning text, the process attempts to transform phrases matching any of the
 // tags marked for removal (action codes D, Z, X, and U) in the Basic Profile
-// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part15/chapter_E.html).
+// (https://dicom.nema.org/medical/dicom/2018e/output/chtml/part15/chapter_E.html).
 // These contextual phrases are replaced with the token "[CTX]". This option
 // uses an additional infoType during inspection.
 type CleanDescriptorsOption struct {
@@ -1437,7 +1437,7 @@ type CleanTextField struct {
 
 // CleanTextTag: Inspect text and transform sensitive text. Configurable using
 // TextConfig. Supported [Value Representations]
-// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
+// (https://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
 // AE, LO, LT, PN, SH, ST, UC, UT, DA, DT, AS
 type CleanTextTag struct {
 }
@@ -2251,7 +2251,7 @@ type DicomConfig struct {
 	//   "ATTRIBUTE_CONFIDENTIALITY_BASIC_PROFILE" - Remove tags based on DICOM
 	// Standard's Attribute Confidentiality Basic Profile (DICOM Standard Edition
 	// 2018e)
-	// http://dicom.nema.org/medical/dicom/2018e/output/chtml/part15/chapter_E.html.
+	// https://dicom.nema.org/medical/dicom/2018e/output/chtml/part15/chapter_E.html.
 	//   "KEEP_ALL_PROFILE" - Keep all tags.
 	//   "DEIDENTIFY_TAG_CONTENTS" - Inspect within tag contents and replace
 	// sensitive text. The process can be configured using the TextConfig. Applies
@@ -2269,7 +2269,7 @@ type DicomConfig struct {
 	// directly to an individual out of context, given access to the original
 	// images, or to a database of the original images containing the UIDs, it
 	// would be possible to recover the individual's identity."
-	// http://dicom.nema.org/medical/dicom/current/output/chtml/part15/sect_E.3.9.html
+	// https://dicom.nema.org/medical/dicom/current/output/chtml/part15/sect_E.3.9.html
 	SkipIdRedaction bool `json:"skipIdRedaction,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FilterProfile") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2477,13 +2477,13 @@ type DicomTagConfig struct {
 	// DICOM objects.
 	//   "ATTRIBUTE_CONFIDENTIALITY_BASIC_PROFILE" - Remove tags based on DICOM
 	// Standard's [Attribute Confidentiality Basic Profile (DICOM Standard Edition
-	// 2018e)](http://dicom.nema.org/medical/dicom/2018e/output/chtml/part15/chapter
-	// _E.html).
+	// 2018e)](https://dicom.nema.org/medical/dicom/2018e/output/chtml/part15/chapte
+	// r_E.html).
 	//   "KEEP_ALL_PROFILE" - Keep all tags.
 	//   "DEIDENTIFY_TAG_CONTENTS" - Inspect tag contents and replace sensitive
 	// text. The process can be configured using the TextConfig. Applies to all
 	// tags with the following [Value Representations]
-	// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
+	// (https://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
 	// AE, LO, LT, PN, SH, ST, UC, UT, DA, DT, AS
 	ProfileType string `json:"profileType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Actions") to unconditionally
@@ -5546,12 +5546,12 @@ type Options struct {
 	// CleanDescriptors: Set Clean Descriptors Option.
 	CleanDescriptors *CleanDescriptorsOption `json:"cleanDescriptors,omitempty"`
 	// CleanImage: Apply `Action.clean_image` to `PixelData`
-	// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part06/chapter_6.html)
+	// (https://dicom.nema.org/medical/dicom/2018e/output/chtml/part06/chapter_6.html)
 	// as configured.
 	CleanImage *ImageConfig `json:"cleanImage,omitempty"`
 	// PrimaryIds: Set `Action` for `StudyInstanceUID`, `SeriesInstanceUID`,
 	// `SOPInstanceUID`, and `MediaStorageSOPInstanceUID`
-	// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part06/chapter_6.html).
+	// (https://dicom.nema.org/medical/dicom/2018e/output/chtml/part06/chapter_6.html).
 	//
 	// Possible values:
 	//   "PRIMARY_IDS_OPTION_UNSPECIFIED" - No value provided. Default to the
@@ -5920,7 +5920,7 @@ func (s QueryAccessibleDataResponse) MarshalJSON() ([]byte, error) {
 
 // RecurseTag: Recursively apply DICOM de-id to tags nested in a sequence.
 // Supported [Value Representation]
-// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
+// (https://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
 // SQ
 type RecurseTag struct {
 }
@@ -5932,7 +5932,7 @@ type RedactConfig struct {
 
 // RegenUidTag: Replace UID with a new generated UID. Supported [Value
 // Representation]
-// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
+// (https://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
 // UI
 type RegenUidTag struct {
 }
@@ -6913,7 +6913,7 @@ func (s StudyMetrics) MarshalJSON() ([]byte, error) {
 type TagFilterList struct {
 	// Tags: Tags to be filtered. Tags must be DICOM Data Elements, File Meta
 	// Elements, or Directory Structuring Elements, as defined at:
-	// http://dicom.nema.org/medical/dicom/current/output/html/part06.html#table_6-1,.
+	// https://dicom.nema.org/medical/dicom/current/output/html/part06.html#table_6-1,.
 	// They may be provided by "Keyword" or "Tag". For example, "PatientID",
 	// "00100010".
 	Tags []string `json:"tags,omitempty"`
@@ -14506,7 +14506,7 @@ type ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall struct {
 
 // SearchForInstances: SearchForInstances returns a list of matching instances.
 // See RetrieveTransaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of SearchForInstances, see Search
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the
@@ -14598,7 +14598,7 @@ type ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall struct {
 
 // SearchForSeries: SearchForSeries returns a list of matching series. See
 // RetrieveTransaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of SearchForSeries, see Search transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the
 // Cloud Healthcare API conformance statement. For samples that show how to
@@ -14688,7 +14688,7 @@ type ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall struct {
 
 // SearchForStudies: SearchForStudies returns a list of matching studies. See
 // RetrieveTransaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of SearchForStudies, see Search
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the
@@ -15001,7 +15001,7 @@ type ProjectsLocationsDatasetsDicomStoresStoreInstancesCall struct {
 
 // StoreInstances: StoreInstances stores DICOM instances associated with study
 // instance unique identifiers (SUID). See Store Transaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5).
 // For details on the implementation of StoreInstances, see Store transaction
 // (https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the
 // Cloud Healthcare API conformance statement. For samples that show how to
@@ -15831,7 +15831,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall struct {
 
 // RetrieveMetadata: RetrieveStudyMetadata returns instance associated with the
 // given study presented as metadata. See RetrieveTransaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of RetrieveStudyMetadata, see Metadata
 // resources
 // (https://cloud.google.com/healthcare/docs/dicom#metadata_resources) in the
@@ -15922,7 +15922,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall struct {
 
 // RetrieveStudy: RetrieveStudy returns all instances within the given study.
 // See RetrieveTransaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of RetrieveStudy, see DICOM
 // study/series/instances
 // (https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances)
@@ -16013,7 +16013,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall struct {
 
 // SearchForInstances: SearchForInstances returns a list of matching instances.
 // See RetrieveTransaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of SearchForInstances, see Search
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the
@@ -16105,7 +16105,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall struct {
 
 // SearchForSeries: SearchForSeries returns a list of matching series. See
 // RetrieveTransaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of SearchForSeries, see Search transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the
 // Cloud Healthcare API conformance statement. For samples that show how to
@@ -16195,7 +16195,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall struct {
 
 // StoreInstances: StoreInstances stores DICOM instances associated with study
 // instance unique identifiers (SUID). See Store Transaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5).
 // For details on the implementation of StoreInstances, see Store transaction
 // (https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the
 // Cloud Healthcare API conformance statement. For samples that show how to
@@ -16544,7 +16544,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall struc
 
 // RetrieveMetadata: RetrieveSeriesMetadata returns instance associated with
 // the given study and series, presented as metadata. See RetrieveTransaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of RetrieveSeriesMetadata, see Metadata
 // resources
 // (https://cloud.google.com/healthcare/docs/dicom#metadata_resources) in the
@@ -16635,7 +16635,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall struct 
 
 // RetrieveSeries: RetrieveSeries returns all instances within the given study
 // and series. See RetrieveTransaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of RetrieveSeries, see DICOM
 // study/series/instances
 // (https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances)
@@ -16726,7 +16726,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall str
 
 // SearchForInstances: SearchForInstances returns a list of matching instances.
 // See RetrieveTransaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of SearchForInstances, see Search
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the
@@ -17007,7 +17007,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceC
 
 // RetrieveInstance: RetrieveInstance returns instance associated with the
 // given study, series, and SOP Instance UID. See RetrieveTransaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of RetrieveInstance, see DICOM
 // study/series/instances
 // (https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances)
@@ -17102,7 +17102,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataC
 // RetrieveMetadata: RetrieveInstanceMetadata returns instance associated with
 // the given study, series, and SOP Instance UID presented as metadata. See
 // RetrieveTransaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of RetrieveInstanceMetadata, see Metadata
 // resources
 // (https://cloud.google.com/healthcare/docs/dicom#metadata_resources) in the
@@ -17196,7 +17196,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedC
 // RetrieveRendered: RetrieveRenderedInstance returns instance associated with
 // the given study, series, and SOP Instance UID in an acceptable Rendered
 // Media Type. See RetrieveTransaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of RetrieveRenderedInstance, see Rendered
 // resources
 // (https://cloud.google.com/healthcare/docs/dicom#rendered_resources) in the
@@ -17375,7 +17375,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveB
 
 // RetrieveBulkdata: Returns uncompressed, unencoded bytes representing the
 // referenced bulkdata tag from an instance. See Retrieve Transaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of RetrieveBulkdata, see Bulkdata
 // resources
 // (https://cloud.google.com/healthcare/docs/dicom#bulkdata-resources) in the
@@ -17468,7 +17468,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFra
 
 // RetrieveFrames: RetrieveFrames returns instances associated with the given
 // study, series, SOP Instance UID and frame numbers. See RetrieveTransaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of RetrieveFrames, see DICOM frames
 // (https://cloud.google.com/healthcare/docs/dicom#dicom_frames) in the Cloud
 // Healthcare API conformance statement. For samples that show how to call
@@ -17561,7 +17561,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRen
 // RetrieveRendered: RetrieveRenderedFrames returns instances associated with
 // the given study, series, SOP Instance UID and frame numbers in an acceptable
 // Rendered Media Type. See RetrieveTransaction
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// (https://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
 // For details on the implementation of RetrieveRenderedFrames, see Rendered
 // resources
 // (https://cloud.google.com/healthcare/docs/dicom#rendered_resources) in the

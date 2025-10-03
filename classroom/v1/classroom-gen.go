@@ -964,7 +964,7 @@ type Course struct {
 	EnrollmentCode string `json:"enrollmentCode,omitempty"`
 	// GradebookSettings: The gradebook settings that specify how a student's
 	// overall grade for the course will be calculated and who it will be displayed
-	// to. Read-only
+	// to. Read-only.
 	GradebookSettings *GradebookSettings `json:"gradebookSettings,omitempty"`
 	// GuardiansEnabled: Whether or not guardian notifications are enabled for this
 	// course. Read-only.

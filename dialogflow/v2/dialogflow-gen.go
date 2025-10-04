@@ -8148,6 +8148,324 @@ func (s GoogleCloudDialogflowV2AgentAssistantRecord) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2AgentCoachingContext: Agent Coaching context that
+// customer can configure.
+type GoogleCloudDialogflowV2AgentCoachingContext struct {
+	// Instructions: Optional. Customized instructions for agent coaching.
+	Instructions []*GoogleCloudDialogflowV2AgentCoachingInstruction `json:"instructions,omitempty"`
+	// OutputLanguageCode: Optional. Output language code.
+	OutputLanguageCode string `json:"outputLanguageCode,omitempty"`
+	// OverarchingGuidance: Optional. The overarching guidance for the agent
+	// coaching. This should be set only for v1.5 and later versions.
+	OverarchingGuidance string `json:"overarchingGuidance,omitempty"`
+	// Version: Optional. Version of the feature. If not set, default to latest
+	// version. Current candidates are ["1.2"].
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Instructions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Instructions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2AgentCoachingContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2AgentCoachingContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2AgentCoachingInstruction: Agent Coaching instructions
+// that customer can configure.
+type GoogleCloudDialogflowV2AgentCoachingInstruction struct {
+	// AgentAction: Optional. The action that human agent should take. For example,
+	// "apologize for the slow shipping". If the users only want to use agent
+	// coaching for intent detection, agent_action can be empty
+	AgentAction string `json:"agentAction,omitempty"`
+	// Condition: Optional. The condition of the instruction. For example, "the
+	// customer wants to cancel an order". If the users want the instruction to be
+	// triggered unconditionally, the condition can be empty.
+	Condition string `json:"condition,omitempty"`
+	// DisplayDetails: Optional. The detailed description of this instruction.
+	DisplayDetails string `json:"displayDetails,omitempty"`
+	// DisplayName: Optional. Display name for the instruction.
+	DisplayName string `json:"displayName,omitempty"`
+	// DuplicateCheckResult: Output only. Duplication check for the
+	// AgentCoachingInstruction.
+	DuplicateCheckResult *GoogleCloudDialogflowV2AgentCoachingInstructionDuplicateCheckResult `json:"duplicateCheckResult,omitempty"`
+	// SystemAction: Optional. The action that system should take. For example,
+	// "call GetOrderTime with order_number={order number provided by the
+	// customer}". If the users don't have plugins or don't want to trigger
+	// plugins, the system_action can be empty
+	SystemAction string `json:"systemAction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentAction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentAction") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2AgentCoachingInstruction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2AgentCoachingInstruction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2AgentCoachingInstructionDuplicateCheckResult:
+// Duplication check for the suggestion.
+type GoogleCloudDialogflowV2AgentCoachingInstructionDuplicateCheckResult struct {
+	// DuplicateSuggestions: Output only. The duplicate suggestions.
+	DuplicateSuggestions []*GoogleCloudDialogflowV2AgentCoachingInstructionDuplicateCheckResultDuplicateSuggestion `json:"duplicateSuggestions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DuplicateSuggestions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DuplicateSuggestions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2AgentCoachingInstructionDuplicateCheckResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2AgentCoachingInstructionDuplicateCheckResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2AgentCoachingInstructionDuplicateCheckResultDuplicateS
+// uggestion: The duplicate suggestion details.
+type GoogleCloudDialogflowV2AgentCoachingInstructionDuplicateCheckResultDuplicateSuggestion struct {
+	// AnswerRecord: Output only. The answer record id of the past duplicate
+	// suggestion.
+	AnswerRecord string `json:"answerRecord,omitempty"`
+	// SimilarityScore: Output only. The similarity score of between the past and
+	// current suggestion.
+	SimilarityScore float64 `json:"similarityScore,omitempty"`
+	// SuggestionIndex: Output only. The index of the duplicate suggestion in the
+	// past suggestion list.
+	SuggestionIndex int64 `json:"suggestionIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2AgentCoachingInstructionDuplicateCheckResultDuplicateSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2AgentCoachingInstructionDuplicateCheckResultDuplicateSuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2AgentCoachingInstructionDuplicateCheckResultDuplicateSuggestion) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2AgentCoachingInstructionDuplicateCheckResultDuplicateSuggestion
+	var s1 struct {
+		SimilarityScore gensupport.JSONFloat64 `json:"similarityScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SimilarityScore = float64(s1.SimilarityScore)
+	return nil
+}
+
+// GoogleCloudDialogflowV2AgentCoachingSuggestion: Suggestion for coaching
+// agents.
+type GoogleCloudDialogflowV2AgentCoachingSuggestion struct {
+	// AgentActionSuggestions: Optional. Suggested actions for the agent to take.
+	AgentActionSuggestions []*GoogleCloudDialogflowV2AgentCoachingSuggestionAgentActionSuggestion `json:"agentActionSuggestions,omitempty"`
+	// ApplicableInstructions: Optional. Instructions applicable based on the
+	// current context.
+	ApplicableInstructions []*GoogleCloudDialogflowV2AgentCoachingInstruction `json:"applicableInstructions,omitempty"`
+	// SampleResponses: Optional. Sample response for the Agent.
+	SampleResponses []*GoogleCloudDialogflowV2AgentCoachingSuggestionSampleResponse `json:"sampleResponses,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentActionSuggestions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentActionSuggestions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2AgentCoachingSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2AgentCoachingSuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2AgentCoachingSuggestionAgentActionSuggestion: Actions
+// suggested for the agent. This is based on applicable instructions.
+type GoogleCloudDialogflowV2AgentCoachingSuggestionAgentActionSuggestion struct {
+	// AgentAction: Optional. The suggested action for the agent.
+	AgentAction string `json:"agentAction,omitempty"`
+	// DuplicateCheckResult: Output only. Duplicate check result for the agent
+	// action suggestion.
+	DuplicateCheckResult *GoogleCloudDialogflowV2AgentCoachingSuggestionDuplicateCheckResult `json:"duplicateCheckResult,omitempty"`
+	// Sources: Output only. Sources for the agent action suggestion.
+	Sources *GoogleCloudDialogflowV2AgentCoachingSuggestionSources `json:"sources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentAction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentAction") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2AgentCoachingSuggestionAgentActionSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2AgentCoachingSuggestionAgentActionSuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2AgentCoachingSuggestionDuplicateCheckResult:
+// Duplication check for the suggestion.
+type GoogleCloudDialogflowV2AgentCoachingSuggestionDuplicateCheckResult struct {
+	// DuplicateSuggestions: Output only. The duplicate suggestions.
+	DuplicateSuggestions []*GoogleCloudDialogflowV2AgentCoachingSuggestionDuplicateCheckResultDuplicateSuggestion `json:"duplicateSuggestions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DuplicateSuggestions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DuplicateSuggestions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2AgentCoachingSuggestionDuplicateCheckResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2AgentCoachingSuggestionDuplicateCheckResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2AgentCoachingSuggestionDuplicateCheckResultDuplicateSu
+// ggestion: The duplicate suggestion details. Keeping answer_record and
+// sources together as they are identifiers for duplicate suggestions.
+type GoogleCloudDialogflowV2AgentCoachingSuggestionDuplicateCheckResultDuplicateSuggestion struct {
+	// AnswerRecord: Output only. The answer record id of the past duplicate
+	// suggestion.
+	AnswerRecord string `json:"answerRecord,omitempty"`
+	// SimilarityScore: Output only. The similarity score of between the past and
+	// current suggestion.
+	SimilarityScore float64 `json:"similarityScore,omitempty"`
+	// Sources: Output only. Sources for the suggestion.
+	Sources *GoogleCloudDialogflowV2AgentCoachingSuggestionSources `json:"sources,omitempty"`
+	// SuggestionIndex: Output only. The index of the duplicate suggestion in the
+	// past suggestion list.
+	SuggestionIndex int64 `json:"suggestionIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2AgentCoachingSuggestionDuplicateCheckResultDuplicateSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2AgentCoachingSuggestionDuplicateCheckResultDuplicateSuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2AgentCoachingSuggestionDuplicateCheckResultDuplicateSuggestion) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2AgentCoachingSuggestionDuplicateCheckResultDuplicateSuggestion
+	var s1 struct {
+		SimilarityScore gensupport.JSONFloat64 `json:"similarityScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SimilarityScore = float64(s1.SimilarityScore)
+	return nil
+}
+
+// GoogleCloudDialogflowV2AgentCoachingSuggestionSampleResponse: Sample
+// response that the agent can use. This could be based on applicable
+// instructions and ingested data from other systems.
+type GoogleCloudDialogflowV2AgentCoachingSuggestionSampleResponse struct {
+	// DuplicateCheckResult: Output only. Duplicate check result for the sample
+	// response.
+	DuplicateCheckResult *GoogleCloudDialogflowV2AgentCoachingSuggestionDuplicateCheckResult `json:"duplicateCheckResult,omitempty"`
+	// ResponseText: Optional. Sample response for Agent in text.
+	ResponseText string `json:"responseText,omitempty"`
+	// Sources: Output only. Sources for the Sample Response.
+	Sources *GoogleCloudDialogflowV2AgentCoachingSuggestionSources `json:"sources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DuplicateCheckResult") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DuplicateCheckResult") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2AgentCoachingSuggestionSampleResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2AgentCoachingSuggestionSampleResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2AgentCoachingSuggestionSources: Sources for the
+// suggestion.
+type GoogleCloudDialogflowV2AgentCoachingSuggestionSources struct {
+	// InstructionIndexes: Output only. Source instruction indexes for the
+	// suggestion. This is the index of the applicable_instructions field.
+	InstructionIndexes []int64 `json:"instructionIndexes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstructionIndexes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstructionIndexes") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2AgentCoachingSuggestionSources) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2AgentCoachingSuggestionSources
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2AnalyzeContentRequest: The request message for
 // Participants.AnalyzeContent.
 type GoogleCloudDialogflowV2AnalyzeContentRequest struct {
@@ -9222,6 +9540,10 @@ func (s GoogleCloudDialogflowV2ConversationContextReference) MarshalJSON() ([]by
 // GoogleCloudDialogflowV2ConversationContextReferenceContextContent: Contents
 // ingested.
 type GoogleCloudDialogflowV2ConversationContextReferenceContextContent struct {
+	// AnswerRecord: If the context content was generated from a tool call, specify
+	// the answer record associated with the tool call. Format:
+	// `projects//locations//answerRecords/`.
+	AnswerRecord string `json:"answerRecord,omitempty"`
 	// Content: Required. The information ingested in a single request.
 	Content string `json:"content,omitempty"`
 	// ContentFormat: Required. The format of the ingested string.
@@ -9234,13 +9556,13 @@ type GoogleCloudDialogflowV2ConversationContextReferenceContextContent struct {
 	// IngestionTime: Output only. The time when this information was incorporated
 	// into the relevant context reference.
 	IngestionTime string `json:"ingestionTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Content") to include in API
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -11327,6 +11649,8 @@ func (s GoogleCloudDialogflowV2GenerateSuggestionsResponseGeneratorSuggestionAns
 
 // GoogleCloudDialogflowV2Generator: LLM generator.
 type GoogleCloudDialogflowV2Generator struct {
+	// AgentCoachingContext: Input of prebuilt Agent Coaching feature.
+	AgentCoachingContext *GoogleCloudDialogflowV2AgentCoachingContext `json:"agentCoachingContext,omitempty"`
 	// CreateTime: Output only. Creation time of this generator.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. Human readable description of the generator.
@@ -11343,6 +11667,9 @@ type GoogleCloudDialogflowV2Generator struct {
 	// Example: `text-bison` * To use a stable model version, specify the version
 	// number as well. Example: `text-bison@002`.
 	PublishedModel string `json:"publishedModel,omitempty"`
+	// SuggestionDedupingConfig: Optional. Configuration for suggestion deduping.
+	// This is only applicable to AI Coach feature.
+	SuggestionDedupingConfig *GoogleCloudDialogflowV2SuggestionDedupingConfig `json:"suggestionDedupingConfig,omitempty"`
 	// SummarizationContext: Input of prebuilt Summarization feature.
 	SummarizationContext *GoogleCloudDialogflowV2SummarizationContext `json:"summarizationContext,omitempty"`
 	// Tools: Optional. Resource names of the tools that the generator can choose
@@ -11366,15 +11693,15 @@ type GoogleCloudDialogflowV2Generator struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "AgentCoachingContext") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentCoachingContext") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -11409,6 +11736,16 @@ type GoogleCloudDialogflowV2GeneratorEvaluation struct {
 	// Name: Output only. Identifier. The resource name of the evaluation. Format:
 	// `projects//locations//generators// evaluations/`
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. A read only boolean field reflecting Zone
+	// Isolation status of the model. The field is an aggregated value of ZI status
+	// of its underlying dependencies. See more details in
+	// go/zicy-resource-placement#resource-status
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. A read only boolean field reflecting Zone
+	// Separation status of the model. The field is an aggregated value of ZS
+	// status of its underlying dependencies. See more details in
+	// go/zicy-resource-placement#resource-status
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SummarizationMetrics: Output only. Only available when the summarization
 	// generator is provided.
 	SummarizationMetrics *GoogleCloudDialogflowV2SummarizationEvaluationMetrics `json:"summarizationMetrics,omitempty"`
@@ -11613,6 +11950,8 @@ func (s GoogleCloudDialogflowV2GeneratorEvaluationConfigSummarizationConfig) Mar
 // GoogleCloudDialogflowV2GeneratorSuggestion: Suggestion generated using a
 // Generator.
 type GoogleCloudDialogflowV2GeneratorSuggestion struct {
+	// AgentCoachingSuggestion: Optional. Suggestion to coach the agent.
+	AgentCoachingSuggestion *GoogleCloudDialogflowV2AgentCoachingSuggestion `json:"agentCoachingSuggestion,omitempty"`
 	// FreeFormSuggestion: Optional. Free form suggestion.
 	FreeFormSuggestion *GoogleCloudDialogflowV2FreeFormSuggestion `json:"freeFormSuggestion,omitempty"`
 	// SummarySuggestion: Optional. Suggested summary.
@@ -11620,15 +11959,15 @@ type GoogleCloudDialogflowV2GeneratorSuggestion struct {
 	// ToolCallInfo: Optional. List of request and response for tool calls
 	// executed.
 	ToolCallInfo []*GoogleCloudDialogflowV2GeneratorSuggestionToolCallInfo `json:"toolCallInfo,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FreeFormSuggestion") to
+	// ForceSendFields is a list of field names (e.g. "AgentCoachingSuggestion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FreeFormSuggestion") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentCoachingSuggestion") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -11804,6 +12143,9 @@ type GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionConfig struct {
 	// from high latency features in Pub/Sub. High latency feature(s):
 	// KNOWLEDGE_ASSIST
 	DisableHighLatencyFeaturesSyncDelivery bool `json:"disableHighLatencyFeaturesSyncDelivery,omitempty"`
+	// EnableAsyncToolCall: Optional. If true, enable asynchronous execution of
+	// tools.
+	EnableAsyncToolCall bool `json:"enableAsyncToolCall,omitempty"`
 	// FeatureConfigs: Configuration of different suggestion features. One feature
 	// can have only one config.
 	FeatureConfigs []*GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionFeatureConfig `json:"featureConfigs,omitempty"`
@@ -11820,6 +12162,16 @@ type GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionConfig struct {
 	// will be grouped into a single Pub/Sub event or
 	// StreamingAnalyzeContentResponse.
 	GroupSuggestionResponses bool `json:"groupSuggestionResponses,omitempty"`
+	// SkipEmptyEventBasedSuggestion: Optional. Enable skipping event based
+	// suggestion if the suggestion is empty. For example, with this field
+	// disabled, Knowledge Assist feature sends a Pub/Sub message when there are no
+	// suggestions. Enabling this field will change the behavior to skip the
+	// Pub/Sub message in this situation.
+	SkipEmptyEventBasedSuggestion bool `json:"skipEmptyEventBasedSuggestion,omitempty"`
+	// UseUnredactedConversationData: Optional. If true, use unredacted transcript
+	// data (Supported features: AI_COACH) and use unredacted ingested context
+	// (Supported features: All Agent Assist features)
+	UseUnredactedConversationData bool `json:"useUnredactedConversationData,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "DisableHighLatencyFeaturesSyncDelivery") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -11866,8 +12218,18 @@ type GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionFeatureConfig str
 	// we can't find its answer. By default, queries are suggested only if we find
 	// its answer. Supported features: KNOWLEDGE_ASSIST
 	EnableQuerySuggestionWhenNoAnswer bool `json:"enableQuerySuggestionWhenNoAnswer,omitempty"`
+	// EnableResponseDebugInfo: Optional. Enable returning detailed reasons for
+	// suggestion results. For example, with this field disabled, Knowledge Search
+	// feature returns NotFound error when no answer is found for the input query.
+	// Enabling this field will change the behavior to return an OK response with
+	// detailed information indicating the lack of results. Supported features:
+	// KNOWLEDGE_SEARCH, KNOWLEDGE_ASSIST
+	EnableResponseDebugInfo bool `json:"enableResponseDebugInfo,omitempty"`
 	// QueryConfig: Configs of query.
 	QueryConfig *GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionQueryConfig `json:"queryConfig,omitempty"`
+	// RaiSettings: Optional. Settings for Responsible AI checks. Supported
+	// features: KNOWLEDGE_ASSIST
+	RaiSettings *GoogleCloudDialogflowV2RaiSettings `json:"raiSettings,omitempty"`
 	// SuggestionFeature: The suggestion feature.
 	SuggestionFeature *GoogleCloudDialogflowV2SuggestionFeature `json:"suggestionFeature,omitempty"`
 	// SuggestionTriggerSettings: Settings of suggestion trigger. Currently, only
@@ -15374,6 +15736,69 @@ func (s *GoogleCloudDialogflowV2QueryResult) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleCloudDialogflowV2RaiSettings: Settings for Responsible AI checks.
+type GoogleCloudDialogflowV2RaiSettings struct {
+	// RaiCategoryConfigs: Configuration for a set of RAI categories.
+	RaiCategoryConfigs []*GoogleCloudDialogflowV2RaiSettingsRaiCategoryConfig `json:"raiCategoryConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RaiCategoryConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RaiCategoryConfigs") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2RaiSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2RaiSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2RaiSettingsRaiCategoryConfig: Configuration for a
+// specific RAI category.
+type GoogleCloudDialogflowV2RaiSettingsRaiCategoryConfig struct {
+	// Category: Optional. The RAI category.
+	//
+	// Possible values:
+	//   "RAI_CATEGORY_UNSPECIFIED" - Default value.
+	//   "DANGEROUS_CONTENT" - Dangerous content.
+	//   "SEXUALLY_EXPLICIT" - Sexually explicit content.
+	//   "HARASSMENT" - Harassment content.
+	//   "HATE_SPEECH" - Hate speech content.
+	Category string `json:"category,omitempty"`
+	// SensitivityLevel: Optional. The sensitivity level for this category.
+	//
+	// Possible values:
+	//   "SENSITIVITY_LEVEL_UNSPECIFIED" - Default value. If unspecified, the
+	// default behavior is: - DANGEROUS_CONTENT: BLOCK_FEW - SEXUALLY_EXPLICIT:
+	// BLOCK_SOME - HARASSMENT: BLOCK_SOME - HATE_SPEECH: BLOCK_SOME
+	//   "BLOCK_MOST" - Block most potentially sensitive responses.
+	//   "BLOCK_SOME" - Block some potentially sensitive responses.
+	//   "BLOCK_FEW" - Block a few potentially sensitive responses.
+	//   "BLOCK_NONE" - No filtering for this category.
+	SensitivityLevel string `json:"sensitivityLevel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2RaiSettingsRaiCategoryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2RaiSettingsRaiCategoryConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2ReloadDocumentRequest: Request message for
 // Documents.ReloadDocument.
 type GoogleCloudDialogflowV2ReloadDocumentRequest struct {
@@ -17034,6 +17459,46 @@ func (s GoogleCloudDialogflowV2SuggestSmartRepliesResponse) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2SuggestionDedupingConfig: Config for suggestion
+// deduping. NEXT_ID: 3
+type GoogleCloudDialogflowV2SuggestionDedupingConfig struct {
+	// EnableDeduping: Optional. Whether to enable suggestion deduping.
+	EnableDeduping bool `json:"enableDeduping,omitempty"`
+	// SimilarityThreshold: Optional. The threshold for similarity between two
+	// suggestions. Acceptable value is [0.0, 1.0], default to 0.8
+	SimilarityThreshold float64 `json:"similarityThreshold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableDeduping") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableDeduping") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2SuggestionDedupingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SuggestionDedupingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2SuggestionDedupingConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2SuggestionDedupingConfig
+	var s1 struct {
+		SimilarityThreshold gensupport.JSONFloat64 `json:"similarityThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SimilarityThreshold = float64(s1.SimilarityThreshold)
+	return nil
+}
+
 // GoogleCloudDialogflowV2SuggestionFeature: The type of Human Agent Assistant
 // API suggestion to perform, and the maximum number of results to return for
 // that type. Multiple `Feature` objects can be specified in the `features`
@@ -17070,21 +17535,37 @@ func (s GoogleCloudDialogflowV2SuggestionFeature) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2SuggestionInput: Represents the selection of a
-// suggestion.
+// GoogleCloudDialogflowV2SuggestionInput: Represents the action to take for a
+// tool call that requires confirmation.
 type GoogleCloudDialogflowV2SuggestionInput struct {
-	// AnswerRecord: Required. The ID of a suggestion selected by the human agent.
-	// The suggestion(s) were generated in a previous call to request Dialogflow
-	// assist. The format is: `projects//locations//answerRecords/` where is an
-	// alphanumeric string.
+	// Action: Optional. The type of action to take with the tool.
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED" - Action not specified.
+	//   "CANCEL" - Indicates the user chooses to not make the tool call. It is
+	// only applicable to tool calls that are waiting for user confirmation.
+	//   "REVISE" - Makes the tool call with provided parameters. This action is
+	// intended for tool calls that only read but not write data.
+	//   "CONFIRM" - Makes the tool call with provided parameters. This action is
+	// intended for tool calls that may write data.
+	Action string `json:"action,omitempty"`
+	// AnswerRecord: Required. Format: `projects//locations//answerRecords/` The
+	// answer record associated with the tool call.
 	AnswerRecord string `json:"answerRecord,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// Parameters: Optional. Parameters to be used for the tool call. If not
+	// provided, the tool will be called without any parameters.
+	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
+	// SendTime: Optional. Time when the current suggest input is sent. For tool
+	// calls, this timestamp (along with the answer record) will be included in the
+	// corresponding tool call result so that it can be identified.
+	SendTime string `json:"sendTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AnswerRecord") to include in API
+	// NullFields is a list of field names (e.g. "Action") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -17873,13 +18354,27 @@ func (s GoogleCloudDialogflowV2TextToSpeechSettings) MarshalJSON() ([]byte, erro
 type GoogleCloudDialogflowV2ToolCall struct {
 	// Action: Optional. The name of the tool's action associated with this call.
 	Action string `json:"action,omitempty"`
+	// AnswerRecord: Optional. The answer record associated with this tool call.
+	AnswerRecord string `json:"answerRecord,omitempty"`
 	// CreateTime: Output only. Create time of the tool call.
 	CreateTime string `json:"createTime,omitempty"`
 	// InputParameters: Optional. The action's input parameters.
 	InputParameters googleapi.RawMessage `json:"inputParameters,omitempty"`
+	// State: Output only. State of the tool call.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value.
+	//   "TRIGGERED" - The tool call has been triggered.
+	//   "NEEDS_CONFIRMATION" - The tool call requires confirmation from a human.
+	State string `json:"state,omitempty"`
 	// Tool: Optional. The tool associated with this call. Format:
 	// `projects//locations//tools/`.
 	Tool string `json:"tool,omitempty"`
+	// ToolDisplayDetails: Optional. A human readable description of the tool.
+	ToolDisplayDetails string `json:"toolDisplayDetails,omitempty"`
+	// ToolDisplayName: Optional. A human readable short name of the tool, to be
+	// shown on the UI.
+	ToolDisplayName string `json:"toolDisplayName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -17903,6 +18398,9 @@ func (s GoogleCloudDialogflowV2ToolCall) MarshalJSON() ([]byte, error) {
 type GoogleCloudDialogflowV2ToolCallResult struct {
 	// Action: Optional. The name of the tool's action associated with this call.
 	Action string `json:"action,omitempty"`
+	// AnswerRecord: Optional. The answer record associated with this tool call
+	// result.
+	AnswerRecord string `json:"answerRecord,omitempty"`
 	// Content: Only populated if the response content is utf-8 encoded.
 	Content string `json:"content,omitempty"`
 	// CreateTime: Output only. Create time of the tool call result.
@@ -18252,6 +18750,293 @@ type GoogleCloudDialogflowV2WebhookResponse struct {
 
 func (s GoogleCloudDialogflowV2WebhookResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2WebhookResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1AgentCoachingInstruction: Agent Coaching
+// instructions that customer can configure.
+type GoogleCloudDialogflowV2beta1AgentCoachingInstruction struct {
+	// AgentAction: Optional. The action that human agent should take. For example,
+	// "apologize for the slow shipping". If the users only want to use agent
+	// coaching for intent detection, agent_action can be empty
+	AgentAction string `json:"agentAction,omitempty"`
+	// Condition: Optional. The condition of the instruction. For example, "the
+	// customer wants to cancel an order". If the users want the instruction to be
+	// triggered unconditionally, the condition can be empty.
+	Condition string `json:"condition,omitempty"`
+	// DisplayDetails: Optional. The detailed description of this instruction.
+	DisplayDetails string `json:"displayDetails,omitempty"`
+	// DisplayName: Optional. Display name for the instruction.
+	DisplayName string `json:"displayName,omitempty"`
+	// DuplicateCheckResult: Output only. Duplication check for the
+	// AgentCoachingInstruction.
+	DuplicateCheckResult *GoogleCloudDialogflowV2beta1AgentCoachingInstructionDuplicateCheckResult `json:"duplicateCheckResult,omitempty"`
+	// SystemAction: Optional. The action that system should take. For example,
+	// "call GetOrderTime with order_number={order number provided by the
+	// customer}". If the users don't have plugins or don't want to trigger
+	// plugins, the system_action can be empty
+	SystemAction string `json:"systemAction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentAction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentAction") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1AgentCoachingInstruction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1AgentCoachingInstruction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1AgentCoachingInstructionDuplicateCheckResult:
+// Duplication check for the suggestion.
+type GoogleCloudDialogflowV2beta1AgentCoachingInstructionDuplicateCheckResult struct {
+	// DuplicateSuggestions: Output only. The duplicate suggestions.
+	DuplicateSuggestions []*GoogleCloudDialogflowV2beta1AgentCoachingInstructionDuplicateCheckResultDuplicateSuggestion `json:"duplicateSuggestions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DuplicateSuggestions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DuplicateSuggestions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1AgentCoachingInstructionDuplicateCheckResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1AgentCoachingInstructionDuplicateCheckResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1AgentCoachingInstructionDuplicateCheckResultDupli
+// cateSuggestion: The duplicate suggestion details.
+type GoogleCloudDialogflowV2beta1AgentCoachingInstructionDuplicateCheckResultDuplicateSuggestion struct {
+	// AnswerRecord: Output only. The answer record id of the past duplicate
+	// suggestion.
+	AnswerRecord string `json:"answerRecord,omitempty"`
+	// SimilarityScore: Output only. The similarity score of between the past and
+	// current suggestion.
+	SimilarityScore float64 `json:"similarityScore,omitempty"`
+	// SuggestionIndex: Output only. The index of the duplicate suggestion in the
+	// past suggestion list.
+	SuggestionIndex int64 `json:"suggestionIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1AgentCoachingInstructionDuplicateCheckResultDuplicateSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1AgentCoachingInstructionDuplicateCheckResultDuplicateSuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2beta1AgentCoachingInstructionDuplicateCheckResultDuplicateSuggestion) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2beta1AgentCoachingInstructionDuplicateCheckResultDuplicateSuggestion
+	var s1 struct {
+		SimilarityScore gensupport.JSONFloat64 `json:"similarityScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SimilarityScore = float64(s1.SimilarityScore)
+	return nil
+}
+
+// GoogleCloudDialogflowV2beta1AgentCoachingSuggestion: Suggestion for coaching
+// agents.
+type GoogleCloudDialogflowV2beta1AgentCoachingSuggestion struct {
+	// AgentActionSuggestions: Optional. Suggested actions for the agent to take.
+	AgentActionSuggestions []*GoogleCloudDialogflowV2beta1AgentCoachingSuggestionAgentActionSuggestion `json:"agentActionSuggestions,omitempty"`
+	// ApplicableInstructions: Optional. Instructions applicable based on the
+	// current context.
+	ApplicableInstructions []*GoogleCloudDialogflowV2beta1AgentCoachingInstruction `json:"applicableInstructions,omitempty"`
+	// SampleResponses: Optional. Sample response for the Agent.
+	SampleResponses []*GoogleCloudDialogflowV2beta1AgentCoachingSuggestionSampleResponse `json:"sampleResponses,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentActionSuggestions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentActionSuggestions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1AgentCoachingSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1AgentCoachingSuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1AgentCoachingSuggestionAgentActionSuggestion:
+// Actions suggested for the agent. This is based on applicable instructions.
+type GoogleCloudDialogflowV2beta1AgentCoachingSuggestionAgentActionSuggestion struct {
+	// AgentAction: Optional. The suggested action for the agent.
+	AgentAction string `json:"agentAction,omitempty"`
+	// DuplicateCheckResult: Output only. Duplicate check result for the agent
+	// action suggestion.
+	DuplicateCheckResult *GoogleCloudDialogflowV2beta1AgentCoachingSuggestionDuplicateCheckResult `json:"duplicateCheckResult,omitempty"`
+	// Sources: Output only. Sources for the agent action suggestion.
+	Sources *GoogleCloudDialogflowV2beta1AgentCoachingSuggestionSources `json:"sources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentAction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentAction") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1AgentCoachingSuggestionAgentActionSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1AgentCoachingSuggestionAgentActionSuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1AgentCoachingSuggestionDuplicateCheckResult:
+// Duplication check for the suggestion.
+type GoogleCloudDialogflowV2beta1AgentCoachingSuggestionDuplicateCheckResult struct {
+	// DuplicateSuggestions: Output only. The duplicate suggestions.
+	DuplicateSuggestions []*GoogleCloudDialogflowV2beta1AgentCoachingSuggestionDuplicateCheckResultDuplicateSuggestion `json:"duplicateSuggestions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DuplicateSuggestions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DuplicateSuggestions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1AgentCoachingSuggestionDuplicateCheckResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1AgentCoachingSuggestionDuplicateCheckResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1AgentCoachingSuggestionDuplicateCheckResultDuplic
+// ateSuggestion: The duplicate suggestion details. Keeping answer_record and
+// sources together as they are identifiers for duplicate suggestions.
+type GoogleCloudDialogflowV2beta1AgentCoachingSuggestionDuplicateCheckResultDuplicateSuggestion struct {
+	// AnswerRecord: Output only. The answer record id of the past duplicate
+	// suggestion.
+	AnswerRecord string `json:"answerRecord,omitempty"`
+	// SimilarityScore: Output only. The similarity score of between the past and
+	// current suggestion.
+	SimilarityScore float64 `json:"similarityScore,omitempty"`
+	// Sources: Output only. Sources for the suggestion.
+	Sources *GoogleCloudDialogflowV2beta1AgentCoachingSuggestionSources `json:"sources,omitempty"`
+	// SuggestionIndex: Output only. The index of the duplicate suggestion in the
+	// past suggestion list.
+	SuggestionIndex int64 `json:"suggestionIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1AgentCoachingSuggestionDuplicateCheckResultDuplicateSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1AgentCoachingSuggestionDuplicateCheckResultDuplicateSuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2beta1AgentCoachingSuggestionDuplicateCheckResultDuplicateSuggestion) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2beta1AgentCoachingSuggestionDuplicateCheckResultDuplicateSuggestion
+	var s1 struct {
+		SimilarityScore gensupport.JSONFloat64 `json:"similarityScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SimilarityScore = float64(s1.SimilarityScore)
+	return nil
+}
+
+// GoogleCloudDialogflowV2beta1AgentCoachingSuggestionSampleResponse: Sample
+// response that the agent can use. This could be based on applicable
+// instructions and ingested data from other systems.
+type GoogleCloudDialogflowV2beta1AgentCoachingSuggestionSampleResponse struct {
+	// DuplicateCheckResult: Output only. Duplicate check result for the sample
+	// response.
+	DuplicateCheckResult *GoogleCloudDialogflowV2beta1AgentCoachingSuggestionDuplicateCheckResult `json:"duplicateCheckResult,omitempty"`
+	// ResponseText: Optional. Sample response for Agent in text.
+	ResponseText string `json:"responseText,omitempty"`
+	// Sources: Output only. Sources for the Sample Response.
+	Sources *GoogleCloudDialogflowV2beta1AgentCoachingSuggestionSources `json:"sources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DuplicateCheckResult") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DuplicateCheckResult") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1AgentCoachingSuggestionSampleResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1AgentCoachingSuggestionSampleResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1AgentCoachingSuggestionSources: Sources for the
+// suggestion.
+type GoogleCloudDialogflowV2beta1AgentCoachingSuggestionSources struct {
+	// InstructionIndexes: Output only. Source instruction indexes for the
+	// suggestion. This is the index of the applicable_instructions field.
+	InstructionIndexes []int64 `json:"instructionIndexes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstructionIndexes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstructionIndexes") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1AgentCoachingSuggestionSources) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1AgentCoachingSuggestionSources
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -18947,6 +19732,8 @@ func (s GoogleCloudDialogflowV2beta1GenerateSuggestionsResponseGeneratorSuggesti
 // GoogleCloudDialogflowV2beta1GeneratorSuggestion: Suggestion generated using
 // a Generator.
 type GoogleCloudDialogflowV2beta1GeneratorSuggestion struct {
+	// AgentCoachingSuggestion: Optional. Suggestion to coach the agent.
+	AgentCoachingSuggestion *GoogleCloudDialogflowV2beta1AgentCoachingSuggestion `json:"agentCoachingSuggestion,omitempty"`
 	// FreeFormSuggestion: Optional. Free form suggestion.
 	FreeFormSuggestion *GoogleCloudDialogflowV2beta1FreeFormSuggestion `json:"freeFormSuggestion,omitempty"`
 	// SummarySuggestion: Optional. Suggested summary.
@@ -18954,15 +19741,15 @@ type GoogleCloudDialogflowV2beta1GeneratorSuggestion struct {
 	// ToolCallInfo: Optional. List of request and response for tool calls
 	// executed.
 	ToolCallInfo []*GoogleCloudDialogflowV2beta1GeneratorSuggestionToolCallInfo `json:"toolCallInfo,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FreeFormSuggestion") to
+	// ForceSendFields is a list of field names (e.g. "AgentCoachingSuggestion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FreeFormSuggestion") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentCoachingSuggestion") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -22082,13 +22869,27 @@ func (s GoogleCloudDialogflowV2beta1TelephonyDtmfEvents) MarshalJSON() ([]byte, 
 type GoogleCloudDialogflowV2beta1ToolCall struct {
 	// Action: Optional. The name of the tool's action associated with this call.
 	Action string `json:"action,omitempty"`
+	// AnswerRecord: Optional. The answer record associated with this tool call.
+	AnswerRecord string `json:"answerRecord,omitempty"`
 	// CreateTime: Output only. Create time of the tool call.
 	CreateTime string `json:"createTime,omitempty"`
 	// InputParameters: Optional. The action's input parameters.
 	InputParameters googleapi.RawMessage `json:"inputParameters,omitempty"`
+	// State: Output only. State of the tool call
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value.
+	//   "TRIGGERED" - The tool call has been triggered.
+	//   "NEEDS_CONFIRMATION" - The tool call requires confirmation from a human.
+	State string `json:"state,omitempty"`
 	// Tool: Optional. The tool associated with this call. Format:
 	// `projects//locations//tools/`.
 	Tool string `json:"tool,omitempty"`
+	// ToolDisplayDetails: Optional. A human readable description of the tool.
+	ToolDisplayDetails string `json:"toolDisplayDetails,omitempty"`
+	// ToolDisplayName: Optional. A human readable short name of the tool, to be
+	// shown on the UI.
+	ToolDisplayName string `json:"toolDisplayName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -22112,6 +22913,9 @@ func (s GoogleCloudDialogflowV2beta1ToolCall) MarshalJSON() ([]byte, error) {
 type GoogleCloudDialogflowV2beta1ToolCallResult struct {
 	// Action: Optional. The name of the tool's action associated with this call.
 	Action string `json:"action,omitempty"`
+	// AnswerRecord: Optional. The answer record associated with this tool call
+	// result.
+	AnswerRecord string `json:"answerRecord,omitempty"`
 	// Content: Only populated if the response content is utf-8 encoded.
 	Content string `json:"content,omitempty"`
 	// CreateTime: Output only. Create time of the tool call result.
@@ -22446,6 +23250,11 @@ type GoogleLongrunningListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -53754,6 +54563,19 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -55013,6 +55835,19 @@ func (c *ProjectsOperationsListCall) PageSize(pageSize int64) *ProjectsOperation
 // token.
 func (c *ProjectsOperationsListCall) PageToken(pageToken string) *ProjectsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

@@ -453,8 +453,8 @@ type AddonsConfig struct {
 	// to use a managed Knative service.
 	CloudRunConfig *CloudRunConfig `json:"cloudRunConfig,omitempty"`
 	// ConfigConnectorConfig: Configuration for the ConfigConnector add-on, a
-	// Kubernetes extension to manage hosted GCP services through the Kubernetes
-	// API
+	// Kubernetes extension to manage hosted Google Cloud services through the
+	// Kubernetes API.
 	ConfigConnectorConfig *ConfigConnectorConfig `json:"configConnectorConfig,omitempty"`
 	// DnsCacheConfig: Configuration for NodeLocalDNS, a dns cache running on
 	// cluster nodes
@@ -462,7 +462,7 @@ type AddonsConfig struct {
 	// GcePersistentDiskCsiDriverConfig: Configuration for the Compute Engine
 	// Persistent Disk CSI driver.
 	GcePersistentDiskCsiDriverConfig *GcePersistentDiskCsiDriverConfig `json:"gcePersistentDiskCsiDriverConfig,omitempty"`
-	// GcpFilestoreCsiDriverConfig: Configuration for the GCP Filestore CSI driver.
+	// GcpFilestoreCsiDriverConfig: Configuration for the Filestore CSI driver.
 	GcpFilestoreCsiDriverConfig *GcpFilestoreCsiDriverConfig `json:"gcpFilestoreCsiDriverConfig,omitempty"`
 	// GcsFuseCsiDriverConfig: Configuration for the Cloud Storage Fuse CSI driver.
 	GcsFuseCsiDriverConfig *GcsFuseCsiDriverConfig `json:"gcsFuseCsiDriverConfig,omitempty"`
@@ -882,6 +882,31 @@ func (s AutoprovisioningNodePoolDefaults) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AutoscaledRolloutPolicy: Autoscaled rollout policy utilizes the cluster
+// autoscaler during blue-green upgrade to scale both the blue and green pools.
+type AutoscaledRolloutPolicy struct {
+	// WaitForDrainDuration: Optional. Time to wait after cordoning the blue pool
+	// before draining the nodes. Defaults to 3 days. The value can be set between
+	// 0 and 7 days, inclusive.
+	WaitForDrainDuration string `json:"waitForDrainDuration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WaitForDrainDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WaitForDrainDuration") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutoscaledRolloutPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscaledRolloutPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BestEffortProvisioning: Best effort provisioning.
 type BestEffortProvisioning struct {
 	// Enabled: When this is enabled, cluster/node pool creations will ignore
@@ -1015,20 +1040,23 @@ func (s BlueGreenInfo) MarshalJSON() ([]byte, error) {
 
 // BlueGreenSettings: Settings for blue-green upgrade.
 type BlueGreenSettings struct {
+	// AutoscaledRolloutPolicy: Autoscaled policy for cluster autoscaler enabled
+	// blue-green upgrade.
+	AutoscaledRolloutPolicy *AutoscaledRolloutPolicy `json:"autoscaledRolloutPolicy,omitempty"`
 	// NodePoolSoakDuration: Time needed after draining entire blue pool. After
 	// this period, blue pool will be cleaned up.
 	NodePoolSoakDuration string `json:"nodePoolSoakDuration,omitempty"`
 	// StandardRolloutPolicy: Standard policy for the blue-green upgrade.
 	StandardRolloutPolicy *StandardRolloutPolicy `json:"standardRolloutPolicy,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "NodePoolSoakDuration") to
+	// ForceSendFields is a list of field names (e.g. "AutoscaledRolloutPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "NodePoolSoakDuration") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutoscaledRolloutPolicy") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1323,7 +1351,8 @@ type Cluster struct {
 	// `https://username:password@endpoint/`. See the `masterAuth` property of this
 	// resource for username and password information.
 	Endpoint string `json:"endpoint,omitempty"`
-	// EnterpriseConfig: GKE Enterprise Configuration.
+	// EnterpriseConfig: GKE Enterprise Configuration. Deprecated: GKE Enterprise
+	// features are now available without an Enterprise tier.
 	EnterpriseConfig *EnterpriseConfig `json:"enterpriseConfig,omitempty"`
 	// Etag: This checksum is computed by the server based on the value of cluster
 	// fields, and may be sent on update requests to ensure the client has an
@@ -1542,7 +1571,7 @@ type Cluster struct {
 	// configuration.
 	VerticalPodAutoscaling *VerticalPodAutoscaling `json:"verticalPodAutoscaling,omitempty"`
 	// WorkloadIdentityConfig: Configuration for the use of Kubernetes Service
-	// Accounts in GCP IAM policies.
+	// Accounts in IAM policies.
 	WorkloadIdentityConfig *WorkloadIdentityConfig `json:"workloadIdentityConfig,omitempty"`
 	// Zone: Output only. The name of the Google Compute Engine zone
 	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
@@ -1722,7 +1751,8 @@ type ClusterUpdate struct {
 	// enable_private_endpoint is false, then enable_public_endpoint will be true.
 	DesiredEnablePrivateEndpoint bool `json:"desiredEnablePrivateEndpoint,omitempty"`
 	// DesiredEnterpriseConfig: The desired enterprise configuration for the
-	// cluster.
+	// cluster. Deprecated: GKE Enterprise features are now available without an
+	// Enterprise tier.
 	DesiredEnterpriseConfig *DesiredEnterpriseConfig `json:"desiredEnterpriseConfig,omitempty"`
 	// DesiredFleet: The desired fleet configuration for the cluster.
 	DesiredFleet *Fleet `json:"desiredFleet,omitempty"`
@@ -2376,9 +2406,15 @@ func (s DNSConfig) MarshalJSON() ([]byte, error) {
 // DNSEndpointConfig: Describes the configuration of a DNS endpoint.
 type DNSEndpointConfig struct {
 	// AllowExternalTraffic: Controls whether user traffic is allowed over this
-	// endpoint. Note that GCP-managed services may still use the endpoint even if
-	// this is false.
+	// endpoint. Note that Google-managed services may still use the endpoint even
+	// if this is false.
 	AllowExternalTraffic bool `json:"allowExternalTraffic,omitempty"`
+	// EnableK8sCertsViaDns: Controls whether the k8s certs auth is allowed via
+	// DNS.
+	EnableK8sCertsViaDns bool `json:"enableK8sCertsViaDns,omitempty"`
+	// EnableK8sTokensViaDns: Controls whether the k8s token auth is allowed via
+	// DNS.
+	EnableK8sTokensViaDns bool `json:"enableK8sTokensViaDns,omitempty"`
 	// Endpoint: Output only. The cluster's DNS endpoint configuration. A DNS
 	// format address. This is accessible from the public internet. Ex:
 	// uid.us-central1.gke.goog. Always present, but the behavior may change
@@ -2559,7 +2595,8 @@ func (s DesiredAdditionalIPRangesConfig) MarshalJSON() ([]byte, error) {
 }
 
 // DesiredEnterpriseConfig: DesiredEnterpriseConfig is a wrapper used for
-// updating enterprise_config.
+// updating enterprise_config. Deprecated: GKE Enterprise features are now
+// available without an Enterprise tier.
 type DesiredEnterpriseConfig struct {
 	// DesiredTier: desired_tier specifies the desired tier of the cluster.
 	//
@@ -2619,6 +2656,8 @@ type Empty struct {
 }
 
 // EnterpriseConfig: EnterpriseConfig is the cluster enterprise configuration.
+// Deprecated: GKE Enterprise features are now available without an Enterprise
+// tier.
 type EnterpriseConfig struct {
 	// ClusterTier: Output only. cluster_tier indicates the effective tier of the
 	// cluster.
@@ -3115,9 +3154,9 @@ func (s GcfsConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GcpFilestoreCsiDriverConfig: Configuration for the GCP Filestore CSI driver.
+// GcpFilestoreCsiDriverConfig: Configuration for the Filestore CSI driver.
 type GcpFilestoreCsiDriverConfig struct {
-	// Enabled: Whether the GCP Filestore CSI driver is enabled for this cluster.
+	// Enabled: Whether the Filestore CSI driver is enabled for this cluster.
 	Enabled bool `json:"enabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3844,8 +3883,8 @@ type LinuxNodeConfig struct {
 	// and compact memory in an effort to allocate a THP immediately.
 	//   "TRANSPARENT_HUGEPAGE_DEFRAG_DEFER" - It means that an application will
 	// wake kswapd in the background to reclaim pages and wake kcompactd to compact
-	// memory so that THP is available in the near future. It’s the
-	// responsibility of khugepaged to then install the THP pages later.
+	// memory so that THP is available in the near future. It's the responsibility
+	// of khugepaged to then install the THP pages later.
 	//   "TRANSPARENT_HUGEPAGE_DEFRAG_DEFER_WITH_MADVISE" - It means that an
 	// application will enter direct reclaim and compaction like always, but only
 	// for regions that have used madvise(MADV_HUGEPAGE); all other regions will
@@ -6628,7 +6667,7 @@ func (s ReservationAffinity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ResourceLabels: Collection of GCP labels
+// ResourceLabels: Collection of Resource Manager labels
 // (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-labels).
 type ResourceLabels struct {
 	// Labels: Map of node label keys and node label values.
@@ -8704,7 +8743,7 @@ func (s WindowsNodeConfig) MarshalJSON() ([]byte, error) {
 }
 
 // WorkloadIdentityConfig: Configuration for the use of Kubernetes Service
-// Accounts in GCP IAM policies.
+// Accounts in IAM policies.
 type WorkloadIdentityConfig struct {
 	// WorkloadPool: The workload pool to attach all Kubernetes service accounts
 	// to.

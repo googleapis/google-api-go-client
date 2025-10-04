@@ -4867,6 +4867,16 @@ func (c *AccountsReportsGenerateCall) DateRange(dateRange string) *AccountsRepor
 //
 // "UserInterest", "RunOfNetwork").
 //
+//	"TRAFFIC_SOURCE_NAME" - Localized traffic source name (e.g. "Google",
+//
+// "Bing", "Facebook", "Other"). For more information, see [Traffic source
+// breakdown](https://support.google.com/adsense/answer/16474600).
+//
+//	"TRAFFIC_SOURCE_CODE" - Traffic source code (e.g. "GOOGLE", "BING",
+//
+// "FACEBOOK", "OTHER"). For more information, see [Traffic source
+// breakdown](https://support.google.com/adsense/answer/16474600).
+//
 //	"CONTENT_PLATFORM_NAME" - Localized content platform name an ad request
 //
 // was made from (e.g. "AMP", "Web").
@@ -5468,6 +5478,16 @@ func (c *AccountsReportsGenerateCsvCall) DateRange(dateRange string) *AccountsRe
 //	"TARGETING_TYPE_CODE" - Targeting type code (e.g. "Keyword",
 //
 // "UserInterest", "RunOfNetwork").
+//
+//	"TRAFFIC_SOURCE_NAME" - Localized traffic source name (e.g. "Google",
+//
+// "Bing", "Facebook", "Other"). For more information, see [Traffic source
+// breakdown](https://support.google.com/adsense/answer/16474600).
+//
+//	"TRAFFIC_SOURCE_CODE" - Traffic source code (e.g. "GOOGLE", "BING",
+//
+// "FACEBOOK", "OTHER"). For more information, see [Traffic source
+// breakdown](https://support.google.com/adsense/answer/16474600).
 //
 //	"CONTENT_PLATFORM_NAME" - Localized content platform name an ad request
 //

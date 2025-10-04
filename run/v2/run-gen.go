@@ -2557,9 +2557,9 @@ type GoogleCloudRunV2Service struct {
 	LaunchStage string `json:"launchStage,omitempty"`
 	// MultiRegionSettings: Optional. Settings for multi-region deployment.
 	MultiRegionSettings *GoogleCloudRunV2MultiRegionSettings `json:"multiRegionSettings,omitempty"`
-	// Name: The fully qualified name of this Service. In CreateServiceRequest,
-	// this field is ignored, and instead composed from CreateServiceRequest.parent
-	// and CreateServiceRequest.service_id. Format:
+	// Name: Identifier. The fully qualified name of this Service. In
+	// CreateServiceRequest, this field is ignored, and instead composed from
+	// CreateServiceRequest.parent and CreateServiceRequest.service_id. Format:
 	// projects/{project}/locations/{location}/services/{service_id}
 	Name string `json:"name,omitempty"`
 	// ObservedGeneration: Output only. The generation of this Service currently
@@ -2741,6 +2741,8 @@ func (s GoogleCloudRunV2StorageSource) MarshalJSON() ([]byte, error) {
 type GoogleCloudRunV2SubmitBuildRequest struct {
 	// BuildpackBuild: Build the source using Buildpacks.
 	BuildpackBuild *GoogleCloudRunV2BuildpacksBuild `json:"buildpackBuild,omitempty"`
+	// Client: Optional. The client that initiated the build request.
+	Client string `json:"client,omitempty"`
 	// DockerBuild: Build the source using Docker. This means the source has a
 	// Dockerfile.
 	DockerBuild *GoogleCloudRunV2DockerBuild `json:"dockerBuild,omitempty"`
@@ -5691,6 +5693,11 @@ type GoogleLongrunningListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -8694,6 +8701,19 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -9567,8 +9587,8 @@ type ProjectsLocationsServicesPatchCall struct {
 
 // Patch: Updates a Service.
 //
-//   - name: The fully qualified name of this Service. In CreateServiceRequest,
-//     this field is ignored, and instead composed from
+//   - name: Identifier. The fully qualified name of this Service. In
+//     CreateServiceRequest, this field is ignored, and instead composed from
 //     CreateServiceRequest.parent and CreateServiceRequest.service_id. Format:
 //     projects/{project}/locations/{location}/services/{service_id}.
 func (r *ProjectsLocationsServicesService) Patch(name string, googlecloudrunv2service *GoogleCloudRunV2Service) *ProjectsLocationsServicesPatchCall {

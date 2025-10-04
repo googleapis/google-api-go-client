@@ -107,6 +107,10 @@ const (
 	// members from conversations and spaces
 	ChatAppMembershipsScope = "https://www.googleapis.com/auth/chat.app.memberships"
 
+	// On their own behalf, apps in Google Chat can see all messages and their
+	// associated reactions and message content
+	ChatAppMessagesReadonlyScope = "https://www.googleapis.com/auth/chat.app.messages.readonly"
+
 	// On their own behalf, apps in Google Chat can create conversations and spaces
 	// and see or update their metadata (including history settings and access
 	// settings)
@@ -171,6 +175,7 @@ const (
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/chat.app.memberships",
+		"https://www.googleapis.com/auth/chat.app.messages.readonly",
 		"https://www.googleapis.com/auth/chat.app.spaces",
 		"https://www.googleapis.com/auth/chat.bot",
 		"https://www.googleapis.com/auth/chat.memberships",

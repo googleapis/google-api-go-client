@@ -130,6 +130,10 @@ const (
 	// members from conversations and spaces
 	ChatAppMembershipsScope = "https://www.googleapis.com/auth/chat.app.memberships"
 
+	// On their own behalf, apps in Google Chat can see all messages and their
+	// associated reactions and message content
+	ChatAppMessagesReadonlyScope = "https://www.googleapis.com/auth/chat.app.messages.readonly"
+
 	// On their own behalf, apps in Google Chat can create conversations and spaces
 	// and see or update their metadata (including history settings and access
 	// settings)
@@ -214,6 +218,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/chat.admin.spaces.readonly",
 		"https://www.googleapis.com/auth/chat.app.delete",
 		"https://www.googleapis.com/auth/chat.app.memberships",
+		"https://www.googleapis.com/auth/chat.app.messages.readonly",
 		"https://www.googleapis.com/auth/chat.app.spaces",
 		"https://www.googleapis.com/auth/chat.app.spaces.create",
 		"https://www.googleapis.com/auth/chat.bot",
@@ -4824,12 +4829,19 @@ type Membership struct {
 	//   "MEMBERSHIP_ROLE_UNSPECIFIED" - Default value. For users: they aren't a
 	// member of the space, but can be invited. For Google Groups: they're always
 	// assigned this role (other enum values might be used in the future).
-	//   "ROLE_MEMBER" - A member of the space. The user has basic permissions,
-	// like sending messages to the space. In 1:1 and unnamed group conversations,
-	// everyone has this role.
-	//   "ROLE_MANAGER" - A space manager. The user has all basic permissions plus
-	// administrative permissions that let them manage the space, like adding or
-	// removing members. Only supported in SpaceType.SPACE.
+	//   "ROLE_MEMBER" - A member of the space. In the Chat UI, this role is called
+	// Member. The user has basic permissions, like sending messages to the space.
+	// Managers and owners can grant members additional permissions in a space,
+	// including: - Add or remove members. - Modify space details. - Turn history
+	// on or off. - Mention everyone in the space with `@all`. - Manage Chat apps
+	// and webhooks installed in the space. In direct messages and unnamed group
+	// conversations, everyone has this role.
+	//   "ROLE_MANAGER" - A space owner. In the Chat UI, this role is called Owner.
+	// The user has the complete set of space permissions to manage the space,
+	// including: - Change the role of other members in the space to member,
+	// manager, or owner. - Delete the space. Only supported in SpaceType.SPACE
+	// (named spaces). To learn more, see [Learn more about your role as a space
+	// owner or manager](https://support.google.com/chat/answer/11833441).
 	Role string `json:"role,omitempty"`
 	// State: Output only. State of the membership.
 	//
@@ -5390,9 +5402,11 @@ func (s OpenLink) MarshalJSON() ([]byte, error) {
 
 // PermissionSetting: Represents a space permission setting.
 type PermissionSetting struct {
-	// ManagersAllowed: Optional. Whether spaces managers have this permission.
+	// ManagersAllowed: Optional. Whether space owners (`ROLE_MANAGER`) have this
+	// permission.
 	ManagersAllowed bool `json:"managersAllowed,omitempty"`
-	// MembersAllowed: Optional. Whether non-manager members have this permission.
+	// MembersAllowed: Optional. Whether basic space members (`ROLE_MEMBER`) have
+	// this permission.
 	MembersAllowed bool `json:"membersAllowed,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ManagersAllowed") to
 	// unconditionally include in API requests. By default, fields with empty or

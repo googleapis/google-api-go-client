@@ -327,7 +327,7 @@ type AddAssetsToGroupRequest struct {
 	// silently ignored by the server. Default value is `false`.
 	AllowExisting bool `json:"allowExisting,omitempty"`
 	// Assets: Required. List of assets to be added. The maximum number of assets
-	// that can be added in a single request is 1000.
+	// that can be added in a single request is 2000.
 	Assets *AssetList `json:"assets,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will

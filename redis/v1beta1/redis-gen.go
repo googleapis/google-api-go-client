@@ -750,6 +750,10 @@ type Cluster struct {
 	// MaintenanceSchedule: Output only. ClusterMaintenanceSchedule Output only
 	// Published maintenance schedule.
 	MaintenanceSchedule *ClusterMaintenanceSchedule `json:"maintenanceSchedule,omitempty"`
+	// MaintenanceVersion: Optional. This field can be used to trigger self service
+	// update to indicate the desired maintenance version. The input to this field
+	// can be determined by the available_maintenance_versions field.
+	MaintenanceVersion string `json:"maintenanceVersion,omitempty"`
 	// ManagedBackupSource: Optional. Backups generated and managed by memorystore
 	// service.
 	ManagedBackupSource *ManagedBackupSource `json:"managedBackupSource,omitempty"`
@@ -1564,6 +1568,7 @@ type DatabaseResourceHealthSignalData struct {
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
 	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
+	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -1648,7 +1653,7 @@ func (s DatabaseResourceId) MarshalJSON() ([]byte, error) {
 }
 
 // DatabaseResourceMetadata: Common model for database resource instance
-// metadata. Next ID: 27
+// metadata. Next ID: 29
 type DatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *AvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -1725,6 +1730,8 @@ type DatabaseResourceMetadata struct {
 	Location string `json:"location,omitempty"`
 	// MachineConfiguration: Machine configuration for this resource.
 	MachineConfiguration *MachineConfiguration `json:"machineConfiguration,omitempty"`
+	// MaintenanceInfo: Optional. Maintenance info for the resource.
+	MaintenanceInfo *ResourceMaintenanceInfo `json:"maintenanceInfo,omitempty"`
 	// PrimaryResourceId: Identifier for this resource's immediate parent/primary
 	// resource if the current resource is a replica or derived form of another
 	// Database resource. Else it would be NULL. REQUIRED if the immediate parent
@@ -2060,6 +2067,7 @@ type DatabaseResourceRecommendationSignalData struct {
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
 	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
+	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2130,6 +2138,44 @@ type DatabaseResourceSignalData struct {
 
 func (s DatabaseResourceSignalData) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseResourceSignalData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Date: Represents a whole or partial calendar date, such as a birthday. The
+// time of day and time zone are either specified elsewhere or are
+// insignificant. The date is relative to the Gregorian Calendar. This can
+// represent one of the following: * A full date, with non-zero year, month,
+// and day values. * A month and day, with a zero year (for example, an
+// anniversary). * A year on its own, with a zero month and a zero day. * A
+// year and month, with a zero day (for example, a credit card expiration
+// date). Related types: * google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
+type Date struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and month,
+	// or 0 to specify a year by itself or a year and month where the day isn't
+	// significant.
+	Day int64 `json:"day,omitempty"`
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year without
+	// a month and day.
+	Month int64 `json:"month,omitempty"`
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a date
+	// without a year.
+	Year int64 `json:"year,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Date) MarshalJSON() ([]byte, error) {
+	type NoMethod Date
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3605,6 +3651,7 @@ type Product struct {
 	//   "PRODUCT_TYPE_FIRESTORE" - Firestore product area in GCP.
 	//   "PRODUCT_TYPE_COMPUTE_ENGINE" - Compute Engine self managed databases
 	//   "PRODUCT_TYPE_ORACLE_ON_GCP" - Oracle product area in GCP
+	//   "PRODUCT_TYPE_BIGQUERY" - BigQuery product area in GCP
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type. This is
 	// to be when product type is known, but it is not present in this enum.
 	Type string `json:"type,omitempty"`
@@ -3978,6 +4025,116 @@ type RescheduleMaintenanceRequest struct {
 
 func (s RescheduleMaintenanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RescheduleMaintenanceRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResourceMaintenanceDenySchedule: Deny maintenance period for the database
+// resource. It specifies the time range during which the maintenance cannot
+// start. This is configured by the customer.
+type ResourceMaintenanceDenySchedule struct {
+	// EndDate: Optional. Deny period end date.
+	EndDate *Date `json:"endDate,omitempty"`
+	// StartDate: Optional. The start date of the deny maintenance period.
+	StartDate *Date `json:"startDate,omitempty"`
+	// Time: Optional. Time in UTC when the deny period starts on start_date and
+	// ends on end_date.
+	Time *TimeOfDay `json:"time,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndDate") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndDate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceMaintenanceDenySchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceMaintenanceDenySchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResourceMaintenanceInfo: MaintenanceInfo to capture the maintenance details
+// of database resource.
+type ResourceMaintenanceInfo struct {
+	// DenyMaintenanceSchedules: Optional. List of Deny maintenance period for the
+	// database resource.
+	DenyMaintenanceSchedules []*ResourceMaintenanceDenySchedule `json:"denyMaintenanceSchedules,omitempty"`
+	// MaintenanceSchedule: Optional. Maintenance window for the database resource.
+	MaintenanceSchedule *ResourceMaintenanceSchedule `json:"maintenanceSchedule,omitempty"`
+	// MaintenanceVersion: Optional. Current Maintenance version of the database
+	// resource. Example: "MYSQL_8_0_41.R20250531.01_15"
+	MaintenanceVersion string `json:"maintenanceVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DenyMaintenanceSchedules")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DenyMaintenanceSchedules") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceMaintenanceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceMaintenanceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResourceMaintenanceSchedule: Maintenance window for the database resource.
+// It specifies preferred time and day of the week and phase in some cases,
+// when the maintenance can start. This is configured by the customer.
+type ResourceMaintenanceSchedule struct {
+	// Day: Optional. Preferred day of the week for maintenance, e.g. MONDAY,
+	// TUESDAY, etc.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	Day string `json:"day,omitempty"`
+	// Phase: Optional. Phase of the maintenance window. This is to capture order
+	// of maintenance. For example, for Cloud SQL resources, this can be used to
+	// capture if the maintenance window is in Week1, Week2, Week5, etc. Non
+	// production resources are usually part of early phase. For more details,
+	// refer to Cloud SQL resources -
+	// https://cloud.google.com/sql/docs/mysql/maintenance
+	//
+	// Possible values:
+	//   "WINDOW_PHASE_UNSPECIFIED" - Phase is unspecified.
+	//   "WINDOW_PHASE_ANY" - Any phase.
+	//   "WINDOW_PHASE_WEEK1" - Week 1.
+	//   "WINDOW_PHASE_WEEK2" - Week 2.
+	//   "WINDOW_PHASE_WEEK5" - Week 5.
+	Phase string `json:"phase,omitempty"`
+	// Time: Optional. Preferred time to start the maintenance operation on the
+	// specified day.
+	Time *TimeOfDay `json:"time,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceMaintenanceSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceMaintenanceSchedule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

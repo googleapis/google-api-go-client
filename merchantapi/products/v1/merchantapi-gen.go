@@ -218,6 +218,230 @@ func (s AutomatedDiscounts) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CarrierShipping: Carrier-based shipping configuration. Allows for setting
+// shipping speed or shipping cost based on a carrier's provided info.
+type CarrierShipping struct {
+	// CarrierPrice: Selected carrier to calculate the shipping price from. Select
+	// a carrier from the available carriers list
+	// (https://support.google.com/merchants/answer/15449142#Supported), for
+	// example `AUSTRALIA_POST_REGULAR`. Price will be calculated by this selected
+	// carrier, the location expressed in originPostalCode, along with the user
+	// location to determine the accurate shipping price. Carrier is represented by
+	// a carrier service name or a carrier service ID. Cannot be set together with
+	// flatPrice.
+	//
+	// Possible values:
+	//   "CARRIER_PRICE_OPTION_UNSPECIFIED" - Carrier price option is unspecified.
+	//   "AUSTRALIA_POST_REGULAR" - Australia Post Regular shipping service.
+	//   "AUSTRALIA_POST_EXPRESS" - Australia Post Express shipping service.
+	//   "AUSTRALIA_POST_REGULAR_S" - Australia Post Regular Small shipping
+	// service.
+	//   "AUSTRALIA_POST_REGULAR_M" - Australia Post Regular Medium shipping
+	// service.
+	//   "AUSTRALIA_POST_REGULAR_L" - Australia Post Regular Large shipping
+	// service.
+	//   "AUSTRALIA_POST_REGULAR_XL" - Australia Post Regular XL shipping service.
+	//   "AUSTRALIA_POST_EXPRESS_S" - Australia Post Express Small shipping
+	// service.
+	//   "AUSTRALIA_POST_EXPRESS_M" - Australia Post Express Medium shipping
+	// service.
+	//   "AUSTRALIA_POST_EXPRESS_L" - Australia Post Express Large shipping
+	// service.
+	//   "AUSTRALIA_POST_EXPRESS_XL" - Australia Post Express XL shipping service.
+	//   "TNT_ROAD_EXPRESS" - TNT Road Express shipping service.
+	//   "TNT_OVERNIGHT_EXPRESS" - TNT Overnight Express shipping service.
+	//   "TOLL_ROAD_DELIVERY" - Toll Road Delivery shipping service.
+	//   "TOLL_OVERNIGHT_PRIORITY" - Toll Overnight Priority shipping service.
+	//   "DHL_PAKET" - DHL Paket shipping service.
+	//   "DHL_PACKCHEN" - DHL Packchen shipping service.
+	//   "DPD_EXPRESS_12" - DPD Express 12 shipping service.
+	//   "DPD_EXPRESS" - DPD Express shipping service.
+	//   "DPD_CLASSIC_PARCEL" - DPD Classic Parcel shipping service.
+	//   "HERMES_PACKCHEN" - Hermes Packchen shipping service.
+	//   "HERMES_PAKETKLASSE_S" - Hermes Paketklasse S shipping service.
+	//   "HERMES_PAKETKLASSE_M" - Hermes Paketklasse M shipping service.
+	//   "HERMES_PAKETKLASSE_L" - Hermes Paketklasse L shipping service.
+	//   "UPS_EXPRESS" - UPS Express shipping service.
+	//   "UPS_EXPRESS_SAVER" - UPS Express Saver shipping service.
+	//   "UPS_EXPRESS_STANDARD" - UPS Express Standard shipping service.
+	//   "DHL_EXPRESS" - DHL Express shipping service.
+	//   "DHL_EXPRESS_12" - DHL Express 12 shipping service.
+	//   "DPD_NEXT_DAY" - DPD Next Day shipping service.
+	//   "DPD_STANDARD_NEXT_DAY" - DPD Standard Next Day shipping service.
+	//   "DPD_STANDARD_TWO_DAY" - DPD Standard Two Day shipping service.
+	//   "RMG_1ST_CLASS_SMALL" - RMG 1st Class Small shipping service.
+	//   "RMG_1ST_CLASS_MEDIUM" - RMG 1st Class Medium shipping service.
+	//   "RMG_2ND_CLASS_SMALL" - RMG 2nd Class Small shipping service.
+	//   "RMG_2ND_CLASS_MEDIUM" - RMG 2nd Class Medium shipping service.
+	//   "TNT_EXPRESS" - TNT Express shipping service.
+	//   "TNT_EXPRESS_10" - TNT Express 10 shipping service.
+	//   "TNT_EXPRESS_12" - TNT Express 12 shipping service.
+	//   "YODEL_B2C_48HR" - Yodel B2C 48HR shipping service.
+	//   "YODEL_B2C_72HR" - Yodel B2C 72HR shipping service.
+	//   "YODEL_B2C_PACKET" - Yodel B2C Packet shipping service.
+	//   "FEDEX_GROUND" - FedEx Ground shipping service.
+	//   "FEDEX_HOME_DELIVERY" - FedEx Home Delivery shipping service.
+	//   "FEDEX_EXPRESS_SAVER" - FedEx Express Saver shipping service.
+	//   "FEDEX_FIRST_OVERNIGHT" - FedEx First Overnight shipping service.
+	//   "FEDEX_PRIORITY_OVERNIGHT" - FedEx Priority Overnight shipping service.
+	//   "FEDEX_STANDARD_OVERNIGHT" - FedEx Standard Overnight shipping service.
+	//   "FEDEX_2DAY" - FedEx 2Day shipping service.
+	//   "UPS_STANDARD" - UPS Standard shipping service.
+	//   "UPS_2ND_DAY_AIR" - UPS 2nd Day Air shipping service.
+	//   "UPS_2ND_DAY_AM" - UPS 2nd Day AM shipping service.
+	//   "UPS_3_DAY_SELECT" - UPS 3 Day Select shipping service.
+	//   "UPS_GROUND" - UPS Ground shipping service.
+	//   "UPS_NEXT_DAY_AIR" - UPS Next Day Air shipping service.
+	//   "UPS_NEXT_DAY_AIR_EARLY_AM" - UPS Next Day Air Early AM shipping service.
+	//   "UPS_NEXT_DAY_AIR_SAVER" - UPS Next Day Air Saver shipping service.
+	//   "USPS_PRIORITY_MAIL_EXPRESS" - USPS Priority Mail Express shipping
+	// service.
+	//   "USPS_MEDIA_MAIL" - USPS Media Mail shipping service.
+	//   "USPS_GROUND_ADVANTAGE_RETAIL" - USPS Ground Advantage Retail shipping
+	// service.
+	//   "USPS_PRIORITY_MAIL" - USPS Priority Mail shipping service.
+	//   "USPS_GROUND_ADVANTAGE_COMMERCIAL" - USPS Ground Advantage Commercial
+	// shipping service.
+	CarrierPrice string `json:"carrierPrice,omitempty"`
+	// CarrierPriceFlatAdjustment: A flat adjustment on the carrier price. Can be
+	// either positive or negative. Cannot be zero. Requires `carrier_price` to be
+	// present. Cannot be set together with flatPrice and
+	// carrierPricePercentageAdjustment.
+	CarrierPriceFlatAdjustment *Price `json:"carrierPriceFlatAdjustment,omitempty"`
+	// CarrierPricePercentageAdjustment: A percentual adjustment on the carrier
+	// price. Can be either positive or negative. Cannot be zero. Requires
+	// `carrier_price` to be present. Cannot be set together with flatPrice and
+	// carrierPriceFlatAdjustment.
+	CarrierPricePercentageAdjustment float64 `json:"carrierPricePercentageAdjustment,omitempty"`
+	// CarrierTransitTime: Selected carrier to calculate the shipping speed from.
+	// Select a carrier from the available carriers list
+	// (https://support.google.com/merchants/answer/15449142#Supported), for
+	// example `AUSTRALIA_POST_REGULAR`. Speed will be calculated by this selected
+	// carrier, the location expressed in originPostalCode, along with the user
+	// location to determine the accurate delivery speed. Carrier is represented by
+	// a carrier service name or a carrier service ID. Cannot be set together with
+	// fixedMaxTransitTime or fixedMinTransitTime.
+	//
+	// Possible values:
+	//   "CARRIER_TRANSIT_TIME_OPTION_UNSPECIFIED" - Carrier transit time option is
+	// unspecified.
+	//   "DHL_PAKET" - DHL Paket shipping service.
+	//   "DHL_PACKCHEN" - DHL Packchen shipping service.
+	//   "DHL_EXPRESSEASY" - DHL Express Easy shipping service.
+	//   "DPD_EXPRESS" - DPD Express shipping service.
+	//   "DPD_CLASSIC_PARCEL" - DPD Classic Parcel shipping service.
+	//   "HERMES_HAUSTUR" - Hermes Haustur shipping service.
+	//   "HERMES_PAKETSHOP" - Hermes Paketshop shipping service.
+	//   "GLS_BUSINESS" - GLS Business shipping service.
+	//   "GLS_EXPRESS" - GLS Express shipping service.
+	//   "GLS_PRIVATE" - GLS Private shipping service.
+	//   "COLISSIMO_DOMICILE" - Colissimo Domicile shipping service.
+	//   "DHL_EXPRESS_12AM" - DHL Express 12 AM shipping service.
+	//   "DHL_EXPRESS_9AM" - DHL Express 9 AM shipping service.
+	//   "GEODIS_EXPRESS" - GEODIS Express shipping service.
+	//   "GEODIS_PACK_30" - GEODIS Pack 30 shipping service.
+	//   "GEODIS_SAME_DAY" - GEODIS Same Day shipping service.
+	//   "GEODIS_TOP_24" - GEODIS Top 24 shipping service.
+	//   "TNT_ESSENTIEL_24H" - TNT Essentiel 24H shipping service.
+	//   "TNT_ESSENTIEL_FLEXIBILITE" - TNT Essentiel Flexibilite shipping service.
+	//   "FEDEX_GROUND" - FedEx Ground shipping service.
+	//   "FEDEX_HOME_DELIVERY" - FedEx Home Delivery shipping service.
+	//   "FEDEX_EXPRESS_SAVER" - FedEx Express Saver shipping service.
+	//   "FEDEX_FIRST_OVERNIGHT" - FedEx First Overnight shipping service.
+	//   "FEDEX_PRIORITY_OVERNIGHT" - FedEx Priority Overnight shipping service.
+	//   "FEDEX_STANDARD_OVERNIGHT" - FedEx Standard Overnight shipping service.
+	//   "FEDEX_2DAY" - FedEx 2Day shipping service.
+	//   "UPS_2ND_DAY_AIR" - UPS 2nd Day Air shipping service.
+	//   "UPS_2ND_DAY_AM" - UPS 2nd Day AM shipping service.
+	//   "UPS_3_DAY_SELECT" - UPS 3 Day Select shipping service.
+	//   "UPS_GROUND" - UPS Ground shipping service.
+	//   "UPS_NEXT_DAY_AIR" - UPS Next Day Air shipping service.
+	//   "UPS_NEXT_DAY_AIR_EARLY_AM" - UPS Next Day Air Early AM shipping service.
+	//   "UPS_NEXT_DAY_AIR_SAVER" - UPS Next Day Air Saver shipping service.
+	//   "USPS_PRIORITY_MAIL_EXPRESS" - USPS Priority Mail Express shipping
+	// service.
+	//   "USPS_MEDIA_MAIL" - USPS Media Mail shipping service.
+	//   "USPS_GROUND_ADVANTAGE_RETAIL" - USPS Ground Advantage Retail shipping
+	// service.
+	//   "USPS_PRIORITY_MAIL" - USPS Priority Mail shipping service.
+	//   "USPS_GROUND_ADVANTAGE_COMMERCIAL" - USPS Ground Advantage Commercial
+	// shipping service.
+	//   "USPS_FIRST_CLASS_MAIL" - USPS First Class Mail shipping service.
+	CarrierTransitTime string `json:"carrierTransitTime,omitempty"`
+	// Country: The CLDR territory code
+	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) of the
+	// country to which an item will ship.
+	Country string `json:"country,omitempty"`
+	// FixedMaxTransitTime: Maximum transit time (inclusive) between when the order
+	// has shipped and when it is delivered in business days. 0 means that the
+	// order is delivered on the same day as it ships. Needs to be provided
+	// together with maxHandlingTime. Cannot be set if carrierTransitTime is
+	// present.
+	FixedMaxTransitTime int64 `json:"fixedMaxTransitTime,omitempty,string"`
+	// FixedMinTransitTime: Minimum transit time (inclusive) between when the order
+	// has shipped and when it is delivered in business days. 0 means that the
+	// order is delivered on the same day as it ships. fixedMinTransitTime can only
+	// be set if fixedMaxTransitTime is set. Cannot be set if carrierTransitTime is
+	// present.
+	FixedMinTransitTime int64 `json:"fixedMinTransitTime,omitempty,string"`
+	// FlatPrice: Fixed shipping price, represented as a number with currency.
+	// Cannot be set together with carrierPrice or its adjustments
+	// (carrierPriceFlatAdjustment, carrierPricePercentageAdjustment).
+	FlatPrice *Price `json:"flatPrice,omitempty"`
+	// MaxHandlingTime: Maximum handling time (inclusive) between when the order is
+	// received and shipped in business days. 0 means that the order is shipped on
+	// the same day as it is received if it happens before the cut-off time. Both
+	// maxHandlingTime and fixedMaxTransitTime or carrierTransitTime are required
+	// if providing shipping speeds.
+	MaxHandlingTime int64 `json:"maxHandlingTime,omitempty,string"`
+	// MinHandlingTime: Minimum handling time (inclusive) between when the order is
+	// received and shipped in business days. 0 means that the order is shipped on
+	// the same day as it is received if it happens before the cut-off time.
+	// minHandlingTime can only be set if maxHandlingTime is also set.
+	MinHandlingTime int64 `json:"minHandlingTime,omitempty,string"`
+	// OriginPostalCode: The source location postal code from which this offer
+	// ships. Represented only by a full-length postal code.
+	OriginPostalCode string `json:"originPostalCode,omitempty"`
+	// PostalCode: The postal code range that the shipping rate applies to,
+	// represented by a postal code (eg. `94043`), a postal code prefix followed by
+	// a * wildcard (eg. `94*`), a range between two postal codes (eg.
+	// `94043-98033`) or two postal code prefixes of equal length (eg. `94*-98*`).
+	PostalCode string `json:"postalCode,omitempty"`
+	// Region: The geographic region to which a shipping rate applies. See region
+	// (https://support.google.com/merchants/answer/6324484) for more information.
+	Region string `json:"region,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CarrierPrice") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CarrierPrice") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CarrierShipping) MarshalJSON() ([]byte, error) {
+	type NoMethod CarrierShipping
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *CarrierShipping) UnmarshalJSON(data []byte) error {
+	type NoMethod CarrierShipping
+	var s1 struct {
+		CarrierPricePercentageAdjustment gensupport.JSONFloat64 `json:"carrierPricePercentageAdjustment"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CarrierPricePercentageAdjustment = float64(s1.CarrierPricePercentageAdjustment)
+	return nil
+}
+
 // CloudExportAdditionalProperties: Product property for the Cloud Retail API.
 // For example, properties for a TV product could be "Screen-Resolution" or
 // "Screen-Size".
@@ -822,6 +1046,8 @@ type ProductAttributes struct {
 	Brand string `json:"brand,omitempty"`
 	// CanonicalLink: URL for the canonical version of your item's landing page.
 	CanonicalLink string `json:"canonicalLink,omitempty"`
+	// CarrierShipping: Rules for carrier-based shipping.
+	CarrierShipping []*CarrierShipping `json:"carrierShipping,omitempty"`
 	// Certifications: Product Certifications, for example for energy efficiency
 	// labeling of products recorded in the EU EPREL
 	// (https://eprel.ec.europa.eu/screen/home) database. See the Help Center

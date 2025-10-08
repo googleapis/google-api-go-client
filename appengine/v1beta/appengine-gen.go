@@ -3287,6 +3287,32 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SubnetworkKey: Subnetwork key message.
+type SubnetworkKey struct {
+	// HostProjectId: Project id (name not number) of the project that hosts the
+	// network
+	HostProjectId string `json:"hostProjectId,omitempty"`
+	// Subnet: Short name of the subnetwork. e.g. SUBNET instead of
+	// projects/{PROJECT_NAME}/regions/{REGION}/subnetworks/{SUBNET}
+	Subnet string `json:"subnet,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HostProjectId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HostProjectId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SubnetworkKey) MarshalJSON() ([]byte, error) {
+	type NoMethod SubnetworkKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TrafficSplit: Traffic routing configuration for versions within a single
 // service. Traffic splits define how traffic directed to the service is
 // assigned to versions.
@@ -3615,6 +3641,8 @@ type Version struct {
 	Vm bool `json:"vm,omitempty"`
 	// VpcAccessConnector: Enables VPC connectivity for standard apps.
 	VpcAccessConnector *VpcAccessConnector `json:"vpcAccessConnector,omitempty"`
+	// VpcEgress: Enables VPC egress connectivity for standard apps.
+	VpcEgress *VpcEgress `json:"vpcEgress,omitempty"`
 	// Zones: The Google Compute Engine zones that are supported by this version in
 	// the App Engine flexible environment. Deprecated.
 	Zones []string `json:"zones,omitempty"`
@@ -3710,6 +3738,62 @@ type VpcAccessConnector struct {
 
 func (s VpcAccessConnector) MarshalJSON() ([]byte, error) {
 	type NoMethod VpcAccessConnector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VpcEgress: Vpc Egress configuration.
+type VpcEgress struct {
+	// EgressSetting: The egress setting for the subnetwork, controlling what
+	// traffic is diverted through it.
+	//
+	// Possible values:
+	//   "EGRESS_SETTING_UNSPECIFIED" - No value set; apply default behavior
+	//   "ALL_TRAFFIC" - Force all traffic to egress through the NetworkInterface
+	// (and configured VPC Network)
+	//   "PRIVATE_IP_RANGES" - Force all Private IP Space traffic to egress through
+	// NetworkInterface (and configured VPC Network)
+	EgressSetting string `json:"egressSetting,omitempty"`
+	// NetworkTags: The network tags to apply to the instance.
+	NetworkTags []*VpcNetworkTag `json:"networkTags,omitempty"`
+	// SubnetworkKey: The subnetwork key.
+	SubnetworkKey *SubnetworkKey `json:"subnetworkKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EgressSetting") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EgressSetting") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VpcEgress) MarshalJSON() ([]byte, error) {
+	type NoMethod VpcEgress
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VpcNetworkTag: Network tag message.
+type VpcNetworkTag struct {
+	// Value: value for the tag name
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VpcNetworkTag) MarshalJSON() ([]byte, error) {
+	type NoMethod VpcNetworkTag
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

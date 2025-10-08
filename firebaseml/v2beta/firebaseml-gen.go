@@ -1189,6 +1189,9 @@ type GoogleCloudAiplatformV1beta1FunctionResponse struct {
 	// Name: Required. The name of the function to call. Matches
 	// [FunctionDeclaration.name] and [FunctionCall.name].
 	Name string `json:"name,omitempty"`
+	// Parts: Optional. Ordered `Parts` that constitute a function response. Parts
+	// may have different IANA MIME types.
+	Parts []*GoogleCloudAiplatformV1beta1FunctionResponsePart `json:"parts,omitempty"`
 	// Response: Required. The function response in JSON object format. Use
 	// "output" key to specify function output and "error" key to specify error
 	// details (if any). If "output" and "error" keys are not specified, then whole
@@ -1209,6 +1212,99 @@ type GoogleCloudAiplatformV1beta1FunctionResponse struct {
 
 func (s GoogleCloudAiplatformV1beta1FunctionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1FunctionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1FunctionResponseBlob: Raw media bytes for
+// function response. Text should not be sent as raw bytes, use the 'text'
+// field.
+type GoogleCloudAiplatformV1beta1FunctionResponseBlob struct {
+	// Data: Required. Raw bytes.
+	Data string `json:"data,omitempty"`
+	// DisplayName: Optional. Display name of the blob. Used to provide a label or
+	// filename to distinguish blobs. This field is only returned in PromptMessage
+	// for prompt management. It is currently used in the Gemini GenerateContent
+	// calls only when server side tools (code_execution, google_search, and
+	// url_context) are enabled.
+	DisplayName string `json:"displayName,omitempty"`
+	// MimeType: Required. The IANA standard MIME type of the source data.
+	MimeType string `json:"mimeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1FunctionResponseBlob) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1FunctionResponseBlob
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1FunctionResponseFileData: URI based data for
+// function response.
+type GoogleCloudAiplatformV1beta1FunctionResponseFileData struct {
+	// DisplayName: Optional. Display name of the file data. Used to provide a
+	// label or filename to distinguish file datas. This field is only returned in
+	// PromptMessage for prompt management. It is currently used in the Gemini
+	// GenerateContent calls only when server side tools (code_execution,
+	// google_search, and url_context) are enabled.
+	DisplayName string `json:"displayName,omitempty"`
+	// FileUri: Required. URI.
+	FileUri string `json:"fileUri,omitempty"`
+	// MimeType: Required. The IANA standard MIME type of the source data.
+	MimeType string `json:"mimeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1FunctionResponseFileData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1FunctionResponseFileData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1FunctionResponsePart: A datatype containing
+// media that is part of a `FunctionResponse` message. A `FunctionResponsePart`
+// consists of data which has an associated datatype. A `FunctionResponsePart`
+// can only contain one of the accepted types in `FunctionResponsePart.data`. A
+// `FunctionResponsePart` must have a fixed IANA MIME type identifying the type
+// and subtype of the media if the `inline_data` field is filled with raw
+// bytes.
+type GoogleCloudAiplatformV1beta1FunctionResponsePart struct {
+	// FileData: URI based data.
+	FileData *GoogleCloudAiplatformV1beta1FunctionResponseFileData `json:"fileData,omitempty"`
+	// InlineData: Inline media bytes.
+	InlineData *GoogleCloudAiplatformV1beta1FunctionResponseBlob `json:"inlineData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1FunctionResponsePart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1FunctionResponsePart
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2196,6 +2292,31 @@ func (s GoogleCloudAiplatformV1beta1ModelArmorConfig) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1beta1MultiSpeakerVoiceConfig: Configuration for a
+// multi-speaker text-to-speech setup. Enables the use of up to two distinct
+// voices in a single synthesis request.
+type GoogleCloudAiplatformV1beta1MultiSpeakerVoiceConfig struct {
+	// SpeakerVoiceConfigs: Required. A list of configurations for the voices of
+	// the speakers. Exactly two speaker voice configurations must be provided.
+	SpeakerVoiceConfigs []*GoogleCloudAiplatformV1beta1SpeakerVoiceConfig `json:"speakerVoiceConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SpeakerVoiceConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SpeakerVoiceConfigs") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1MultiSpeakerVoiceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1MultiSpeakerVoiceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1beta1Part: A datatype containing media that is part
 // of a multi-part `Content` message. A `Part` consists of data which has an
 // associated datatype. A `Part` can only contain one of the accepted types in
@@ -2939,11 +3060,41 @@ func (s GoogleCloudAiplatformV1beta1Segment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1beta1SpeakerVoiceConfig: Configuration for a single
+// speaker in a multi speaker setup.
+type GoogleCloudAiplatformV1beta1SpeakerVoiceConfig struct {
+	// Speaker: Required. The name of the speaker. This should be the same as the
+	// speaker name used in the prompt.
+	Speaker string `json:"speaker,omitempty"`
+	// VoiceConfig: Required. The configuration for the voice of this speaker.
+	VoiceConfig *GoogleCloudAiplatformV1beta1VoiceConfig `json:"voiceConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Speaker") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Speaker") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1SpeakerVoiceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1SpeakerVoiceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1beta1SpeechConfig: The speech generation config.
 type GoogleCloudAiplatformV1beta1SpeechConfig struct {
 	// LanguageCode: Optional. Language code (ISO 639. e.g. en-US) for the speech
 	// synthesization.
 	LanguageCode string `json:"languageCode,omitempty"`
+	// MultiSpeakerVoiceConfig: The configuration for a multi-speaker
+	// text-to-speech request. This field is mutually exclusive with
+	// `voice_config`.
+	MultiSpeakerVoiceConfig *GoogleCloudAiplatformV1beta1MultiSpeakerVoiceConfig `json:"multiSpeakerVoiceConfig,omitempty"`
 	// VoiceConfig: The configuration for the speaker to use.
 	VoiceConfig *GoogleCloudAiplatformV1beta1VoiceConfig `json:"voiceConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -2974,6 +3125,10 @@ type GoogleCloudAiplatformV1beta1Tool struct {
 	// CodeExecution: Optional. CodeExecution tool type. Enables the model to
 	// execute code as part of generation.
 	CodeExecution *GoogleCloudAiplatformV1beta1ToolCodeExecution `json:"codeExecution,omitempty"`
+	// ComputerUse: Optional. Tool to support the model interacting directly with
+	// the computer. If enabled, it automatically populates computer-use specific
+	// Function Declarations.
+	ComputerUse *GoogleCloudAiplatformV1beta1ToolComputerUse `json:"computerUse,omitempty"`
 	// EnterpriseWebSearch: Optional. Tool to support searching public web data,
 	// powered by Vertex AI Search and Sec4 compliance.
 	EnterpriseWebSearch *GoogleCloudAiplatformV1beta1EnterpriseWebSearch `json:"enterpriseWebSearch,omitempty"`
@@ -3023,6 +3178,38 @@ func (s GoogleCloudAiplatformV1beta1Tool) MarshalJSON() ([]byte, error) {
 // See also [ExecutableCode]and [CodeExecutionResult] which are input and
 // output to this tool.
 type GoogleCloudAiplatformV1beta1ToolCodeExecution struct {
+}
+
+// GoogleCloudAiplatformV1beta1ToolComputerUse: Tool to support computer use.
+type GoogleCloudAiplatformV1beta1ToolComputerUse struct {
+	// Environment: Required. The environment being operated.
+	//
+	// Possible values:
+	//   "ENVIRONMENT_UNSPECIFIED" - Defaults to browser.
+	//   "ENVIRONMENT_BROWSER" - Operates in a web browser.
+	Environment string `json:"environment,omitempty"`
+	// ExcludedPredefinedFunctions: Optional. By default, predefined functions are
+	// included in the final model call. Some of them can be explicitly excluded
+	// from being automatically included. This can serve two purposes: 1. Using a
+	// more restricted / different action space. 2. Improving the definitions /
+	// instructions of predefined functions.
+	ExcludedPredefinedFunctions []string `json:"excludedPredefinedFunctions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Environment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Environment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1ToolComputerUse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1ToolComputerUse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1beta1ToolConfig: Tool config. This config is shared

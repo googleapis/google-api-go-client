@@ -1309,6 +1309,7 @@ type Subscription struct {
 	//   "PROCESSING_STATE_UNSPECIFIED" - The processing state is unspecified.
 	//   "PROCESSING_STATE_CANCELLING" - The subscription is being cancelled.
 	//   "PROCESSING_STATE_RECURRING" - The subscription is recurring.
+	//   "PROCESSING_STATE_RESUMING" - The subscription is being resumed.
 	ProcessingState string `json:"processingState,omitempty"`
 	// Products: Optional. Deprecated: consider using `line_items` as the input.
 	// Required. Resource name that identifies the purchased products. The format
@@ -1465,6 +1466,9 @@ type SubscriptionLineItem struct {
 	// This feature is not enabled. If used, the request will be rejected. When
 	// used as input in Create or Provision API, specify its resource name only.
 	LineItemPromotionSpecs []*SubscriptionPromotionSpec `json:"lineItemPromotionSpecs,omitempty"`
+	// Name: Identifier. Resource name of the line item. Format:
+	// partners/{partner}/subscriptions/{subscription}/lineItems/{lineItem}
+	Name string `json:"name,omitempty"`
 	// OneTimeRecurrenceDetails: Output only. Details only set for a ONE_TIME
 	// recurrence line item.
 	OneTimeRecurrenceDetails *SubscriptionLineItemOneTimeRecurrenceDetails `json:"oneTimeRecurrenceDetails,omitempty"`

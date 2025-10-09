@@ -1755,7 +1755,8 @@ type Environment struct {
 	// UseStreamingEngineResourceBasedBilling: Output only. Whether the job uses
 	// the Streaming Engine resource-based billing model.
 	UseStreamingEngineResourceBasedBilling bool `json:"useStreamingEngineResourceBasedBilling,omitempty"`
-	// UserAgent: A description of the process that generated the request.
+	// UserAgent: Optional. A description of the process that generated the
+	// request.
 	UserAgent googleapi.RawMessage `json:"userAgent,omitempty"`
 	// Version: A structure describing which components and their versions of the
 	// service are required in order to run the job.

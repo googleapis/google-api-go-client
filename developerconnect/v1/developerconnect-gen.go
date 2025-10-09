@@ -819,6 +819,7 @@ type GitHubConfig struct {
 	//   "GIT_HUB_APP_UNSPECIFIED" - GitHub App not specified.
 	//   "DEVELOPER_CONNECT" - The Developer Connect GitHub Application.
 	//   "FIREBASE" - The Firebase GitHub Application.
+	//   "GEMINI_CODE_ASSIST" - The Gemini Code Assist Application.
 	GithubApp string `json:"githubApp,omitempty"`
 	// InstallationUri: Output only. The URI to navigate to in order to manage the
 	// installation associated with this GitHubConfig.
@@ -4599,8 +4600,9 @@ type ProjectsLocationsConnectionsGitRepositoryLinksCreateCall struct {
 // Create: Creates a GitRepositoryLink. Upon linking a Git Repository,
 // Developer Connect will configure the Git Repository to send webhook events
 // to Developer Connect. Connections that use Firebase GitHub Application will
-// have events forwarded to the Firebase service. All other Connections will
-// have events forwarded to Cloud Build.
+// have events forwarded to the Firebase service. Connections that use Gemini
+// Code Assist will have events forwarded to Gemini Code Assist service. All
+// other Connections will have events forwarded to Cloud Build.
 //
 // - parent: Value for parent.
 func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) Create(parent string, gitrepositorylink *GitRepositoryLink) *ProjectsLocationsConnectionsGitRepositoryLinksCreateCall {

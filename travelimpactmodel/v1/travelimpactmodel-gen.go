@@ -203,6 +203,61 @@ func (s ComputeFlightEmissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ComputeScope3FlightEmissionsRequest: A list of flight segments to request
+// the Scope 3 emissions for.
+type ComputeScope3FlightEmissionsRequest struct {
+	// Flights: Required. Flights to return emission estimates for.
+	Flights []*Scope3FlightSegment `json:"flights,omitempty"`
+	// ModelVersion: Optional. The model version under which emission estimates for
+	// all flights in this request were computed.
+	ModelVersion *ModelVersion `json:"modelVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Flights") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Flights") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComputeScope3FlightEmissionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeScope3FlightEmissionsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ComputeScope3FlightEmissionsResponse: A list of flights with Scope 3
+// emission estimates.
+type ComputeScope3FlightEmissionsResponse struct {
+	// FlightEmissions: List of flight segments with emission estimates.
+	FlightEmissions []*Scope3FlightEmissions `json:"flightEmissions,omitempty"`
+	// ModelVersion: The model version under which emission estimates for all
+	// flights in this response were computed.
+	ModelVersion *ModelVersion `json:"modelVersion,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "FlightEmissions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FlightEmissions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComputeScope3FlightEmissionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeScope3FlightEmissionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ComputeTypicalFlightEmissionsRequest: A list of pair of airports (markets)
 // to request the typical emissions for.
 type ComputeTypicalFlightEmissionsRequest struct {
@@ -519,6 +574,119 @@ func (s ModelVersion) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Scope3FlightEmissions: Scope 3 flight with emission estimates.
+type Scope3FlightEmissions struct {
+	// Flight: Required. Matches the flight identifiers in the request.
+	Flight *Scope3FlightSegment `json:"flight,omitempty"`
+	// Source: Optional. The source of the emissions data.
+	//
+	// Possible values:
+	//   "SCOPE3_DATA_TYPE_UNSPECIFIED" - Unspecified data type.
+	//   "TIM_EMISSIONS" - TIM-based emissions given origin, destination, carrier,
+	// flight number, departure date, and year.
+	//   "TYPICAL_FLIGHT_EMISSIONS" - Typical flight emissions given origin,
+	// destination, and year.
+	//   "DISTANCE_BASED_EMISSIONS" - Distance-based emissions based on the
+	// distance traveled and year.
+	Source string `json:"source,omitempty"`
+	// TtwEmissionsGramsPerPax: Optional. Tank-to-wake flight emissions per
+	// passenger based on the requested info.
+	TtwEmissionsGramsPerPax int64 `json:"ttwEmissionsGramsPerPax,omitempty,string"`
+	// WttEmissionsGramsPerPax: Optional. Well-to-tank flight emissions per
+	// passenger based on the requested info.
+	WttEmissionsGramsPerPax int64 `json:"wttEmissionsGramsPerPax,omitempty,string"`
+	// WtwEmissionsGramsPerPax: Optional. Total flight emissions (sum of
+	// well-to-tank and tank-to-wake) per passenger based on the requested info.
+	// This is the total emissions and unless you have specific reasons for using
+	// TTW or WTT emissions, you should use this number.
+	WtwEmissionsGramsPerPax int64 `json:"wtwEmissionsGramsPerPax,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Flight") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Flight") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Scope3FlightEmissions) MarshalJSON() ([]byte, error) {
+	type NoMethod Scope3FlightEmissions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Scope3FlightSegment: Flight parameters with which the Scope 3 emissions are
+// fetched.
+type Scope3FlightSegment struct {
+	// CabinClass: Required. The cabin class of the flight.
+	//
+	// Possible values:
+	//   "CABIN_CLASS_UNSPECIFIED" - Unspecified cabin class.
+	//   "ECONOMY" - Economy class.
+	//   "PREMIUM_ECONOMY" - Premium economy class.
+	//   "BUSINESS" - Business class.
+	//   "FIRST" - First class.
+	CabinClass string `json:"cabinClass,omitempty"`
+	// CarrierCode: Optional. IATA carrier code, e.g. `KE`. This is required if
+	// specific flight matching is desired. Otherwise, this is unused for typical
+	// flight and distance-based emissions models. This could be both operating and
+	// marketing carrier code (i.e. codeshare is covered).
+	CarrierCode string `json:"carrierCode,omitempty"`
+	// DepartureDate: Required. Date of the flight in the time zone of the origin
+	// airport. Only year is required for typical flight and distance-based
+	// emissions models (month and day values are ignored and therefore, can be
+	// either omitted, set to 0, or set to a valid date for those cases).
+	// Correspondingly, if a specific date is not provided for TIM emissions, we
+	// will fallback to typical flight (or distance-based) emissions.
+	DepartureDate *Date `json:"departureDate,omitempty"`
+	// Destination: Optional. IATA airport code for flight destination, e.g. `ICN`.
+	// This is used to match specific flight if provided alongside origin, carrier,
+	// and flight number. If there is no match, we will first try to match the
+	// flight to a typical flight between the provided origin and destination
+	// airports. Otherwise, we will use the distance-based emissions model if the
+	// flight distance is provided.
+	Destination string `json:"destination,omitempty"`
+	// DistanceKm: Optional. Distance in kilometers, e.g. `2423`. This is used to
+	// match a flight to distance-based emissions when origin and destination are
+	// not provided or there are no matching typical flights. This field supports
+	// values between 0 and 2.5e16 km.
+	DistanceKm int64 `json:"distanceKm,omitempty,string"`
+	// FlightNumber: Optional. Flight number, e.g. `71`. This is first used to
+	// match a specific flight if a flight number is specified alongside origin,
+	// destination, and carrier. If a flight number is not specified, we will first
+	// try to match the flight to a typical flight between the provided origin and
+	// destination airports. If that fails and/or origin & destination are not
+	// provided, we will use the distance-based emissions model based on the flight
+	// distance provided.
+	FlightNumber int64 `json:"flightNumber,omitempty"`
+	// Origin: Optional. IATA airport code for flight origin, e.g. `YVR`. This is
+	// used to match specific flight if provided alongside destination, carrier,
+	// and flight number. If there is no match, we will first try to match the
+	// flight to a typical flight between the provided origin and destination
+	// airports. Otherwise, we will use the distance-based emissions model if the
+	// flight distance is provided.
+	Origin string `json:"origin,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CabinClass") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CabinClass") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Scope3FlightSegment) MarshalJSON() ([]byte, error) {
+	type NoMethod Scope3FlightSegment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TypicalFlightEmissions: Typical flight emission estimates for a certain
 // market
 type TypicalFlightEmissions struct {
@@ -654,6 +822,135 @@ func (c *FlightsComputeFlightEmissionsCall) Do(opts ...googleapi.CallOption) (*C
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "travelimpactmodel.flights.computeFlightEmissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FlightsComputeScope3FlightEmissionsCall struct {
+	s                                   *Service
+	computescope3flightemissionsrequest *ComputeScope3FlightEmissionsRequest
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// ComputeScope3FlightEmissions: Stateless method to retrieve GHG emissions
+// estimates for a set of flight segments for Scope 3 reporting. The response
+// will contain all entries that match the input Scope3FlightSegment flight
+// segments, in the same order provided. The estimates will be computed using
+// the following cascading logic (using the first one that is available): 1.
+// TIM-based emissions given origin, destination, carrier, flightNumber,
+// departureDate, and cabinClass. 2. Typical flight emissions given origin,
+// destination, year in departureDate, and cabinClass. 3. Distance-based
+// emissions calculated using distanceKm, year in departureDate, and
+// cabinClass. If there are no estimates available for a certain flight with
+// any of the three methods, the response will return a Scope3FlightEmissions
+// object with empty emission fields. The request will still be considered
+// successful. Generally, missing emissions estimates occur when the flight is
+// unknown to the server (e.g. no specific flight exists, or typical flight
+// emissions are not available for the requested pair). The request will fail
+// with an `INVALID_ARGUMENT` error if: * The request contains more than 1,000
+// flight legs. * The input flight leg is missing one or more identifiers. For
+// example, missing origin/destination without a valid distance for
+// TIM_EMISSIONS or TYPICAL_FLIGHT_EMISSIONS type matching, or missing distance
+// for a DISTANCE_BASED_EMISSIONS type matching (if you want to fallback to
+// distance-based emissions or want a distance-based emissions estimate, you
+// need to specify a distance). * The flight date is before 2019 (Scope 3 data
+// is only available for 2019 and after). * The flight distance is not between
+// 0 and 25,000,000,000,000,000 km. * Missing cabin class. Because the request
+// is processed with fallback logic, it is possible that misconfigured requests
+// return valid emissions estimates using fallback methods. For example, if a
+// request has the wrong flight number but specifies the origin and
+// destination, the request will still succeed, but the returned emissions will
+// be based solely on the typical flight emissions. Similarly, if a request is
+// missing the origin for a typical flight emissions request, but specifies a
+// valid distance, the request could succeed based solely on the distance-based
+// emissions. Consequently, one should check the source of the returned
+// emissions (source) to confirm the results are as expected.
+func (r *FlightsService) ComputeScope3FlightEmissions(computescope3flightemissionsrequest *ComputeScope3FlightEmissionsRequest) *FlightsComputeScope3FlightEmissionsCall {
+	c := &FlightsComputeScope3FlightEmissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.computescope3flightemissionsrequest = computescope3flightemissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FlightsComputeScope3FlightEmissionsCall) Fields(s ...googleapi.Field) *FlightsComputeScope3FlightEmissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FlightsComputeScope3FlightEmissionsCall) Context(ctx context.Context) *FlightsComputeScope3FlightEmissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FlightsComputeScope3FlightEmissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FlightsComputeScope3FlightEmissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.computescope3flightemissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/flights:computeScope3FlightEmissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "travelimpactmodel.flights.computeScope3FlightEmissions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "travelimpactmodel.flights.computeScope3FlightEmissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ComputeScope3FlightEmissionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FlightsComputeScope3FlightEmissionsCall) Do(opts ...googleapi.CallOption) (*ComputeScope3FlightEmissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ComputeScope3FlightEmissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "travelimpactmodel.flights.computeScope3FlightEmissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

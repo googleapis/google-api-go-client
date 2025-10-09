@@ -2861,7 +2861,8 @@ type TestSetup struct {
 	// the test.
 	Account *Account `json:"account,omitempty"`
 	// AdditionalApks: APKs to install in addition to those being directly tested.
-	// These will be installed after the app under test. Currently capped at 100.
+	// These will be installed after the app under test. Limited to a combined
+	// total of 100 initial setup and additional files.
 	AdditionalApks []*Apk `json:"additionalApks,omitempty"`
 	// DirectoriesToPull: List of directories on the device to upload to GCS at the
 	// end of the test; they must be absolute paths under /sdcard, /storage or
@@ -2880,7 +2881,8 @@ type TestSetup struct {
 	// FilesToPush: List of files to push to the device before starting the test.
 	FilesToPush []*DeviceFile `json:"filesToPush,omitempty"`
 	// InitialSetupApks: Optional. Initial setup APKs to install before the app
-	// under test is installed. Currently capped at 100.
+	// under test is installed. Limited to a combined total of 100 initial setup
+	// and additional files.
 	InitialSetupApks []*Apk `json:"initialSetupApks,omitempty"`
 	// NetworkProfile: The network traffic profile used for running the test.
 	// Available network profiles can be queried by using the NETWORK_CONFIGURATION

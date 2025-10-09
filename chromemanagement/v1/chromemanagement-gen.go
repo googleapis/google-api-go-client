@@ -144,6 +144,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Customers = NewCustomersService(s)
+	s.Operations = NewOperationsService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -169,6 +170,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Customers *CustomersService
+
+	Operations *OperationsService
 }
 
 func (s *Service) userAgent() string {
@@ -181,6 +184,7 @@ func (s *Service) userAgent() string {
 func NewCustomersService(s *Service) *CustomersService {
 	rs := &CustomersService{s: s}
 	rs.Apps = NewCustomersAppsService(s)
+	rs.CertificateProvisioningProcesses = NewCustomersCertificateProvisioningProcessesService(s)
 	rs.Profiles = NewCustomersProfilesService(s)
 	rs.Reports = NewCustomersReportsService(s)
 	rs.Telemetry = NewCustomersTelemetryService(s)
@@ -192,6 +196,8 @@ type CustomersService struct {
 	s *Service
 
 	Apps *CustomersAppsService
+
+	CertificateProvisioningProcesses *CustomersCertificateProvisioningProcessesService
 
 	Profiles *CustomersProfilesService
 
@@ -244,6 +250,27 @@ func NewCustomersAppsWebService(s *Service) *CustomersAppsWebService {
 }
 
 type CustomersAppsWebService struct {
+	s *Service
+}
+
+func NewCustomersCertificateProvisioningProcessesService(s *Service) *CustomersCertificateProvisioningProcessesService {
+	rs := &CustomersCertificateProvisioningProcessesService{s: s}
+	rs.Operations = NewCustomersCertificateProvisioningProcessesOperationsService(s)
+	return rs
+}
+
+type CustomersCertificateProvisioningProcessesService struct {
+	s *Service
+
+	Operations *CustomersCertificateProvisioningProcessesOperationsService
+}
+
+func NewCustomersCertificateProvisioningProcessesOperationsService(s *Service) *CustomersCertificateProvisioningProcessesOperationsService {
+	rs := &CustomersCertificateProvisioningProcessesOperationsService{s: s}
+	return rs
+}
+
+type CustomersCertificateProvisioningProcessesOperationsService struct {
 	s *Service
 }
 
@@ -340,6 +367,15 @@ func NewCustomersThirdPartyProfileUsersService(s *Service) *CustomersThirdPartyP
 }
 
 type CustomersThirdPartyProfileUsersService struct {
+	s *Service
+}
+
+func NewOperationsService(s *Service) *OperationsService {
+	rs := &OperationsService{s: s}
+	return rs
+}
+
+type OperationsService struct {
 	s *Service
 }
 
@@ -4198,19 +4234,20 @@ type GoogleChromeManagementVersionsV1CertificateProvisioningProcess struct {
 	// using the client's private key using `signature_algorithm`. This field is
 	// only present after the `SignData` operation has finished.
 	Signature string `json:"signature,omitempty"`
-	// SignatureAlgorithm: Output only. The signature algorithm that the adapter
-	// expects the client and backend components to use when processing
-	// `sign_data`. This field is only present after the `SignData` operation has
-	// been initiated.
+	// SignatureAlgorithm: Output only. The signature algorithm that the client and
+	// backend components use when processing `sign_data`. If the `profile_type` is
+	// a `GenericProfile`, this field will only be present after the `SignData`
+	// operation was initiated. If the `profile_type` is a `ScepProfile`, the field
+	// will always be present.
 	//
 	// Possible values:
 	//   "SIGNATURE_ALGORITHM_UNSPECIFIED" - Default value. This value is unused.
 	//   "SIGNATURE_ALGORITHM_RSA_PKCS1_V1_5_SHA256" - The server-side builds the
-	// PKCS#1 DigestInfo, i.e., the SHA256 hash is constructed on the server-side.
-	// The client should sign using RSA with PKCS#1 v1.5 padding.
-	//   "SIGNATURE_ALGORITHM_ECDSA_SHA256" - The PKCS#1 digest info is built by
-	// the server-side and sent to the client unhashed. The client is responsible
-	// for signing and hashing. Uses the P-256 curve.
+	// PKCS#1 DigestInfo and sends a SHA256 hash of it to the client. The client
+	// should sign using RSA with PKCS#1 v1.5 padding.
+	//   "SIGNATURE_ALGORITHM_ECDSA_SHA256" - The server-side builds the PKCS#1
+	// DigestInfo and sends it unhashed to the client. The client is responsible
+	// for signing and hashing using the P-256 curve.
 	SignatureAlgorithm string `json:"signatureAlgorithm,omitempty"`
 	// StartTime: Output only. Server-generated timestamp of when the certificate
 	// provisioning process has been created.
@@ -4219,6 +4256,9 @@ type GoogleChromeManagementVersionsV1CertificateProvisioningProcess struct {
 	// should be provisioned. Represented as a DER-encoded X.509
 	// SubjectPublicKeyInfo.
 	SubjectPublicKeyInfo string `json:"subjectPublicKeyInfo,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "ChromeOsDevice") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4327,6 +4367,9 @@ type GoogleChromeManagementVersionsV1ChromeBrowserProfile struct {
 	// ReportingData: Output only. Detailed reporting data of the profile. This
 	// information is only available when the profile reporting policy is enabled.
 	ReportingData *GoogleChromeManagementVersionsV1ReportingData `json:"reportingData,omitempty"`
+	// SupportsFcmNotifications: Output only. Whether the profile supports FCM
+	// notifications.
+	SupportsFcmNotifications bool `json:"supportsFcmNotifications,omitempty"`
 	// UserEmail: Output only. Email address of the user to which the profile
 	// belongs.
 	UserEmail string `json:"userEmail,omitempty"`
@@ -4497,6 +4540,36 @@ func (s GoogleChromeManagementVersionsV1ChromeOsUserSession) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementVersionsV1ClaimCertificateProvisioningProcessRequest:
+// Request message for claiming a certificate provisioning process.
+type GoogleChromeManagementVersionsV1ClaimCertificateProvisioningProcessRequest struct {
+	// CallerInstanceId: Required. The instance id of the caller.
+	CallerInstanceId string `json:"callerInstanceId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CallerInstanceId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CallerInstanceId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1ClaimCertificateProvisioningProcessRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1ClaimCertificateProvisioningProcessRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1ClaimCertificateProvisioningProcessResponse:
+// Response message for claiming a certificate provisioning process.
+type GoogleChromeManagementVersionsV1ClaimCertificateProvisioningProcessResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // GoogleChromeManagementVersionsV1DeviceInfo: Information of a device that
 // runs a Chrome browser profile.
 type GoogleChromeManagementVersionsV1DeviceInfo struct {
@@ -4541,7 +4614,7 @@ func (s GoogleChromeManagementVersionsV1DeviceInfo) MarshalJSON() ([]byte, error
 type GoogleChromeManagementVersionsV1GenericCaConnection struct {
 	// CaConnectionAdapterConfigReference: Output only. A string that references
 	// the administrator-provided configuration for the certification authority
-	// service. This field can be missing if no configuration was given.
+	// service.
 	CaConnectionAdapterConfigReference string `json:"caConnectionAdapterConfigReference,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "CaConnectionAdapterConfigReference") to unconditionally include in API
@@ -4568,7 +4641,7 @@ func (s GoogleChromeManagementVersionsV1GenericCaConnection) MarshalJSON() ([]by
 type GoogleChromeManagementVersionsV1GenericProfile struct {
 	// ProfileAdapterConfigReference: Output only. A string that references the
 	// administrator-provided configuration for the certificate provisioning
-	// profile. This field can be missing if no configuration was given.
+	// profile.
 	ProfileAdapterConfigReference string `json:"profileAdapterConfigReference,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "ProfileAdapterConfigReference") to unconditionally include in API requests.
@@ -4903,7 +4976,7 @@ func (s GoogleChromeManagementVersionsV1ReportingDataPolicyData) MarshalJSON() (
 type GoogleChromeManagementVersionsV1ScepCaConnection struct {
 	// CaConnectionAdapterConfigReference: Output only. A string that references
 	// the administrator-provided configuration for the certification authority
-	// service. This field can be missing if no configuration was given.
+	// service.
 	CaConnectionAdapterConfigReference string `json:"caConnectionAdapterConfigReference,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "CaConnectionAdapterConfigReference") to unconditionally include in API
@@ -4929,8 +5002,8 @@ func (s GoogleChromeManagementVersionsV1ScepCaConnection) MarshalJSON() ([]byte,
 // provisioning profile.
 type GoogleChromeManagementVersionsV1ScepProfile struct {
 	// CertificateTemplateName: Output only. The certificate template name as
-	// defined by the admin on their on-prem infrastructure. This is identifiable
-	// by the customer's CA.
+	// defined by the admin on their on-prem infrastructure. The Certificate
+	// Authority uses this name to identify the certificate template.
 	CertificateTemplateName string `json:"certificateTemplateName,omitempty"`
 	// Country: Output only. The country of the subject.
 	Country string `json:"country,omitempty"`
@@ -4972,6 +5045,37 @@ func (s GoogleChromeManagementVersionsV1ScepProfile) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementVersionsV1SetFailureRequest: Request message for
+// marking a certificate provisioning process as failed.
+type GoogleChromeManagementVersionsV1SetFailureRequest struct {
+	// ErrorMessage: Required. A message describing the failure details. It is
+	// displayed on the ChromeOS client device.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorMessage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1SetFailureRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1SetFailureRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1SetFailureResponse: Response message for
+// publishing a failure for a certificate provisioning process.
+type GoogleChromeManagementVersionsV1SetFailureResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // GoogleChromeManagementVersionsV1SignDataMetadata: Metadata for the
 // long-running operation returned by signData.
 type GoogleChromeManagementVersionsV1SignDataMetadata struct {
@@ -4992,6 +5096,43 @@ type GoogleChromeManagementVersionsV1SignDataMetadata struct {
 
 func (s GoogleChromeManagementVersionsV1SignDataMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementVersionsV1SignDataMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1SignDataRequest: Request message for
+// requesting a signature from the client that initated a certificate
+// provisioning process.
+type GoogleChromeManagementVersionsV1SignDataRequest struct {
+	// SignData: Required. The data that the client was asked to sign.
+	SignData string `json:"signData,omitempty"`
+	// SignatureAlgorithm: Required. The signature algorithm that the adapter
+	// expects the client and backend components to use when processing
+	// `sign_data`.
+	//
+	// Possible values:
+	//   "SIGNATURE_ALGORITHM_UNSPECIFIED" - Default value. This value is unused.
+	//   "SIGNATURE_ALGORITHM_RSA_PKCS1_V1_5_SHA256" - The server-side builds the
+	// PKCS#1 DigestInfo and sends a SHA256 hash of it to the client. The client
+	// should sign using RSA with PKCS#1 v1.5 padding.
+	//   "SIGNATURE_ALGORITHM_ECDSA_SHA256" - The server-side builds the PKCS#1
+	// DigestInfo and sends it unhashed to the client. The client is responsible
+	// for signing and hashing using the P-256 curve.
+	SignatureAlgorithm string `json:"signatureAlgorithm,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SignData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SignData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1SignDataRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1SignDataRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5032,14 +5173,14 @@ type GoogleChromeManagementVersionsV1SubjectAltName struct {
 	// unspecified.
 	//   "RFC822_NAME" - The subject alternative name type is an email address
 	// adhering to RFC822.
-	//   "DNS_NAME" - The subject alternative name type is a a Domain Name System
+	//   "DNS_NAME" - The subject alternative name type is a Domain Name System
 	// (DNS).
 	//   "OTHER_NAME_USER_PRINCIPAL_NAME" - The subject alternative name type is a
 	// User Principal Name (UPN).
 	//   "UNIFORM_RESOURCE_IDENTIFIER" - The subject alternative name type is a
 	// Uniform Resource Identifier (URI).
 	Type string `json:"type,omitempty"`
-	// Value: Output only. The value of the subject alternative name with respoect
+	// Value: Output only. The value of the subject alternative name with respect
 	// to the `type`.
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
@@ -5085,6 +5226,122 @@ type GoogleChromeManagementVersionsV1ThirdPartyProfileUser struct {
 
 func (s GoogleChromeManagementVersionsV1ThirdPartyProfileUser) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementVersionsV1ThirdPartyProfileUser
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1UploadCertificateRequest: Request message
+// for uploading an issued certificate for a certificate provisioning process.
+type GoogleChromeManagementVersionsV1UploadCertificateRequest struct {
+	// CertificatePem: Required. The issued certificate in PEM format.
+	CertificatePem string `json:"certificatePem,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CertificatePem") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CertificatePem") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1UploadCertificateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1UploadCertificateRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1UploadCertificateResponse: Response message
+// for publishing an issued certificate for a certificate provisioning process.
+type GoogleChromeManagementVersionsV1UploadCertificateResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleLongrunningCancelOperationRequest: The request message for
+// Operations.CancelOperation.
+type GoogleLongrunningCancelOperationRequest struct {
+}
+
+// GoogleLongrunningListOperationsResponse: The response message for
+// Operations.ListOperations.
+type GoogleLongrunningListOperationsResponse struct {
+	// NextPageToken: The standard List next-page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Operations: A list of operations that matches the specified filter in the
+	// request.
+	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleLongrunningListOperationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleLongrunningOperation: This resource represents a long-running
+// operation that is the result of a network API call.
+type GoogleLongrunningOperation struct {
+	// Done: If the value is `false`, it means the operation is still in progress.
+	// If `true`, the operation is completed, and either `error` or `response` is
+	// available.
+	Done bool `json:"done,omitempty"`
+	// Error: The error result of the operation in case of failure or cancellation.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as create
+	// time. Some services might not provide such metadata. Any method that returns
+	// a long-running operation should document the metadata type, if any.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+	// Name: The server-assigned name, which is only unique within the same service
+	// that originally returns it. If you use the default HTTP mapping, the `name`
+	// should be a resource name ending with `operations/{unique_id}`.
+	Name string `json:"name,omitempty"`
+	// Response: The normal, successful response of the operation. If the original
+	// method returns no data on success, such as `Delete`, the response is
+	// `google.protobuf.Empty`. If the original method is standard
+	// `Get`/`Create`/`Update`, the response should be the resource. For other
+	// methods, the response should have the type `XxxResponse`, where `Xxx` is the
+	// original method name. For example, if the original method name is
+	// `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
+	Response googleapi.RawMessage `json:"response,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Done") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleLongrunningOperation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5997,6 +6254,674 @@ func (c *CustomersAppsWebGetCall) Do(opts ...googleapi.CallOption) (*GoogleChrom
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.apps.web.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersCertificateProvisioningProcessesClaimCall struct {
+	s                                                                          *Service
+	name                                                                       string
+	googlechromemanagementversionsv1claimcertificateprovisioningprocessrequest *GoogleChromeManagementVersionsV1ClaimCertificateProvisioningProcessRequest
+	urlParams_                                                                 gensupport.URLParams
+	ctx_                                                                       context.Context
+	header_                                                                    http.Header
+}
+
+// Claim: Claims a certificate provisioning process. For each certificate
+// provisioning process, this operation can succeed only for one
+// `caller_instance_id`.
+//
+//   - name: Resource name of the `CertificateProvisioningProcess` to claim. The
+//     name pattern is given as
+//     `customers/{customer}/certificateProvisioningProcesses/{certificate_provisi
+//     oning_process}` with `{customer}` being the obfuscated customer id and
+//     `{certificate_provisioning_process}` being the certificate provisioning
+//     process id.
+func (r *CustomersCertificateProvisioningProcessesService) Claim(name string, googlechromemanagementversionsv1claimcertificateprovisioningprocessrequest *GoogleChromeManagementVersionsV1ClaimCertificateProvisioningProcessRequest) *CustomersCertificateProvisioningProcessesClaimCall {
+	c := &CustomersCertificateProvisioningProcessesClaimCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlechromemanagementversionsv1claimcertificateprovisioningprocessrequest = googlechromemanagementversionsv1claimcertificateprovisioningprocessrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersCertificateProvisioningProcessesClaimCall) Fields(s ...googleapi.Field) *CustomersCertificateProvisioningProcessesClaimCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersCertificateProvisioningProcessesClaimCall) Context(ctx context.Context) *CustomersCertificateProvisioningProcessesClaimCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersCertificateProvisioningProcessesClaimCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersCertificateProvisioningProcessesClaimCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromemanagementversionsv1claimcertificateprovisioningprocessrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:claim")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.certificateProvisioningProcesses.claim", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.certificateProvisioningProcesses.claim" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1ClaimCertificateProvisioningProcessResponse.
+// ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersCertificateProvisioningProcessesClaimCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1ClaimCertificateProvisioningProcessResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1ClaimCertificateProvisioningProcessResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.certificateProvisioningProcesses.claim", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersCertificateProvisioningProcessesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a certificate provisioning process.
+//
+//   - name: Resource name of the `CertificateProvisioningProcess` to return. The
+//     name pattern is given as
+//     `customers/{customer}/certificateProvisioningProcesses/{certificate_provisi
+//     oning_process}` with `{customer}` being the obfuscated customer id and
+//     `{certificate_provisioning_process}` being the certificate provisioning
+//     process id.
+func (r *CustomersCertificateProvisioningProcessesService) Get(name string) *CustomersCertificateProvisioningProcessesGetCall {
+	c := &CustomersCertificateProvisioningProcessesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersCertificateProvisioningProcessesGetCall) Fields(s ...googleapi.Field) *CustomersCertificateProvisioningProcessesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersCertificateProvisioningProcessesGetCall) IfNoneMatch(entityTag string) *CustomersCertificateProvisioningProcessesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersCertificateProvisioningProcessesGetCall) Context(ctx context.Context) *CustomersCertificateProvisioningProcessesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersCertificateProvisioningProcessesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersCertificateProvisioningProcessesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.certificateProvisioningProcesses.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.certificateProvisioningProcesses.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1CertificateProvisioningProcess.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersCertificateProvisioningProcessesGetCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1CertificateProvisioningProcess, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1CertificateProvisioningProcess{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.certificateProvisioningProcesses.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersCertificateProvisioningProcessesSetFailureCall struct {
+	s                                                 *Service
+	name                                              string
+	googlechromemanagementversionsv1setfailurerequest *GoogleChromeManagementVersionsV1SetFailureRequest
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// SetFailure: Marks a certificate provisioning process as failed.
+//
+//   - name: Resource name of the `CertificateProvisioningProcess` to return. The
+//     name pattern is given as
+//     `customers/{customer}/certificateProvisioningProcesses/{certificate_provisi
+//     oning_process}` with `{customer}` being the obfuscated customer id and
+//     `{certificate_provisioning_process}` being the certificate provisioning
+//     process id.
+func (r *CustomersCertificateProvisioningProcessesService) SetFailure(name string, googlechromemanagementversionsv1setfailurerequest *GoogleChromeManagementVersionsV1SetFailureRequest) *CustomersCertificateProvisioningProcessesSetFailureCall {
+	c := &CustomersCertificateProvisioningProcessesSetFailureCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlechromemanagementversionsv1setfailurerequest = googlechromemanagementversionsv1setfailurerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersCertificateProvisioningProcessesSetFailureCall) Fields(s ...googleapi.Field) *CustomersCertificateProvisioningProcessesSetFailureCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersCertificateProvisioningProcessesSetFailureCall) Context(ctx context.Context) *CustomersCertificateProvisioningProcessesSetFailureCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersCertificateProvisioningProcessesSetFailureCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersCertificateProvisioningProcessesSetFailureCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromemanagementversionsv1setfailurerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:setFailure")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.certificateProvisioningProcesses.setFailure", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.certificateProvisioningProcesses.setFailure" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1SetFailureResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersCertificateProvisioningProcessesSetFailureCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1SetFailureResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1SetFailureResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.certificateProvisioningProcesses.setFailure", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersCertificateProvisioningProcessesSignDataCall struct {
+	s                                               *Service
+	name                                            string
+	googlechromemanagementversionsv1signdatarequest *GoogleChromeManagementVersionsV1SignDataRequest
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+	header_                                         http.Header
+}
+
+// SignData: Requests the client that initiated a certificate provisioning
+// process to sign data. This should only be called after
+// `ClaimCertificateProvisioningProcess` has been successfully executed.
+//
+//   - name: Resource name of the `CertificateProvisioningProcess` to return. The
+//     name pattern is given as
+//     `customers/{customer}/certificateProvisioningProcesses/{certificate_provisi
+//     oning_process}` with `{customer}` being the obfuscated customer id and
+//     `{certificate_provisioning_process}` being the certificate provisioning
+//     process id.
+func (r *CustomersCertificateProvisioningProcessesService) SignData(name string, googlechromemanagementversionsv1signdatarequest *GoogleChromeManagementVersionsV1SignDataRequest) *CustomersCertificateProvisioningProcessesSignDataCall {
+	c := &CustomersCertificateProvisioningProcessesSignDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlechromemanagementversionsv1signdatarequest = googlechromemanagementversionsv1signdatarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersCertificateProvisioningProcessesSignDataCall) Fields(s ...googleapi.Field) *CustomersCertificateProvisioningProcessesSignDataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersCertificateProvisioningProcessesSignDataCall) Context(ctx context.Context) *CustomersCertificateProvisioningProcessesSignDataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersCertificateProvisioningProcessesSignDataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersCertificateProvisioningProcessesSignDataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromemanagementversionsv1signdatarequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:signData")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.certificateProvisioningProcesses.signData", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.certificateProvisioningProcesses.signData" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersCertificateProvisioningProcessesSignDataCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.certificateProvisioningProcesses.signData", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersCertificateProvisioningProcessesUploadCertificateCall struct {
+	s                                                        *Service
+	name                                                     string
+	googlechromemanagementversionsv1uploadcertificaterequest *GoogleChromeManagementVersionsV1UploadCertificateRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// UploadCertificate: Uploads a successfully issued certificate for a
+// certificate provisioning process.
+//
+//   - name: Resource name of the `CertificateProvisioningProcess` to return. The
+//     name pattern is given as
+//     `customers/{customer}/certificateProvisioningProcesses/{certificate_provisi
+//     oning_process}` with `{customer}` being the obfuscated customer id and
+//     `{certificate_provisioning_process}` being the certificate provisioning
+//     process id.
+func (r *CustomersCertificateProvisioningProcessesService) UploadCertificate(name string, googlechromemanagementversionsv1uploadcertificaterequest *GoogleChromeManagementVersionsV1UploadCertificateRequest) *CustomersCertificateProvisioningProcessesUploadCertificateCall {
+	c := &CustomersCertificateProvisioningProcessesUploadCertificateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlechromemanagementversionsv1uploadcertificaterequest = googlechromemanagementversionsv1uploadcertificaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersCertificateProvisioningProcessesUploadCertificateCall) Fields(s ...googleapi.Field) *CustomersCertificateProvisioningProcessesUploadCertificateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersCertificateProvisioningProcessesUploadCertificateCall) Context(ctx context.Context) *CustomersCertificateProvisioningProcessesUploadCertificateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersCertificateProvisioningProcessesUploadCertificateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersCertificateProvisioningProcessesUploadCertificateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlechromemanagementversionsv1uploadcertificaterequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:uploadCertificate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.certificateProvisioningProcesses.uploadCertificate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.certificateProvisioningProcesses.uploadCertificate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1UploadCertificateResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersCertificateProvisioningProcessesUploadCertificateCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1UploadCertificateResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1UploadCertificateResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.certificateProvisioningProcesses.uploadCertificate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersCertificateProvisioningProcessesOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
+//
+// - name: The name of the operation resource.
+func (r *CustomersCertificateProvisioningProcessesOperationsService) Get(name string) *CustomersCertificateProvisioningProcessesOperationsGetCall {
+	c := &CustomersCertificateProvisioningProcessesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersCertificateProvisioningProcessesOperationsGetCall) Fields(s ...googleapi.Field) *CustomersCertificateProvisioningProcessesOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersCertificateProvisioningProcessesOperationsGetCall) IfNoneMatch(entityTag string) *CustomersCertificateProvisioningProcessesOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersCertificateProvisioningProcessesOperationsGetCall) Context(ctx context.Context) *CustomersCertificateProvisioningProcessesOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersCertificateProvisioningProcessesOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersCertificateProvisioningProcessesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.certificateProvisioningProcesses.operations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.certificateProvisioningProcesses.operations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersCertificateProvisioningProcessesOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.certificateProvisioningProcesses.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -9678,4 +10603,382 @@ func (c *CustomersThirdPartyProfileUsersMoveCall) Do(opts ...googleapi.CallOptio
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.thirdPartyProfileUsers.move", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type OperationsCancelCall struct {
+	s                                       *Service
+	name                                    string
+	googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// Cancel: Starts asynchronous cancellation on a long-running operation. The
+// server makes a best effort to cancel the operation, but success is not
+// guaranteed. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether the
+// operation completed despite cancellation. On successful cancellation, the
+// operation is not deleted; instead, it becomes an operation with an
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
+// `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
+func (r *OperationsService) Cancel(name string, googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest) *OperationsCancelCall {
+	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlelongrunningcanceloperationrequest = googlelongrunningcanceloperationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OperationsCancelCall) Fields(s ...googleapi.Field) *OperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OperationsCancelCall) Context(ctx context.Context) *OperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlelongrunningcanceloperationrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.operations.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.operations.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.operations.cancel", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OperationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a long-running operation. This method indicates that the
+// client is no longer interested in the operation result. It does not cancel
+// the operation. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
+func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
+	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OperationsDeleteCall) Fields(s ...googleapi.Field) *OperationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OperationsDeleteCall) Context(ctx context.Context) *OperationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OperationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.operations.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.operations.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.operations.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns `UNIMPLEMENTED`.
+//
+// - name: The name of the operation's parent resource.
+func (r *OperationsService) List(name string) *OperationsListCall {
+	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list filter.
+func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
+func (c *OperationsListCall) PageSize(pageSize int64) *OperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
+func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *OperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OperationsListCall) IfNoneMatch(entityTag string) *OperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OperationsListCall) Context(ctx context.Context) *OperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.operations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.operations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.operations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

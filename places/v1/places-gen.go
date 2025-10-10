@@ -1839,7 +1839,7 @@ type GoogleMapsPlacesV1PlaceGoogleMapsLinks struct {
 	// DirectionsUri: A link to show the directions to the place. The link only
 	// populates the destination location and uses the default travel mode `DRIVE`.
 	DirectionsUri string `json:"directionsUri,omitempty"`
-	// PhotosUri: A link to show reviews of this place on Google Maps.
+	// PhotosUri: A link to show photos of this place on Google Maps.
 	PhotosUri string `json:"photosUri,omitempty"`
 	// PlaceUri: A link to show this place.
 	PlaceUri string `json:"placeUri,omitempty"`

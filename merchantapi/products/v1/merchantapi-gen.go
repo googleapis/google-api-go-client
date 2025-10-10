@@ -648,6 +648,46 @@ func (s FreeShippingThreshold) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// HandlingCutoffTime: Configuration for offer or offer-country level shipping
+// handling cutoff time.
+type HandlingCutoffTime struct {
+	// Country: The CLDR territory code
+	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) of the
+	// country to which the handling cutoff time applies.
+	Country string `json:"country,omitempty"`
+	// CutoffTime: The handling cutoff time until which an order has to be placed
+	// to be processed in the same day. This is a string in format of HHMM (e.g.
+	// `1530`) for 3:30 PM. If not configured, the cutoff time will be defaulted to
+	// 8AM PST.
+	CutoffTime string `json:"cutoffTime,omitempty"`
+	// CutoffTimezone: Timezone identifier
+	// (https://developers.google.com/adwords/api/docs/appendix/codes-formats#timezone-ids)
+	// For example 'Europe/Zurich'. If not set, the shipping destination timezone
+	// will be used.
+	CutoffTimezone string `json:"cutoffTimezone,omitempty"`
+	// DisableDeliveryAfterCutoff: This field only applies to same-day delivery. If
+	// true, prevents next-day delivery from being shown for this offer after the
+	// cutoff time. This field only applies to same-day delivery offers, for
+	// merchants who want to explicitly disable it.
+	DisableDeliveryAfterCutoff bool `json:"disableDeliveryAfterCutoff,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Country") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Country") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HandlingCutoffTime) MarshalJSON() ([]byte, error) {
+	type NoMethod HandlingCutoffTime
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Interval: Represents a time interval, encoded as a Timestamp start
 // (inclusive) and a Timestamp end (exclusive). The start must be less than or
 // equal to the end. When the start equals the end, the interval is empty
@@ -1197,6 +1237,8 @@ type ProductAttributes struct {
 	// (https://support.google.com/merchants/answer/188494#gtin)) of the item. You
 	// can provide up to 10 GTINs.
 	Gtins []string `json:"gtins,omitempty"`
+	// HandlingCutoffTimes: The handling cutoff times for shipping.
+	HandlingCutoffTimes []*HandlingCutoffTime `json:"handlingCutoffTimes,omitempty"`
 	// IdentifierExists: Set this value to false when the item does not have unique
 	// product identifiers appropriate to its category, such as GTIN, MPN, and
 	// brand. Defaults to true, if not provided.
@@ -2023,6 +2065,18 @@ type Shipping struct {
 	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) of the
 	// country to which an item will ship.
 	Country string `json:"country,omitempty"`
+	// HandlingCutoffTime: The handling cutoff time until which an order has to be
+	// placed to be processed in the same day. This is a string in format of HHMM
+	// (e.g. `1530`) for 3:30 PM. If not configured, the cutoff time will be
+	// defaulted to 8AM PST and `handling_cutoff_timezone` will be ignored.
+	HandlingCutoffTime string `json:"handlingCutoffTime,omitempty"`
+	// HandlingCutoffTimezone: Timezone identifier
+	// (https://developers.google.com/adwords/api/docs/appendix/codes-formats#timezone-ids)
+	// For example `Europe/Zurich`. This field only applies if
+	// `handling_cutoff_time` is set. If `handling_cutoff_time` is set but this
+	// field is not set, the shipping destination timezone will be used. If both
+	// fields are not set, the handling cutoff time will default to 8AM PST.
+	HandlingCutoffTimezone string `json:"handlingCutoffTimezone,omitempty"`
 	// LocationGroupName: The location where the shipping is applicable,
 	// represented by a location group name.
 	LocationGroupName string `json:"locationGroupName,omitempty"`

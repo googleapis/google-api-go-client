@@ -2052,6 +2052,40 @@ func (s GoogleBigtableAdminV2AuthorizedViewSubsetView) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleBigtableAdminV2MaterializedViewClusterState: The state of a
+// materialized view's data in a particular cluster.
+type GoogleBigtableAdminV2MaterializedViewClusterState struct {
+	// ReplicationState: Output only. The state of the materialized view in this
+	// cluster.
+	//
+	// Possible values:
+	//   "STATE_NOT_KNOWN" - The state of the materialized view is unknown in this
+	// cluster.
+	//   "INITIALIZING" - The cluster or view was recently created, and the
+	// materialized view must finish backfilling before it can begin serving Data
+	// API requests.
+	//   "READY" - The materialized view can serve Data API requests from this
+	// cluster. Depending on materialization and replication delay, reads may not
+	// immediately reflect the state of the materialized view in other clusters.
+	ReplicationState string `json:"replicationState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReplicationState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReplicationState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleBigtableAdminV2MaterializedViewClusterState) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2MaterializedViewClusterState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleBigtableAdminV2TypeAggregate: A value that combines incremental
 // updates into a summarized value. Data is never directly written or read
 // using type `Aggregate`. Writes provide either the `input_type` or
@@ -3115,6 +3149,11 @@ type ListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*Operation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3268,6 +3307,12 @@ func (s LogicalView) MarshalJSON() ([]byte, error) {
 // MaterializedView: A materialized view object that can be referenced in SQL
 // queries.
 type MaterializedView struct {
+	// ClusterStates: Output only. Map from cluster ID to per-cluster materialized
+	// view state. If it could not be determined whether or not the materialized
+	// view has data in a particular cluster (for example, if its zone is
+	// unavailable), then there will be an entry for the cluster with
+	// `STATE_NOT_KNOWN` state. Views: `REPLICATION_VIEW`, `FULL`.
+	ClusterStates map[string]GoogleBigtableAdminV2MaterializedViewClusterState `json:"clusterStates,omitempty"`
 	// DeletionProtection: Set to true to make the MaterializedView protected
 	// against deletion. Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.
 	DeletionProtection bool `json:"deletionProtection,omitempty"`
@@ -3286,15 +3331,15 @@ type MaterializedView struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "DeletionProtection") to
+	// ForceSendFields is a list of field names (e.g. "ClusterStates") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DeletionProtection") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ClusterStates") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4829,6 +4874,19 @@ func (c *OperationsProjectsOperationsListCall) PageSize(pageSize int64) *Operati
 // token.
 func (c *OperationsProjectsOperationsListCall) PageToken(pageToken string) *OperationsProjectsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *OperationsProjectsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OperationsProjectsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -9635,6 +9693,29 @@ func (r *ProjectsInstancesMaterializedViewsService) Get(name string) *ProjectsIn
 	return c
 }
 
+// View sets the optional parameter "view": Describes which of the materialized
+// view's fields should be populated in the response. Defaults to SCHEMA_VIEW.
+//
+// Possible values:
+//
+//	"VIEW_UNSPECIFIED" - Uses the default view for each method as documented
+//
+// in its request.
+//
+//	"SCHEMA_VIEW" - Only populates fields related to the materialized view's
+//
+// schema.
+//
+//	"REPLICATION_VIEW" - Only populates fields related to the materialized
+//
+// view's replication state.
+//
+//	"FULL" - Populates all fields.
+func (c *ProjectsInstancesMaterializedViewsGetCall) View(view string) *ProjectsInstancesMaterializedViewsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -9867,6 +9948,30 @@ func (c *ProjectsInstancesMaterializedViewsListCall) PageSize(pageSize int64) *P
 // `ListMaterializedViews` must match the call that provided the page token.
 func (c *ProjectsInstancesMaterializedViewsListCall) PageToken(pageToken string) *ProjectsInstancesMaterializedViewsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Describes which of the materialized
+// view's fields should be populated in the response. For now, only the default
+// value SCHEMA_VIEW is supported.
+//
+// Possible values:
+//
+//	"VIEW_UNSPECIFIED" - Uses the default view for each method as documented
+//
+// in its request.
+//
+//	"SCHEMA_VIEW" - Only populates fields related to the materialized view's
+//
+// schema.
+//
+//	"REPLICATION_VIEW" - Only populates fields related to the materialized
+//
+// view's replication state.
+//
+//	"FULL" - Populates all fields.
+func (c *ProjectsInstancesMaterializedViewsListCall) View(view string) *ProjectsInstancesMaterializedViewsListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 
@@ -13243,113 +13348,6 @@ func (c *ProjectsInstancesTablesSchemaBundlesGetCall) Do(opts ...googleapi.CallO
 	return ret, nil
 }
 
-type ProjectsInstancesTablesSchemaBundlesGetIamPolicyCall struct {
-	s                   *Service
-	resource            string
-	getiampolicyrequest *GetIamPolicyRequest
-	urlParams_          gensupport.URLParams
-	ctx_                context.Context
-	header_             http.Header
-}
-
-// GetIamPolicy: Gets the access control policy for a Bigtable resource.
-// Returns an empty policy if the resource exists but does not have a policy
-// set.
-//
-//   - resource: REQUIRED: The resource for which the policy is being requested.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
-func (r *ProjectsInstancesTablesSchemaBundlesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesTablesSchemaBundlesGetIamPolicyCall {
-	c := &ProjectsInstancesTablesSchemaBundlesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.getiampolicyrequest = getiampolicyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsInstancesTablesSchemaBundlesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsInstancesTablesSchemaBundlesGetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsInstancesTablesSchemaBundlesGetIamPolicyCall) Context(ctx context.Context) *ProjectsInstancesTablesSchemaBundlesGetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsInstancesTablesSchemaBundlesGetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsInstancesTablesSchemaBundlesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.getiampolicyrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+resource}:getIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.tables.schemaBundles.getIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "bigtableadmin.projects.instances.tables.schemaBundles.getIamPolicy" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsInstancesTablesSchemaBundlesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.tables.schemaBundles.getIamPolicy", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
 type ProjectsInstancesTablesSchemaBundlesListCall struct {
 	s            *Service
 	parent       string
@@ -13639,220 +13637,6 @@ func (c *ProjectsInstancesTablesSchemaBundlesPatchCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.tables.schemaBundles.patch", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsInstancesTablesSchemaBundlesSetIamPolicyCall struct {
-	s                   *Service
-	resource            string
-	setiampolicyrequest *SetIamPolicyRequest
-	urlParams_          gensupport.URLParams
-	ctx_                context.Context
-	header_             http.Header
-}
-
-// SetIamPolicy: Sets the access control policy on a Bigtable resource.
-// Replaces any existing policy.
-//
-//   - resource: REQUIRED: The resource for which the policy is being specified.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
-func (r *ProjectsInstancesTablesSchemaBundlesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesTablesSchemaBundlesSetIamPolicyCall {
-	c := &ProjectsInstancesTablesSchemaBundlesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.setiampolicyrequest = setiampolicyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsInstancesTablesSchemaBundlesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsInstancesTablesSchemaBundlesSetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsInstancesTablesSchemaBundlesSetIamPolicyCall) Context(ctx context.Context) *ProjectsInstancesTablesSchemaBundlesSetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsInstancesTablesSchemaBundlesSetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsInstancesTablesSchemaBundlesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.setiampolicyrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+resource}:setIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.tables.schemaBundles.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "bigtableadmin.projects.instances.tables.schemaBundles.setIamPolicy" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsInstancesTablesSchemaBundlesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.tables.schemaBundles.setIamPolicy", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsInstancesTablesSchemaBundlesTestIamPermissionsCall struct {
-	s                         *Service
-	resource                  string
-	testiampermissionsrequest *TestIamPermissionsRequest
-	urlParams_                gensupport.URLParams
-	ctx_                      context.Context
-	header_                   http.Header
-}
-
-// TestIamPermissions: Returns permissions that the caller has on the specified
-// Bigtable resource.
-//
-//   - resource: REQUIRED: The resource for which the policy detail is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
-//     value for this field.
-func (r *ProjectsInstancesTablesSchemaBundlesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesTablesSchemaBundlesTestIamPermissionsCall {
-	c := &ProjectsInstancesTablesSchemaBundlesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.testiampermissionsrequest = testiampermissionsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsInstancesTablesSchemaBundlesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsInstancesTablesSchemaBundlesTestIamPermissionsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsInstancesTablesSchemaBundlesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsInstancesTablesSchemaBundlesTestIamPermissionsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsInstancesTablesSchemaBundlesTestIamPermissionsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsInstancesTablesSchemaBundlesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.testiampermissionsrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+resource}:testIamPermissions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.tables.schemaBundles.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "bigtableadmin.projects.instances.tables.schemaBundles.testIamPermissions" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsInstancesTablesSchemaBundlesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &TestIamPermissionsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.tables.schemaBundles.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

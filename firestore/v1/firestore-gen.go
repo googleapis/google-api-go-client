@@ -1951,10 +1951,11 @@ type GoogleFirestoreAdminV1Database struct {
 	// Possible values:
 	//   "REALTIME_UPDATES_MODE_UNSPECIFIED" - The Realtime Updates feature is not
 	// specified.
-	//   "REALTIME_UPDATES_ENABLED" - The Realtime Updates feature is enabled by
-	// default. This could potentially degrade write performance for the database.
-	//   "REALTIME_UPDATES_DISABLED" - The Realtime Updates feature is disabled by
-	// default.
+	//   "REALTIME_UPDATES_MODE_ENABLED" - The Realtime Updates feature is enabled
+	// by default. This could potentially degrade write performance for the
+	// database.
+	//   "REALTIME_UPDATES_MODE_DISABLED" - The Realtime Updates feature is
+	// disabled by default.
 	RealtimeUpdatesMode string `json:"realtimeUpdatesMode,omitempty"`
 	// SourceInfo: Output only. Information about the provenance of this database.
 	SourceInfo *GoogleFirestoreAdminV1SourceInfo `json:"sourceInfo,omitempty"`
@@ -3277,6 +3278,11 @@ type GoogleLongrunningListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -9681,6 +9687,19 @@ func (c *ProjectsDatabasesOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsDatabasesOperationsListCall) PageToken(pageToken string) *ProjectsDatabasesOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsDatabasesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsDatabasesOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

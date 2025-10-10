@@ -6,7 +6,7 @@
 
 // Package cloudtrace provides access to the Cloud Trace API.
 //
-// For product documentation, see: https://cloud.google.com/trace
+// For product documentation, see: https://cloud.google.com/trace/
 //
 // # Library status
 //

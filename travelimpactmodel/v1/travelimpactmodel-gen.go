@@ -842,30 +842,34 @@ type FlightsComputeScope3FlightEmissionsCall struct {
 // departureDate, and cabinClass. 2. Typical flight emissions given origin,
 // destination, year in departureDate, and cabinClass. 3. Distance-based
 // emissions calculated using distanceKm, year in departureDate, and
-// cabinClass. If there are no estimates available for a certain flight with
-// any of the three methods, the response will return a Scope3FlightEmissions
-// object with empty emission fields. The request will still be considered
-// successful. Generally, missing emissions estimates occur when the flight is
-// unknown to the server (e.g. no specific flight exists, or typical flight
-// emissions are not available for the requested pair). The request will fail
-// with an `INVALID_ARGUMENT` error if: * The request contains more than 1,000
-// flight legs. * The input flight leg is missing one or more identifiers. For
-// example, missing origin/destination without a valid distance for
-// TIM_EMISSIONS or TYPICAL_FLIGHT_EMISSIONS type matching, or missing distance
-// for a DISTANCE_BASED_EMISSIONS type matching (if you want to fallback to
-// distance-based emissions or want a distance-based emissions estimate, you
-// need to specify a distance). * The flight date is before 2019 (Scope 3 data
-// is only available for 2019 and after). * The flight distance is not between
-// 0 and 25,000,000,000,000,000 km. * Missing cabin class. Because the request
-// is processed with fallback logic, it is possible that misconfigured requests
-// return valid emissions estimates using fallback methods. For example, if a
-// request has the wrong flight number but specifies the origin and
-// destination, the request will still succeed, but the returned emissions will
-// be based solely on the typical flight emissions. Similarly, if a request is
-// missing the origin for a typical flight emissions request, but specifies a
-// valid distance, the request could succeed based solely on the distance-based
-// emissions. Consequently, one should check the source of the returned
-// emissions (source) to confirm the results are as expected.
+// cabinClass. If there is a future flight requested in this calendar year, we
+// do not support Tier 1 emissions and will fallback to Tier 2 or 3 emissions.
+// If the requested future flight is in not in this calendar year, we will
+// return an empty response. We recommend that for future flights,
+// computeFlightEmissions API is used instead. If there are no estimates
+// available for a certain flight with any of the three methods, the response
+// will return a Scope3FlightEmissions object with empty emission fields. The
+// request will still be considered successful. Generally, missing emissions
+// estimates occur when the flight is unknown to the server (e.g. no specific
+// flight exists, or typical flight emissions are not available for the
+// requested pair). The request will fail with an `INVALID_ARGUMENT` error if:
+// * The request contains more than 1,000 flight legs. * The input flight leg
+// is missing one or more identifiers. For example, missing origin/destination
+// without a valid distance for TIM_EMISSIONS or TYPICAL_FLIGHT_EMISSIONS type
+// matching, or missing distance for a DISTANCE_BASED_EMISSIONS type matching
+// (if you want to fallback to distance-based emissions or want a
+// distance-based emissions estimate, you need to specify a distance). * The
+// flight date is before 2019 (Scope 3 data is only available for 2019 and
+// after). * The flight distance is 0 or lower. * Missing cabin class. Because
+// the request is processed with fallback logic, it is possible that
+// misconfigured requests return valid emissions estimates using fallback
+// methods. For example, if a request has the wrong flight number but specifies
+// the origin and destination, the request will still succeed, but the returned
+// emissions will be based solely on the typical flight emissions. Similarly,
+// if a request is missing the origin for a typical flight emissions request,
+// but specifies a valid distance, the request could succeed based solely on
+// the distance-based emissions. Consequently, one should check the source of
+// the returned emissions (source) to confirm the results are as expected.
 func (r *FlightsService) ComputeScope3FlightEmissions(computescope3flightemissionsrequest *ComputeScope3FlightEmissionsRequest) *FlightsComputeScope3FlightEmissionsCall {
 	c := &FlightsComputeScope3FlightEmissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.computescope3flightemissionsrequest = computescope3flightemissionsrequest

@@ -1275,6 +1275,9 @@ type CloudDlpDataProfile struct {
 	// DataProfile: Name of the data profile, for example,
 	// `projects/123/locations/europe/tableProfiles/8383929`.
 	DataProfile string `json:"dataProfile,omitempty"`
+	// InfoTypes: Type of information detected by SDP. Info type includes name,
+	// version and sensitivity of the detected information type.
+	InfoTypes []*InfoType `json:"infoTypes,omitempty"`
 	// ParentType: The resource hierarchy level at which the data profile was
 	// generated.
 	//
@@ -4926,6 +4929,9 @@ type GoogleCloudSecuritycenterV2CloudDlpDataProfile struct {
 	// DataProfile: Name of the data profile, for example,
 	// `projects/123/locations/europe/tableProfiles/8383929`.
 	DataProfile string `json:"dataProfile,omitempty"`
+	// InfoTypes: Type of information detected by SDP. Info type includes name,
+	// version and sensitivity of the detected information type.
+	InfoTypes []*GoogleCloudSecuritycenterV2InfoType `json:"infoTypes,omitempty"`
 	// ParentType: The resource hierarchy level at which the data profile was
 	// generated.
 	//
@@ -6540,6 +6546,39 @@ func (s GoogleCloudSecuritycenterV2Indicator) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2InfoType: Type of information detected by the
+// API.
+type GoogleCloudSecuritycenterV2InfoType struct {
+	// Name: Name of the information type. Either a name of your choosing when
+	// creating a CustomInfoType, or one of the names listed at
+	// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+	// when specifying a built-in type. When sending Cloud DLP results to Data
+	// Catalog, infoType names should conform to the pattern
+	// `[A-Za-z0-9$_-]{1,64}`.
+	Name string `json:"name,omitempty"`
+	// SensitivityScore: Optional custom sensitivity for this InfoType. This only
+	// applies to data profiling.
+	SensitivityScore *GoogleCloudSecuritycenterV2SensitivityScore `json:"sensitivityScore,omitempty"`
+	// Version: Optional version name for this InfoType.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2InfoType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2InfoType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2IpRule: IP rule information.
 type GoogleCloudSecuritycenterV2IpRule struct {
 	// PortRanges: Optional. An optional list of ports to which this rule applies.
@@ -7439,6 +7478,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
 	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
 	//   "USER_EXECUTION" - T1204
+	//   "EXPLOITATION_FOR_CREDENTIAL_ACCESS" - T1212
 	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
@@ -7606,6 +7646,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
 	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
 	//   "USER_EXECUTION" - T1204
+	//   "EXPLOITATION_FOR_CREDENTIAL_ACCESS" - T1212
 	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
@@ -8716,6 +8757,44 @@ func (s GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2SensitivityScore: Score is calculated from of all
+// elements in the data profile. A higher level means the data is more
+// sensitive.
+type GoogleCloudSecuritycenterV2SensitivityScore struct {
+	// Score: The sensitivity score applied to the resource.
+	//
+	// Possible values:
+	//   "SENSITIVITY_SCORE_LEVEL_UNSPECIFIED" - Unused.
+	//   "SENSITIVITY_LOW" - No sensitive information detected. The resource isn't
+	// publicly accessible.
+	//   "SENSITIVITY_UNKNOWN" - Unable to determine sensitivity.
+	//   "SENSITIVITY_MODERATE" - Medium risk. Contains personally identifiable
+	// information (PII), potentially sensitive data, or fields with free-text data
+	// that are at a higher risk of having intermittent sensitive data. Consider
+	// limiting access.
+	//   "SENSITIVITY_HIGH" - High risk. Sensitive personally identifiable
+	// information (SPII) can be present. Exfiltration of data can lead to user
+	// data loss. Re-identification of users might be possible. Consider limiting
+	// usage and or removing SPII.
+	Score string `json:"score,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Score") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Score") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2SensitivityScore) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2SensitivityScore
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2ServiceAccountDelegationInfo: Identity delegation
 // history of an authenticated service account.
 type GoogleCloudSecuritycenterV2ServiceAccountDelegationInfo struct {
@@ -9291,6 +9370,38 @@ func (s Indicator) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InfoType: Type of information detected by the API.
+type InfoType struct {
+	// Name: Name of the information type. Either a name of your choosing when
+	// creating a CustomInfoType, or one of the names listed at
+	// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+	// when specifying a built-in type. When sending Cloud DLP results to Data
+	// Catalog, infoType names should conform to the pattern
+	// `[A-Za-z0-9$_-]{1,64}`.
+	Name string `json:"name,omitempty"`
+	// SensitivityScore: Optional custom sensitivity for this InfoType. This only
+	// applies to data profiling.
+	SensitivityScore *SensitivityScore `json:"sensitivityScore,omitempty"`
+	// Version: Optional version name for this InfoType.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InfoType) MarshalJSON() ([]byte, error) {
+	type NoMethod InfoType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // IpRule: IP rule information.
 type IpRule struct {
 	// PortRanges: Optional. An optional list of ports to which this rule applies.
@@ -9626,6 +9737,11 @@ type ListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*Operation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -9845,6 +9961,7 @@ type MitreAttack struct {
 	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
 	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
 	//   "USER_EXECUTION" - T1204
+	//   "EXPLOITATION_FOR_CREDENTIAL_ACCESS" - T1212
 	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
@@ -10012,6 +10129,7 @@ type MitreAttack struct {
 	//   "COMPROMISE_SOFTWARE_DEPENDENCIES_AND_DEVELOPMENT_TOOLS" - T1195.001
 	//   "EXPLOITATION_FOR_CLIENT_EXECUTION" - T1203
 	//   "USER_EXECUTION" - T1204
+	//   "EXPLOITATION_FOR_CREDENTIAL_ACCESS" - T1212
 	//   "LINUX_AND_MAC_FILE_AND_DIRECTORY_PERMISSIONS_MODIFICATION" - T1222.002
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "DATA_DESTRUCTION" - T1485
@@ -11035,6 +11153,43 @@ type SecurityPosture struct {
 
 func (s SecurityPosture) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityPosture
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SensitivityScore: Score is calculated from of all elements in the data
+// profile. A higher level means the data is more sensitive.
+type SensitivityScore struct {
+	// Score: The sensitivity score applied to the resource.
+	//
+	// Possible values:
+	//   "SENSITIVITY_SCORE_LEVEL_UNSPECIFIED" - Unused.
+	//   "SENSITIVITY_LOW" - No sensitive information detected. The resource isn't
+	// publicly accessible.
+	//   "SENSITIVITY_UNKNOWN" - Unable to determine sensitivity.
+	//   "SENSITIVITY_MODERATE" - Medium risk. Contains personally identifiable
+	// information (PII), potentially sensitive data, or fields with free-text data
+	// that are at a higher risk of having intermittent sensitive data. Consider
+	// limiting access.
+	//   "SENSITIVITY_HIGH" - High risk. Sensitive personally identifiable
+	// information (SPII) can be present. Exfiltration of data can lead to user
+	// data loss. Re-identification of users might be possible. Consider limiting
+	// usage and or removing SPII.
+	Score string `json:"score,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Score") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Score") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SensitivityScore) MarshalJSON() ([]byte, error) {
+	type NoMethod SensitivityScore
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12703,6 +12858,19 @@ func (c *OrganizationsOperationsListCall) PageSize(pageSize int64) *Organization
 // token.
 func (c *OrganizationsOperationsListCall) PageToken(pageToken string) *OrganizationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *OrganizationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OrganizationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

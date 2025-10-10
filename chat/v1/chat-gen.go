@@ -6,7 +6,7 @@
 
 // Package chat provides access to the Google Chat API.
 //
-// For product documentation, see: https://developers.google.com/hangouts/chat
+// For product documentation, see: https://developers.google.com/workspace/chat
 //
 // # Library status
 //

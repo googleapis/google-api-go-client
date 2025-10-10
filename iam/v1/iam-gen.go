@@ -7436,6 +7436,13 @@ func (r *LocationsWorkforcePoolsProvidersScimTenantsService) Delete(name string)
 	return c
 }
 
+// HardDelete sets the optional parameter "hardDelete": Deletes the SCIM tenant
+// immediately. This operation cannot be undone.
+func (c *LocationsWorkforcePoolsProvidersScimTenantsDeleteCall) HardDelete(hardDelete bool) *LocationsWorkforcePoolsProvidersScimTenantsDeleteCall {
+	c.urlParams_.Set("hardDelete", fmt.Sprint(hardDelete))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.

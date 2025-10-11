@@ -440,7 +440,7 @@ type Backup struct {
 	// created manually by a user or via a schedule in the BackupPlan. A value of
 	// True means that the Backup was created manually.
 	Manual bool `json:"manual,omitempty"`
-	// Name: Output only. The fully qualified name of the Backup.
+	// Name: Output only. Identifier. The fully qualified name of the Backup.
 	// `projects/*/locations/*/backupPlans/*/backups/*`
 	Name string `json:"name,omitempty"`
 	// PermissiveMode: Output only. If false, Backup will fail when Backup for GKE
@@ -727,8 +727,8 @@ type BackupPlan struct {
 	// field. This field is added to maintain consistency with BackupPlanBinding to
 	// display last successful backup time.
 	LastSuccessfulBackupTime string `json:"lastSuccessfulBackupTime,omitempty"`
-	// Name: Output only. The full name of the BackupPlan resource. Format:
-	// `projects/*/locations/*/backupPlans/*`
+	// Name: Output only. Identifier. The full name of the BackupPlan resource.
+	// Format: `projects/*/locations/*/backupPlans/*`
 	Name string `json:"name,omitempty"`
 	// ProtectedPodCount: Output only. The number of Kubernetes Pods backed up in
 	// the last successful Backup created via this BackupPlan.
@@ -1347,6 +1347,11 @@ type GoogleLongrunningListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2249,8 +2254,8 @@ type Restore struct {
 	Filter *Filter `json:"filter,omitempty"`
 	// Labels: A set of custom labels supplied by user.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. The full name of the Restore resource. Format:
-	// `projects/*/locations/*/restorePlans/*/restores/*`
+	// Name: Output only. Identifier. The full name of the Restore resource.
+	// Format: `projects/*/locations/*/restorePlans/*/restores/*`
 	Name string `json:"name,omitempty"`
 	// ResourcesExcludedCount: Output only. Number of resources excluded during the
 	// restore execution.
@@ -2574,8 +2579,8 @@ type RestorePlan struct {
 	Etag string `json:"etag,omitempty"`
 	// Labels: Optional. A set of custom labels supplied by user.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. The full name of the RestorePlan resource. Format:
-	// `projects/*/locations/*/restorePlans/*`.
+	// Name: Output only. Identifier. The full name of the RestorePlan resource.
+	// Format: `projects/*/locations/*/restorePlans/*`.
 	Name string `json:"name,omitempty"`
 	// RestoreChannel: Output only. The fully qualified name of the RestoreChannel
 	// to be used to create a RestorePlan. This field is set only if the
@@ -5209,8 +5214,8 @@ type ProjectsLocationsBackupPlansPatchCall struct {
 
 // Patch: Update a BackupPlan.
 //
-//   - name: Output only. The full name of the BackupPlan resource. Format:
-//     `projects/*/locations/*/backupPlans/*`.
+//   - name: Output only. Identifier. The full name of the BackupPlan resource.
+//     Format: `projects/*/locations/*/backupPlans/*`.
 func (r *ProjectsLocationsBackupPlansService) Patch(name string, backupplan *BackupPlan) *ProjectsLocationsBackupPlansPatchCall {
 	c := &ProjectsLocationsBackupPlansPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6301,7 +6306,7 @@ type ProjectsLocationsBackupPlansBackupsPatchCall struct {
 
 // Patch: Update a Backup.
 //
-//   - name: Output only. The fully qualified name of the Backup.
+//   - name: Output only. Identifier. The fully qualified name of the Backup.
 //     `projects/*/locations/*/backupPlans/*/backups/*`.
 func (r *ProjectsLocationsBackupPlansBackupsService) Patch(name string, backup *Backup) *ProjectsLocationsBackupPlansBackupsPatchCall {
 	c := &ProjectsLocationsBackupPlansBackupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7607,6 +7612,19 @@ func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -9266,8 +9284,8 @@ type ProjectsLocationsRestorePlansPatchCall struct {
 
 // Patch: Update a RestorePlan.
 //
-//   - name: Output only. The full name of the RestorePlan resource. Format:
-//     `projects/*/locations/*/restorePlans/*`.
+//   - name: Output only. Identifier. The full name of the RestorePlan resource.
+//     Format: `projects/*/locations/*/restorePlans/*`.
 func (r *ProjectsLocationsRestorePlansService) Patch(name string, restoreplan *RestorePlan) *ProjectsLocationsRestorePlansPatchCall {
 	c := &ProjectsLocationsRestorePlansPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10238,8 +10256,8 @@ type ProjectsLocationsRestorePlansRestoresPatchCall struct {
 
 // Patch: Update a Restore.
 //
-//   - name: Output only. The full name of the Restore resource. Format:
-//     `projects/*/locations/*/restorePlans/*/restores/*`.
+//   - name: Output only. Identifier. The full name of the Restore resource.
+//     Format: `projects/*/locations/*/restorePlans/*/restores/*`.
 func (r *ProjectsLocationsRestorePlansRestoresService) Patch(name string, restore *Restore) *ProjectsLocationsRestorePlansRestoresPatchCall {
 	c := &ProjectsLocationsRestorePlansRestoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

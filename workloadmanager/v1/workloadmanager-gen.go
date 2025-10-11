@@ -1275,6 +1275,11 @@ type ListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*Operation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1415,6 +1420,28 @@ func (s Notice) MarshalJSON() ([]byte, error) {
 // OpenShiftValidation: A presentation of OpenShift workload insight. The
 // schema of OpenShift workloads validation related data.
 type OpenShiftValidation struct {
+	// ClusterId: Required. The OpenShift cluster ID (e.g.
+	// 8371bb05-7cac-4d38-82c0-0f58c4f6f936).
+	ClusterId string `json:"clusterId,omitempty"`
+	// ValidationDetails: Required. The validation details of the OpenShift cluster
+	// in JSON format.
+	ValidationDetails googleapi.RawMessage `json:"validationDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClusterId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClusterId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OpenShiftValidation) MarshalJSON() ([]byte, error) {
+	type NoMethod OpenShiftValidation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1614,6 +1641,9 @@ func (s ResourceStatus) MarshalJSON() ([]byte, error) {
 
 // Rule: Message represent a rule
 type Rule struct {
+	// AssetType: The CAI asset type of the rule is evaluating, for joined asset
+	// types, it will be the corresponding primary asset types.
+	AssetType string `json:"assetType,omitempty"`
 	// Description: descrite rule in plain language
 	Description string `json:"description,omitempty"`
 	// DisplayName: the name display in UI
@@ -1643,13 +1673,13 @@ type Rule struct {
 	Tags []string `json:"tags,omitempty"`
 	// Uri: the docuement url for the rule
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Description") to
+	// ForceSendFields is a list of field names (e.g. "AssetType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Description") to include in API
+	// NullFields is a list of field names (e.g. "AssetType") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5333,6 +5363,19 @@ func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

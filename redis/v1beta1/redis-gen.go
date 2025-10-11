@@ -714,6 +714,9 @@ type Cluster struct {
 	// AutomatedBackupConfig: Optional. The automated backup config for the
 	// cluster.
 	AutomatedBackupConfig *AutomatedBackupConfig `json:"automatedBackupConfig,omitempty"`
+	// AvailableMaintenanceVersions: Output only. This field is used to determine
+	// the available maintenance versions for the self service update.
+	AvailableMaintenanceVersions []string `json:"availableMaintenanceVersions,omitempty"`
 	// BackupCollection: Optional. Output only. The backup collection full resource
 	// name. Example:
 	// projects/{project}/locations/{location}/backupCollections/{collection}
@@ -732,6 +735,9 @@ type Cluster struct {
 	// for Redis clients to connect to the cluster. Currently only one discovery
 	// endpoint is supported.
 	DiscoveryEndpoints []*DiscoveryEndpoint `json:"discoveryEndpoints,omitempty"`
+	// EffectiveMaintenanceVersion: Output only. This field represents the actual
+	// maintenance version of the cluster.
+	EffectiveMaintenanceVersion string `json:"effectiveMaintenanceVersion,omitempty"`
 	// EncryptionInfo: Output only. Encryption information of the data at rest of
 	// the cluster.
 	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`

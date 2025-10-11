@@ -1935,10 +1935,8 @@ type Instance struct {
 	// during an operation on the instance. Note: Instances in this state would
 	// tried to be auto-repaired. And Customers should be able to restart, update
 	// or delete these instances.
-	//   "BOOTSTRAPPING" - Index 7 is used in the producer apis for ROLLED_BACK
-	// state. Keeping that index unused in case that state also needs to exposed
-	// via consumer apis in future. The instance has been configured to sync data
-	// from some other source.
+	//   "BOOTSTRAPPING" - The instance has been configured to sync data from some
+	// other source.
 	//   "PROMOTING" - The instance is being promoted.
 	State string `json:"state,omitempty"`
 	// Uid: Output only. The system-generated UID of the resource. The UID is
@@ -4057,6 +4055,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
 	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
+	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -4555,6 +4554,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
 	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
+	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5124,6 +5124,7 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	//   "PRODUCT_TYPE_FIRESTORE" - Firestore product area in GCP.
 	//   "PRODUCT_TYPE_COMPUTE_ENGINE" - Compute Engine self managed databases
 	//   "PRODUCT_TYPE_ORACLE_ON_GCP" - Oracle product area in GCP
+	//   "PRODUCT_TYPE_BIGQUERY" - BigQuery product area in GCP
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type. This is
 	// to be when product type is known, but it is not present in this enum.
 	Type string `json:"type,omitempty"`

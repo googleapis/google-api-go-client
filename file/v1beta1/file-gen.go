@@ -497,6 +497,12 @@ type FileShareConfig struct {
 	// `projects/{project_id}/locations/{location_id}/backups/{backup_id}`, that
 	// this file share has been restored from.
 	SourceBackup string `json:"sourceBackup,omitempty"`
+	// SourceBackupdrBackup: The resource name of the BackupDR backup, in the
+	// format
+	// `projects/{project_id}/locations/{location_id}/backupVaults/{backupvault_id}/
+	// dataSources/{datasource_id}/backups/{backup_id}`, TODO (b/443690479) -
+	// Remove visibility restrictions once the feature is ready
+	SourceBackupdrBackup string `json:"sourceBackupdrBackup,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CapacityGb") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -270,31 +270,6 @@ func (s AuthorizedNetwork) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AutoScalingConfig: Configuration for autoscaling.
-type AutoScalingConfig struct {
-	// Policy: Policy for the MIG autoscaler.
-	Policy *Policy `json:"policy,omitempty"`
-	// Schedules: Optional list of schedules for the MIG autoscaler. If not set, no
-	// schedules are created.
-	Schedules []*Schedule `json:"schedules,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Policy") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s AutoScalingConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod AutoScalingConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // AutomatedBackupPolicy: Message describing the user-specified automated
 // backup policy. All fields in the automated backup policy are optional.
 // Defaults for each field are provided if they are not set.
@@ -1126,42 +1101,6 @@ func (s ContinuousBackupSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CpuUtilization: CPU utilization policy for the autoscaler.
-type CpuUtilization struct {
-	// UtilizationTarget: Target CPU utilization as a float between 0 and 1.
-	UtilizationTarget float64 `json:"utilizationTarget,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "UtilizationTarget") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "UtilizationTarget") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s CpuUtilization) MarshalJSON() ([]byte, error) {
-	type NoMethod CpuUtilization
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *CpuUtilization) UnmarshalJSON(data []byte) error {
-	type NoMethod CpuUtilization
-	var s1 struct {
-		UtilizationTarget gensupport.JSONFloat64 `json:"utilizationTarget"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.UtilizationTarget = float64(s1.UtilizationTarget)
-	return nil
-}
-
 // CsvExportOptions: Options for exporting data in CSV format.
 type CsvExportOptions struct {
 	// EscapeCharacter: Optional. Specifies the character that should appear before
@@ -1834,10 +1773,8 @@ type Instance struct {
 	// during an operation on the instance. Note: Instances in this state would
 	// tried to be auto-repaired. And Customers should be able to restart, update
 	// or delete these instances.
-	//   "BOOTSTRAPPING" - Index 7 is used in the producer apis for ROLLED_BACK
-	// state. Keeping that index unused in case that state also needs to exposed
-	// via consumer apis in future. The instance has been configured to sync data
-	// from some other source.
+	//   "BOOTSTRAPPING" - The instance has been configured to sync data from some
+	// other source.
 	//   "PROMOTING" - The instance is being promoted.
 	State string `json:"state,omitempty"`
 	// Uid: Output only. The system-generated UID of the resource. The UID is
@@ -2516,37 +2453,6 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Policy: Policy for the autoscaler.
-type Policy struct {
-	// CoolDownPeriodSec: The period of time in seconds after a new node is created
-	// before the autoscaler will incorporate its resource usage (e.g. CPU
-	// utilization) into the autoscaling recommendation algorithm.
-	CoolDownPeriodSec int64 `json:"coolDownPeriodSec,omitempty,string"`
-	// CpuUtilization: CPU utilization policy for the autoscaler.
-	CpuUtilization *CpuUtilization `json:"cpuUtilization,omitempty"`
-	// Enabled: If true, autoscaling is enabled for the instance. If not set, the
-	// default value is false.
-	Enabled bool `json:"enabled,omitempty"`
-	// MaxNodeCount: Maximum number of nodes for the autoscaler.
-	MaxNodeCount int64 `json:"maxNodeCount,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "CoolDownPeriodSec") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CoolDownPeriodSec") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Policy) MarshalJSON() ([]byte, error) {
-	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // PrimaryConfig: Configuration for the primary cluster. It has the list of
 // clusters that are replicating from this cluster. This should be set if and
 // only if the cluster is of type PRIMARY.
@@ -2850,20 +2756,17 @@ func (s QueryInsightsInstanceConfig) MarshalJSON() ([]byte, error) {
 
 // ReadPoolConfig: Configuration for a read pool instance.
 type ReadPoolConfig struct {
-	// AutoScalingConfig: Autoscaling configuration for the read pool instance. If
-	// not set, the read pool instance will not be autoscaled.
-	AutoScalingConfig *AutoScalingConfig `json:"autoScalingConfig,omitempty"`
 	// NodeCount: Read capacity, i.e. number of nodes in a read pool instance.
 	NodeCount int64 `json:"nodeCount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AutoScalingConfig") to
+	// ForceSendFields is a list of field names (e.g. "NodeCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AutoScalingConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "NodeCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3008,43 +2911,6 @@ type RestoreFromCloudSQLRequest struct {
 
 func (s RestoreFromCloudSQLRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RestoreFromCloudSQLRequest
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// Schedule: A schedule for the autoscaler.
-type Schedule struct {
-	// CronExpression: Cron expression for the triggering the schedule. See
-	// https://cloud.google.com/compute/docs/autoscaler/scaling-schedules#cron_expressions
-	// for the syntax.
-	CronExpression string `json:"cronExpression,omitempty"`
-	// Description: Description of the schedule.
-	Description string `json:"description,omitempty"`
-	// Disabled: If true, the schedule is disabled.
-	Disabled bool `json:"disabled,omitempty"`
-	// DurationSec: Duration of the schedule.
-	DurationSec int64 `json:"durationSec,omitempty,string"`
-	// MinNodeCount: Minimum number of nodes in while the schedule is active.
-	MinNodeCount int64 `json:"minNodeCount,omitempty,string"`
-	// Name: Name of the schedule.
-	Name string `json:"name,omitempty"`
-	// TimeZone: The location-based IANA time zone for interpreting the schedule's
-	// start time. If no time zone is provided, UTC is used by default.
-	TimeZone string `json:"timeZone,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CronExpression") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CronExpression") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Schedule) MarshalJSON() ([]byte, error) {
-	type NoMethod Schedule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3945,6 +3811,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
 	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
+	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -4443,6 +4310,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
 	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
+	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5012,6 +4880,7 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	//   "PRODUCT_TYPE_FIRESTORE" - Firestore product area in GCP.
 	//   "PRODUCT_TYPE_COMPUTE_ENGINE" - Compute Engine self managed databases
 	//   "PRODUCT_TYPE_ORACLE_ON_GCP" - Oracle product area in GCP
+	//   "PRODUCT_TYPE_BIGQUERY" - BigQuery product area in GCP
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type. This is
 	// to be when product type is known, but it is not present in this enum.
 	Type string `json:"type,omitempty"`

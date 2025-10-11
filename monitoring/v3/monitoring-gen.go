@@ -231,6 +231,7 @@ type OrganizationsTimeSeriesService struct {
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.AlertPolicies = NewProjectsAlertPoliciesService(s)
+	rs.Alerts = NewProjectsAlertsService(s)
 	rs.CollectdTimeSeries = NewProjectsCollectdTimeSeriesService(s)
 	rs.Groups = NewProjectsGroupsService(s)
 	rs.MetricDescriptors = NewProjectsMetricDescriptorsService(s)
@@ -247,6 +248,8 @@ type ProjectsService struct {
 	s *Service
 
 	AlertPolicies *ProjectsAlertPoliciesService
+
+	Alerts *ProjectsAlertsService
 
 	CollectdTimeSeries *ProjectsCollectdTimeSeriesService
 
@@ -273,6 +276,15 @@ func NewProjectsAlertPoliciesService(s *Service) *ProjectsAlertPoliciesService {
 }
 
 type ProjectsAlertPoliciesService struct {
+	s *Service
+}
+
+func NewProjectsAlertsService(s *Service) *ProjectsAlertsService {
+	rs := &ProjectsAlertsService{s: s}
+	return rs
+}
+
+type ProjectsAlertsService struct {
 	s *Service
 }
 
@@ -633,6 +645,58 @@ type Aggregation struct {
 
 func (s Aggregation) MarshalJSON() ([]byte, error) {
 	type NoMethod Aggregation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Alert: An alert is the representation of a violation of an alert policy. It
+// is a read-only resource that cannot be modified by the accompanied API.
+type Alert struct {
+	// CloseTime: The time when the alert was closed.
+	CloseTime string `json:"closeTime,omitempty"`
+	// Log: The log information associated with the alert. This field is only
+	// populated for log-based alerts.
+	Log *LogMetadata `json:"log,omitempty"`
+	// Metadata: The metadata of the monitored resource.
+	Metadata *MonitoredResourceMetadata `json:"metadata,omitempty"`
+	// Metric: The metric type and any metric labels preserved from the incident's
+	// generating condition.
+	Metric *Metric `json:"metric,omitempty"`
+	// Name: Identifier. The name of the alert.The format is:
+	// projects/[PROJECT_ID_OR_NUMBER]/alerts/[ALERT_ID] The [ALERT_ID] is a
+	// system-assigned unique identifier for the alert.
+	Name string `json:"name,omitempty"`
+	// OpenTime: The time when the alert was opened.
+	OpenTime string `json:"openTime,omitempty"`
+	// Policy: The snapshot of the alert policy that generated this alert.
+	Policy *PolicySnapshot `json:"policy,omitempty"`
+	// Resource: The monitored resource type and any monitored resource labels
+	// preserved from the incident's generating condition.
+	Resource *MonitoredResource `json:"resource,omitempty"`
+	// State: Output only. The current state of the alert.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The alert state is unspecified.
+	//   "OPEN" - The alert is open.
+	//   "CLOSED" - The alert is closed.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CloseTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloseTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Alert) MarshalJSON() ([]byte, error) {
+	type NoMethod Alert
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2755,6 +2819,39 @@ func (s ListAlertPoliciesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListAlertsResponse: The ListAlerts response.
+type ListAlertsResponse struct {
+	// Alerts: The list of alerts.
+	Alerts []*Alert `json:"alerts,omitempty"`
+	// NextPageToken: If not empty, indicates that there may be more results that
+	// match the request. Use the value in the page_token field in a subsequent
+	// request to fetch the next set of results. The token is encrypted and only
+	// guaranteed to return correct results for 72 hours after it is created. If
+	// empty, all results have been returned.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// TotalSize: The estimated total number of matching results for this query.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Alerts") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Alerts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAlertsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAlertsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListGroupMembersResponse: The ListGroupMembers response.
 type ListGroupMembersResponse struct {
 	// Members: A set of monitored resources in the group.
@@ -3177,6 +3274,28 @@ type LogMatch struct {
 
 func (s LogMatch) MarshalJSON() ([]byte, error) {
 	type NoMethod LogMatch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LogMetadata: Information about the log for log-based alerts.
+type LogMetadata struct {
+	// ExtractedLabels: The labels extracted from the log.
+	ExtractedLabels map[string]string `json:"extractedLabels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExtractedLabels") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExtractedLabels") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LogMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod LogMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4391,6 +4510,46 @@ type PointData struct {
 
 func (s PointData) MarshalJSON() ([]byte, error) {
 	type NoMethod PointData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicySnapshot: The state of the policy at the time the alert was generated.
+type PolicySnapshot struct {
+	// DisplayName: The display name of the alert policy.
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: The name of the alert policy resource. In the form of
+	// "projects/PROJECT_ID_OR_NUMBER/alertPolicies/ALERT_POLICY_ID".
+	Name string `json:"name,omitempty"`
+	// Severity: The severity of the alert policy.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - No severity is specified. This is the default
+	// value.
+	//   "CRITICAL" - This is the highest severity level. Use this if the problem
+	// could cause significant damage or downtime.
+	//   "ERROR" - This is the medium severity level. Use this if the problem could
+	// cause minor damage or downtime.
+	//   "WARNING" - This is the lowest severity level. Use this if the problem is
+	// not causing any damage or downtime, but could potentially lead to a problem
+	// in the future.
+	Severity string `json:"severity,omitempty"`
+	// UserLabels: The user labels for the alert policy.
+	UserLabels map[string]string `json:"userLabels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicySnapshot) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicySnapshot
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8074,6 +8233,284 @@ func (c *ProjectsAlertPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Aler
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "monitoring.projects.alertPolicies.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsAlertsGetCall struct {
+	s            *Service
+	nameid       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a single alert.
+//
+//   - name: The name of the alert.The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/alerts/[ALERT_ID] The [ALERT_ID] is a
+//     system-assigned unique identifier for the alert.
+func (r *ProjectsAlertsService) Get(nameid string) *ProjectsAlertsGetCall {
+	c := &ProjectsAlertsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAlertsGetCall) Fields(s ...googleapi.Field) *ProjectsAlertsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsAlertsGetCall) IfNoneMatch(entityTag string) *ProjectsAlertsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAlertsGetCall) Context(ctx context.Context) *ProjectsAlertsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAlertsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAlertsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "monitoring.projects.alerts.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.alerts.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Alert.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsAlertsGetCall) Do(opts ...googleapi.CallOption) (*Alert, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Alert{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "monitoring.projects.alerts.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsAlertsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the existing alerts for the metrics scope of the project.
+//
+// - parent: The name of the project to list alerts for.
+func (r *ProjectsAlertsService) List(parent string) *ProjectsAlertsListCall {
+	c := &ProjectsAlertsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An alert is returned if there
+// is a match on any fields belonging to the alert or its subfields.
+func (c *ProjectsAlertsListCall) Filter(filter string) *ProjectsAlertsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": A comma-separated list of
+// fields in Alert to use for sorting. The default sort direction is ascending.
+// To specify descending order for a field, add a desc modifier. The following
+// fields are supported: open_time close_timeFor example, close_time desc,
+// open_time will return the alerts closed most recently, with ties broken in
+// the order of older alerts listed first.If the field is not set, the results
+// are sorted by open_time desc.
+func (c *ProjectsAlertsListCall) OrderBy(orderBy string) *ProjectsAlertsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return in a single response. If not set to a positive number, at
+// most 50 alerts will be returned. The maximum value is 1000; values above
+// 1000 will be coerced to 1000.
+func (c *ProjectsAlertsListCall) PageSize(pageSize int64) *ProjectsAlertsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If non-empty, page_token
+// must contain a value returned as the next_page_token in a previous response
+// to request the next set of results.
+func (c *ProjectsAlertsListCall) PageToken(pageToken string) *ProjectsAlertsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAlertsListCall) Fields(s ...googleapi.Field) *ProjectsAlertsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsAlertsListCall) IfNoneMatch(entityTag string) *ProjectsAlertsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAlertsListCall) Context(ctx context.Context) *ProjectsAlertsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAlertsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAlertsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/alerts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "monitoring.projects.alerts.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.alerts.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAlertsResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsAlertsListCall) Do(opts ...googleapi.CallOption) (*ListAlertsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAlertsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "monitoring.projects.alerts.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsAlertsListCall) Pages(ctx context.Context, f func(*ListAlertsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsCollectdTimeSeriesCreateCall struct {

@@ -4801,7 +4801,8 @@ type RolloutUpdateEvent struct {
 	//
 	// Possible values:
 	//   "ROLLOUT_UPDATE_TYPE_UNSPECIFIED" - Rollout update type unspecified.
-	//   "PENDING" - rollout state updated to pending.
+	//   "PENDING" - Rollout state updated to pending (release has succeeded,
+	// waiting on the rollout to start).
 	//   "PENDING_RELEASE" - Rollout state updated to pending release.
 	//   "IN_PROGRESS" - Rollout state updated to in progress.
 	//   "CANCELLING" - Rollout state updated to cancelling.

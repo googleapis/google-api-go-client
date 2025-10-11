@@ -1950,12 +1950,13 @@ type GoogleCloudRunV2ResourceRequirements struct {
 	// default). However, if ResourceRequirements is set, the caller must
 	// explicitly set this field to true to preserve the default behavior.
 	CpuIdle bool `json:"cpuIdle,omitempty"`
-	// Limits: Only `memory` and `cpu` keys in the map are supported. Notes: * The
-	// only supported values for CPU are '1', '2', '4', and '8'. Setting 4 CPU
-	// requires at least 2Gi of memory. For more information, go to
-	// https://cloud.google.com/run/docs/configuring/cpu. * For supported 'memory'
-	// values and syntax, go to
-	// https://cloud.google.com/run/docs/configuring/memory-limits
+	// Limits: Only `memory`, `cpu` and `nvidia.com/gpu` keys in the map are
+	// supported. Notes: * The only supported values for CPU are '1', '2', '4', and
+	// '8'. Setting 4 CPU requires at least 2Gi of memory. For more information, go
+	// to https://cloud.google.com/run/docs/configuring/cpu. * For supported
+	// 'memory' values and syntax, go to
+	// https://cloud.google.com/run/docs/configuring/memory-limits * The only
+	// supported 'nvidia.com/gpu' value is '1'.
 	Limits map[string]string `json:"limits,omitempty"`
 	// StartupCpuBoost: Determines whether CPU should be boosted on startup of a
 	// new container instance above the requested CPU threshold, this can help

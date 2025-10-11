@@ -1827,6 +1827,9 @@ type ConfigManagementMembershipState struct {
 	ConfigSyncState *ConfigManagementConfigSyncState `json:"configSyncState,omitempty"`
 	// HierarchyControllerState: Output only. Hierarchy Controller status
 	HierarchyControllerState *ConfigManagementHierarchyControllerState `json:"hierarchyControllerState,omitempty"`
+	// KubernetesApiServerVersion: Output only. The Kubernetes API server version
+	// of the cluster.
+	KubernetesApiServerVersion string `json:"kubernetesApiServerVersion,omitempty"`
 	// MembershipSpec: Output only. Membership configuration in the cluster. This
 	// represents the actual state in the cluster, while the MembershipSpec in the
 	// FeatureSpec represents the intended state

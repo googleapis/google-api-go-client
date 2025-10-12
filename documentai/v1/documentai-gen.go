@@ -2260,8 +2260,22 @@ type GoogleCloudDocumentaiV1Document struct {
 	// Entities: A list of entities detected on Document.text. For document shards,
 	// entities in this list may cross shard boundaries.
 	Entities []*GoogleCloudDocumentaiV1DocumentEntity `json:"entities,omitempty"`
+	// EntitiesRevisionId: The entity revision id that `document.entities` field is
+	// based on. If this field is set and `entities_revisions` is not empty, the
+	// entities in `document.entities` field are the entities in the entity
+	// revision with this id and `document.entity_validation_output` field is the
+	// `entity_validation_output` field in this entity revision.
+	EntitiesRevisionId string `json:"entitiesRevisionId,omitempty"`
+	// EntitiesRevisions: A list of entity revisions. The entity revisions are
+	// appended to the document in the processing order. This field can be used for
+	// comparing the entity extraction results at different stages of the
+	// processing.
+	EntitiesRevisions []*GoogleCloudDocumentaiV1DocumentEntitiesRevision `json:"entitiesRevisions,omitempty"`
 	// EntityRelations: Placeholder. Relationship among Document.entities.
 	EntityRelations []*GoogleCloudDocumentaiV1DocumentEntityRelation `json:"entityRelations,omitempty"`
+	// EntityValidationOutput: The entity validation output for the document. This
+	// is the validation output for `document.entities` field.
+	EntityValidationOutput *GoogleCloudDocumentaiV1DocumentEntityValidationOutput `json:"entityValidationOutput,omitempty"`
 	// Error: Any error that occurred while processing this document.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
 	// MimeType: An IANA published media type (MIME type)
@@ -2676,6 +2690,32 @@ func (s GoogleCloudDocumentaiV1DocumentDocumentLayoutDocumentLayoutBlockLayoutTe
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1DocumentEntitiesRevision: Entity revision.
+type GoogleCloudDocumentaiV1DocumentEntitiesRevision struct {
+	// Entities: The entities in this revision.
+	Entities []*GoogleCloudDocumentaiV1DocumentEntity `json:"entities,omitempty"`
+	// EntityValidationOutput: The entity validation output for this revision.
+	EntityValidationOutput *GoogleCloudDocumentaiV1DocumentEntityValidationOutput `json:"entityValidationOutput,omitempty"`
+	// RevisionId: The revision id.
+	RevisionId string `json:"revisionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Entities") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Entities") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1DocumentEntitiesRevision) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DocumentEntitiesRevision
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1DocumentEntity: An entity that could be a phrase in
 // the text or a property that belongs to the document. It is a known entity
 // type, such as a person, an organization, or location.
@@ -2841,6 +2881,71 @@ type GoogleCloudDocumentaiV1DocumentEntityRelation struct {
 
 func (s GoogleCloudDocumentaiV1DocumentEntityRelation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentEntityRelation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1DocumentEntityValidationOutput: The output of the
+// validation given the document and the validation rules.
+type GoogleCloudDocumentaiV1DocumentEntityValidationOutput struct {
+	// PassAllRules: The overall result of the validation, true if all applicable
+	// rules are valid.
+	PassAllRules bool `json:"passAllRules,omitempty"`
+	// ValidationResults: The result of each validation rule.
+	ValidationResults []*GoogleCloudDocumentaiV1DocumentEntityValidationOutputValidationResult `json:"validationResults,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PassAllRules") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PassAllRules") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1DocumentEntityValidationOutput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DocumentEntityValidationOutput
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1DocumentEntityValidationOutputValidationResult:
+// Validation result for a single validation rule.
+type GoogleCloudDocumentaiV1DocumentEntityValidationOutputValidationResult struct {
+	// RuleDescription: The description of the validation rule.
+	RuleDescription string `json:"ruleDescription,omitempty"`
+	// RuleName: The name of the validation rule.
+	RuleName string `json:"ruleName,omitempty"`
+	// ValidationDetails: The detailed information of the running the validation
+	// process using the entity from the document based on the validation rule.
+	ValidationDetails string `json:"validationDetails,omitempty"`
+	// ValidationResultType: The result of the validation rule.
+	//
+	// Possible values:
+	//   "VALIDATION_RESULT_TYPE_UNSPECIFIED" - The validation result type is
+	// unspecified.
+	//   "VALIDATION_RESULT_TYPE_VALID" - The validation is valid.
+	//   "VALIDATION_RESULT_TYPE_INVALID" - The validation is invalid.
+	//   "VALIDATION_RESULT_TYPE_SKIPPED" - The validation is skipped.
+	//   "VALIDATION_RESULT_TYPE_NOT_APPLICABLE" - The validation is not
+	// applicable.
+	ValidationResultType string `json:"validationResultType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RuleDescription") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RuleDescription") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1DocumentEntityValidationOutputValidationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DocumentEntityValidationOutputValidationResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

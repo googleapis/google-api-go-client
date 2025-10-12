@@ -2116,15 +2116,17 @@ type ExecuteSqlPayload struct {
 	// executed.
 	Database string `json:"database,omitempty"`
 	// PartialResultMode: Optional. Controls how the API should respond when the
-	// SQL execution result exceeds 10 MB. The default mode is to throw an error.
+	// SQL execution result is incomplete due to the size limit or another error.
+	// The default mode is to throw an error.
 	//
 	// Possible values:
 	//   "PARTIAL_RESULT_MODE_UNSPECIFIED" - Unspecified mode, effectively the same
 	// as `FAIL_PARTIAL_RESULT`.
-	//   "FAIL_PARTIAL_RESULT" - Throw an error if the result exceeds 10 MB. Don't
-	// return the result.
+	//   "FAIL_PARTIAL_RESULT" - Throw an error if the result exceeds 10 MB or if a
+	// partial result can be retrieved. Don't return the result.
 	//   "ALLOW_PARTIAL_RESULT" - Return a truncated result and set
-	// `partial_result` to true if the result exceeds 10 MB. Don't throw an error.
+	// `partial_result` to true if the result exceeds 10 MB or if only a partial
+	// result can be retrieved due to error. Don't throw an error.
 	PartialResultMode string `json:"partialResultMode,omitempty"`
 	// RowLimit: Optional. The maximum number of rows returned per SQL statement.
 	RowLimit int64 `json:"rowLimit,omitempty,string"`
@@ -4702,10 +4704,12 @@ type QueryResult struct {
 	// Message: Message related to the SQL execution result.
 	Message string `json:"message,omitempty"`
 	// PartialResult: Set to true if the SQL execution's result is truncated due to
-	// size limits.
+	// size limits or an error retrieving results.
 	PartialResult bool `json:"partialResult,omitempty"`
 	// Rows: Rows returned by the SQL statement.
 	Rows []*Row `json:"rows,omitempty"`
+	// Status: If results were truncated due to an error, details of that error.
+	Status *Status `json:"status,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Columns") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -5024,6 +5028,10 @@ type Settings struct {
 	// AuthorizedGaeApplications: The App Engine app IDs that can access this
 	// instance. (Deprecated) Applied to First Generation instances only.
 	AuthorizedGaeApplications []string `json:"authorizedGaeApplications,omitempty"`
+	// AutoUpgradeEnabled: Optional. Cloud SQL for MySQL auto-upgrade
+	// configuration. When this parameter is set to true, auto-upgrade is enabled
+	// for MySQL 8.0 minor versions. The MySQL version must be 8.0.35 or higher.
+	AutoUpgradeEnabled bool `json:"autoUpgradeEnabled,omitempty"`
 	// AvailabilityType: Availability type. Potential values: * `ZONAL`: The
 	// instance serves data from only one zone. Outages in that zone affect data
 	// accessibility. * `REGIONAL`: The instance can serve data from more than one
@@ -5234,7 +5242,10 @@ type SqlActiveDirectoryConfig struct {
 	//   "ACTIVE_DIRECTORY_MODE_UNSPECIFIED" - Unspecified mode.
 	//   "MANAGED_ACTIVE_DIRECTORY" - Managed Active Directory mode. This is the
 	// fallback option to maintain backward compatibility.
-	//   "SELF_MANAGED_ACTIVE_DIRECTORY" - Self-managed Active Directory mode.
+	//   "SELF_MANAGED_ACTIVE_DIRECTORY" - Deprecated: Use
+	// CUSTOMER_MANAGED_ACTIVE_DIRECTORY instead.
+	//   "CUSTOMER_MANAGED_ACTIVE_DIRECTORY" - Customer-managed Active Directory
+	// mode.
 	Mode string `json:"mode,omitempty"`
 	// OrganizationalUnit: Optional. The organizational unit distinguished name.
 	// This is the full hierarchical path to the organizational unit.
@@ -5452,6 +5463,8 @@ type SqlInstancesExecuteSqlResponse struct {
 	Metadata *Metadata `json:"metadata,omitempty"`
 	// Results: The list of results after executing all the SQL statements.
 	Results []*QueryResult `json:"results,omitempty"`
+	// Status: Contains the error from the database if the SQL execution failed.
+	Status *Status `json:"status,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -6100,6 +6113,40 @@ func (s SslCertsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Status: The `Status` type defines a logical error model that is suitable for
+// different programming environments, including REST APIs and RPC APIs. It is
+// used by gRPC (https://github.com/grpc). Each `Status` message contains three
+// pieces of data: error code, error message, and error details. You can find
+// out more about this error model and how to work with it in the API Design
+// Guide (https://cloud.google.com/apis/design/errors).
+type Status struct {
+	// Code: The status code, which should be an enum value of google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SyncFlags: Initial sync flags for certain Cloud SQL APIs. Currently used for
 // the MySQL external server initial dump.
 type SyncFlags struct {
@@ -6267,6 +6314,9 @@ type User struct {
 	// after insertion. For a MySQL instance, it's required; for a PostgreSQL or
 	// SQL Server instance, it's optional.
 	Host string `json:"host,omitempty"`
+	// IamEmail: Optional. The full email for an IAM user. For normal database
+	// users, this will not be filled. Only applicable to MySQL database users.
+	IamEmail string `json:"iamEmail,omitempty"`
 	// IamStatus: Indicates if a group is active or inactive for IAM database
 	// authentication.
 	//

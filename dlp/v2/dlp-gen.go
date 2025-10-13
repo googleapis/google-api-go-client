@@ -5585,9 +5585,9 @@ type GooglePrivacyDlpV2FileStoreCollection struct {
 	// all provided tag filters. - If one or more patterns are specified, match at
 	// least one pattern. For a resource to match the tag filters, the resource
 	// must have all of the provided tags attached. Tags refer to Resource Manager
-	// tags bound to the resource or its ancestors. See
-	// https://cloud.google.com/sensitive-data-protection/docs/profile-project-cloud-storage#manage-schedules
-	// to learn more.
+	// tags bound to the resource or its ancestors. For more information, see
+	// Manage schedules
+	// (https://cloud.google.com/sensitive-data-protection/docs/profile-project-cloud-storage#manage-schedules).
 	IncludeTags *GooglePrivacyDlpV2TagFilters `json:"includeTags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IncludeRegexes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8447,12 +8447,12 @@ type GooglePrivacyDlpV2OutputStorageConfig struct {
 	//   "ALL_COLUMNS" - Schema containing all columns.
 	OutputSchema string `json:"outputSchema,omitempty"`
 	// StoragePath: Store findings in an existing Cloud Storage bucket. Files will
-	// be generated with the job ID and file part number as the filename, and will
-	// contain findings in textproto format as SaveToGcsFindingsOutput. The file
-	// name will use the naming convention -, for example: my-job-id-2. Supported
-	// for Inspect jobs. The bucket must not be the same as the bucket being
-	// inspected. If storing findings to Cloud Storage, the output schema field
-	// should not be set. If set, it will be ignored.
+	// be generated with the job ID and file part number as the filename and will
+	// contain findings in textproto format as SaveToGcsFindingsOutput. The
+	// filename will follow the naming convention `-`. Example: `my-job-id-2`.
+	// Supported for Inspect jobs. The bucket must not be the same as the bucket
+	// being inspected. If storing findings to Cloud Storage, the output schema
+	// field should not be set. If set, it will be ignored.
 	StoragePath *GooglePrivacyDlpV2CloudStoragePath `json:"storagePath,omitempty"`
 	// Table: Store findings in an existing table or a new table in an existing
 	// dataset. If table_id is not set a new one will be generated for you with the
@@ -8885,11 +8885,11 @@ type GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog struct {
 
 // GooglePrivacyDlpV2PublishFindingsToDataplexCatalog: Publish findings of a
 // DlpJob to Dataplex Universal Catalog as a
-// `sensitive-data-protection-job-result` aspect. To learn more about aspects,
-// see Send inspection results to Dataplex Universal Catalog as aspects
+// `sensitive-data-protection-job-result` aspect. For more information, see
+// Send inspection results to Dataplex Universal Catalog as aspects
 // (https://cloud.google.com/sensitive-data-protection/docs/add-aspects-inspection-job).
-// Aspects are persisted in Dataplex Universal Catalog storage and are governed
-// by service-specific policies for Dataplex Universal Catalog. For more
+// Aspects are stored in Dataplex Universal Catalog storage and are governed by
+// service-specific policies for Dataplex Universal Catalog. For more
 // information, see Service Specific Terms
 // (https://cloud.google.com/terms/service-terms). Only a single instance of
 // this action can be specified. This action is allowed only if all resources
@@ -9291,6 +9291,12 @@ type GooglePrivacyDlpV2RedactConfig struct {
 type GooglePrivacyDlpV2RedactImageRequest struct {
 	// ByteItem: The content must be PNG, JPEG, SVG or BMP.
 	ByteItem *GooglePrivacyDlpV2ByteContentItem `json:"byteItem,omitempty"`
+	// DeidentifyTemplate: The full resource name of the de-identification template
+	// to use. Settings in the main `image_redaction_configs` field override the
+	// corresponding settings in this de-identification template. The request fails
+	// if the type of the template's deidentify_config is not
+	// image_transformations.
+	DeidentifyTemplate string `json:"deidentifyTemplate,omitempty"`
 	// ImageRedactionConfigs: The configuration for specifying what content to
 	// redact from images.
 	ImageRedactionConfigs []*GooglePrivacyDlpV2ImageRedactionConfig `json:"imageRedactionConfigs,omitempty"`
@@ -9299,6 +9305,14 @@ type GooglePrivacyDlpV2RedactImageRequest struct {
 	IncludeFindings bool `json:"includeFindings,omitempty"`
 	// InspectConfig: Configuration for the inspector.
 	InspectConfig *GooglePrivacyDlpV2InspectConfig `json:"inspectConfig,omitempty"`
+	// InspectTemplate: The full resource name of the inspection template to use.
+	// Settings in the main `inspect_config` field override the corresponding
+	// settings in this inspection template. The merge behavior is as follows: -
+	// Singular field: The main field's value replaces the value of the
+	// corresponding field in the template. - Repeated fields: The field values are
+	// appended to the list defined in the template. - Sub-messages and groups: The
+	// fields are recursively merged.
+	InspectTemplate string `json:"inspectTemplate,omitempty"`
 	// LocationId: Deprecated. This field has no effect.
 	LocationId string `json:"locationId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ByteItem") to
@@ -13493,20 +13507,22 @@ func (r *OrganizationsLocationsColumnDataProfilesService) List(parent string) *O
 // syntax: * Filter expressions are made up of one or more restrictions. *
 // Restrictions can be combined by `AND` or `OR` logical operators. A sequence
 // of restrictions implicitly uses `AND`. * A restriction has the form of
-// `{field} {operator} {value}`. * Supported fields/values: -
-// `table_data_profile_name` - The name of the related table data profile. -
-// `project_id` - The Google Cloud project ID. (REQUIRED) - `dataset_id` - The
-// BigQuery dataset ID. (REQUIRED) - `table_id` - The BigQuery table ID.
-// (REQUIRED) - `field_id` - The ID of the BigQuery field. - `info_type` - The
-// infotype detected in the resource. - `sensitivity_level` - HIGH|MEDIUM|LOW -
-// `data_risk_level`: How much risk is associated with this data. -
-// `status_code` - an RPC status code as defined in
-// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
-// The operator must be `=` for project_id, dataset_id, and table_id. Other
-// filters also support `!=`. Examples: * project_id = 12345 AND status_code =
-// 1 * project_id = 12345 AND sensitivity_level = HIGH * project_id = 12345 AND
-// info_type = STREET_ADDRESS The length of this field should be no more than
-// 500 characters.
+// `{field} {operator} {value}`. * Supported fields: -
+// `table_data_profile_name`: The name of the related table data profile -
+// `project_id`: The Google Cloud project ID (REQUIRED) - `dataset_id`: The
+// BigQuery dataset ID (REQUIRED) - `table_id`: The BigQuery table ID
+// (REQUIRED) - `field_id`: The ID of the BigQuery field - `info_type`: The
+// infotype detected in the resource - `sensitivity_level`: HIGH|MEDIUM|LOW -
+// `data_risk_level`: How much risk is associated with this data -
+// `status_code`: An RPC status code as defined in
+// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto -
+// `profile_last_generated`: Date and time the profile was last generated * The
+// operator must be `=` for project_id, dataset_id, and table_id. Other filters
+// also support `!=`. The `profile_last_generated` filter also supports `<` and
+// `>`. Examples: * project_id = 12345 AND status_code = 1 * project_id = 12345
+// AND sensitivity_level = HIGH * project_id = 12345 AND info_type =
+// STREET_ADDRESS * profile_last_generated < "2025-01-01T00:00:00.000Z" The
+// length of this field should be no more than 500 characters.
 func (c *OrganizationsLocationsColumnDataProfilesListCall) Filter(filter string) *OrganizationsLocationsColumnDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -16049,20 +16065,22 @@ func (r *OrganizationsLocationsFileStoreDataProfilesService) List(parent string)
 // syntax: * Filter expressions are made up of one or more restrictions. *
 // Restrictions can be combined by `AND` or `OR` logical operators. A sequence
 // of restrictions implicitly uses `AND`. * A restriction has the form of
-// `{field} {operator} {value}`. * Supported fields/values: - `project_id` -
-// The Google Cloud project ID. - `account_id` - The AWS account ID. -
-// `file_store_path` - The path like "gs://bucket". - `data_source_type` - The
-// profile's data source type, like "google/storage/bucket". -
-// `data_storage_location` - The location where the file store's data is
-// stored, like "us-central1". - `sensitivity_level` - HIGH|MODERATE|LOW -
-// `data_risk_level` - HIGH|MODERATE|LOW - `resource_visibility`:
-// PUBLIC|RESTRICTED - `status_code` - an RPC status code as defined in
-// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
-// The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
-// status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` *
-// `project_id = 12345 AND resource_visibility = PUBLIC` * `file_store_path =
-// "gs://mybucket" The length of this field should be no more than 500
-// characters.
+// `{field} {operator} {value}`. * Supported fields: - `project_id`: The Google
+// Cloud project ID - `account_id`: The AWS account ID - `file_store_path`: The
+// path like "gs://bucket" - `data_source_type`: The profile's data source
+// type, like "google/storage/bucket" - `data_storage_location`: The location
+// where the file store's data is stored, like "us-central1" -
+// `sensitivity_level`: HIGH|MODERATE|LOW - `data_risk_level`:
+// HIGH|MODERATE|LOW - `resource_visibility`: PUBLIC|RESTRICTED -
+// `status_code`: an RPC status code as defined in
+// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto -
+// `profile_last_generated`: Date and time the profile was last generated * The
+// operator must be `=` or `!=`. The `profile_last_generated` filter also
+// supports `<` and `>`. Examples: * `project_id = 12345 AND status_code = 1` *
+// `project_id = 12345 AND sensitivity_level = HIGH` * `project_id = 12345 AND
+// resource_visibility = PUBLIC` * `file_store_path = "gs://mybucket" *
+// `profile_last_generated < "2025-01-01T00:00:00.000Z" The length of this
+// field should be no more than 500 characters.
 func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Filter(filter string) *OrganizationsLocationsFileStoreDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -17757,13 +17775,17 @@ func (r *OrganizationsLocationsProjectDataProfilesService) List(parent string) *
 // syntax: * Filter expressions are made up of one or more restrictions. *
 // Restrictions can be combined by `AND` or `OR` logical operators. A sequence
 // of restrictions implicitly uses `AND`. * A restriction has the form of
-// `{field} {operator} {value}`. * Supported fields/values: -
-// `sensitivity_level` - HIGH|MODERATE|LOW - `data_risk_level` -
-// HIGH|MODERATE|LOW - `status_code` - an RPC status code as defined in
-// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
-// The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
-// status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` The
-// length of this field should be no more than 500 characters.
+// `{field} {operator} {value}`. * Supported fields: - `project_id`: the Google
+// Cloud project ID - `sensitivity_level`: HIGH|MODERATE|LOW -
+// `data_risk_level`: HIGH|MODERATE|LOW - `status_code`: an RPC status code as
+// defined in
+// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto -
+// `profile_last_generated`: Date and time the profile was last generated * The
+// operator must be `=` or `!=`. The `profile_last_generated` filter also
+// supports `<` and `>`. Examples: * `project_id = 12345 AND status_code = 1` *
+// `project_id = 12345 AND sensitivity_level = HIGH` * `profile_last_generated
+// < "2025-01-01T00:00:00.000Z" The length of this field should be no more
+// than 500 characters.
 func (c *OrganizationsLocationsProjectDataProfilesListCall) Filter(filter string) *OrganizationsLocationsProjectDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -17773,11 +17795,11 @@ func (c *OrganizationsLocationsProjectDataProfilesListCall) Filter(filter string
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
-// Examples: * `project_id` * `sensitivity_level desc` Supported fields are: -
+// Examples: * `project_id` * `sensitivity_level desc` Supported fields: -
 // `project_id`: Google Cloud project ID - `sensitivity_level`: How sensitive
-// the data in a project is, at most. - `data_risk_level`: How much risk is
-// associated with this data. - `profile_last_generated`: When the profile was
-// last updated in epoch seconds.
+// the data in a project is, at most - `data_risk_level`: How much risk is
+// associated with this data - `profile_last_generated`: Date and time (in
+// epoch seconds) the profile was last generated
 func (c *OrganizationsLocationsProjectDataProfilesListCall) OrderBy(orderBy string) *OrganizationsLocationsProjectDataProfilesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -18767,17 +18789,19 @@ func (r *OrganizationsLocationsTableDataProfilesService) List(parent string) *Or
 // syntax: * Filter expressions are made up of one or more restrictions. *
 // Restrictions can be combined by `AND` or `OR` logical operators. A sequence
 // of restrictions implicitly uses `AND`. * A restriction has the form of
-// `{field} {operator} {value}`. * Supported fields/values: - `project_id` -
-// The Google Cloud project ID. - `dataset_id` - The BigQuery dataset ID. -
-// `table_id` - The ID of the BigQuery table. - `sensitivity_level` -
-// HIGH|MODERATE|LOW - `data_risk_level` - HIGH|MODERATE|LOW -
-// `resource_visibility`: PUBLIC|RESTRICTED - `status_code` - an RPC status
-// code as defined in
-// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
-// The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
-// status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` *
-// `project_id = 12345 AND resource_visibility = PUBLIC` The length of this
-// field should be no more than 500 characters.
+// `{field} {operator} {value}`. * Supported fields: - `project_id`: The Google
+// Cloud project ID - `dataset_id`: The BigQuery dataset ID - `table_id`: The
+// ID of the BigQuery table - `sensitivity_level`: HIGH|MODERATE|LOW -
+// `data_risk_level`: HIGH|MODERATE|LOW - `resource_visibility`:
+// PUBLIC|RESTRICTED - `status_code`: an RPC status code as defined in
+// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto -
+// `profile_last_generated`: Date and time the profile was last generated * The
+// operator must be `=` or `!=`. The `profile_last_generated` filter also
+// supports `<` and `>`. Examples: * `project_id = 12345 AND status_code = 1` *
+// `project_id = 12345 AND sensitivity_level = HIGH` * `project_id = 12345 AND
+// resource_visibility = PUBLIC` * `profile_last_generated <
+// "2025-01-01T00:00:00.000Z" The length of this field should be no more than
+// 500 characters.
 func (c *OrganizationsLocationsTableDataProfilesListCall) Filter(filter string) *OrganizationsLocationsTableDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -22824,20 +22848,22 @@ func (r *ProjectsLocationsColumnDataProfilesService) List(parent string) *Projec
 // syntax: * Filter expressions are made up of one or more restrictions. *
 // Restrictions can be combined by `AND` or `OR` logical operators. A sequence
 // of restrictions implicitly uses `AND`. * A restriction has the form of
-// `{field} {operator} {value}`. * Supported fields/values: -
-// `table_data_profile_name` - The name of the related table data profile. -
-// `project_id` - The Google Cloud project ID. (REQUIRED) - `dataset_id` - The
-// BigQuery dataset ID. (REQUIRED) - `table_id` - The BigQuery table ID.
-// (REQUIRED) - `field_id` - The ID of the BigQuery field. - `info_type` - The
-// infotype detected in the resource. - `sensitivity_level` - HIGH|MEDIUM|LOW -
-// `data_risk_level`: How much risk is associated with this data. -
-// `status_code` - an RPC status code as defined in
-// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
-// The operator must be `=` for project_id, dataset_id, and table_id. Other
-// filters also support `!=`. Examples: * project_id = 12345 AND status_code =
-// 1 * project_id = 12345 AND sensitivity_level = HIGH * project_id = 12345 AND
-// info_type = STREET_ADDRESS The length of this field should be no more than
-// 500 characters.
+// `{field} {operator} {value}`. * Supported fields: -
+// `table_data_profile_name`: The name of the related table data profile -
+// `project_id`: The Google Cloud project ID (REQUIRED) - `dataset_id`: The
+// BigQuery dataset ID (REQUIRED) - `table_id`: The BigQuery table ID
+// (REQUIRED) - `field_id`: The ID of the BigQuery field - `info_type`: The
+// infotype detected in the resource - `sensitivity_level`: HIGH|MEDIUM|LOW -
+// `data_risk_level`: How much risk is associated with this data -
+// `status_code`: An RPC status code as defined in
+// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto -
+// `profile_last_generated`: Date and time the profile was last generated * The
+// operator must be `=` for project_id, dataset_id, and table_id. Other filters
+// also support `!=`. The `profile_last_generated` filter also supports `<` and
+// `>`. Examples: * project_id = 12345 AND status_code = 1 * project_id = 12345
+// AND sensitivity_level = HIGH * project_id = 12345 AND info_type =
+// STREET_ADDRESS * profile_last_generated < "2025-01-01T00:00:00.000Z" The
+// length of this field should be no more than 500 characters.
 func (c *ProjectsLocationsColumnDataProfilesListCall) Filter(filter string) *ProjectsLocationsColumnDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -26391,20 +26417,22 @@ func (r *ProjectsLocationsFileStoreDataProfilesService) List(parent string) *Pro
 // syntax: * Filter expressions are made up of one or more restrictions. *
 // Restrictions can be combined by `AND` or `OR` logical operators. A sequence
 // of restrictions implicitly uses `AND`. * A restriction has the form of
-// `{field} {operator} {value}`. * Supported fields/values: - `project_id` -
-// The Google Cloud project ID. - `account_id` - The AWS account ID. -
-// `file_store_path` - The path like "gs://bucket". - `data_source_type` - The
-// profile's data source type, like "google/storage/bucket". -
-// `data_storage_location` - The location where the file store's data is
-// stored, like "us-central1". - `sensitivity_level` - HIGH|MODERATE|LOW -
-// `data_risk_level` - HIGH|MODERATE|LOW - `resource_visibility`:
-// PUBLIC|RESTRICTED - `status_code` - an RPC status code as defined in
-// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
-// The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
-// status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` *
-// `project_id = 12345 AND resource_visibility = PUBLIC` * `file_store_path =
-// "gs://mybucket" The length of this field should be no more than 500
-// characters.
+// `{field} {operator} {value}`. * Supported fields: - `project_id`: The Google
+// Cloud project ID - `account_id`: The AWS account ID - `file_store_path`: The
+// path like "gs://bucket" - `data_source_type`: The profile's data source
+// type, like "google/storage/bucket" - `data_storage_location`: The location
+// where the file store's data is stored, like "us-central1" -
+// `sensitivity_level`: HIGH|MODERATE|LOW - `data_risk_level`:
+// HIGH|MODERATE|LOW - `resource_visibility`: PUBLIC|RESTRICTED -
+// `status_code`: an RPC status code as defined in
+// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto -
+// `profile_last_generated`: Date and time the profile was last generated * The
+// operator must be `=` or `!=`. The `profile_last_generated` filter also
+// supports `<` and `>`. Examples: * `project_id = 12345 AND status_code = 1` *
+// `project_id = 12345 AND sensitivity_level = HIGH` * `project_id = 12345 AND
+// resource_visibility = PUBLIC` * `file_store_path = "gs://mybucket" *
+// `profile_last_generated < "2025-01-01T00:00:00.000Z" The length of this
+// field should be no more than 500 characters.
 func (c *ProjectsLocationsFileStoreDataProfilesListCall) Filter(filter string) *ProjectsLocationsFileStoreDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -28432,13 +28460,17 @@ func (r *ProjectsLocationsProjectDataProfilesService) List(parent string) *Proje
 // syntax: * Filter expressions are made up of one or more restrictions. *
 // Restrictions can be combined by `AND` or `OR` logical operators. A sequence
 // of restrictions implicitly uses `AND`. * A restriction has the form of
-// `{field} {operator} {value}`. * Supported fields/values: -
-// `sensitivity_level` - HIGH|MODERATE|LOW - `data_risk_level` -
-// HIGH|MODERATE|LOW - `status_code` - an RPC status code as defined in
-// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
-// The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
-// status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` The
-// length of this field should be no more than 500 characters.
+// `{field} {operator} {value}`. * Supported fields: - `project_id`: the Google
+// Cloud project ID - `sensitivity_level`: HIGH|MODERATE|LOW -
+// `data_risk_level`: HIGH|MODERATE|LOW - `status_code`: an RPC status code as
+// defined in
+// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto -
+// `profile_last_generated`: Date and time the profile was last generated * The
+// operator must be `=` or `!=`. The `profile_last_generated` filter also
+// supports `<` and `>`. Examples: * `project_id = 12345 AND status_code = 1` *
+// `project_id = 12345 AND sensitivity_level = HIGH` * `profile_last_generated
+// < "2025-01-01T00:00:00.000Z" The length of this field should be no more
+// than 500 characters.
 func (c *ProjectsLocationsProjectDataProfilesListCall) Filter(filter string) *ProjectsLocationsProjectDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -28448,11 +28480,11 @@ func (c *ProjectsLocationsProjectDataProfilesListCall) Filter(filter string) *Pr
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
-// Examples: * `project_id` * `sensitivity_level desc` Supported fields are: -
+// Examples: * `project_id` * `sensitivity_level desc` Supported fields: -
 // `project_id`: Google Cloud project ID - `sensitivity_level`: How sensitive
-// the data in a project is, at most. - `data_risk_level`: How much risk is
-// associated with this data. - `profile_last_generated`: When the profile was
-// last updated in epoch seconds.
+// the data in a project is, at most - `data_risk_level`: How much risk is
+// associated with this data - `profile_last_generated`: Date and time (in
+// epoch seconds) the profile was last generated
 func (c *ProjectsLocationsProjectDataProfilesListCall) OrderBy(orderBy string) *ProjectsLocationsProjectDataProfilesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -29442,17 +29474,19 @@ func (r *ProjectsLocationsTableDataProfilesService) List(parent string) *Project
 // syntax: * Filter expressions are made up of one or more restrictions. *
 // Restrictions can be combined by `AND` or `OR` logical operators. A sequence
 // of restrictions implicitly uses `AND`. * A restriction has the form of
-// `{field} {operator} {value}`. * Supported fields/values: - `project_id` -
-// The Google Cloud project ID. - `dataset_id` - The BigQuery dataset ID. -
-// `table_id` - The ID of the BigQuery table. - `sensitivity_level` -
-// HIGH|MODERATE|LOW - `data_risk_level` - HIGH|MODERATE|LOW -
-// `resource_visibility`: PUBLIC|RESTRICTED - `status_code` - an RPC status
-// code as defined in
-// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
-// The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
-// status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` *
-// `project_id = 12345 AND resource_visibility = PUBLIC` The length of this
-// field should be no more than 500 characters.
+// `{field} {operator} {value}`. * Supported fields: - `project_id`: The Google
+// Cloud project ID - `dataset_id`: The BigQuery dataset ID - `table_id`: The
+// ID of the BigQuery table - `sensitivity_level`: HIGH|MODERATE|LOW -
+// `data_risk_level`: HIGH|MODERATE|LOW - `resource_visibility`:
+// PUBLIC|RESTRICTED - `status_code`: an RPC status code as defined in
+// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto -
+// `profile_last_generated`: Date and time the profile was last generated * The
+// operator must be `=` or `!=`. The `profile_last_generated` filter also
+// supports `<` and `>`. Examples: * `project_id = 12345 AND status_code = 1` *
+// `project_id = 12345 AND sensitivity_level = HIGH` * `project_id = 12345 AND
+// resource_visibility = PUBLIC` * `profile_last_generated <
+// "2025-01-01T00:00:00.000Z" The length of this field should be no more than
+// 500 characters.
 func (c *ProjectsLocationsTableDataProfilesListCall) Filter(filter string) *ProjectsLocationsTableDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

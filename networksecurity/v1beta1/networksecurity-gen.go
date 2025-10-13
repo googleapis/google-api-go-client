@@ -1834,6 +1834,25 @@ func (s FirewallEndpointAssociationReference) MarshalJSON() ([]byte, error) {
 
 // FirewallEndpointEndpointSettings: Settings for the endpoint.
 type FirewallEndpointEndpointSettings struct {
+	// JumboFramesEnabled: Optional. Immutable. Indicates whether Jumbo Frames are
+	// enabled. Default value is false.
+	JumboFramesEnabled bool `json:"jumboFramesEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "JumboFramesEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "JumboFramesEnabled") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FirewallEndpointEndpointSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod FirewallEndpointEndpointSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GatewaySecurityPolicy: The GatewaySecurityPolicy resource contains a
@@ -4000,6 +4019,7 @@ type MirroringDeploymentGroup struct {
 	//   "ACTIVE" - The deployment group is ready.
 	//   "CREATING" - The deployment group is being created.
 	//   "DELETING" - The deployment group is being deleted.
+	//   "CLOSED" - The deployment group is being wiped out (project deleted).
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. The timestamp when the resource was most recently
 	// updated. See https://google.aip.dev/148#timestamps.

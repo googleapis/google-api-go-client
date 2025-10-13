@@ -4658,6 +4658,11 @@ type ListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*Operation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -13712,7 +13717,8 @@ type ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 //
 //   - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb request.
-//     For example, `instances`, `series/{series_uid}/instances`, or
+//     For example, `instances`,
+//     `studies/{study_uid}/series/{series_uid}/instances`, or
 //     `studies/{study_uid}/instances`.
 //   - parent: The name of the DICOM store that is being accessed. For example,
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomS
@@ -15143,7 +15149,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 //
 //   - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb request.
-//     For example, `instances`, `series/{series_uid}/instances`, or
+//     For example, `instances`,
+//     `studies/{study_uid}/series/{series_uid}/instances`, or
 //     `studies/{study_uid}/instances`.
 //   - parent: The name of the DICOM store that is being accessed. For example,
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomS
@@ -15701,7 +15708,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall str
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 //
 //   - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb request.
-//     For example, `instances`, `series/{series_uid}/instances`, or
+//     For example, `instances`,
+//     `studies/{study_uid}/series/{series_uid}/instances`, or
 //     `studies/{study_uid}/instances`.
 //   - parent: The name of the DICOM store that is being accessed. For example,
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomS
@@ -17301,12 +17309,19 @@ type ProjectsLocationsDatasetsFhirStoresExportCall struct {
 
 // Export: Export resources from the FHIR store to the specified destination.
 // This method returns an Operation that can be used to track the status of the
-// export by calling GetOperation. Immediate fatal errors appear in the error
-// field, errors are also logged to Cloud Logging (see Viewing error logs in
-// Cloud Logging (https://cloud.google.com/healthcare/docs/how-tos/logging)).
-// Otherwise, when the operation finishes, a detailed response of type
-// ExportResourcesResponse is returned in the response field. The metadata
-// field type for this operation is OperationMetadata.
+// export by calling GetOperation. To improve performance, it is recommended to
+// make the `type` filter as specific as possible, including only the resource
+// types that are absolutely needed. This minimizes the size of the initial
+// dataset to be processed and is the most effective way to improve
+// performance. While post-filters like `_since` are useful for refining
+// results, they do not speed up the initial data retrieval phase, which is
+// primarily governed by the `type` filter. Immediate fatal errors appear in
+// the error field, errors are also logged to Cloud Logging (see Viewing error
+// logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging)). Otherwise, when
+// the operation finishes, a detailed response of type ExportResourcesResponse
+// is returned in the response field. The metadata field type for this
+// operation is OperationMetadata.
 //
 //   - name: The name of the FHIR store to export resource from, in the format of
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirSt
@@ -23664,6 +23679,19 @@ func (c *ProjectsLocationsDatasetsOperationsListCall) PageSize(pageSize int64) *
 // token.
 func (c *ProjectsLocationsDatasetsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsDatasetsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsDatasetsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsDatasetsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

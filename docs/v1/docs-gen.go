@@ -1301,6 +1301,33 @@ func (s Document) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DocumentFormat: Represents document-level format settings.
+type DocumentFormat struct {
+	// DocumentMode: Whether the document has pages or is pageless.
+	//
+	// Possible values:
+	//   "DOCUMENT_MODE_UNSPECIFIED" - The document mode is unspecified.
+	//   "PAGES" - The document has pages.
+	//   "PAGELESS" - The document is pageless.
+	DocumentMode string `json:"documentMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DocumentMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocumentMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DocumentFormat) MarshalJSON() ([]byte, error) {
+	type NoMethod DocumentFormat
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DocumentStyle: The style of the document.
 type DocumentStyle struct {
 	// Background: The background of the document. Documents cannot have a
@@ -1312,6 +1339,9 @@ type DocumentStyle struct {
 	// DefaultHeaderId: The ID of the default header. If not set, there's no
 	// default header. This property is read-only.
 	DefaultHeaderId string `json:"defaultHeaderId,omitempty"`
+	// DocumentFormat: Specifies document-level format settings, such as the
+	// document mode (pages vs pageless).
+	DocumentFormat *DocumentFormat `json:"documentFormat,omitempty"`
 	// EvenPageFooterId: The ID of the footer used only for even pages. The value
 	// of use_even_page_header_footer determines whether to use the
 	// default_footer_id or this value for the footer on even pages. If not set,

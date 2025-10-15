@@ -10460,6 +10460,8 @@ func (s GoogleCloudDialogflowCxV3beta1LlmCallTokenCount) MarshalJSON() ([]byte, 
 type GoogleCloudDialogflowCxV3beta1LlmModelSettings struct {
 	// Model: The selected LLM model.
 	Model string `json:"model,omitempty"`
+	// Parameters: Generative model parameters.
+	Parameters *GoogleCloudDialogflowCxV3beta1LlmModelSettingsParameters `json:"parameters,omitempty"`
 	// PromptText: The custom prompt to use.
 	PromptText string `json:"promptText,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Model") to unconditionally
@@ -10478,6 +10480,66 @@ type GoogleCloudDialogflowCxV3beta1LlmModelSettings struct {
 func (s GoogleCloudDialogflowCxV3beta1LlmModelSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1LlmModelSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1LlmModelSettingsParameters: Generative model
+// parameters to control the model behavior.
+type GoogleCloudDialogflowCxV3beta1LlmModelSettingsParameters struct {
+	// InputTokenLimit: The input token limit. This setting is currently only
+	// supported by playbooks.
+	//
+	// Possible values:
+	//   "INPUT_TOKEN_LIMIT_UNSPECIFIED" - Limit not specified. Treated as
+	// 'INPUT_TOKEN_LIMIT_SHORT'.
+	//   "INPUT_TOKEN_LIMIT_SHORT" - Input token limit up to 8k.
+	//   "INPUT_TOKEN_LIMIT_MEDIUM" - Input token limit up to 32k.
+	//   "INPUT_TOKEN_LIMIT_LONG" - Input token limit up to 100k.
+	InputTokenLimit string `json:"inputTokenLimit,omitempty"`
+	// OutputTokenLimit: The output token limit. This setting is currently only
+	// supported by playbooks. Only one of output_token_limit and max_output_tokens
+	// is allowed to be set.
+	//
+	// Possible values:
+	//   "OUTPUT_TOKEN_LIMIT_UNSPECIFIED" - Limit not specified.
+	//   "OUTPUT_TOKEN_LIMIT_SHORT" - Input token limit up to 512 tokens.
+	//   "OUTPUT_TOKEN_LIMIT_MEDIUM" - Input token limit up to 1k.
+	//   "OUTPUT_TOKEN_LIMIT_LONG" - Input token limit up to 2k.
+	OutputTokenLimit string `json:"outputTokenLimit,omitempty"`
+	// Temperature: The temperature used for sampling during response generation.
+	// Value ranges from 0 to 1. Temperature controls the degree of randomness in
+	// token selection. Lower temperature means less randomness, while higher
+	// temperature means more randomness. Valid range: [0.0, 1.0]
+	Temperature float64 `json:"temperature,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InputTokenLimit") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InputTokenLimit") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1LlmModelSettingsParameters) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1LlmModelSettingsParameters
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1LlmModelSettingsParameters) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowCxV3beta1LlmModelSettingsParameters
+	var s1 struct {
+		Temperature gensupport.JSONFloat64 `json:"temperature"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Temperature = float64(s1.Temperature)
+	return nil
 }
 
 // GoogleCloudDialogflowCxV3beta1LoadVersionRequest: The request message for

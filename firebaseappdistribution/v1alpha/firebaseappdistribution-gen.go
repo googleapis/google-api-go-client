@@ -675,7 +675,7 @@ func (s GoogleFirebaseAppdistroV1alphaAssertionDetails) MarshalJSON() ([]byte, e
 }
 
 // GoogleFirebaseAppdistroV1alphaBatchDeleteTestCasesRequest: The request
-// message for `DeleteTestCase`.
+// message for `BatchDeleteTestCase`.
 type GoogleFirebaseAppdistroV1alphaBatchDeleteTestCasesRequest struct {
 	// Names: Required. The name of the test cases to delete. A maximum number of
 	// 1000 test cases can be deleted in one batch Format:
@@ -3466,7 +3466,7 @@ type ProjectsAppsTestCasesBatchDeleteCall struct {
 	header_                                                   http.Header
 }
 
-// BatchDelete: Delete test cases.
+// BatchDelete: Deletes multiple test cases.
 //
 //   - parent: The parent resource where these test cases will be deleted.
 //     Format: `projects/{project_number}/apps/{app_id}`.

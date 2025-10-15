@@ -2439,6 +2439,293 @@ func (s Date) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DefaultApplication: Information about the application to be set as the
+// default.
+type DefaultApplication struct {
+	// PackageName: Required. The package name that should be set as the default
+	// application. The policy is rejected if the package name is invalid.
+	PackageName string `json:"packageName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PackageName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PackageName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DefaultApplication) MarshalJSON() ([]byte, error) {
+	type NoMethod DefaultApplication
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DefaultApplicationContext: Additional context for non-compliance related to
+// default application settings.
+type DefaultApplicationContext struct {
+	// DefaultApplicationScope: Output only. The scope of non-compliant default
+	// application setting.
+	//
+	// Possible values:
+	//   "DEFAULT_APPLICATION_SCOPE_UNSPECIFIED" - Unspecified. This value must not
+	// be used.
+	//   "SCOPE_FULLY_MANAGED" - Sets the application as the default on fully
+	// managed devices.
+	//   "SCOPE_WORK_PROFILE" - Sets the application as the work profile
+	// default.Only supported for DEFAULT_BROWSER, DEFAULT_CALL_REDIRECTION,
+	// DEFAULT_CALL_SCREENING, DEFAULT_DIALER and DEFAULT_WALLET.
+	//   "SCOPE_PERSONAL_PROFILE" - Sets the application as the personal profile
+	// default on company-owned devices with a work profile. Only pre-installed
+	// system apps can be set as the default.Only supported for DEFAULT_BROWSER,
+	// DEFAULT_DIALER, DEFAULT_SMS and DEFAULT_WALLET.
+	DefaultApplicationScope string `json:"defaultApplicationScope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultApplicationScope") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultApplicationScope") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DefaultApplicationContext) MarshalJSON() ([]byte, error) {
+	type NoMethod DefaultApplicationContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DefaultApplicationInfo: The default application information for a specific
+// DefaultApplicationType.
+type DefaultApplicationInfo struct {
+	// DefaultApplicationSettingAttempts: Output only. Details on the default
+	// application setting attempts, in the same order as listed in
+	// defaultApplications.
+	DefaultApplicationSettingAttempts []*DefaultApplicationSettingAttempt `json:"defaultApplicationSettingAttempts,omitempty"`
+	// DefaultApplicationType: Output only. The default application type.
+	//
+	// Possible values:
+	//   "DEFAULT_APPLICATION_TYPE_UNSPECIFIED" - Unspecified. This value must not
+	// be used.
+	//   "DEFAULT_ASSISTANT" - The assistant app type. This app type is only
+	// allowed to be set for SCOPE_FULLY_MANAGED.Supported on fully managed devices
+	// on Android 16 and above. A NonComplianceDetail with MANAGEMENT_MODE is
+	// reported for other management modes. A NonComplianceDetail with API_LEVEL is
+	// reported if the Android version is less than 16.
+	//   "DEFAULT_BROWSER" - The browser app type.Supported on Android 16 and
+	// above. A NonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 16.
+	//   "DEFAULT_CALL_REDIRECTION" - The call redirection app type. This app type
+	// cannot be set for SCOPE_PERSONAL_PROFILE.Supported on Android 16 and above.
+	// A NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 16.
+	//   "DEFAULT_CALL_SCREENING" - The call screening app type. This app type
+	// cannot be set for SCOPE_PERSONAL_PROFILE.Supported on Android 16 and above.
+	// A NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 16.
+	//   "DEFAULT_DIALER" - The dialer app type.Supported on fully managed devices
+	// on Android 14 and 15. A NonComplianceDetail with MANAGEMENT_MODE is reported
+	// for other management modes. A NonComplianceDetail with API_LEVEL is reported
+	// if the Android version is less than 14.Supported on all management modes on
+	// Android 16 and above.
+	//   "DEFAULT_HOME" - The home app type. This app type is only allowed to be
+	// set for SCOPE_FULLY_MANAGED.Supported on fully managed devices on Android 16
+	// and above. A NonComplianceDetail with MANAGEMENT_MODE is reported for other
+	// management modes. A NonComplianceDetail with API_LEVEL is reported if the
+	// Android version is less than 16.
+	//   "DEFAULT_SMS" - The SMS app type. This app type cannot be set for
+	// SCOPE_WORK_PROFILE.Supported on company-owned devices on Android 16 and
+	// above. A NonComplianceDetail with MANAGEMENT_MODE is reported for
+	// personally-owned devices. A NonComplianceDetail with API_LEVEL is reported
+	// if the Android version is less than 16.
+	//   "DEFAULT_WALLET" - The wallet app type. The default application of this
+	// type applies across profiles.On a company-owned device with a work profile,
+	// admins can set the scope to SCOPE_PERSONAL_PROFILE to set a personal profile
+	// pre-installed system app as the default, or to SCOPE_WORK_PROFILE to set a
+	// work profile app as the default. It is not allowed to specify both scopes at
+	// the same time.Due to a known issue, the user may be able to change the
+	// default wallet even when this is set on a fully managed device.Supported on
+	// company-owned devices on Android 16 and above. A NonComplianceDetail with
+	// MANAGEMENT_MODE is reported for personally-owned devices. A
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 16.
+	DefaultApplicationType string `json:"defaultApplicationType,omitempty"`
+	// PackageName: Output only. The package name of the current default
+	// application.
+	PackageName string `json:"packageName,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultApplicationSettingAttempts") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "DefaultApplicationSettingAttempts") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DefaultApplicationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DefaultApplicationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DefaultApplicationSetting: The default application setting for a
+// DefaultApplicationType.
+type DefaultApplicationSetting struct {
+	// DefaultApplicationScopes: Required. The scopes to which the policy should be
+	// applied. This list must not be empty or contain duplicates.A
+	// NonComplianceDetail with MANAGEMENT_MODE reason and
+	// DEFAULT_APPLICATION_SETTING_UNSUPPORTED_SCOPES specific reason is reported
+	// if none of the specified scopes can be applied to the management mode (e.g.
+	// a fully managed device receives a policy with only SCOPE_PERSONAL_PROFILE in
+	// the list).
+	//
+	// Possible values:
+	//   "DEFAULT_APPLICATION_SCOPE_UNSPECIFIED" - Unspecified. This value must not
+	// be used.
+	//   "SCOPE_FULLY_MANAGED" - Sets the application as the default on fully
+	// managed devices.
+	//   "SCOPE_WORK_PROFILE" - Sets the application as the work profile
+	// default.Only supported for DEFAULT_BROWSER, DEFAULT_CALL_REDIRECTION,
+	// DEFAULT_CALL_SCREENING, DEFAULT_DIALER and DEFAULT_WALLET.
+	//   "SCOPE_PERSONAL_PROFILE" - Sets the application as the personal profile
+	// default on company-owned devices with a work profile. Only pre-installed
+	// system apps can be set as the default.Only supported for DEFAULT_BROWSER,
+	// DEFAULT_DIALER, DEFAULT_SMS and DEFAULT_WALLET.
+	DefaultApplicationScopes []string `json:"defaultApplicationScopes,omitempty"`
+	// DefaultApplicationType: Required. The app type to set the default
+	// application.
+	//
+	// Possible values:
+	//   "DEFAULT_APPLICATION_TYPE_UNSPECIFIED" - Unspecified. This value must not
+	// be used.
+	//   "DEFAULT_ASSISTANT" - The assistant app type. This app type is only
+	// allowed to be set for SCOPE_FULLY_MANAGED.Supported on fully managed devices
+	// on Android 16 and above. A NonComplianceDetail with MANAGEMENT_MODE is
+	// reported for other management modes. A NonComplianceDetail with API_LEVEL is
+	// reported if the Android version is less than 16.
+	//   "DEFAULT_BROWSER" - The browser app type.Supported on Android 16 and
+	// above. A NonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 16.
+	//   "DEFAULT_CALL_REDIRECTION" - The call redirection app type. This app type
+	// cannot be set for SCOPE_PERSONAL_PROFILE.Supported on Android 16 and above.
+	// A NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 16.
+	//   "DEFAULT_CALL_SCREENING" - The call screening app type. This app type
+	// cannot be set for SCOPE_PERSONAL_PROFILE.Supported on Android 16 and above.
+	// A NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 16.
+	//   "DEFAULT_DIALER" - The dialer app type.Supported on fully managed devices
+	// on Android 14 and 15. A NonComplianceDetail with MANAGEMENT_MODE is reported
+	// for other management modes. A NonComplianceDetail with API_LEVEL is reported
+	// if the Android version is less than 14.Supported on all management modes on
+	// Android 16 and above.
+	//   "DEFAULT_HOME" - The home app type. This app type is only allowed to be
+	// set for SCOPE_FULLY_MANAGED.Supported on fully managed devices on Android 16
+	// and above. A NonComplianceDetail with MANAGEMENT_MODE is reported for other
+	// management modes. A NonComplianceDetail with API_LEVEL is reported if the
+	// Android version is less than 16.
+	//   "DEFAULT_SMS" - The SMS app type. This app type cannot be set for
+	// SCOPE_WORK_PROFILE.Supported on company-owned devices on Android 16 and
+	// above. A NonComplianceDetail with MANAGEMENT_MODE is reported for
+	// personally-owned devices. A NonComplianceDetail with API_LEVEL is reported
+	// if the Android version is less than 16.
+	//   "DEFAULT_WALLET" - The wallet app type. The default application of this
+	// type applies across profiles.On a company-owned device with a work profile,
+	// admins can set the scope to SCOPE_PERSONAL_PROFILE to set a personal profile
+	// pre-installed system app as the default, or to SCOPE_WORK_PROFILE to set a
+	// work profile app as the default. It is not allowed to specify both scopes at
+	// the same time.Due to a known issue, the user may be able to change the
+	// default wallet even when this is set on a fully managed device.Supported on
+	// company-owned devices on Android 16 and above. A NonComplianceDetail with
+	// MANAGEMENT_MODE is reported for personally-owned devices. A
+	// NonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 16.
+	DefaultApplicationType string `json:"defaultApplicationType,omitempty"`
+	// DefaultApplications: Required. The list of applications that can be set as
+	// the default app for a given type. This list must not be empty or contain
+	// duplicates. The first app in the list that is installed and qualified for
+	// the defaultApplicationType (e.g. SMS app for DEFAULT_SMS) is set as the
+	// default app. The signing key certificate fingerprint of the app on the
+	// device must also match one of the signing key certificate fingerprints
+	// obtained from Play Store or one of the entries in
+	// ApplicationPolicy.signingKeyCerts in order to be set as the default.If the
+	// defaultApplicationScopes contains SCOPE_FULLY_MANAGED or SCOPE_WORK_PROFILE,
+	// the app must have an entry in applications with installType set to a value
+	// other than BLOCKED.A NonComplianceDetail with APP_NOT_INSTALLED reason and
+	// DEFAULT_APPLICATION_SETTING_FAILED_FOR_SCOPE specific reason is reported if
+	// none of the apps in the list are installed. A NonComplianceDetail with
+	// INVALID_VALUE reason and DEFAULT_APPLICATION_SETTING_FAILED_FOR_SCOPE
+	// specific reason is reported if at least one app is installed but the policy
+	// fails to apply due to other reasons (e.g. the app is not of the right
+	// type).When applying to SCOPE_PERSONAL_PROFILE on a company-owned device with
+	// a work profile, only pre-installed system apps can be set as the default. A
+	// NonComplianceDetail with INVALID_VALUE reason and
+	// DEFAULT_APPLICATION_SETTING_FAILED_FOR_SCOPE specific reason is reported if
+	// the policy fails to apply to the personal profile.
+	DefaultApplications []*DefaultApplication `json:"defaultApplications,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultApplicationScopes")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultApplicationScopes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DefaultApplicationSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod DefaultApplicationSetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DefaultApplicationSettingAttempt: Details on a default application setting
+// attempt.
+type DefaultApplicationSettingAttempt struct {
+	// AttemptOutcome: Output only. The outcome of setting the app as the default.
+	//
+	// Possible values:
+	//   "ATTEMPT_OUTCOME_UNSPECIFIED" - Attempt outcome is unspecified. This is
+	// not used.
+	//   "SUCCESS" - App is successfully set as the default.
+	//   "APP_NOT_INSTALLED" - Attempt failed as the app is not installed.
+	//   "APP_SIGNING_CERT_MISMATCH" - Attempt failed as the signing key
+	// certificate fingerprint of the app from Play Store or from
+	// ApplicationPolicy.signingKeyCerts does not match the one on the device.
+	//   "OTHER_FAILURE" - Attempt failed due to other reasons.
+	AttemptOutcome string `json:"attemptOutcome,omitempty"`
+	// PackageName: Output only. The package name of the attempted application.
+	PackageName string `json:"packageName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttemptOutcome") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttemptOutcome") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DefaultApplicationSettingAttempt) MarshalJSON() ([]byte, error) {
+	type NoMethod DefaultApplicationSettingAttempt
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Device: A device owned by an enterprise. Unless otherwise noted, all fields
 // are read-only and can't be modified by enterprises.devices.patch.
 type Device struct {
@@ -2494,6 +2781,16 @@ type Device struct {
 	// only available if statusReportingSettings.commonCriteriaModeEnabled is true
 	// in the device's policy the device is company-owned.
 	CommonCriteriaModeInfo *CommonCriteriaModeInfo `json:"commonCriteriaModeInfo,omitempty"`
+	// DefaultApplicationInfo: Output only. The default application information for
+	// the DefaultApplicationType. This information is only available if
+	// defaultApplicationInfoReportingEnabled is true in the device's policy.
+	// Available on Android 16 and above.All app types are reported on fully
+	// managed devices. DEFAULT_BROWSER, DEFAULT_CALL_REDIRECTION,
+	// DEFAULT_CALL_SCREENING and DEFAULT_DIALER types are reported for the work
+	// profiles on company-owned devices with a work profile and personally-owned
+	// devices. DEFAULT_WALLET is also reported for company-owned devices with a
+	// work profile, but will only include work profile information.
+	DefaultApplicationInfo []*DefaultApplicationInfo `json:"defaultApplicationInfo,omitempty"`
 	// DeviceSettings: Device settings information. This information is only
 	// available if deviceSettingsEnabled is true in the device's policy.
 	DeviceSettings *DeviceSettings `json:"deviceSettings,omitempty"`
@@ -5201,6 +5498,17 @@ type NonComplianceDetail struct {
 	// nonComplianceReason is set to USER_ACTION.
 	//   "NEW_ACCOUNT_NOT_IN_ENTERPRISE" - Work account added by the user is not
 	// part of the enterprise. nonComplianceReason is set to USER_ACTION.
+	//   "DEFAULT_APPLICATION_SETTING_UNSUPPORTED_SCOPES" - The default application
+	// setting is applied to the scopes that are not supported by the management
+	// mode, even if the management mode itself is supported for the app type
+	// (e.g., a policy with DEFAULT_BROWSER app type and SCOPE_PERSONAL_PROFILE
+	// list sent to a fully managed device results in the scopes being inapplicable
+	// for the management mode). If the management mode is not supported for the
+	// app type, a NonComplianceDetail with MANAGEMENT_MODE is reported, without a
+	// specificNonComplianceReason.nonComplianceReason is set to MANAGEMENT_MODE.
+	//   "DEFAULT_APPLICATION_SETTING_FAILED_FOR_SCOPE" - The default application
+	// setting failed to apply for a specific scope. defaultApplicationContext is
+	// set. nonComplianceReason is set to INVALID_VALUE or APP_NOT_INSTALLED.
 	SpecificNonComplianceReason string `json:"specificNonComplianceReason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CurrentValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6034,6 +6342,14 @@ type Policy struct {
 	// DebuggingFeaturesAllowed: Whether the user is allowed to enable debugging
 	// features.
 	DebuggingFeaturesAllowed bool `json:"debuggingFeaturesAllowed,omitempty"`
+	// DefaultApplicationSettings: Optional. The default application setting for
+	// supported types. If the default application is successfully set for at least
+	// one app type on a profile, users are prevented from changing any default
+	// applications on that profile.Only one DefaultApplicationSetting is allowed
+	// for each DefaultApplicationType.See Default application settings
+	// (https://developers.google.com/android/management/default-application-settings)
+	// guide for more details.
+	DefaultApplicationSettings []*DefaultApplicationSetting `json:"defaultApplicationSettings,omitempty"`
 	// DefaultPermissionPolicy: The default permission policy for runtime
 	// permission requests.
 	//
@@ -7383,6 +7699,10 @@ func (s SoftwareInfo) MarshalJSON() ([]byte, error) {
 // SpecificNonComplianceContext: Additional context for
 // SpecificNonComplianceReason.
 type SpecificNonComplianceContext struct {
+	// DefaultApplicationContext: Output only. Additional context for
+	// non-compliance related to default application settings. See
+	// DEFAULT_APPLICATION_SETTING_FAILED_FOR_SCOPE.
+	DefaultApplicationContext *DefaultApplicationContext `json:"defaultApplicationContext,omitempty"`
 	// OncWifiContext: Additional context for non-compliance related to Wi-Fi
 	// configuration. See ONC_WIFI_INVALID_VALUE and ONC_WIFI_API_LEVEL
 	OncWifiContext *OncWifiContext `json:"oncWifiContext,omitempty"`
@@ -7390,15 +7710,15 @@ type SpecificNonComplianceContext struct {
 	// password policies. See PASSWORD_POLICIES_PASSWORD_EXPIRED and
 	// PASSWORD_POLICIES_PASSWORD_NOT_SUFFICIENT.
 	PasswordPoliciesContext *PasswordPoliciesContext `json:"passwordPoliciesContext,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "OncWifiContext") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "DefaultApplicationContext")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "OncWifiContext") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DefaultApplicationContext") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -7523,6 +7843,9 @@ type StatusReportingSettings struct {
 	// CommonCriteriaModeEnabled: Whether Common Criteria Mode reporting is
 	// enabled. This is supported only on company-owned devices.
 	CommonCriteriaModeEnabled bool `json:"commonCriteriaModeEnabled,omitempty"`
+	// DefaultApplicationInfoReportingEnabled: Optional. Whether
+	// defaultApplicationInfo reporting is enabled.
+	DefaultApplicationInfoReportingEnabled bool `json:"defaultApplicationInfoReportingEnabled,omitempty"`
 	// DeviceSettingsEnabled: Whether device settings reporting is enabled.
 	DeviceSettingsEnabled bool `json:"deviceSettingsEnabled,omitempty"`
 	// DisplayInfoEnabled: Whether displays reporting is enabled. Report data is

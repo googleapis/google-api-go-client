@@ -194,10 +194,22 @@ type PartnersPromotionsService struct {
 
 func NewPartnersSubscriptionsService(s *Service) *PartnersSubscriptionsService {
 	rs := &PartnersSubscriptionsService{s: s}
+	rs.LineItems = NewPartnersSubscriptionsLineItemsService(s)
 	return rs
 }
 
 type PartnersSubscriptionsService struct {
+	s *Service
+
+	LineItems *PartnersSubscriptionsLineItemsService
+}
+
+func NewPartnersSubscriptionsLineItemsService(s *Service) *PartnersSubscriptionsLineItemsService {
+	rs := &PartnersSubscriptionsLineItemsService{s: s}
+	return rs
+}
+
+type PartnersSubscriptionsLineItemsService struct {
 	s *Service
 }
 
@@ -341,6 +353,33 @@ type CreateSubscriptionIntent struct {
 
 func (s CreateSubscriptionIntent) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateSubscriptionIntent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CycleOptions: The cycle options when starting and resuming a subscription.
+type CycleOptions struct {
+	// InitialCycleDuration: Optional. The duration of the initial cycle. Only
+	// `DAY` is supported. If set, Google will start the subscription with this
+	// initial cycle duration starting at the request time (see available methods
+	// below). A prorated charge will be applied. This option is available to the
+	// following methods: - partners.subscriptions.provision -
+	// partners.subscriptions.resume - partners.userSessions.generate
+	InitialCycleDuration *Duration `json:"initialCycleDuration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InitialCycleDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InitialCycleDuration") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CycleOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod CycleOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1207,6 +1246,24 @@ func (s PromotionIntroductoryPricingDetailsIntroductoryPricingSpec) MarshalJSON(
 
 // ResumeSubscriptionRequest: Request to resume a suspended subscription.
 type ResumeSubscriptionRequest struct {
+	// CycleOptions: Optional. The cycle options for the subscription.
+	CycleOptions *CycleOptions `json:"cycleOptions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CycleOptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CycleOptions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResumeSubscriptionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ResumeSubscriptionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResumeSubscriptionResponse: Response that contains the resumed subscription.
@@ -1507,6 +1564,9 @@ type SubscriptionLineItem struct {
 	//   "LINE_ITEM_STATE_OFF_CYCLE_CHARGING" - Line item is being charged
 	// off-cycle.
 	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "Amount") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2876,6 +2936,31 @@ func (r *PartnersSubscriptionsService) Provision(parentid string, subscription *
 	return c
 }
 
+// CycleOptionsInitialCycleDurationCount sets the optional parameter
+// "cycleOptions.initialCycleDuration.count": number of duration units to be
+// included.
+func (c *PartnersSubscriptionsProvisionCall) CycleOptionsInitialCycleDurationCount(cycleOptionsInitialCycleDurationCount int64) *PartnersSubscriptionsProvisionCall {
+	c.urlParams_.Set("cycleOptions.initialCycleDuration.count", fmt.Sprint(cycleOptionsInitialCycleDurationCount))
+	return c
+}
+
+// CycleOptionsInitialCycleDurationUnit sets the optional parameter
+// "cycleOptions.initialCycleDuration.unit": The unit used for the duration
+//
+// Possible values:
+//
+//	"UNIT_UNSPECIFIED" - Default value, reserved as an invalid or an
+//
+// unexpected value.
+//
+//	"MONTH" - Unit of a calendar month.
+//	"DAY" - Unit of a day.
+//	"HOUR" - Unit of an hour. It is used for testing.
+func (c *PartnersSubscriptionsProvisionCall) CycleOptionsInitialCycleDurationUnit(cycleOptionsInitialCycleDurationUnit string) *PartnersSubscriptionsProvisionCall {
+	c.urlParams_.Set("cycleOptions.initialCycleDuration.unit", cycleOptionsInitialCycleDurationUnit)
+	return c
+}
+
 // SubscriptionId sets the optional parameter "subscriptionId": Required.
 // Identifies the subscription resource on the Partner side. The value is
 // restricted to 63 ASCII characters at the maximum. If a subscription was
@@ -3291,6 +3376,121 @@ func (c *PartnersSubscriptionsUndoCancelCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.undoCancel", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type PartnersSubscriptionsLineItemsPatchCall struct {
+	s                    *Service
+	name                 string
+	subscriptionlineitem *SubscriptionLineItem
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Patch: Updates a line item of a subscription. It should be autenticated with
+// a service account.
+//
+//   - name: Identifier. Resource name of the line item. Format:
+//     partners/{partner}/subscriptions/{subscription}/lineItems/{lineItem}.
+func (r *PartnersSubscriptionsLineItemsService) Patch(name string, subscriptionlineitem *SubscriptionLineItem) *PartnersSubscriptionsLineItemsPatchCall {
+	c := &PartnersSubscriptionsLineItemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.subscriptionlineitem = subscriptionlineitem
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to update. Only a limited set of fields can be updated. The allowed
+// fields are the following: -
+// `product_payload.googleHomePayload.googleStructureId`
+func (c *PartnersSubscriptionsLineItemsPatchCall) UpdateMask(updateMask string) *PartnersSubscriptionsLineItemsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PartnersSubscriptionsLineItemsPatchCall) Fields(s ...googleapi.Field) *PartnersSubscriptionsLineItemsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PartnersSubscriptionsLineItemsPatchCall) Context(ctx context.Context) *PartnersSubscriptionsLineItemsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PartnersSubscriptionsLineItemsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersSubscriptionsLineItemsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.subscriptionlineitem)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.lineItems.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "paymentsresellersubscription.partners.subscriptions.lineItems.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SubscriptionLineItem.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PartnersSubscriptionsLineItemsPatchCall) Do(opts ...googleapi.CallOption) (*SubscriptionLineItem, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SubscriptionLineItem{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "paymentsresellersubscription.partners.subscriptions.lineItems.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

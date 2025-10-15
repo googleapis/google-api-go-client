@@ -774,9 +774,9 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// UserIpAddress: Optional. The IP address in the request from the user's
 	// device related to this event.
 	UserIpAddress string `json:"userIpAddress,omitempty"`
-	// WafTokenAssessment: Optional. Flag for running WAF token assessment. If
-	// enabled, the token must be specified, and have been created by a WAF-enabled
-	// key.
+	// WafTokenAssessment: Optional. Flag for running Web Application Firewall
+	// (WAF) token assessment. If enabled, the token must be specified, and have
+	// been created by a WAF-enabled key.
 	WafTokenAssessment bool `json:"wafTokenAssessment,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExpectedAction") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1396,7 +1396,7 @@ type GoogleCloudRecaptchaenterpriseV1Key struct {
 	Name string `json:"name,omitempty"`
 	// TestingOptions: Optional. Options for user acceptance testing.
 	TestingOptions *GoogleCloudRecaptchaenterpriseV1TestingOptions `json:"testingOptions,omitempty"`
-	// WafSettings: Optional. Settings for WAF
+	// WafSettings: Optional. Settings for Web Application Firewall (WAF).
 	WafSettings *GoogleCloudRecaptchaenterpriseV1WafSettings `json:"wafSettings,omitempty"`
 	// WebSettings: Settings for keys that can be used by websites.
 	WebSettings *GoogleCloudRecaptchaenterpriseV1WebKeySettings `json:"webSettings,omitempty"`
@@ -2620,7 +2620,8 @@ func (s GoogleCloudRecaptchaenterpriseV1UserInfo) MarshalJSON() ([]byte, error) 
 // GoogleCloudRecaptchaenterpriseV1WafSettings: Settings specific to keys that
 // can be used for WAF (Web Application Firewall).
 type GoogleCloudRecaptchaenterpriseV1WafSettings struct {
-	// WafFeature: Required. The WAF feature for which this key is enabled.
+	// WafFeature: Required. The Web Application Firewall (WAF) feature for which
+	// this key is enabled.
 	//
 	// Possible values:
 	//   "WAF_FEATURE_UNSPECIFIED" - Undefined feature.
@@ -2630,7 +2631,8 @@ type GoogleCloudRecaptchaenterpriseV1WafSettings struct {
 	//   "ACTION_TOKEN" - Use reCAPTCHA action-tokens to protect user actions.
 	//   "EXPRESS" - Deprecated: Use `express_settings` instead.
 	WafFeature string `json:"wafFeature,omitempty"`
-	// WafService: Required. The WAF service that uses this key.
+	// WafService: Required. The Web Application Firewall (WAF) service that uses
+	// this key.
 	//
 	// Possible values:
 	//   "WAF_SERVICE_UNSPECIFIED" - Undefined WAF

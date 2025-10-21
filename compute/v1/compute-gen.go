@@ -73651,6 +73651,39 @@ func (s ZoneSetLabelsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type ZoneSetNestedPolicyRequest struct {
+	// Bindings: Flatten Policy to create a backwacd compatible
+	// wire-format.
+	// Deprecated. Use 'policy' to specify bindings.
+	Bindings []*Binding `json:"bindings,omitempty"`
+	// Etag: Flatten Policy to create a backward compatible
+	// wire-format.
+	// Deprecated. Use 'policy' to specify the etag.
+	Etag string `json:"etag,omitempty"`
+	// Policy: REQUIRED: The complete policy to be applied to the 'resource'. The
+	// size of
+	// the policy is limited to a few 10s of KB. An empty policy is in general
+	// a
+	// valid policy but certain services (like Projects) might reject them.
+	Policy *Policy `json:"policy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bindings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bindings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ZoneSetNestedPolicyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ZoneSetNestedPolicyRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type ZoneSetPolicyRequest struct {
 	// Bindings: Flatten Policy to create a backwacd compatible
 	// wire-format.

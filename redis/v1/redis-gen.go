@@ -1575,6 +1575,8 @@ type DatabaseResourceHealthSignalData struct {
 	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
 	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
+	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
+	// policy.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -2074,6 +2076,8 @@ type DatabaseResourceRecommendationSignalData struct {
 	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
 	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
+	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
+	// policy.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3076,6 +3080,11 @@ type ListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*Operation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4110,7 +4119,8 @@ type ResourceMaintenanceSchedule struct {
 	// capture if the maintenance window is in Week1, Week2, Week5, etc. Non
 	// production resources are usually part of early phase. For more details,
 	// refer to Cloud SQL resources -
-	// https://cloud.google.com/sql/docs/mysql/maintenance
+	// https://cloud.google.com/sql/docs/mysql/maintenance Deprecated. Use phase
+	// instead.
 	//
 	// Possible values:
 	//   "WINDOW_PHASE_UNSPECIFIED" - Phase is unspecified.
@@ -4122,6 +4132,20 @@ type ResourceMaintenanceSchedule struct {
 	// Time: Optional. Preferred time to start the maintenance operation on the
 	// specified day.
 	Time *TimeOfDay `json:"time,omitempty"`
+	// Week: Optional. Phase of the maintenance window. This is to capture order of
+	// maintenance. For example, for Cloud SQL resources, this can be used to
+	// capture if the maintenance window is in Week1, Week2, Week5, etc. Non
+	// production resources are usually part of early phase. For more details,
+	// refer to Cloud SQL resources -
+	// https://cloud.google.com/sql/docs/mysql/maintenance
+	//
+	// Possible values:
+	//   "PHASE_UNSPECIFIED" - Phase is unspecified.
+	//   "ANY" - Any phase.
+	//   "WEEK1" - Week 1.
+	//   "WEEK2" - Week 2.
+	//   "WEEK5" - Week 5.
+	Week string `json:"week,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -8101,6 +8125,19 @@ func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

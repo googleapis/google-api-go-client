@@ -800,6 +800,18 @@ type Cluster struct {
 	// MaintenanceUpdatePolicy: Optional. The maintenance update policy determines
 	// when to allow or deny updates.
 	MaintenanceUpdatePolicy *MaintenanceUpdatePolicy `json:"maintenanceUpdatePolicy,omitempty"`
+	// MaintenanceVersionSelectionPolicy: Input only. Policy to use to
+	// automatically select the maintenance version to which to update the
+	// cluster's instances.
+	//
+	// Possible values:
+	//   "MAINTENANCE_VERSION_SELECTION_POLICY_UNSPECIFIED" - The maintenance
+	// version selection policy is not specified.
+	//   "MAINTENANCE_VERSION_SELECTION_POLICY_LATEST" - Use the latest available
+	// maintenance version.
+	//   "MAINTENANCE_VERSION_SELECTION_POLICY_DEFAULT" - Use the current default
+	// maintenance version.
+	MaintenanceVersionSelectionPolicy string `json:"maintenanceVersionSelectionPolicy,omitempty"`
 	// MigrationSource: Output only. Cluster created via DMS migration.
 	MigrationSource *MigrationSource `json:"migrationSource,omitempty"`
 	// Name: Output only. The name of the cluster resource with the format: *
@@ -4066,6 +4078,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
 	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
+	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
+	// policy.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -4565,6 +4579,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
 	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
+	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
+	// policy.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4962,11 +4978,11 @@ type StorageDatabasecenterPartnerapiV1mainResourceMaintenanceSchedule struct {
 	// https://cloud.google.com/sql/docs/mysql/maintenance
 	//
 	// Possible values:
-	//   "WINDOW_PHASE_UNSPECIFIED" - Phase is unspecified.
-	//   "WINDOW_PHASE_ANY" - Any phase.
-	//   "WINDOW_PHASE_WEEK1" - Week 1.
-	//   "WINDOW_PHASE_WEEK2" - Week 2.
-	//   "WINDOW_PHASE_WEEK5" - Week 5.
+	//   "PHASE_UNSPECIFIED" - Phase is unspecified.
+	//   "ANY" - Any phase.
+	//   "WEEK1" - Week 1.
+	//   "WEEK2" - Week 2.
+	//   "WEEK5" - Week 5.
 	Phase string `json:"phase,omitempty"`
 	// Time: Optional. Preferred time to start the maintenance operation on the
 	// specified day.

@@ -2456,10 +2456,13 @@ func (s Operation) MarshalJSON() ([]byte, error) {
 }
 
 // Permission: A permission for a file. A permission grants a user, group,
-// domain, or the world access to a file or a folder hierarchy. By default,
-// permissions requests only return a subset of fields. Permission kind, ID,
-// type, and role are always returned. To retrieve specific fields, see
-// https://developers.google.com/workspace/drive/api/guides/fields-parameter.
+// domain, or the world access to a file or a folder hierarchy. For more
+// information, see Share files, folders, and drives
+// (https://developers.google.com/workspace/drive/api/guides/manage-sharing).
+// By default, permission requests only return a subset of fields. Permission
+// `kind`, `ID`, `type`, and `role` are always returned. To retrieve specific
+// fields, see Return specific fields
+// (https://developers.google.com/workspace/drive/api/guides/fields-parameter).
 // Some resource methods (such as `permissions.update`) require a
 // `permissionId`. Use the `permissions.list` method to retrieve the ID for a
 // file, folder, or shared drive.
@@ -2469,13 +2472,14 @@ type Permission struct {
 	// `anyone`.
 	AllowFileDiscovery bool `json:"allowFileDiscovery,omitempty"`
 	// Deleted: Output only. Whether the account associated with this permission
-	// has been deleted. This field only pertains to user and group permissions.
+	// has been deleted. This field only pertains to permissions of type `user` or
+	// `group`.
 	Deleted bool `json:"deleted,omitempty"`
 	// DisplayName: Output only. The "pretty" name of the value of the permission.
 	// The following is a list of examples for each type of permission: * `user` -
-	// User's full name, as defined for their Google account, such as "Joe Smith."
-	// * `group` - Name of the Google Group, such as "The Company Administrators."
-	// * `domain` - String domain name, such as "thecompany.com." * `anyone` - No
+	// User's full name, as defined for their Google Account, such as "Dana A." *
+	// `group` - Name of the Google Group, such as "The Company Administrators." *
+	// `domain` - String domain name, such as "cymbalgroup.com." * `anyone` - No
 	// `displayName` is present.
 	DisplayName string `json:"displayName,omitempty"`
 	// Domain: The domain to which this permission refers.
@@ -2489,43 +2493,47 @@ type Permission struct {
 	// The time cannot be more than a year in the future
 	ExpirationTime string `json:"expirationTime,omitempty"`
 	// Id: Output only. The ID of this permission. This is a unique identifier for
-	// the grantee, and is published in User resources as `permissionId`. IDs
-	// should be treated as opaque values.
+	// the grantee, and is published in the User resource
+	// (https://developers.google.com/workspace/drive/api/reference/rest/v3/User)
+	// as `permissionId`. IDs should be treated as opaque values.
 	Id string `json:"id,omitempty"`
-	// InheritedPermissionsDisabled: When true, only organizers, owners, and users
-	// with permissions added directly on the item can access it.
+	// InheritedPermissionsDisabled: When `true`, only organizers, owners, and
+	// users with permissions added directly on the item can access it.
 	InheritedPermissionsDisabled bool `json:"inheritedPermissionsDisabled,omitempty"`
 	// Kind: Output only. Identifies what kind of resource this is. Value: the
 	// fixed string "drive#permission".
 	Kind string `json:"kind,omitempty"`
 	// PendingOwner: Whether the account associated with this permission is a
-	// pending owner. Only populated for `user` type permissions for files that are
-	// not in a shared drive.
+	// pending owner. Only populated for permissions of type `user` for files that
+	// aren't in a shared drive.
 	PendingOwner bool `json:"pendingOwner,omitempty"`
 	// PermissionDetails: Output only. Details of whether the permissions on this
-	// item are inherited or directly on this item.
+	// item are inherited or are directly on this item.
 	PermissionDetails []*PermissionPermissionDetails `json:"permissionDetails,omitempty"`
 	// PhotoLink: Output only. A link to the user's profile photo, if available.
 	PhotoLink string `json:"photoLink,omitempty"`
-	// Role: The role granted by this permission. While new values may be supported
-	// in the future, the following are currently allowed: * `owner` * `organizer`
-	// * `fileOrganizer` * `writer` * `commenter` * `reader`
+	// Role: The role granted by this permission. Supported values include: *
+	// `owner` * `organizer` * `fileOrganizer` * `writer` * `commenter` * `reader`
+	// For more information, see Roles and permissions
+	// (https://developers.google.com/workspace/drive/api/guides/ref-roles).
 	Role string `json:"role,omitempty"`
 	// TeamDrivePermissionDetails: Output only. Deprecated: Output only. Use
 	// `permissionDetails` instead.
 	TeamDrivePermissionDetails []*PermissionTeamDrivePermissionDetails `json:"teamDrivePermissionDetails,omitempty"`
-	// Type: The type of the grantee. Valid values are: * `user` * `group` *
-	// `domain` * `anyone` When creating a permission, if `type` is `user` or
-	// `group`, you must provide an `emailAddress` for the user or group. When
-	// `type` is `domain`, you must provide a `domain`. There isn't extra
-	// information required for an `anyone` type.
+	// Type: The type of the grantee. Supported values include: * `user` * `group`
+	// * `domain` * `anyone` When creating a permission, if `type` is `user` or
+	// `group`, you must provide an `emailAddress` for the user or group. If `type`
+	// is `domain`, you must provide a `domain`. If `type` is `anyone`, no extra
+	// information is required.
 	Type string `json:"type,omitempty"`
 	// View: Indicates the view for this permission. Only populated for permissions
-	// that belong to a view. published and metadata are the only supported values.
-	// - published: The permission's role is published_reader. - metadata: The item
-	// is only visible to the metadata view because the item has limited access and
-	// the scope has at least read access to the parent. Note: The metadata view is
-	// currently only supported on folders.
+	// that belong to a view. The only supported values are `published` and
+	// `metadata`: * `published`: The permission's role is `publishedReader`. *
+	// `metadata`: The item is only visible to the `metadata` view because the item
+	// has limited access and the scope has at least read access to the parent. The
+	// `metadata` view is only supported on folders. For more information, see
+	// Views
+	// (https://developers.google.com/workspace/drive/api/guides/ref-roles#views).
 	View string `json:"view,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2555,13 +2563,13 @@ type PermissionPermissionDetails struct {
 	// InheritedFrom: Output only. The ID of the item from which this permission is
 	// inherited. This is only populated for items in shared drives.
 	InheritedFrom string `json:"inheritedFrom,omitempty"`
-	// PermissionType: Output only. The permission type for this user. While new
-	// values may be added in future, the following are currently possible: *
-	// `file` * `member`
+	// PermissionType: Output only. The permission type for this user. Supported
+	// values include: * `file` * `member`
 	PermissionType string `json:"permissionType,omitempty"`
-	// Role: Output only. The primary role for this user. While new values may be
-	// added in the future, the following are currently possible: * `owner` *
-	// `organizer` * `fileOrganizer` * `writer` * `commenter` * `reader`
+	// Role: Output only. The primary role for this user. Supported values include:
+	// * `owner` * `organizer` * `fileOrganizer` * `writer` * `commenter` *
+	// `reader` For more information, see Roles and permissions
+	// (https://developers.google.com/workspace/drive/api/guides/ref-roles).
 	Role string `json:"role,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Inherited") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2623,7 +2631,7 @@ type PermissionList struct {
 	// typically valid for several hours. However, if new items are added or
 	// removed, your expected results might differ.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Permissions: The list of permissions. If nextPageToken is populated, then
+	// Permissions: The list of permissions. If `nextPageToken` is populated, then
 	// this list may be incomplete and an additional page of results should be
 	// fetched.
 	Permissions []*Permission `json:"permissions,omitempty"`
@@ -8128,9 +8136,11 @@ type PermissionsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a permission for a file or shared drive. **Warning:**
-// Concurrent permissions operations on the same file are not supported; only
-// the last update is applied.
+// Create: Creates a permission for a file or shared drive. For more
+// information, see Share files, folders, and drives
+// (https://developers.google.com/workspace/drive/api/guides/manage-sharing).
+// **Warning:** Concurrent permissions operations on the same file aren't
+// supported; only the last update is applied.
 //
 // - fileId: The ID of the file or shared drive.
 func (r *PermissionsService) Create(fileId string, permission *Permission) *PermissionsCreateCall {
@@ -8162,10 +8172,10 @@ func (c *PermissionsCreateCall) EnforceSingleParent(enforceSingleParent bool) *P
 }
 
 // MoveToNewOwnersRoot sets the optional parameter "moveToNewOwnersRoot": This
-// parameter will only take effect if the item is not in a shared drive and the
+// parameter only takes effect if the item isn't in a shared drive and the
 // request is attempting to transfer the ownership of the item. If set to
-// `true`, the item will be moved to the new owner's My Drive root folder and
-// all prior parents removed. If set to `false`, parents are not changed.
+// `true`, the item is moved to the new owner's My Drive root folder and all
+// prior parents removed. If set to `false`, parents aren't changed.
 func (c *PermissionsCreateCall) MoveToNewOwnersRoot(moveToNewOwnersRoot bool) *PermissionsCreateCall {
 	c.urlParams_.Set("moveToNewOwnersRoot", fmt.Sprint(moveToNewOwnersRoot))
 	return c
@@ -8197,17 +8207,20 @@ func (c *PermissionsCreateCall) SupportsTeamDrives(supportsTeamDrives bool) *Per
 // TransferOwnership sets the optional parameter "transferOwnership": Whether
 // to transfer ownership to the specified user and downgrade the current owner
 // to a writer. This parameter is required as an acknowledgement of the side
-// effect.
+// effect. For more information, see Transfer file ownership
+// (https://developers.google.com/workspace/drive/api/guides/transfer-file).
 func (c *PermissionsCreateCall) TransferOwnership(transferOwnership bool) *PermissionsCreateCall {
 	c.urlParams_.Set("transferOwnership", fmt.Sprint(transferOwnership))
 	return c
 }
 
 // UseDomainAdminAccess sets the optional parameter "useDomainAdminAccess":
-// Issue the request as a domain administrator; if set to true, then the
-// requester will be granted access if the file ID parameter refers to a shared
-// drive and the requester is an administrator of the domain to which the
-// shared drive belongs.
+// Issue the request as a domain administrator. If set to `true`, and if the
+// following additional conditions are met, the requester is granted access: 1.
+// The file ID parameter refers to a shared drive. 2. The requester is an
+// administrator of the domain to which the shared drive belongs. For more
+// information, see Manage shared drives as domain administrators
+// (https://developers.google.com/workspace/drive/api/guides/manage-shareddrives#manage-administrators).
 func (c *PermissionsCreateCall) UseDomainAdminAccess(useDomainAdminAccess bool) *PermissionsCreateCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -8306,8 +8319,11 @@ type PermissionsDeleteCall struct {
 	header_      http.Header
 }
 
-// Delete: Deletes a permission. **Warning:** Concurrent permissions operations
-// on the same file are not supported; only the last update is applied.
+// Delete: Deletes a permission. For more information, see Share files,
+// folders, and drives
+// (https://developers.google.com/workspace/drive/api/guides/manage-sharing).
+// **Warning:** Concurrent permissions operations on the same file aren't
+// supported; only the last update is applied.
 //
 // - fileId: The ID of the file or shared drive.
 // - permissionId: The ID of the permission.
@@ -8340,10 +8356,12 @@ func (c *PermissionsDeleteCall) SupportsTeamDrives(supportsTeamDrives bool) *Per
 }
 
 // UseDomainAdminAccess sets the optional parameter "useDomainAdminAccess":
-// Issue the request as a domain administrator; if set to true, then the
-// requester will be granted access if the file ID parameter refers to a shared
-// drive and the requester is an administrator of the domain to which the
-// shared drive belongs.
+// Issue the request as a domain administrator. If set to `true`, and if the
+// following additional conditions are met, the requester is granted access: 1.
+// The file ID parameter refers to a shared drive. 2. The requester is an
+// administrator of the domain to which the shared drive belongs. For more
+// information, see Manage shared drives as domain administrators
+// (https://developers.google.com/workspace/drive/api/guides/manage-shareddrives#manage-administrators).
 func (c *PermissionsDeleteCall) UseDomainAdminAccess(useDomainAdminAccess bool) *PermissionsDeleteCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -8416,7 +8434,9 @@ type PermissionsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a permission by ID.
+// Get: Gets a permission by ID. For more information, see Share files,
+// folders, and drives
+// (https://developers.google.com/workspace/drive/api/guides/manage-sharing).
 //
 // - fileId: The ID of the file.
 // - permissionId: The ID of the permission.
@@ -8442,10 +8462,12 @@ func (c *PermissionsGetCall) SupportsTeamDrives(supportsTeamDrives bool) *Permis
 }
 
 // UseDomainAdminAccess sets the optional parameter "useDomainAdminAccess":
-// Issue the request as a domain administrator; if set to true, then the
-// requester will be granted access if the file ID parameter refers to a shared
-// drive and the requester is an administrator of the domain to which the
-// shared drive belongs.
+// Issue the request as a domain administrator. If set to `true`, and if the
+// following additional conditions are met, the requester is granted access: 1.
+// The file ID parameter refers to a shared drive. 2. The requester is an
+// administrator of the domain to which the shared drive belongs. For more
+// information, see Manage shared drives as domain administrators
+// (https://developers.google.com/workspace/drive/api/guides/manage-shareddrives#manage-administrators).
 func (c *PermissionsGetCall) UseDomainAdminAccess(useDomainAdminAccess bool) *PermissionsGetCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -8552,7 +8574,9 @@ type PermissionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists a file's or shared drive's permissions.
+// List: Lists a file's or shared drive's permissions. For more information,
+// see Share files, folders, and drives
+// (https://developers.google.com/workspace/drive/api/guides/manage-sharing).
 //
 // - fileId: The ID of the file or shared drive.
 func (r *PermissionsService) List(fileId string) *PermissionsListCall {
@@ -8563,7 +8587,7 @@ func (r *PermissionsService) List(fileId string) *PermissionsListCall {
 
 // IncludePermissionsForView sets the optional parameter
 // "includePermissionsForView": Specifies which additional view's permissions
-// to include in the response. Only 'published' is supported.
+// to include in the response. Only `published` is supported.
 func (c *PermissionsListCall) IncludePermissionsForView(includePermissionsForView string) *PermissionsListCall {
 	c.urlParams_.Set("includePermissionsForView", includePermissionsForView)
 	return c
@@ -8580,7 +8604,7 @@ func (c *PermissionsListCall) PageSize(pageSize int64) *PermissionsListCall {
 
 // PageToken sets the optional parameter "pageToken": The token for continuing
 // a previous list request on the next page. This should be set to the value of
-// 'nextPageToken' from the previous response.
+// `nextPageToken` from the previous response.
 func (c *PermissionsListCall) PageToken(pageToken string) *PermissionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8601,10 +8625,12 @@ func (c *PermissionsListCall) SupportsTeamDrives(supportsTeamDrives bool) *Permi
 }
 
 // UseDomainAdminAccess sets the optional parameter "useDomainAdminAccess":
-// Issue the request as a domain administrator; if set to true, then the
-// requester will be granted access if the file ID parameter refers to a shared
-// drive and the requester is an administrator of the domain to which the
-// shared drive belongs.
+// Issue the request as a domain administrator. If set to `true`, and if the
+// following additional conditions are met, the requester is granted access: 1.
+// The file ID parameter refers to a shared drive. 2. The requester is an
+// administrator of the domain to which the shared drive belongs. For more
+// information, see Manage shared drives as domain administrators
+// (https://developers.google.com/workspace/drive/api/guides/manage-shareddrives#manage-administrators).
 func (c *PermissionsListCall) UseDomainAdminAccess(useDomainAdminAccess bool) *PermissionsListCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -8732,9 +8758,11 @@ type PermissionsUpdateCall struct {
 	header_      http.Header
 }
 
-// Update: Updates a permission with patch semantics. **Warning:** Concurrent
-// permissions operations on the same file are not supported; only the last
-// update is applied.
+// Update: Updates a permission with patch semantics. For more information, see
+// Share files, folders, and drives
+// (https://developers.google.com/workspace/drive/api/guides/manage-sharing).
+// **Warning:** Concurrent permissions operations on the same file aren't
+// supported; only the last update is applied.
 //
 // - fileId: The ID of the file or shared drive.
 // - permissionId: The ID of the permission.
@@ -8777,17 +8805,20 @@ func (c *PermissionsUpdateCall) SupportsTeamDrives(supportsTeamDrives bool) *Per
 // TransferOwnership sets the optional parameter "transferOwnership": Whether
 // to transfer ownership to the specified user and downgrade the current owner
 // to a writer. This parameter is required as an acknowledgement of the side
-// effect.
+// effect. For more information, see Transfer file ownership
+// (https://developers.google.com//workspace/drive/api/guides/transfer-file).
 func (c *PermissionsUpdateCall) TransferOwnership(transferOwnership bool) *PermissionsUpdateCall {
 	c.urlParams_.Set("transferOwnership", fmt.Sprint(transferOwnership))
 	return c
 }
 
 // UseDomainAdminAccess sets the optional parameter "useDomainAdminAccess":
-// Issue the request as a domain administrator; if set to true, then the
-// requester will be granted access if the file ID parameter refers to a shared
-// drive and the requester is an administrator of the domain to which the
-// shared drive belongs.
+// Issue the request as a domain administrator. If set to `true`, and if the
+// following additional conditions are met, the requester is granted access: 1.
+// The file ID parameter refers to a shared drive. 2. The requester is an
+// administrator of the domain to which the shared drive belongs. For more
+// information, see Manage shared drives as domain administrators
+// (https://developers.google.com/workspace/drive/api/guides/manage-shareddrives#manage-administrators).
 func (c *PermissionsUpdateCall) UseDomainAdminAccess(useDomainAdminAccess bool) *PermissionsUpdateCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c

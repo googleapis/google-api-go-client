@@ -4960,6 +4960,12 @@ func (s Tab) MarshalJSON() ([]byte, error) {
 
 // TabProperties: Properties of a tab.
 type TabProperties struct {
+	// IconEmoji: Optional. The emoji icon displayed with the tab. A valid emoji
+	// icon is represented by a non-empty Unicode string. Any set of characters
+	// that don't represent a single emoji is invalid. If an emoji is invalid, a
+	// 400 bad request error is returned. If this value is unset or empty, the tab
+	// will display the default tab icon.
+	IconEmoji string `json:"iconEmoji,omitempty"`
 	// Index: The zero-based index of the tab within the parent.
 	Index int64 `json:"index,omitempty"`
 	// NestingLevel: Output only. The depth of the tab within the document.
@@ -4972,13 +4978,13 @@ type TabProperties struct {
 	TabId string `json:"tabId,omitempty"`
 	// Title: The user-visible name of the tab.
 	Title string `json:"title,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Index") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "IconEmoji") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Index") to include in API
+	// NullFields is a list of field names (e.g. "IconEmoji") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

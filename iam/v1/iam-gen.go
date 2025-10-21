@@ -3898,6 +3898,18 @@ type WorkforcePoolProvider struct {
 	Oidc *GoogleIamAdminV1WorkforcePoolProviderOidc `json:"oidc,omitempty"`
 	// Saml: A SAML identity provider configuration.
 	Saml *GoogleIamAdminV1WorkforcePoolProviderSaml `json:"saml,omitempty"`
+	// ScimUsage: Optional. Agentspace only. Specifies whether the workforce
+	// identity pool provider uses SCIM-managed groups instead of the
+	// `google.groups` attribute mapping for authorization checks. The `scim_usage`
+	// and `extended_attributes_oauth2_client` fields are mutually exclusive. A
+	// request that enables both fields on the same workforce identity pool
+	// provider will produce an error.
+	//
+	// Possible values:
+	//   "SCIM_USAGE_UNSPECIFIED" - Agentspace only. Do not use SCIM data.
+	//   "ENABLED_FOR_GROUPS" - Agentspace only. SCIM sync is enabled and
+	// SCIM-managed groups are used for authorization checks.
+	ScimUsage string `json:"scimUsage,omitempty"`
 	// State: Output only. The state of the provider.
 	//
 	// Possible values:
@@ -3956,7 +3968,8 @@ type WorkforcePoolProviderKey struct {
 	// Use: Required. The purpose of the key.
 	//
 	// Possible values:
-	//   "KEY_USE_UNSPECIFIED" - KeyUse unspecified.
+	//   "KEY_USE_UNSPECIFIED" - KeyUse unspecified. Do not use. The purpose of the
+	// key must be specified.
 	//   "ENCRYPTION" - The key is used for encryption.
 	Use string `json:"use,omitempty"`
 

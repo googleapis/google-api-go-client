@@ -174,13 +174,11 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.MulticloudDataTransferSupportedServices = NewProjectsLocationsMulticloudDataTransferSupportedServicesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.RegionalEndpoints = NewProjectsLocationsRegionalEndpointsService(s)
-	rs.RemoteTransportProfiles = NewProjectsLocationsRemoteTransportProfilesService(s)
 	rs.ServiceClasses = NewProjectsLocationsServiceClassesService(s)
 	rs.ServiceConnectionMaps = NewProjectsLocationsServiceConnectionMapsService(s)
 	rs.ServiceConnectionPolicies = NewProjectsLocationsServiceConnectionPoliciesService(s)
 	rs.ServiceConnectionTokens = NewProjectsLocationsServiceConnectionTokensService(s)
 	rs.Spokes = NewProjectsLocationsSpokesService(s)
-	rs.Transports = NewProjectsLocationsTransportsService(s)
 	return rs
 }
 
@@ -199,8 +197,6 @@ type ProjectsLocationsService struct {
 
 	RegionalEndpoints *ProjectsLocationsRegionalEndpointsService
 
-	RemoteTransportProfiles *ProjectsLocationsRemoteTransportProfilesService
-
 	ServiceClasses *ProjectsLocationsServiceClassesService
 
 	ServiceConnectionMaps *ProjectsLocationsServiceConnectionMapsService
@@ -210,8 +206,6 @@ type ProjectsLocationsService struct {
 	ServiceConnectionTokens *ProjectsLocationsServiceConnectionTokensService
 
 	Spokes *ProjectsLocationsSpokesService
-
-	Transports *ProjectsLocationsTransportsService
 }
 
 func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalService {
@@ -340,15 +334,6 @@ type ProjectsLocationsRegionalEndpointsService struct {
 	s *Service
 }
 
-func NewProjectsLocationsRemoteTransportProfilesService(s *Service) *ProjectsLocationsRemoteTransportProfilesService {
-	rs := &ProjectsLocationsRemoteTransportProfilesService{s: s}
-	return rs
-}
-
-type ProjectsLocationsRemoteTransportProfilesService struct {
-	s *Service
-}
-
 func NewProjectsLocationsServiceClassesService(s *Service) *ProjectsLocationsServiceClassesService {
 	rs := &ProjectsLocationsServiceClassesService{s: s}
 	return rs
@@ -391,15 +376,6 @@ func NewProjectsLocationsSpokesService(s *Service) *ProjectsLocationsSpokesServi
 }
 
 type ProjectsLocationsSpokesService struct {
-	s *Service
-}
-
-func NewProjectsLocationsTransportsService(s *Service) *ProjectsLocationsTransportsService {
-	rs := &ProjectsLocationsTransportsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsTransportsService struct {
 	s *Service
 }
 
@@ -683,6 +659,40 @@ func (s AutoCreatedSubnetworkInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AutomatedDnsCreationSpec: The specification for automatically creating a DNS
+// record.
+type AutomatedDnsCreationSpec struct {
+	// DnsSuffix: Required. The DNS suffix to use for the DNS record. Must end with
+	// a dot. This should be a valid DNS domain name as per RFC 1035. Each label
+	// (between dots) can contain letters, digits, and hyphens, and must not start
+	// or end with a hyphen. Example: "my-service.example.com.", "internal."
+	DnsSuffix string `json:"dnsSuffix,omitempty"`
+	// Hostname: Required. The hostname (the first label of the FQDN) to use for
+	// the DNS record. This should be a valid DNS label as per RFC 1035. Generally,
+	// this means the hostname can contain letters, digits, and hyphens, and must
+	// not start or end with a hyphen. Example: "my-instance", "db-1"
+	Hostname string `json:"hostname,omitempty"`
+	// Ttl: Optional. The Time To Live for the DNS record, in seconds. If not
+	// provided, a default of 30 seconds will be used.
+	Ttl string `json:"ttl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DnsSuffix") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DnsSuffix") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutomatedDnsCreationSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomatedDnsCreationSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -937,6 +947,9 @@ func (s ConsumerPscConfig) MarshalJSON() ([]byte, error) {
 
 // ConsumerPscConnection: PSC connection details on consumer side.
 type ConsumerPscConnection struct {
+	// DnsAutomationStatus: Output only. The status of DNS automation for this PSC
+	// connection.
+	DnsAutomationStatus *DnsAutomationStatus `json:"dnsAutomationStatus,omitempty"`
 	// Error: The most recent error during operating this connection.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
 	// ErrorInfo: Output only. The error info for the latest error during operating
@@ -1007,15 +1020,15 @@ type ConsumerPscConnection struct {
 	//   "DELETE_REPAIRING" - The connection is being repaired to complete
 	// deletion.
 	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DnsAutomationStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Error") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DnsAutomationStatus") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1117,6 +1130,41 @@ type DestinationEndpoint struct {
 
 func (s DestinationEndpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod DestinationEndpoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DnsAutomationStatus: The status of DNS automation for a PSC connection.
+type DnsAutomationStatus struct {
+	// Error: Output only. The error details if the state is CREATE_FAILED or
+	// DELETE_FAILED.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// Fqdn: Output only. The fully qualified domain name of the DNS record.
+	Fqdn string `json:"fqdn,omitempty"`
+	// State: Output only. The current state of DNS automation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "PENDING_CREATE" - DNS record creation is pending.
+	//   "ACTIVE" - DNS record is active.
+	//   "PENDING_DELETE" - DNS record deletion is pending.
+	//   "CREATE_FAILED" - DNS record creation failed.
+	//   "DELETE_FAILED" - DNS record deletion failed.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DnsAutomationStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsAutomationStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2245,37 +2293,6 @@ func (s ListRegionalEndpointsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListRemoteTransportProfilesResponse: Message for response to listing
-// RemoteTransportProfiles
-type ListRemoteTransportProfilesResponse struct {
-	// NextPageToken: A token identifying a page of results the server should
-	// return.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// RemoteTransportProfiles: The list of RemoteTransportProfiles.
-	RemoteTransportProfiles []*RemoteTransportProfile `json:"remoteTransportProfiles,omitempty"`
-	// Unreachable: Unordered list. Locations that could not be reached.
-	Unreachable []string `json:"unreachable,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ListRemoteTransportProfilesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListRemoteTransportProfilesResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // ListRouteTablesResponse: Response for HubService.ListRouteTables method.
 type ListRouteTablesResponse struct {
 	// NextPageToken: The token for the next page of the response. To see more
@@ -2492,36 +2509,6 @@ type ListSpokesResponse struct {
 
 func (s ListSpokesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSpokesResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ListTransportsResponse: Message for response to listing Transports.
-type ListTransportsResponse struct {
-	// NextPageToken: A token identifying a page of results the server should
-	// return.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Transports: The list of Transport.
-	Transports []*Transport `json:"transports,omitempty"`
-	// Unreachable: Unordered list. Locations that could not be reached.
-	Unreachable []string `json:"unreachable,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ListTransportsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListTransportsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3066,18 +3053,21 @@ func (s PolicyBasedRoute) MarshalJSON() ([]byte, error) {
 
 // ProducerPscConfig: The PSC configurations on producer side.
 type ProducerPscConfig struct {
+	// AutomatedDnsCreationSpec: Optional. The specification for automatically
+	// creating a DNS record for this PSC connection.
+	AutomatedDnsCreationSpec *AutomatedDnsCreationSpec `json:"automatedDnsCreationSpec,omitempty"`
 	// ServiceAttachmentUri: The resource path of a service attachment. Example:
 	// projects/{projectNumOrId}/regions/{region}/serviceAttachments/{resourceId}.
 	ServiceAttachmentUri string `json:"serviceAttachmentUri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ServiceAttachmentUri") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AutomatedDnsCreationSpec")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ServiceAttachmentUri") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutomatedDnsCreationSpec") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3482,97 +3472,6 @@ type RejectSpokeUpdateRequest struct {
 
 func (s RejectSpokeUpdateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RejectSpokeUpdateRequest
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// RemoteTransportProfile: Message describing RemoteTransportProfile object.
-type RemoteTransportProfile struct {
-	// CreateTime: Output only. [Output only] Create time stamp.
-	CreateTime string `json:"createTime,omitempty"`
-	// Description: Output only. Description of the profile.
-	Description string `json:"description,omitempty"`
-	// Flow: Output only. [Output only] Type of provisioning flows supported by
-	// this profile.
-	//
-	// Possible values:
-	//   "KEY_PROVISIONING_FLOW_UNSPECIFIED" - Unspecified key provisioning flow.
-	//   "INPUT_ONLY" - The activationKey field on the Transport must be included
-	// in a create or patch request to establish connectivity.
-	//   "OUTPUT_ONLY" - The generatedActivationKey field is populated and must be
-	// read from the resource and passed into the other provider.
-	//   "INPUT_OR_OUTPUT" - Both activation key fields are allowed for
-	// establishing connectivity. If a key is input, the generated key is still
-	// present after provisioning is finished.
-	Flow string `json:"flow,omitempty"`
-	// Labels: Output only. Labels as key value pairs.
-	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Identifier. Name of the resource in the format of $provider-$site.
-	Name string `json:"name,omitempty"`
-	// OrderState: Output only. [Output only] Order state for this profile.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "CLOSED" - Not enough capacity for customers to order.
-	//   "OPEN" - Enough capacity to fulfill an order.
-	OrderState string `json:"orderState,omitempty"`
-	// Provider: Output only. Name of the provider on the other end of this
-	// profile. E.g. “Amazon Web Services” or “Microsoft Azure”.
-	Provider string `json:"provider,omitempty"`
-	// ProviderSite: Output only. If the profile is a Cloud Service Provider with
-	// compute resources, this is populated with the region where connectivity is
-	// being established. If the profile provides facility-level selection, this is
-	// an identity of the facility any connections on this profile are going
-	// through.
-	ProviderSite string `json:"providerSite,omitempty"`
-	// Region: Output only. GCP Region where this profile is available.
-	Region string `json:"region,omitempty"`
-	// Sla: Output only. [Output only] Availability class that will be configured
-	// for this particular RemoteTransportProfile.
-	//
-	// Possible values:
-	//   "SERVICE_LEVEL_AVAILABILITY_UNSPECIFIED" - Unspecified service level
-	// availability.
-	//   "HIGH" - This represents a 99.9% service level on the availability of the
-	// configured connectivity.
-	//   "MAXIMUM" - This represents a 99.99% service level on the availability of
-	// the configured connectivity.
-	Sla string `json:"sla,omitempty"`
-	// SupportedBandwidths: Output only. List of bandwidth enum values that are
-	// supported by this profile.
-	//
-	// Possible values:
-	//   "BANDWIDTH_UNSPECIFIED" - Unspecified bandwidth.
-	//   "BPS_50M" - 50 Megabits per second.
-	//   "BPS_100M" - 100 Megabits per second.
-	//   "BPS_200M" - 200 Megabits per second.
-	//   "BPS_300M" - 300 Megabits per second.
-	//   "BPS_400M" - 400 Megabits per second.
-	//   "BPS_500M" - 500 Megabits per second.
-	//   "BPS_1G" - 1 Gigabit per second.
-	//   "BPS_2G" - 2 Gigabits per second.
-	//   "BPS_5G" - 5 Gigabits per second.
-	//   "BPS_10G" - 10 Gigabits per second.
-	SupportedBandwidths []string `json:"supportedBandwidths,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s RemoteTransportProfile) MarshalJSON() ([]byte, error) {
-	type NoMethod RemoteTransportProfile
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4475,114 +4374,6 @@ type TestIamPermissionsResponse struct {
 
 func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// Transport: Message describing Transport object.
-type Transport struct {
-	// AdminEnabled: Optional. Administrative state of the underlying connectivity.
-	// If set to true (default), connectivity should be available between your
-	// environments. If set to false, the connectivity over these links is
-	// disabled. Disabling your Transport does not affect billing, and retains the
-	// underlying network bandwidth associated with the connectivity.
-	AdminEnabled bool `json:"adminEnabled,omitempty"`
-	// AdvertisedRoutes: Optional. [Preview only] List of IP Prefixes that will be
-	// advertised to the remote provider. Both IPv4 and IPv6 addresses are
-	// supported.
-	AdvertisedRoutes []string `json:"advertisedRoutes,omitempty"`
-	// Bandwidth: Required. Bandwidth of the Transport. This must be one of the
-	// supported bandwidths for the remote profile.
-	//
-	// Possible values:
-	//   "BANDWIDTH_UNSPECIFIED" - Unspecified bandwidth.
-	//   "BPS_50M" - 50 Megabits per second.
-	//   "BPS_100M" - 100 Megabits per second.
-	//   "BPS_200M" - 200 Megabits per second.
-	//   "BPS_300M" - 300 Megabits per second.
-	//   "BPS_400M" - 400 Megabits per second.
-	//   "BPS_500M" - 500 Megabits per second.
-	//   "BPS_1G" - 1 Gigabit per second.
-	//   "BPS_2G" - 2 Gigabits per second.
-	//   "BPS_5G" - 5 Gigabits per second.
-	//   "BPS_10G" - 10 Gigabits per second.
-	Bandwidth string `json:"bandwidth,omitempty"`
-	// CreateTime: Output only. [Output only] Create time stamp.
-	CreateTime string `json:"createTime,omitempty"`
-	// Description: Optional. Description of the Transport.
-	Description string `json:"description,omitempty"`
-	// GeneratedActivationKey: Output only. [Output only] Google-generated
-	// activation key. This is only output if the selected profile supports an
-	// OUTPUT key flow. Inputting this to the provider is only valid while the
-	// resource is in a PENDING_KEY state. Once the provider has accepted the key,
-	// the resource will move to the CONFIGURING state.
-	GeneratedActivationKey string `json:"generatedActivationKey,omitempty"`
-	// Labels: Optional. Labels as key value pairs.
-	Labels map[string]string `json:"labels,omitempty"`
-	// MtuLimit: Output only. [Output only] The maximum transmission unit (MTU) of
-	// a packet that can be sent over this transport.
-	MtuLimit int64 `json:"mtuLimit,omitempty"`
-	// Name: Identifier. Name of the resource, see google.aip.dev/122 for resource
-	// naming.
-	Name string `json:"name,omitempty"`
-	// Network: Required. [Preview only] Resource URL of the Network that will be
-	// peered with this Transport. This field must be provided during resource
-	// creation and cannot be changed.
-	Network string `json:"network,omitempty"`
-	// ProvidedActivationKey: Optional. Key used for establishing a connection with
-	// the remote transport. This key can only be provided if the profile supports
-	// an INPUT key flow and the resource is in the PENDING_KEY state.
-	ProvidedActivationKey string `json:"providedActivationKey,omitempty"`
-	// Region: Required. GCP Region where this Transport is located.
-	Region string `json:"region,omitempty"`
-	// RemoteProfile: Required. Resource URL of the remoteTransportProfile that
-	// this Transport is connecting to. Format:
-	// projects/{project}/locations/{location}/remoteTransportProfiles/{remote_trans
-	// port_profile}
-	RemoteProfile string `json:"remoteProfile,omitempty"`
-	// StackType: Optional. IP version stack for the established connectivity.
-	//
-	// Possible values:
-	//   "STACK_TYPE_UNSPECIFIED" - Unspecified stack type.
-	//   "IPV4_ONLY" - Only IPv4 is supported. (default)
-	//   "IPV4_IPV6" - Both IPv4 and IPv6 are supported.
-	StackType string `json:"stackType,omitempty"`
-	// State: Output only. [Output only] State of the underlying connectivity.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "CREATING" - The resource exists locally and is being created / associated
-	// with the resource on the remote provider’s end of the underlying
-	// connectivity.
-	//   "PENDING_CONFIG" - The Transport exists on both sides of the connection,
-	// and is waiting for configuration to finalize and be verified as operational.
-	//   "PENDING_KEY" - The Transport was created in GCP. Depending on the
-	// profile’s key provisioning flow, this is either waiting for an activation
-	// key to be input (the key will be validated that it uses remote resources
-	// that match the Transport), or for the generated key to be input to the
-	// provider for finalizing. The configured bandwidth is not yet guaranteed.
-	//   "ACTIVE" - The Transport is configured and the underlying connectivity is
-	// considered operational.
-	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AdminEnabled") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AdminEnabled") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s Transport) MarshalJSON() ([]byte, error) {
-	type NoMethod Transport
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12535,275 +12326,6 @@ func (c *ProjectsLocationsRegionalEndpointsListCall) Pages(ctx context.Context, 
 	}
 }
 
-type ProjectsLocationsRemoteTransportProfilesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets details of a single RemoteTransportProfile.
-//
-// - name: Name of the resource.
-func (r *ProjectsLocationsRemoteTransportProfilesService) Get(name string) *ProjectsLocationsRemoteTransportProfilesGetCall {
-	c := &ProjectsLocationsRemoteTransportProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsRemoteTransportProfilesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsRemoteTransportProfilesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsRemoteTransportProfilesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsRemoteTransportProfilesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsRemoteTransportProfilesGetCall) Context(ctx context.Context) *ProjectsLocationsRemoteTransportProfilesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsRemoteTransportProfilesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsRemoteTransportProfilesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.remoteTransportProfiles.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkconnectivity.projects.locations.remoteTransportProfiles.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *RemoteTransportProfile.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsRemoteTransportProfilesGetCall) Do(opts ...googleapi.CallOption) (*RemoteTransportProfile, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &RemoteTransportProfile{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.remoteTransportProfiles.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsRemoteTransportProfilesListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists RemoteTransportProfiles in a given project and location.
-//
-// - parent: Parent value for ListRemoteTransportProfilesRequest.
-func (r *ProjectsLocationsRemoteTransportProfilesService) List(parent string) *ProjectsLocationsRemoteTransportProfilesListCall {
-	c := &ProjectsLocationsRemoteTransportProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Filter sets the optional parameter "filter": Filtering results.
-func (c *ProjectsLocationsRemoteTransportProfilesListCall) Filter(filter string) *ProjectsLocationsRemoteTransportProfilesListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results.
-func (c *ProjectsLocationsRemoteTransportProfilesListCall) OrderBy(orderBy string) *ProjectsLocationsRemoteTransportProfilesListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Requested page size. Server
-// may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
-func (c *ProjectsLocationsRemoteTransportProfilesListCall) PageSize(pageSize int64) *ProjectsLocationsRemoteTransportProfilesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
-func (c *ProjectsLocationsRemoteTransportProfilesListCall) PageToken(pageToken string) *ProjectsLocationsRemoteTransportProfilesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsRemoteTransportProfilesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRemoteTransportProfilesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsRemoteTransportProfilesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRemoteTransportProfilesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsRemoteTransportProfilesListCall) Context(ctx context.Context) *ProjectsLocationsRemoteTransportProfilesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsRemoteTransportProfilesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsRemoteTransportProfilesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/remoteTransportProfiles")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.remoteTransportProfiles.list", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkconnectivity.projects.locations.remoteTransportProfiles.list" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *ListRemoteTransportProfilesResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsRemoteTransportProfilesListCall) Do(opts ...googleapi.CallOption) (*ListRemoteTransportProfilesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ListRemoteTransportProfilesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.remoteTransportProfiles.list", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsRemoteTransportProfilesListCall) Pages(ctx context.Context, f func(*ListRemoteTransportProfilesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken"))
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
 type ProjectsLocationsServiceClassesDeleteCall struct {
 	s          *Service
 	name       string
@@ -14701,8 +14223,8 @@ func (r *ProjectsLocationsServiceConnectionPoliciesService) Create(parent string
 // range to create a subnetwork. It can be narrow down or pick a different
 // space. This is in standard CIDR format. If not specified, “10.0.0.0/8”
 // is used. Only eligible for IPV4_ONLY and IPV4_IPV6 subnetwork.
-func (c *ProjectsLocationsServiceConnectionPoliciesCreateCall) AutoSubnetworkConfigAllocRangeSpace(autoSubnetworkConfigAllocRangeSpace string) *ProjectsLocationsServiceConnectionPoliciesCreateCall {
-	c.urlParams_.Set("autoSubnetworkConfig.allocRangeSpace", autoSubnetworkConfigAllocRangeSpace)
+func (c *ProjectsLocationsServiceConnectionPoliciesCreateCall) AutoSubnetworkConfigAllocRangeSpace(autoSubnetworkConfigAllocRangeSpace ...string) *ProjectsLocationsServiceConnectionPoliciesCreateCall {
+	c.urlParams_.SetMulti("autoSubnetworkConfig.allocRangeSpace", append([]string{}, autoSubnetworkConfigAllocRangeSpace...))
 	return c
 }
 
@@ -17243,646 +16765,5 @@ func (c *ProjectsLocationsSpokesTestIamPermissionsCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.spokes.testIamPermissions", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsTransportsCreateCall struct {
-	s          *Service
-	parent     string
-	transport  *Transport
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Create: Creates a new Transport in a given project and location.
-//
-// - parent: Value for parent.
-func (r *ProjectsLocationsTransportsService) Create(parent string, transport *Transport) *ProjectsLocationsTransportsCreateCall {
-	c := &ProjectsLocationsTransportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.transport = transport
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
-func (c *ProjectsLocationsTransportsCreateCall) RequestId(requestId string) *ProjectsLocationsTransportsCreateCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// TransportId sets the optional parameter "transportId": Required. Id of the
-// requesting object
-func (c *ProjectsLocationsTransportsCreateCall) TransportId(transportId string) *ProjectsLocationsTransportsCreateCall {
-	c.urlParams_.Set("transportId", transportId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsTransportsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransportsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsTransportsCreateCall) Context(ctx context.Context) *ProjectsLocationsTransportsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsTransportsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsTransportsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.transport)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/transports")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.create", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkconnectivity.projects.locations.transports.create" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsTransportsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleLongrunningOperation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.create", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsTransportsDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a single Transport.
-//
-// - name: Name of the resource.
-func (r *ProjectsLocationsTransportsService) Delete(name string) *ProjectsLocationsTransportsDeleteCall {
-	c := &ProjectsLocationsTransportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
-func (c *ProjectsLocationsTransportsDeleteCall) RequestId(requestId string) *ProjectsLocationsTransportsDeleteCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsTransportsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransportsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsTransportsDeleteCall) Context(ctx context.Context) *ProjectsLocationsTransportsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsTransportsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsTransportsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.delete", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkconnectivity.projects.locations.transports.delete" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsTransportsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleLongrunningOperation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.delete", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsTransportsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets details of a single Transport.
-//
-// - name: Name of the resource.
-func (r *ProjectsLocationsTransportsService) Get(name string) *ProjectsLocationsTransportsGetCall {
-	c := &ProjectsLocationsTransportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsTransportsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransportsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsTransportsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsTransportsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsTransportsGetCall) Context(ctx context.Context) *ProjectsLocationsTransportsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsTransportsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsTransportsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkconnectivity.projects.locations.transports.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Transport.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsTransportsGetCall) Do(opts ...googleapi.CallOption) (*Transport, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Transport{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsTransportsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists Transports in a given project and location.
-//
-// - parent: Parent value for ListTransportsRequest.
-func (r *ProjectsLocationsTransportsService) List(parent string) *ProjectsLocationsTransportsListCall {
-	c := &ProjectsLocationsTransportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Filter sets the optional parameter "filter": Filtering results.
-func (c *ProjectsLocationsTransportsListCall) Filter(filter string) *ProjectsLocationsTransportsListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results.
-func (c *ProjectsLocationsTransportsListCall) OrderBy(orderBy string) *ProjectsLocationsTransportsListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Requested page size. Server
-// may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
-func (c *ProjectsLocationsTransportsListCall) PageSize(pageSize int64) *ProjectsLocationsTransportsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
-func (c *ProjectsLocationsTransportsListCall) PageToken(pageToken string) *ProjectsLocationsTransportsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsTransportsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransportsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsTransportsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsTransportsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsTransportsListCall) Context(ctx context.Context) *ProjectsLocationsTransportsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsTransportsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsTransportsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/transports")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.list", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkconnectivity.projects.locations.transports.list" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *ListTransportsResponse.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsTransportsListCall) Do(opts ...googleapi.CallOption) (*ListTransportsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ListTransportsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.list", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsTransportsListCall) Pages(ctx context.Context, f func(*ListTransportsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken"))
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-type ProjectsLocationsTransportsPatchCall struct {
-	s          *Service
-	name       string
-	transport  *Transport
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Patch: Updates the parameters of a single Transport.
-//
-//   - name: Identifier. Name of the resource, see google.aip.dev/122 for
-//     resource naming.
-func (r *ProjectsLocationsTransportsService) Patch(name string, transport *Transport) *ProjectsLocationsTransportsPatchCall {
-	c := &ProjectsLocationsTransportsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.transport = transport
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
-func (c *ProjectsLocationsTransportsPatchCall) RequestId(requestId string) *ProjectsLocationsTransportsPatchCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": Field mask is used to
-// specify the fields to be overwritten in the Transport resource by the
-// update. The fields specified in the update_mask are relative to the
-// resource, not the full request. A field will be overwritten if it is in the
-// mask. If the user does not provide a mask then all fields present in the
-// request will be overwritten.
-func (c *ProjectsLocationsTransportsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTransportsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsTransportsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransportsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsTransportsPatchCall) Context(ctx context.Context) *ProjectsLocationsTransportsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsTransportsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsTransportsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.transport)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkconnectivity.projects.locations.transports.patch" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsTransportsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleLongrunningOperation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkconnectivity.projects.locations.transports.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

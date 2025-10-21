@@ -3870,8 +3870,10 @@ type GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue struct {
 	IntegerValue int64 `json:"integerValue,omitempty"`
 	// MoneyValue: Money value. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/money.proto
-	MoneyValue     *GoogleTypeMoney `json:"moneyValue,omitempty"`
-	SignatureValue bool             `json:"signatureValue,omitempty"`
+	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
+	// SignatureValue: A signature - a graphical representation of a person's name,
+	// often used to sign a document.
+	SignatureValue bool `json:"signatureValue,omitempty"`
 	// Text: Optional. An optional field to store a normalized string. For some
 	// entity types, one of respective `structured_value` fields may also be
 	// populated. Also not all the types of `structured_value` will be normalized.

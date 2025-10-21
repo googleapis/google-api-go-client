@@ -2805,7 +2805,7 @@ type GceClusterConfig struct {
 	// ResourceManagerTags: Optional. Resource manager tags
 	// (https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing)
 	// to add to all instances (see Use secure tags in Dataproc
-	// (https://cloud.google.com/dataproc/docs/guides/attach-secure-tags)).
+	// (https://cloud.google.com/dataproc/docs/guides/use-secure-tags)).
 	ResourceManagerTags map[string]string `json:"resourceManagerTags,omitempty"`
 	// ServiceAccount: Optional. The Dataproc service account
 	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/service-accounts#service_accounts_in_dataproc)
@@ -4417,6 +4417,11 @@ type ListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*Operation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets ListOperationsRequest.return_partial_success and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -9036,10 +9041,10 @@ func (s TrinoJob) MarshalJSON() ([]byte, error) {
 // UsageMetrics: Usage metrics represent approximate total resources consumed
 // by a workload.
 type UsageMetrics struct {
-	// AcceleratorType: Optional. Accelerator type being used, if any
+	// AcceleratorType: Optional. DEPRECATED Accelerator type being used, if any
 	AcceleratorType string `json:"acceleratorType,omitempty"`
-	// MilliAcceleratorSeconds: Optional. Accelerator usage in (milliAccelerator x
-	// seconds) (see Dataproc Serverless pricing
+	// MilliAcceleratorSeconds: Optional. DEPRECATED Accelerator usage in
+	// (milliAccelerator x seconds) (see Dataproc Serverless pricing
 	// (https://cloud.google.com/dataproc-serverless/pricing)).
 	MilliAcceleratorSeconds int64 `json:"milliAcceleratorSeconds,omitempty,string"`
 	// MilliDcuSeconds: Optional. DCU (Dataproc Compute Units) usage in (milliDCU x
@@ -9503,6 +9508,9 @@ type WriteSparkApplicationContextResponse struct {
 // This report is available for testing purposes only. It may be changed before
 // final release.
 type YarnApplication struct {
+	// MemoryMbSeconds: Optional. The cumulative memory usage of the application
+	// for a job, measured in mb-seconds.
+	MemoryMbSeconds int64 `json:"memoryMbSeconds,omitempty,string"`
 	// Name: Required. The application name.
 	Name string `json:"name,omitempty"`
 	// Progress: Required. The numerical progress of the application, from 1 to
@@ -9526,15 +9534,18 @@ type YarnApplication struct {
 	// uses the internal hostname, and requires a proxy server for resolution and,
 	// possibly, access.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// VcoreSeconds: Optional. The cumulative CPU time consumed by the application
+	// for a job, measured in vcore-seconds.
+	VcoreSeconds int64 `json:"vcoreSeconds,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "MemoryMbSeconds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "MemoryMbSeconds") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -14365,6 +14376,19 @@ func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to true, operations that are reachable are returned as normal, and
+// those that are unreachable are returned in the
+// ListOperationsResponse.unreachable field.This can only be true when reading
+// across collections e.g. when parent is set to
+// "projects/example/locations/-".This field is not by default supported and
+// will result in an UNIMPLEMENTED error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -24483,6 +24507,19 @@ func (c *ProjectsRegionsOperationsListCall) PageSize(pageSize int64) *ProjectsRe
 // token.
 func (c *ProjectsRegionsOperationsListCall) PageToken(pageToken string) *ProjectsRegionsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to true, operations that are reachable are returned as normal, and
+// those that are unreachable are returned in the
+// ListOperationsResponse.unreachable field.This can only be true when reading
+// across collections e.g. when parent is set to
+// "projects/example/locations/-".This field is not by default supported and
+// will result in an UNIMPLEMENTED error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsRegionsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsRegionsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

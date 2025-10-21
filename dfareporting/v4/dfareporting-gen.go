@@ -189,6 +189,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Reports = NewReportsService(s)
 	s.Sites = NewSitesService(s)
 	s.Sizes = NewSizesService(s)
+	s.StudioCreativeAssets = NewStudioCreativeAssetsService(s)
+	s.StudioCreatives = NewStudioCreativesService(s)
 	s.Subaccounts = NewSubaccountsService(s)
 	s.TargetableRemarketingLists = NewTargetableRemarketingListsService(s)
 	s.TargetingTemplates = NewTargetingTemplatesService(s)
@@ -336,6 +338,10 @@ type Service struct {
 	Sites *SitesService
 
 	Sizes *SizesService
+
+	StudioCreativeAssets *StudioCreativeAssetsService
+
+	StudioCreatives *StudioCreativesService
 
 	Subaccounts *SubaccountsService
 
@@ -899,6 +905,24 @@ func NewSizesService(s *Service) *SizesService {
 }
 
 type SizesService struct {
+	s *Service
+}
+
+func NewStudioCreativeAssetsService(s *Service) *StudioCreativeAssetsService {
+	rs := &StudioCreativeAssetsService{s: s}
+	return rs
+}
+
+type StudioCreativeAssetsService struct {
+	s *Service
+}
+
+func NewStudioCreativesService(s *Service) *StudioCreativesService {
+	rs := &StudioCreativesService{s: s}
+	return rs
+}
+
+type StudioCreativesService struct {
 	s *Service
 }
 
@@ -3692,6 +3716,9 @@ type Creative struct {
 	//   "CREATIVE_AUTHORING_SOURCE_GWD" - Google Web Designer used to author the
 	// creative.
 	//   "CREATIVE_AUTHORING_SOURCE_ACS" - ACS-UI used to author the creative.
+	//   "CREATIVE_AUTHORING_SOURCE_ADOBE" - Creative authoring source is Adobe.
+	//   "CREATIVE_AUTHORING_SOURCE_TYPEFACE_AI" - Creative authoring source is
+	// Typeface.ai.
 	AuthoringSource string `json:"authoringSource,omitempty"`
 	// AuthoringTool: Authoring tool for HTML5 banner creatives. This is a
 	// read-only field. Applicable to the following creative types: HTML5_BANNER.
@@ -5854,6 +5881,37 @@ func (s DependentFieldValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DfareportingStudioCreativeAssetsInsertRequest: Request message for
+// DfareportingStudioCreativeAssets.Insert.
+type DfareportingStudioCreativeAssetsInsertRequest struct {
+	// StudioAccountId: Optional. Studio account ID of the studio creative asset.
+	// It is a optional.
+	StudioAccountId int64 `json:"studioAccountId,omitempty,string"`
+	// StudioAdvertiserId: Required. Studio advertiser ID of the studio creative
+	// asset. It is a required field on insertion.
+	StudioAdvertiserId int64 `json:"studioAdvertiserId,omitempty,string"`
+	// StudioCreativeId: Optional. Studio creative ID of the studio creative asset.
+	// It is a optional field. If it is set, the asset will be associated to the
+	// creative.
+	StudioCreativeId int64 `json:"studioCreativeId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "StudioAccountId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StudioAccountId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DfareportingStudioCreativeAssetsInsertRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DfareportingStudioCreativeAssetsInsertRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DfpSettings: Google Ad Manager Settings
 type DfpSettings struct {
 	// DfpNetworkCode: Ad Manager network code for this directory site.
@@ -6241,7 +6299,7 @@ func (s DynamicFeed) MarshalJSON() ([]byte, error) {
 // DynamicFeedsInsertRequest: Dynamic profile ID is required for dynamic feed
 // insert as the current GPA API only can create a dynamic feed under profile
 // context,even though the dynnamic feed itself don't need the dynamic profile
-// id. See go/cm3-dco-display-api-interface
+// id. See
 type DynamicFeedsInsertRequest struct {
 	// DynamicFeed: Required. Dynamic feed to insert.
 	DynamicFeed *DynamicFeed `json:"dynamicFeed,omitempty"`
@@ -6357,6 +6415,32 @@ type DynamicProfileFeedSettings struct {
 
 func (s DynamicProfileFeedSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicProfileFeedSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DynamicProfileGenerateCodeResponse: Response message for
+// DfareportingDynamicProfiles.GenerateCode.
+type DynamicProfileGenerateCodeResponse struct {
+	// Code: Generated code for the dynamic profile.
+	Code string `json:"code,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DynamicProfileGenerateCodeResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod DynamicProfileGenerateCodeResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12025,6 +12109,190 @@ func (s SortedDimension) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// StudioCreative: Contains studio creative information.
+type StudioCreative struct {
+	// AssetIds: List of assets associated with this studio creative. It is a
+	// required field on insertion.
+	AssetIds googleapi.Int64s `json:"assetIds,omitempty"`
+	// BackupImageAssetId: Backup image asset ID of this studio creative.
+	BackupImageAssetId int64 `json:"backupImageAssetId,omitempty,string"`
+	// CreatedInfo: The timestamp when the studio creative was created. This is a
+	// read-only, auto-generated field.
+	CreatedInfo *LastModifiedInfo `json:"createdInfo,omitempty"`
+	// Dimension: Dimension of this studio creative. This is a required field on
+	// insertion if format is BANNER or EXPANDING.
+	Dimension *StudioCreativeDimension `json:"dimension,omitempty"`
+	// DynamicProfileId: Dynamic profile ID of this studio creative.
+	DynamicProfileId int64 `json:"dynamicProfileId,omitempty,string"`
+	// Format: Format of this studio creative. This is a required field on
+	// insertion.
+	//
+	// Possible values:
+	//   "UNKNOWN" - The format of the studio creative is unknown. This value is
+	// unused.
+	//   "BANNER" - Banner format.
+	//   "EXPANDING" - Expanding format.
+	//   "INTERSTITIAL" - Intertitial format.
+	//   "VPAID_LINEAR_VIDEO" - VPAID linear video creative format.
+	Format string `json:"format,omitempty"`
+	// Id: Output only. Unique ID of this studio creative. This is a read-only,
+	// auto-generated field.
+	Id int64 `json:"id,omitempty,string"`
+	// LastModifiedInfo: The timestamp when the studio creative was last modified.
+	// This is a read-only, auto-generated field.
+	LastModifiedInfo *LastModifiedInfo `json:"lastModifiedInfo,omitempty"`
+	// Name: Identifier. Name of this studio creative. This is a required field on
+	// insertion.
+	Name string `json:"name,omitempty"`
+	// Status: Output only. Status of this studio creative. It is a read-only
+	// field.
+	//
+	// Possible values:
+	//   "UNKNOWN_STATUS" - The status of the studio creative is unknown. This
+	// value is unused.
+	//   "IN_DEVELOPMENT" - The creative is still being developed.
+	//   "PUBLISHED" - The creative has been published and is ready for QA.
+	//   "QA_REJECTED" - The creative has failed QA and must be corrected.
+	//   "QA_APPROVED" - The creative has passed QA and is ready to be trafficked.
+	//   "TRAFFICKED" - The creative has been trafficked to an adserver.
+	Status string `json:"status,omitempty"`
+	// StudioAccountId: Studio account ID of this creative. This field, if left
+	// unset, will be auto-populated.
+	StudioAccountId int64 `json:"studioAccountId,omitempty,string"`
+	// StudioAdvertiserId: Studio advertiser ID of this studio creative. This is a
+	// required field on insertion.
+	StudioAdvertiserId int64 `json:"studioAdvertiserId,omitempty,string"`
+	// StudioCampaignId: Studio campaign ID of this studio creative. This is a
+	// required field on insertion.
+	StudioCampaignId int64 `json:"studioCampaignId,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AssetIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssetIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StudioCreative) MarshalJSON() ([]byte, error) {
+	type NoMethod StudioCreative
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StudioCreativeAsset: Contains studio creative asset information.
+type StudioCreativeAsset struct {
+	// CreateInfo: Output only. The creation timestamp of the studio creative
+	// asset. This is a read-only field.
+	CreateInfo *LastModifiedInfo `json:"createInfo,omitempty"`
+	// Filename: The filename of the studio creative asset. It is default to the
+	// original filename of the asset.
+	Filename string `json:"filename,omitempty"`
+	// Filesize: The filesize of the studio creative asset. This is a read-only
+	// field.
+	Filesize int64 `json:"filesize,omitempty,string"`
+	// Id: Output only. Unique ID of this studio creative asset. This is a
+	// read-only, auto-generated field.
+	Id int64 `json:"id,omitempty,string"`
+	// LastModifiedInfo: Output only. The last modified timestamp of the studio
+	// creative asset. This is a read-only field.
+	LastModifiedInfo *LastModifiedInfo `json:"lastModifiedInfo,omitempty"`
+	// StudioAccountId: Studio account ID of this studio creative asset. This
+	// field, if left unset, will be auto-populated..
+	StudioAccountId int64 `json:"studioAccountId,omitempty,string"`
+	// StudioAdvertiserId: Studio advertiser ID of this studio creative asset. This
+	// is a required field on insertion.
+	StudioAdvertiserId int64 `json:"studioAdvertiserId,omitempty,string"`
+	// StudioCreativeId: Studio creative ID of this studio creative asset. The
+	// asset will be associated to the creative if creative id is set.
+	StudioCreativeId int64 `json:"studioCreativeId,omitempty,string"`
+	// Type: The type of the studio creative asset. It is a auto-generated,
+	// read-only field.
+	//
+	// Possible values:
+	//   "UNKNOWN_TYPE" - Unknown type of asset.
+	//   "HTML" - The asset is an HTML file.
+	//   "VIDEO" - The asset is a video file.
+	//   "IMAGE" - The asset is an image file.
+	//   "FONT" - The asset is a font file.
+	Type string `json:"type,omitempty"`
+	// VideoProcessingData: The processing data of the studio creative asset. This
+	// is a read-only field.
+	VideoProcessingData *VideoProcessingData `json:"videoProcessingData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StudioCreativeAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod StudioCreativeAsset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StudioCreativeAssetsResponse: Response message for
+// DfareportingStudioCreativeAssets.Insert.
+type StudioCreativeAssetsResponse struct {
+	// Assets: The list of studio creative assets.
+	Assets []*StudioCreativeAsset `json:"assets,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Assets") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Assets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StudioCreativeAssetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod StudioCreativeAssetsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StudioCreativeDimension: Dimension information for a studio creative.
+type StudioCreativeDimension struct {
+	// Height: Height of the studio creative.
+	Height int64 `json:"height,omitempty"`
+	// Width: Width of the studio creative.
+	Width int64 `json:"width,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Height") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Height") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StudioCreativeDimension) MarshalJSON() ([]byte, error) {
+	type NoMethod StudioCreativeDimension
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Subaccount: Contains properties of a Campaign Manager subaccount.
 type Subaccount struct {
 	// AccountId: ID of the account that contains this subaccount. This is a
@@ -13357,6 +13625,37 @@ type VideoOffset struct {
 
 func (s VideoOffset) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoOffset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VideoProcessingData: Contains processing data for a video asset.
+type VideoProcessingData struct {
+	// ErrorReason: For a FAILED processing state, the error reason discovered.
+	ErrorReason string `json:"errorReason,omitempty"`
+	// ProcessingState: Output only. The processing state of the studio creative
+	// asset.
+	//
+	// Possible values:
+	//   "UNKNOWN" - The processing state is unknown.
+	//   "PROCESSING" - The asset is being processed.
+	//   "SUCCEEDED" - The asset was successfully processed.
+	//   "FAILED" - The asset failed to be processed.
+	ProcessingState string `json:"processingState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorReason") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorReason") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VideoProcessingData) MarshalJSON() ([]byte, error) {
+	type NoMethod VideoProcessingData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -25682,6 +25981,309 @@ func (c *DynamicFeedsInsertCall) Do(opts ...googleapi.CallOption) (*DynamicFeed,
 	return ret, nil
 }
 
+type DynamicFeedsRetransformCall struct {
+	s             *Service
+	dynamicFeedId int64
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Retransform: Retransforms a dynamic feed.
+//
+// - dynamicFeedId: Dynamic feed ID.
+func (r *DynamicFeedsService) Retransform(dynamicFeedId int64) *DynamicFeedsRetransformCall {
+	c := &DynamicFeedsRetransformCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dynamicFeedId = dynamicFeedId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DynamicFeedsRetransformCall) Fields(s ...googleapi.Field) *DynamicFeedsRetransformCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DynamicFeedsRetransformCall) Context(ctx context.Context) *DynamicFeedsRetransformCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DynamicFeedsRetransformCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DynamicFeedsRetransformCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "studio/dynamicFeeds/{+dynamicFeedId}/retransform")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dynamicFeedId": strconv.FormatInt(c.dynamicFeedId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dfareporting.dynamicFeeds.retransform", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.dynamicFeeds.retransform" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DynamicFeed.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *DynamicFeedsRetransformCall) Do(opts ...googleapi.CallOption) (*DynamicFeed, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DynamicFeed{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.dynamicFeeds.retransform", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type DynamicFeedsUpdateCall struct {
+	s           *Service
+	dynamicfeed *DynamicFeed
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Update: Updates a new dynamic feed.
+func (r *DynamicFeedsService) Update(dynamicfeed *DynamicFeed) *DynamicFeedsUpdateCall {
+	c := &DynamicFeedsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dynamicfeed = dynamicfeed
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DynamicFeedsUpdateCall) Fields(s ...googleapi.Field) *DynamicFeedsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DynamicFeedsUpdateCall) Context(ctx context.Context) *DynamicFeedsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DynamicFeedsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DynamicFeedsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.dynamicfeed)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "studio/dynamicFeeds")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dfareporting.dynamicFeeds.update", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.dynamicFeeds.update" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DynamicFeed.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *DynamicFeedsUpdateCall) Do(opts ...googleapi.CallOption) (*DynamicFeed, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DynamicFeed{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.dynamicFeeds.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type DynamicProfilesGenerateCodeCall struct {
+	s                *Service
+	dynamicProfileId int64
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// GenerateCode: Generates code for a dynamic profile.
+//
+// - dynamicProfileId: Dynamic profile ID.
+func (r *DynamicProfilesService) GenerateCode(dynamicProfileId int64) *DynamicProfilesGenerateCodeCall {
+	c := &DynamicProfilesGenerateCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dynamicProfileId = dynamicProfileId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DynamicProfilesGenerateCodeCall) Fields(s ...googleapi.Field) *DynamicProfilesGenerateCodeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DynamicProfilesGenerateCodeCall) IfNoneMatch(entityTag string) *DynamicProfilesGenerateCodeCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DynamicProfilesGenerateCodeCall) Context(ctx context.Context) *DynamicProfilesGenerateCodeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DynamicProfilesGenerateCodeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DynamicProfilesGenerateCodeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "studio/dynamicProfiles/{+dynamicProfileId}/generateCode")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dynamicProfileId": strconv.FormatInt(c.dynamicProfileId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dfareporting.dynamicProfiles.generateCode", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.dynamicProfiles.generateCode" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DynamicProfileGenerateCodeResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DynamicProfilesGenerateCodeCall) Do(opts ...googleapi.CallOption) (*DynamicProfileGenerateCodeResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DynamicProfileGenerateCodeResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.dynamicProfiles.generateCode", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type DynamicProfilesGetCall struct {
 	s                *Service
 	dynamicProfileId int64
@@ -25885,6 +26487,79 @@ func (c *DynamicProfilesInsertCall) Do(opts ...googleapi.CallOption) (*DynamicPr
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.dynamicProfiles.insert", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type DynamicProfilesPublishCall struct {
+	s                *Service
+	dynamicProfileId int64
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Publish: Publish for a dynamic profile.
+//
+// - dynamicProfileId: Dynamic profile ID.
+func (r *DynamicProfilesService) Publish(dynamicProfileId int64) *DynamicProfilesPublishCall {
+	c := &DynamicProfilesPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dynamicProfileId = dynamicProfileId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DynamicProfilesPublishCall) Fields(s ...googleapi.Field) *DynamicProfilesPublishCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DynamicProfilesPublishCall) Context(ctx context.Context) *DynamicProfilesPublishCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DynamicProfilesPublishCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DynamicProfilesPublishCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "studio/dynamicProfiles/{+dynamicProfileId}/publish")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dynamicProfileId": strconv.FormatInt(c.dynamicProfileId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dfareporting.dynamicProfiles.publish", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.dynamicProfiles.publish" call.
+func (c *DynamicProfilesPublishCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.dynamicProfiles.publish", "response", internallog.HTTPResponse(res, nil))
+	return nil
 }
 
 type DynamicProfilesUpdateCall struct {
@@ -37672,6 +38347,444 @@ func (c *SizesListCall) Do(opts ...googleapi.CallOption) (*SizesListResponse, er
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.sizes.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type StudioCreativeAssetsInsertCall struct {
+	s                                             *Service
+	dfareportingstudiocreativeassetsinsertrequest *DfareportingStudioCreativeAssetsInsertRequest
+	urlParams_                                    gensupport.URLParams
+	mediaInfo_                                    *gensupport.MediaInfo
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Insert: Inserts a new studio creative asset.
+func (r *StudioCreativeAssetsService) Insert(dfareportingstudiocreativeassetsinsertrequest *DfareportingStudioCreativeAssetsInsertRequest) *StudioCreativeAssetsInsertCall {
+	c := &StudioCreativeAssetsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dfareportingstudiocreativeassetsinsertrequest = dfareportingstudiocreativeassetsinsertrequest
+	return c
+}
+
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
+// googleapi.ChunkSize. The chunk size defaults to
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
+// At most one of Media and ResumableMedia may be set.
+func (c *StudioCreativeAssetsInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *StudioCreativeAssetsInsertCall {
+	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
+//
+// Deprecated: use Media instead.
+//
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
+func (c *StudioCreativeAssetsInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *StudioCreativeAssetsInsertCall {
+	c.ctx_ = ctx
+	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
+func (c *StudioCreativeAssetsInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *StudioCreativeAssetsInsertCall {
+	c.mediaInfo_.SetProgressUpdater(pu)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *StudioCreativeAssetsInsertCall) Fields(s ...googleapi.Field) *StudioCreativeAssetsInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
+func (c *StudioCreativeAssetsInsertCall) Context(ctx context.Context) *StudioCreativeAssetsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *StudioCreativeAssetsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *StudioCreativeAssetsInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.dfareportingstudiocreativeassetsinsertrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "studio/creativeAssets")
+	if c.mediaInfo_ != nil {
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/dfareporting/v4/studio/creativeAssets")
+		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
+	}
+	newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	defer cleanup()
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, newBody)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	req.GetBody = getBody
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dfareporting.studioCreativeAssets.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.studioCreativeAssets.insert" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *StudioCreativeAssetsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *StudioCreativeAssetsInsertCall) Do(opts ...googleapi.CallOption) (*StudioCreativeAssetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
+	if rx != nil {
+		rx.Client = c.s.client
+		rx.UserAgent = c.s.userAgent()
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
+		if err != nil {
+			return nil, err
+		}
+		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, gensupport.WrapError(err)
+		}
+	}
+	ret := &StudioCreativeAssetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.studioCreativeAssets.insert", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type StudioCreativesGetCall struct {
+	s                *Service
+	studioCreativeId int64
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Get: Gets a studio creative by ID.
+//
+// - studioCreativeId: Studio creative ID.
+func (r *StudioCreativesService) Get(studioCreativeId int64) *StudioCreativesGetCall {
+	c := &StudioCreativesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.studioCreativeId = studioCreativeId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *StudioCreativesGetCall) Fields(s ...googleapi.Field) *StudioCreativesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *StudioCreativesGetCall) IfNoneMatch(entityTag string) *StudioCreativesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *StudioCreativesGetCall) Context(ctx context.Context) *StudioCreativesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *StudioCreativesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *StudioCreativesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "studio/creatives/{+studioCreativeId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"studioCreativeId": strconv.FormatInt(c.studioCreativeId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dfareporting.studioCreatives.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.studioCreatives.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *StudioCreative.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *StudioCreativesGetCall) Do(opts ...googleapi.CallOption) (*StudioCreative, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &StudioCreative{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.studioCreatives.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type StudioCreativesInsertCall struct {
+	s              *Service
+	studiocreative *StudioCreative
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Insert: Inserts a new studio creative.
+func (r *StudioCreativesService) Insert(studiocreative *StudioCreative) *StudioCreativesInsertCall {
+	c := &StudioCreativesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.studiocreative = studiocreative
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *StudioCreativesInsertCall) Fields(s ...googleapi.Field) *StudioCreativesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *StudioCreativesInsertCall) Context(ctx context.Context) *StudioCreativesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *StudioCreativesInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *StudioCreativesInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.studiocreative)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "studio/creatives")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dfareporting.studioCreatives.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.studioCreatives.insert" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *StudioCreative.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *StudioCreativesInsertCall) Do(opts ...googleapi.CallOption) (*StudioCreative, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &StudioCreative{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.studioCreatives.insert", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type StudioCreativesPublishCall struct {
+	s                *Service
+	studioCreativeId int64
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Publish: Publish for a studio creative.
+//
+// - studioCreativeId: Studio creative ID.
+func (r *StudioCreativesService) Publish(studioCreativeId int64) *StudioCreativesPublishCall {
+	c := &StudioCreativesPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.studioCreativeId = studioCreativeId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *StudioCreativesPublishCall) Fields(s ...googleapi.Field) *StudioCreativesPublishCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *StudioCreativesPublishCall) Context(ctx context.Context) *StudioCreativesPublishCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *StudioCreativesPublishCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *StudioCreativesPublishCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "studio/creatives/{+studioCreativeId}/publish")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"studioCreativeId": strconv.FormatInt(c.studioCreativeId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dfareporting.studioCreatives.publish", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.studioCreatives.publish" call.
+func (c *StudioCreativesPublishCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dfareporting.studioCreatives.publish", "response", internallog.HTTPResponse(res, nil))
+	return nil
 }
 
 type SubaccountsGetCall struct {

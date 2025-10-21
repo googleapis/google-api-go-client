@@ -2551,10 +2551,22 @@ type GoogleChromeManagementV1NetworkStatusReport struct {
 	EncryptionOn bool `json:"encryptionOn,omitempty"`
 	// GatewayIpAddress: Output only. Gateway IP address.
 	GatewayIpAddress string `json:"gatewayIpAddress,omitempty"`
+	// GatewayIpv6Address: Output only. The gateway IPv6 for this interface, if
+	// detected
+	GatewayIpv6Address string `json:"gatewayIpv6Address,omitempty"`
 	// Guid: Output only. Network connection guid.
 	Guid string `json:"guid,omitempty"`
+	// Ipv6Address: Output only. IPv6 addresses assigned to this network, if any.
+	// Each address is a string in standard IPv6 text representation (e.g.,
+	// "2001:db8::1").
+	Ipv6Address []string `json:"ipv6Address,omitempty"`
 	// LanIpAddress: Output only. LAN IP address.
 	LanIpAddress string `json:"lanIpAddress,omitempty"`
+	// LinkDownSpeedKbps: Output only. The maximum downstream bandwidth in Kilobits
+	// per second (Kbps), if reported by the network interface or connection.
+	LinkDownSpeedKbps int64 `json:"linkDownSpeedKbps,omitempty,string"`
+	// Metered: Output only. Whether the network was detected as metered.
+	Metered bool `json:"metered,omitempty"`
 	// ReceivingBitRateMbps: Output only. Receiving bit rate measured in Megabits
 	// per second.
 	ReceivingBitRateMbps int64 `json:"receivingBitRateMbps,omitempty,string"`
@@ -3466,6 +3478,10 @@ type GoogleChromeManagementV1TelemetryEvent struct {
 	//   "EXTERNAL_DISPLAY_DISCONNECTED" - Triggered when an external display is
 	// disconnected.
 	EventType string `json:"eventType,omitempty"`
+	// ExternalDisplaysEvent: Output only. Payload for external display
+	// connected/disconnected event. Present only when `event_type` is
+	// `EXTERNAL_DISPLAY_CONNECTED` or `EXTERNAL_DISPLAY_DISCONNECTED`.
+	ExternalDisplaysEvent *GoogleChromeManagementV1TelemetryExternalDisplayEvent `json:"externalDisplaysEvent,omitempty"`
 	// HttpsLatencyChangeEvent: Output only. Payload for HTTPS latency change
 	// event. Present only when `event_type` is `NETWORK_HTTPS_LATENCY_CHANGE`.
 	HttpsLatencyChangeEvent *GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent `json:"httpsLatencyChangeEvent,omitempty"`
@@ -3556,6 +3572,62 @@ type GoogleChromeManagementV1TelemetryEventNotificationFilter struct {
 
 func (s GoogleChromeManagementV1TelemetryEventNotificationFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryEventNotificationFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1TelemetryExternalDisplayData: External display data.
+type GoogleChromeManagementV1TelemetryExternalDisplayData struct {
+	// DisplayName: The display name.
+	DisplayName string `json:"displayName,omitempty"`
+	// EdidVersion: The EDID version.
+	EdidVersion string `json:"edidVersion,omitempty"`
+	// RefreshRate: The refresh rate.
+	RefreshRate int64 `json:"refreshRate,omitempty,string"`
+	// ResolutionHorizontal: The horizontal resolution.
+	ResolutionHorizontal int64 `json:"resolutionHorizontal,omitempty"`
+	// ResolutionVertical: The vertical resolution.
+	ResolutionVertical int64 `json:"resolutionVertical,omitempty"`
+	// SerialNumber: The serial number.
+	SerialNumber int64 `json:"serialNumber,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1TelemetryExternalDisplayData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1TelemetryExternalDisplayData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1TelemetryExternalDisplayEvent: External display
+// connected/disconnected event payload.
+type GoogleChromeManagementV1TelemetryExternalDisplayEvent struct {
+	// ExternalDisplayData: List of external displays that were
+	// connected/disconnected.
+	ExternalDisplayData []*GoogleChromeManagementV1TelemetryExternalDisplayData `json:"externalDisplayData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExternalDisplayData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExternalDisplayData") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1TelemetryExternalDisplayEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1TelemetryExternalDisplayEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

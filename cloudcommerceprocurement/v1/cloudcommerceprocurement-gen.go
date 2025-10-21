@@ -967,10 +967,10 @@ func (r *ProvidersAccountsService) Get(name string) *ProvidersAccountsGetCall {
 //
 // Possible values:
 //
-//	"ACCOUNT_VIEW_UNSPECIFIED" - The default / unset value. For `GetAccount`,
+//	"ACCOUNT_VIEW_UNSPECIFIED" - The default / unset value. For `GetAccount`
 //
-// it defaults to the FULL view. For `ListAccounts`, it only supports BASIC
-// view.
+// and `ListAccounts`, they default to the BASIC view. For `ListAccounts`, it
+// only supports the BASIC view.
 //
 //	"ACCOUNT_VIEW_BASIC" - Include base account information. This is the
 //

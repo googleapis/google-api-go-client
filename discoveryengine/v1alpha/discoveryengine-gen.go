@@ -37,7 +37,7 @@
 // By default, all available scopes (see "Constants") are used to authenticate.
 // To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
-//	discoveryengineService, err := discoveryengine.NewService(ctx, option.WithScopes(discoveryengine.CloudSearchQueryScope))
+//	discoveryengineService, err := discoveryengine.NewService(ctx, option.WithScopes(discoveryengine.DiscoveryengineReadwriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
@@ -109,6 +109,17 @@ const (
 
 	// Search your organization's data in the Cloud Search index
 	CloudSearchQueryScope = "https://www.googleapis.com/auth/cloud_search.query"
+
+	// View your Agentspace chat history, including uploaded files and generated
+	// reports and visualizations, and interact with the Agentspace assistant on
+	// your behalf.
+	DiscoveryengineAssistReadwriteScope = "https://www.googleapis.com/auth/discoveryengine.assist.readwrite"
+
+	// View, edit, create, and delete all your data associated with any Discovery
+	// Engine API product, such as Agentspace, Vertex AI Search, or NotebookLM
+	// Enterprise, including both end user data and administration or configuration
+	// data.
+	DiscoveryengineReadwriteScope = "https://www.googleapis.com/auth/discoveryengine.readwrite"
 )
 
 // NewService creates a new Service.
@@ -116,6 +127,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud_search.query",
+		"https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+		"https://www.googleapis.com/auth/discoveryengine.readwrite",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -2815,72 +2828,6 @@ func (s GoogleCloudDiscoveryengineV1AlertPolicyConfigAlertEnrollment) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDiscoveryengineV1AlertPolicyResourceConfig: The resource level
-// alert config. Used in: * UserLicense * EngineUserData The AlertPolicyConfig
-// in data connector is of same usage. No easy way to migrate.
-type GoogleCloudDiscoveryengineV1AlertPolicyResourceConfig struct {
-	// AlertEnrollments: Optional. The enrollment state of each alert.
-	AlertEnrollments []*GoogleCloudDiscoveryengineV1AlertPolicyResourceConfigAlertEnrollment `json:"alertEnrollments,omitempty"`
-	// AlertPolicy: Immutable. The fully qualified resource name of the
-	// AlertPolicy.
-	AlertPolicy string `json:"alertPolicy,omitempty"`
-	// ContactDetails: Optional. The contact details for each alert policy.
-	ContactDetails []*GoogleCloudDiscoveryengineV1ContactDetails `json:"contactDetails,omitempty"`
-	// LanguageCode: Optional. The language code used for notifications
-	LanguageCode string `json:"languageCode,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AlertEnrollments") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AlertEnrollments") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1AlertPolicyResourceConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1AlertPolicyResourceConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1AlertPolicyResourceConfigAlertEnrollment: The
-// alert enrollment status.
-type GoogleCloudDiscoveryengineV1AlertPolicyResourceConfigAlertEnrollment struct {
-	// AlertId: Immutable. The id of an alert.
-	AlertId string `json:"alertId,omitempty"`
-	// EnrollState: Required. The enrollment status of a customer.
-	//
-	// Possible values:
-	//   "ENROLL_STATE_UNSPECIFIED" - Default value. Used for customers who have
-	// not responded to the alert policy.
-	//   "ENROLLED" - Customer is enrolled in this policy.
-	//   "DECLINED" - Customer declined this policy.
-	EnrollState string `json:"enrollState,omitempty"`
-	// NotificationParams: Optional. Parameters used to instantiate a notification.
-	// Used for notifications that are triggered when registered. Not stored. *
-	// Gemini Business welcome emails. * Gemini Business user invitation emails.
-	NotificationParams map[string]string `json:"notificationParams,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AlertId") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AlertId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1AlertPolicyResourceConfigAlertEnrollment) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1AlertPolicyResourceConfigAlertEnrollment
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDiscoveryengineV1AnswerGenerationSpec: The specification for
 // answer generation.
 type GoogleCloudDiscoveryengineV1AnswerGenerationSpec struct {
@@ -3545,30 +3492,6 @@ type GoogleCloudDiscoveryengineV1ConditionTimeRange struct {
 
 func (s GoogleCloudDiscoveryengineV1ConditionTimeRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1ConditionTimeRange
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1ContactDetails: The contact info stored in
-// resource level. If both project level and resource level is populated, the
-// resource level contact info will override the project level contact info.
-type GoogleCloudDiscoveryengineV1ContactDetails struct {
-	// EmailAddress: Optional. The email address of the contact.
-	EmailAddress string `json:"emailAddress,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EmailAddress") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1ContactDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1ContactDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6119,9 +6042,6 @@ func (s GoogleCloudDiscoveryengineV1ImportUserEventsResponse) MarshalJSON() ([]b
 // GoogleCloudDiscoveryengineV1LicenseConfig: Information about users'
 // licenses.
 type GoogleCloudDiscoveryengineV1LicenseConfig struct {
-	// AlertPolicyResourceConfig: Optional. The alert policy config for this
-	// license config.
-	AlertPolicyResourceConfig *GoogleCloudDiscoveryengineV1AlertPolicyResourceConfig `json:"alertPolicyResourceConfig,omitempty"`
 	// AutoRenew: Optional. Whether the license config should be auto renewed when
 	// it reaches the end date.
 	AutoRenew bool `json:"autoRenew,omitempty"`
@@ -6129,6 +6049,8 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 	EndDate *GoogleTypeDate `json:"endDate,omitempty"`
 	// FreeTrial: Optional. Whether the license config is for free trial.
 	FreeTrial bool `json:"freeTrial,omitempty"`
+	// GeminiBundle: Output only. Whether the license config is for Gemini bundle.
+	GeminiBundle bool `json:"geminiBundle,omitempty"`
 	// LicenseCount: Required. Number of licenses purchased.
 	LicenseCount int64 `json:"licenseCount,omitempty,string"`
 	// Name: Immutable. Identifier. The fully qualified resource name of the
@@ -6175,15 +6097,15 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
 	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
 	SubscriptionTier string `json:"subscriptionTier,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AlertPolicyResourceConfig")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AutoRenew") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AlertPolicyResourceConfig") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutoRenew") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -10645,19 +10567,22 @@ func (s GoogleCloudDiscoveryengineV1alphaAssistantGenerationConfigSystemInstruct
 // grounding. Phrases like "Of course, I will gladly search it for you." do not
 // need grounding.
 type GoogleCloudDiscoveryengineV1alphaAssistantGroundedContent struct {
+	// CitationMetadata: Source attribution of the generated content. See also
+	// https://cloud.google.com/vertex-ai/generative-ai/docs/learn/overview#citation_check
+	CitationMetadata *GoogleCloudDiscoveryengineV1alphaCitationMetadata `json:"citationMetadata,omitempty"`
 	// Content: The content.
 	Content *GoogleCloudDiscoveryengineV1alphaAssistantContent `json:"content,omitempty"`
 	// TextGroundingMetadata: Metadata for grounding based on text sources.
 	TextGroundingMetadata *GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadata `json:"textGroundingMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CitationMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Content") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CitationMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -12059,6 +11984,61 @@ func (s GoogleCloudDiscoveryengineV1alphaChunkStructuredContent) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaCitation: Source attributions for content.
+type GoogleCloudDiscoveryengineV1alphaCitation struct {
+	// EndIndex: Output only. End index into the content.
+	EndIndex int64 `json:"endIndex,omitempty"`
+	// License: Output only. License of the attribution.
+	License string `json:"license,omitempty"`
+	// PublicationDate: Output only. Publication date of the attribution.
+	PublicationDate *GoogleTypeDate `json:"publicationDate,omitempty"`
+	// StartIndex: Output only. Start index into the content.
+	StartIndex int64 `json:"startIndex,omitempty"`
+	// Title: Output only. Title of the attribution.
+	Title string `json:"title,omitempty"`
+	// Uri: Output only. Url reference of the attribution.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndIndex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndIndex") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaCitation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCitation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaCitationMetadata: A collection of source
+// attributions for a piece of content.
+type GoogleCloudDiscoveryengineV1alphaCitationMetadata struct {
+	// Citations: Output only. List of citations.
+	Citations []*GoogleCloudDiscoveryengineV1alphaCitation `json:"citations,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Citations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Citations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaCitationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCitationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaCloudSqlSource: Cloud SQL source import
 // data from.
 type GoogleCloudDiscoveryengineV1alphaCloudSqlSource struct {
@@ -12442,6 +12422,129 @@ type GoogleCloudDiscoveryengineV1alphaConditionTimeRange struct {
 func (s GoogleCloudDiscoveryengineV1alphaConditionTimeRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaConditionTimeRange
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStats: Response for
+// [EstimateBillingService.GetConfigurablePricingUsageStats] method.
+type GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStats struct {
+	// MetricUsages: A list of metric usages, one for each requested resource type
+	// that has data in the requested time range.
+	MetricUsages []*GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStatsMetricUsage `json:"metricUsages,omitempty"`
+	// Name: Identifier. The name of the ConfigurablePricingUsageStats. Format:
+	// projects/{project}/locations/{location}/configurablePricingUsageStats
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "MetricUsages") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MetricUsages") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStatsDatedUsage: A
+// list of usages for a specific day.
+type GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStatsDatedUsage struct {
+	// Date: The date of the usage.
+	Date *GoogleTypeDate `json:"date,omitempty"`
+	// Usage: The usage value on the date.
+	Usage float64 `json:"usage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Date") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Date") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStatsDatedUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStatsDatedUsage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStatsDatedUsage) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStatsDatedUsage
+	var s1 struct {
+		Usage gensupport.JSONFloat64 `json:"usage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Usage = float64(s1.Usage)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStatsMetricUsage:
+// The usage of a metric over a list of days.
+type GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStatsMetricUsage struct {
+	// DatedUsages: The list of usages for this resource type, chronologically
+	// sorted by date. This is populated for metrics with daily aggregation like
+	// DAILY_MDN_QPM.
+	DatedUsages []*GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStatsDatedUsage `json:"datedUsages,omitempty"`
+	// MetricType: The metric type.
+	//
+	// Possible values:
+	//   "BILLING_METRIC_TYPE_UNSPECIFIED" - Default value.
+	//   "DAILY_MDN_QPM" - Daily median search request QPM.
+	//   "DAILY_MIN_QPM" - Daily min search request QPM.
+	//   "DAILY_MAX_QPM" - Daily max search request QPM.
+	//   "DAILY_SEARCH_REQUEST" - Daily search request total.
+	//   "TOTAL_STORAGE" - Total storage bytes for indexing core.
+	MetricType string `json:"metricType,omitempty"`
+	// TotalUsages: The list of total usages for this resource type
+	TotalUsages []float64 `json:"totalUsages,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatedUsages") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatedUsages") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStatsMetricUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStatsMetricUsage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStatsMetricUsage) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStatsMetricUsage
+	var s1 struct {
+		TotalUsages []gensupport.JSONFloat64 `json:"totalUsages"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TotalUsages = make([]float64, len(s1.TotalUsages))
+	for i := range s1.TotalUsages {
+		s.TotalUsages[i] = float64(s1.TotalUsages[i])
+	}
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1alphaConnectorRun: A data sync run of
@@ -17738,6 +17841,8 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 	EndDate *GoogleTypeDate `json:"endDate,omitempty"`
 	// FreeTrial: Optional. Whether the license config is for free trial.
 	FreeTrial bool `json:"freeTrial,omitempty"`
+	// GeminiBundle: Output only. Whether the license config is for Gemini bundle.
+	GeminiBundle bool `json:"geminiBundle,omitempty"`
 	// LicenseCount: Required. Number of licenses purchased.
 	LicenseCount int64 `json:"licenseCount,omitempty,string"`
 	// Name: Immutable. Identifier. The fully qualified resource name of the
@@ -23595,6 +23700,9 @@ type GoogleCloudDiscoveryengineV1alphaSession struct {
 	// IsPinned: Optional. Whether the session is pinned, pinned session will be
 	// displayed on the top of the session list.
 	IsPinned bool `json:"isPinned,omitempty"`
+	// Labels: Optional. The labels for the session. Can be set as filter in
+	// ListSessionsRequest.
+	Labels []string `json:"labels,omitempty"`
 	// Name: Immutable. Fully qualified name
 	// `projects/{project}/locations/global/collections/{collection}/engines/{engine
 	// }/sessions/*`
@@ -24254,7 +24362,8 @@ type GoogleCloudDiscoveryengineV1alphaStreamAssistResponse struct {
 	// AssistToken: A global unique ID that identifies the current pair of request
 	// and stream of responses. Used for feedback and support.
 	AssistToken string `json:"assistToken,omitempty"`
-	// SessionInfo: Session information.
+	// SessionInfo: Session information. Only included in the final
+	// StreamAssistResponse of the response stream.
 	SessionInfo *GoogleCloudDiscoveryengineV1alphaStreamAssistResponseSessionInfo `json:"sessionInfo,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -26113,73 +26222,6 @@ func (s GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig) MarshalJSON() 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfig: The resource
-// level alert config. Used in: * UserLicense * EngineUserData The
-// AlertPolicyConfig in data connector is of same usage. No easy way to
-// migrate.
-type GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfig struct {
-	// AlertEnrollments: Optional. The enrollment state of each alert.
-	AlertEnrollments []*GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfigAlertEnrollment `json:"alertEnrollments,omitempty"`
-	// AlertPolicy: Immutable. The fully qualified resource name of the
-	// AlertPolicy.
-	AlertPolicy string `json:"alertPolicy,omitempty"`
-	// ContactDetails: Optional. The contact details for each alert policy.
-	ContactDetails []*GoogleCloudDiscoveryengineV1betaContactDetails `json:"contactDetails,omitempty"`
-	// LanguageCode: Optional. The language code used for notifications
-	LanguageCode string `json:"languageCode,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AlertEnrollments") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AlertEnrollments") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfigAlertEnrollment:
-// The alert enrollment status.
-type GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfigAlertEnrollment struct {
-	// AlertId: Immutable. The id of an alert.
-	AlertId string `json:"alertId,omitempty"`
-	// EnrollState: Required. The enrollment status of a customer.
-	//
-	// Possible values:
-	//   "ENROLL_STATE_UNSPECIFIED" - Default value. Used for customers who have
-	// not responded to the alert policy.
-	//   "ENROLLED" - Customer is enrolled in this policy.
-	//   "DECLINED" - Customer declined this policy.
-	EnrollState string `json:"enrollState,omitempty"`
-	// NotificationParams: Optional. Parameters used to instantiate a notification.
-	// Used for notifications that are triggered when registered. Not stored. *
-	// Gemini Business welcome emails. * Gemini Business user invitation emails.
-	NotificationParams map[string]string `json:"notificationParams,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AlertId") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AlertId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfigAlertEnrollment) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfigAlertEnrollment
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDiscoveryengineV1betaBatchCreateTargetSiteMetadata: Metadata
 // related to the progress of the
 // SiteSearchEngineService.BatchCreateTargetSites operation. This will be
@@ -26437,30 +26479,6 @@ type GoogleCloudDiscoveryengineV1betaConditionTimeRange struct {
 
 func (s GoogleCloudDiscoveryengineV1betaConditionTimeRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaConditionTimeRange
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1betaContactDetails: The contact info stored in
-// resource level. If both project level and resource level is populated, the
-// resource level contact info will override the project level contact info.
-type GoogleCloudDiscoveryengineV1betaContactDetails struct {
-	// EmailAddress: Optional. The email address of the contact.
-	EmailAddress string `json:"emailAddress,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EmailAddress") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1betaContactDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1betaContactDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -28742,9 +28760,6 @@ func (s GoogleCloudDiscoveryengineV1betaLanguageInfo) MarshalJSON() ([]byte, err
 // GoogleCloudDiscoveryengineV1betaLicenseConfig: Information about users'
 // licenses.
 type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
-	// AlertPolicyResourceConfig: Optional. The alert policy config for this
-	// license config.
-	AlertPolicyResourceConfig *GoogleCloudDiscoveryengineV1betaAlertPolicyResourceConfig `json:"alertPolicyResourceConfig,omitempty"`
 	// AutoRenew: Optional. Whether the license config should be auto renewed when
 	// it reaches the end date.
 	AutoRenew bool `json:"autoRenew,omitempty"`
@@ -28752,6 +28767,8 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 	EndDate *GoogleTypeDate `json:"endDate,omitempty"`
 	// FreeTrial: Optional. Whether the license config is for free trial.
 	FreeTrial bool `json:"freeTrial,omitempty"`
+	// GeminiBundle: Output only. Whether the license config is for Gemini bundle.
+	GeminiBundle bool `json:"geminiBundle,omitempty"`
 	// LicenseCount: Required. Number of licenses purchased.
 	LicenseCount int64 `json:"licenseCount,omitempty,string"`
 	// Name: Immutable. Identifier. The fully qualified resource name of the
@@ -28798,15 +28815,15 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
 	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
 	SubscriptionTier string `json:"subscriptionTier,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AlertPolicyResourceConfig")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AutoRenew") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AlertPolicyResourceConfig") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutoRenew") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -33884,6 +33901,183 @@ func (c *ProjectsLocationsGetCmekConfigCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.getCmekConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGetConfigurablePricingUsageStatsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetConfigurablePricingUsageStats: Gets configurable pricing usage stats.
+//
+//   - name: The name of the ConfigurablePricingUsageStats to retrieve. Format:
+//     projects/{project}/locations/{location}/configurablePricingUsageStats.
+func (r *ProjectsLocationsService) GetConfigurablePricingUsageStats(name string) *ProjectsLocationsGetConfigurablePricingUsageStatsCall {
+	c := &ProjectsLocationsGetConfigurablePricingUsageStatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// MetricTypes sets the optional parameter "metricTypes": The metric types to
+// return usage for.
+//
+// Possible values:
+//
+//	"BILLING_METRIC_TYPE_UNSPECIFIED" - Default value.
+//	"DAILY_MDN_QPM" - Daily median search request QPM.
+//	"DAILY_MIN_QPM" - Daily min search request QPM.
+//	"DAILY_MAX_QPM" - Daily max search request QPM.
+//	"DAILY_SEARCH_REQUEST" - Daily search request total.
+//	"TOTAL_STORAGE" - Total storage bytes for indexing core.
+func (c *ProjectsLocationsGetConfigurablePricingUsageStatsCall) MetricTypes(metricTypes ...string) *ProjectsLocationsGetConfigurablePricingUsageStatsCall {
+	c.urlParams_.SetMulti("metricTypes", append([]string{}, metricTypes...))
+	return c
+}
+
+// TimeRangeEndDateDay sets the optional parameter "timeRange.endDate.day": Day
+// of a month. Must be from 1 to 31 and valid for the year and month, or 0 to
+// specify a year by itself or a year and month where the day isn't
+// significant.
+func (c *ProjectsLocationsGetConfigurablePricingUsageStatsCall) TimeRangeEndDateDay(timeRangeEndDateDay int64) *ProjectsLocationsGetConfigurablePricingUsageStatsCall {
+	c.urlParams_.Set("timeRange.endDate.day", fmt.Sprint(timeRangeEndDateDay))
+	return c
+}
+
+// TimeRangeEndDateMonth sets the optional parameter "timeRange.endDate.month":
+// Month of a year. Must be from 1 to 12, or 0 to specify a year without a
+// month and day.
+func (c *ProjectsLocationsGetConfigurablePricingUsageStatsCall) TimeRangeEndDateMonth(timeRangeEndDateMonth int64) *ProjectsLocationsGetConfigurablePricingUsageStatsCall {
+	c.urlParams_.Set("timeRange.endDate.month", fmt.Sprint(timeRangeEndDateMonth))
+	return c
+}
+
+// TimeRangeEndDateYear sets the optional parameter "timeRange.endDate.year":
+// Year of the date. Must be from 1 to 9999, or 0 to specify a date without a
+// year.
+func (c *ProjectsLocationsGetConfigurablePricingUsageStatsCall) TimeRangeEndDateYear(timeRangeEndDateYear int64) *ProjectsLocationsGetConfigurablePricingUsageStatsCall {
+	c.urlParams_.Set("timeRange.endDate.year", fmt.Sprint(timeRangeEndDateYear))
+	return c
+}
+
+// TimeRangeStartDateDay sets the optional parameter "timeRange.startDate.day":
+// Day of a month. Must be from 1 to 31 and valid for the year and month, or 0
+// to specify a year by itself or a year and month where the day isn't
+// significant.
+func (c *ProjectsLocationsGetConfigurablePricingUsageStatsCall) TimeRangeStartDateDay(timeRangeStartDateDay int64) *ProjectsLocationsGetConfigurablePricingUsageStatsCall {
+	c.urlParams_.Set("timeRange.startDate.day", fmt.Sprint(timeRangeStartDateDay))
+	return c
+}
+
+// TimeRangeStartDateMonth sets the optional parameter
+// "timeRange.startDate.month": Month of a year. Must be from 1 to 12, or 0 to
+// specify a year without a month and day.
+func (c *ProjectsLocationsGetConfigurablePricingUsageStatsCall) TimeRangeStartDateMonth(timeRangeStartDateMonth int64) *ProjectsLocationsGetConfigurablePricingUsageStatsCall {
+	c.urlParams_.Set("timeRange.startDate.month", fmt.Sprint(timeRangeStartDateMonth))
+	return c
+}
+
+// TimeRangeStartDateYear sets the optional parameter
+// "timeRange.startDate.year": Year of the date. Must be from 1 to 9999, or 0
+// to specify a date without a year.
+func (c *ProjectsLocationsGetConfigurablePricingUsageStatsCall) TimeRangeStartDateYear(timeRangeStartDateYear int64) *ProjectsLocationsGetConfigurablePricingUsageStatsCall {
+	c.urlParams_.Set("timeRange.startDate.year", fmt.Sprint(timeRangeStartDateYear))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGetConfigurablePricingUsageStatsCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetConfigurablePricingUsageStatsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGetConfigurablePricingUsageStatsCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetConfigurablePricingUsageStatsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGetConfigurablePricingUsageStatsCall) Context(ctx context.Context) *ProjectsLocationsGetConfigurablePricingUsageStatsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGetConfigurablePricingUsageStatsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetConfigurablePricingUsageStatsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.getConfigurablePricingUsageStats", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.getConfigurablePricingUsageStats" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStats.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetConfigurablePricingUsageStatsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStats, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaConfigurablePricingUsageStats{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.getConfigurablePricingUsageStats", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

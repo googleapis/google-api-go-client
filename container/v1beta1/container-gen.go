@@ -1626,6 +1626,9 @@ type Cluster struct {
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SecretManagerConfig: Secret CSI driver configuration.
 	SecretManagerConfig *SecretManagerConfig `json:"secretManagerConfig,omitempty"`
+	// SecretSyncConfig: Configuration for sync Secret Manager secrets as k8s
+	// secrets.
+	SecretSyncConfig *SecretSyncConfig `json:"secretSyncConfig,omitempty"`
 	// SecurityPostureConfig: Enable/Disable Security Posture API features for the
 	// cluster.
 	SecurityPostureConfig *SecurityPostureConfig `json:"securityPostureConfig,omitempty"`
@@ -2390,6 +2393,9 @@ type ContainerdConfig struct {
 	// PrivateRegistryAccessConfig: PrivateRegistryAccessConfig is used to
 	// configure access configuration for private container registries.
 	PrivateRegistryAccessConfig *PrivateRegistryAccessConfig `json:"privateRegistryAccessConfig,omitempty"`
+	// WritableCgroups: Optional. WritableCgroups defines writable cgroups
+	// configuration for the node pool.
+	WritableCgroups *WritableCgroups `json:"writableCgroups,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "PrivateRegistryAccessConfig") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -5578,7 +5584,8 @@ type NodeKubeletConfig struct {
 	// CpuCfsQuotaPeriod: Set the CPU CFS quota period value 'cpu.cfs_period_us'.
 	// The string must be a sequence of decimal numbers, each with optional
 	// fraction and a unit suffix, such as "300ms". Valid time units are "ns", "us"
-	// (or "µs"), "ms", "s", "m", "h". The value must be a positive duration.
+	// (or "µs"), "ms", "s", "m", "h". The value must be a positive duration
+	// between 1ms and 1 second, inclusive.
 	CpuCfsQuotaPeriod string `json:"cpuCfsQuotaPeriod,omitempty"`
 	// CpuManagerPolicy: Control the CPU management policy on the node. See
 	// https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/
@@ -7480,6 +7487,31 @@ func (s SecretManagerConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SecretSyncConfig: Configuration for sync Secret Manager secrets as k8s
+// secrets.
+type SecretSyncConfig struct {
+	// Enabled: Enable/Disable Secret Sync Config.
+	Enabled bool `json:"enabled,omitempty"`
+	// RotationConfig: Rotation config for secret manager.
+	RotationConfig *SyncRotationConfig `json:"rotationConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SecretSyncConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretSyncConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SecurityBulletinEvent: SecurityBulletinEvent is a notification sent to
 // customers when a security bulletin has been posted that they are vulnerable
 // to.
@@ -8497,6 +8529,32 @@ type StatusCondition struct {
 
 func (s StatusCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod StatusCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SyncRotationConfig: SyncRotationConfig is config for secret manager auto
+// rotation.
+type SyncRotationConfig struct {
+	// Enabled: Whether the rotation is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// RotationInterval: The interval between two consecutive rotations. Default
+	// rotation interval is 2 minutes.
+	RotationInterval string `json:"rotationInterval,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SyncRotationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SyncRotationConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9556,6 +9614,28 @@ type WorkloadPolicyConfig struct {
 
 func (s WorkloadPolicyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadPolicyConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WritableCgroups: Defines writable cgroups configuration.
+type WritableCgroups struct {
+	// Enabled: Optional. Whether writable cgroups is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WritableCgroups) MarshalJSON() ([]byte, error) {
+	type NoMethod WritableCgroups
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

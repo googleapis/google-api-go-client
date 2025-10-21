@@ -6,7 +6,7 @@
 
 // Package chromewebstore provides access to the Chrome Web Store API.
 //
-// For product documentation, see: https://developer.chrome.com/webstore/api_index
+// For product documentation, see: https://developer.chrome.com/docs/webstore/api
 //
 // # Library status
 //

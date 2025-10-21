@@ -2890,6 +2890,8 @@ type GoogleCloudContactcenterinsightsV1Dimension struct {
 	//   "MEDIUM" - The dimension is keyed by the conversation medium.
 	//   "AGENT_VERSION_ID" - The dimension is keyed by the agent version ID.
 	//   "AGENT_DEPLOYMENT_ID" - The dimension is keyed by the agent deployment ID.
+	//   "AGENT_ASSIST_SUPERVISOR_ID" - The dimension is keyed by the supervisor ID
+	// of the assigned human supervisor for virtual agents.
 	DimensionKey string `json:"dimensionKey,omitempty"`
 	// IssueDimensionMetadata: Output only. Metadata about the issue dimension.
 	IssueDimensionMetadata *GoogleCloudContactcenterinsightsV1DimensionIssueDimensionMetadata `json:"issueDimensionMetadata,omitempty"`
@@ -8857,6 +8859,8 @@ type GoogleCloudContactcenterinsightsV1alpha1Dimension struct {
 	//   "MEDIUM" - The dimension is keyed by the conversation medium.
 	//   "AGENT_VERSION_ID" - The dimension is keyed by the agent version ID.
 	//   "AGENT_DEPLOYMENT_ID" - The dimension is keyed by the agent deployment ID.
+	//   "AGENT_ASSIST_SUPERVISOR_ID" - The dimension is keyed by the supervisor ID
+	// of the assigned human supervisor for virtual agents.
 	DimensionKey string `json:"dimensionKey,omitempty"`
 	// IssueDimensionMetadata: Output only. Metadata about the issue dimension.
 	IssueDimensionMetadata *GoogleCloudContactcenterinsightsV1alpha1DimensionIssueDimensionMetadata `json:"issueDimensionMetadata,omitempty"`

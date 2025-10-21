@@ -2125,6 +2125,16 @@ type GoogleCloudAiplatformV1beta1ImageConfig struct {
 	// The following aspect ratios are supported: "1:1" "2:3", "3:2" "3:4", "4:3"
 	// "4:5", "5:4" "9:16", "16:9" "21:9"
 	AspectRatio string `json:"aspectRatio,omitempty"`
+	// ImageOutputOptions: Optional. The image output format for generated images.
+	ImageOutputOptions *GoogleCloudAiplatformV1beta1ImageConfigImageOutputOptions `json:"imageOutputOptions,omitempty"`
+	// PersonGeneration: Optional. Controls whether the model can generate people.
+	//
+	// Possible values:
+	//   "PERSON_GENERATION_UNSPECIFIED" - Generation images of people unspecified.
+	//   "ALLOW_ALL" - Generate images that include adults and children.
+	//   "ALLOW_ADULT" - Generate images of adults, but not children.
+	//   "ALLOW_NONE" - Block generation of images of people.
+	PersonGeneration string `json:"personGeneration,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AspectRatio") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2140,6 +2150,31 @@ type GoogleCloudAiplatformV1beta1ImageConfig struct {
 
 func (s GoogleCloudAiplatformV1beta1ImageConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1ImageConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1ImageConfigImageOutputOptions: The image output
+// format for generated images.
+type GoogleCloudAiplatformV1beta1ImageConfigImageOutputOptions struct {
+	// CompressionQuality: Optional. The compression quality of the output image.
+	CompressionQuality int64 `json:"compressionQuality,omitempty"`
+	// MimeType: Optional. The image format that the output should be saved as.
+	MimeType string `json:"mimeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CompressionQuality") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CompressionQuality") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1ImageConfigImageOutputOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1ImageConfigImageOutputOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

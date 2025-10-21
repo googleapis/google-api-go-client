@@ -1310,7 +1310,7 @@ type CommonEventObject struct {
 	//   "SHEETS" - The add-on launches from Google Sheets.
 	//   "SLIDES" - The add-on launches from Google Slides.
 	//   "DRAWINGS" - The add-on launches from Google Drawings.
-	//   "CHAT" - A Google Chat app. Not used for Google Workspace add-ons.
+	//   "CHAT" - A Google Chat app.
 	HostApp string `json:"hostApp,omitempty"`
 	// InvokedFunction: Name of the function to invoke. This field doesn't populate
 	// for Google Workspace Add-ons that extend Google Chat. Instead, to receive
@@ -2802,14 +2802,15 @@ type GoogleAppsCardV1DateTimePicker struct {
 	//   "DATE_ONLY" - Users input a date.
 	//   "TIME_ONLY" - Users input a time.
 	Type string `json:"type,omitempty"`
-	// ValueMsEpoch: The default value displayed in the widget, in milliseconds
-	// since Unix epoch time (https://en.wikipedia.org/wiki/Unix_time). Specify the
-	// value based on the type of picker (`DateTimePickerType`): * `DATE_AND_TIME`:
-	// a calendar date and time in UTC. For example, to represent January 1, 2023
-	// at 12:00 PM UTC, use `1672574400000`. * `DATE_ONLY`: a calendar date at
-	// 00:00:00 UTC. For example, to represent January 1, 2023, use
-	// `1672531200000`. * `TIME_ONLY`: a time in UTC. For example, to represent
-	// 12:00 PM, use `43200000` (or `12 * 60 * 60 * 1000`).
+	// ValueMsEpoch: Optional. The default value displayed in the widget, in
+	// milliseconds since Unix epoch time
+	// (https://en.wikipedia.org/wiki/Unix_time). Specify the value based on the
+	// type of picker (`DateTimePickerType`): * `DATE_AND_TIME`: a calendar date
+	// and time in UTC. For example, to represent January 1, 2023 at 12:00 PM UTC,
+	// use `1672574400000`. * `DATE_ONLY`: a calendar date at 00:00:00 UTC. For
+	// example, to represent January 1, 2023, use `1672531200000`. * `TIME_ONLY`: a
+	// time in UTC. For example, to represent 12:00 PM, use `43200000` (or `12 * 60
+	// * 60 * 1000`).
 	ValueMsEpoch int64 `json:"valueMsEpoch,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "HostAppDataSource") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5118,8 +5119,9 @@ type Message struct {
 	// `<{url}|{rendered_text}>` where the first string is the URL and the second
 	// is the rendered text—for example, ``. * Custom emoji using the format
 	// `:{emoji_name}:`—for example, `:smile:`. This doesn't apply to Unicode
-	// emoji, such as `U+1F600` for a grinning face emoji. For more information,
-	// see View text formatting sent in a message
+	// emoji, such as `U+1F600` for a grinning face emoji. * Bullet list items
+	// using asterisks (`*`)—for example, `* item`. For more information, see
+	// View text formatting sent in a message
 	// (https://developers.google.com/workspace/chat/format-messages#view_text_formatting_sent_in_a_message)
 	FormattedText string `json:"formattedText,omitempty"`
 	// LastUpdateTime: Output only. The time at which the message was last edited

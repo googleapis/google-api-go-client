@@ -941,6 +941,14 @@ type GoogleCloudDataplexV1AspectType struct {
 	Authorization *GoogleCloudDataplexV1AspectTypeAuthorization `json:"authorization,omitempty"`
 	// CreateTime: Output only. The time when the AspectType was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataClassification: Optional. Immutable. Stores data classification of the
+	// aspect.
+	//
+	// Possible values:
+	//   "DATA_CLASSIFICATION_UNSPECIFIED" - Denotes that the aspect contains only
+	// metadata.
+	//   "METADATA_AND_DATA" - Metadata and data classification.
+	DataClassification string `json:"dataClassification,omitempty"`
 	// Description: Optional. Description of the AspectType.
 	Description string `json:"description,omitempty"`
 	// DisplayName: Optional. User friendly display name.
@@ -11076,9 +11084,7 @@ func (c *ProjectsLocationsLookupEntryCall) Paths(paths ...string) *ProjectsLocat
 //
 // the number of aspects exceeds 100, the first 100 will be returned.
 //
-//	"ALL" - Returns all aspects. If the number of aspects exceeds 100, the
-//
-// first 100 will be returned.
+//	"ALL"
 func (c *ProjectsLocationsLookupEntryCall) View(view string) *ProjectsLocationsLookupEntryCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -18907,9 +18913,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesGetCall) Paths(paths ...string) *Pro
 //
 // the number of aspects exceeds 100, the first 100 will be returned.
 //
-//	"ALL" - Returns all aspects. If the number of aspects exceeds 100, the
-//
-// first 100 will be returned.
+//	"ALL"
 func (c *ProjectsLocationsEntryGroupsEntriesGetCall) View(view string) *ProjectsLocationsEntryGroupsEntriesGetCall {
 	c.urlParams_.Set("view", view)
 	return c

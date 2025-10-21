@@ -1221,6 +1221,12 @@ type DropInfo struct {
 	//   "L2_INTERCONNECT_DESTINATION_IP_MISMATCH" - Packet is dropped due to
 	// destination IP not matching the appliance mapping IPs configured on the L2
 	// Interconnect attachment.
+	//   "NCC_ROUTE_WITHIN_HYBRID_SUBNET_UNSUPPORTED" - Packet could be dropped
+	// because it matches a route associated with an NCC spoke in the hybrid subnet
+	// context, but such a configuration is not supported.
+	//   "HYBRID_SUBNET_REGION_MISMATCH" - Packet is dropped because the region of
+	// the hybrid subnet is different from the region of the next hop of the route
+	// matched within this hybrid subnet.
 	Cause string `json:"cause,omitempty"`
 	// DestinationGeolocationCode: Geolocation (region code) of the destination IP
 	// address (if relevant).

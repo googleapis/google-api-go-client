@@ -413,6 +413,8 @@ type AdvancedSecurityOverrides struct {
 	// MtePolicy: Optional. Controls Memory Tagging Extension (MTE)
 	// (https://source.android.com/docs/security/test/memory-safety/arm-mte) on the
 	// device. The device needs to be rebooted to apply changes to the MTE policy.
+	// On Android 15 and above, a NonComplianceDetail with PENDING is reported if
+	// the policy change is pending a device reboot.
 	//
 	// Possible values:
 	//   "MTE_POLICY_UNSPECIFIED" - Unspecified. Defaults to MTE_USER_CHOICE.

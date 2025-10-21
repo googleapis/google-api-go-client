@@ -13519,10 +13519,11 @@ func (r *OrganizationsLocationsColumnDataProfilesService) List(parent string) *O
 // `profile_last_generated`: Date and time the profile was last generated * The
 // operator must be `=` for project_id, dataset_id, and table_id. Other filters
 // also support `!=`. The `profile_last_generated` filter also supports `<` and
-// `>`. Examples: * project_id = 12345 AND status_code = 1 * project_id = 12345
-// AND sensitivity_level = HIGH * project_id = 12345 AND info_type =
-// STREET_ADDRESS * profile_last_generated < "2025-01-01T00:00:00.000Z" The
-// length of this field should be no more than 500 characters.
+// `>`. The syntax is based on https://google.aip.dev/160. Examples: *
+// project_id = 12345 AND status_code = 1 * project_id = 12345 AND
+// sensitivity_level = HIGH * project_id = 12345 AND info_type = STREET_ADDRESS
+// * profile_last_generated < "2025-01-01T00:00:00.000Z" The length of this
+// field should be no more than 500 characters.
 func (c *OrganizationsLocationsColumnDataProfilesListCall) Filter(filter string) *OrganizationsLocationsColumnDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -14011,7 +14012,7 @@ func (r *OrganizationsLocationsConnectionsService) List(parent string) *Organiza
 }
 
 // Filter sets the optional parameter "filter": Supported field/value: `state`
-// - MISSING|AVAILABLE|ERROR
+// - MISSING|AVAILABLE|ERROR The syntax is based on https://google.aip.dev/160.
 func (c *OrganizationsLocationsConnectionsListCall) Filter(filter string) *OrganizationsLocationsConnectionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -14271,7 +14272,8 @@ func (r *OrganizationsLocationsConnectionsService) Search(parent string) *Organi
 }
 
 // Filter sets the optional parameter "filter": Supported field/value: -
-// `state` - MISSING|AVAILABLE|ERROR
+// `state` - MISSING|AVAILABLE|ERROR The syntax is based on
+// https://google.aip.dev/160.
 func (c *OrganizationsLocationsConnectionsSearchCall) Filter(filter string) *OrganizationsLocationsConnectionsSearchCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -15661,11 +15663,12 @@ func (r *OrganizationsLocationsDlpJobsService) List(parentid string) *Organizati
 // Supported fields for risk analysis jobs: - `state` -
 // RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to the time the
 // job finished. - 'start_time` - Corresponds to the time the job finished. *
-// The operator must be `=` or `!=`. Examples: * inspected_storage =
-// cloud_storage AND state = done * inspected_storage = cloud_storage OR
-// inspected_storage = bigquery * inspected_storage = cloud_storage AND (state
-// = done OR state = canceled) * end_time > \"2017-12-12T00:00:00+00:00\" The
-// length of this field should be no more than 500 characters.
+// The operator must be `=` or `!=`. The syntax is based on
+// https://google.aip.dev/160. Examples: * inspected_storage = cloud_storage
+// AND state = done * inspected_storage = cloud_storage OR inspected_storage =
+// bigquery * inspected_storage = cloud_storage AND (state = done OR state =
+// canceled) * end_time > \"2017-12-12T00:00:00+00:00\" The length of this
+// field should be no more than 500 characters.
 func (c *OrganizationsLocationsDlpJobsListCall) Filter(filter string) *OrganizationsLocationsDlpJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -16076,11 +16079,12 @@ func (r *OrganizationsLocationsFileStoreDataProfilesService) List(parent string)
 // https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto -
 // `profile_last_generated`: Date and time the profile was last generated * The
 // operator must be `=` or `!=`. The `profile_last_generated` filter also
-// supports `<` and `>`. Examples: * `project_id = 12345 AND status_code = 1` *
-// `project_id = 12345 AND sensitivity_level = HIGH` * `project_id = 12345 AND
-// resource_visibility = PUBLIC` * `file_store_path = "gs://mybucket" *
-// `profile_last_generated < "2025-01-01T00:00:00.000Z" The length of this
-// field should be no more than 500 characters.
+// supports `<` and `>`. The syntax is based on https://google.aip.dev/160.
+// Examples: * `project_id = 12345 AND status_code = 1` * `project_id = 12345
+// AND sensitivity_level = HIGH` * `project_id = 12345 AND resource_visibility
+// = PUBLIC` * `file_store_path = "gs://mybucket" * `profile_last_generated <
+// "2025-01-01T00:00:00.000Z" The length of this field should be no more than
+// 500 characters.
 func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Filter(filter string) *OrganizationsLocationsFileStoreDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -17361,12 +17365,12 @@ func (r *OrganizationsLocationsJobTriggersService) List(parentid string) *Organi
 // DATASTORE|CLOUD_STORAGE|BIGQUERY - 'last_run_time` - RFC 3339 formatted
 // timestamp, surrounded by quotation marks. Nanoseconds are ignored. -
 // 'error_count' - Number of errors that have occurred while running. * The
-// operator must be `=` or `!=` for status and inspected_storage. Examples: *
-// inspected_storage = cloud_storage AND status = HEALTHY * inspected_storage =
-// cloud_storage OR inspected_storage = bigquery * inspected_storage =
-// cloud_storage AND (state = PAUSED OR state = HEALTHY) * last_run_time >
-// \"2017-12-12T00:00:00+00:00\" The length of this field should be no more
-// than 500 characters.
+// operator must be `=` or `!=` for status and inspected_storage. The syntax is
+// based on https://google.aip.dev/160. Examples: * inspected_storage =
+// cloud_storage AND status = HEALTHY * inspected_storage = cloud_storage OR
+// inspected_storage = bigquery * inspected_storage = cloud_storage AND (state
+// = PAUSED OR state = HEALTHY) * last_run_time > \"2017-12-12T00:00:00+00:00\"
+// The length of this field should be no more than 500 characters.
 func (c *OrganizationsLocationsJobTriggersListCall) Filter(filter string) *OrganizationsLocationsJobTriggersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -17782,10 +17786,11 @@ func (r *OrganizationsLocationsProjectDataProfilesService) List(parent string) *
 // https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto -
 // `profile_last_generated`: Date and time the profile was last generated * The
 // operator must be `=` or `!=`. The `profile_last_generated` filter also
-// supports `<` and `>`. Examples: * `project_id = 12345 AND status_code = 1` *
-// `project_id = 12345 AND sensitivity_level = HIGH` * `profile_last_generated
-// < "2025-01-01T00:00:00.000Z" The length of this field should be no more
-// than 500 characters.
+// supports `<` and `>`. The syntax is based on https://google.aip.dev/160.
+// Examples: * `project_id = 12345 AND status_code = 1` * `project_id = 12345
+// AND sensitivity_level = HIGH` * `profile_last_generated <
+// "2025-01-01T00:00:00.000Z" The length of this field should be no more than
+// 500 characters.
 func (c *OrganizationsLocationsProjectDataProfilesListCall) Filter(filter string) *OrganizationsLocationsProjectDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -18797,11 +18802,11 @@ func (r *OrganizationsLocationsTableDataProfilesService) List(parent string) *Or
 // https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto -
 // `profile_last_generated`: Date and time the profile was last generated * The
 // operator must be `=` or `!=`. The `profile_last_generated` filter also
-// supports `<` and `>`. Examples: * `project_id = 12345 AND status_code = 1` *
-// `project_id = 12345 AND sensitivity_level = HIGH` * `project_id = 12345 AND
-// resource_visibility = PUBLIC` * `profile_last_generated <
-// "2025-01-01T00:00:00.000Z" The length of this field should be no more than
-// 500 characters.
+// supports `<` and `>`. The syntax is based on https://google.aip.dev/160.
+// Examples: * `project_id = 12345 AND status_code = 1` * `project_id = 12345
+// AND sensitivity_level = HIGH` * `project_id = 12345 AND resource_visibility
+// = PUBLIC` * `profile_last_generated < "2025-01-01T00:00:00.000Z" The length
+// of this field should be no more than 500 characters.
 func (c *OrganizationsLocationsTableDataProfilesListCall) Filter(filter string) *OrganizationsLocationsTableDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -21044,11 +21049,12 @@ func (r *ProjectsDlpJobsService) List(parentid string) *ProjectsDlpJobsListCall 
 // Supported fields for risk analysis jobs: - `state` -
 // RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to the time the
 // job finished. - 'start_time` - Corresponds to the time the job finished. *
-// The operator must be `=` or `!=`. Examples: * inspected_storage =
-// cloud_storage AND state = done * inspected_storage = cloud_storage OR
-// inspected_storage = bigquery * inspected_storage = cloud_storage AND (state
-// = done OR state = canceled) * end_time > \"2017-12-12T00:00:00+00:00\" The
-// length of this field should be no more than 500 characters.
+// The operator must be `=` or `!=`. The syntax is based on
+// https://google.aip.dev/160. Examples: * inspected_storage = cloud_storage
+// AND state = done * inspected_storage = cloud_storage OR inspected_storage =
+// bigquery * inspected_storage = cloud_storage AND (state = done OR state =
+// canceled) * end_time > \"2017-12-12T00:00:00+00:00\" The length of this
+// field should be no more than 500 characters.
 func (c *ProjectsDlpJobsListCall) Filter(filter string) *ProjectsDlpJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -22432,12 +22438,12 @@ func (r *ProjectsJobTriggersService) List(parentid string) *ProjectsJobTriggersL
 // DATASTORE|CLOUD_STORAGE|BIGQUERY - 'last_run_time` - RFC 3339 formatted
 // timestamp, surrounded by quotation marks. Nanoseconds are ignored. -
 // 'error_count' - Number of errors that have occurred while running. * The
-// operator must be `=` or `!=` for status and inspected_storage. Examples: *
-// inspected_storage = cloud_storage AND status = HEALTHY * inspected_storage =
-// cloud_storage OR inspected_storage = bigquery * inspected_storage =
-// cloud_storage AND (state = PAUSED OR state = HEALTHY) * last_run_time >
-// \"2017-12-12T00:00:00+00:00\" The length of this field should be no more
-// than 500 characters.
+// operator must be `=` or `!=` for status and inspected_storage. The syntax is
+// based on https://google.aip.dev/160. Examples: * inspected_storage =
+// cloud_storage AND status = HEALTHY * inspected_storage = cloud_storage OR
+// inspected_storage = bigquery * inspected_storage = cloud_storage AND (state
+// = PAUSED OR state = HEALTHY) * last_run_time > \"2017-12-12T00:00:00+00:00\"
+// The length of this field should be no more than 500 characters.
 func (c *ProjectsJobTriggersListCall) Filter(filter string) *ProjectsJobTriggersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -22860,10 +22866,11 @@ func (r *ProjectsLocationsColumnDataProfilesService) List(parent string) *Projec
 // `profile_last_generated`: Date and time the profile was last generated * The
 // operator must be `=` for project_id, dataset_id, and table_id. Other filters
 // also support `!=`. The `profile_last_generated` filter also supports `<` and
-// `>`. Examples: * project_id = 12345 AND status_code = 1 * project_id = 12345
-// AND sensitivity_level = HIGH * project_id = 12345 AND info_type =
-// STREET_ADDRESS * profile_last_generated < "2025-01-01T00:00:00.000Z" The
-// length of this field should be no more than 500 characters.
+// `>`. The syntax is based on https://google.aip.dev/160. Examples: *
+// project_id = 12345 AND status_code = 1 * project_id = 12345 AND
+// sensitivity_level = HIGH * project_id = 12345 AND info_type = STREET_ADDRESS
+// * profile_last_generated < "2025-01-01T00:00:00.000Z" The length of this
+// field should be no more than 500 characters.
 func (c *ProjectsLocationsColumnDataProfilesListCall) Filter(filter string) *ProjectsLocationsColumnDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -23352,7 +23359,7 @@ func (r *ProjectsLocationsConnectionsService) List(parent string) *ProjectsLocat
 }
 
 // Filter sets the optional parameter "filter": Supported field/value: `state`
-// - MISSING|AVAILABLE|ERROR
+// - MISSING|AVAILABLE|ERROR The syntax is based on https://google.aip.dev/160.
 func (c *ProjectsLocationsConnectionsListCall) Filter(filter string) *ProjectsLocationsConnectionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -23612,7 +23619,8 @@ func (r *ProjectsLocationsConnectionsService) Search(parent string) *ProjectsLoc
 }
 
 // Filter sets the optional parameter "filter": Supported field/value: -
-// `state` - MISSING|AVAILABLE|ERROR
+// `state` - MISSING|AVAILABLE|ERROR The syntax is based on
+// https://google.aip.dev/160.
 func (c *ProjectsLocationsConnectionsSearchCall) Filter(filter string) *ProjectsLocationsConnectionsSearchCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -26013,11 +26021,12 @@ func (r *ProjectsLocationsDlpJobsService) List(parentid string) *ProjectsLocatio
 // Supported fields for risk analysis jobs: - `state` -
 // RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to the time the
 // job finished. - 'start_time` - Corresponds to the time the job finished. *
-// The operator must be `=` or `!=`. Examples: * inspected_storage =
-// cloud_storage AND state = done * inspected_storage = cloud_storage OR
-// inspected_storage = bigquery * inspected_storage = cloud_storage AND (state
-// = done OR state = canceled) * end_time > \"2017-12-12T00:00:00+00:00\" The
-// length of this field should be no more than 500 characters.
+// The operator must be `=` or `!=`. The syntax is based on
+// https://google.aip.dev/160. Examples: * inspected_storage = cloud_storage
+// AND state = done * inspected_storage = cloud_storage OR inspected_storage =
+// bigquery * inspected_storage = cloud_storage AND (state = done OR state =
+// canceled) * end_time > \"2017-12-12T00:00:00+00:00\" The length of this
+// field should be no more than 500 characters.
 func (c *ProjectsLocationsDlpJobsListCall) Filter(filter string) *ProjectsLocationsDlpJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -26428,11 +26437,12 @@ func (r *ProjectsLocationsFileStoreDataProfilesService) List(parent string) *Pro
 // https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto -
 // `profile_last_generated`: Date and time the profile was last generated * The
 // operator must be `=` or `!=`. The `profile_last_generated` filter also
-// supports `<` and `>`. Examples: * `project_id = 12345 AND status_code = 1` *
-// `project_id = 12345 AND sensitivity_level = HIGH` * `project_id = 12345 AND
-// resource_visibility = PUBLIC` * `file_store_path = "gs://mybucket" *
-// `profile_last_generated < "2025-01-01T00:00:00.000Z" The length of this
-// field should be no more than 500 characters.
+// supports `<` and `>`. The syntax is based on https://google.aip.dev/160.
+// Examples: * `project_id = 12345 AND status_code = 1` * `project_id = 12345
+// AND sensitivity_level = HIGH` * `project_id = 12345 AND resource_visibility
+// = PUBLIC` * `file_store_path = "gs://mybucket" * `profile_last_generated <
+// "2025-01-01T00:00:00.000Z" The length of this field should be no more than
+// 500 characters.
 func (c *ProjectsLocationsFileStoreDataProfilesListCall) Filter(filter string) *ProjectsLocationsFileStoreDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -28046,12 +28056,12 @@ func (r *ProjectsLocationsJobTriggersService) List(parentid string) *ProjectsLoc
 // DATASTORE|CLOUD_STORAGE|BIGQUERY - 'last_run_time` - RFC 3339 formatted
 // timestamp, surrounded by quotation marks. Nanoseconds are ignored. -
 // 'error_count' - Number of errors that have occurred while running. * The
-// operator must be `=` or `!=` for status and inspected_storage. Examples: *
-// inspected_storage = cloud_storage AND status = HEALTHY * inspected_storage =
-// cloud_storage OR inspected_storage = bigquery * inspected_storage =
-// cloud_storage AND (state = PAUSED OR state = HEALTHY) * last_run_time >
-// \"2017-12-12T00:00:00+00:00\" The length of this field should be no more
-// than 500 characters.
+// operator must be `=` or `!=` for status and inspected_storage. The syntax is
+// based on https://google.aip.dev/160. Examples: * inspected_storage =
+// cloud_storage AND status = HEALTHY * inspected_storage = cloud_storage OR
+// inspected_storage = bigquery * inspected_storage = cloud_storage AND (state
+// = PAUSED OR state = HEALTHY) * last_run_time > \"2017-12-12T00:00:00+00:00\"
+// The length of this field should be no more than 500 characters.
 func (c *ProjectsLocationsJobTriggersListCall) Filter(filter string) *ProjectsLocationsJobTriggersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -28467,10 +28477,11 @@ func (r *ProjectsLocationsProjectDataProfilesService) List(parent string) *Proje
 // https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto -
 // `profile_last_generated`: Date and time the profile was last generated * The
 // operator must be `=` or `!=`. The `profile_last_generated` filter also
-// supports `<` and `>`. Examples: * `project_id = 12345 AND status_code = 1` *
-// `project_id = 12345 AND sensitivity_level = HIGH` * `profile_last_generated
-// < "2025-01-01T00:00:00.000Z" The length of this field should be no more
-// than 500 characters.
+// supports `<` and `>`. The syntax is based on https://google.aip.dev/160.
+// Examples: * `project_id = 12345 AND status_code = 1` * `project_id = 12345
+// AND sensitivity_level = HIGH` * `profile_last_generated <
+// "2025-01-01T00:00:00.000Z" The length of this field should be no more than
+// 500 characters.
 func (c *ProjectsLocationsProjectDataProfilesListCall) Filter(filter string) *ProjectsLocationsProjectDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -29482,11 +29493,11 @@ func (r *ProjectsLocationsTableDataProfilesService) List(parent string) *Project
 // https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto -
 // `profile_last_generated`: Date and time the profile was last generated * The
 // operator must be `=` or `!=`. The `profile_last_generated` filter also
-// supports `<` and `>`. Examples: * `project_id = 12345 AND status_code = 1` *
-// `project_id = 12345 AND sensitivity_level = HIGH` * `project_id = 12345 AND
-// resource_visibility = PUBLIC` * `profile_last_generated <
-// "2025-01-01T00:00:00.000Z" The length of this field should be no more than
-// 500 characters.
+// supports `<` and `>`. The syntax is based on https://google.aip.dev/160.
+// Examples: * `project_id = 12345 AND status_code = 1` * `project_id = 12345
+// AND sensitivity_level = HIGH` * `project_id = 12345 AND resource_visibility
+// = PUBLIC` * `profile_last_generated < "2025-01-01T00:00:00.000Z" The length
+// of this field should be no more than 500 characters.
 func (c *ProjectsLocationsTableDataProfilesListCall) Filter(filter string) *ProjectsLocationsTableDataProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

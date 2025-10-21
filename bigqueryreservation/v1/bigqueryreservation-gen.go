@@ -281,6 +281,12 @@ type Assignment struct {
 	// The assignment_id must only contain lower case alphanumeric characters or
 	// dashes and the max length is 64 characters.
 	Name string `json:"name,omitempty"`
+	// SchedulingPolicy: Optional. The scheduling policy to use for jobs and
+	// queries of this assignee when running under the associated reservation. The
+	// scheduling policy controls how the reservation's resources are distributed.
+	// This overrides the default scheduling policy specified on the reservation.
+	// This feature is not yet generally available.
+	SchedulingPolicy *SchedulingPolicy `json:"schedulingPolicy,omitempty"`
 	// State: Output only. State of the assignment.
 	//
 	// Possible values:
@@ -1245,6 +1251,11 @@ type Reservation struct {
 	// mode, the ignore_idle_slots field must be set to false. Otherwise the
 	// request will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`.
 	ScalingMode string `json:"scalingMode,omitempty"`
+	// SchedulingPolicy: Optional. The scheduling policy to use for jobs and
+	// queries running under this reservation. The scheduling policy controls how
+	// the reservation's resources are distributed. This feature is not yet
+	// generally available.
+	SchedulingPolicy *SchedulingPolicy `json:"schedulingPolicy,omitempty"`
 	// SecondaryLocation: Optional. The current location of the reservation's
 	// secondary replica. This field is only set for reservations using the managed
 	// disaster recovery feature. Users can set this in create reservation calls to
@@ -1312,6 +1323,35 @@ type ReservationGroup struct {
 
 func (s ReservationGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod ReservationGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SchedulingPolicy: The scheduling policy controls how a reservation's
+// resources are distributed.
+type SchedulingPolicy struct {
+	// Concurrency: Optional. If present and > 0, the reservation will attempt to
+	// limit the concurrency of jobs running for any particular project within it
+	// to the given value. This feature is not yet generally available.
+	Concurrency int64 `json:"concurrency,omitempty,string"`
+	// MaxSlots: Optional. If present and > 0, the reservation will attempt to
+	// limit the slot consumption of queries running for any particular project
+	// within it to the given value. This feature is not yet generally available.
+	MaxSlots int64 `json:"maxSlots,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Concurrency") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Concurrency") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SchedulingPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod SchedulingPolicy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

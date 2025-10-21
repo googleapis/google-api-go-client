@@ -747,6 +747,38 @@ func (s Manifest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ObjectRetention: Describes options for object retention update.
+type ObjectRetention struct {
+	// RetainUntilTime: Required. The time when the object will be retained until.
+	// UNSET will clear the retention. Must be specified in RFC 3339 format e.g.
+	// YYYY-MM-DD'T'HH:MM:SS.SS'Z' or YYYY-MM-DD'T'HH:MM:SS'Z'.
+	RetainUntilTime string `json:"retainUntilTime,omitempty"`
+	// RetentionMode: Required. The retention mode of the object.
+	//
+	// Possible values:
+	//   "RETENTION_MODE_UNSPECIFIED" - If set and retain_until_time is empty,
+	// clears the retention.
+	//   "LOCKED" - Sets the retention mode to locked.
+	//   "UNLOCKED" - Sets the retention mode to unlocked.
+	RetentionMode string `json:"retentionMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RetainUntilTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RetainUntilTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ObjectRetention) MarshalJSON() ([]byte, error) {
+	type NoMethod ObjectRetention
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is the
 // result of a network API call.
 type Operation struct {
@@ -895,6 +927,12 @@ type PutMetadata struct {
 	// values will be ignored. Set empty values to clear the metadata. Refer to
 	// documentation in https://cloud.google.com/storage/docs/metadata#custom-time.
 	CustomTime string `json:"customTime,omitempty"`
+	// ObjectRetention: Optional. Updates objects retention lock configuration.
+	// Unset values will be ignored. Set empty values to clear the retention for
+	// the object with existing `Unlocked` retention mode. Object with existing
+	// `Locked` retention mode cannot be cleared or reduce retain_until_time. Refer
+	// to documentation in https://cloud.google.com/storage/docs/object-lock
+	ObjectRetention *ObjectRetention `json:"objectRetention,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CacheControl") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

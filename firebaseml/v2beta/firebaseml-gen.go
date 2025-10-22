@@ -3223,11 +3223,12 @@ type GoogleCloudAiplatformV1beta1ToolComputerUse struct {
 	//   "ENVIRONMENT_UNSPECIFIED" - Defaults to browser.
 	//   "ENVIRONMENT_BROWSER" - Operates in a web browser.
 	Environment string `json:"environment,omitempty"`
-	// ExcludedPredefinedFunctions: Optional. By default, predefined functions are
-	// included in the final model call. Some of them can be explicitly excluded
-	// from being automatically included. This can serve two purposes: 1. Using a
-	// more restricted / different action space. 2. Improving the definitions /
-	// instructions of predefined functions.
+	// ExcludedPredefinedFunctions: Optional. By default, predefined functions
+	// (https://cloud.google.com/vertex-ai/generative-ai/docs/computer-use#supported-actions)
+	// are included in the final model call. Some of them can be explicitly
+	// excluded from being automatically included. This can serve two purposes: 1.
+	// Using a more restricted / different action space. 2. Improving the
+	// definitions / instructions of predefined functions.
 	ExcludedPredefinedFunctions []string `json:"excludedPredefinedFunctions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Environment") to
 	// unconditionally include in API requests. By default, fields with empty or

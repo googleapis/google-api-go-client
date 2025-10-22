@@ -328,6 +328,8 @@ func (s CancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
 // CreateSubscriptionIntent: Intent message for creating a Subscription
 // resource.
 type CreateSubscriptionIntent struct {
+	// CycleOptions: Optional. The cycle options for the subscription.
+	CycleOptions *CycleOptions `json:"cycleOptions,omitempty"`
 	// Parent: Required. The parent resource name, which is the identifier of the
 	// partner.
 	Parent string `json:"parent,omitempty"`
@@ -338,13 +340,13 @@ type CreateSubscriptionIntent struct {
 	// If a subscription was previously created with the same subscription_id, we
 	// will directly return that one.
 	SubscriptionId string `json:"subscriptionId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Parent") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CycleOptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// NullFields is a list of field names (e.g. "CycleOptions") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

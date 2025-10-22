@@ -2651,6 +2651,7 @@ type Repository struct {
 	//   "KFP" - Kubeflow Pipelines package format.
 	//   "GO" - Go package format.
 	//   "GENERIC" - Generic package format.
+	//   "RUBY" - Ruby package format.
 	Format string `json:"format,omitempty"`
 	// KmsKeyName: The Cloud KMS resource name of the customer managed encryption
 	// key that's used to encrypt the contents of the Repository. Has the form:
@@ -3441,7 +3442,7 @@ type VulnerabilityScanningConfig struct {
 	//
 	// Possible values:
 	//   "ENABLEMENT_CONFIG_UNSPECIFIED" - Not set. This will be treated as
-	// INHERITED.
+	// INHERITED for Docker repositories and DISABLED for non-Docker repositories.
 	//   "INHERITED" - Scanning is Enabled, but dependent on API enablement.
 	//   "DISABLED" - No automatic vulnerability scanning will be performed for
 	// this repository.

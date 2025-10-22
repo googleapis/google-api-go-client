@@ -1111,7 +1111,8 @@ type KmsConfig struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// CryptoKeyName: Required. Customer managed crypto key resource full name.
 	// Format:
-	// projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{key}.
+	// projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypt
+	// o_key}.
 	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
 	// Description: Description of the KmsConfig.
 	Description string `json:"description,omitempty"`

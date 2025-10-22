@@ -4099,6 +4099,8 @@ func (s IncrementalResultStats) MarshalJSON() ([]byte, error) {
 type IndexPruningStats struct {
 	// BaseTable: The base table reference.
 	BaseTable *TableReference `json:"baseTable,omitempty"`
+	// IndexId: The index id.
+	IndexId string `json:"indexId,omitempty"`
 	// PostIndexPruningParallelInputCount: The number of parallel inputs after
 	// index pruning.
 	PostIndexPruningParallelInputCount int64 `json:"postIndexPruningParallelInputCount,omitempty,string"`

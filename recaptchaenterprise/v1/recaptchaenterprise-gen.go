@@ -590,8 +590,6 @@ type GoogleCloudRecaptchaenterpriseV1AssessmentEnvironment struct {
 	// CreateAssessment request. This can be the link to the client module's
 	// project. Examples include: -
 	// "github.com/GoogleCloudPlatform/recaptcha-enterprise-google-tag-manager" -
-	// "cloud.google.com/recaptcha/docs/implement-waf-akamai" -
-	// "cloud.google.com/recaptcha/docs/implement-waf-cloudflare" -
 	// "wordpress.org/plugins/recaptcha-something"
 	Client string `json:"client,omitempty"`
 	// Version: Optional. The version of the client module. For example, "1.0.0".
@@ -2187,6 +2185,12 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 	//   "MISSING" - The user verification token was not present.
 	//   "BROWSER_ERROR" - A retriable error (such as network failure) occurred on
 	// the browser. Could easily be simulated by an attacker.
+	//   "UNEXPECTED_ACTION" - The action provided at token generation was
+	// different than the `expected_action` in the assessment request. The
+	// comparison is case-insensitive. This reason can only be returned if all of
+	// the following are true: - your `site_key` has the POLICY_BASED_CHALLENGE
+	// integration type - you set an action score threshold higher than 0.0 - you
+	// provided a non-empty `expected_action`
 	InvalidReason string `json:"invalidReason,omitempty"`
 	// IosBundleId: Output only. The ID of the iOS bundle with which the token was
 	// generated (iOS keys only).

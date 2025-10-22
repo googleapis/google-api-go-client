@@ -4843,6 +4843,18 @@ type Membership struct {
 	// manager, or owner. - Delete the space. Only supported in SpaceType.SPACE
 	// (named spaces). To learn more, see [Learn more about your role as a space
 	// owner or manager](https://support.google.com/chat/answer/11833441).
+	//   "ROLE_ASSISTANT_MANAGER" - A space manager. In the Chat UI, this role is
+	// called Manager. The user has all basic permissions of `ROLE_MEMBER`, and can
+	// be granted a subset of administrative permissions by an owner. By default,
+	// managers have all the permissions of an owner except for the ability to: -
+	// Delete the space. - Make another space member an owner. - Change an owner's
+	// role. By default, managers permissions include but aren't limited to: - Make
+	// another member a manager. - Delete messages in the space. - Manage space
+	// permissions. - Receive notifications for requests to join the space if the
+	// manager has the "manage members" permission in the space settings. - Make a
+	// space discoverable. Only supported in SpaceType.SPACE (named spaces). To
+	// learn more, see [Manage space
+	// settings](https://support.google.com/chat/answer/13340792).
 	Role string `json:"role,omitempty"`
 	// State: Output only. State of the membership.
 	//
@@ -5404,21 +5416,24 @@ func (s OpenLink) MarshalJSON() ([]byte, error) {
 
 // PermissionSetting: Represents a space permission setting.
 type PermissionSetting struct {
+	// AssistantManagersAllowed: Optional. Whether space managers
+	// `ROLE_ASSISTANT_MANAGER`) have this permission.
+	AssistantManagersAllowed bool `json:"assistantManagersAllowed,omitempty"`
 	// ManagersAllowed: Optional. Whether space owners (`ROLE_MANAGER`) have this
 	// permission.
 	ManagersAllowed bool `json:"managersAllowed,omitempty"`
 	// MembersAllowed: Optional. Whether basic space members (`ROLE_MEMBER`) have
 	// this permission.
 	MembersAllowed bool `json:"membersAllowed,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ManagersAllowed") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AssistantManagersAllowed")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ManagersAllowed") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AssistantManagersAllowed") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5902,8 +5917,9 @@ type Space struct {
 	// customer resource
 	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers).
 	// Private apps can also use the `customers/my_customer` alias to create the
-	// space in the same Google Workspace organization as the app. For DMs, this
-	// field isn't populated.
+	// space in the same Google Workspace organization as the app. This field isn't
+	// populated for direct messages (DMs) or when the space is created by
+	// non-Google Workspace users.
 	Customer string `json:"customer,omitempty"`
 	// DisplayName: Optional. The space's display name. Required when creating a
 	// space

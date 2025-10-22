@@ -1402,6 +1402,17 @@ type GoogleMapsPlacesV1Place struct {
 	Location *GoogleTypeLatLng `json:"location,omitempty"`
 	// MenuForChildren: Place has a children's menu.
 	MenuForChildren bool `json:"menuForChildren,omitempty"`
+	// MovedPlace: If this Place is permanently closed and has moved to a new
+	// Place, this field contains the new Place's resource name, in
+	// `places/{place_id}` format. If this Place moved multiple times, this field
+	// will represent the first moved place. This field will not be populated if
+	// this Place has not moved.
+	MovedPlace string `json:"movedPlace,omitempty"`
+	// MovedPlaceId: If this Place is permanently closed and has moved to a new
+	// Place, this field contains the new Place's place ID. If this Place moved
+	// multiple times, this field will represent the first moved Place. This field
+	// will not be populated if this Place has not moved.
+	MovedPlaceId string `json:"movedPlaceId,omitempty"`
 	// Name: This Place's resource name, in `places/{place_id}` format. Can be used
 	// to look up the Place.
 	Name string `json:"name,omitempty"`

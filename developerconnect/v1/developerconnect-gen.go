@@ -296,6 +296,35 @@ func (s AccountConnector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AppHubService: AppHubService represents the App Hub Service.
+type AppHubService struct {
+	// ApphubService: Required. Output only. Immutable. The name of the App Hub
+	// Service. Format:
+	// `projects/{project}/locations/{location}/applications/{application}/services/
+	// {service}`.
+	ApphubService string `json:"apphubService,omitempty"`
+	// Criticality: Output only. The criticality of the App Hub Service.
+	Criticality string `json:"criticality,omitempty"`
+	// Environment: Output only. The environment of the App Hub Service.
+	Environment string `json:"environment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApphubService") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApphubService") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppHubService) MarshalJSON() ([]byte, error) {
+	type NoMethod AppHubService
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AppHubWorkload: AppHubWorkload represents the App Hub Workload.
 type AppHubWorkload struct {
 	// Criticality: Output only. The criticality of the App Hub Workload.
@@ -1106,6 +1135,29 @@ func (s GoogleArtifactRegistry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRun: GoogleCloudRun represents the Cloud Run runtime.
+type GoogleCloudRun struct {
+	// ServiceUri: Required. Immutable. The name of the Cloud Run service. Format:
+	// `projects/{project}/locations/{location}/services/{service}`.
+	ServiceUri string `json:"serviceUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ServiceUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ServiceUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRun) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRun
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // HttpBody: Message that represents an arbitrary HTTP body. It should only be
 // used for payload formats that can't be represented as JSON, such as raw
 // binary or an HTML page. This message can be used both in streaming and
@@ -1833,10 +1885,14 @@ func (s ProviderOAuthConfig) MarshalJSON() ([]byte, error) {
 // RuntimeConfig: RuntimeConfig represents the runtimes where the application
 // is deployed.
 type RuntimeConfig struct {
+	// AppHubService: Output only. App Hub Service.
+	AppHubService *AppHubService `json:"appHubService,omitempty"`
 	// AppHubWorkload: Output only. App Hub Workload.
 	AppHubWorkload *AppHubWorkload `json:"appHubWorkload,omitempty"`
 	// GkeWorkload: Output only. Google Kubernetes Engine runtime.
 	GkeWorkload *GKEWorkload `json:"gkeWorkload,omitempty"`
+	// GoogleCloudRun: Output only. Cloud Run runtime.
+	GoogleCloudRun *GoogleCloudRun `json:"googleCloudRun,omitempty"`
 	// State: Output only. The state of the Runtime.
 	//
 	// Possible values:
@@ -1849,15 +1905,15 @@ type RuntimeConfig struct {
 	// Uri: Required. Immutable. The URI of the runtime configuration. For GKE,
 	// this is the cluster name. For Cloud Run, this is the service name.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AppHubWorkload") to
+	// ForceSendFields is a list of field names (e.g. "AppHubService") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AppHubWorkload") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AppHubService") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

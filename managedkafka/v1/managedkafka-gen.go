@@ -902,13 +902,14 @@ type ConnectCluster struct {
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
-	// State: Output only. The current state of the cluster.
+	// State: Output only. The current state of the Kafka Connect cluster.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - A state was not specified.
 	//   "CREATING" - The cluster is being created.
 	//   "ACTIVE" - The cluster is active.
 	//   "DELETING" - The cluster is being deleted.
+	//   "DETACHED" - The cluster is detached.
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. The time when the cluster was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`

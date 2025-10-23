@@ -4833,6 +4833,180 @@
                             "https://www.googleapis.com/auth/discoveryengine.readwrite"
                           ]
                         }
+                      },
+                      "resources": {
+                        "cannedQueries": {
+                          "methods": {
+                            "create": {
+                              "description": "Creates a CannedQuery.",
+                              "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/assistants/{assistantsId}/cannedQueries",
+                              "httpMethod": "POST",
+                              "id": "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.create",
+                              "parameterOrder": [
+                                "parent"
+                              ],
+                              "parameters": {
+                                "cannedQueryId": {
+                                  "description": "Required. The ID to use for the canned query, which will become the final component of the canned query's resource name. This field must conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) with a length limit of 63 characters.",
+                                  "location": "query",
+                                  "type": "string"
+                                },
+                                "parent": {
+                                  "description": "Required. The parent resource name. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}`",
+                                  "location": "path",
+                                  "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/assistants/[^/]+$",
+                                  "required": true,
+                                  "type": "string"
+                                }
+                              },
+                              "path": "v1alpha/{+parent}/cannedQueries",
+                              "request": {
+                                "$ref": "GoogleCloudDiscoveryengineV1alphaCannedQuery"
+                              },
+                              "response": {
+                                "$ref": "GoogleCloudDiscoveryengineV1alphaCannedQuery"
+                              },
+                              "scopes": [
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+                                "https://www.googleapis.com/auth/discoveryengine.readwrite"
+                              ]
+                            },
+                            "delete": {
+                              "description": "Deletes a CannedQuery.",
+                              "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/assistants/{assistantsId}/cannedQueries/{cannedQueriesId}",
+                              "httpMethod": "DELETE",
+                              "id": "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.delete",
+                              "parameterOrder": [
+                                "name"
+                              ],
+                              "parameters": {
+                                "name": {
+                                  "description": "Required. Resource name of CannedQuery. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}/cannedQueries/{canned_query}` If the caller does not have permission to delete the canned query, regardless of whether or not it exists, a `PERMISSION_DENIED` error is returned. If the canned query to delete does not exist, a `NOT_FOUND` error is returned.",
+                                  "location": "path",
+                                  "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/assistants/[^/]+/cannedQueries/[^/]+$",
+                                  "required": true,
+                                  "type": "string"
+                                }
+                              },
+                              "path": "v1alpha/{+name}",
+                              "response": {
+                                "$ref": "GoogleProtobufEmpty"
+                              },
+                              "scopes": [
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+                                "https://www.googleapis.com/auth/discoveryengine.readwrite"
+                              ]
+                            },
+                            "get": {
+                              "description": "Gets a CannedQuery.",
+                              "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/assistants/{assistantsId}/cannedQueries/{cannedQueriesId}",
+                              "httpMethod": "GET",
+                              "id": "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.get",
+                              "parameterOrder": [
+                                "name"
+                              ],
+                              "parameters": {
+                                "name": {
+                                  "description": "Required. Resource name of CannedQuery. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}/cannedQueries/{canned_query}`",
+                                  "location": "path",
+                                  "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/assistants/[^/]+/cannedQueries/[^/]+$",
+                                  "required": true,
+                                  "type": "string"
+                                }
+                              },
+                              "path": "v1alpha/{+name}",
+                              "response": {
+                                "$ref": "GoogleCloudDiscoveryengineV1alphaCannedQuery"
+                              },
+                              "scopes": [
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+                                "https://www.googleapis.com/auth/discoveryengine.readwrite"
+                              ]
+                            },
+                            "list": {
+                              "description": "Lists all CannedQuerys under an Assistant.",
+                              "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/assistants/{assistantsId}/cannedQueries",
+                              "httpMethod": "GET",
+                              "id": "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.list",
+                              "parameterOrder": [
+                                "parent"
+                              ],
+                              "parameters": {
+                                "filter": {
+                                  "description": "Optional. The filter expression. Supported fields: * `enabled` * `google_defined` Examples: * `enabled=true` * `google_defined=true` * `enabled=true AND google_defined=true`",
+                                  "location": "query",
+                                  "type": "string"
+                                },
+                                "pageSize": {
+                                  "description": "Maximum number of canned queries to return. If unspecified, defaults to 100. The maximum allowed value is 1000; anything above that will be coerced down to 1000.",
+                                  "format": "int32",
+                                  "location": "query",
+                                  "type": "integer"
+                                },
+                                "pageToken": {
+                                  "description": "A page token received from a previous CannedQueryService.ListCannedQueries call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to CannedQueryService.ListCannedQueries must match the call that provided the page token.",
+                                  "location": "query",
+                                  "type": "string"
+                                },
+                                "parent": {
+                                  "description": "Required. The parent resource name. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}`",
+                                  "location": "path",
+                                  "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/assistants/[^/]+$",
+                                  "required": true,
+                                  "type": "string"
+                                }
+                              },
+                              "path": "v1alpha/{+parent}/cannedQueries",
+                              "response": {
+                                "$ref": "GoogleCloudDiscoveryengineV1alphaListCannedQueriesResponse"
+                              },
+                              "scopes": [
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+                                "https://www.googleapis.com/auth/discoveryengine.readwrite"
+                              ]
+                            },
+                            "patch": {
+                              "description": "Updates a CannedQuery.",
+                              "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/assistants/{assistantsId}/cannedQueries/{cannedQueriesId}",
+                              "httpMethod": "PATCH",
+                              "id": "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.patch",
+                              "parameterOrder": [
+                                "name"
+                              ],
+                              "parameters": {
+                                "name": {
+                                  "description": "Immutable. Resource name of the canned query. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}/cannedQueries/{canned_query}` It must be a UTF-8 encoded string with a length limit of 1024 characters.",
+                                  "location": "path",
+                                  "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/assistants/[^/]+/cannedQueries/[^/]+$",
+                                  "required": true,
+                                  "type": "string"
+                                },
+                                "updateMask": {
+                                  "description": "The list of fields to update.",
+                                  "format": "google-fieldmask",
+                                  "location": "query",
+                                  "type": "string"
+                                }
+                              },
+                              "path": "v1alpha/{+name}",
+                              "request": {
+                                "$ref": "GoogleCloudDiscoveryengineV1alphaCannedQuery"
+                              },
+                              "response": {
+                                "$ref": "GoogleCloudDiscoveryengineV1alphaCannedQuery"
+                              },
+                              "scopes": [
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+                                "https://www.googleapis.com/auth/discoveryengine.readwrite"
+                              ]
+                            }
+                          }
+                        }
                       }
                     },
                     "completionConfig": {
@@ -10716,7 +10890,7 @@
       }
     }
   },
-  "revision": "20251020",
+  "revision": "20251021",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "ApiservingMediaRequestInfo": {
@@ -18372,6 +18546,92 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaCannedQuery": {
+      "description": "Canned query resource of Assistant. It represents a short-cut to a predefined conversation start.",
+      "id": "GoogleCloudDiscoveryengineV1alphaCannedQuery",
+      "properties": {
+        "defaultTexts": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaCannedQueryCannedQueryTexts",
+          "description": "Required. The default (non-localized) values for the text attributes."
+        },
+        "displayName": {
+          "description": "The display name of the canned query. It must be a UTF-8 encoded string with a length limit of 128 characters.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Whether this canned query is enabled.",
+          "type": "boolean"
+        },
+        "googleDefined": {
+          "description": "Output only. Whether this is a Google-defined, read-only canned query.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "localizedTexts": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaCannedQueryCannedQueryTexts"
+          },
+          "description": "Optional. The translations of the text attributes. The keys should be BCP-47 language codes.",
+          "type": "object"
+        },
+        "name": {
+          "description": "Immutable. Resource name of the canned query. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}/cannedQueries/{canned_query}` It must be a UTF-8 encoded string with a length limit of 1024 characters.",
+          "type": "string"
+        },
+        "requiredCapabilities": {
+          "description": "Optional. The capabilities the Assistant needs to have to use this canned query.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaCannedQueryAssistantCapability"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaCannedQueryAssistantCapability": {
+      "description": "Capability of an assistant needed to use this canned query.",
+      "id": "GoogleCloudDiscoveryengineV1alphaCannedQueryAssistantCapability",
+      "properties": {
+        "actionName": {
+          "description": "The name of the action that the Assistant needs to have set up to use this canned query.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaCannedQueryCannedQueryTexts": {
+      "description": "The text pieces for the canned query, which can be localized.",
+      "id": "GoogleCloudDiscoveryengineV1alphaCannedQueryCannedQueryTexts",
+      "properties": {
+        "prefix": {
+          "description": "Optional. The prefix that `suggested_prompts` should start with.",
+          "type": "string"
+        },
+        "suggestedPrompts": {
+          "description": "Required. The prompts the canned query will offer to the user.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaCannedQuerySuggestedPrompt"
+          },
+          "type": "array"
+        },
+        "title": {
+          "description": "Required. The title that is for the end user.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaCannedQuerySuggestedPrompt": {
+      "description": "A suggested prompt for the canned query.",
+      "id": "GoogleCloudDiscoveryengineV1alphaCannedQuerySuggestedPrompt",
+      "properties": {
+        "promptText": {
+          "description": "Required. The text of the suggested prompt.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaCheckGroundingRequest": {
       "description": "Request message for GroundedGenerationService.CheckGrounding method.",
       "id": "GoogleCloudDiscoveryengineV1alphaCheckGroundingRequest",
@@ -23420,6 +23680,24 @@
             "$ref": "GoogleCloudDiscoveryengineV1alphaBranch"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaListCannedQueriesResponse": {
+      "description": "Response message for the CannedQueryService.ListCannedQueries method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaListCannedQueriesResponse",
+      "properties": {
+        "cannedQueries": {
+          "description": "The list of CannedQuerys matching the request.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaCannedQuery"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "A token that can be sent as ListCannedQueriesRequest.page_token to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -29030,7 +29308,7 @@
       "id": "GoogleCloudDiscoveryengineV1alphaWidgetConfigHomepageSetting",
       "properties": {
         "shortcuts": {
-          "description": "Optional. The shortcuts to display on the homepage. LINT.IfChange(max_shortcuts_number) LINT.ThenChange(//depot/google3/cloud/console/web/ai/unified_cloud_search/components/widget_preview/widget_homepage_shortcut_config_form.ts:max_shortcuts_number)",
+          "description": "Optional. The shortcuts to display on the homepage. LINT.IfChange(max_shortcuts_number) LINT.ThenChange( //depot/google3/cloud/console/web/ai/unified_cloud_search/components/widget_preview/widget_homepage_shortcut_config_form.ts:max_shortcuts_number )",
           "items": {
             "$ref": "GoogleCloudDiscoveryengineV1alphaWidgetConfigHomepageSettingShortcut"
           },

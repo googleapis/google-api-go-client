@@ -1156,6 +1156,31 @@ func (s BatchDeletePrintersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BluetoothAdapterInfo: Information about a device's Bluetooth adapter.
+type BluetoothAdapterInfo struct {
+	// Address: Output only. The MAC address of the adapter.
+	Address string `json:"address,omitempty"`
+	// NumConnectedDevices: Output only. The number of devices connected to this
+	// adapter.
+	NumConnectedDevices int64 `json:"numConnectedDevices,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Address") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BluetoothAdapterInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod BluetoothAdapterInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Building: Public API: Resources.buildings
 type Building struct {
 	// Address: The postal address of the building. See `PostalAddress`
@@ -1545,6 +1570,9 @@ type ChromeOsDevice struct {
 	AutoUpdateThrough string `json:"autoUpdateThrough,omitempty"`
 	// BacklightInfo: Output only. Contains backlight information for the device.
 	BacklightInfo []*BacklightInfo `json:"backlightInfo,omitempty"`
+	// BluetoothAdapterInfo: Output only. Information about bluetooth adapters of
+	// the device.
+	BluetoothAdapterInfo []*BluetoothAdapterInfo `json:"bluetoothAdapterInfo,omitempty"`
 	// BootMode: The boot mode for the device. The possible values are: *
 	// `Verified`: The device is running a valid version of the Chrome OS. * `Dev`:
 	// The devices's developer hardware switch is enabled. When booted, the device

@@ -849,6 +849,9 @@ type Comment struct {
 	// on defining anchor properties, refer to Manage comments and replies
 	// (https://developers.google.com/workspace/drive/api/v3/manage-comments).
 	Anchor string `json:"anchor,omitempty"`
+	// AssigneeEmailAddress: Output only. The email of the user who is assigned to
+	// this comment, if none is assigned this will be unset.
+	AssigneeEmailAddress string `json:"assigneeEmailAddress,omitempty"`
 	// Author: Output only. The author of the comment. The author's email address
 	// and permission ID will not be populated.
 	Author *User `json:"author,omitempty"`
@@ -867,6 +870,10 @@ type Comment struct {
 	// Kind: Output only. Identifies what kind of resource this is. Value: the
 	// fixed string "drive#comment".
 	Kind string `json:"kind,omitempty"`
+	// MentionedEmailAddresses: Output only. The emails of the users who were
+	// mentioned in this comment, if none were mentioned this will be an empty
+	// list.
+	MentionedEmailAddresses []string `json:"mentionedEmailAddresses,omitempty"`
 	// ModifiedTime: The last time the comment or any of its replies was modified
 	// (RFC 3339 date-time).
 	ModifiedTime string `json:"modifiedTime,omitempty"`
@@ -2663,6 +2670,9 @@ type Reply struct {
 	// Action: The action the reply performed to the parent comment. Valid values
 	// are: * `resolve` * `reopen`
 	Action string `json:"action,omitempty"`
+	// AssigneeEmailAddress: Output only. The email of the user who is assigned to
+	// this reply, if none is assigned this will be unset.
+	AssigneeEmailAddress string `json:"assigneeEmailAddress,omitempty"`
 	// Author: Output only. The author of the reply. The author's email address and
 	// permission ID will not be populated.
 	Author *User `json:"author,omitempty"`
@@ -2682,6 +2692,9 @@ type Reply struct {
 	// Kind: Output only. Identifies what kind of resource this is. Value: the
 	// fixed string "drive#reply".
 	Kind string `json:"kind,omitempty"`
+	// MentionedEmailAddresses: Output only. The emails of the users who were
+	// mentioned in this reply, if none were mentioned this will be an empty list.
+	MentionedEmailAddresses []string `json:"mentionedEmailAddresses,omitempty"`
 	// ModifiedTime: The last time the reply was modified (RFC 3339 date-time).
 	ModifiedTime string `json:"modifiedTime,omitempty"`
 

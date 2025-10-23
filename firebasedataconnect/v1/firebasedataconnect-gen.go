@@ -610,10 +610,19 @@ type GraphqlErrorExtensions struct {
 	// `UpdateSchema` and `UpdateConnector`, it corresponds to `File.path` of the
 	// provided `Source`.
 	File string `json:"file,omitempty"`
-	// Resource: Distinguish which schema or connector the error originates from.
-	// It should be set on errors from control plane APIs (e.g. `UpdateSchema`,
-	// `UpdateConnector`).
-	Resource string `json:"resource,omitempty"`
+	// WarningLevel: Warning level describes the severity and required action to
+	// suppress this warning when Firebase CLI run into it.
+	//
+	// Possible values:
+	//   "WARNING_LEVEL_UNKNOWN" - Warning level is not specified.
+	//   "LOG_ONLY" - Display a warning without action needed.
+	//   "INTERACTIVE_ACK" - Request a confirmation in interactive deployment flow.
+	//   "REQUIRE_ACK" - Require an explicit confirmation in all deployment flows.
+	//   "REQUIRE_FORCE" - Require --force in all deployment flows.
+	WarningLevel string `json:"warningLevel,omitempty"`
+	// Workarounds: Workarounds provide suggestions to address the compile errors
+	// or warnings.
+	Workarounds []*Workaround `json:"workarounds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1318,6 +1327,32 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Workaround: Workaround provides suggestions to address errors and warnings.
+type Workaround struct {
+	// Description: Description of this workaround.
+	Description string `json:"description,omitempty"`
+	// Reason: Why would this workaround address the error and warning.
+	Reason string `json:"reason,omitempty"`
+	// Replace: A suggested code snippet to fix the error and warning.
+	Replace string `json:"replace,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Workaround) MarshalJSON() ([]byte, error) {
+	type NoMethod Workaround
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

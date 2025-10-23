@@ -676,10 +676,22 @@ type ProjectsLocationsCollectionsEnginesAnalyticsService struct {
 
 func NewProjectsLocationsCollectionsEnginesAssistantsService(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsService {
 	rs := &ProjectsLocationsCollectionsEnginesAssistantsService{s: s}
+	rs.CannedQueries = NewProjectsLocationsCollectionsEnginesAssistantsCannedQueriesService(s)
 	return rs
 }
 
 type ProjectsLocationsCollectionsEnginesAssistantsService struct {
+	s *Service
+
+	CannedQueries *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesService
+}
+
+func NewProjectsLocationsCollectionsEnginesAssistantsCannedQueriesService(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesService {
+	rs := &ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesService struct {
 	s *Service
 }
 
@@ -11452,6 +11464,127 @@ func (s GoogleCloudDiscoveryengineV1alphaBranchBranchStats) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaCannedQuery: Canned query resource of
+// Assistant. It represents a short-cut to a predefined conversation start.
+type GoogleCloudDiscoveryengineV1alphaCannedQuery struct {
+	// DefaultTexts: Required. The default (non-localized) values for the text
+	// attributes.
+	DefaultTexts *GoogleCloudDiscoveryengineV1alphaCannedQueryCannedQueryTexts `json:"defaultTexts,omitempty"`
+	// DisplayName: The display name of the canned query. It must be a UTF-8
+	// encoded string with a length limit of 128 characters.
+	DisplayName string `json:"displayName,omitempty"`
+	// Enabled: Whether this canned query is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// GoogleDefined: Output only. Whether this is a Google-defined, read-only
+	// canned query.
+	GoogleDefined bool `json:"googleDefined,omitempty"`
+	// LocalizedTexts: Optional. The translations of the text attributes. The keys
+	// should be BCP-47 language codes.
+	LocalizedTexts map[string]GoogleCloudDiscoveryengineV1alphaCannedQueryCannedQueryTexts `json:"localizedTexts,omitempty"`
+	// Name: Immutable. Resource name of the canned query. Format:
+	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
+	// gine}/assistants/{assistant}/cannedQueries/{canned_query}` It must be a
+	// UTF-8 encoded string with a length limit of 1024 characters.
+	Name string `json:"name,omitempty"`
+	// RequiredCapabilities: Optional. The capabilities the Assistant needs to have
+	// to use this canned query.
+	RequiredCapabilities []*GoogleCloudDiscoveryengineV1alphaCannedQueryAssistantCapability `json:"requiredCapabilities,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DefaultTexts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultTexts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaCannedQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCannedQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaCannedQueryAssistantCapability: Capability
+// of an assistant needed to use this canned query.
+type GoogleCloudDiscoveryengineV1alphaCannedQueryAssistantCapability struct {
+	// ActionName: The name of the action that the Assistant needs to have set up
+	// to use this canned query.
+	ActionName string `json:"actionName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActionName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActionName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaCannedQueryAssistantCapability) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCannedQueryAssistantCapability
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaCannedQueryCannedQueryTexts: The text
+// pieces for the canned query, which can be localized.
+type GoogleCloudDiscoveryengineV1alphaCannedQueryCannedQueryTexts struct {
+	// Prefix: Optional. The prefix that `suggested_prompts` should start with.
+	Prefix string `json:"prefix,omitempty"`
+	// SuggestedPrompts: Required. The prompts the canned query will offer to the
+	// user.
+	SuggestedPrompts []*GoogleCloudDiscoveryengineV1alphaCannedQuerySuggestedPrompt `json:"suggestedPrompts,omitempty"`
+	// Title: Required. The title that is for the end user.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Prefix") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Prefix") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaCannedQueryCannedQueryTexts) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCannedQueryCannedQueryTexts
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaCannedQuerySuggestedPrompt: A suggested
+// prompt for the canned query.
+type GoogleCloudDiscoveryengineV1alphaCannedQuerySuggestedPrompt struct {
+	// PromptText: Required. The text of the suggested prompt.
+	PromptText string `json:"promptText,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PromptText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PromptText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaCannedQuerySuggestedPrompt) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCannedQuerySuggestedPrompt
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaCheckGroundingRequest: Request message for
 // GroundedGenerationService.CheckGrounding method.
 type GoogleCloudDiscoveryengineV1alphaCheckGroundingRequest struct {
@@ -18011,6 +18144,36 @@ type GoogleCloudDiscoveryengineV1alphaListBranchesResponse struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaListBranchesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaListBranchesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaListCannedQueriesResponse: Response message
+// for the CannedQueryService.ListCannedQueries method.
+type GoogleCloudDiscoveryengineV1alphaListCannedQueriesResponse struct {
+	// CannedQueries: The list of CannedQuerys matching the request.
+	CannedQueries []*GoogleCloudDiscoveryengineV1alphaCannedQuery `json:"cannedQueries,omitempty"`
+	// NextPageToken: A token that can be sent as
+	// ListCannedQueriesRequest.page_token to retrieve the next page. If this field
+	// is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CannedQueries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CannedQueries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaListCannedQueriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaListCannedQueriesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -25953,10 +26116,9 @@ func (s GoogleCloudDiscoveryengineV1alphaWidgetConfigFacetField) MarshalJSON() (
 // and configurations, such as shortcuts.
 type GoogleCloudDiscoveryengineV1alphaWidgetConfigHomepageSetting struct {
 	// Shortcuts: Optional. The shortcuts to display on the homepage.
-	// LINT.IfChange(max_shortcuts_number)
-	// LINT.ThenChange(//depot/google3/cloud/console/web/ai/unified_cloud_search/com
-	// ponents/widget_preview/widget_homepage_shortcut_config_form.ts:max_shortcuts_
-	// number)
+	// LINT.IfChange(max_shortcuts_number) LINT.ThenChange(
+	// //depot/google3/cloud/console/web/ai/unified_cloud_search/components/widget_p
+	// review/widget_homepage_shortcut_config_form.ts:max_shortcuts_number )
 	Shortcuts []*GoogleCloudDiscoveryengineV1alphaWidgetConfigHomepageSettingShortcut `json:"shortcuts,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Shortcuts") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -49932,6 +50094,609 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsStreamAssistCall) Do(opts 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.streamAssist", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesCreateCall struct {
+	s                                            *Service
+	parent                                       string
+	googleclouddiscoveryenginev1alphacannedquery *GoogleCloudDiscoveryengineV1alphaCannedQuery
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// Create: Creates a CannedQuery.
+//
+//   - parent: The parent resource name. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}/assistants/{assistant}`.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesService) Create(parent string, googleclouddiscoveryenginev1alphacannedquery *GoogleCloudDiscoveryengineV1alphaCannedQuery) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesCreateCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphacannedquery = googleclouddiscoveryenginev1alphacannedquery
+	return c
+}
+
+// CannedQueryId sets the optional parameter "cannedQueryId": Required. The ID
+// to use for the canned query, which will become the final component of the
+// canned query's resource name. This field must conform to RFC-1034
+// (https://tools.ietf.org/html/rfc1034) with a length limit of 63 characters.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesCreateCall) CannedQueryId(cannedQueryId string) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesCreateCall {
+	c.urlParams_.Set("cannedQueryId", cannedQueryId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesCreateCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphacannedquery)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/cannedQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaCannedQuery.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaCannedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaCannedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a CannedQuery.
+//
+//   - name: Resource name of CannedQuery. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}/assistants/{assistant}/cannedQueries/{canned_query}` If the caller
+//     does not have permission to delete the canned query, regardless of whether
+//     or not it exists, a `PERMISSION_DENIED` error is returned. If the canned
+//     query to delete does not exist, a `NOT_FOUND` error is returned.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesService) Delete(name string) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesDeleteCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesDeleteCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a CannedQuery.
+//
+//   - name: Resource name of CannedQuery. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}/assistants/{assistant}/cannedQueries/{canned_query}`.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesService) Get(name string) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesGetCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaCannedQuery.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaCannedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaCannedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all CannedQuerys under an Assistant.
+//
+//   - parent: The parent resource name. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}/assistants/{assistant}`.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesService) List(parent string) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression.
+// Supported fields: * `enabled` * `google_defined` Examples: * `enabled=true`
+// * `google_defined=true` * `enabled=true AND google_defined=true`
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall) Filter(filter string) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of canned
+// queries to return. If unspecified, defaults to 100. The maximum allowed
+// value is 1000; anything above that will be coerced down to 1000.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token received
+// from a previous CannedQueryService.ListCannedQueries call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to CannedQueryService.ListCannedQueries must match the call that provided
+// the page token.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/cannedQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaListCannedQueriesResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaListCannedQueriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaListCannedQueriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesListCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1alphaListCannedQueriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesPatchCall struct {
+	s                                            *Service
+	name                                         string
+	googleclouddiscoveryenginev1alphacannedquery *GoogleCloudDiscoveryengineV1alphaCannedQuery
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// Patch: Updates a CannedQuery.
+//
+//   - name: Immutable. Resource name of the canned query. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}/assistants/{assistant}/cannedQueries/{canned_query}` It must be a
+//     UTF-8 encoded string with a length limit of 1024 characters.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesService) Patch(name string, googleclouddiscoveryenginev1alphacannedquery *GoogleCloudDiscoveryengineV1alphaCannedQuery) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesPatchCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphacannedquery = googleclouddiscoveryenginev1alphacannedquery
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesPatchCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphacannedquery)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaCannedQuery.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCannedQueriesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaCannedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaCannedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.cannedQueries.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

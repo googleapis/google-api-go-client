@@ -141,6 +141,72 @@
   },
   "protocol": "rest",
   "resources": {
+    "billingAccounts": {
+      "resources": {
+        "billingAccountLicenseConfigs": {
+          "methods": {
+            "distributeLicenseConfig": {
+              "description": "Distributes a LicenseConfig from billing account level to project level.",
+              "flatPath": "v1alpha/billingAccounts/{billingAccountsId}/billingAccountLicenseConfigs/{billingAccountLicenseConfigsId}:distributeLicenseConfig",
+              "httpMethod": "POST",
+              "id": "discoveryengine.billingAccounts.billingAccountLicenseConfigs.distributeLicenseConfig",
+              "parameterOrder": [
+                "billingAccountLicenseConfig"
+              ],
+              "parameters": {
+                "billingAccountLicenseConfig": {
+                  "description": "Required. Full resource name of BillingAccountLicenseConfig. Format: `billingAccounts/{billing_account}/billingAccountLicenseConfigs/{billing_account_license_config_id}`.",
+                  "location": "path",
+                  "pattern": "^billingAccounts/[^/]+/billingAccountLicenseConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha/{+billingAccountLicenseConfig}:distributeLicenseConfig",
+              "request": {
+                "$ref": "GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigRequest"
+              },
+              "response": {
+                "$ref": "GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite"
+              ]
+            },
+            "retractLicenseConfig": {
+              "description": "This method is called from the billing account side to retract the LicenseConfig from the given project back to the billing account.",
+              "flatPath": "v1alpha/billingAccounts/{billingAccountsId}/billingAccountLicenseConfigs/{billingAccountLicenseConfigsId}:retractLicenseConfig",
+              "httpMethod": "POST",
+              "id": "discoveryengine.billingAccounts.billingAccountLicenseConfigs.retractLicenseConfig",
+              "parameterOrder": [
+                "billingAccountLicenseConfig"
+              ],
+              "parameters": {
+                "billingAccountLicenseConfig": {
+                  "description": "Required. Full resource name of BillingAccountLicenseConfig. Format: `billingAccounts/{billing_account}/billingAccountLicenseConfigs/{billing_account_license_config_id}`.",
+                  "location": "path",
+                  "pattern": "^billingAccounts/[^/]+/billingAccountLicenseConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha/{+billingAccountLicenseConfig}:retractLicenseConfig",
+              "request": {
+                "$ref": "GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigRequest"
+              },
+              "response": {
+                "$ref": "GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/discoveryengine.readwrite"
+              ]
+            }
+          }
+        }
+      }
+    },
     "media": {
       "methods": {
         "download": {
@@ -10890,7 +10956,7 @@
       }
     }
   },
-  "revision": "20251021",
+  "revision": "20251023",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "ApiservingMediaRequestInfo": {
@@ -21243,6 +21309,42 @@
       "properties": {},
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigRequest": {
+      "description": "Request message for LicenseConfigService.DistributeLicenseConfig method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigRequest",
+      "properties": {
+        "licenseConfigId": {
+          "description": "Optional. Distribute seats to this license config instead of creating a new one. If not specified, a new license config will be created from the billing account license config.",
+          "type": "string"
+        },
+        "licenseCount": {
+          "description": "Required. The number of licenses to distribute.",
+          "format": "int64",
+          "type": "string"
+        },
+        "location": {
+          "description": "Required. The target GCP project region to distribute the license config to.",
+          "type": "string"
+        },
+        "projectNumber": {
+          "description": "Required. The target GCP project number to distribute the license config to.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigResponse": {
+      "description": "Response message for LicenseConfigService.DistributeLicenseConfig method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigResponse",
+      "properties": {
+        "licenseConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaLicenseConfig",
+          "description": "The updated or created LicenseConfig."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaDocument": {
       "description": "Document captures all raw metadata information of items to be recommended or searched.",
       "id": "GoogleCloudDiscoveryengineV1alphaDocument",
@@ -25489,6 +25591,37 @@
       "properties": {},
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigRequest": {
+      "description": "Request message for LicenseConfigService.RetractLicenseConfig method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigRequest",
+      "properties": {
+        "fullRetract": {
+          "description": "Optional. If set to true, retract the entire license config. Otherwise, retract the specified license count.",
+          "type": "boolean"
+        },
+        "licenseConfig": {
+          "description": "Required. Full resource name of LicenseConfig. Format: `projects/{project}/locations/{location}/licenseConfigs/{license_config_id}`.",
+          "type": "string"
+        },
+        "licenseCount": {
+          "description": "Optional. The number of licenses to retract. Only used when full_retract is false.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigResponse": {
+      "description": "Response message for LicenseConfigService.RetractLicenseConfig method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigResponse",
+      "properties": {
+        "licenseConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaLicenseConfig",
+          "description": "The updated LicenseConfig."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaSafetyRating": {
       "description": "Safety rating corresponding to the generated content.",
       "id": "GoogleCloudDiscoveryengineV1alphaSafetyRating",
@@ -28957,6 +29090,11 @@
           "deprecated": true,
           "description": "The key is the UI component. Mock. Currently supported `title`, `thumbnail`, `url`, `custom1`, `custom2`, `custom3`. The value is the name of the field along with its device visibility. The 3 custom fields are optional and can be added or removed. `title`, `thumbnail`, `url` are required UI components that cannot be removed.",
           "type": "object"
+        },
+        "geminiBundle": {
+          "description": "Output only. Whether the subscription is gemini bundle or not.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "homepageSetting": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaWidgetConfigHomepageSetting",

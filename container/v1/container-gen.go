@@ -3854,6 +3854,11 @@ type LinuxNodeConfig struct {
 	CgroupMode string `json:"cgroupMode,omitempty"`
 	// Hugepages: Optional. Amounts for 2M and 1G hugepages
 	Hugepages *HugepagesConfig `json:"hugepages,omitempty"`
+	// NodeKernelModuleLoading: Optional. Configuration for kernel module loading
+	// on nodes. When enabled, the node pool will be provisioned with a
+	// Container-Optimized OS image that enforces kernel module signature
+	// verification.
+	NodeKernelModuleLoading *NodeKernelModuleLoading `json:"nodeKernelModuleLoading,omitempty"`
 	// Sysctls: The Linux kernel parameters to be applied to the nodes and all pods
 	// running on the nodes. The following parameters are supported.
 	// net.core.busy_poll net.core.busy_read net.core.netdev_max_backlog
@@ -4202,6 +4207,15 @@ func (s LustreCsiDriverConfig) MarshalJSON() ([]byte, error) {
 
 // MaintenanceExclusionOptions: Represents the Maintenance exclusion option.
 type MaintenanceExclusionOptions struct {
+	// EndTimeBehavior: EndTimeBehavior specifies the behavior of the exclusion end
+	// time.
+	//
+	// Possible values:
+	//   "END_TIME_BEHAVIOR_UNSPECIFIED" - END_TIME_BEHAVIOR_UNSPECIFIED is the
+	// default behavior, which is fixed end time.
+	//   "UNTIL_END_OF_SUPPORT" - UNTIL_END_OF_SUPPORT means the exclusion will be
+	// in effect until the end of the support of the cluster's current version.
+	EndTimeBehavior string `json:"endTimeBehavior,omitempty"`
 	// Scope: Scope specifies the upgrade scope which upgrades are blocked by the
 	// exclusion.
 	//
@@ -4215,15 +4229,15 @@ type MaintenanceExclusionOptions struct {
 	// upgrades for the cluster, and also exclude all node pool upgrades. Only
 	// control plane patches are allowed.
 	Scope string `json:"scope,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Scope") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "EndTimeBehavior") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Scope") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EndTimeBehavior") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5111,6 +5125,42 @@ type NodeConfigDefaults struct {
 
 func (s NodeConfigDefaults) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeConfigDefaults
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NodeKernelModuleLoading: Configuration for kernel module loading on nodes.
+type NodeKernelModuleLoading struct {
+	// Policy: Set the node module loading policy for nodes in the node pool.
+	//
+	// Possible values:
+	//   "POLICY_UNSPECIFIED" - Default behavior. GKE selects the image based on
+	// node type. For CPU and TPU nodes, the image will not allow loading external
+	// kernel modules. For GPU nodes, the image will allow loading any module,
+	// whether it is signed or not.
+	//   "ENFORCE_SIGNED_MODULES" - Enforced signature verification: Node pools
+	// will use a Container-Optimized OS image configured to allow loading of
+	// *Google-signed* external kernel modules. Loadpin is enabled but configured
+	// to exclude modules, and kernel module signature checking is enforced.
+	//   "DO_NOT_ENFORCE_SIGNED_MODULES" - Mirrors existing DEFAULT behavior: For
+	// CPU and TPU nodes, the image will not allow loading external kernel modules.
+	// For GPU nodes, the image will allow loading any module, whether it is signed
+	// or not.
+	Policy string `json:"policy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NodeKernelModuleLoading) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeKernelModuleLoading
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8192,6 +8242,13 @@ type UpdateNodePoolRequest struct {
 	// in which the node pool's nodes should be located. Changing the locations for
 	// a node pool will result in nodes being either created or removed from the
 	// node pool, depending on whether locations are being added or removed.
+	// Warning: It is recommended to update node pool locations in a standalone API
+	// call. Do not combine a location update with changes to other fields (such as
+	// `tags`, `labels`, `taints`, etc.) in the same request. Otherwise, the API
+	// performs a structural modification where changes to other fields will only
+	// apply to newly created nodes and will not be applied to existing nodes in
+	// the node pool. To ensure all nodes are updated consistently, use a separate
+	// API call for location changes.
 	Locations []string `json:"locations,omitempty"`
 	// LoggingConfig: Logging configuration.
 	LoggingConfig *NodePoolLoggingConfig `json:"loggingConfig,omitempty"`

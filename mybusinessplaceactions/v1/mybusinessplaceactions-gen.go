@@ -109,9 +109,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Locations = NewLocationsService(s)
 	s.PlaceActionTypeMetadata = NewPlaceActionTypeMetadataService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -284,6 +281,8 @@ type PlaceActionLink struct {
 	//   "FOOD_TAKEOUT" - The action type is ordering food for takeout.
 	//   "SHOP_ONLINE" - The action type is shopping, that can be delivery and/or
 	// pickup.
+	//   "SOLOPRENEUR_APPOINTMENT" - The action type is booking an appointment with
+	// a Solopneuer partner.
 	PlaceActionType string `json:"placeActionType,omitempty"`
 	// ProviderType: Output only. Specifies the provider type.
 	//
@@ -340,6 +339,8 @@ type PlaceActionTypeMetadata struct {
 	//   "FOOD_TAKEOUT" - The action type is ordering food for takeout.
 	//   "SHOP_ONLINE" - The action type is shopping, that can be delivery and/or
 	// pickup.
+	//   "SOLOPRENEUR_APPOINTMENT" - The action type is booking an appointment with
+	// a Solopneuer partner.
 	PlaceActionType string `json:"placeActionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or

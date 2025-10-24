@@ -1182,6 +1182,31 @@ func (s BootDisk) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BootDiskProfile: Swap on the node's boot disk.
+type BootDiskProfile struct {
+	// SwapSizeGib: Specifies the size of the swap space in gibibytes (GiB).
+	SwapSizeGib int64 `json:"swapSizeGib,omitempty,string"`
+	// SwapSizePercent: Specifies the size of the swap space as a percentage of the
+	// boot disk size.
+	SwapSizePercent int64 `json:"swapSizePercent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SwapSizeGib") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SwapSizeGib") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BootDiskProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod BootDiskProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: CancelOperationRequest cancels a single operation.
 type CancelOperationRequest struct {
 	// Name: The name (project, location, operation id) of the operation to cancel.
@@ -2739,6 +2764,29 @@ func (s Date) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DedicatedLocalSsdProfile: Provisions a new, separate local NVMe SSD
+// exclusively for swap.
+type DedicatedLocalSsdProfile struct {
+	// DiskCount: The number of physical local NVMe SSD disks to attach.
+	DiskCount int64 `json:"diskCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "DiskCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiskCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DedicatedLocalSsdProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod DedicatedLocalSsdProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DefaultComputeClassConfig: DefaultComputeClassConfig defines default compute
 // class configuration.
 type DefaultComputeClassConfig struct {
@@ -2871,6 +2919,29 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EncryptionConfig: Defines encryption settings for the swap space.
+type EncryptionConfig struct {
+	// Disabled: Optional. If true, swap space will not be encrypted. Defaults to
+	// false (encrypted).
+	Disabled bool `json:"disabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Disabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Disabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // EnterpriseConfig: EnterpriseConfig is the cluster enterprise configuration.
 // Deprecated: GKE Enterprise features are now available without an Enterprise
 // tier.
@@ -2907,6 +2978,32 @@ type EnterpriseConfig struct {
 
 func (s EnterpriseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EnterpriseConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EphemeralLocalSsdProfile: Swap on the local SSD shared with pod ephemeral
+// storage.
+type EphemeralLocalSsdProfile struct {
+	// SwapSizeGib: Specifies the size of the swap space in gibibytes (GiB).
+	SwapSizeGib int64 `json:"swapSizeGib,omitempty,string"`
+	// SwapSizePercent: Specifies the size of the swap space as a percentage of the
+	// ephemeral local SSD capacity.
+	SwapSizePercent int64 `json:"swapSizePercent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SwapSizeGib") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SwapSizeGib") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EphemeralLocalSsdProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod EphemeralLocalSsdProfile
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4199,6 +4296,14 @@ type LinuxNodeConfig struct {
 	CgroupMode string `json:"cgroupMode,omitempty"`
 	// Hugepages: Optional. Amounts for 2M and 1G hugepages
 	Hugepages *HugepagesConfig `json:"hugepages,omitempty"`
+	// NodeKernelModuleLoading: Optional. Configuration for kernel module loading
+	// on nodes. When enabled, the node pool will be provisioned with a
+	// Container-Optimized OS image that enforces kernel module signature
+	// verification.
+	NodeKernelModuleLoading *NodeKernelModuleLoading `json:"nodeKernelModuleLoading,omitempty"`
+	// SwapConfig: Optional. Enables and configures swap space on nodes. If
+	// omitted, swap is disabled.
+	SwapConfig *SwapConfig `json:"swapConfig,omitempty"`
 	// Sysctls: The Linux kernel parameters to be applied to the nodes and all pods
 	// running on the nodes. The following parameters are supported.
 	// net.core.busy_poll net.core.busy_read net.core.netdev_max_backlog
@@ -4613,6 +4718,15 @@ func (s LustreCsiDriverConfig) MarshalJSON() ([]byte, error) {
 
 // MaintenanceExclusionOptions: Represents the Maintenance exclusion option.
 type MaintenanceExclusionOptions struct {
+	// EndTimeBehavior: EndTimeBehavior specifies the behavior of the exclusion end
+	// time.
+	//
+	// Possible values:
+	//   "END_TIME_BEHAVIOR_UNSPECIFIED" - END_TIME_BEHAVIOR_UNSPECIFIED is the
+	// default behavior, which is fixed end time.
+	//   "UNTIL_END_OF_SUPPORT" - UNTIL_END_OF_SUPPORT means the exclusion will be
+	// in effect until the end of the support of the cluster's current version.
+	EndTimeBehavior string `json:"endTimeBehavior,omitempty"`
 	// Scope: Scope specifies the upgrade scope which upgrades are blocked by the
 	// exclusion.
 	//
@@ -4626,15 +4740,15 @@ type MaintenanceExclusionOptions struct {
 	// upgrades for the cluster, and also exclude all node pool upgrades. Only
 	// control plane patches are allowed.
 	Scope string `json:"scope,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Scope") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "EndTimeBehavior") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Scope") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EndTimeBehavior") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5546,6 +5660,42 @@ func (s NodeConfigDefaults) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// NodeKernelModuleLoading: Configuration for kernel module loading on nodes.
+type NodeKernelModuleLoading struct {
+	// Policy: Set the node module loading policy for nodes in the node pool.
+	//
+	// Possible values:
+	//   "POLICY_UNSPECIFIED" - Default behavior. GKE selects the image based on
+	// node type. For CPU and TPU nodes, the image will not allow loading external
+	// kernel modules. For GPU nodes, the image will allow loading any module,
+	// whether it is signed or not.
+	//   "ENFORCE_SIGNED_MODULES" - Enforced signature verification: Node pools
+	// will use a Container-Optimized OS image configured to allow loading of
+	// *Google-signed* external kernel modules. Loadpin is enabled but configured
+	// to exclude modules, and kernel module signature checking is enforced.
+	//   "DO_NOT_ENFORCE_SIGNED_MODULES" - Mirrors existing DEFAULT behavior: For
+	// CPU and TPU nodes, the image will not allow loading external kernel modules.
+	// For GPU nodes, the image will allow loading any module, whether it is signed
+	// or not.
+	Policy string `json:"policy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NodeKernelModuleLoading) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeKernelModuleLoading
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // NodeKubeletConfig: Node kubelet configs.
 type NodeKubeletConfig struct {
 	// AllowedUnsafeSysctls: Optional. Defines a comma-separated allowlist of
@@ -5740,6 +5890,11 @@ func (s NodeManagement) MarshalJSON() ([]byte, error) {
 
 // NodeNetworkConfig: Parameters for node pool-level network config.
 type NodeNetworkConfig struct {
+	// AcceleratorNetworkProfile: Immutable. The accelerator network profile for
+	// the node pool. For now the only valid value is "auto". If specified, the
+	// network configuration of the nodes in this node pool will be managed by this
+	// profile for the supported machine types, zone, etc.
+	AcceleratorNetworkProfile string `json:"acceleratorNetworkProfile,omitempty"`
 	// AdditionalNodeNetworkConfigs: We specify the additional node networks for
 	// this node pool using this list. Each node network corresponds to an
 	// additional interface
@@ -5800,13 +5955,13 @@ type NodeNetworkConfig struct {
 	// picked based on the IP utilization during node pool creation and is
 	// immutable.
 	Subnetwork string `json:"subnetwork,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "AdditionalNodeNetworkConfigs") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
-	// for more details.
+	// ForceSendFields is a list of field names (e.g. "AcceleratorNetworkProfile")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AdditionalNodeNetworkConfigs") to
+	// NullFields is a list of field names (e.g. "AcceleratorNetworkProfile") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -8532,6 +8687,38 @@ func (s StatusCondition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SwapConfig: Configuration for swap memory on a node pool.
+type SwapConfig struct {
+	// BootDiskProfile: Swap on the node's boot disk.
+	BootDiskProfile *BootDiskProfile `json:"bootDiskProfile,omitempty"`
+	// DedicatedLocalSsdProfile: Provisions a new, separate local NVMe SSD
+	// exclusively for swap.
+	DedicatedLocalSsdProfile *DedicatedLocalSsdProfile `json:"dedicatedLocalSsdProfile,omitempty"`
+	// Enabled: Optional. Enables or disables swap for the node pool.
+	Enabled bool `json:"enabled,omitempty"`
+	// EncryptionConfig: Optional. If omitted, swap space is encrypted by default.
+	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
+	// EphemeralLocalSsdProfile: Swap on the local SSD shared with pod ephemeral
+	// storage.
+	EphemeralLocalSsdProfile *EphemeralLocalSsdProfile `json:"ephemeralLocalSsdProfile,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BootDiskProfile") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BootDiskProfile") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SwapConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SwapConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SyncRotationConfig: SyncRotationConfig is config for secret manager auto
 // rotation.
 type SyncRotationConfig struct {
@@ -8820,6 +9007,13 @@ type UpdateNodePoolRequest struct {
 	// in which the node pool's nodes should be located. Changing the locations for
 	// a node pool will result in nodes being either created or removed from the
 	// node pool, depending on whether locations are being added or removed.
+	// Warning: It is recommended to update node pool locations in a standalone API
+	// call. Do not combine a location update with changes to other fields (such as
+	// `tags`, `labels`, `taints`, etc.) in the same request. Otherwise, the API
+	// performs a structural modification where changes to other fields will only
+	// apply to newly created nodes and will not be applied to existing nodes in
+	// the node pool. To ensure all nodes are updated consistently, use a separate
+	// API call for location changes.
 	Locations []string `json:"locations,omitempty"`
 	// LoggingConfig: Logging configuration.
 	LoggingConfig *NodePoolLoggingConfig `json:"loggingConfig,omitempty"`
@@ -8990,6 +9184,8 @@ func (s UpgradeDetails) MarshalJSON() ([]byte, error) {
 // UpgradeEvent: UpgradeEvent is a notification sent to customers by the
 // cluster server when a resource is upgrading.
 type UpgradeEvent struct {
+	// CurrentEmulatedVersion: The current emulated version before the upgrade.
+	CurrentEmulatedVersion string `json:"currentEmulatedVersion,omitempty"`
 	// CurrentVersion: The current version before the upgrade.
 	CurrentVersion string `json:"currentVersion,omitempty"`
 	// Operation: The operation associated with this upgrade.
@@ -9007,17 +9203,19 @@ type UpgradeEvent struct {
 	//   "MASTER" - Master / control plane
 	//   "NODE_POOL" - Node pool
 	ResourceType string `json:"resourceType,omitempty"`
+	// TargetEmulatedVersion: The target emulated version for the upgrade.
+	TargetEmulatedVersion string `json:"targetEmulatedVersion,omitempty"`
 	// TargetVersion: The target version for the upgrade.
 	TargetVersion string `json:"targetVersion,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CurrentVersion") to
+	// ForceSendFields is a list of field names (e.g. "CurrentEmulatedVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CurrentVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CurrentEmulatedVersion") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -9030,6 +9228,8 @@ func (s UpgradeEvent) MarshalJSON() ([]byte, error) {
 // UpgradeInfoEvent: UpgradeInfoEvent is a notification sent to customers about
 // the upgrade information of a resource.
 type UpgradeInfoEvent struct {
+	// CurrentEmulatedVersion: The current emulated version before the upgrade.
+	CurrentEmulatedVersion string `json:"currentEmulatedVersion,omitempty"`
 	// CurrentVersion: The current version before the upgrade.
 	CurrentVersion string `json:"currentVersion,omitempty"`
 	// Description: A brief description of the event.
@@ -9079,17 +9279,19 @@ type UpgradeInfoEvent struct {
 	//   "FAILED" - FAILED indicates the upgrade has failed.
 	//   "CANCELED" - CANCELED indicates the upgrade has canceled.
 	State string `json:"state,omitempty"`
+	// TargetEmulatedVersion: The target emulated version for the upgrade.
+	TargetEmulatedVersion string `json:"targetEmulatedVersion,omitempty"`
 	// TargetVersion: The target version for the upgrade.
 	TargetVersion string `json:"targetVersion,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CurrentVersion") to
+	// ForceSendFields is a list of field names (e.g. "CurrentEmulatedVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CurrentVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CurrentEmulatedVersion") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

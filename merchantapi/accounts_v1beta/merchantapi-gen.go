@@ -4455,10 +4455,11 @@ func (s UriSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// User: The `User` message represents a user associated with a Merchant Center
-// account. It is used to manage user permissions and access rights within the
-// account. For more information, see Frequently asked questions about people
-// and access levels (//support.google.com/merchants/answer/12160472).
+// User: The `User` resource represents a user associated with a Merchant
+// Center account. It is used to manage user permissions and access rights
+// within the account. For more information, see Frequently asked questions
+// about people and access levels
+// (//support.google.com/merchants/answer/12160472).
 type User struct {
 	// AccessRights: Required. The access rights
 	// (https://support.google.com/merchants/answer/12160472?sjid=6789834943175119429-EU#accesstypes)

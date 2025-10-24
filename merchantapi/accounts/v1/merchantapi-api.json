@@ -2376,7 +2376,7 @@
       }
     }
   },
-  "revision": "20251002",
+  "revision": "20251021",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "About": {
@@ -5455,7 +5455,7 @@
       "type": "object"
     },
     "User": {
-      "description": "The `User` message represents a user associated with a Merchant Center account. It is used to manage user permissions and access rights within the account. For more information, see [Frequently asked questions about people and access levels](//support.google.com/merchants/answer/12160472).",
+      "description": "The `User` resource represents a user associated with a Merchant Center account. It is used to manage user permissions and access rights within the account. For more information, see [Frequently asked questions about people and access levels](//support.google.com/merchants/answer/12160472).",
       "id": "User",
       "properties": {
         "accessRights": {

@@ -1977,7 +1977,10 @@ type Command struct {
 	//
 	// Possible values:
 	//   "COMMAND_TYPE_UNSPECIFIED" - This value is disallowed.
-	//   "LOCK" - Lock the device, as if the lock screen timeout had expired.
+	//   "LOCK" - Lock the device, as if the lock screen timeout had expired. For a
+	// work profile, if there is a separate work profile lock, this only locks the
+	// work profile, with one exception: on work profiles on an organization-owned
+	// device running Android 8, 9, or 10, this locks the entire device.
 	//   "RESET_PASSWORD" - Reset the user's password.
 	//   "REBOOT" - Reboot the device. Only supported on fully managed devices
 	// running Android 7.0 (API level 24) or higher.

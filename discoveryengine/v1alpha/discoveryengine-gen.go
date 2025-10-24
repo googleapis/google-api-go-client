@@ -141,6 +141,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		return nil, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
+	s.BillingAccounts = NewBillingAccountsService(s)
 	s.Media = NewMediaService(s)
 	s.Projects = NewProjectsService(s)
 	if endpoint != "" {
@@ -167,6 +168,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	BillingAccounts *BillingAccountsService
+
 	Media *MediaService
 
 	Projects *ProjectsService
@@ -177,6 +180,27 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewBillingAccountsService(s *Service) *BillingAccountsService {
+	rs := &BillingAccountsService{s: s}
+	rs.BillingAccountLicenseConfigs = NewBillingAccountsBillingAccountLicenseConfigsService(s)
+	return rs
+}
+
+type BillingAccountsService struct {
+	s *Service
+
+	BillingAccountLicenseConfigs *BillingAccountsBillingAccountLicenseConfigsService
+}
+
+func NewBillingAccountsBillingAccountLicenseConfigsService(s *Service) *BillingAccountsBillingAccountLicenseConfigsService {
+	rs := &BillingAccountsBillingAccountLicenseConfigsService{s: s}
+	return rs
+}
+
+type BillingAccountsBillingAccountLicenseConfigsService struct {
+	s *Service
 }
 
 func NewMediaService(s *Service) *MediaService {
@@ -14850,6 +14874,65 @@ type GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchRequest struct {
 type GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchResponse struct {
 }
 
+// GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigRequest: Request
+// message for LicenseConfigService.DistributeLicenseConfig method.
+type GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigRequest struct {
+	// LicenseConfigId: Optional. Distribute seats to this license config instead
+	// of creating a new one. If not specified, a new license config will be
+	// created from the billing account license config.
+	LicenseConfigId string `json:"licenseConfigId,omitempty"`
+	// LicenseCount: Required. The number of licenses to distribute.
+	LicenseCount int64 `json:"licenseCount,omitempty,string"`
+	// Location: Required. The target GCP project region to distribute the license
+	// config to.
+	Location string `json:"location,omitempty"`
+	// ProjectNumber: Required. The target GCP project number to distribute the
+	// license config to.
+	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "LicenseConfigId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LicenseConfigId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigResponse: Response
+// message for LicenseConfigService.DistributeLicenseConfig method.
+type GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigResponse struct {
+	// LicenseConfig: The updated or created LicenseConfig.
+	LicenseConfig *GoogleCloudDiscoveryengineV1alphaLicenseConfig `json:"licenseConfig,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "LicenseConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LicenseConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaDocument: Document captures all raw
 // metadata information of items to be recommended or searched.
 type GoogleCloudDiscoveryengineV1alphaDocument struct {
@@ -20911,6 +20994,62 @@ func (s GoogleCloudDiscoveryengineV1alphaRequirementViolationSamplesBinding) Mar
 type GoogleCloudDiscoveryengineV1alphaResumeEngineRequest struct {
 }
 
+// GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigRequest: Request
+// message for LicenseConfigService.RetractLicenseConfig method.
+type GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigRequest struct {
+	// FullRetract: Optional. If set to true, retract the entire license config.
+	// Otherwise, retract the specified license count.
+	FullRetract bool `json:"fullRetract,omitempty"`
+	// LicenseConfig: Required. Full resource name of LicenseConfig. Format:
+	// `projects/{project}/locations/{location}/licenseConfigs/{license_config_id}`.
+	LicenseConfig string `json:"licenseConfig,omitempty"`
+	// LicenseCount: Optional. The number of licenses to retract. Only used when
+	// full_retract is false.
+	LicenseCount int64 `json:"licenseCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "FullRetract") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FullRetract") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigResponse: Response
+// message for LicenseConfigService.RetractLicenseConfig method.
+type GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigResponse struct {
+	// LicenseConfig: The updated LicenseConfig.
+	LicenseConfig *GoogleCloudDiscoveryengineV1alphaLicenseConfig `json:"licenseConfig,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "LicenseConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LicenseConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaSafetyRating: Safety rating corresponding
 // to the generated content.
 type GoogleCloudDiscoveryengineV1alphaSafetyRating struct {
@@ -25739,6 +25878,8 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfig struct {
 	// custom fields are optional and can be added or removed. `title`,
 	// `thumbnail`, `url` are required UI components that cannot be removed.
 	FieldsUiComponentsMap map[string]GoogleCloudDiscoveryengineV1alphaWidgetConfigUIComponentField `json:"fieldsUiComponentsMap,omitempty"`
+	// GeminiBundle: Output only. Whether the subscription is gemini bundle or not.
+	GeminiBundle bool `json:"geminiBundle,omitempty"`
 	// HomepageSetting: Optional. Describes the homepage settings of the widget.
 	HomepageSetting *GoogleCloudDiscoveryengineV1alphaWidgetConfigHomepageSetting `json:"homepageSetting,omitempty"`
 	// IndustryVertical: Output only. The industry vertical that the WidgetConfig
@@ -33325,6 +33466,223 @@ type GoogleTypeTimeZone struct {
 func (s GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeTimeZone
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall struct {
+	s                                                               *Service
+	billingAccountLicenseConfig                                     string
+	googleclouddiscoveryenginev1alphadistributelicenseconfigrequest *GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigRequest
+	urlParams_                                                      gensupport.URLParams
+	ctx_                                                            context.Context
+	header_                                                         http.Header
+}
+
+// DistributeLicenseConfig: Distributes a LicenseConfig from billing account
+// level to project level.
+//
+//   - billingAccountLicenseConfig: Full resource name of
+//     BillingAccountLicenseConfig. Format:
+//     `billingAccounts/{billing_account}/billingAccountLicenseConfigs/{billing_ac
+//     count_license_config_id}`.
+func (r *BillingAccountsBillingAccountLicenseConfigsService) DistributeLicenseConfig(billingAccountLicenseConfig string, googleclouddiscoveryenginev1alphadistributelicenseconfigrequest *GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigRequest) *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall {
+	c := &BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.billingAccountLicenseConfig = billingAccountLicenseConfig
+	c.googleclouddiscoveryenginev1alphadistributelicenseconfigrequest = googleclouddiscoveryenginev1alphadistributelicenseconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall) Fields(s ...googleapi.Field) *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall) Context(ctx context.Context) *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphadistributelicenseconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+billingAccountLicenseConfig}:distributeLicenseConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"billingAccountLicenseConfig": c.billingAccountLicenseConfig,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.billingAccounts.billingAccountLicenseConfigs.distributeLicenseConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.billingAccounts.billingAccountLicenseConfigs.distributeLicenseConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *BillingAccountsBillingAccountLicenseConfigsDistributeLicenseConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaDistributeLicenseConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.billingAccounts.billingAccountLicenseConfigs.distributeLicenseConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall struct {
+	s                                                            *Service
+	billingAccountLicenseConfig                                  string
+	googleclouddiscoveryenginev1alpharetractlicenseconfigrequest *GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigRequest
+	urlParams_                                                   gensupport.URLParams
+	ctx_                                                         context.Context
+	header_                                                      http.Header
+}
+
+// RetractLicenseConfig: This method is called from the billing account side to
+// retract the LicenseConfig from the given project back to the billing
+// account.
+//
+//   - billingAccountLicenseConfig: Full resource name of
+//     BillingAccountLicenseConfig. Format:
+//     `billingAccounts/{billing_account}/billingAccountLicenseConfigs/{billing_ac
+//     count_license_config_id}`.
+func (r *BillingAccountsBillingAccountLicenseConfigsService) RetractLicenseConfig(billingAccountLicenseConfig string, googleclouddiscoveryenginev1alpharetractlicenseconfigrequest *GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigRequest) *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall {
+	c := &BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.billingAccountLicenseConfig = billingAccountLicenseConfig
+	c.googleclouddiscoveryenginev1alpharetractlicenseconfigrequest = googleclouddiscoveryenginev1alpharetractlicenseconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall) Fields(s ...googleapi.Field) *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall) Context(ctx context.Context) *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alpharetractlicenseconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+billingAccountLicenseConfig}:retractLicenseConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"billingAccountLicenseConfig": c.billingAccountLicenseConfig,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.billingAccounts.billingAccountLicenseConfigs.retractLicenseConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.billingAccounts.billingAccountLicenseConfigs.retractLicenseConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *BillingAccountsBillingAccountLicenseConfigsRetractLicenseConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaRetractLicenseConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.billingAccounts.billingAccountLicenseConfigs.retractLicenseConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type MediaDownloadCall struct {

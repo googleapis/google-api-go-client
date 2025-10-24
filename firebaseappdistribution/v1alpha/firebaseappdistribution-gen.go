@@ -756,6 +756,37 @@ type GoogleFirebaseAppdistroV1alphaCancelReleaseTestResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleFirebaseAppdistroV1alphaClearTestCaseCacheRequest: Request message for
+// `ClearTestCaseCache`.
+type GoogleFirebaseAppdistroV1alphaClearTestCaseCacheRequest struct {
+	// TestDevices: Optional. The list of devices for which to clear the cache. If
+	// not present, clear all of them.
+	TestDevices []*GoogleFirebaseAppdistroV1alphaTestDevice `json:"testDevices,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TestDevices") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TestDevices") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppdistroV1alphaClearTestCaseCacheRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaClearTestCaseCacheRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppdistroV1alphaClearTestCaseCacheResponse: Response empty
+// (google.protobuf.Empty) message for `ClearTestCaseCache`
+type GoogleFirebaseAppdistroV1alphaClearTestCaseCacheResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest: The request message
 // for `CreateReleaseNotes`.
 type GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest struct {
@@ -3742,6 +3773,112 @@ func (c *ProjectsAppsTestCasesBatchUpdateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappdistribution.projects.apps.testCases.batchUpdate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsAppsTestCasesClearTestCaseCacheCall struct {
+	s                                                       *Service
+	testCase                                                string
+	googlefirebaseappdistrov1alphacleartestcasecacherequest *GoogleFirebaseAppdistroV1alphaClearTestCaseCacheRequest
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// ClearTestCaseCache: Clears cached test runs for a specific test case and
+// device(s).
+//
+//   - testCase: The name of the test case resource for which to clear the cache.
+//     Format: `projects/{project_number}/apps/{app_id}/testCases/{test_case_id}`.
+func (r *ProjectsAppsTestCasesService) ClearTestCaseCache(testCase string, googlefirebaseappdistrov1alphacleartestcasecacherequest *GoogleFirebaseAppdistroV1alphaClearTestCaseCacheRequest) *ProjectsAppsTestCasesClearTestCaseCacheCall {
+	c := &ProjectsAppsTestCasesClearTestCaseCacheCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.testCase = testCase
+	c.googlefirebaseappdistrov1alphacleartestcasecacherequest = googlefirebaseappdistrov1alphacleartestcasecacherequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAppsTestCasesClearTestCaseCacheCall) Fields(s ...googleapi.Field) *ProjectsAppsTestCasesClearTestCaseCacheCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAppsTestCasesClearTestCaseCacheCall) Context(ctx context.Context) *ProjectsAppsTestCasesClearTestCaseCacheCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAppsTestCasesClearTestCaseCacheCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAppsTestCasesClearTestCaseCacheCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlefirebaseappdistrov1alphacleartestcasecacherequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+testCase}:clearTestCaseCache")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"testCase": c.testCase,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappdistribution.projects.apps.testCases.clearTestCaseCache", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappdistribution.projects.apps.testCases.clearTestCaseCache" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaClearTestCaseCacheResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsAppsTestCasesClearTestCaseCacheCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaClearTestCaseCacheResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppdistroV1alphaClearTestCaseCacheResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappdistribution.projects.apps.testCases.clearTestCaseCache", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

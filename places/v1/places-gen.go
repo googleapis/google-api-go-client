@@ -1674,7 +1674,7 @@ func (s GoogleMapsPlacesV1PlaceAttribution) MarshalJSON() ([]byte, error) {
 // place when we detect suspicious review activity on a business or a business
 // violates our policies.
 type GoogleMapsPlacesV1PlaceConsumerAlert struct {
-	// Details: The details of the consumer alert message.ƒ
+	// Details: The details of the consumer alert message.
 	Details *GoogleMapsPlacesV1PlaceConsumerAlertDetails `json:"details,omitempty"`
 	// LanguageCode: The language code of the consumer alert message. This is a BCP
 	// 47 language code.
@@ -2315,7 +2315,7 @@ type GoogleMapsPlacesV1Review struct {
 	RelativePublishTimeDescription string `json:"relativePublishTimeDescription,omitempty"`
 	// Text: The localized text of the review.
 	Text *GoogleTypeLocalizedText `json:"text,omitempty"`
-	// VisitDate: The date when the author visited the place. This is trucated to
+	// VisitDate: The date when the author visited the place. This is truncated to
 	// the year and month of the visit.
 	VisitDate *GoogleTypeDate `json:"visitDate,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthorAttribution") to

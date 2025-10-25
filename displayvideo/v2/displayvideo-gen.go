@@ -4700,6 +4700,7 @@ type CreateSdfDownloadTaskRequest struct {
 	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
 	// migrating to this version.
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
+	//   "SDF_VERSION_9_2" - SDF version 9.2.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12871,6 +12872,7 @@ type SdfConfig struct {
 	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
 	// migrating to this version.
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
+	//   "SDF_VERSION_9_2" - SDF version 9.2.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12954,6 +12956,7 @@ type SdfDownloadTaskMetadata struct {
 	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
 	// migrating to this version.
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
+	//   "SDF_VERSION_9_2" - SDF version 9.2.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or

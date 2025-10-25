@@ -27,7 +27,7 @@ type AcceleratorTypesAggregatedListCall struct {
 
 // AggregatedList: Retrieves an aggregated list of accelerator types.
 //
-// To prevent failure, Google recommends that you set
+// To prevent failure, it is recommended that you set
 // the
 // `returnPartialSuccess` parameter to `true`.
 //
@@ -699,7 +699,7 @@ type AddressesAggregatedListCall struct {
 
 // AggregatedList: Retrieves an aggregated list of addresses.
 //
-// To prevent failure, Google recommends that you set
+// To prevent failure, it is recommended that you set
 // the
 // `returnPartialSuccess` parameter to `true`.
 //
@@ -2007,7 +2007,7 @@ type AutoscalersAggregatedListCall struct {
 
 // AggregatedList: Retrieves an aggregated list of autoscalers.
 //
-// To prevent failure, Google recommends that you set
+// To prevent failure, it is recommended that you set
 // the
 // `returnPartialSuccess` parameter to `true`.
 //
@@ -4972,7 +4972,7 @@ type BackendServicesAggregatedListCall struct {
 // and global,
 // available to the specified project.
 //
-// To prevent failure, Google recommends that you set
+// To prevent failure, it is recommended that you set
 // the
 // `returnPartialSuccess` parameter to `true`.
 //
@@ -8136,7 +8136,7 @@ type DiskTypesAggregatedListCall struct {
 
 // AggregatedList: Retrieves an aggregated list of disk types.
 //
-// To prevent failure, Google recommends that you set
+// To prevent failure, it is recommended that you set
 // the
 // `returnPartialSuccess` parameter to `true`.
 //
@@ -8941,7 +8941,7 @@ type DisksAggregatedListCall struct {
 
 // AggregatedList: Retrieves an aggregated list of persistent disks.
 //
-// To prevent failure, Google recommends that you set
+// To prevent failure, it is recommended that you set
 // the
 // `returnPartialSuccess` parameter to `true`.
 //
@@ -15506,6 +15506,115 @@ func (c *FirewallsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	return ret, nil
 }
 
+type FirewallsTestIamPermissionsCall struct {
+	s                      *Service
+	project                string
+	resource               string
+	testpermissionsrequest *TestPermissionsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource.
+//
+// - project: Project ID for this request.
+// - resource: Name or id of the resource for this request.
+func (r *FirewallsService) TestIamPermissions(project string, resource string, testpermissionsrequest *TestPermissionsRequest) *FirewallsTestIamPermissionsCall {
+	c := &FirewallsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.resource = resource
+	c.testpermissionsrequest = testpermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FirewallsTestIamPermissionsCall) Fields(s ...googleapi.Field) *FirewallsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FirewallsTestIamPermissionsCall) Context(ctx context.Context) *FirewallsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FirewallsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FirewallsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.testpermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/firewalls/{resource}/testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.firewalls.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.firewalls.testIamPermissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FirewallsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TestPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.firewalls.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type FirewallsUpdateCall struct {
 	s          *Service
 	project    string
@@ -15651,7 +15760,7 @@ type ForwardingRulesAggregatedListCall struct {
 
 // AggregatedList: Retrieves an aggregated list of forwarding rules.
 //
-// To prevent failure, Google recommends that you set
+// To prevent failure, it is recommended that you set
 // the
 // `returnPartialSuccess` parameter to `true`.
 //
@@ -16990,7 +17099,7 @@ type FutureReservationsAggregatedListCall struct {
 
 // AggregatedList: Retrieves an aggregated list of future reservations.
 //
-// To prevent failure, recommendation is that you set
+// To prevent failure, it is recommended that you set
 // the
 // `returnPartialSuccess` parameter to `true`.
 //
@@ -57881,7 +57990,7 @@ type NetworkFirewallPoliciesAggregatedListCall struct {
 // and
 // grouping the results per scope.
 //
-// To prevent failure, Google recommends that you set
+// To prevent failure, it is recommended that you set
 // the
 // `returnPartialSuccess` parameter to `true`.
 //
@@ -72103,13 +72212,15 @@ type ProjectsMoveDiskCall struct {
 	header_         http.Header
 }
 
-// MoveDisk: Starting September 29, 2025, you can't use the moveDisk API on
-// new
+// MoveDisk: Moves a persistent disk from one zone to another.
+// *Note*: The moveDisk API will be deprecated on September 29, 2026.
+//
+// Starting September 29, 2025, you can't use the moveDisk API on new
 // projects. To move a disk to a different region or zone, follow the steps
 // in
 // Change the location of a
 // disk
-// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/disks/migrate-to-hyperdisk#migrate-to-hd).
+// (https://cloud.google.com/compute/docs/disks/migrate-to-hyperdisk#migrate-to-hd).
 //
 // Projects that already use the moveDisk API can continue usage
 // until

@@ -932,6 +932,8 @@ type AdGroupAd struct {
 	AdGroupAdId int64 `json:"adGroupAdId,omitempty,string"`
 	// AdGroupId: The unique ID of the ad group that the ad belongs to.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
+	// AdPolicy: The policy approval status of the ad.
+	AdPolicy *AdPolicy `json:"adPolicy,omitempty"`
 	// AdUrls: List of URLs used by the ad.
 	AdUrls []*AdUrl `json:"adUrls,omitempty"`
 	// AdvertiserId: The unique ID of the advertiser the ad belongs to.
@@ -1031,6 +1033,638 @@ type AdGroupAssignedTargetingOption struct {
 
 func (s AdGroupAssignedTargetingOption) MarshalJSON() ([]byte, error) {
 	type NoMethod AdGroupAssignedTargetingOption
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicy: A single ad policy associated with an ad group ad.
+type AdPolicy struct {
+	// AdPolicyApprovalStatus: The policy approval status of an ad. Indicating the
+	// ad policy approval decision.
+	//
+	// Possible values:
+	//   "AD_POLICY_APPROVAL_STATUS_UNKNOWN" - Unknown or not specified.
+	//   "DISAPPROVED" - Will not serve.
+	//   "APPROVED_LIMITED" - Serves with restrictions.
+	//   "APPROVED" - Serves without restrictions.
+	//   "AREA_OF_INTEREST_ONLY" - Will not serve in targeted countries, but may
+	// serve for users who are searching for information about the targeted
+	// countries.
+	AdPolicyApprovalStatus string `json:"adPolicyApprovalStatus,omitempty"`
+	// AdPolicyReviewStatus: The policy review status of an ad. Indicating where
+	// the review process the ad is currently at.
+	//
+	// Possible values:
+	//   "AD_POLICY_REVIEW_STATUS_UNKNOWN" - Unknown or not specified.
+	//   "REVIEW_IN_PROGRESS" - Currently under review.
+	//   "REVIEWED" - Primary review complete. Other reviews may be continuing.
+	//   "UNDER_APPEAL" - The resource has been resubmitted for approval or its
+	// policy decision has been appealed.
+	//   "ELIGIBLE_MAY_SERVE" - The resource is eligible and may be serving but
+	// could still undergo further review.
+	AdPolicyReviewStatus string `json:"adPolicyReviewStatus,omitempty"`
+	// AdPolicyTopicEntry: The policy topic entries for the ad, including the
+	// topic, restriction level, and guidance on how to fix policy issues.
+	AdPolicyTopicEntry []*AdPolicyTopicEntry `json:"adPolicyTopicEntry,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdPolicyApprovalStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdPolicyApprovalStatus") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyCriterionRestriction: Represents a criterion that is restricted.
+// Today only used to represent a country restriction. Used by both policy
+// evidence and policy constraints.
+type AdPolicyCriterionRestriction struct {
+	// CountryCriterionId: Only used today to represent a country criterion id.
+	CountryCriterionId int64 `json:"countryCriterionId,omitempty,string"`
+	// CountryLabel: Localized name for the country. Could be empty.
+	CountryLabel string `json:"countryLabel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CountryCriterionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CountryCriterionId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyCriterionRestriction) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyCriterionRestriction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicAppealInfo: Appeal related information for a policy topic.
+type AdPolicyTopicAppealInfo struct {
+	// AppealFormLink: Only available when appeal_type is APPEAL_FORM.
+	AppealFormLink string `json:"appealFormLink,omitempty"`
+	// AppealType: Indicate whether the policy topic can be self-service appeal or
+	// appeal form.
+	//
+	// Possible values:
+	//   "AD_POLICY_APPEAL_TYPE_UNKNOWN" - Unknown or not specified.
+	//   "SELF_SERVICE_APPEAL" - The policy topic can be self-service appeal.
+	//   "APPEAL_FORM" - The policy topic needs to be appealed through appeal form.
+	AppealType string `json:"appealType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppealFormLink") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppealFormLink") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicAppealInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicAppealInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicConstraint: Additional constraints information that explains
+// restrictions applied to this policy.
+type AdPolicyTopicConstraint struct {
+	// CertificateDomainMismatchCountryList: Countries where the resource's domain
+	// is not covered by the certificates associated with it.
+	CertificateDomainMismatchCountryList *AdPolicyTopicConstraintAdPolicyCountryConstraintList `json:"certificateDomainMismatchCountryList,omitempty"`
+	// CertificateMissingCountryList: Countries where a certificate is required for
+	// serving.
+	CertificateMissingCountryList *AdPolicyTopicConstraintAdPolicyCountryConstraintList `json:"certificateMissingCountryList,omitempty"`
+	// CountryConstraint: Countries where the ad cannot serve.
+	CountryConstraint *AdPolicyTopicConstraintAdPolicyCountryConstraintList `json:"countryConstraint,omitempty"`
+	// GlobalCertificateDomainMismatch: Certificate is required to serve in any
+	// country and the existing certificate does not cover the ad's domain.
+	GlobalCertificateDomainMismatch *AdPolicyTopicConstraintAdPolicyGlobalCertificateDomainMismatchConstraint `json:"globalCertificateDomainMismatch,omitempty"`
+	// GlobalCertificateMissing: Certificate is required to serve in any country.
+	GlobalCertificateMissing *AdPolicyTopicConstraintAdPolicyGlobalCertificateMissingConstraint `json:"globalCertificateMissing,omitempty"`
+	// RequestCertificateFormLink: Link to the form to request a certificate for
+	// the policy topic constraint.
+	RequestCertificateFormLink string `json:"requestCertificateFormLink,omitempty"`
+	// ResellerConstraint: Reseller constraint.
+	ResellerConstraint *AdPolicyTopicConstraintAdPolicyResellerConstraint `json:"resellerConstraint,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CertificateDomainMismatchCountryList") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "CertificateDomainMismatchCountryList") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicConstraint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicConstraintAdPolicyCountryConstraintList: A list of countries
+// where the ad cannot serve due to policy constraints.
+type AdPolicyTopicConstraintAdPolicyCountryConstraintList struct {
+	// Countries: Countries where the ad cannot serve.
+	Countries []*AdPolicyCriterionRestriction `json:"countries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Countries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Countries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicConstraintAdPolicyCountryConstraintList) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicConstraintAdPolicyCountryConstraintList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicConstraintAdPolicyGlobalCertificateDomainMismatchConstraint:
+// Certificate is required to serve in any country and the existing certificate
+// does not cover the ad's domain.
+type AdPolicyTopicConstraintAdPolicyGlobalCertificateDomainMismatchConstraint struct {
+}
+
+// AdPolicyTopicConstraintAdPolicyGlobalCertificateMissingConstraint:
+// Certificate is required to serve in any country.
+type AdPolicyTopicConstraintAdPolicyGlobalCertificateMissingConstraint struct {
+}
+
+// AdPolicyTopicConstraintAdPolicyResellerConstraint: Policy topic was
+// constrained due to disapproval of the website for reseller purposes.
+type AdPolicyTopicConstraintAdPolicyResellerConstraint struct {
+}
+
+// AdPolicyTopicEntry: Policy topic entry.
+type AdPolicyTopicEntry struct {
+	// AppealInfo: Ad policy appeal related information for the policy topic.
+	AppealInfo *AdPolicyTopicAppealInfo `json:"appealInfo,omitempty"`
+	// HelpCenterLink: Ad policy help center link for the policy topic.
+	HelpCenterLink string `json:"helpCenterLink,omitempty"`
+	// PolicyDecisionType: The source of the policy decision.
+	//
+	// Possible values:
+	//   "AD_POLICY_DECISION_TYPE_UNKNOWN" - Unknown or not specified.
+	//   "PURSUANT_TO_NOTICE" - The decision is from legal notice, court order, or
+	// trademark content owner complaint, etc.
+	//   "GOOGLE_INVESTIGATION" - The decision is from the Google owned
+	// investigation.
+	PolicyDecisionType string `json:"policyDecisionType,omitempty"`
+	// PolicyEnforcementMeans: The policy enforcement means used in the policy
+	// review.
+	//
+	// Possible values:
+	//   "AD_POLICY_ENFORCEMENT_MEANS_UNKNOWN" - Unknown or not specified.
+	//   "AUTOMATED" - The enforcement process was fully automated.
+	//   "HUMAN_REVIEW" - A human was partially or fully involved in the decision
+	// enforcement process.
+	PolicyEnforcementMeans string `json:"policyEnforcementMeans,omitempty"`
+	// PolicyLabel: Localized label text for policy. (Trademarks in text, Contains
+	// Alcohol, etc.)
+	PolicyLabel string `json:"policyLabel,omitempty"`
+	// PolicyTopic: The policy topic of an ad policy topic entry. (TRADEMARKS,
+	// ALCOHOL, etc.)
+	PolicyTopic string `json:"policyTopic,omitempty"`
+	// PolicyTopicConstraints: The policy topic constraints.
+	PolicyTopicConstraints []*AdPolicyTopicConstraint `json:"policyTopicConstraints,omitempty"`
+	// PolicyTopicDescription: Short summary description of the policy topic.
+	PolicyTopicDescription string `json:"policyTopicDescription,omitempty"`
+	// PolicyTopicEvidences: The policy topic evidences.
+	PolicyTopicEvidences []*AdPolicyTopicEvidence `json:"policyTopicEvidences,omitempty"`
+	// PolicyTopicType: The policy topic entry type.
+	//
+	// Possible values:
+	//   "AD_POLICY_TOPIC_ENTRY_TYPE_UNKNOWN" - Unknown or not specified.
+	//   "PROHIBITED" - The resource will not serve.
+	//   "FULLY_LIMITED" - The resource will not serve in all targeted countries.
+	//   "LIMITED" - The resource cannot serve in some countries.
+	//   "DESCRIPTIVE" - The resource can serve.
+	//   "BROADENING" - The resource cannot serve to entry in any way.
+	//   "AREA_OF_INTEREST_ONLY" - The resource is only serving in classroom
+	// account.
+	PolicyTopicType string `json:"policyTopicType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppealInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppealInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidence: Additional evidence information that explains a
+// policy decision.
+type AdPolicyTopicEvidence struct {
+	// Counterfeit: Counterfeit enforcement that caused a policy violation.
+	Counterfeit *AdPolicyTopicEvidenceCounterfeit `json:"counterfeit,omitempty"`
+	// DestinationMismatch: Mismatch between the ad destinations URLs.
+	DestinationMismatch *AdPolicyTopicEvidenceDestinationMismatch `json:"destinationMismatch,omitempty"`
+	// DestinationNotWorking: Destination not working because of HTTP error or DNS
+	// error.
+	DestinationNotWorking *AdPolicyTopicEvidenceDestinationNotWorking `json:"destinationNotWorking,omitempty"`
+	// DestinationTextList: The text in the destination of the ad that is causing a
+	// policy violation.
+	DestinationTextList *AdPolicyTopicEvidenceDestinationTextList `json:"destinationTextList,omitempty"`
+	// HttpCode: HTTP code returned when the final URL was crawled.
+	HttpCode int64 `json:"httpCode,omitempty"`
+	// LanguageCode: The language the ad was detected to be written in. This is an
+	// IETF language tag such as "en-US".
+	LanguageCode string `json:"languageCode,omitempty"`
+	// LegalRemoval: Legal related regulation enforcement that caused a policy
+	// violation.
+	LegalRemoval *AdPolicyTopicEvidenceLegalRemoval `json:"legalRemoval,omitempty"`
+	// RegionalRequirements: T&S proactive enforcement that caused a policy
+	// violation.
+	RegionalRequirements *AdPolicyTopicEvidenceRegionalRequirements `json:"regionalRequirements,omitempty"`
+	// TextList: List of evidence found in the text of the ad.
+	TextList *AdPolicyTopicEvidenceTextList `json:"textList,omitempty"`
+	// Trademark: Trademark terms that caused a policy violation.
+	Trademark *AdPolicyTopicEvidenceTrademark `json:"trademark,omitempty"`
+	// WebsiteList: List of websites linked with the ad.
+	WebsiteList *AdPolicyTopicEvidenceWebsiteList `json:"websiteList,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Counterfeit") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Counterfeit") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidence
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceCounterfeit: Counterfeit enforcement that caused a
+// policy violation.
+type AdPolicyTopicEvidenceCounterfeit struct {
+	// Owners: The content or product owners that make the complainants.
+	Owners []string `json:"owners,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Owners") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Owners") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceCounterfeit) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceCounterfeit
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceDestinationMismatch: A list of destination mismatch URL
+// types.
+type AdPolicyTopicEvidenceDestinationMismatch struct {
+	// UriTypes: The set of URLs that do not match each other. The list can include
+	// single or multiple uri types. Example 1: [DISPLAY_URL, FINAL_URL] means ad
+	// display URL does not match with the ad final URL. Example 2: [FINAL_URL]
+	// means ad final URL did not match the crawled url, which is also considered
+	// as destinationmismatch.
+	//
+	// Possible values:
+	//   "AD_POLICY_TOPIC_EVIDENCE_DESTINATION_MISMATCH_URL_TYPE_UNKNOWN" - Not
+	// specified or unknown.
+	//   "DISPLAY_URL" - The display URL.
+	//   "FINAL_URL" - The final URL.
+	//   "FINAL_MOBILE_URL" - The final mobile URL.
+	//   "TRACKING_URL" - The tracking URL.
+	//   "MOBILE_TRACKING_URL" - The mobile tracking URL.
+	UriTypes []string `json:"uriTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UriTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UriTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceDestinationMismatch) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceDestinationMismatch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceDestinationNotWorking: Evidence details for destination
+// not working policy violations.
+type AdPolicyTopicEvidenceDestinationNotWorking struct {
+	// Device: The device platform of the not working url.
+	//
+	// Possible values:
+	//   "AD_POLICY_TOPIC_EVIDENCE_DESTINATION_NOT_WORKING_DEVICE_TYPE_UNKNOWN" -
+	// Not specified or unknown.
+	//   "DESKTOP" - Landing page doesn't work on desktop device.
+	//   "ANDROID" - Landing page doesn't work on Android device.
+	//   "IOS" - Landing page doesn't work on iOS device.
+	Device string `json:"device,omitempty"`
+	// DnsErrorType: The type of DNS error.
+	//
+	// Possible values:
+	//   "AD_POLICY_TOPIC_EVIDENCE_DESTINATION_NOT_WORKING_DNS_ERROR_TYPE_UNKNOWN"
+	// - Not specified or unknown.
+	//   "HOSTNAME_NOT_FOUND" - Host name not found in DNS when fetching landing
+	// page.
+	//   "GOOGLE_CRAWLER_DNS_ISSUE" - Google could not crawl the landing page when
+	// communicating with DNS.
+	DnsErrorType string `json:"dnsErrorType,omitempty"`
+	// ExpandedUri: The full URL that didn't work.
+	ExpandedUri string `json:"expandedUri,omitempty"`
+	// HttpErrorCode: The HTTP error code.
+	HttpErrorCode int64 `json:"httpErrorCode,omitempty,string"`
+	// LastCheckedTime: The last checked time of the not working url.
+	LastCheckedTime string `json:"lastCheckedTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Device") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Device") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceDestinationNotWorking) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceDestinationNotWorking
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceDestinationTextList: A list of destination text that
+// violated the policy.
+type AdPolicyTopicEvidenceDestinationTextList struct {
+	// DestinationTexts: Destination text that caused the policy finding.
+	DestinationTexts []string `json:"destinationTexts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestinationTexts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestinationTexts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceDestinationTextList) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceDestinationTextList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceLegalRemoval: Legal related regulation enforcement,
+// either from DMCA or local legal.
+type AdPolicyTopicEvidenceLegalRemoval struct {
+	// ComplaintType: The legal removal complaint type.
+	//
+	// Possible values:
+	//   "AD_POLICY_TOPIC_EVIDENCE_LEGAL_REMOVAL_COMPLAINT_TYPE_UNKNOWN" - Not
+	// specified or unknown.
+	//   "COPYRIGHT" - Only applies to DMCA.
+	//   "COURT_ORDER" - Only applies to local legal.
+	//   "LOCAL_LEGAL" - Only applies to local legal.
+	ComplaintType string `json:"complaintType,omitempty"`
+	// CountryRestrictions: The restricted countries due to the legal removal.
+	CountryRestrictions []*AdPolicyCriterionRestriction `json:"countryRestrictions,omitempty"`
+	// Dmca: Whether the restriction is from DMCA regulation.
+	Dmca *AdPolicyTopicEvidenceLegalRemovalDmca `json:"dmca,omitempty"`
+	// LocalLegal: Whether the restriction is from local legal regulation.
+	LocalLegal *AdPolicyTopicEvidenceLegalRemovalLocalLegal `json:"localLegal,omitempty"`
+	// RestrictedUris: The urls that are restricted due to the legal removal.
+	RestrictedUris []string `json:"restrictedUris,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ComplaintType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComplaintType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceLegalRemoval) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceLegalRemoval
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceLegalRemovalDmca: DMCA related regulation enforcement.
+type AdPolicyTopicEvidenceLegalRemovalDmca struct {
+	// Complainant: The entity who makes the legal complaint.
+	Complainant string `json:"complainant,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Complainant") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Complainant") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceLegalRemovalDmca) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceLegalRemovalDmca
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceLegalRemovalLocalLegal: Local legal related regulation
+// enforcement.
+type AdPolicyTopicEvidenceLegalRemovalLocalLegal struct {
+	// LawType: Type of law for the legal notice.
+	LawType string `json:"lawType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LawType") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LawType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceLegalRemovalLocalLegal) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceLegalRemovalLocalLegal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceRegionalRequirements: T&S proactive enforcement for
+// policies meant to address regional requirements. This is considered as
+// Google owned investigation instead of regulation notice since it's a T&S
+// proactive enforcement.
+type AdPolicyTopicEvidenceRegionalRequirements struct {
+	// RegionalRequirementsEntries: List of regional requirements.
+	RegionalRequirementsEntries []*AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry `json:"regionalRequirementsEntries,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "RegionalRequirementsEntries") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RegionalRequirementsEntries") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceRegionalRequirements) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceRegionalRequirements
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry: Policy
+// level regional legal violation details.
+type AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry struct {
+	// CountryRestrictions: The restricted countries due to the legal policy.
+	CountryRestrictions []*AdPolicyCriterionRestriction `json:"countryRestrictions,omitempty"`
+	// LegalPolicy: The legal policy that is violated.
+	LegalPolicy string `json:"legalPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CountryRestrictions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CountryRestrictions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceTextList: A list of fragments of text that violated the
+// policy.
+type AdPolicyTopicEvidenceTextList struct {
+	// Texts: The fragments of text from the resource that caused the policy
+	// finding.
+	Texts []string `json:"texts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Texts") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Texts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceTextList) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceTextList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceTrademark: Trademark terms that caused a policy
+// violation.
+type AdPolicyTopicEvidenceTrademark struct {
+	// CountryRestrictions: Criteria that are geo restrictions.
+	CountryRestrictions []*AdPolicyCriterionRestriction `json:"countryRestrictions,omitempty"`
+	// Owner: The trademark content owner.
+	Owner string `json:"owner,omitempty"`
+	// Term: The trademark term.
+	Term string `json:"term,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CountryRestrictions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CountryRestrictions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceTrademark) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceTrademark
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceWebsiteList: A list of websites that violated the
+// policy.
+type AdPolicyTopicEvidenceWebsiteList struct {
+	// Websites: Websites that caused the policy finding.
+	Websites []string `json:"websites,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Websites") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Websites") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceWebsiteList) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceWebsiteList
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5942,6 +6576,7 @@ type CreateSdfDownloadTaskRequest struct {
 	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
 	// migrating to this version.
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
+	//   "SDF_VERSION_9_2" - SDF version 9.2.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14699,6 +15334,7 @@ type SdfConfig struct {
 	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
 	// migrating to this version.
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
+	//   "SDF_VERSION_9_2" - SDF version 9.2.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14782,6 +15418,7 @@ type SdfDownloadTaskMetadata struct {
 	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
 	// migrating to this version.
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
+	//   "SDF_VERSION_9_2" - SDF version 9.2.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or

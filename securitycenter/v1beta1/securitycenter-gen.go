@@ -6926,25 +6926,142 @@ func (s GoogleCloudSecuritycenterV2IssueResource) MarshalJSON() ([]byte, error) 
 // GoogleCloudSecuritycenterV2IssueResourceApplication: The AppHub application
 // associated with the resource, if any.
 type GoogleCloudSecuritycenterV2IssueResourceApplication struct {
+	// Attributes: Consumer provided attributes for the application
+	Attributes *GoogleCloudSecuritycenterV2IssueResourceApplicationAttributes `json:"attributes,omitempty"`
 	// Name: The resource name of an Application. Format:
 	// `projects/{host-project-id}/locations/{location}/applications/{application-id
 	// }`
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudSecuritycenterV2IssueResourceApplication) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2IssueResourceApplication
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2IssueResourceApplicationAttributes: Consumer
+// provided attributes for the application
+type GoogleCloudSecuritycenterV2IssueResourceApplicationAttributes struct {
+	// BusinessOwners: Business team that ensures user needs are met and value is
+	// delivered
+	BusinessOwners []*GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesContactInfo `json:"businessOwners,omitempty"`
+	// Criticality: User-defined criticality information.
+	Criticality *GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesCriticality `json:"criticality,omitempty"`
+	// DeveloperOwners: Developer team that owns development and coding.
+	DeveloperOwners []*GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesContactInfo `json:"developerOwners,omitempty"`
+	// Environment: User-defined environment information.
+	Environment *GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesEnvironment `json:"environment,omitempty"`
+	// OperatorOwners: Operator team that ensures runtime and operations.
+	OperatorOwners []*GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesContactInfo `json:"operatorOwners,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BusinessOwners") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BusinessOwners") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2IssueResourceApplicationAttributes) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2IssueResourceApplicationAttributes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesContactInfo:
+// Contact information of stakeholders.
+type GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesContactInfo struct {
+	// Email: Email address of the contacts.
+	Email string `json:"email,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesContactInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesContactInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesCriticality:
+// Criticality of the Application, Service, or Workload
+type GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesCriticality struct {
+	// Type: Criticality Type.
+	//
+	// Possible values:
+	//   "CRITICALITY_TYPE_UNSPECIFIED" - Unspecified type.
+	//   "MISSION_CRITICAL" - Mission critical service, application or workload.
+	//   "HIGH" - High impact.
+	//   "MEDIUM" - Medium impact.
+	//   "LOW" - Low impact.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesCriticality) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesCriticality
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesEnvironment:
+// Environment of the Application, Service, or Workload
+type GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesEnvironment struct {
+	// Type: Environment Type.
+	//
+	// Possible values:
+	//   "ENVIRONMENT_TYPE_UNSPECIFIED" - Unspecified type.
+	//   "PRODUCTION" - Production environment.
+	//   "STAGING" - Staging environment.
+	//   "TEST" - Test environment.
+	//   "DEVELOPMENT" - Development environment.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesEnvironment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2IssueResourceApplicationAttributesEnvironment
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

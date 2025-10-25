@@ -6708,8 +6708,10 @@ type TransactionOptions struct {
 	// transactions actually occurred in parallel. Spanner assigns commit
 	// timestamps that reflect the order of committed transactions to implement
 	// this property. Spanner offers a stronger guarantee than serializability
-	// called external consistency. For further details, please refer to
-	// https://cloud.google.com/spanner/docs/true-time-external-consistency#serializability.
+	// called external consistency. For more information, see [TrueTime and
+	// external
+	// consistency](https://cloud.google.com/spanner/docs/true-time-external-consist
+	// ency#serializability).
 	//   "REPEATABLE_READ" - All reads performed during the transaction observe a
 	// consistent snapshot of the database, and the transaction is only
 	// successfully committed in the absence of conflicts between its updates and
@@ -6830,6 +6832,8 @@ type Type struct {
 	// `P[n]Y[n]M[n]DT[n]H[n]M[n[.fraction]]S` where `n` is an integer. For
 	// example, `P1Y2M3DT4H5M6.5S` represents time duration of 1 year, 2 months, 3
 	// days, 4 hours, 5 minutes, and 6.5 seconds.
+	//   "UUID" - Encoded as `string`, in lower-case hexa-decimal format, as
+	// described in RFC 9562, section 4.
 	Code string `json:"code,omitempty"`
 	// ProtoTypeFqn: If code == PROTO or code == ENUM, then `proto_type_fqn` is the
 	// fully qualified name of the proto type representing the proto/enum

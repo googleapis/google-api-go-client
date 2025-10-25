@@ -220,6 +220,7 @@ func (s *Service) userAgent() string {
 
 func NewAdvertisersService(s *Service) *AdvertisersService {
 	rs := &AdvertisersService{s: s}
+	rs.AdAssets = NewAdvertisersAdAssetsService(s)
 	rs.AdGroupAds = NewAdvertisersAdGroupAdsService(s)
 	rs.AdGroups = NewAdvertisersAdGroupsService(s)
 	rs.Assets = NewAdvertisersAssetsService(s)
@@ -237,6 +238,8 @@ func NewAdvertisersService(s *Service) *AdvertisersService {
 
 type AdvertisersService struct {
 	s *Service
+
+	AdAssets *AdvertisersAdAssetsService
 
 	AdGroupAds *AdvertisersAdGroupAdsService
 
@@ -263,6 +266,15 @@ type AdvertisersService struct {
 	TargetingTypes *AdvertisersTargetingTypesService
 }
 
+func NewAdvertisersAdAssetsService(s *Service) *AdvertisersAdAssetsService {
+	rs := &AdvertisersAdAssetsService{s: s}
+	return rs
+}
+
+type AdvertisersAdAssetsService struct {
+	s *Service
+}
+
 func NewAdvertisersAdGroupAdsService(s *Service) *AdvertisersAdGroupAdsService {
 	rs := &AdvertisersAdGroupAdsService{s: s}
 	return rs
@@ -275,6 +287,7 @@ type AdvertisersAdGroupAdsService struct {
 func NewAdvertisersAdGroupsService(s *Service) *AdvertisersAdGroupsService {
 	rs := &AdvertisersAdGroupsService{s: s}
 	rs.TargetingTypes = NewAdvertisersAdGroupsTargetingTypesService(s)
+	rs.YoutubeAssetTypes = NewAdvertisersAdGroupsYoutubeAssetTypesService(s)
 	return rs
 }
 
@@ -282,6 +295,8 @@ type AdvertisersAdGroupsService struct {
 	s *Service
 
 	TargetingTypes *AdvertisersAdGroupsTargetingTypesService
+
+	YoutubeAssetTypes *AdvertisersAdGroupsYoutubeAssetTypesService
 }
 
 func NewAdvertisersAdGroupsTargetingTypesService(s *Service) *AdvertisersAdGroupsTargetingTypesService {
@@ -302,6 +317,27 @@ func NewAdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsService(s *Serv
 }
 
 type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsService struct {
+	s *Service
+}
+
+func NewAdvertisersAdGroupsYoutubeAssetTypesService(s *Service) *AdvertisersAdGroupsYoutubeAssetTypesService {
+	rs := &AdvertisersAdGroupsYoutubeAssetTypesService{s: s}
+	rs.YoutubeAssetAssociations = NewAdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsService(s)
+	return rs
+}
+
+type AdvertisersAdGroupsYoutubeAssetTypesService struct {
+	s *Service
+
+	YoutubeAssetAssociations *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsService
+}
+
+func NewAdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsService(s *Service) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsService {
+	rs := &AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsService{s: s}
+	return rs
+}
+
+type AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsService struct {
 	s *Service
 }
 
@@ -422,6 +458,7 @@ type AdvertisersInvoicesService struct {
 func NewAdvertisersLineItemsService(s *Service) *AdvertisersLineItemsService {
 	rs := &AdvertisersLineItemsService{s: s}
 	rs.TargetingTypes = NewAdvertisersLineItemsTargetingTypesService(s)
+	rs.YoutubeAssetTypes = NewAdvertisersLineItemsYoutubeAssetTypesService(s)
 	return rs
 }
 
@@ -429,6 +466,8 @@ type AdvertisersLineItemsService struct {
 	s *Service
 
 	TargetingTypes *AdvertisersLineItemsTargetingTypesService
+
+	YoutubeAssetTypes *AdvertisersLineItemsYoutubeAssetTypesService
 }
 
 func NewAdvertisersLineItemsTargetingTypesService(s *Service) *AdvertisersLineItemsTargetingTypesService {
@@ -449,6 +488,27 @@ func NewAdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService(s *Ser
 }
 
 type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService struct {
+	s *Service
+}
+
+func NewAdvertisersLineItemsYoutubeAssetTypesService(s *Service) *AdvertisersLineItemsYoutubeAssetTypesService {
+	rs := &AdvertisersLineItemsYoutubeAssetTypesService{s: s}
+	rs.YoutubeAssetAssociations = NewAdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsService(s)
+	return rs
+}
+
+type AdvertisersLineItemsYoutubeAssetTypesService struct {
+	s *Service
+
+	YoutubeAssetAssociations *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsService
+}
+
+func NewAdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsService(s *Service) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsService {
+	rs := &AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsService{s: s}
+	return rs
+}
+
+type AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsService struct {
 	s *Service
 }
 
@@ -870,6 +930,58 @@ func (s ActiveViewVideoViewabilityMetricConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AdAsset: A single ad asset. Next ID: 6
+type AdAsset struct {
+	// AdAssetId: Output only. Asset ID of the ad asset.
+	AdAssetId int64 `json:"adAssetId,omitempty,string"`
+	// AdAssetType: Required. The type of the ad asset.
+	//
+	// Possible values:
+	//   "AD_ASSET_TYPE_UNSPECIFIED" - The ad asset type is unspecified.
+	//   "AD_ASSET_TYPE_IMAGE" - The ad asset is a YouTube/DemandGen image.
+	//   "AD_ASSET_TYPE_YOUTUBE_VIDEO" - The ad asset is a YouTube video.
+	AdAssetType string `json:"adAssetType,omitempty"`
+	// EntityStatus: Output only. The entity status of the ad asset.
+	//
+	// Possible values:
+	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not specified
+	// or is unknown in this version.
+	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend budget.
+	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and budget
+	// spending are disabled. An entity can be deleted after archived. Deleted
+	// entities cannot be retrieved.
+	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and budget
+	// spending are disabled.
+	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for the
+	// entity.
+	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled for
+	// deletion.
+	EntityStatus string `json:"entityStatus,omitempty"`
+	// Name: Identifier. The resource name of the ad asset.
+	Name string `json:"name,omitempty"`
+	// YoutubeVideoAsset: The youtube video asset of the ad asset.
+	YoutubeVideoAsset *YoutubeVideoAsset `json:"youtubeVideoAsset,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AdAssetId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdAssetId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod AdAsset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AdGroup: A single ad group associated with a line item.
 type AdGroup struct {
 	// AdGroupFormat: The format of the ads in the ad group.
@@ -956,6 +1068,8 @@ type AdGroupAd struct {
 	AdGroupAdId int64 `json:"adGroupAdId,omitempty,string"`
 	// AdGroupId: The unique ID of the ad group that the ad belongs to.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
+	// AdPolicy: The policy approval status of the ad.
+	AdPolicy *AdPolicy `json:"adPolicy,omitempty"`
 	// AdUrls: List of URLs used by the ad.
 	AdUrls []*AdUrl `json:"adUrls,omitempty"`
 	// AdvertiserId: The unique ID of the advertiser the ad belongs to.
@@ -1055,6 +1169,638 @@ type AdGroupAssignedTargetingOption struct {
 
 func (s AdGroupAssignedTargetingOption) MarshalJSON() ([]byte, error) {
 	type NoMethod AdGroupAssignedTargetingOption
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicy: A single ad policy associated with an ad group ad.
+type AdPolicy struct {
+	// AdPolicyApprovalStatus: The policy approval status of an ad. Indicating the
+	// ad policy approval decision.
+	//
+	// Possible values:
+	//   "AD_POLICY_APPROVAL_STATUS_UNKNOWN" - Unknown or not specified.
+	//   "DISAPPROVED" - Will not serve.
+	//   "APPROVED_LIMITED" - Serves with restrictions.
+	//   "APPROVED" - Serves without restrictions.
+	//   "AREA_OF_INTEREST_ONLY" - Will not serve in targeted countries, but may
+	// serve for users who are searching for information about the targeted
+	// countries.
+	AdPolicyApprovalStatus string `json:"adPolicyApprovalStatus,omitempty"`
+	// AdPolicyReviewStatus: The policy review status of an ad. Indicating where
+	// the review process the ad is currently at.
+	//
+	// Possible values:
+	//   "AD_POLICY_REVIEW_STATUS_UNKNOWN" - Unknown or not specified.
+	//   "REVIEW_IN_PROGRESS" - Currently under review.
+	//   "REVIEWED" - Primary review complete. Other reviews may be continuing.
+	//   "UNDER_APPEAL" - The resource has been resubmitted for approval or its
+	// policy decision has been appealed.
+	//   "ELIGIBLE_MAY_SERVE" - The resource is eligible and may be serving but
+	// could still undergo further review.
+	AdPolicyReviewStatus string `json:"adPolicyReviewStatus,omitempty"`
+	// AdPolicyTopicEntry: The policy topic entries for the ad, including the
+	// topic, restriction level, and guidance on how to fix policy issues.
+	AdPolicyTopicEntry []*AdPolicyTopicEntry `json:"adPolicyTopicEntry,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdPolicyApprovalStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdPolicyApprovalStatus") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyCriterionRestriction: Represents a criterion that is restricted.
+// Today only used to represent a country restriction. Used by both policy
+// evidence and policy constraints.
+type AdPolicyCriterionRestriction struct {
+	// CountryCriterionId: Only used today to represent a country criterion id.
+	CountryCriterionId int64 `json:"countryCriterionId,omitempty,string"`
+	// CountryLabel: Localized name for the country. Could be empty.
+	CountryLabel string `json:"countryLabel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CountryCriterionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CountryCriterionId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyCriterionRestriction) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyCriterionRestriction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicAppealInfo: Appeal related information for a policy topic.
+type AdPolicyTopicAppealInfo struct {
+	// AppealFormLink: Only available when appeal_type is APPEAL_FORM.
+	AppealFormLink string `json:"appealFormLink,omitempty"`
+	// AppealType: Indicate whether the policy topic can be self-service appeal or
+	// appeal form.
+	//
+	// Possible values:
+	//   "AD_POLICY_APPEAL_TYPE_UNKNOWN" - Unknown or not specified.
+	//   "SELF_SERVICE_APPEAL" - The policy topic can be self-service appeal.
+	//   "APPEAL_FORM" - The policy topic needs to be appealed through appeal form.
+	AppealType string `json:"appealType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppealFormLink") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppealFormLink") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicAppealInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicAppealInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicConstraint: Additional constraints information that explains
+// restrictions applied to this policy.
+type AdPolicyTopicConstraint struct {
+	// CertificateDomainMismatchCountryList: Countries where the resource's domain
+	// is not covered by the certificates associated with it.
+	CertificateDomainMismatchCountryList *AdPolicyTopicConstraintAdPolicyCountryConstraintList `json:"certificateDomainMismatchCountryList,omitempty"`
+	// CertificateMissingCountryList: Countries where a certificate is required for
+	// serving.
+	CertificateMissingCountryList *AdPolicyTopicConstraintAdPolicyCountryConstraintList `json:"certificateMissingCountryList,omitempty"`
+	// CountryConstraint: Countries where the ad cannot serve.
+	CountryConstraint *AdPolicyTopicConstraintAdPolicyCountryConstraintList `json:"countryConstraint,omitempty"`
+	// GlobalCertificateDomainMismatch: Certificate is required to serve in any
+	// country and the existing certificate does not cover the ad's domain.
+	GlobalCertificateDomainMismatch *AdPolicyTopicConstraintAdPolicyGlobalCertificateDomainMismatchConstraint `json:"globalCertificateDomainMismatch,omitempty"`
+	// GlobalCertificateMissing: Certificate is required to serve in any country.
+	GlobalCertificateMissing *AdPolicyTopicConstraintAdPolicyGlobalCertificateMissingConstraint `json:"globalCertificateMissing,omitempty"`
+	// RequestCertificateFormLink: Link to the form to request a certificate for
+	// the policy topic constraint.
+	RequestCertificateFormLink string `json:"requestCertificateFormLink,omitempty"`
+	// ResellerConstraint: Reseller constraint.
+	ResellerConstraint *AdPolicyTopicConstraintAdPolicyResellerConstraint `json:"resellerConstraint,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CertificateDomainMismatchCountryList") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "CertificateDomainMismatchCountryList") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicConstraint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicConstraintAdPolicyCountryConstraintList: A list of countries
+// where the ad cannot serve due to policy constraints.
+type AdPolicyTopicConstraintAdPolicyCountryConstraintList struct {
+	// Countries: Countries where the ad cannot serve.
+	Countries []*AdPolicyCriterionRestriction `json:"countries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Countries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Countries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicConstraintAdPolicyCountryConstraintList) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicConstraintAdPolicyCountryConstraintList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicConstraintAdPolicyGlobalCertificateDomainMismatchConstraint:
+// Certificate is required to serve in any country and the existing certificate
+// does not cover the ad's domain.
+type AdPolicyTopicConstraintAdPolicyGlobalCertificateDomainMismatchConstraint struct {
+}
+
+// AdPolicyTopicConstraintAdPolicyGlobalCertificateMissingConstraint:
+// Certificate is required to serve in any country.
+type AdPolicyTopicConstraintAdPolicyGlobalCertificateMissingConstraint struct {
+}
+
+// AdPolicyTopicConstraintAdPolicyResellerConstraint: Policy topic was
+// constrained due to disapproval of the website for reseller purposes.
+type AdPolicyTopicConstraintAdPolicyResellerConstraint struct {
+}
+
+// AdPolicyTopicEntry: Policy topic entry.
+type AdPolicyTopicEntry struct {
+	// AppealInfo: Ad policy appeal related information for the policy topic.
+	AppealInfo *AdPolicyTopicAppealInfo `json:"appealInfo,omitempty"`
+	// HelpCenterLink: Ad policy help center link for the policy topic.
+	HelpCenterLink string `json:"helpCenterLink,omitempty"`
+	// PolicyDecisionType: The source of the policy decision.
+	//
+	// Possible values:
+	//   "AD_POLICY_DECISION_TYPE_UNKNOWN" - Unknown or not specified.
+	//   "PURSUANT_TO_NOTICE" - The decision is from legal notice, court order, or
+	// trademark content owner complaint, etc.
+	//   "GOOGLE_INVESTIGATION" - The decision is from the Google owned
+	// investigation.
+	PolicyDecisionType string `json:"policyDecisionType,omitempty"`
+	// PolicyEnforcementMeans: The policy enforcement means used in the policy
+	// review.
+	//
+	// Possible values:
+	//   "AD_POLICY_ENFORCEMENT_MEANS_UNKNOWN" - Unknown or not specified.
+	//   "AUTOMATED" - The enforcement process was fully automated.
+	//   "HUMAN_REVIEW" - A human was partially or fully involved in the decision
+	// enforcement process.
+	PolicyEnforcementMeans string `json:"policyEnforcementMeans,omitempty"`
+	// PolicyLabel: Localized label text for policy. (Trademarks in text, Contains
+	// Alcohol, etc.)
+	PolicyLabel string `json:"policyLabel,omitempty"`
+	// PolicyTopic: The policy topic of an ad policy topic entry. (TRADEMARKS,
+	// ALCOHOL, etc.)
+	PolicyTopic string `json:"policyTopic,omitempty"`
+	// PolicyTopicConstraints: The policy topic constraints.
+	PolicyTopicConstraints []*AdPolicyTopicConstraint `json:"policyTopicConstraints,omitempty"`
+	// PolicyTopicDescription: Short summary description of the policy topic.
+	PolicyTopicDescription string `json:"policyTopicDescription,omitempty"`
+	// PolicyTopicEvidences: The policy topic evidences.
+	PolicyTopicEvidences []*AdPolicyTopicEvidence `json:"policyTopicEvidences,omitempty"`
+	// PolicyTopicType: The policy topic entry type.
+	//
+	// Possible values:
+	//   "AD_POLICY_TOPIC_ENTRY_TYPE_UNKNOWN" - Unknown or not specified.
+	//   "PROHIBITED" - The resource will not serve.
+	//   "FULLY_LIMITED" - The resource will not serve in all targeted countries.
+	//   "LIMITED" - The resource cannot serve in some countries.
+	//   "DESCRIPTIVE" - The resource can serve.
+	//   "BROADENING" - The resource cannot serve to entry in any way.
+	//   "AREA_OF_INTEREST_ONLY" - The resource is only serving in classroom
+	// account.
+	PolicyTopicType string `json:"policyTopicType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppealInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppealInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidence: Additional evidence information that explains a
+// policy decision.
+type AdPolicyTopicEvidence struct {
+	// Counterfeit: Counterfeit enforcement that caused a policy violation.
+	Counterfeit *AdPolicyTopicEvidenceCounterfeit `json:"counterfeit,omitempty"`
+	// DestinationMismatch: Mismatch between the ad destinations URLs.
+	DestinationMismatch *AdPolicyTopicEvidenceDestinationMismatch `json:"destinationMismatch,omitempty"`
+	// DestinationNotWorking: Destination not working because of HTTP error or DNS
+	// error.
+	DestinationNotWorking *AdPolicyTopicEvidenceDestinationNotWorking `json:"destinationNotWorking,omitempty"`
+	// DestinationTextList: The text in the destination of the ad that is causing a
+	// policy violation.
+	DestinationTextList *AdPolicyTopicEvidenceDestinationTextList `json:"destinationTextList,omitempty"`
+	// HttpCode: HTTP code returned when the final URL was crawled.
+	HttpCode int64 `json:"httpCode,omitempty"`
+	// LanguageCode: The language the ad was detected to be written in. This is an
+	// IETF language tag such as "en-US".
+	LanguageCode string `json:"languageCode,omitempty"`
+	// LegalRemoval: Legal related regulation enforcement that caused a policy
+	// violation.
+	LegalRemoval *AdPolicyTopicEvidenceLegalRemoval `json:"legalRemoval,omitempty"`
+	// RegionalRequirements: T&S proactive enforcement that caused a policy
+	// violation.
+	RegionalRequirements *AdPolicyTopicEvidenceRegionalRequirements `json:"regionalRequirements,omitempty"`
+	// TextList: List of evidence found in the text of the ad.
+	TextList *AdPolicyTopicEvidenceTextList `json:"textList,omitempty"`
+	// Trademark: Trademark terms that caused a policy violation.
+	Trademark *AdPolicyTopicEvidenceTrademark `json:"trademark,omitempty"`
+	// WebsiteList: List of websites linked with the ad.
+	WebsiteList *AdPolicyTopicEvidenceWebsiteList `json:"websiteList,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Counterfeit") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Counterfeit") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidence) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidence
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceCounterfeit: Counterfeit enforcement that caused a
+// policy violation.
+type AdPolicyTopicEvidenceCounterfeit struct {
+	// Owners: The content or product owners that make the complainants.
+	Owners []string `json:"owners,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Owners") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Owners") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceCounterfeit) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceCounterfeit
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceDestinationMismatch: A list of destination mismatch URL
+// types.
+type AdPolicyTopicEvidenceDestinationMismatch struct {
+	// UriTypes: The set of URLs that do not match each other. The list can include
+	// single or multiple uri types. Example 1: [DISPLAY_URL, FINAL_URL] means ad
+	// display URL does not match with the ad final URL. Example 2: [FINAL_URL]
+	// means ad final URL did not match the crawled url, which is also considered
+	// as destinationmismatch.
+	//
+	// Possible values:
+	//   "AD_POLICY_TOPIC_EVIDENCE_DESTINATION_MISMATCH_URL_TYPE_UNKNOWN" - Not
+	// specified or unknown.
+	//   "DISPLAY_URL" - The display URL.
+	//   "FINAL_URL" - The final URL.
+	//   "FINAL_MOBILE_URL" - The final mobile URL.
+	//   "TRACKING_URL" - The tracking URL.
+	//   "MOBILE_TRACKING_URL" - The mobile tracking URL.
+	UriTypes []string `json:"uriTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UriTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UriTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceDestinationMismatch) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceDestinationMismatch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceDestinationNotWorking: Evidence details for destination
+// not working policy violations.
+type AdPolicyTopicEvidenceDestinationNotWorking struct {
+	// Device: The device platform of the not working url.
+	//
+	// Possible values:
+	//   "AD_POLICY_TOPIC_EVIDENCE_DESTINATION_NOT_WORKING_DEVICE_TYPE_UNKNOWN" -
+	// Not specified or unknown.
+	//   "DESKTOP" - Landing page doesn't work on desktop device.
+	//   "ANDROID" - Landing page doesn't work on Android device.
+	//   "IOS" - Landing page doesn't work on iOS device.
+	Device string `json:"device,omitempty"`
+	// DnsErrorType: The type of DNS error.
+	//
+	// Possible values:
+	//   "AD_POLICY_TOPIC_EVIDENCE_DESTINATION_NOT_WORKING_DNS_ERROR_TYPE_UNKNOWN"
+	// - Not specified or unknown.
+	//   "HOSTNAME_NOT_FOUND" - Host name not found in DNS when fetching landing
+	// page.
+	//   "GOOGLE_CRAWLER_DNS_ISSUE" - Google could not crawl the landing page when
+	// communicating with DNS.
+	DnsErrorType string `json:"dnsErrorType,omitempty"`
+	// ExpandedUri: The full URL that didn't work.
+	ExpandedUri string `json:"expandedUri,omitempty"`
+	// HttpErrorCode: The HTTP error code.
+	HttpErrorCode int64 `json:"httpErrorCode,omitempty,string"`
+	// LastCheckedTime: The last checked time of the not working url.
+	LastCheckedTime string `json:"lastCheckedTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Device") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Device") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceDestinationNotWorking) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceDestinationNotWorking
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceDestinationTextList: A list of destination text that
+// violated the policy.
+type AdPolicyTopicEvidenceDestinationTextList struct {
+	// DestinationTexts: Destination text that caused the policy finding.
+	DestinationTexts []string `json:"destinationTexts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestinationTexts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestinationTexts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceDestinationTextList) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceDestinationTextList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceLegalRemoval: Legal related regulation enforcement,
+// either from DMCA or local legal.
+type AdPolicyTopicEvidenceLegalRemoval struct {
+	// ComplaintType: The legal removal complaint type.
+	//
+	// Possible values:
+	//   "AD_POLICY_TOPIC_EVIDENCE_LEGAL_REMOVAL_COMPLAINT_TYPE_UNKNOWN" - Not
+	// specified or unknown.
+	//   "COPYRIGHT" - Only applies to DMCA.
+	//   "COURT_ORDER" - Only applies to local legal.
+	//   "LOCAL_LEGAL" - Only applies to local legal.
+	ComplaintType string `json:"complaintType,omitempty"`
+	// CountryRestrictions: The restricted countries due to the legal removal.
+	CountryRestrictions []*AdPolicyCriterionRestriction `json:"countryRestrictions,omitempty"`
+	// Dmca: Whether the restriction is from DMCA regulation.
+	Dmca *AdPolicyTopicEvidenceLegalRemovalDmca `json:"dmca,omitempty"`
+	// LocalLegal: Whether the restriction is from local legal regulation.
+	LocalLegal *AdPolicyTopicEvidenceLegalRemovalLocalLegal `json:"localLegal,omitempty"`
+	// RestrictedUris: The urls that are restricted due to the legal removal.
+	RestrictedUris []string `json:"restrictedUris,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ComplaintType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComplaintType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceLegalRemoval) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceLegalRemoval
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceLegalRemovalDmca: DMCA related regulation enforcement.
+type AdPolicyTopicEvidenceLegalRemovalDmca struct {
+	// Complainant: The entity who makes the legal complaint.
+	Complainant string `json:"complainant,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Complainant") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Complainant") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceLegalRemovalDmca) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceLegalRemovalDmca
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceLegalRemovalLocalLegal: Local legal related regulation
+// enforcement.
+type AdPolicyTopicEvidenceLegalRemovalLocalLegal struct {
+	// LawType: Type of law for the legal notice.
+	LawType string `json:"lawType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LawType") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LawType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceLegalRemovalLocalLegal) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceLegalRemovalLocalLegal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceRegionalRequirements: T&S proactive enforcement for
+// policies meant to address regional requirements. This is considered as
+// Google owned investigation instead of regulation notice since it's a T&S
+// proactive enforcement.
+type AdPolicyTopicEvidenceRegionalRequirements struct {
+	// RegionalRequirementsEntries: List of regional requirements.
+	RegionalRequirementsEntries []*AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry `json:"regionalRequirementsEntries,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "RegionalRequirementsEntries") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RegionalRequirementsEntries") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceRegionalRequirements) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceRegionalRequirements
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry: Policy
+// level regional legal violation details.
+type AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry struct {
+	// CountryRestrictions: The restricted countries due to the legal policy.
+	CountryRestrictions []*AdPolicyCriterionRestriction `json:"countryRestrictions,omitempty"`
+	// LegalPolicy: The legal policy that is violated.
+	LegalPolicy string `json:"legalPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CountryRestrictions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CountryRestrictions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceTextList: A list of fragments of text that violated the
+// policy.
+type AdPolicyTopicEvidenceTextList struct {
+	// Texts: The fragments of text from the resource that caused the policy
+	// finding.
+	Texts []string `json:"texts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Texts") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Texts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceTextList) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceTextList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceTrademark: Trademark terms that caused a policy
+// violation.
+type AdPolicyTopicEvidenceTrademark struct {
+	// CountryRestrictions: Criteria that are geo restrictions.
+	CountryRestrictions []*AdPolicyCriterionRestriction `json:"countryRestrictions,omitempty"`
+	// Owner: The trademark content owner.
+	Owner string `json:"owner,omitempty"`
+	// Term: The trademark term.
+	Term string `json:"term,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CountryRestrictions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CountryRestrictions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceTrademark) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceTrademark
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AdPolicyTopicEvidenceWebsiteList: A list of websites that violated the
+// policy.
+type AdPolicyTopicEvidenceWebsiteList struct {
+	// Websites: Websites that caused the policy finding.
+	Websites []string `json:"websites,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Websites") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Websites") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdPolicyTopicEvidenceWebsiteList) MarshalJSON() ([]byte, error) {
+	type NoMethod AdPolicyTopicEvidenceWebsiteList
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3560,6 +4306,54 @@ func (s BudgetSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BulkCreateAdAssetsRequest: A request message for BulkCreateAdAssets.
+type BulkCreateAdAssetsRequest struct {
+	// AdAssets: Required. Ad assets to create. Only supports youtube video assets
+	// for now.
+	AdAssets []*AdAsset `json:"adAssets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdAssets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdAssets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BulkCreateAdAssetsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkCreateAdAssetsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BulkCreateAdAssetsResponse: A response message for BulkCreateAdAssets.
+type BulkCreateAdAssetsResponse struct {
+	// AdAssets: The uploaded video ad assets, if successful.
+	AdAssets []*AdAsset `json:"adAssets,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AdAssets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdAssets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BulkCreateAdAssetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkCreateAdAssetsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BulkEditAdvertiserAssignedTargetingOptionsRequest: Request message for
 // BulkEditAdvertiserAssignedTargetingOptions.
 type BulkEditAdvertiserAssignedTargetingOptionsRequest struct {
@@ -5732,6 +6526,29 @@ func (s CounterEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CreateAdAssetRequest: A request message for CreateAdAsset.
+type CreateAdAssetRequest struct {
+	// AdAsset: Required. Ad assets to create. Only supports youtube video assets
+	// for now.
+	AdAsset *AdAsset `json:"adAsset,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdAsset") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdAsset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateAdAssetRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateAdAssetRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CreateAssetRequest: A request message for CreateAsset.
 type CreateAssetRequest struct {
 	// Filename: Required. The filename of the asset, including the file extension.
@@ -5968,6 +6785,7 @@ type CreateSdfDownloadTaskRequest struct {
 	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
 	// migrating to this version.
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
+	//   "SDF_VERSION_9_2" - SDF version 9.2.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11501,6 +12319,35 @@ func (s LineItemFlight) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListAdAssetsResponse: A response message for ListAdAssets.
+type ListAdAssetsResponse struct {
+	// AdAssets: The list of ad assets. This list will be absent if empty.
+	AdAssets []*AdAsset `json:"adAssets,omitempty"`
+	// NextPageToken: A token to retrieve the next page of results. Pass this value
+	// in the page_token field in the subsequent call to `ListAdAssets` method to
+	// retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AdAssets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdAssets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAdAssetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAdAssetsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type ListAdGroupAdsResponse struct {
 	// AdGroupAds: The list of ad group ads. This list will be absent if empty.
 	AdGroupAds []*AdGroupAd `json:"adGroupAds,omitempty"`
@@ -12541,6 +13388,35 @@ type ListUsersResponse struct {
 
 func (s ListUsersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListUsersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListYoutubeAssetAssociationsResponse: Response message for
+// YoutubeAssetAssociationService.ListYoutubeAssetAssociations.
+type ListYoutubeAssetAssociationsResponse struct {
+	// NextPageToken: A token to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// YoutubeAssetAssociations: The list of associations. This list will be absent
+	// if empty.
+	YoutubeAssetAssociations []*YoutubeAssetAssociation `json:"youtubeAssetAssociations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListYoutubeAssetAssociationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListYoutubeAssetAssociationsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -14699,6 +15575,7 @@ type SdfConfig struct {
 	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
 	// migrating to this version.
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
+	//   "SDF_VERSION_9_2" - SDF version 9.2.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14782,6 +15659,7 @@ type SdfDownloadTaskMetadata struct {
 	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
 	// migrating to this version.
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
+	//   "SDF_VERSION_9_2" - SDF version 9.2.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -15864,6 +16742,63 @@ func (s UniversalAdId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// UploadAdAssetRequest: A request message for UploadAdAsset. Next ID: 6
+type UploadAdAssetRequest struct {
+	// AdAssetType: Required. The type of the ad asset. Only supports image assets
+	// for now.
+	//
+	// Possible values:
+	//   "AD_ASSET_TYPE_UNSPECIFIED" - The ad asset type is unspecified.
+	//   "AD_ASSET_TYPE_IMAGE" - The ad asset is a YouTube/DemandGen image.
+	//   "AD_ASSET_TYPE_YOUTUBE_VIDEO" - The ad asset is a YouTube video.
+	AdAssetType string `json:"adAssetType,omitempty"`
+	// Filename: Required. The filename of the ad asset, including the file
+	// extension. The filename must be UTF-8 encoded with a maximum size of 240
+	// bytes.
+	Filename string `json:"filename,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdAssetType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdAssetType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UploadAdAssetRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadAdAssetRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UploadAdAssetResponse: A response message for UploadAdAsset.
+type UploadAdAssetResponse struct {
+	// AdAsset: The uploaded ad asset, if successful.
+	AdAsset *AdAsset `json:"adAsset,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AdAsset") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdAsset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UploadAdAssetResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadAdAssetResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UrlAssignedTargetingOptionDetails: Details for assigned URL targeting
 // option. This will be populated in the details field of an
 // AssignedTargetingOption when targeting_type is `TARGETING_TYPE_URL`.
@@ -16551,6 +17486,275 @@ func (s YoutubeAndPartnersSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// YoutubeAssetAssociation: A YouTube asset association between one linked
+// entity and one YouTube asset.
+type YoutubeAssetAssociation struct {
+	// LinkedYoutubeAsset: Required. The linked YouTube asset in the association.
+	LinkedYoutubeAsset *YoutubeAssetAssociationLinkedYouTubeAsset `json:"linkedYoutubeAsset,omitempty"`
+	// Name: Identifier. The resource name of the association. For line item level
+	// associations: The name pattern is
+	// `advertisers/{advertiser_id}/lineItems/{line_item_id}/youtubeAssetTypes/{yout
+	// ube_asset_type}/youtubeAssetAssociations/{youtube_asset_association_id}`.
+	// For ad group level associations: The name pattern is
+	// `advertisers/{advertiser_id}/adGroups/{ad_group_id}/youtubeAssetTypes/{youtub
+	// e_asset_type}/youtubeAssetAssociations/{youtube_asset_association_id}`. For
+	// location and affiliate location associations: {youtube_asset_association_id}
+	// is the linked asset set ID if the YouTube asset type (location or affiliate
+	// location) is enabled on the linked line item or ad group, 0 if disabled. For
+	// sitelink associations: {youtube_asset_association_id} is the linked asset
+	// ID.
+	Name string `json:"name,omitempty"`
+	// YoutubeAssetType: Required. The type of the linked YouTube asset in the
+	// association.
+	//
+	// Possible values:
+	//   "YOUTUBE_ASSET_TYPE_UNSPECIFIED" - YouTube asset type is not specified or
+	// is unknown in this version.
+	//   "YOUTUBE_ASSET_TYPE_LOCATION" - Location asset
+	//   "YOUTUBE_ASSET_TYPE_AFFILIATE_LOCATION" - Affiliate location asset
+	//   "YOUTUBE_ASSET_TYPE_SITELINK" - Sitelink asset
+	YoutubeAssetType string `json:"youtubeAssetType,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "LinkedYoutubeAsset") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LinkedYoutubeAsset") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s YoutubeAssetAssociation) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeAssetAssociation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// YoutubeAssetAssociationAffiliateLocationAssetFilter: An asset filter that
+// matches eligible affiliate location assets for serving.
+type YoutubeAssetAssociationAffiliateLocationAssetFilter struct {
+	// AffiliateLocationMatchingFunction: Optional. The matching function that
+	// contains details about how the affiliate location asset filter matches
+	// affiliate location assets. When creating associations with affiliate
+	// location asset filters: This field is required only for affiliate location
+	// asset filters of AffiliateLocationMatchingType#SELECTED_CHAINS.
+	AffiliateLocationMatchingFunction *YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationMatchingFunction `json:"affiliateLocationMatchingFunction,omitempty"`
+	// AffiliateLocationMatchingType: Required. The matching type of this affiliate
+	// location asset filter.
+	//
+	// Possible values:
+	//   "AFFILIATE_LOCATION_MATCHING_TYPE_UNSPECIFIED" - Affiliate location
+	// matching type is not specified or is unknown in this version.
+	//   "SELECT_ALL" - All available affiliate location assets are eligible for
+	// serving.
+	//   "SELECTED_CHAINS" - The affiliate location assets that match particular
+	// chains can serve.
+	//   "DISABLED" - No affiliate location assets can serve.
+	AffiliateLocationMatchingType string `json:"affiliateLocationMatchingType,omitempty"`
+	// AssetSetId: Output only. The ID of the asset set that matches the affiliate
+	// location assets eligible for serving.
+	AssetSetId int64 `json:"assetSetId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AffiliateLocationMatchingFunction") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "AffiliateLocationMatchingFunction") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s YoutubeAssetAssociationAffiliateLocationAssetFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeAssetAssociationAffiliateLocationAssetFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationChain: A
+// chain for affiliate locations.
+type YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationChain struct {
+	// ChainId: Required. ID of the affiliate location chain.
+	ChainId int64 `json:"chainId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ChainId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChainId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationChain) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationChain
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationMatchingF
+// unction: The matching function for an affiliate location asset filter.
+type YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationMatchingFunction struct {
+	// Chains: Optional. The chains that match the affiliate location assets for
+	// serving. This is required to set when linking with affiliate location asset
+	// filters of AffiliateLocationMatchingType#SELECTED_CHAINS.
+	Chains []*YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationChain `json:"chains,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Chains") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Chains") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationMatchingFunction) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationMatchingFunction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// YoutubeAssetAssociationLinkedYouTubeAsset: The YouTube asset linked with the
+// entity in a YouTube asset association.
+type YoutubeAssetAssociationLinkedYouTubeAsset struct {
+	// AffiliateLocationAssetFilter: The linked affiliate location asset filter.
+	AffiliateLocationAssetFilter *YoutubeAssetAssociationAffiliateLocationAssetFilter `json:"affiliateLocationAssetFilter,omitempty"`
+	// LocationAssetFilter: The linked location asset filter.
+	LocationAssetFilter *YoutubeAssetAssociationLocationAssetFilter `json:"locationAssetFilter,omitempty"`
+	// SitelinkAsset: The linked sitelink asset.
+	SitelinkAsset *YoutubeAssetAssociationSitelinkAsset `json:"sitelinkAsset,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AffiliateLocationAssetFilter") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AffiliateLocationAssetFilter") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s YoutubeAssetAssociationLinkedYouTubeAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeAssetAssociationLinkedYouTubeAsset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// YoutubeAssetAssociationLocationAssetFilter: An asset filter that matches
+// eligible location assets for serving.
+type YoutubeAssetAssociationLocationAssetFilter struct {
+	// AssetSetId: Output only. The ID of the asset set that matches the location
+	// assets eligible for serving.
+	AssetSetId int64 `json:"assetSetId,omitempty,string"`
+	// LocationMatchingFunction: Optional. The matching function that contains
+	// details about how the location asset filter matches location assets. This
+	// field should only be set for location asset filters of
+	// LocationMatchingType#FILTER or LocationMatchingType#SELECTED_ASSETS. When
+	// creating associations with location asset filters: This field is required
+	// only for location asset filters of LocationMatchingType#FILTER or
+	// LocationMatchingType#SELECTED_ASSETS.
+	LocationMatchingFunction *YoutubeAssetAssociationLocationAssetFilterLocationMatchingFunction `json:"locationMatchingFunction,omitempty"`
+	// LocationMatchingType: Required. The matching type of this location asset
+	// filter.
+	//
+	// Possible values:
+	//   "LOCATION_MATCHING_TYPE_UNSPECIFIED" - Location matching type is not
+	// specified or is unknown in this version.
+	//   "SELECT_ALL" - All available location assets are eligible for serving.
+	//   "FILTER" - The location assets that match business name and / or label
+	// filters can serve.
+	//   "SELECTED_ASSETS" - Only the location assets selected can serve.
+	//   "DISABLED" - No location assets can serve.
+	LocationMatchingType string `json:"locationMatchingType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssetSetId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssetSetId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s YoutubeAssetAssociationLocationAssetFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeAssetAssociationLocationAssetFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// YoutubeAssetAssociationLocationAssetFilterLocationMatchingFunction: The
+// matching function for a location asset filter.
+type YoutubeAssetAssociationLocationAssetFilterLocationMatchingFunction struct {
+	// Business: Optional. The business name filter. This can be set only when
+	// linking with location asset filters of LocationMatchingType#FILTER. This is
+	// optional when linking with location asset filters of
+	// LocationMatchingType#FILTER.
+	Business string `json:"business,omitempty"`
+	// Labels: Optional. The label filters. Label filters are OR'ed together. This
+	// can be set only when linking with location asset filters of
+	// LocationMatchingType#FILTER. This is optional when linking with location
+	// asset filters of LocationMatchingType#FILTER.
+	Labels []string `json:"labels,omitempty"`
+	// LocationAssetIds: Optional. The selected location asset IDs. This is
+	// required to set when linking with location asset filters of
+	// LocationMatchingType#SELECTED_ASSETS.
+	LocationAssetIds googleapi.Int64s `json:"locationAssetIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Business") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Business") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s YoutubeAssetAssociationLocationAssetFilterLocationMatchingFunction) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeAssetAssociationLocationAssetFilterLocationMatchingFunction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// YoutubeAssetAssociationSitelinkAsset: A sitelink asset.
+type YoutubeAssetAssociationSitelinkAsset struct {
+	// AssetId: Required. ID of the sitelink asset.
+	AssetId int64 `json:"assetId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "AssetId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssetId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s YoutubeAssetAssociationSitelinkAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeAssetAssociationSitelinkAsset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // YoutubeChannelAssignedTargetingOptionDetails: Details for YouTube channel
 // assigned targeting option. This will be populated in the
 // youtube_channel_details field when targeting_type is
@@ -16576,6 +17780,29 @@ type YoutubeChannelAssignedTargetingOptionDetails struct {
 
 func (s YoutubeChannelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod YoutubeChannelAssignedTargetingOptionDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// YoutubeVideoAsset: The youtube video asset data of the ad asset.
+type YoutubeVideoAsset struct {
+	// YoutubeVideoId: Required. The youtube video id of the asset. This is the 11
+	// char string value used in the Youtube video URL.
+	YoutubeVideoId string `json:"youtubeVideoId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "YoutubeVideoId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "YoutubeVideoId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s YoutubeVideoAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeVideoAsset
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17640,6 +18867,664 @@ func (c *AdvertisersPatchCall) Do(opts ...googleapi.CallOption) (*Advertiser, er
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersAdAssetsBulkCreateCall struct {
+	s                         *Service
+	advertiserId              int64
+	bulkcreateadassetsrequest *BulkCreateAdAssetsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// BulkCreate: BulkCreate video assets for Ad. Only supports youtube video
+// assets for now.
+//
+// - advertiserId: The ID of the advertiser this ad asset belongs to.
+func (r *AdvertisersAdAssetsService) BulkCreate(advertiserId int64, bulkcreateadassetsrequest *BulkCreateAdAssetsRequest) *AdvertisersAdAssetsBulkCreateCall {
+	c := &AdvertisersAdAssetsBulkCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.bulkcreateadassetsrequest = bulkcreateadassetsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdAssetsBulkCreateCall) Fields(s ...googleapi.Field) *AdvertisersAdAssetsBulkCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdAssetsBulkCreateCall) Context(ctx context.Context) *AdvertisersAdAssetsBulkCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdAssetsBulkCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdAssetsBulkCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.bulkcreateadassetsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/adAssets:bulkCreate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adAssets.bulkCreate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adAssets.bulkCreate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BulkCreateAdAssetsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersAdAssetsBulkCreateCall) Do(opts ...googleapi.CallOption) (*BulkCreateAdAssetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BulkCreateAdAssetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adAssets.bulkCreate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersAdAssetsCreateCall struct {
+	s                    *Service
+	advertiserId         int64
+	createadassetrequest *CreateAdAssetRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Create: Create a video asset for Ad. Only supports youtube video assets for
+// now.
+//
+// - advertiserId: The ID of the advertiser this ad asset belongs to.
+func (r *AdvertisersAdAssetsService) Create(advertiserId int64, createadassetrequest *CreateAdAssetRequest) *AdvertisersAdAssetsCreateCall {
+	c := &AdvertisersAdAssetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.createadassetrequest = createadassetrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdAssetsCreateCall) Fields(s ...googleapi.Field) *AdvertisersAdAssetsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdAssetsCreateCall) Context(ctx context.Context) *AdvertisersAdAssetsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdAssetsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdAssetsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.createadassetrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/adAssets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adAssets.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adAssets.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdAsset.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AdvertisersAdAssetsCreateCall) Do(opts ...googleapi.CallOption) (*AdAsset, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AdAsset{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adAssets.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersAdAssetsGetCall struct {
+	s            *Service
+	advertiserId int64
+	adAssetId    int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get an ad asset by ad asset ID. Only supports youtube video assets.
+//
+// - adAssetId: The ID of the ad asset to fetch.
+// - advertiserId: The ID of the advertiser this ad asset belongs to.
+func (r *AdvertisersAdAssetsService) Get(advertiserId int64, adAssetId int64) *AdvertisersAdAssetsGetCall {
+	c := &AdvertisersAdAssetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.adAssetId = adAssetId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdAssetsGetCall) Fields(s ...googleapi.Field) *AdvertisersAdAssetsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AdvertisersAdAssetsGetCall) IfNoneMatch(entityTag string) *AdvertisersAdAssetsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdAssetsGetCall) Context(ctx context.Context) *AdvertisersAdAssetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdAssetsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdAssetsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/adAssets/{+adAssetId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"adAssetId":    strconv.FormatInt(c.adAssetId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adAssets.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adAssets.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdAsset.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AdvertisersAdAssetsGetCall) Do(opts ...googleapi.CallOption) (*AdAsset, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AdAsset{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adAssets.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersAdAssetsListCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List ad assets by advertiser ID. Only supports youtube video ad
+// assets.
+//
+// - advertiserId: The ID of the advertiser to list assets for.
+func (r *AdvertisersAdAssetsService) List(advertiserId int64) *AdvertisersAdAssetsListCall {
+	c := &AdvertisersAdAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression to restrict
+// the ad assets to return. The supported fields are: *
+// `youtubeVideoAsset.youtubeVideoId` * `entityStatus` Examples: *
+// `entityStatus=ENTITY_STATUS_ACTIVE`
+func (c *AdvertisersAdAssetsListCall) Filter(filter string) *AdvertisersAdAssetsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort the
+// list. Acceptable values are: * `entityStatus` *
+// `youtubeVideoAsset.youtubeVideoId` * `adAssetId` (default) The default
+// sorting order is ascending. To specify descending order for a field, a
+// suffix "desc" should be added to the field name. Example: `assetId desc`.
+func (c *AdvertisersAdAssetsListCall) OrderBy(orderBy string) *AdvertisersAdAssetsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Must
+// be between `1` and `5000`. If unspecified will default to `5000`. Returns
+// error code `INVALID_ARGUMENT` if an invalid value is specified.
+func (c *AdvertisersAdAssetsListCall) PageSize(pageSize int64) *AdvertisersAdAssetsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return. Typically, this is the value of
+// next_page_token returned from the previous call to `ListAssets` method. If
+// not specified, the first page of results will be returned.
+func (c *AdvertisersAdAssetsListCall) PageToken(pageToken string) *AdvertisersAdAssetsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdAssetsListCall) Fields(s ...googleapi.Field) *AdvertisersAdAssetsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AdvertisersAdAssetsListCall) IfNoneMatch(entityTag string) *AdvertisersAdAssetsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdAssetsListCall) Context(ctx context.Context) *AdvertisersAdAssetsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdAssetsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdAssetsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/adAssets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adAssets.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adAssets.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAdAssetsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AdvertisersAdAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAdAssetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAdAssetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adAssets.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersAdAssetsListCall) Pages(ctx context.Context, f func(*ListAdAssetsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type AdvertisersAdAssetsUploadCall struct {
+	s                    *Service
+	advertiserId         int64
+	uploadadassetrequest *UploadAdAssetRequest
+	urlParams_           gensupport.URLParams
+	mediaInfo_           *gensupport.MediaInfo
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Upload: Uploads an ad asset. Returns the ID of the newly uploaded ad asset
+// if successful.
+//
+// - advertiserId: The ID of the advertiser this ad asset belongs to.
+func (r *AdvertisersAdAssetsService) Upload(advertiserId int64, uploadadassetrequest *UploadAdAssetRequest) *AdvertisersAdAssetsUploadCall {
+	c := &AdvertisersAdAssetsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.uploadadassetrequest = uploadadassetrequest
+	return c
+}
+
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
+// googleapi.ChunkSize. The chunk size defaults to
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
+// At most one of Media and ResumableMedia may be set.
+func (c *AdvertisersAdAssetsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *AdvertisersAdAssetsUploadCall {
+	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
+//
+// Deprecated: use Media instead.
+//
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
+func (c *AdvertisersAdAssetsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *AdvertisersAdAssetsUploadCall {
+	c.ctx_ = ctx
+	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
+func (c *AdvertisersAdAssetsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *AdvertisersAdAssetsUploadCall {
+	c.mediaInfo_.SetProgressUpdater(pu)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdAssetsUploadCall) Fields(s ...googleapi.Field) *AdvertisersAdAssetsUploadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
+func (c *AdvertisersAdAssetsUploadCall) Context(ctx context.Context) *AdvertisersAdAssetsUploadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdAssetsUploadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdAssetsUploadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.uploadadassetrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/adAssets:uploadAdAsset")
+	if c.mediaInfo_ != nil {
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/v4/advertisers/{+advertiserId}/adAssets:uploadAdAsset")
+		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
+	}
+	newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	defer cleanup()
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, newBody)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	req.GetBody = getBody
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adAssets.upload", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adAssets.upload" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UploadAdAssetResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AdvertisersAdAssetsUploadCall) Do(opts ...googleapi.CallOption) (*UploadAdAssetResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
+	if rx != nil {
+		rx.Client = c.s.client
+		rx.UserAgent = c.s.userAgent()
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
+		if err != nil {
+			return nil, err
+		}
+		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, gensupport.WrapError(err)
+		}
+	}
+	ret := &UploadAdAssetResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adAssets.upload", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -18718,6 +20603,422 @@ func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsListCall) Do(o
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsListCall) Pages(ctx context.Context, f func(*ListAdGroupAssignedTargetingOptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall struct {
+	s                       *Service
+	advertiserId            int64
+	adGroupId               int64
+	youtubeAssetType        string
+	youtubeassetassociation *YoutubeAssetAssociation
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Create: Creates a new association between an entity (line item or ad group)
+// and a YouTube asset. Returns the newly created association if successful.
+//
+// - adGroupId: The unique ID of the ad group linked.
+// - advertiserId: The ID of the advertiser this request is for.
+// - youtubeAssetType: The type of the linked YouTube asset in the association.
+func (r *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsService) Create(advertiserId int64, adGroupId int64, youtubeAssetType string, youtubeassetassociation *YoutubeAssetAssociation) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall {
+	c := &AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.adGroupId = adGroupId
+	c.youtubeAssetType = youtubeAssetType
+	c.youtubeassetassociation = youtubeassetassociation
+	return c
+}
+
+// LinkedEntityLineItemId sets the optional parameter
+// "linkedEntity.lineItemId": The unique ID of the line item linked.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall) LinkedEntityLineItemId(linkedEntityLineItemId int64) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall {
+	c.urlParams_.Set("linkedEntity.lineItemId", fmt.Sprint(linkedEntityLineItemId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall) Fields(s ...googleapi.Field) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall) Context(ctx context.Context) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.youtubeassetassociation)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/adGroups/{+adGroupId}/youtubeAssetTypes/{+youtubeAssetType}/youtubeAssetAssociations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
+		"adGroupId":        strconv.FormatInt(c.adGroupId, 10),
+		"youtubeAssetType": c.youtubeAssetType,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.youtubeAssetTypes.youtubeAssetAssociations.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adGroups.youtubeAssetTypes.youtubeAssetAssociations.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *YoutubeAssetAssociation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall) Do(opts ...googleapi.CallOption) (*YoutubeAssetAssociation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &YoutubeAssetAssociation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.youtubeAssetTypes.youtubeAssetAssociations.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall struct {
+	s                         *Service
+	advertiserId              int64
+	adGroupId                 int64
+	youtubeAssetType          string
+	youtubeAssetAssociationId int64
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Delete: Deletes an existing association between an entity (line item or ad
+// group) and a YouTube asset.
+//
+//   - adGroupId: The unique ID of the ad group linked.
+//   - advertiserId: The ID of the advertiser this request is for.
+//   - youtubeAssetAssociationId: The ID of the YouTube asset in the association.
+//     For location associations: This should be the ID of the asset set linked,
+//     or 0 if the association stands for location asset is disabled. For
+//     affiliate location associations: This should be the ID of the asset set
+//     linked, or 0 if the association stands for affiliate location asset is
+//     disabled. For sitelink associations: This should be the ID of the sitelink
+//     asset linked.
+//   - youtubeAssetType: The YouTube asset type this request is for.
+func (r *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsService) Delete(advertiserId int64, adGroupId int64, youtubeAssetType string, youtubeAssetAssociationId int64) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall {
+	c := &AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.adGroupId = adGroupId
+	c.youtubeAssetType = youtubeAssetType
+	c.youtubeAssetAssociationId = youtubeAssetAssociationId
+	return c
+}
+
+// LinkedEntityLineItemId sets the optional parameter
+// "linkedEntity.lineItemId": The unique ID of the line item linked.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall) LinkedEntityLineItemId(linkedEntityLineItemId int64) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall {
+	c.urlParams_.Set("linkedEntity.lineItemId", fmt.Sprint(linkedEntityLineItemId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall) Fields(s ...googleapi.Field) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall) Context(ctx context.Context) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/adGroups/{+adGroupId}/youtubeAssetTypes/{+youtubeAssetType}/youtubeAssetAssociations/{+youtubeAssetAssociationId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":              strconv.FormatInt(c.advertiserId, 10),
+		"adGroupId":                 strconv.FormatInt(c.adGroupId, 10),
+		"youtubeAssetType":          c.youtubeAssetType,
+		"youtubeAssetAssociationId": strconv.FormatInt(c.youtubeAssetAssociationId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.youtubeAssetTypes.youtubeAssetAssociations.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adGroups.youtubeAssetTypes.youtubeAssetAssociations.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.youtubeAssetTypes.youtubeAssetAssociations.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall struct {
+	s                *Service
+	advertiserId     int64
+	adGroupId        int64
+	youtubeAssetType string
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// List: Lists the YouTube asset associations for given resource.
+//
+// - adGroupId: The unique ID of the ad group linked.
+// - advertiserId: The ID of the advertiser this request is for.
+// - youtubeAssetType: The type of YouTube asset in the association.
+func (r *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsService) List(advertiserId int64, adGroupId int64, youtubeAssetType string) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c := &AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.adGroupId = adGroupId
+	c.youtubeAssetType = youtubeAssetType
+	return c
+}
+
+// LinkedEntityLineItemId sets the optional parameter
+// "linkedEntity.lineItemId": The unique ID of the line item linked.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall) LinkedEntityLineItemId(linkedEntityLineItemId int64) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c.urlParams_.Set("linkedEntity.lineItemId", fmt.Sprint(linkedEntityLineItemId))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort the
+// list. The only acceptable values are:
+// `linkedYoutubeAsset.locationAssetFilter.assetSetId`,
+// `linkedYoutubeAsset.affiliateLocationAssetFilter.assetSetId`,
+// `linkedYoutubeAsset.sitelinkAsset.assetId` The default sorting order is
+// ascending. To specify descending order for a field, a suffix " desc" should
+// be added to the field name. Example:
+// `linkedYoutubeAsset.sitelinkAsset.assetId desc`.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall) OrderBy(orderBy string) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Must
+// be between `1` and `10000`. If unspecified will default to `100`.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall) PageSize(pageSize int64) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall) PageToken(pageToken string) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall) Fields(s ...googleapi.Field) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall) IfNoneMatch(entityTag string) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall) Context(ctx context.Context) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/adGroups/{+adGroupId}/youtubeAssetTypes/{+youtubeAssetType}/youtubeAssetAssociations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
+		"adGroupId":        strconv.FormatInt(c.adGroupId, 10),
+		"youtubeAssetType": c.youtubeAssetType,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.youtubeAssetTypes.youtubeAssetAssociations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adGroups.youtubeAssetTypes.youtubeAssetAssociations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListYoutubeAssetAssociationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall) Do(opts ...googleapi.CallOption) (*ListYoutubeAssetAssociationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListYoutubeAssetAssociationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adGroups.youtubeAssetTypes.youtubeAssetAssociations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall) Pages(ctx context.Context, f func(*ListYoutubeAssetAssociationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -25495,6 +27796,422 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Pages(ctx context.Context, f func(*ListLineItemAssignedTargetingOptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall struct {
+	s                       *Service
+	advertiserId            int64
+	lineItemId              int64
+	youtubeAssetType        string
+	youtubeassetassociation *YoutubeAssetAssociation
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Create: Creates a new association between an entity (line item or ad group)
+// and a YouTube asset. Returns the newly created association if successful.
+//
+// - advertiserId: The ID of the advertiser this request is for.
+// - lineItemId: The unique ID of the line item linked.
+// - youtubeAssetType: The type of the linked YouTube asset in the association.
+func (r *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsService) Create(advertiserId int64, lineItemId int64, youtubeAssetType string, youtubeassetassociation *YoutubeAssetAssociation) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall {
+	c := &AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.lineItemId = lineItemId
+	c.youtubeAssetType = youtubeAssetType
+	c.youtubeassetassociation = youtubeassetassociation
+	return c
+}
+
+// LinkedEntityAdGroupId sets the optional parameter "linkedEntity.adGroupId":
+// The unique ID of the ad group linked.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall) LinkedEntityAdGroupId(linkedEntityAdGroupId int64) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall {
+	c.urlParams_.Set("linkedEntity.adGroupId", fmt.Sprint(linkedEntityAdGroupId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall) Context(ctx context.Context) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.youtubeassetassociation)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/lineItems/{+lineItemId}/youtubeAssetTypes/{+youtubeAssetType}/youtubeAssetAssociations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
+		"lineItemId":       strconv.FormatInt(c.lineItemId, 10),
+		"youtubeAssetType": c.youtubeAssetType,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.youtubeAssetTypes.youtubeAssetAssociations.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.youtubeAssetTypes.youtubeAssetAssociations.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *YoutubeAssetAssociation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall) Do(opts ...googleapi.CallOption) (*YoutubeAssetAssociation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &YoutubeAssetAssociation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.youtubeAssetTypes.youtubeAssetAssociations.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall struct {
+	s                         *Service
+	advertiserId              int64
+	lineItemId                int64
+	youtubeAssetType          string
+	youtubeAssetAssociationId int64
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Delete: Deletes an existing association between an entity (line item or ad
+// group) and a YouTube asset.
+//
+//   - advertiserId: The ID of the advertiser this request is for.
+//   - lineItemId: The unique ID of the line item linked.
+//   - youtubeAssetAssociationId: The ID of the YouTube asset in the association.
+//     For location associations: This should be the ID of the asset set linked,
+//     or 0 if the association stands for location asset is disabled. For
+//     affiliate location associations: This should be the ID of the asset set
+//     linked, or 0 if the association stands for affiliate location asset is
+//     disabled. For sitelink associations: This should be the ID of the sitelink
+//     asset linked.
+//   - youtubeAssetType: The YouTube asset type this request is for.
+func (r *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsService) Delete(advertiserId int64, lineItemId int64, youtubeAssetType string, youtubeAssetAssociationId int64) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall {
+	c := &AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.lineItemId = lineItemId
+	c.youtubeAssetType = youtubeAssetType
+	c.youtubeAssetAssociationId = youtubeAssetAssociationId
+	return c
+}
+
+// LinkedEntityAdGroupId sets the optional parameter "linkedEntity.adGroupId":
+// The unique ID of the ad group linked.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall) LinkedEntityAdGroupId(linkedEntityAdGroupId int64) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall {
+	c.urlParams_.Set("linkedEntity.adGroupId", fmt.Sprint(linkedEntityAdGroupId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall) Context(ctx context.Context) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/lineItems/{+lineItemId}/youtubeAssetTypes/{+youtubeAssetType}/youtubeAssetAssociations/{+youtubeAssetAssociationId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":              strconv.FormatInt(c.advertiserId, 10),
+		"lineItemId":                strconv.FormatInt(c.lineItemId, 10),
+		"youtubeAssetType":          c.youtubeAssetType,
+		"youtubeAssetAssociationId": strconv.FormatInt(c.youtubeAssetAssociationId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.youtubeAssetTypes.youtubeAssetAssociations.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.youtubeAssetTypes.youtubeAssetAssociations.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.youtubeAssetTypes.youtubeAssetAssociations.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall struct {
+	s                *Service
+	advertiserId     int64
+	lineItemId       int64
+	youtubeAssetType string
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// List: Lists the YouTube asset associations for given resource.
+//
+// - advertiserId: The ID of the advertiser this request is for.
+// - lineItemId: The unique ID of the line item linked.
+// - youtubeAssetType: The type of YouTube asset in the association.
+func (r *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsService) List(advertiserId int64, lineItemId int64, youtubeAssetType string) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c := &AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.lineItemId = lineItemId
+	c.youtubeAssetType = youtubeAssetType
+	return c
+}
+
+// LinkedEntityAdGroupId sets the optional parameter "linkedEntity.adGroupId":
+// The unique ID of the ad group linked.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall) LinkedEntityAdGroupId(linkedEntityAdGroupId int64) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c.urlParams_.Set("linkedEntity.adGroupId", fmt.Sprint(linkedEntityAdGroupId))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort the
+// list. The only acceptable values are:
+// `linkedYoutubeAsset.locationAssetFilter.assetSetId`,
+// `linkedYoutubeAsset.affiliateLocationAssetFilter.assetSetId`,
+// `linkedYoutubeAsset.sitelinkAsset.assetId` The default sorting order is
+// ascending. To specify descending order for a field, a suffix " desc" should
+// be added to the field name. Example:
+// `linkedYoutubeAsset.sitelinkAsset.assetId desc`.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall) OrderBy(orderBy string) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Must
+// be between `1` and `10000`. If unspecified will default to `100`.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall) PageSize(pageSize int64) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall) PageToken(pageToken string) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall) IfNoneMatch(entityTag string) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall) Context(ctx context.Context) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/lineItems/{+lineItemId}/youtubeAssetTypes/{+youtubeAssetType}/youtubeAssetAssociations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
+		"lineItemId":       strconv.FormatInt(c.lineItemId, 10),
+		"youtubeAssetType": c.youtubeAssetType,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.youtubeAssetTypes.youtubeAssetAssociations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.youtubeAssetTypes.youtubeAssetAssociations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListYoutubeAssetAssociationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall) Do(opts ...googleapi.CallOption) (*ListYoutubeAssetAssociationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListYoutubeAssetAssociationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.lineItems.youtubeAssetTypes.youtubeAssetAssociations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall) Pages(ctx context.Context, f func(*ListYoutubeAssetAssociationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

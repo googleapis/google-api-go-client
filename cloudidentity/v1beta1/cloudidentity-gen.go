@@ -12373,7 +12373,7 @@ type PoliciesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get a Policy
+// Get: Get a policy.
 //
 // - name: The name of the policy to retrieve. Format: "policies/{policy}".
 func (r *PoliciesService) Get(name string) *PoliciesGetCall {
@@ -12481,7 +12481,7 @@ type PoliciesListCall struct {
 	header_      http.Header
 }
 
-// List: List Policies
+// List: List policies.
 func (r *PoliciesService) List() *PoliciesListCall {
 	c := &PoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c

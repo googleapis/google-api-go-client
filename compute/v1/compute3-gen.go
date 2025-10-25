@@ -4057,7 +4057,7 @@ type RegionCommitmentsAggregatedListCall struct {
 
 // AggregatedList: Retrieves an aggregated list of commitments by region.
 //
-// To prevent failure, Google recommends that you set
+// To prevent failure, it is recommended that you set
 // the
 // `returnPartialSuccess` parameter to `true`.
 //
@@ -28914,6 +28914,23 @@ func (r *ReservationSubBlocksService) Get(project string, zone string, parentNam
 	return c
 }
 
+// View sets the optional parameter "view": View of the subBlock.
+//
+// Possible values:
+//
+//	"SUB_BLOCK_VIEW_BASIC" - This view includes basic information about the
+//
+// reservation sub block
+//
+//	"SUB_BLOCK_VIEW_FULL" - Includes detailed topology view.
+//	"SUB_BLOCK_VIEW_UNSPECIFIED" - The default / unset value. The API will
+//
+// default to the BASIC view.
+func (c *ReservationSubBlocksGetCall) View(view string) *ReservationSubBlocksGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -29937,7 +29954,7 @@ type ReservationsAggregatedListCall struct {
 
 // AggregatedList: Retrieves an aggregated list of reservations.
 //
-// To prevent failure, Google recommends that you set
+// To prevent failure, it is recommended that you set
 // the
 // `returnPartialSuccess` parameter to `true`.
 //
@@ -46026,6 +46043,22 @@ func (c *SubnetworksAggregatedListCall) ReturnPartialSuccess(returnPartialSucces
 // aggregated list request is invoked for subnetworks list-usable api.
 func (c *SubnetworksAggregatedListCall) ServiceProjectNumber(serviceProjectNumber int64) *SubnetworksAggregatedListCall {
 	c.urlParams_.Set("serviceProjectNumber", fmt.Sprint(serviceProjectNumber))
+	return c
+}
+
+// Views sets the optional parameter "views": Defines the extra views returned
+// back in the subnetwork resource.
+// Supported values:
+//
+//   - WITH_UTILIZATION: Utilization data is included in the
+//     response.
+//
+// Possible values:
+//
+//	"DEFAULT"
+//	"WITH_UTILIZATION" - Utilization data is included in the response.
+func (c *SubnetworksAggregatedListCall) Views(views ...string) *SubnetworksAggregatedListCall {
+	c.urlParams_.SetMulti("views", append([]string{}, views...))
 	return c
 }
 

@@ -3265,9 +3265,9 @@ func (s GooglePrivacyDlpV2DataRiskLevel) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2DataSourceType: Message used to identify the type of
 // resource being profiled.
 type GooglePrivacyDlpV2DataSourceType struct {
-	// DataSource: Output only. An identifying string to the type of resource being
-	// profiled. Current values: * google/bigquery/table * google/project *
-	// google/sql/table * google/gcs/bucket
+	// DataSource: An identifying string to the type of resource being profiled.
+	// Current values: * google/bigquery/table * google/project * google/sql/table
+	// * google/gcs/bucket
 	DataSource string `json:"dataSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataSource") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11631,11 +11631,12 @@ func (s GooglePrivacyDlpV2VertexDatasetRegexes) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2VertexDatasetResourceReference: Identifies a single Vertex
-// AI dataset.
+// AI resource. Currently only datasets are supported.
 type GooglePrivacyDlpV2VertexDatasetResourceReference struct {
-	// DatasetResourceName: Required. The name of the dataset resource. If set
+	// DatasetResourceName: Required. The name of the Vertex AI resource. If set
 	// within a project-level configuration, the specified resource must be within
-	// the project.
+	// the project. Examples: *
+	// `projects/{project}/locations/{location}/datasets/{dataset}`
 	DatasetResourceName string `json:"datasetResourceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatasetResourceName") to
 	// unconditionally include in API requests. By default, fields with empty or

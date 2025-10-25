@@ -1,5 +1,14 @@
 # Changes
 
+## [0.254.0](https://github.com/googleapis/google-api-go-client/compare/v0.253.0...v0.254.0) (2025-10-25)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#3348](https://github.com/googleapis/google-api-go-client/issues/3348)) ([8e2becc](https://github.com/googleapis/google-api-go-client/commit/8e2becc10cbfe6a5f2c9ad147730f4271c364417))
+* **all:** Auto-regenerate discovery clients ([#3350](https://github.com/googleapis/google-api-go-client/issues/3350)) ([9e07cd0](https://github.com/googleapis/google-api-go-client/commit/9e07cd04a1bc6d229520b666a3f5d00dfb930d4c))
+* **all:** Auto-regenerate discovery clients ([#3351](https://github.com/googleapis/google-api-go-client/issues/3351)) ([470f33c](https://github.com/googleapis/google-api-go-client/commit/470f33c2321d0b6e81b1b55cbc2640edad5fc848))
+
 ## [0.253.0](https://github.com/googleapis/google-api-go-client/compare/v0.252.0...v0.253.0) (2025-10-22)
 
 

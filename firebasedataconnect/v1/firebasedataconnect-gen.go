@@ -472,19 +472,22 @@ func (s File) MarshalJSON() ([]byte, error) {
 // surfaces `GraphqlError` in various APIs: - Upon compile error,
 // `UpdateSchema` and `UpdateConnector` return Code.Invalid_Argument with a
 // list of `GraphqlError` in error details. - Upon query compile error,
-// `ExecuteGraphql` and `ExecuteGraphqlRead` return Code.OK with a list of
-// `GraphqlError` in response body. - Upon query execution error,
-// `ExecuteGraphql`, `ExecuteGraphqlRead`, `ExecuteMutation` and `ExecuteQuery`
-// all return Code.OK with a list of `GraphqlError` in response body.
+// `ExecuteGraphql`, `ExecuteGraphqlRead` and `IntrospectGraphql` return
+// Code.OK with a list of `GraphqlError` in response body. - Upon query
+// execution error, `ExecuteGraphql`, `ExecuteGraphqlRead`, `ExecuteMutation`,
+// `ExecuteQuery`, `IntrospectGraphql`, `ImpersonateQuery` and
+// `ImpersonateMutation` all return Code.OK with a list of `GraphqlError` in
+// response body.
 type GraphqlError struct {
 	// Extensions: Additional error information.
 	Extensions *GraphqlErrorExtensions `json:"extensions,omitempty"`
 	// Locations: The source locations where the error occurred. Locations should
 	// help developers and toolings identify the source of error quickly. Included
-	// in admin endpoints (`ExecuteGraphql`, `ExecuteGraphqlRead`, `UpdateSchema`
-	// and `UpdateConnector`) to reference the provided GraphQL GQL document.
-	// Omitted in `ExecuteMutation` and `ExecuteQuery` since the caller shouldn't
-	// have access access the underlying GQL source.
+	// in admin endpoints (`ExecuteGraphql`, `ExecuteGraphqlRead`,
+	// `IntrospectGraphql`, `ImpersonateQuery`, `ImpersonateMutation`,
+	// `UpdateSchema` and `UpdateConnector`) to reference the provided GraphQL GQL
+	// document. Omitted in `ExecuteMutation` and `ExecuteQuery` since the caller
+	// shouldn't have access access the underlying GQL source.
 	Locations []*SourceLocation `json:"locations,omitempty"`
 	// Message: The detailed error message. The message should help developer
 	// understand the underlying problem without leaking internal data.
@@ -865,6 +868,11 @@ type ListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*Operation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1483,9 +1491,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -1986,6 +1994,19 @@ func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

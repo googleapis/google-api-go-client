@@ -237,6 +237,31 @@ func (s AdminSettings) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
+// ControlledEgressConfig: Controlled egress configuration.
+type ControlledEgressConfig struct {
+	// EgressFqdns: Optional. List of fully qualified domain names to be added to
+	// the allowlist for outbound traffic.
+	EgressFqdns []string `json:"egressFqdns,omitempty"`
+	// MarketplaceEnabled: Optional. Whether marketplace is enabled.
+	MarketplaceEnabled bool `json:"marketplaceEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EgressFqdns") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EgressFqdns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ControlledEgressConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ControlledEgressConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CustomDomain: Custom domain information.
 type CustomDomain struct {
 	// Domain: Domain name.
@@ -537,6 +562,11 @@ type Instance struct {
 	// network may be in a different GCP project than the consumer project that is
 	// hosting the Looker Instance.
 	ConsumerNetwork string `json:"consumerNetwork,omitempty"`
+	// ControlledEgressConfig: Optional. Controlled egress configuration.
+	ControlledEgressConfig *ControlledEgressConfig `json:"controlledEgressConfig,omitempty"`
+	// ControlledEgressEnabled: Optional. Whether controlled egress is enabled on
+	// the Looker instance.
+	ControlledEgressEnabled bool `json:"controlledEgressEnabled,omitempty"`
 	// CreateTime: Output only. The time when the Looker instance provisioning was
 	// first requested.
 	CreateTime string `json:"createTime,omitempty"`

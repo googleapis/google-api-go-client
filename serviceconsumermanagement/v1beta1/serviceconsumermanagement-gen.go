@@ -4193,6 +4193,12 @@ type V1Beta1ServiceIdentity struct {
 	// `services/serviceconsumermanagement.googleapis.com/projects/123/serviceIdenti
 	// ties/default`
 	Name string `json:"name,omitempty"`
+	// ProjectRole: The project-level IAM role defined in the service agent's grant
+	// configuration. This is the standard role intended for this service agent.
+	// This field is populated regardless of the `skip_role_attach` option in the
+	// request. If `skip_role_attach` is true, the caller can use this value to
+	// know which role they are responsible for granting.
+	ProjectRole string `json:"projectRole,omitempty"`
 	// Tag: The P4 service identity configuration tag. This must be defined in
 	// activation_grants. If not specified when creating the account, the tag is
 	// set to "default".

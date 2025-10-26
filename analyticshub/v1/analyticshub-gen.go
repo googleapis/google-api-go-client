@@ -1250,6 +1250,10 @@ type GooglePubsubV1Subscription struct {
 	// possible for healthy subscribers. RetryPolicy will be triggered on NACKs or
 	// acknowledgement deadline exceeded events for a given message.
 	RetryPolicy *RetryPolicy `json:"retryPolicy,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AckDeadlineSeconds") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1605,6 +1609,9 @@ type Listing struct {
 	//   "ACTIVE" - Subscribable state. Users with dataexchange.listings.subscribe
 	// permission can subscribe to this listing.
 	State string `json:"state,omitempty"`
+	// StoredProcedureConfig: Optional. If set, stored procedure configuration will
+	// be propagated and enforced on the linked dataset.
+	StoredProcedureConfig *StoredProcedureConfig `json:"storedProcedureConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2397,6 +2404,36 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StoredProcedureConfig: Stored procedure configuration, used to configure
+// stored procedure sharing on linked dataset.
+type StoredProcedureConfig struct {
+	// AllowedStoredProcedureTypes: Output only. Types of stored procedure
+	// supported to share.
+	//
+	// Possible values:
+	//   "STORED_PROCEDURE_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "SQL_PROCEDURE" - SQL stored procedure.
+	AllowedStoredProcedureTypes []string `json:"allowedStoredProcedureTypes,omitempty"`
+	// Enabled: Optional. If true, enable sharing of stored procedure.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedStoredProcedureTypes") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedStoredProcedureTypes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StoredProcedureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod StoredProcedureConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -1030,8 +1030,12 @@ type CryptoKeyVersion struct {
 	//   "ML_KEM_1024" - ML-KEM-1024 (FIPS 203)
 	//   "KEM_XWING" - X-Wing hybrid KEM combining ML-KEM-768 with X25519 following
 	// datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/.
+	//   "PQ_SIGN_ML_DSA_44" - The post-quantum Module-Lattice-Based Digital
+	// Signature Algorithm, at security level 1. Randomized version.
 	//   "PQ_SIGN_ML_DSA_65" - The post-quantum Module-Lattice-Based Digital
 	// Signature Algorithm, at security level 3. Randomized version.
+	//   "PQ_SIGN_ML_DSA_87" - The post-quantum Module-Lattice-Based Digital
+	// Signature Algorithm, at security level 5. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
 	// digital signature algorithm, at security level 1. Randomized version.
 	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
@@ -1222,8 +1226,12 @@ type CryptoKeyVersionTemplate struct {
 	//   "ML_KEM_1024" - ML-KEM-1024 (FIPS 203)
 	//   "KEM_XWING" - X-Wing hybrid KEM combining ML-KEM-768 with X25519 following
 	// datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/.
+	//   "PQ_SIGN_ML_DSA_44" - The post-quantum Module-Lattice-Based Digital
+	// Signature Algorithm, at security level 1. Randomized version.
 	//   "PQ_SIGN_ML_DSA_65" - The post-quantum Module-Lattice-Based Digital
 	// Signature Algorithm, at security level 3. Randomized version.
+	//   "PQ_SIGN_ML_DSA_87" - The post-quantum Module-Lattice-Based Digital
+	// Signature Algorithm, at security level 5. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
 	// digital signature algorithm, at security level 1. Randomized version.
 	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
@@ -1935,8 +1943,12 @@ type ImportCryptoKeyVersionRequest struct {
 	//   "ML_KEM_1024" - ML-KEM-1024 (FIPS 203)
 	//   "KEM_XWING" - X-Wing hybrid KEM combining ML-KEM-768 with X25519 following
 	// datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/.
+	//   "PQ_SIGN_ML_DSA_44" - The post-quantum Module-Lattice-Based Digital
+	// Signature Algorithm, at security level 1. Randomized version.
 	//   "PQ_SIGN_ML_DSA_65" - The post-quantum Module-Lattice-Based Digital
 	// Signature Algorithm, at security level 3. Randomized version.
+	//   "PQ_SIGN_ML_DSA_87" - The post-quantum Module-Lattice-Based Digital
+	// Signature Algorithm, at security level 5. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
 	// digital signature algorithm, at security level 1. Randomized version.
 	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
@@ -3051,8 +3063,12 @@ type PublicKey struct {
 	//   "ML_KEM_1024" - ML-KEM-1024 (FIPS 203)
 	//   "KEM_XWING" - X-Wing hybrid KEM combining ML-KEM-768 with X25519 following
 	// datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/.
+	//   "PQ_SIGN_ML_DSA_44" - The post-quantum Module-Lattice-Based Digital
+	// Signature Algorithm, at security level 1. Randomized version.
 	//   "PQ_SIGN_ML_DSA_65" - The post-quantum Module-Lattice-Based Digital
 	// Signature Algorithm, at security level 3. Randomized version.
+	//   "PQ_SIGN_ML_DSA_87" - The post-quantum Module-Lattice-Based Digital
+	// Signature Algorithm, at security level 5. Randomized version.
 	//   "PQ_SIGN_SLH_DSA_SHA2_128S" - The post-quantum stateless hash-based
 	// digital signature algorithm, at security level 1. Randomized version.
 	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless

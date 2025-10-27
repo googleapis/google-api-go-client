@@ -699,6 +699,9 @@ type Asset struct {
 	// AwsCloudFrontDistributionDetails: Output only. Asset information specific
 	// for AWS CloudFront distributions.
 	AwsCloudFrontDistributionDetails *AwsCloudFrontDistributionDetails `json:"awsCloudFrontDistributionDetails,omitempty"`
+	// AwsDynamodbTableDetails: Output only. Asset information specific for AWS
+	// DynamoDB tables.
+	AwsDynamodbTableDetails *AwsDynamoDBTableDetails `json:"awsDynamodbTableDetails,omitempty"`
 	// AwsEcsClusterDetails: Output only. Asset information specific for AWS ECS
 	// clusters.
 	AwsEcsClusterDetails *AwsEcsClusterDetails `json:"awsEcsClusterDetails,omitempty"`
@@ -714,8 +717,14 @@ type Asset struct {
 	// AwsLambdaFunctionDetails: Output only. Asset information specific for AWS
 	// Lambda functions.
 	AwsLambdaFunctionDetails *AwsLambdaFunctionDetails `json:"awsLambdaFunctionDetails,omitempty"`
+	// AwsNatGatewayDetails: Output only. Asset information specific for
+	// AwsNatGatewayDetails
+	AwsNatGatewayDetails *AwsNatGatewayDetails `json:"awsNatGatewayDetails,omitempty"`
 	// AwsRedshiftDetails: Output only. Asset information specific for AWS Redshift
 	AwsRedshiftDetails *AwsRedshiftDetails `json:"awsRedshiftDetails,omitempty"`
+	// AwsRoute53HostedZoneDetails: Output only. Asset information specific for
+	// AwsRoute53HostedZoneDetails
+	AwsRoute53HostedZoneDetails *AwsRoute53HostedZoneDetails `json:"awsRoute53HostedZoneDetails,omitempty"`
 	// AwsS3BucketDetails: Output only. Asset information specific for AWS S3
 	// buckets.
 	AwsS3BucketDetails *AwsS3BucketDetails `json:"awsS3BucketDetails,omitempty"`
@@ -788,6 +797,8 @@ type AssetFrame struct {
 	// AwsCloudFrontDistributionDetails: Asset information specific for AWS
 	// CloudFront distributions.
 	AwsCloudFrontDistributionDetails *AwsCloudFrontDistributionDetails `json:"awsCloudFrontDistributionDetails,omitempty"`
+	// AwsDynamodbTableDetails: Asset information specific for AWS DynamoDB tables.
+	AwsDynamodbTableDetails *AwsDynamoDBTableDetails `json:"awsDynamodbTableDetails,omitempty"`
 	// AwsEcsClusterDetails: Asset information specific for AWS ECS clusters.
 	AwsEcsClusterDetails *AwsEcsClusterDetails `json:"awsEcsClusterDetails,omitempty"`
 	// AwsEfsFileSystemDetails: Asset information specific for AWS EFS file
@@ -801,8 +812,13 @@ type AssetFrame struct {
 	// AwsLambdaFunctionDetails: Asset information specific for AWS Lambda
 	// functions.
 	AwsLambdaFunctionDetails *AwsLambdaFunctionDetails `json:"awsLambdaFunctionDetails,omitempty"`
+	// AwsNatGatewayDetails: Asset information specific for AwsNatGatewayDetails
+	AwsNatGatewayDetails *AwsNatGatewayDetails `json:"awsNatGatewayDetails,omitempty"`
 	// AwsRedshiftDetails: Asset information specific for AWS Redshift clusters.
 	AwsRedshiftDetails *AwsRedshiftDetails `json:"awsRedshiftDetails,omitempty"`
+	// AwsRoute53HostedZoneDetails: Asset information specific for
+	// AwsRoute53HostedZoneDetails
+	AwsRoute53HostedZoneDetails *AwsRoute53HostedZoneDetails `json:"awsRoute53HostedZoneDetails,omitempty"`
 	// AwsS3BucketDetails: Asset information specific for AWS S3 buckets.
 	AwsS3BucketDetails *AwsS3BucketDetails `json:"awsS3BucketDetails,omitempty"`
 	// AwsVpcDetails: Asset information specific for AWS VPCs.
@@ -1050,27 +1066,6 @@ type AssetsExportJobInventory struct {
 // AssetsExportJobNetworkDependencies: Configuration for network dependencies
 // exports.
 type AssetsExportJobNetworkDependencies struct {
-	// MaxDays: Optional. When this value is set to a positive integer, network
-	// connections data will be returned for the most recent days for which data is
-	// available. When this value is unset (or set to zero), all available data is
-	// returned.
-	MaxDays int64 `json:"maxDays,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MaxDays") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MaxDays") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s AssetsExportJobNetworkDependencies) MarshalJSON() ([]byte, error) {
-	type NoMethod AssetsExportJobNetworkDependencies
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AssetsExportJobPerformanceData: Configuration for performance data exports.
@@ -1101,6 +1096,10 @@ func (s AssetsExportJobPerformanceData) MarshalJSON() ([]byte, error) {
 
 // AwsCloudFrontDistributionDetails: Details of an AWS CloudFront distribution.
 type AwsCloudFrontDistributionDetails struct {
+}
+
+// AwsDynamoDBTableDetails: Details of an AWS DynamoDB table.
+type AwsDynamoDBTableDetails struct {
 }
 
 // AwsEc2PlatformDetails: AWS EC2 specific details.
@@ -1158,12 +1157,20 @@ type AwsElbLoadBalancerDetails struct {
 type AwsLambdaFunctionDetails struct {
 }
 
+// AwsNatGatewayDetails: Details of an AWS NAT Gateway.
+type AwsNatGatewayDetails struct {
+}
+
 // AwsRds: Specific details for an AWS RDS database deployment.
 type AwsRds struct {
 }
 
 // AwsRedshiftDetails: Details of an AWS Redshift cluster.
 type AwsRedshiftDetails struct {
+}
+
+// AwsRoute53HostedZoneDetails: Details of an AWS Route 53 Hosted Zone.
+type AwsRoute53HostedZoneDetails struct {
 }
 
 // AwsS3BucketDetails: Asset information specific for AWS S3 buckets.
@@ -8409,9 +8416,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

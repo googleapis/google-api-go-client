@@ -561,7 +561,9 @@ type GoogleCloudApihubV1Api struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Documentation: Optional. The documentation for the API resource.
 	Documentation *GoogleCloudApihubV1Documentation `json:"documentation,omitempty"`
-	// Fingerprint: Optional. Fingerprint of the API resource.
+	// Fingerprint: Optional. Fingerprint of the API resource. This must be unique
+	// for each API resource. It can neither be unset nor be updated to an existing
+	// fingerprint of another API resource.
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// MaturityLevel: Optional. The maturity level of the API. This maps to the
 	// following system defined attribute:
@@ -4626,6 +4628,11 @@ type GoogleLongrunningListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4962,9 +4969,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -6380,9 +6387,9 @@ type ProjectsLocationsApisPatchCall struct {
 // Patch: Update an API resource in the API hub. The following fields in the
 // API can be updated: * display_name * description * owner * documentation *
 // target_user * team * business_unit * maturity_level * api_style * attributes
-// The update_mask should be used to specify the fields being updated. Updating
-// the owner field requires complete owner message and updates both owner and
-// email fields.
+// * fingerprint The update_mask should be used to specify the fields being
+// updated. Updating the owner field requires complete owner message and
+// updates both owner and email fields.
 //
 //   - name: Identifier. The name of the API resource in the API Hub. Format:
 //     `projects/{project}/locations/{location}/apis/{api}`.
@@ -7835,11 +7842,17 @@ type ProjectsLocationsApisVersionsOperationsPatchCall struct {
 // Patch: Update an operation in an API version. The following fields in the
 // ApiOperation resource can be updated: * details.description *
 // details.documentation * details.http_operation.path *
-// details.http_operation.method * details.deprecated * attributes The
-// update_mask should be used to specify the fields being updated. An operation
-// can be updated only if the operation was created via CreateApiOperation API.
-// If the operation was created by parsing the spec, then it can be edited by
-// updating the spec.
+// details.http_operation.method * details.deprecated * attributes *
+// details.mcp_tool.title * details.mcp_tool.description * details.input_schema
+// * details.output_schema * details.mcp_tool.annotations.title *
+// details.mcp_tool.annotations.read_only_hint *
+// details.mcp_tool.annotations.destructive_hint *
+// details.mcp_tool.annotations.idempotent_hint *
+// details.mcp_tool.annotations.open_world_hint *
+// details.mcp_tool.annotations.additional_hints The update_mask should be used
+// to specify the fields being updated. An operation can be updated only if the
+// operation was created via CreateApiOperation API. If the operation was
+// created by parsing the spec, then it can be edited by updating the spec.
 //
 //   - name: Identifier. The name of the operation. Format:
 //     `projects/{project}/locations/{location}/apis/{api}/versions/{version}/oper
@@ -13288,6 +13301,19 @@ func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

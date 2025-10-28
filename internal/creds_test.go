@@ -593,38 +593,38 @@ func TestIsSelfSignedJWTFlow(t *testing.T) {
 		{
 			name: "EnableJwtWithScope true",
 			ds: &DialSettings{
-				CredentialsFile:    "testdata/service-account.json",
-				Scopes:             []string{"foo"},
-				EnableJwtWithScope: true,
+				AuthCredentialsFile: "testdata/service-account.json",
+				Scopes:              []string{"foo"},
+				EnableJwtWithScope:  true,
 			},
 			want: true,
 		},
 		{
 			name: "EnableJwtWithScope false",
 			ds: &DialSettings{
-				CredentialsFile:    "testdata/service-account.json",
-				Scopes:             []string{"foo"},
-				EnableJwtWithScope: false,
+				AuthCredentialsFile: "testdata/service-account.json",
+				Scopes:              []string{"foo"},
+				EnableJwtWithScope:  false,
 			},
 			want: false,
 		},
 		{
 			name: "UniverseDomain",
 			ds: &DialSettings{
-				CredentialsFile:    "testdata/service-account.json",
-				Scopes:             []string{"foo"},
-				EnableJwtWithScope: false,
-				UniverseDomain:     "example.com",
+				AuthCredentialsFile: "testdata/service-account.json",
+				Scopes:              []string{"foo"},
+				EnableJwtWithScope:  false,
+				UniverseDomain:      "example.com",
 			},
 			want: true,
 		},
 		{
 			name: "UniverseDomainUserAccount",
 			ds: &DialSettings{
-				CredentialsFile:    "testdata/user-account.json",
-				Scopes:             []string{"foo"},
-				EnableJwtWithScope: false,
-				UniverseDomain:     "example.com",
+				AuthCredentialsFile: "testdata/user-account.json",
+				Scopes:              []string{"foo"},
+				EnableJwtWithScope:  false,
+				UniverseDomain:      "example.com",
 			},
 			want: false,
 		},
@@ -632,7 +632,7 @@ func TestIsSelfSignedJWTFlow(t *testing.T) {
 
 	for _, tc := range tests {
 
-		bytes, err := os.ReadFile(tc.ds.CredentialsFile)
+		bytes, err := os.ReadFile(tc.ds.AuthCredentialsFile)
 		if err != nil {
 			t.Fatal(err)
 		}

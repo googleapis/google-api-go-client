@@ -139,11 +139,13 @@ func detectDefaultFromDialSettings(settings *DialSettings) (*auth.Credentials, e
 		aud = settings.DefaultAudience
 	}
 
+	credsFile, _ := settings.GetAuthCredentialsFile()
+	credsJSON, _ := settings.GetAuthCredentialsJSON()
 	return credentials.DetectDefault(&credentials.DetectOptions{
 		Scopes:           scopes,
 		Audience:         aud,
-		CredentialsFile:  settings.CredentialsFile,
-		CredentialsJSON:  settings.CredentialsJSON,
+		CredentialsFile:  credsFile,
+		CredentialsJSON:  credsJSON,
 		UseSelfSignedJWT: useSelfSignedJWT,
 		Logger:           settings.Logger,
 	})
@@ -159,8 +161,8 @@ func baseCreds(ctx context.Context, ds *DialSettings) (*google.Credentials, erro
 	if len(ds.CredentialsJSON) > 0 {
 		return credentialsFromJSON(ctx, ds.CredentialsJSON, ds)
 	}
-	if ds.CredentialsFile != "" {
-		data, err := os.ReadFile(ds.CredentialsFile)
+	if cf, _ := ds.GetAuthCredentialsFile(); cf != "" {
+		data, err := os.ReadFile(cf)
 		if err != nil {
 			return nil, fmt.Errorf("cannot read credentials file: %v", err)
 		}

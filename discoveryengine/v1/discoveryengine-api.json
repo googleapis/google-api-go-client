@@ -8078,7 +8078,7 @@
       }
     }
   },
-  "revision": "20251020",
+  "revision": "20251026",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GdataBlobstore2Info": {
@@ -13275,6 +13275,12 @@
           ],
           "type": "string"
         },
+        "configurableBillingApproachUpdateTime": {
+          "description": "Output only. The timestamp when configurable_billing_approach was last updated.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
         "contentConfig": {
           "description": "Immutable. The content config of the data store. If this field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.",
           "enum": [
@@ -15526,6 +15532,11 @@
       "description": "Metadata and configurations for a Google Cloud project in the service.",
       "id": "GoogleCloudDiscoveryengineV1Project",
       "properties": {
+        "configurableBillingStatus": {
+          "$ref": "GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus",
+          "description": "Output only. The current status of the project's configurable billing.",
+          "readOnly": true
+        },
         "createTime": {
           "description": "Output only. The timestamp when this project is created.",
           "format": "google-datetime",
@@ -15554,6 +15565,28 @@
           "description": "Output only. A map of terms of services. The key is the `id` of ServiceTerms.",
           "readOnly": true,
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus": {
+      "description": "Represents the currently effective configurable billing parameters. These values are derived from the customer's subscription history stored internally and reflect the thresholds actively being used for billing purposes at the time of the GetProject call. This includes the start_time of the subscription and may differ from the values in `customer_provided_config` due to billing rules (e.g., scale-downs taking effect only at the start of a new month).",
+      "id": "GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus",
+      "properties": {
+        "effectiveIndexingCoreThreshold": {
+          "description": "Optional. The currently effective Indexing Core threshold. This is the threshold against which Indexing Core usage is compared for overage calculations.",
+          "format": "int64",
+          "type": "string"
+        },
+        "effectiveSearchQpmThreshold": {
+          "description": "Optional. The currently effective Search QPM threshold in queries per minute. This is the threshold against which QPM usage is compared for overage calculations.",
+          "format": "int64",
+          "type": "string"
+        },
+        "startTime": {
+          "description": "Optional. The start time of the currently active billing subscription.",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"
@@ -21146,6 +21179,12 @@
           ],
           "type": "string"
         },
+        "configurableBillingApproachUpdateTime": {
+          "description": "Output only. The timestamp when configurable_billing_approach was last updated.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
         "contentConfig": {
           "description": "Immutable. The content config of the data store. If this field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.",
           "enum": [
@@ -23101,6 +23140,11 @@
       "description": "Metadata and configurations for a Google Cloud project in the service.",
       "id": "GoogleCloudDiscoveryengineV1alphaProject",
       "properties": {
+        "configurableBillingStatus": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus",
+          "description": "Output only. The current status of the project's configurable billing.",
+          "readOnly": true
+        },
         "createTime": {
           "description": "Output only. The timestamp when this project is created.",
           "format": "google-datetime",
@@ -23129,6 +23173,28 @@
           "description": "Output only. A map of terms of services. The key is the `id` of ServiceTerms.",
           "readOnly": true,
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus": {
+      "description": "Represents the currently effective configurable billing parameters. These values are derived from the customer's subscription history stored internally and reflect the thresholds actively being used for billing purposes at the time of the GetProject call. This includes the start_time of the subscription and may differ from the values in `customer_provided_config` due to billing rules (e.g., scale-downs taking effect only at the start of a new month).",
+      "id": "GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus",
+      "properties": {
+        "effectiveIndexingCoreThreshold": {
+          "description": "Optional. The currently effective Indexing Core threshold. This is the threshold against which Indexing Core usage is compared for overage calculations.",
+          "format": "int64",
+          "type": "string"
+        },
+        "effectiveSearchQpmThreshold": {
+          "description": "Optional. The currently effective Search QPM threshold in queries per minute. This is the threshold against which QPM usage is compared for overage calculations.",
+          "format": "int64",
+          "type": "string"
+        },
+        "startTime": {
+          "description": "Optional. The start time of the currently active billing subscription.",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"
@@ -25874,6 +25940,12 @@
           ],
           "type": "string"
         },
+        "configurableBillingApproachUpdateTime": {
+          "description": "Output only. The timestamp when configurable_billing_approach was last updated.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
         "contentConfig": {
           "description": "Immutable. The content config of the data store. If this field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.",
           "enum": [
@@ -27337,6 +27409,11 @@
       "description": "Metadata and configurations for a Google Cloud project in the service.",
       "id": "GoogleCloudDiscoveryengineV1betaProject",
       "properties": {
+        "configurableBillingStatus": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus",
+          "description": "Output only. The current status of the project's configurable billing.",
+          "readOnly": true
+        },
         "createTime": {
           "description": "Output only. The timestamp when this project is created.",
           "format": "google-datetime",
@@ -27365,6 +27442,28 @@
           "description": "Output only. A map of terms of services. The key is the `id` of ServiceTerms.",
           "readOnly": true,
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus": {
+      "description": "Represents the currently effective configurable billing parameters. These values are derived from the customer's subscription history stored internally and reflect the thresholds actively being used for billing purposes at the time of the GetProject call. This includes the start_time of the subscription and may differ from the values in `customer_provided_config` due to billing rules (e.g., scale-downs taking effect only at the start of a new month).",
+      "id": "GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus",
+      "properties": {
+        "effectiveIndexingCoreThreshold": {
+          "description": "Optional. The currently effective Indexing Core threshold. This is the threshold against which Indexing Core usage is compared for overage calculations.",
+          "format": "int64",
+          "type": "string"
+        },
+        "effectiveSearchQpmThreshold": {
+          "description": "Optional. The currently effective Search QPM threshold in queries per minute. This is the threshold against which QPM usage is compared for overage calculations.",
+          "format": "int64",
+          "type": "string"
+        },
+        "startTime": {
+          "description": "Optional. The start time of the currently active billing subscription.",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"

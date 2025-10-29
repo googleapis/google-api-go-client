@@ -229,6 +229,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.Authorizations = NewProjectsLocationsAuthorizationsService(s)
 	rs.CmekConfigs = NewProjectsLocationsCmekConfigsService(s)
 	rs.Collections = NewProjectsLocationsCollectionsService(s)
 	rs.DataStores = NewProjectsLocationsDataStoresService(s)
@@ -249,6 +250,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 
 type ProjectsLocationsService struct {
 	s *Service
+
+	Authorizations *ProjectsLocationsAuthorizationsService
 
 	CmekConfigs *ProjectsLocationsCmekConfigsService
 
@@ -279,6 +282,15 @@ type ProjectsLocationsService struct {
 	UserEvents *ProjectsLocationsUserEventsService
 
 	UserStores *ProjectsLocationsUserStoresService
+}
+
+func NewProjectsLocationsAuthorizationsService(s *Service) *ProjectsLocationsAuthorizationsService {
+	rs := &ProjectsLocationsAuthorizationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAuthorizationsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsCmekConfigsService(s *Service) *ProjectsLocationsCmekConfigsService {
@@ -4477,6 +4489,9 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	//   "CONFIGURABLE_CONSUMPTION_EMBEDDING" - Use the consumption pay-as-you-go
 	// billing for embedding storage add-on.
 	ConfigurableBillingApproach string `json:"configurableBillingApproach,omitempty"`
+	// ConfigurableBillingApproachUpdateTime: Output only. The timestamp when
+	// configurable_billing_approach was last updated.
+	ConfigurableBillingApproachUpdateTime string `json:"configurableBillingApproachUpdateTime,omitempty"`
 	// ContentConfig: Immutable. The content config of the data store. If this
 	// field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.
 	//
@@ -6154,6 +6169,9 @@ func (s GoogleCloudDiscoveryengineV1LicenseConfig) MarshalJSON() ([]byte, error)
 // GoogleCloudDiscoveryengineV1Project: Metadata and configurations for a
 // Google Cloud project in the service.
 type GoogleCloudDiscoveryengineV1Project struct {
+	// ConfigurableBillingStatus: Output only. The current status of the project's
+	// configurable billing.
+	ConfigurableBillingStatus *GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus `json:"configurableBillingStatus,omitempty"`
 	// CreateTime: Output only. The timestamp when this project is created.
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomerProvidedConfig: Optional. Customer provided configurations.
@@ -6170,21 +6188,59 @@ type GoogleCloudDiscoveryengineV1Project struct {
 	// ServiceTermsMap: Output only. A map of terms of services. The key is the
 	// `id` of ServiceTerms.
 	ServiceTermsMap map[string]GoogleCloudDiscoveryengineV1ProjectServiceTerms `json:"serviceTermsMap,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "ConfigurableBillingStatus")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConfigurableBillingStatus") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1Project) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1Project
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus: Represents the
+// currently effective configurable billing parameters. These values are
+// derived from the customer's subscription history stored internally and
+// reflect the thresholds actively being used for billing purposes at the time
+// of the GetProject call. This includes the start_time of the subscription and
+// may differ from the values in `customer_provided_config` due to billing
+// rules (e.g., scale-downs taking effect only at the start of a new month).
+type GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus struct {
+	// EffectiveIndexingCoreThreshold: Optional. The currently effective Indexing
+	// Core threshold. This is the threshold against which Indexing Core usage is
+	// compared for overage calculations.
+	EffectiveIndexingCoreThreshold int64 `json:"effectiveIndexingCoreThreshold,omitempty,string"`
+	// EffectiveSearchQpmThreshold: Optional. The currently effective Search QPM
+	// threshold in queries per minute. This is the threshold against which QPM
+	// usage is compared for overage calculations.
+	EffectiveSearchQpmThreshold int64 `json:"effectiveSearchQpmThreshold,omitempty,string"`
+	// StartTime: Optional. The start time of the currently active billing
+	// subscription.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveIndexingCoreThreshold")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10859,6 +10915,78 @@ func (s GoogleCloudDiscoveryengineV1alphaAssistantToolList) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaAuthorization: Discovery Engine
+// Authorization resource.
+type GoogleCloudDiscoveryengineV1alphaAuthorization struct {
+	// DisplayName: Required. The display name of the authorization. It must be a
+	// UTF-8 encoded string with a length limit of 128 characters.
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Identifier. Resource name of the authorization. Format:
+	// `projects/{project}/locations/{location}/authorizations/{authorization}` It
+	// must be a UTF-8 encoded string with a length limit of 1024 characters.
+	Name string `json:"name,omitempty"`
+	// ServerSideOauth2: Server-side OAuth2 configuration.
+	ServerSideOauth2 *GoogleCloudDiscoveryengineV1alphaAuthorizationServerSideOAuth2 `json:"serverSideOauth2,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAuthorization) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAuthorization
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAuthorizationServerSideOAuth2: OAuth2
+// configuration.
+type GoogleCloudDiscoveryengineV1alphaAuthorizationServerSideOAuth2 struct {
+	// AuthorizationUri: Required. The URI the user is directed to when they need
+	// to authorize. Should include everything required for a successful
+	// authorization: OAuth ID, extra flags, etc. Example:
+	// `https://accounts.google.com/o/oauth2/v2/auth?client_id=OAUTH_ID&scope=https:
+	// //www.googleapis.com/auth/calendar.events&response_type=code&access_type=offl
+	// ine&prompt=consent` The `redirect_uri` parameter will be overwritten by the
+	// Vertex AI Search frontend.
+	AuthorizationUri string `json:"authorizationUri,omitempty"`
+	// ClientId: Required. The OAuth2 client ID.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Required. The OAuth2 client secret. Encrypted at rest.
+	ClientSecret string `json:"clientSecret,omitempty"`
+	// Scopes: Required. The scopes to request. Example:
+	// `https://www.googleapis.com/auth/calendar.events`
+	Scopes []string `json:"scopes,omitempty"`
+	// TokenUri: Required. The HTTP endpoint that exchanges a client authorization
+	// for an access token.
+	TokenUri string `json:"tokenUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthorizationUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthorizationUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAuthorizationServerSideOAuth2) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAuthorizationServerSideOAuth2
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaBAPConfig: The configuration for the BAP
 // connector.
 type GoogleCloudDiscoveryengineV1alphaBAPConfig struct {
@@ -14295,6 +14423,9 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	//   "CONFIGURABLE_CONSUMPTION_EMBEDDING" - Use the consumption pay-as-you-go
 	// billing for embedding storage add-on.
 	ConfigurableBillingApproach string `json:"configurableBillingApproach,omitempty"`
+	// ConfigurableBillingApproachUpdateTime: Output only. The timestamp when
+	// configurable_billing_approach was last updated.
+	ConfigurableBillingApproachUpdateTime string `json:"configurableBillingApproachUpdateTime,omitempty"`
 	// ContentConfig: Immutable. The content config of the data store. If this
 	// field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.
 	//
@@ -18204,6 +18335,36 @@ func (s GoogleCloudDiscoveryengineV1alphaLicenseConfig) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaListAuthorizationsResponse: Response
+// message for the AuthorizationService.ListAuthorizations method.
+type GoogleCloudDiscoveryengineV1alphaListAuthorizationsResponse struct {
+	// Authorizations: All the customer's Authorizations.
+	Authorizations []*GoogleCloudDiscoveryengineV1alphaAuthorization `json:"authorizations,omitempty"`
+	// NextPageToken: A token that can be sent as
+	// ListAuthorizationsRequest.page_token to retrieve the next page. If this
+	// field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Authorizations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Authorizations") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaListAuthorizationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaListAuthorizationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaListBranchesResponse: Response for
 // BranchService.ListBranches method.
 type GoogleCloudDiscoveryengineV1alphaListBranchesResponse struct {
@@ -19322,6 +19483,9 @@ func (s GoogleCloudDiscoveryengineV1alphaProcessedDocument) MarshalJSON() ([]byt
 // GoogleCloudDiscoveryengineV1alphaProject: Metadata and configurations for a
 // Google Cloud project in the service.
 type GoogleCloudDiscoveryengineV1alphaProject struct {
+	// ConfigurableBillingStatus: Output only. The current status of the project's
+	// configurable billing.
+	ConfigurableBillingStatus *GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus `json:"configurableBillingStatus,omitempty"`
 	// CreateTime: Output only. The timestamp when this project is created.
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomerProvidedConfig: Optional. Customer provided configurations.
@@ -19341,21 +19505,60 @@ type GoogleCloudDiscoveryengineV1alphaProject struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "ConfigurableBillingStatus")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConfigurableBillingStatus") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1alphaProject) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaProject
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus:
+// Represents the currently effective configurable billing parameters. These
+// values are derived from the customer's subscription history stored
+// internally and reflect the thresholds actively being used for billing
+// purposes at the time of the GetProject call. This includes the start_time of
+// the subscription and may differ from the values in
+// `customer_provided_config` due to billing rules (e.g., scale-downs taking
+// effect only at the start of a new month).
+type GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus struct {
+	// EffectiveIndexingCoreThreshold: Optional. The currently effective Indexing
+	// Core threshold. This is the threshold against which Indexing Core usage is
+	// compared for overage calculations.
+	EffectiveIndexingCoreThreshold int64 `json:"effectiveIndexingCoreThreshold,omitempty,string"`
+	// EffectiveSearchQpmThreshold: Optional. The currently effective Search QPM
+	// threshold in queries per minute. This is the threshold against which QPM
+	// usage is compared for overage calculations.
+	EffectiveSearchQpmThreshold int64 `json:"effectiveSearchQpmThreshold,omitempty,string"`
+	// StartTime: Optional. The start time of the currently active billing
+	// subscription.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveIndexingCoreThreshold")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -27442,6 +27645,9 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	//   "CONFIGURABLE_CONSUMPTION_EMBEDDING" - Use the consumption pay-as-you-go
 	// billing for embedding storage add-on.
 	ConfigurableBillingApproach string `json:"configurableBillingApproach,omitempty"`
+	// ConfigurableBillingApproachUpdateTime: Output only. The timestamp when
+	// configurable_billing_approach was last updated.
+	ConfigurableBillingApproachUpdateTime string `json:"configurableBillingApproachUpdateTime,omitempty"`
 	// ContentConfig: Immutable. The content config of the data store. If this
 	// field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.
 	//
@@ -29370,6 +29576,9 @@ func (s GoogleCloudDiscoveryengineV1betaOrganicCrawlRateTimeSeries) MarshalJSON(
 // GoogleCloudDiscoveryengineV1betaProject: Metadata and configurations for a
 // Google Cloud project in the service.
 type GoogleCloudDiscoveryengineV1betaProject struct {
+	// ConfigurableBillingStatus: Output only. The current status of the project's
+	// configurable billing.
+	ConfigurableBillingStatus *GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus `json:"configurableBillingStatus,omitempty"`
 	// CreateTime: Output only. The timestamp when this project is created.
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomerProvidedConfig: Optional. Customer provided configurations.
@@ -29386,21 +29595,59 @@ type GoogleCloudDiscoveryengineV1betaProject struct {
 	// ServiceTermsMap: Output only. A map of terms of services. The key is the
 	// `id` of ServiceTerms.
 	ServiceTermsMap map[string]GoogleCloudDiscoveryengineV1betaProjectServiceTerms `json:"serviceTermsMap,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "ConfigurableBillingStatus")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConfigurableBillingStatus") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1betaProject) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaProject
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus: Represents
+// the currently effective configurable billing parameters. These values are
+// derived from the customer's subscription history stored internally and
+// reflect the thresholds actively being used for billing purposes at the time
+// of the GetProject call. This includes the start_time of the subscription and
+// may differ from the values in `customer_provided_config` due to billing
+// rules (e.g., scale-downs taking effect only at the start of a new month).
+type GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus struct {
+	// EffectiveIndexingCoreThreshold: Optional. The currently effective Indexing
+	// Core threshold. This is the threshold against which Indexing Core usage is
+	// compared for overage calculations.
+	EffectiveIndexingCoreThreshold int64 `json:"effectiveIndexingCoreThreshold,omitempty,string"`
+	// EffectiveSearchQpmThreshold: Optional. The currently effective Search QPM
+	// threshold in queries per minute. This is the threshold against which QPM
+	// usage is compared for overage calculations.
+	EffectiveSearchQpmThreshold int64 `json:"effectiveSearchQpmThreshold,omitempty,string"`
+	// StartTime: Optional. The start time of the currently active billing
+	// subscription.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveIndexingCoreThreshold")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -35561,6 +35808,597 @@ func (c *ProjectsLocationsUpdateCmekConfigCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.updateCmekConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthorizationsCreateCall struct {
+	s                                              *Service
+	parent                                         string
+	googleclouddiscoveryenginev1alphaauthorization *GoogleCloudDiscoveryengineV1alphaAuthorization
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Create: Creates an Authorization.
+//
+//   - parent: The parent resource name. Format:
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsAuthorizationsService) Create(parent string, googleclouddiscoveryenginev1alphaauthorization *GoogleCloudDiscoveryengineV1alphaAuthorization) *ProjectsLocationsAuthorizationsCreateCall {
+	c := &ProjectsLocationsAuthorizationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphaauthorization = googleclouddiscoveryenginev1alphaauthorization
+	return c
+}
+
+// AuthorizationId sets the optional parameter "authorizationId": Required. The
+// ID to use for the authorization, which will become the final component of
+// the resource name. This field must conform to RFC-1034
+// (https://tools.ietf.org/html/rfc1034) with a length limit of 63 characters.
+func (c *ProjectsLocationsAuthorizationsCreateCall) AuthorizationId(authorizationId string) *ProjectsLocationsAuthorizationsCreateCall {
+	c.urlParams_.Set("authorizationId", authorizationId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizationsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizationsCreateCall) Context(ctx context.Context) *ProjectsLocationsAuthorizationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizationsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphaauthorization)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/authorizations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.authorizations.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.authorizations.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaAuthorization.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizationsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaAuthorization, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaAuthorization{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.authorizations.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthorizationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an Authorization.
+//
+//   - name: Resource name of Authorization. Format:
+//     `projects/{project}/locations/{location}/authorizations/{authorization}`
+//     If the caller does not have permission to delete the authorization,
+//     regardless of whether or not it exists, a `PERMISSION_DENIED` error is
+//     returned. If the authorization to delete does not exist, a `NOT_FOUND`
+//     error is returned.
+func (r *ProjectsLocationsAuthorizationsService) Delete(name string) *ProjectsLocationsAuthorizationsDeleteCall {
+	c := &ProjectsLocationsAuthorizationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsAuthorizationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.authorizations.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.authorizations.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAuthorizationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.authorizations.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthorizationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an Authorization.
+//
+//   - name: Resource name of Authorization. Format:
+//     `projects/{project}/locations/{location}/authorizations/{authorization}`.
+func (r *ProjectsLocationsAuthorizationsService) Get(name string) *ProjectsLocationsAuthorizationsGetCall {
+	c := &ProjectsLocationsAuthorizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuthorizationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthorizationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizationsGetCall) Context(ctx context.Context) *ProjectsLocationsAuthorizationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.authorizations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.authorizations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaAuthorization.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaAuthorization, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaAuthorization{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.authorizations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthorizationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all Authorizations under an Engine.
+//
+//   - parent: The parent resource name. Format:
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsAuthorizationsService) List(parent string) *ProjectsLocationsAuthorizationsListCall {
+	c := &ProjectsLocationsAuthorizationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// Authorizations to return. If unspecified, defaults to 100. The maximum
+// allowed value is 1000; anything above that will be coerced down to 1000.
+func (c *ProjectsLocationsAuthorizationsListCall) PageSize(pageSize int64) *ProjectsLocationsAuthorizationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token
+// ListAuthorizationsResponse.next_page_token, received from a previous
+// AuthorizationService.ListAuthorizations call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// ListAuthorizations must match the call that provided the page token.
+func (c *ProjectsLocationsAuthorizationsListCall) PageToken(pageToken string) *ProjectsLocationsAuthorizationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuthorizationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthorizationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizationsListCall) Context(ctx context.Context) *ProjectsLocationsAuthorizationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/authorizations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.authorizations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.authorizations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaListAuthorizationsResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaListAuthorizationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaListAuthorizationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.authorizations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAuthorizationsListCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1alphaListAuthorizationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAuthorizationsPatchCall struct {
+	s                                              *Service
+	name                                           string
+	googleclouddiscoveryenginev1alphaauthorization *GoogleCloudDiscoveryengineV1alphaAuthorization
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Patch: Updates an Authorization
+//
+//   - name: Identifier. Resource name of the authorization. Format:
+//     `projects/{project}/locations/{location}/authorizations/{authorization}`
+//     It must be a UTF-8 encoded string with a length limit of 1024 characters.
+func (r *ProjectsLocationsAuthorizationsService) Patch(name string, googleclouddiscoveryenginev1alphaauthorization *GoogleCloudDiscoveryengineV1alphaAuthorization) *ProjectsLocationsAuthorizationsPatchCall {
+	c := &ProjectsLocationsAuthorizationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphaauthorization = googleclouddiscoveryenginev1alphaauthorization
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *ProjectsLocationsAuthorizationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAuthorizationsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizationsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizationsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizationsPatchCall) Context(ctx context.Context) *ProjectsLocationsAuthorizationsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizationsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizationsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphaauthorization)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.authorizations.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.authorizations.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaAuthorization.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizationsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaAuthorization, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaAuthorization{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.authorizations.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

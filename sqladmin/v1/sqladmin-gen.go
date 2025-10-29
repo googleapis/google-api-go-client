@@ -1063,8 +1063,8 @@ type CloneContext struct {
 	// DatabaseNames: (SQL Server only) Clone only the specified databases from the
 	// source instance. Clone all databases if empty.
 	DatabaseNames []string `json:"databaseNames,omitempty"`
-	// DestinationInstanceName: Name of the Cloud SQL instance to be created as a
-	// clone.
+	// DestinationInstanceName: Required. Name of the Cloud SQL instance to be
+	// created as a clone.
 	DestinationInstanceName string `json:"destinationInstanceName,omitempty"`
 	// Kind: This is always `sql#cloneContext`.
 	Kind string `json:"kind,omitempty"`
@@ -3124,7 +3124,7 @@ func (s InstancesAcquireSsrsLeaseRequest) MarshalJSON() ([]byte, error) {
 
 // InstancesCloneRequest: Database instance clone request.
 type InstancesCloneRequest struct {
-	// CloneContext: Contains details about the clone operation.
+	// CloneContext: Required. Contains details about the clone operation.
 	CloneContext *CloneContext `json:"cloneContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloneContext") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5059,6 +5059,17 @@ type Settings struct {
 	// instances. Indicates whether database flags for crash-safe replication are
 	// enabled. This property was only applicable to First Generation instances.
 	CrashSafeReplicationEnabled bool `json:"crashSafeReplicationEnabled,omitempty"`
+	// DataApiAccess: This parameter controls whether to allow using Data API to
+	// connect to the instance. Not allowed by default.
+	//
+	// Possible values:
+	//   "DATA_API_ACCESS_UNSPECIFIED" - Unspecified, effectively the same as
+	// `DISALLOW_DATA_API`.
+	//   "DISALLOW_DATA_API" - Disallow using Data API to connect to the instance.
+	//   "ALLOW_DATA_API" - Allow using Data API to connect to the instance. For
+	// private IP instances, this will allow authorized users to access the
+	// instance from the public internet.
+	DataApiAccess string `json:"dataApiAccess,omitempty"`
 	// DataCacheConfig: Configuration for data cache.
 	DataCacheConfig *DataCacheConfig `json:"dataCacheConfig,omitempty"`
 	// DataDiskProvisionedIops: Optional. Provisioned number of I/O operations per

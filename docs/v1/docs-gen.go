@@ -1334,10 +1334,12 @@ type DocumentStyle struct {
 	// transparent background color.
 	Background *Background `json:"background,omitempty"`
 	// DefaultFooterId: The ID of the default footer. If not set, there's no
-	// default footer. This property is read-only.
+	// default footer. If DocumentMode is PAGELESS, this property will not be
+	// rendered. This property is read-only.
 	DefaultFooterId string `json:"defaultFooterId,omitempty"`
 	// DefaultHeaderId: The ID of the default header. If not set, there's no
-	// default header. This property is read-only.
+	// default header. If DocumentMode is PAGELESS, this property will not be
+	// rendered. This property is read-only.
 	DefaultHeaderId string `json:"defaultHeaderId,omitempty"`
 	// DocumentFormat: Specifies document-level format settings, such as the
 	// document mode (pages vs pageless).
@@ -1345,64 +1347,79 @@ type DocumentStyle struct {
 	// EvenPageFooterId: The ID of the footer used only for even pages. The value
 	// of use_even_page_header_footer determines whether to use the
 	// default_footer_id or this value for the footer on even pages. If not set,
-	// there's no even page footer. This property is read-only.
+	// there's no even page footer. If DocumentMode is PAGELESS, this property will
+	// not be rendered. This property is read-only.
 	EvenPageFooterId string `json:"evenPageFooterId,omitempty"`
 	// EvenPageHeaderId: The ID of the header used only for even pages. The value
 	// of use_even_page_header_footer determines whether to use the
 	// default_header_id or this value for the header on even pages. If not set,
-	// there's no even page header. This property is read-only.
+	// there's no even page header. If DocumentMode is PAGELESS, this property will
+	// not be rendered. This property is read-only.
 	EvenPageHeaderId string `json:"evenPageHeaderId,omitempty"`
 	// FirstPageFooterId: The ID of the footer used only for the first page. If not
 	// set then a unique footer for the first page does not exist. The value of
 	// use_first_page_header_footer determines whether to use the default_footer_id
 	// or this value for the footer on the first page. If not set, there's no first
-	// page footer. This property is read-only.
+	// page footer. If DocumentMode is PAGELESS, this property will not be
+	// rendered. This property is read-only.
 	FirstPageFooterId string `json:"firstPageFooterId,omitempty"`
 	// FirstPageHeaderId: The ID of the header used only for the first page. If not
 	// set then a unique header for the first page does not exist. The value of
 	// use_first_page_header_footer determines whether to use the default_header_id
 	// or this value for the header on the first page. If not set, there's no first
-	// page header. This property is read-only.
+	// page header. If DocumentMode is PAGELESS, this property will not be
+	// rendered. This property is read-only.
 	FirstPageHeaderId string `json:"firstPageHeaderId,omitempty"`
 	// FlipPageOrientation: Optional. Indicates whether to flip the dimensions of
 	// the page_size, which allows changing the page orientation between portrait
-	// and landscape.
+	// and landscape. If DocumentMode is PAGELESS, this property will not be
+	// rendered.
 	FlipPageOrientation bool `json:"flipPageOrientation,omitempty"`
 	// MarginBottom: The bottom page margin. Updating the bottom page margin on the
-	// document style clears the bottom page margin on all section styles.
+	// document style clears the bottom page margin on all section styles. If
+	// DocumentMode is PAGELESS, this property will not be rendered.
 	MarginBottom *Dimension `json:"marginBottom,omitempty"`
 	// MarginFooter: The amount of space between the bottom of the page and the
-	// contents of the footer.
+	// contents of the footer. If DocumentMode is PAGELESS, this property will not
+	// be rendered.
 	MarginFooter *Dimension `json:"marginFooter,omitempty"`
 	// MarginHeader: The amount of space between the top of the page and the
-	// contents of the header.
+	// contents of the header. If DocumentMode is PAGELESS, this property will not
+	// be rendered.
 	MarginHeader *Dimension `json:"marginHeader,omitempty"`
 	// MarginLeft: The left page margin. Updating the left page margin on the
 	// document style clears the left page margin on all section styles. It may
-	// also cause columns to resize in all sections.
+	// also cause columns to resize in all sections. If DocumentMode is PAGELESS,
+	// this property will not be rendered.
 	MarginLeft *Dimension `json:"marginLeft,omitempty"`
 	// MarginRight: The right page margin. Updating the right page margin on the
 	// document style clears the right page margin on all section styles. It may
-	// also cause columns to resize in all sections.
+	// also cause columns to resize in all sections. If DocumentMode is PAGELESS,
+	// this property will not be rendered.
 	MarginRight *Dimension `json:"marginRight,omitempty"`
 	// MarginTop: The top page margin. Updating the top page margin on the document
-	// style clears the top page margin on all section styles.
+	// style clears the top page margin on all section styles. If DocumentMode is
+	// PAGELESS, this property will not be rendered.
 	MarginTop *Dimension `json:"marginTop,omitempty"`
 	// PageNumberStart: The page number from which to start counting the number of
-	// pages.
+	// pages. If DocumentMode is PAGELESS, this property will not be rendered.
 	PageNumberStart int64 `json:"pageNumberStart,omitempty"`
-	// PageSize: The size of a page in the document.
+	// PageSize: The size of a page in the document. If DocumentMode is PAGELESS,
+	// this property will not be rendered.
 	PageSize *Size `json:"pageSize,omitempty"`
 	// UseCustomHeaderFooterMargins: Indicates whether DocumentStyle margin_header,
 	// SectionStyle margin_header and DocumentStyle margin_footer, SectionStyle
 	// margin_footer are respected. When false, the default values in the Docs
-	// editor for header and footer margin is used. This property is read-only.
+	// editor for header and footer margin is used. If DocumentMode is PAGELESS,
+	// this property will not be rendered. This property is read-only.
 	UseCustomHeaderFooterMargins bool `json:"useCustomHeaderFooterMargins,omitempty"`
 	// UseEvenPageHeaderFooter: Indicates whether to use the even page header /
-	// footer IDs for the even pages.
+	// footer IDs for the even pages. If DocumentMode is PAGELESS, this property
+	// will not be rendered.
 	UseEvenPageHeaderFooter bool `json:"useEvenPageHeaderFooter,omitempty"`
 	// UseFirstPageHeaderFooter: Indicates whether to use the first page header /
-	// footer IDs for the first page.
+	// footer IDs for the first page. If DocumentMode is PAGELESS, this property
+	// will not be rendered.
 	UseFirstPageHeaderFooter bool `json:"useFirstPageHeaderFooter,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Background") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2312,14 +2329,14 @@ func (s InsertPageBreakRequest) MarshalJSON() ([]byte, error) {
 
 // InsertPersonRequest: Inserts a person mention.
 type InsertPersonRequest struct {
-	// EndOfSegmentLocation: Inserts the person at the end of a header, footer,
-	// footnote or the document body.
+	// EndOfSegmentLocation: Inserts the person mention at the end of a header,
+	// footer, footnote or the document body.
 	EndOfSegmentLocation *EndOfSegmentLocation `json:"endOfSegmentLocation,omitempty"`
-	// Location: Inserts the person at a specific index in the document. The person
-	// mention must be inserted inside the bounds of an existing Paragraph. For
-	// instance, it cannot be inserted at a table's start index (i.e. between the
-	// table and its preceding paragraph). People cannot be inserted inside an
-	// equation.
+	// Location: Inserts the person mention at a specific index in the document.
+	// The person mention must be inserted inside the bounds of an existing
+	// Paragraph. For instance, it cannot be inserted at a table's start index
+	// (i.e. between the table and its preceding paragraph). People cannot be
+	// inserted inside an equation.
 	Location *Location `json:"location,omitempty"`
 	// PersonProperties: The properties of the person mention to insert.
 	PersonProperties *PersonProperties `json:"personProperties,omitempty"`
@@ -4311,13 +4328,15 @@ type SectionStyle struct {
 	ContentDirection string `json:"contentDirection,omitempty"`
 	// DefaultFooterId: The ID of the default footer. If unset, the value inherits
 	// from the previous SectionBreak's SectionStyle. If the value is unset in the
-	// first SectionBreak, it inherits from DocumentStyle's default_footer_id. This
-	// property is read-only.
+	// first SectionBreak, it inherits from DocumentStyle's default_footer_id. If
+	// DocumentMode is PAGELESS, this property will not be rendered. This property
+	// is read-only.
 	DefaultFooterId string `json:"defaultFooterId,omitempty"`
 	// DefaultHeaderId: The ID of the default header. If unset, the value inherits
 	// from the previous SectionBreak's SectionStyle. If the value is unset in the
-	// first SectionBreak, it inherits from DocumentStyle's default_header_id. This
-	// property is read-only.
+	// first SectionBreak, it inherits from DocumentStyle's default_header_id. If
+	// DocumentMode is PAGELESS, this property will not be rendered. This property
+	// is read-only.
 	DefaultHeaderId string `json:"defaultHeaderId,omitempty"`
 	// EvenPageFooterId: The ID of the footer used only for even pages. If the
 	// value of DocumentStyle's use_even_page_header_footer is true, this value is
@@ -4325,7 +4344,8 @@ type SectionStyle struct {
 	// footers on even pages use the default_footer_id. If unset, the value
 	// inherits from the previous SectionBreak's SectionStyle. If the value is
 	// unset in the first SectionBreak, it inherits from DocumentStyle's
-	// even_page_footer_id. This property is read-only.
+	// even_page_footer_id. If DocumentMode is PAGELESS, this property will not be
+	// rendered. This property is read-only.
 	EvenPageFooterId string `json:"evenPageFooterId,omitempty"`
 	// EvenPageHeaderId: The ID of the header used only for even pages. If the
 	// value of DocumentStyle's use_even_page_header_footer is true, this value is
@@ -4333,7 +4353,8 @@ type SectionStyle struct {
 	// headers on even pages use the default_header_id. If unset, the value
 	// inherits from the previous SectionBreak's SectionStyle. If the value is
 	// unset in the first SectionBreak, it inherits from DocumentStyle's
-	// even_page_header_id. This property is read-only.
+	// even_page_header_id. If DocumentMode is PAGELESS, this property will not be
+	// rendered. This property is read-only.
 	EvenPageHeaderId string `json:"evenPageHeaderId,omitempty"`
 	// FirstPageFooterId: The ID of the footer used only for the first page of the
 	// section. If use_first_page_header_footer is true, this value is used for the
@@ -4341,7 +4362,8 @@ type SectionStyle struct {
 	// first page of the section uses the default_footer_id. If unset, the value
 	// inherits from the previous SectionBreak's SectionStyle. If the value is
 	// unset in the first SectionBreak, it inherits from DocumentStyle's
-	// first_page_footer_id. This property is read-only.
+	// first_page_footer_id. If DocumentMode is PAGELESS, this property will not be
+	// rendered. This property is read-only.
 	FirstPageFooterId string `json:"firstPageFooterId,omitempty"`
 	// FirstPageHeaderId: The ID of the header used only for the first page of the
 	// section. If use_first_page_header_footer is true, this value is used for the
@@ -4349,59 +4371,67 @@ type SectionStyle struct {
 	// first page of the section uses the default_header_id. If unset, the value
 	// inherits from the previous SectionBreak's SectionStyle. If the value is
 	// unset in the first SectionBreak, it inherits from DocumentStyle's
-	// first_page_header_id. This property is read-only.
+	// first_page_header_id. If DocumentMode is PAGELESS, this property will not be
+	// rendered. This property is read-only.
 	FirstPageHeaderId string `json:"firstPageHeaderId,omitempty"`
 	// FlipPageOrientation: Optional. Indicates whether to flip the dimensions of
 	// DocumentStyle's page_size for this section, which allows changing the page
 	// orientation between portrait and landscape. If unset, the value inherits
-	// from DocumentStyle's flip_page_orientation. When updating this property,
-	// setting a concrete value is required. Unsetting this property results in a
-	// 400 bad request error.
+	// from DocumentStyle's flip_page_orientation. If DocumentMode is PAGELESS,
+	// this property will not be rendered. When updating this property, setting a
+	// concrete value is required. Unsetting this property results in a 400 bad
+	// request error.
 	FlipPageOrientation bool `json:"flipPageOrientation,omitempty"`
 	// MarginBottom: The bottom page margin of the section. If unset, the value
-	// defaults to margin_bottom from DocumentStyle. When updating this property,
-	// setting a concrete value is required. Unsetting this property results in a
-	// 400 bad request error.
+	// defaults to margin_bottom from DocumentStyle. If DocumentMode is PAGELESS,
+	// this property will not be rendered. When updating this property, setting a
+	// concrete value is required. Unsetting this property results in a 400 bad
+	// request error.
 	MarginBottom *Dimension `json:"marginBottom,omitempty"`
 	// MarginFooter: The footer margin of the section. If unset, the value defaults
 	// to margin_footer from DocumentStyle. If updated,
 	// use_custom_header_footer_margins is set to true on DocumentStyle. The value
 	// of use_custom_header_footer_margins on DocumentStyle indicates if a footer
-	// margin is being respected for this section When updating this property,
-	// setting a concrete value is required. Unsetting this property results in a
-	// 400 bad request error.
+	// margin is being respected for this section If DocumentMode is PAGELESS, this
+	// property will not be rendered. When updating this property, setting a
+	// concrete value is required. Unsetting this property results in a 400 bad
+	// request error.
 	MarginFooter *Dimension `json:"marginFooter,omitempty"`
 	// MarginHeader: The header margin of the section. If unset, the value defaults
 	// to margin_header from DocumentStyle. If updated,
 	// use_custom_header_footer_margins is set to true on DocumentStyle. The value
 	// of use_custom_header_footer_margins on DocumentStyle indicates if a header
-	// margin is being respected for this section. When updating this property,
-	// setting a concrete value is required. Unsetting this property results in a
-	// 400 bad request error.
+	// margin is being respected for this section. If DocumentMode is PAGELESS,
+	// this property will not be rendered. When updating this property, setting a
+	// concrete value is required. Unsetting this property results in a 400 bad
+	// request error.
 	MarginHeader *Dimension `json:"marginHeader,omitempty"`
 	// MarginLeft: The left page margin of the section. If unset, the value
 	// defaults to margin_left from DocumentStyle. Updating the left margin causes
 	// columns in this section to resize. Since the margin affects column width,
-	// it's applied before column properties. When updating this property, setting
-	// a concrete value is required. Unsetting this property results in a 400 bad
+	// it's applied before column properties. If DocumentMode is PAGELESS, this
+	// property will not be rendered. When updating this property, setting a
+	// concrete value is required. Unsetting this property results in a 400 bad
 	// request error.
 	MarginLeft *Dimension `json:"marginLeft,omitempty"`
 	// MarginRight: The right page margin of the section. If unset, the value
 	// defaults to margin_right from DocumentStyle. Updating the right margin
 	// causes columns in this section to resize. Since the margin affects column
-	// width, it's applied before column properties. When updating this property,
-	// setting a concrete value is required. Unsetting this property results in a
-	// 400 bad request error.
-	MarginRight *Dimension `json:"marginRight,omitempty"`
-	// MarginTop: The top page margin of the section. If unset, the value defaults
-	// to margin_top from DocumentStyle. When updating this property, setting a
+	// width, it's applied before column properties. If DocumentMode is PAGELESS,
+	// this property will not be rendered. When updating this property, setting a
 	// concrete value is required. Unsetting this property results in a 400 bad
 	// request error.
+	MarginRight *Dimension `json:"marginRight,omitempty"`
+	// MarginTop: The top page margin of the section. If unset, the value defaults
+	// to margin_top from DocumentStyle. If DocumentMode is PAGELESS, this property
+	// will not be rendered. When updating this property, setting a concrete value
+	// is required. Unsetting this property results in a 400 bad request error.
 	MarginTop *Dimension `json:"marginTop,omitempty"`
 	// PageNumberStart: The page number from which to start counting the number of
 	// pages for this section. If unset, page numbering continues from the previous
 	// section. If the value is unset in the first SectionBreak, refer to
-	// DocumentStyle's page_number_start. When updating this property, setting a
+	// DocumentStyle's page_number_start. If DocumentMode is PAGELESS, this
+	// property will not be rendered. When updating this property, setting a
 	// concrete value is required. Unsetting this property results in a 400 bad
 	// request error.
 	PageNumberStart int64 `json:"pageNumberStart,omitempty"`
@@ -4416,9 +4446,10 @@ type SectionStyle struct {
 	// UseFirstPageHeaderFooter: Indicates whether to use the first page header /
 	// footer IDs for the first page of the section. If unset, it inherits from
 	// DocumentStyle's use_first_page_header_footer for the first section. If the
-	// value is unset for subsequent sectors, it should be interpreted as false.
-	// When updating this property, setting a concrete value is required. Unsetting
-	// this property results in a 400 bad request error.
+	// value is unset for subsequent sectors, it should be interpreted as false. If
+	// DocumentMode is PAGELESS, this property will not be rendered. When updating
+	// this property, setting a concrete value is required. Unsetting this property
+	// results in a 400 bad request error.
 	UseFirstPageHeaderFooter bool `json:"useFirstPageHeaderFooter,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ColumnProperties") to
 	// unconditionally include in API requests. By default, fields with empty or

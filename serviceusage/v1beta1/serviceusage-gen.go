@@ -1368,6 +1368,36 @@ func (s ContentSecurity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ContentSecurityPolicy: Content Security Policy contains the content security
+// related policy of a resource.
+type ContentSecurityPolicy struct {
+	// McpContentSecurity: mcp_content_security contains the content security
+	// related settings at resource level for MCP traffic.
+	McpContentSecurity *ContentSecurity `json:"mcpContentSecurity,omitempty"`
+	// Name: Output only. The resource name of the policy. Only the `default`
+	// policy is supported. We allow the following formats:
+	// `projects/{PROJECT_NUMBER}/contentSecurityPolicies/default`,
+	// `projects/{PROJECT_ID}/contentSecurityPolicies/default`, We only support
+	// project level content security policy for now.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "McpContentSecurity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "McpContentSecurity") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContentSecurityPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentSecurityPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ContentSecurityProvider: ContentSecurityProvider contains the name of
 // content security provider.
 type ContentSecurityProvider struct {
@@ -2713,11 +2743,6 @@ func (s GoogleApiServiceusageV2betaAnalyzeConsumerPolicyResponse) MarshalJSON() 
 // that define what services or service groups can be used for a cloud resource
 // hierarchy.
 type GoogleApiServiceusageV2betaConsumerPolicy struct {
-	// Annotations: Optional. Annotations is an unstructured key-value map stored
-	// with a policy that may be set by external tools to store and retrieve
-	// arbitrary metadata. They are not queryable and should be preserved when
-	// modifying objects. AIP-128 (https://google.aip.dev/128#annotations)
-	Annotations map[string]string `json:"annotations,omitempty"`
 	// CreateTime: Output only. The time the policy was created. For singleton
 	// policies, this is the first touch of the policy.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2735,13 +2760,13 @@ type GoogleApiServiceusageV2betaConsumerPolicy struct {
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. The time the policy was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3454,6 +3479,11 @@ type ListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*Operation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3684,9 +3714,6 @@ func (s McpEnableRule) MarshalJSON() ([]byte, error) {
 // McpPolicy: MCP Consumer Policy is a set of rules that define MCP related
 // policy for a cloud resource hierarchy.
 type McpPolicy struct {
-	// ContentSecurity: ContentSecurity contains the content security related
-	// fields of a MCP policy.
-	ContentSecurity *ContentSecurity `json:"contentSecurity,omitempty"`
 	// CreateTime: Output only. The time the policy was created. For singleton
 	// policies (such as the `default` policy), this is the first touch of the
 	// policy.
@@ -3705,15 +3732,15 @@ type McpPolicy struct {
 	Name string `json:"name,omitempty"`
 	// UpdateTime: Output only. The time the policy was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ContentSecurity") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ContentSecurity") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5457,6 +5484,11 @@ type UpdateAdminQuotaPolicyMetadata struct {
 type UpdateConsumerPolicyMetadata struct {
 }
 
+// UpdateContentSecurityPolicyMetadata: Metadata for the
+// `UpdateContentSecurityPolicy` method.
+type UpdateContentSecurityPolicyMetadata struct {
+}
+
 // UpdateMcpPolicyMetadata: Metadata for the `UpdateMcpPolicy` method.
 type UpdateMcpPolicyMetadata struct {
 }
@@ -5684,6 +5716,19 @@ func (c *OperationsListCall) PageSize(pageSize int64) *OperationsListCall {
 // token.
 func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *OperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

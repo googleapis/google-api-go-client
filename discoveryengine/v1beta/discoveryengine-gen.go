@@ -4089,6 +4089,9 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	//   "CONFIGURABLE_CONSUMPTION_EMBEDDING" - Use the consumption pay-as-you-go
 	// billing for embedding storage add-on.
 	ConfigurableBillingApproach string `json:"configurableBillingApproach,omitempty"`
+	// ConfigurableBillingApproachUpdateTime: Output only. The timestamp when
+	// configurable_billing_approach was last updated.
+	ConfigurableBillingApproachUpdateTime string `json:"configurableBillingApproachUpdateTime,omitempty"`
 	// ContentConfig: Immutable. The content config of the data store. If this
 	// field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.
 	//
@@ -5766,6 +5769,9 @@ func (s GoogleCloudDiscoveryengineV1LicenseConfig) MarshalJSON() ([]byte, error)
 // GoogleCloudDiscoveryengineV1Project: Metadata and configurations for a
 // Google Cloud project in the service.
 type GoogleCloudDiscoveryengineV1Project struct {
+	// ConfigurableBillingStatus: Output only. The current status of the project's
+	// configurable billing.
+	ConfigurableBillingStatus *GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus `json:"configurableBillingStatus,omitempty"`
 	// CreateTime: Output only. The timestamp when this project is created.
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomerProvidedConfig: Optional. Customer provided configurations.
@@ -5782,21 +5788,59 @@ type GoogleCloudDiscoveryengineV1Project struct {
 	// ServiceTermsMap: Output only. A map of terms of services. The key is the
 	// `id` of ServiceTerms.
 	ServiceTermsMap map[string]GoogleCloudDiscoveryengineV1ProjectServiceTerms `json:"serviceTermsMap,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "ConfigurableBillingStatus")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConfigurableBillingStatus") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1Project) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1Project
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus: Represents the
+// currently effective configurable billing parameters. These values are
+// derived from the customer's subscription history stored internally and
+// reflect the thresholds actively being used for billing purposes at the time
+// of the GetProject call. This includes the start_time of the subscription and
+// may differ from the values in `customer_provided_config` due to billing
+// rules (e.g., scale-downs taking effect only at the start of a new month).
+type GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus struct {
+	// EffectiveIndexingCoreThreshold: Optional. The currently effective Indexing
+	// Core threshold. This is the threshold against which Indexing Core usage is
+	// compared for overage calculations.
+	EffectiveIndexingCoreThreshold int64 `json:"effectiveIndexingCoreThreshold,omitempty,string"`
+	// EffectiveSearchQpmThreshold: Optional. The currently effective Search QPM
+	// threshold in queries per minute. This is the threshold against which QPM
+	// usage is compared for overage calculations.
+	EffectiveSearchQpmThreshold int64 `json:"effectiveSearchQpmThreshold,omitempty,string"`
+	// StartTime: Optional. The start time of the currently active billing
+	// subscription.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveIndexingCoreThreshold")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10283,6 +10327,9 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	//   "CONFIGURABLE_CONSUMPTION_EMBEDDING" - Use the consumption pay-as-you-go
 	// billing for embedding storage add-on.
 	ConfigurableBillingApproach string `json:"configurableBillingApproach,omitempty"`
+	// ConfigurableBillingApproachUpdateTime: Output only. The timestamp when
+	// configurable_billing_approach was last updated.
+	ConfigurableBillingApproachUpdateTime string `json:"configurableBillingApproachUpdateTime,omitempty"`
 	// ContentConfig: Immutable. The content config of the data store. If this
 	// field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.
 	//
@@ -12866,6 +12913,9 @@ func (s GoogleCloudDiscoveryengineV1alphaOrganicCrawlRateTimeSeries) MarshalJSON
 // GoogleCloudDiscoveryengineV1alphaProject: Metadata and configurations for a
 // Google Cloud project in the service.
 type GoogleCloudDiscoveryengineV1alphaProject struct {
+	// ConfigurableBillingStatus: Output only. The current status of the project's
+	// configurable billing.
+	ConfigurableBillingStatus *GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus `json:"configurableBillingStatus,omitempty"`
 	// CreateTime: Output only. The timestamp when this project is created.
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomerProvidedConfig: Optional. Customer provided configurations.
@@ -12882,21 +12932,60 @@ type GoogleCloudDiscoveryengineV1alphaProject struct {
 	// ServiceTermsMap: Output only. A map of terms of services. The key is the
 	// `id` of ServiceTerms.
 	ServiceTermsMap map[string]GoogleCloudDiscoveryengineV1alphaProjectServiceTerms `json:"serviceTermsMap,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "ConfigurableBillingStatus")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConfigurableBillingStatus") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1alphaProject) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaProject
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus:
+// Represents the currently effective configurable billing parameters. These
+// values are derived from the customer's subscription history stored
+// internally and reflect the thresholds actively being used for billing
+// purposes at the time of the GetProject call. This includes the start_time of
+// the subscription and may differ from the values in
+// `customer_provided_config` due to billing rules (e.g., scale-downs taking
+// effect only at the start of a new month).
+type GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus struct {
+	// EffectiveIndexingCoreThreshold: Optional. The currently effective Indexing
+	// Core threshold. This is the threshold against which Indexing Core usage is
+	// compared for overage calculations.
+	EffectiveIndexingCoreThreshold int64 `json:"effectiveIndexingCoreThreshold,omitempty,string"`
+	// EffectiveSearchQpmThreshold: Optional. The currently effective Search QPM
+	// threshold in queries per minute. This is the threshold against which QPM
+	// usage is compared for overage calculations.
+	EffectiveSearchQpmThreshold int64 `json:"effectiveSearchQpmThreshold,omitempty,string"`
+	// StartTime: Optional. The start time of the currently active billing
+	// subscription.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveIndexingCoreThreshold")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -21179,6 +21268,9 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	//   "CONFIGURABLE_CONSUMPTION_EMBEDDING" - Use the consumption pay-as-you-go
 	// billing for embedding storage add-on.
 	ConfigurableBillingApproach string `json:"configurableBillingApproach,omitempty"`
+	// ConfigurableBillingApproachUpdateTime: Output only. The timestamp when
+	// configurable_billing_approach was last updated.
+	ConfigurableBillingApproachUpdateTime string `json:"configurableBillingApproachUpdateTime,omitempty"`
 	// ContentConfig: Immutable. The content config of the data store. If this
 	// field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.
 	//
@@ -24903,6 +24995,9 @@ func (s GoogleCloudDiscoveryengineV1betaPrincipal) MarshalJSON() ([]byte, error)
 // GoogleCloudDiscoveryengineV1betaProject: Metadata and configurations for a
 // Google Cloud project in the service.
 type GoogleCloudDiscoveryengineV1betaProject struct {
+	// ConfigurableBillingStatus: Output only. The current status of the project's
+	// configurable billing.
+	ConfigurableBillingStatus *GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus `json:"configurableBillingStatus,omitempty"`
 	// CreateTime: Output only. The timestamp when this project is created.
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomerProvidedConfig: Optional. Customer provided configurations.
@@ -24919,21 +25014,59 @@ type GoogleCloudDiscoveryengineV1betaProject struct {
 	// ServiceTermsMap: Output only. A map of terms of services. The key is the
 	// `id` of ServiceTerms.
 	ServiceTermsMap map[string]GoogleCloudDiscoveryengineV1betaProjectServiceTerms `json:"serviceTermsMap,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "ConfigurableBillingStatus")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConfigurableBillingStatus") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1betaProject) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaProject
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus: Represents
+// the currently effective configurable billing parameters. These values are
+// derived from the customer's subscription history stored internally and
+// reflect the thresholds actively being used for billing purposes at the time
+// of the GetProject call. This includes the start_time of the subscription and
+// may differ from the values in `customer_provided_config` due to billing
+// rules (e.g., scale-downs taking effect only at the start of a new month).
+type GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus struct {
+	// EffectiveIndexingCoreThreshold: Optional. The currently effective Indexing
+	// Core threshold. This is the threshold against which Indexing Core usage is
+	// compared for overage calculations.
+	EffectiveIndexingCoreThreshold int64 `json:"effectiveIndexingCoreThreshold,omitempty,string"`
+	// EffectiveSearchQpmThreshold: Optional. The currently effective Search QPM
+	// threshold in queries per minute. This is the threshold against which QPM
+	// usage is compared for overage calculations.
+	EffectiveSearchQpmThreshold int64 `json:"effectiveSearchQpmThreshold,omitempty,string"`
+	// StartTime: Optional. The start time of the currently active billing
+	// subscription.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectiveIndexingCoreThreshold") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EffectiveIndexingCoreThreshold")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

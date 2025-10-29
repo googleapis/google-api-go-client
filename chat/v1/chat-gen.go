@@ -2802,15 +2802,14 @@ type GoogleAppsCardV1DateTimePicker struct {
 	//   "DATE_ONLY" - Users input a date.
 	//   "TIME_ONLY" - Users input a time.
 	Type string `json:"type,omitempty"`
-	// ValueMsEpoch: Optional. The default value displayed in the widget, in
-	// milliseconds since Unix epoch time
-	// (https://en.wikipedia.org/wiki/Unix_time). Specify the value based on the
-	// type of picker (`DateTimePickerType`): * `DATE_AND_TIME`: a calendar date
-	// and time in UTC. For example, to represent January 1, 2023 at 12:00 PM UTC,
-	// use `1672574400000`. * `DATE_ONLY`: a calendar date at 00:00:00 UTC. For
-	// example, to represent January 1, 2023, use `1672531200000`. * `TIME_ONLY`: a
-	// time in UTC. For example, to represent 12:00 PM, use `43200000` (or `12 * 60
-	// * 60 * 1000`).
+	// ValueMsEpoch: The default value displayed in the widget, in milliseconds
+	// since Unix epoch time (https://en.wikipedia.org/wiki/Unix_time). Specify the
+	// value based on the type of picker (`DateTimePickerType`): * `DATE_AND_TIME`:
+	// a calendar date and time in UTC. For example, to represent January 1, 2023
+	// at 12:00 PM UTC, use `1672574400000`. * `DATE_ONLY`: a calendar date at
+	// 00:00:00 UTC. For example, to represent January 1, 2023, use
+	// `1672531200000`. * `TIME_ONLY`: a time in UTC. For example, to represent
+	// 12:00 PM, use `43200000` (or `12 * 60 * 60 * 1000`).
 	ValueMsEpoch int64 `json:"valueMsEpoch,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "HostAppDataSource") to
 	// unconditionally include in API requests. By default, fields with empty or

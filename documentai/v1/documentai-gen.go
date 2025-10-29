@@ -186,6 +186,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.ProcessorTypes = NewProjectsLocationsProcessorTypesService(s)
 	rs.Processors = NewProjectsLocationsProcessorsService(s)
+	rs.Schemas = NewProjectsLocationsSchemasService(s)
 	return rs
 }
 
@@ -197,6 +198,8 @@ type ProjectsLocationsService struct {
 	ProcessorTypes *ProjectsLocationsProcessorTypesService
 
 	Processors *ProjectsLocationsProcessorsService
+
+	Schemas *ProjectsLocationsSchemasService
 }
 
 func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
@@ -259,6 +262,27 @@ func NewProjectsLocationsProcessorsProcessorVersionsEvaluationsService(s *Servic
 }
 
 type ProjectsLocationsProcessorsProcessorVersionsEvaluationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSchemasService(s *Service) *ProjectsLocationsSchemasService {
+	rs := &ProjectsLocationsSchemasService{s: s}
+	rs.SchemaVersions = NewProjectsLocationsSchemasSchemaVersionsService(s)
+	return rs
+}
+
+type ProjectsLocationsSchemasService struct {
+	s *Service
+
+	SchemaVersions *ProjectsLocationsSchemasSchemaVersionsService
+}
+
+func NewProjectsLocationsSchemasSchemaVersionsService(s *Service) *ProjectsLocationsSchemasSchemaVersionsService {
+	rs := &ProjectsLocationsSchemasSchemaVersionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSchemasSchemaVersionsService struct {
 	s *Service
 }
 
@@ -1109,6 +1133,198 @@ func (s GoogleCloudDocumentaiUiv1beta3DocumentIdUnmanagedDocumentId) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiUiv1beta3DocumentSchema: The schema defines the output
+// of the processed document by a processor.
+type GoogleCloudDocumentaiUiv1beta3DocumentSchema struct {
+	// Description: Description of the schema.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Display name to show to users.
+	DisplayName string `json:"displayName,omitempty"`
+	// EntityTypes: Entity types of the schema.
+	EntityTypes []*GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityType `json:"entityTypes,omitempty"`
+	// Metadata: Metadata of the schema.
+	Metadata *GoogleCloudDocumentaiUiv1beta3DocumentSchemaMetadata `json:"metadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3DocumentSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3DocumentSchema
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityType: EntityType is the
+// wrapper of a label of the corresponding model with detailed attributes and
+// limitations for entity-based processors. Multiple types can also compose a
+// dependency tree to represent nested types.
+type GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityType struct {
+	// BaseTypes: The entity type that this type is derived from. For now, one and
+	// only one should be set.
+	BaseTypes []string `json:"baseTypes,omitempty"`
+	// Description: The description of the entity type. Could be used to provide
+	// more information about the entity type for model calls.
+	Description string `json:"description,omitempty"`
+	// DisplayName: User defined name for the type.
+	DisplayName string `json:"displayName,omitempty"`
+	// EntityTypeMetadata: Metadata for the entity type.
+	EntityTypeMetadata *GoogleCloudDocumentaiUiv1beta3EntityTypeMetadata `json:"entityTypeMetadata,omitempty"`
+	// EnumValues: If specified, lists all the possible values for this entity.
+	// This should not be more than a handful of values. If the number of values is
+	// >10 or could change frequently use the `EntityType.value_ontology` field and
+	// specify a list of all possible values in a value ontology file.
+	EnumValues *GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityTypeEnumValues `json:"enumValues,omitempty"`
+	// Name: Name of the type. It must be unique within the schema file and cannot
+	// be a "Common Type". The following naming conventions are used: - Use
+	// `snake_casing`. - Name matching is case-sensitive. - Maximum 64 characters.
+	// - Must start with a letter. - Allowed characters: ASCII letters
+	// `[a-z0-9_-]`. (For backward compatibility internal infrastructure and
+	// tooling can handle any ascii character.) - The `/` is sometimes used to
+	// denote a property of a type. For example `line_item/amount`. This convention
+	// is deprecated, but will still be honored for backward compatibility.
+	Name string `json:"name,omitempty"`
+	// Properties: Description the nested structure, or composition of an entity.
+	Properties []*GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityTypeProperty `json:"properties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityTypeEnumValues: Defines
+// the a list of enum values.
+type GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityTypeEnumValues struct {
+	// Values: The individual values that this enum values type can include.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityTypeEnumValues) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityTypeEnumValues
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityTypeProperty: Defines
+// properties that can be part of the entity type.
+type GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityTypeProperty struct {
+	// Description: The description of the property. Could be used to provide more
+	// information about the property for model calls.
+	Description string `json:"description,omitempty"`
+	// DisplayName: User defined name for the property.
+	DisplayName string `json:"displayName,omitempty"`
+	// Method: Specifies how the entity's value is obtained.
+	//
+	// Possible values:
+	//   "METHOD_UNSPECIFIED" - Unspecified method. It defaults to `EXTRACT`.
+	//   "EXTRACT" - The entity's value is directly extracted as-is from the
+	// document text.
+	//   "DERIVE" - The entity's value is derived through inference and is not
+	// necessarily an exact text extraction from the document.
+	Method string `json:"method,omitempty"`
+	// Name: The name of the property. Follows the same guidelines as the
+	// EntityType name.
+	Name string `json:"name,omitempty"`
+	// OccurrenceType: Occurrence type limits the number of instances an entity
+	// type appears in the document.
+	//
+	// Possible values:
+	//   "OCCURRENCE_TYPE_UNSPECIFIED" - Unspecified occurrence type.
+	//   "OPTIONAL_ONCE" - There will be zero or one instance of this entity type.
+	// The same entity instance may be mentioned multiple times.
+	//   "OPTIONAL_MULTIPLE" - The entity type will appear zero or multiple times.
+	//   "REQUIRED_ONCE" - The entity type will only appear exactly once. The same
+	// entity instance may be mentioned multiple times.
+	//   "REQUIRED_MULTIPLE" - The entity type will appear once or more times.
+	OccurrenceType string `json:"occurrenceType,omitempty"`
+	// PropertyMetadata: Any additional metadata about the property can be added
+	// here.
+	PropertyMetadata *GoogleCloudDocumentaiUiv1beta3PropertyMetadata `json:"propertyMetadata,omitempty"`
+	// ValueType: A reference to the value type of the property. This type is
+	// subject to the same conventions as the `Entity.base_types` field.
+	ValueType string `json:"valueType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityTypeProperty) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityTypeProperty
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3DocumentSchemaMetadata: Metadata for global
+// schema behavior.
+type GoogleCloudDocumentaiUiv1beta3DocumentSchemaMetadata struct {
+	// DocumentAllowMultipleLabels: If true, on a given page, there can be multiple
+	// `document` annotations covering it.
+	DocumentAllowMultipleLabels bool `json:"documentAllowMultipleLabels,omitempty"`
+	// DocumentSplitter: If true, a `document` entity type can be applied to
+	// subdocument (splitting). Otherwise, it can only be applied to the entire
+	// document (classification).
+	DocumentSplitter bool `json:"documentSplitter,omitempty"`
+	// PrefixedNamingOnProperties: If set, all the nested entities must be prefixed
+	// with the parents.
+	PrefixedNamingOnProperties bool `json:"prefixedNamingOnProperties,omitempty"`
+	// SkipNamingValidation: If set, we will skip the naming format validation in
+	// the schema. So the string values in `DocumentSchema.EntityType.name` and
+	// `DocumentSchema.EntityType.Property.name` will not be checked.
+	SkipNamingValidation bool `json:"skipNamingValidation,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DocumentAllowMultipleLabels") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocumentAllowMultipleLabels") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3DocumentSchemaMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3DocumentSchemaMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata: The long-running
 // operation metadata for the EnableProcessor method.
 type GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata struct {
@@ -1136,6 +1352,39 @@ func (s GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata) MarshalJSON() ([]
 // the EnableProcessor method. Intentionally empty proto for adding fields in
 // future.
 type GoogleCloudDocumentaiUiv1beta3EnableProcessorResponse struct {
+}
+
+// GoogleCloudDocumentaiUiv1beta3EntityTypeMetadata: Metadata about an entity
+// type.
+type GoogleCloudDocumentaiUiv1beta3EntityTypeMetadata struct {
+	// FieldTierMetadata: Field tier metadata on the property
+	FieldTierMetadata *GoogleCloudDocumentaiUiv1beta3FieldTierMetadata `json:"fieldTierMetadata,omitempty"`
+	// HumanReviewLabelingMetadata: Human review labeling config on the entity.
+	HumanReviewLabelingMetadata *GoogleCloudDocumentaiUiv1beta3HumanReviewLabelingMetadata `json:"humanReviewLabelingMetadata,omitempty"`
+	// HumanReviewMetadata: Human review config on the entity.
+	HumanReviewMetadata *GoogleCloudDocumentaiUiv1beta3HumanReviewValidationMetadata `json:"humanReviewMetadata,omitempty"`
+	// Inactive: Whether the entity type should be considered inactive.
+	Inactive bool `json:"inactive,omitempty"`
+	// SchemaEditabilityMetadata: Schema editability metadata on the entity.
+	SchemaEditabilityMetadata *GoogleCloudDocumentaiUiv1beta3SchemaEditabilityMetadata `json:"schemaEditabilityMetadata,omitempty"`
+	// SchemaInferenceMetadata: Schema inference metadata on the entity.
+	SchemaInferenceMetadata *GoogleCloudDocumentaiUiv1beta3SchemaInferenceMetadata `json:"schemaInferenceMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldTierMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldTierMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3EntityTypeMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3EntityTypeMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionMetadata: Metadata of
@@ -1181,6 +1430,102 @@ type GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse struct {
 
 func (s GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3EvaluationMetrics: Evaluation metrics, either
+// in aggregate or about a specific entity.
+type GoogleCloudDocumentaiUiv1beta3EvaluationMetrics struct {
+	// F1Score: The calculated f1 score.
+	F1Score float64 `json:"f1Score,omitempty"`
+	// FalseNegativesCount: The amount of false negatives.
+	FalseNegativesCount int64 `json:"falseNegativesCount,omitempty"`
+	// FalsePositivesCount: The amount of false positives.
+	FalsePositivesCount int64 `json:"falsePositivesCount,omitempty"`
+	// GroundTruthDocumentCount: The amount of documents with a ground truth
+	// occurrence.
+	GroundTruthDocumentCount int64 `json:"groundTruthDocumentCount,omitempty"`
+	// GroundTruthOccurrencesCount: The amount of occurrences in ground truth
+	// documents.
+	GroundTruthOccurrencesCount int64 `json:"groundTruthOccurrencesCount,omitempty"`
+	// Precision: The calculated precision.
+	Precision float64 `json:"precision,omitempty"`
+	// PredictedDocumentCount: The amount of documents with a predicted occurrence.
+	PredictedDocumentCount int64 `json:"predictedDocumentCount,omitempty"`
+	// PredictedOccurrencesCount: The amount of occurrences in predicted documents.
+	PredictedOccurrencesCount int64 `json:"predictedOccurrencesCount,omitempty"`
+	// Recall: The calculated recall.
+	Recall float64 `json:"recall,omitempty"`
+	// TotalDocumentsCount: The amount of documents that had an occurrence of this
+	// label.
+	TotalDocumentsCount int64 `json:"totalDocumentsCount,omitempty"`
+	// TruePositivesCount: The amount of true positives.
+	TruePositivesCount int64 `json:"truePositivesCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "F1Score") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "F1Score") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3EvaluationMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3EvaluationMetrics
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3EvaluationMetrics) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3EvaluationMetrics
+	var s1 struct {
+		F1Score   gensupport.JSONFloat64 `json:"f1Score"`
+		Precision gensupport.JSONFloat64 `json:"precision"`
+		Recall    gensupport.JSONFloat64 `json:"recall"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.F1Score = float64(s1.F1Score)
+	s.Precision = float64(s1.Precision)
+	s.Recall = float64(s1.Recall)
+	return nil
+}
+
+// GoogleCloudDocumentaiUiv1beta3EvaluationReference: Gives a short summary of
+// an evaluation, and links to the evaluation itself.
+type GoogleCloudDocumentaiUiv1beta3EvaluationReference struct {
+	// AggregateMetrics: An aggregate of the statistics for the evaluation with
+	// fuzzy matching on.
+	AggregateMetrics *GoogleCloudDocumentaiUiv1beta3EvaluationMetrics `json:"aggregateMetrics,omitempty"`
+	// AggregateMetricsExact: An aggregate of the statistics for the evaluation
+	// with fuzzy matching off.
+	AggregateMetricsExact *GoogleCloudDocumentaiUiv1beta3EvaluationMetrics `json:"aggregateMetricsExact,omitempty"`
+	// Evaluation: The resource name of the evaluation.
+	Evaluation string `json:"evaluation,omitempty"`
+	// Operation: The resource name of the Long Running Operation for the
+	// evaluation.
+	Operation string `json:"operation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AggregateMetrics") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AggregateMetrics") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3EvaluationReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3EvaluationReference
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1322,6 +1667,144 @@ func (s GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiUiv1beta3FieldExtractionMetadata: Metadata for how this
+// field value is extracted.
+type GoogleCloudDocumentaiUiv1beta3FieldExtractionMetadata struct {
+	// EntityQuery: Entity query config.
+	EntityQuery *GoogleCloudDocumentaiUiv1beta3FieldExtractionMetadataEntityQuery `json:"entityQuery,omitempty"`
+	// SummaryOptions: Summary options config.
+	SummaryOptions *GoogleCloudDocumentaiUiv1beta3SummaryOptions `json:"summaryOptions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EntityQuery") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntityQuery") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3FieldExtractionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3FieldExtractionMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3FieldExtractionMetadataEntityQuery: Message
+// for entity query.
+type GoogleCloudDocumentaiUiv1beta3FieldExtractionMetadataEntityQuery struct {
+	// UserEntityQuery: The original entity query inputed by the user.
+	UserEntityQuery string `json:"userEntityQuery,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UserEntityQuery") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UserEntityQuery") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3FieldExtractionMetadataEntityQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3FieldExtractionMetadataEntityQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3FieldTierMetadata: Metadata for the field tier
+// of a property.
+type GoogleCloudDocumentaiUiv1beta3FieldTierMetadata struct {
+	// TierLevel: Integer that indicates the tier of a property. e.g. Invoice has
+	// entities that are classified as tier 1 which is the most important, while
+	// tier 2 and tier 3 less so. This attribute can be used to filter schema
+	// attributes before running eval. e.g. compute F1 score for only tier 1
+	// entities. If not present this attribute should be inferred as 1.
+	TierLevel int64 `json:"tierLevel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TierLevel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TierLevel") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3FieldTierMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3FieldTierMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3HumanReviewLabelingMetadata: Metadata for
+// human review labeling config.
+type GoogleCloudDocumentaiUiv1beta3HumanReviewLabelingMetadata struct {
+	// EnableNormalizationEditing: Whether to enable normalization editing.
+	EnableNormalizationEditing bool `json:"enableNormalizationEditing,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableNormalizationEditing")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableNormalizationEditing") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3HumanReviewLabelingMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3HumanReviewLabelingMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3HumanReviewValidationMetadata: Metadata for
+// Human Review config.
+type GoogleCloudDocumentaiUiv1beta3HumanReviewValidationMetadata struct {
+	// ConfidenceThreshold: The confidence threshold if human review validation is
+	// enabled.
+	ConfidenceThreshold float64 `json:"confidenceThreshold,omitempty"`
+	// EnableValidation: Whether to enable human review validation.
+	EnableValidation bool `json:"enableValidation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConfidenceThreshold") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConfidenceThreshold") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3HumanReviewValidationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3HumanReviewValidationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3HumanReviewValidationMetadata) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3HumanReviewValidationMetadata
+	var s1 struct {
+		ConfidenceThreshold gensupport.JSONFloat64 `json:"confidenceThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ConfidenceThreshold = float64(s1.ConfidenceThreshold)
+	return nil
+}
+
 // GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata: Metadata of the
 // import document operation.
 type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata struct {
@@ -1459,6 +1942,335 @@ type GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionResponse struct {
 
 func (s GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3Processor: The first-class citizen for
+// Document AI. Each processor defines how to extract structural information
+// from a document.
+type GoogleCloudDocumentaiUiv1beta3Processor struct {
+	// ActiveSchemaVersion: Optional. SchemaVersion used by the Processor. It is
+	// the same as Processor's DatasetSchema.schema_version Format is
+	// `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{sch
+	// ema_version}
+	ActiveSchemaVersion string `json:"activeSchemaVersion,omitempty"`
+	// CreateTime: Output only. The time the processor was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DefaultProcessorVersion: The default processor version.
+	DefaultProcessorVersion string `json:"defaultProcessorVersion,omitempty"`
+	// DisplayName: The display name of the processor.
+	DisplayName string `json:"displayName,omitempty"`
+	// KmsKeyName: The KMS key (https://cloud.google.com/security-key-management)
+	// used for encryption and decryption in CMEK scenarios.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// Name: Output only. Immutable. The resource name of the processor. Format:
+	// `projects/{project}/locations/{location}/processors/{processor}`
+	Name string `json:"name,omitempty"`
+	// ProcessEndpoint: Output only. Immutable. The http endpoint that can be
+	// called to invoke processing.
+	ProcessEndpoint string `json:"processEndpoint,omitempty"`
+	// ProcessorVersionAliases: Output only. The processor version aliases.
+	ProcessorVersionAliases []*GoogleCloudDocumentaiUiv1beta3ProcessorVersionAlias `json:"processorVersionAliases,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+	// State: Output only. The state of the processor.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The processor is in an unspecified state.
+	//   "ENABLED" - The processor is enabled, i.e., has an enabled version which
+	// can currently serve processing requests and all the feature dependencies
+	// have been successfully initialized.
+	//   "DISABLED" - The processor is disabled.
+	//   "ENABLING" - The processor is being enabled, will become `ENABLED` if
+	// successful.
+	//   "DISABLING" - The processor is being disabled, will become `DISABLED` if
+	// successful.
+	//   "CREATING" - The processor is being created, will become either `ENABLED`
+	// (for successful creation) or `FAILED` (for failed ones). Once a processor is
+	// in this state, it can then be used for document processing, but the feature
+	// dependencies of the processor might not be fully created yet.
+	//   "FAILED" - The processor failed during creation or initialization of
+	// feature dependencies. The user should delete the processor and recreate one
+	// as all the functionalities of the processor are disabled.
+	//   "DELETING" - The processor is being deleted, will be removed if
+	// successful.
+	State string `json:"state,omitempty"`
+	// Type: The processor type, such as: `OCR_PROCESSOR`, `INVOICE_PROCESSOR`. To
+	// get a list of processor types, see FetchProcessorTypes.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActiveSchemaVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActiveSchemaVersion") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3Processor) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3Processor
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3ProcessorVersion: A processor version is an
+// implementation of a processor. Each processor can have multiple versions,
+// pretrained by Google internally or uptrained by the customer. A processor
+// can only have one default version at a time. Its document-processing
+// behavior is defined by that version.
+type GoogleCloudDocumentaiUiv1beta3ProcessorVersion struct {
+	// CreateTime: Output only. The time the processor version was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DeploymentAllowed: Output only. Denotes that this `ProcessorVersion` can be
+	// deployed and undeployed.
+	DeploymentAllowed bool `json:"deploymentAllowed,omitempty"`
+	// DeprecationInfo: Output only. If set, information about the eventual
+	// deprecation of this version.
+	DeprecationInfo *GoogleCloudDocumentaiUiv1beta3ProcessorVersionDeprecationInfo `json:"deprecationInfo,omitempty"`
+	// DisplayName: The display name of the processor version.
+	DisplayName string `json:"displayName,omitempty"`
+	// DocumentSchema: Output only. The schema of the processor version. Describes
+	// the output.
+	DocumentSchema *GoogleCloudDocumentaiUiv1beta3DocumentSchema `json:"documentSchema,omitempty"`
+	// GenAiModelInfo: Output only. Information about Generative AI model-based
+	// processor versions.
+	GenAiModelInfo *GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfo `json:"genAiModelInfo,omitempty"`
+	// GoogleManaged: Output only. Denotes that this `ProcessorVersion` is managed
+	// by Google.
+	GoogleManaged bool `json:"googleManaged,omitempty"`
+	// KmsKeyName: Output only. The KMS key name used for encryption.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// KmsKeyVersionName: Output only. The KMS key version with which data is
+	// encrypted.
+	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
+	// LatestEvaluation: Output only. The most recently invoked evaluation for the
+	// processor version.
+	LatestEvaluation *GoogleCloudDocumentaiUiv1beta3EvaluationReference `json:"latestEvaluation,omitempty"`
+	// ModelType: Output only. The model type of this processor version.
+	//
+	// Possible values:
+	//   "MODEL_TYPE_UNSPECIFIED" - The processor version has unspecified model
+	// type.
+	//   "MODEL_TYPE_GENERATIVE" - The processor version has generative model type.
+	//   "MODEL_TYPE_CUSTOM" - The processor version has custom model type.
+	ModelType string `json:"modelType,omitempty"`
+	// Name: Identifier. The resource name of the processor version. Format:
+	// `projects/{project}/locations/{location}/processors/{processor}/processorVers
+	// ions/{processor_version}`
+	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+	// Schema: The schema of the processor version. Describes the output.
+	Schema *GoogleCloudDocumentaiUiv1beta3Schema `json:"schema,omitempty"`
+	// State: Output only. The state of the processor version.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The processor version is in an unspecified state.
+	//   "DEPLOYED" - The processor version is deployed and can be used for
+	// processing.
+	//   "DEPLOYING" - The processor version is being deployed.
+	//   "UNDEPLOYED" - The processor version is not deployed and cannot be used
+	// for processing.
+	//   "UNDEPLOYING" - The processor version is being undeployed.
+	//   "CREATING" - The processor version is being created.
+	//   "DELETING" - The processor version is being deleted.
+	//   "FAILED" - The processor version failed and is in an indeterminate state.
+	//   "IMPORTING" - The processor version is being imported.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3ProcessorVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ProcessorVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3ProcessorVersionAlias: Contains the alias and
+// the aliased resource name of processor version.
+type GoogleCloudDocumentaiUiv1beta3ProcessorVersionAlias struct {
+	// Alias: The alias in the form of `processor_version` resource name.
+	Alias string `json:"alias,omitempty"`
+	// ProcessorVersion: The resource name of aliased processor version.
+	ProcessorVersion string `json:"processorVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Alias") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Alias") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3ProcessorVersionAlias) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ProcessorVersionAlias
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3ProcessorVersionDeprecationInfo: Information
+// about the upcoming deprecation of this processor version.
+type GoogleCloudDocumentaiUiv1beta3ProcessorVersionDeprecationInfo struct {
+	// DeprecationTime: The time at which this processor version will be
+	// deprecated.
+	DeprecationTime string `json:"deprecationTime,omitempty"`
+	// ReplacementProcessorVersion: If set, the processor version that will be used
+	// as a replacement.
+	ReplacementProcessorVersion string `json:"replacementProcessorVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeprecationTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeprecationTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3ProcessorVersionDeprecationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ProcessorVersionDeprecationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfo: Information
+// about Generative AI model-based processor versions.
+type GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfo struct {
+	// CustomGenAiModelInfo: Information for a custom Generative AI model created
+	// by the user.
+	CustomGenAiModelInfo *GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfoCustomGenAiModelInfo `json:"customGenAiModelInfo,omitempty"`
+	// FoundationGenAiModelInfo: Information for a pretrained Google-managed
+	// foundation model.
+	FoundationGenAiModelInfo *GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo `json:"foundationGenAiModelInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomGenAiModelInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomGenAiModelInfo") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfoCustomGenAiModelI
+// nfo: Information for a custom Generative AI model created by the user. These
+// are created with `Create New Version` in either the `Call foundation model`
+// or `Fine tuning` tabs.
+type GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfoCustomGenAiModelInfo struct {
+	// BaseProcessorVersionId: The base processor version ID for the custom model.
+	BaseProcessorVersionId string `json:"baseProcessorVersionId,omitempty"`
+	// CustomModelType: The type of custom model created by the user.
+	//
+	// Possible values:
+	//   "CUSTOM_MODEL_TYPE_UNSPECIFIED" - The model type is unspecified.
+	//   "VERSIONED_FOUNDATION" - The model is a versioned foundation model.
+	//   "FINE_TUNED" - The model is a finetuned foundation model.
+	CustomModelType string `json:"customModelType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseProcessorVersionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseProcessorVersionId") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfoCustomGenAiModelInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfoCustomGenAiModelInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfoFoundationGenAiMo
+// delInfo: Information for a pretrained Google-managed foundation model.
+type GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo struct {
+	// FinetuningAllowed: Whether finetuning is allowed for this base processor
+	// version.
+	FinetuningAllowed bool `json:"finetuningAllowed,omitempty"`
+	// MinTrainLabeledDocuments: The minimum number of labeled documents in the
+	// training dataset required for finetuning.
+	MinTrainLabeledDocuments int64 `json:"minTrainLabeledDocuments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FinetuningAllowed") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FinetuningAllowed") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3PropertyMetadata: Metadata about a property.
+type GoogleCloudDocumentaiUiv1beta3PropertyMetadata struct {
+	// FieldExtractionMetadata: Field extraction metadata on the property.
+	FieldExtractionMetadata *GoogleCloudDocumentaiUiv1beta3FieldExtractionMetadata `json:"fieldExtractionMetadata,omitempty"`
+	// FieldTierMetadata: Field tier metadata on the property
+	FieldTierMetadata *GoogleCloudDocumentaiUiv1beta3FieldTierMetadata `json:"fieldTierMetadata,omitempty"`
+	// HumanReviewLabelingMetadata: Human review labeling config on the property.
+	HumanReviewLabelingMetadata *GoogleCloudDocumentaiUiv1beta3HumanReviewLabelingMetadata `json:"humanReviewLabelingMetadata,omitempty"`
+	// HumanReviewMetadata: Human review validation config on the property.
+	HumanReviewMetadata *GoogleCloudDocumentaiUiv1beta3HumanReviewValidationMetadata `json:"humanReviewMetadata,omitempty"`
+	// Inactive: Whether the property should be considered as "inactive".
+	Inactive bool `json:"inactive,omitempty"`
+	// SchemaEditabilityMetadata: Schema editability metadata on the property.
+	SchemaEditabilityMetadata *GoogleCloudDocumentaiUiv1beta3SchemaEditabilityMetadata `json:"schemaEditabilityMetadata,omitempty"`
+	// SchemaInferenceMetadata: Schema inference metadata on the property.
+	SchemaInferenceMetadata *GoogleCloudDocumentaiUiv1beta3SchemaInferenceMetadata `json:"schemaInferenceMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldExtractionMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldExtractionMetadata") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3PropertyMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3PropertyMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1673,6 +2485,166 @@ func (s GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponseSelectedDocument) M
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiUiv1beta3Schema: The schema defines the output of the
+// processed document by a processor.
+type GoogleCloudDocumentaiUiv1beta3Schema struct {
+	// Description: Description of the schema.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Display name to show to users.
+	DisplayName string `json:"displayName,omitempty"`
+	// EntityTypes: Entity types of the schema.
+	EntityTypes []*GoogleCloudDocumentaiUiv1beta3SchemaEntityType `json:"entityTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3Schema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3Schema
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3SchemaEditabilityMetadata: Metadata that
+// specifies whether a label is editable and reasons why. These fields are
+// read-only. Changing these fields has no impact on the backend.
+type GoogleCloudDocumentaiUiv1beta3SchemaEditabilityMetadata struct {
+	// Editable: Explicit flag that controls whether the label is editable.
+	Editable bool `json:"editable,omitempty"`
+	// ProcessorVersions: Full resource name of processor versions that contain
+	// this label. e.g.
+	// `projects/{project}/locations/{location}/processors/{processor}/processorVers
+	// ions/{processorVersion}`
+	ProcessorVersions []string `json:"processorVersions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Editable") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Editable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3SchemaEditabilityMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3SchemaEditabilityMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3SchemaEntityType: EntityType is the wrapper of
+// a label of the corresponding model with detailed attributes and limitations
+// for entity-based processors. Multiple types can also compose a dependency
+// tree to represent nested types.
+type GoogleCloudDocumentaiUiv1beta3SchemaEntityType struct {
+	BaseType string `json:"baseType,omitempty"`
+	// Description: Description of the entity type.
+	Description string `json:"description,omitempty"`
+	// EnumValues: If specified, lists all the possible values for this entity.
+	EnumValues []string `json:"enumValues,omitempty"`
+	// Hide: If the entity type is hidden in the schema. This provides the
+	// functionality to temporally "disable" an entity without deleting it.
+	Hide bool `json:"hide,omitempty"`
+	// Method: Specifies how the entity's value is obtained.
+	//
+	// Possible values:
+	//   "METHOD_UNSPECIFIED" - Unspecified method. It defaults to `EXTRACT`.
+	//   "EXTRACT" - The entity's value is directly extracted as-is from the
+	// document text.
+	//   "DERIVE" - The entity's value is derived through inference and is not
+	// necessarily an exact text extraction from the document.
+	Method string `json:"method,omitempty"`
+	// OccurrenceType: Occurrence type limits the number of times an entity type
+	// appears in the document.
+	//
+	// Possible values:
+	//   "OCCURRENCE_TYPE_UNSPECIFIED" - Unspecified occurrence type.
+	//   "OPTIONAL_ONCE" - The entity type will appear zero times or once.
+	//   "OPTIONAL_MULTIPLE" - The entity type will appear zero or multiple times.
+	//   "REQUIRED_ONCE" - The entity type will only appear exactly once.
+	//   "REQUIRED_MULTIPLE" - The entity type will appear once or more times.
+	OccurrenceType string `json:"occurrenceType,omitempty"`
+	// Properties: Describing the nested structure of an entity. An EntityType may
+	// consist of several other EntityTypes. For example, in a document there can
+	// be an EntityType `ID`, which consists of EntityType `name` and `address`,
+	// with corresponding attributes, such as TEXT for both types and ONCE for
+	// occurrence types.
+	Properties []*GoogleCloudDocumentaiUiv1beta3SchemaEntityType `json:"properties,omitempty"`
+	// Source: Source of this entity type.
+	//
+	// Possible values:
+	//   "SOURCE_UNSPECIFIED" - Unspecified source.
+	//   "PREDEFINED" - The entity type is in the predefined schema of a pretrained
+	// version of a processor.
+	//   "USER_INPUT" - The entity type is added by the users either: - during an
+	// uptraining of an existing processor, or - during the process of creating a
+	// customized processor.
+	Source string `json:"source,omitempty"`
+	// Type: Name of the type. It must satisfy the following constraints: 1. Must
+	// be unique within the set of same level types (with case-insensitive match).
+	// 2. Maximum 64 characters. 3. Must start with a letter. 4. Allowed
+	// characters: ASCII letters [a-zA-Z], ASCII digits [0-9], or one of the
+	// following punctuation characters: * underscore '_' (recommended) * hyphen
+	// '-' (allowed, not recommended) * colon ':' (allowed, not recommended) NOTE:
+	// Whitespace characters are not allowed. 5. Cannot end with a punctuation
+	// character. 6. Cannot contain the following restricted strings: "google",
+	// "DocumentAI" (case-insensitive match). 7. A slash character '/' is reserved
+	// as a separator in flattened representations of nested entity types (e.g.,
+	// "line_item/amount") in which case each part (e.g., "line_item", "amount")
+	// must comply with the rules defined above. We recommend using the snake case
+	// ("snake_case") in entity type names.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3SchemaEntityType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3SchemaEntityType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3SchemaInferenceMetadata: Metadata for schema
+// inference. Only used on dataset.schema for schema inference, can be safely
+// ignored elsewhere.
+type GoogleCloudDocumentaiUiv1beta3SchemaInferenceMetadata struct {
+	// Inferred: True if is inferred by schema inference.
+	Inferred bool `json:"inferred,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Inferred") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Inferred") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3SchemaInferenceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3SchemaInferenceMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata: The
 // long-running operation metadata for the SetDefaultProcessorVersion method.
 type GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata struct {
@@ -1699,6 +2671,42 @@ func (s GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata) Marsha
 // GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionResponse: Response
 // message for the SetDefaultProcessorVersion method.
 type GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionResponse struct {
+}
+
+// GoogleCloudDocumentaiUiv1beta3SummaryOptions: Metadata for document
+// summarization.
+type GoogleCloudDocumentaiUiv1beta3SummaryOptions struct {
+	// Format: The format the summary should be in.
+	//
+	// Possible values:
+	//   "FORMAT_UNSPECIFIED" - Default.
+	//   "PARAGRAPH" - Format the output in paragraphs.
+	//   "BULLETS" - Format the output in bullets.
+	Format string `json:"format,omitempty"`
+	// Length: How long the summary should be.
+	//
+	// Possible values:
+	//   "LENGTH_UNSPECIFIED" - Default.
+	//   "BRIEF" - A brief summary of one or two sentences.
+	//   "MODERATE" - A paragraph-length summary.
+	//   "COMPREHENSIVE" - The longest option available.
+	Length string `json:"length,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Format") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Format") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3SummaryOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3SummaryOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata: The metadata
@@ -1880,6 +2888,29 @@ type GoogleCloudDocumentaiUiv1beta3UpdateLabelerPoolOperationMetadata struct {
 
 func (s GoogleCloudDocumentaiUiv1beta3UpdateLabelerPoolOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3UpdateLabelerPoolOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3UpdateProcessorVersionMetadata: The
+// long-running operation metadata for the UpdateProcessorVersion method.
+type GoogleCloudDocumentaiUiv1beta3UpdateProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata for the long-running operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommonMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3UpdateProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3UpdateProcessorVersionMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2915,9 +3946,12 @@ func (s GoogleCloudDocumentaiV1DocumentEntityValidationOutput) MarshalJSON() ([]
 // GoogleCloudDocumentaiV1DocumentEntityValidationOutputValidationResult:
 // Validation result for a single validation rule.
 type GoogleCloudDocumentaiV1DocumentEntityValidationOutputValidationResult struct {
+	// Rule: Optional. The name of the rule resource that is used for validation.
+	// Format: `projects/{project}/locations/{location}/rules/{rule}`
+	Rule string `json:"rule,omitempty"`
 	// RuleDescription: The description of the validation rule.
 	RuleDescription string `json:"ruleDescription,omitempty"`
-	// RuleName: The name of the validation rule.
+	// RuleName: The display name of the validation rule.
 	RuleName string `json:"ruleName,omitempty"`
 	// ValidationDetails: The detailed information of the running the validation
 	// process using the entity from the document based on the validation rule.
@@ -2933,15 +3967,15 @@ type GoogleCloudDocumentaiV1DocumentEntityValidationOutputValidationResult struc
 	//   "VALIDATION_RESULT_TYPE_NOT_APPLICABLE" - The validation is not
 	// applicable.
 	ValidationResultType string `json:"validationResultType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RuleDescription") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Rule") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RuleDescription") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Rule") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4404,6 +5438,28 @@ func (s GoogleCloudDocumentaiV1DocumentTextChange) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1Documents: A set of inline documents.
+type GoogleCloudDocumentaiV1Documents struct {
+	// Documents: The list of documents.
+	Documents []*GoogleCloudDocumentaiV1Document `json:"documents,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Documents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Documents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1Documents) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1Documents
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1EnableProcessorMetadata: The long-running operation
 // metadata for the EnableProcessor method.
 type GoogleCloudDocumentaiV1EnableProcessorMetadata struct {
@@ -4882,6 +5938,94 @@ func (s GoogleCloudDocumentaiV1GcsPrefix) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1GenerateSchemaVersionRequest: Request message for
+// GenerateSchemaVersion.
+type GoogleCloudDocumentaiV1GenerateSchemaVersionRequest struct {
+	// BaseSchemaVersion: The base schema version name to use for the schema
+	// generation. Format:
+	// `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{sch
+	// ema_version}`
+	BaseSchemaVersion string `json:"baseSchemaVersion,omitempty"`
+	// GcsDocuments: The set of documents placed on Cloud Storage.
+	GcsDocuments *GoogleCloudDocumentaiV1GcsDocuments `json:"gcsDocuments,omitempty"`
+	// GcsPrefix: The common prefix of documents placed on Cloud Storage.
+	GcsPrefix *GoogleCloudDocumentaiV1GcsPrefix `json:"gcsPrefix,omitempty"`
+	// GenerateSchemaVersionParams: Optional. User specified parameters for the
+	// schema generation.
+	GenerateSchemaVersionParams *GoogleCloudDocumentaiV1GenerateSchemaVersionRequestGenerateSchemaVersionParams `json:"generateSchemaVersionParams,omitempty"`
+	// InlineDocuments: The set of documents specified inline.
+	InlineDocuments *GoogleCloudDocumentaiV1Documents `json:"inlineDocuments,omitempty"`
+	// RawDocuments: The set of raw documents.
+	RawDocuments *GoogleCloudDocumentaiV1RawDocuments `json:"rawDocuments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseSchemaVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseSchemaVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1GenerateSchemaVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1GenerateSchemaVersionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1GenerateSchemaVersionRequestGenerateSchemaVersionParam
+// s: The parameters for the schema generation.
+type GoogleCloudDocumentaiV1GenerateSchemaVersionRequestGenerateSchemaVersionParams struct {
+	// History: Optional. Previous prompt-answers in a chronological order.
+	History *GoogleCloudDocumentaiV1SchemaGenerationHistory `json:"history,omitempty"`
+	// Prompt: Optional. The prompt used for the schema generation.
+	Prompt string `json:"prompt,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "History") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "History") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1GenerateSchemaVersionRequestGenerateSchemaVersionParams) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1GenerateSchemaVersionRequestGenerateSchemaVersionParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1GenerateSchemaVersionResponse: Response message for
+// GenerateSchemaVersion.
+type GoogleCloudDocumentaiV1GenerateSchemaVersionResponse struct {
+	// SchemaVersion: The schema version generated by the model.
+	SchemaVersion *GoogleCloudDocumentaiV1SchemaVersion `json:"schemaVersion,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "SchemaVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SchemaVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1GenerateSchemaVersionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1GenerateSchemaVersionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1HumanReviewStatus: The status of human review on a
 // processed document.
 type GoogleCloudDocumentaiV1HumanReviewStatus struct {
@@ -5035,6 +6179,97 @@ type GoogleCloudDocumentaiV1ListProcessorsResponse struct {
 
 func (s GoogleCloudDocumentaiV1ListProcessorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1ListProcessorsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1ListSchemaVersionsResponse: Response message for
+// ListSchemaVersions.
+type GoogleCloudDocumentaiV1ListSchemaVersionsResponse struct {
+	// NextPageToken: Points to the next SchemaVersion, otherwise empty.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SchemaVersions: The list of SchemaVersions.
+	SchemaVersions []*GoogleCloudDocumentaiV1SchemaVersion `json:"schemaVersions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1ListSchemaVersionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1ListSchemaVersionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1ListSchemasResponse: Response message for
+// ListSchemas.
+type GoogleCloudDocumentaiV1ListSchemasResponse struct {
+	// NextPageToken: Points to the next Schema, otherwise empty.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Schemas: The list of Schemas.
+	Schemas []*GoogleCloudDocumentaiV1NextSchema `json:"schemas,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1ListSchemasResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1ListSchemasResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1NextSchema: NextSchema is a collection of
+// SchemaVersions.
+type GoogleCloudDocumentaiV1NextSchema struct {
+	// CreateTime: Output only. The time when the Schema was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Optional. The user-defined name of the Schema.
+	DisplayName string `json:"displayName,omitempty"`
+	// Labels: Optional. The GCP labels for the Schema.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The resource name of the Schema. Format:
+	// `projects/{project}/locations/{location}/schemas/{schema}`
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. The time when the Schema was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1NextSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1NextSchema
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5248,6 +6483,12 @@ func (s GoogleCloudDocumentaiV1ProcessOptionsIndividualPageSelector) MarshalJSON
 type GoogleCloudDocumentaiV1ProcessOptionsLayoutConfig struct {
 	// ChunkingConfig: Optional. Config for chunking in layout parser processor.
 	ChunkingConfig *GoogleCloudDocumentaiV1ProcessOptionsLayoutConfigChunkingConfig `json:"chunkingConfig,omitempty"`
+	// EnableImageAnnotation: Optional. Whether to include image annotations in
+	// layout parser response.
+	EnableImageAnnotation bool `json:"enableImageAnnotation,omitempty"`
+	// EnableTableAnnotation: Optional. Whether to include table annotations in
+	// layout parser response.
+	EnableTableAnnotation bool `json:"enableTableAnnotation,omitempty"`
 	// ReturnBoundingBoxes: Optional. Whether to include bounding boxes in layout
 	// parser processor response.
 	ReturnBoundingBoxes bool `json:"returnBoundingBoxes,omitempty"`
@@ -5376,6 +6617,11 @@ func (s GoogleCloudDocumentaiV1ProcessResponse) MarshalJSON() ([]byte, error) {
 // Each processor defines how to extract structural information from a
 // document.
 type GoogleCloudDocumentaiV1Processor struct {
+	// ActiveSchemaVersion: Optional. SchemaVersion used by the Processor. It is
+	// the same as Processor's DatasetSchema.schema_version Format is
+	// `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{sch
+	// ema_version}
+	ActiveSchemaVersion string `json:"activeSchemaVersion,omitempty"`
 	// CreateTime: Output only. The time the processor was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DefaultProcessorVersion: The default processor version.
@@ -5425,15 +6671,15 @@ type GoogleCloudDocumentaiV1Processor struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "ActiveSchemaVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ActiveSchemaVersion") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5794,6 +7040,28 @@ func (s GoogleCloudDocumentaiV1RawDocument) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1RawDocuments: Specifies a set of raw documents.
+type GoogleCloudDocumentaiV1RawDocuments struct {
+	// Documents: Specifies raw document content and mime type.
+	Documents []*GoogleCloudDocumentaiV1RawDocument `json:"documents,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Documents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Documents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1RawDocuments) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1RawDocuments
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1ReviewDocumentOperationMetadata: The long-running
 // operation metadata for the ReviewDocument method.
 type GoogleCloudDocumentaiV1ReviewDocumentOperationMetadata struct {
@@ -5885,6 +7153,92 @@ type GoogleCloudDocumentaiV1ReviewDocumentResponse struct {
 
 func (s GoogleCloudDocumentaiV1ReviewDocumentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1ReviewDocumentResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1SchemaGenerationHistory: The history of schema
+// generation iterations.
+type GoogleCloudDocumentaiV1SchemaGenerationHistory struct {
+	// Iterations: Required. Previous prompt-answers in a chronological order.
+	Iterations []*GoogleCloudDocumentaiV1SchemaGenerationIteration `json:"iterations,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Iterations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Iterations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1SchemaGenerationHistory) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1SchemaGenerationHistory
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1SchemaGenerationIteration: A single iteration of the
+// schema generation.
+type GoogleCloudDocumentaiV1SchemaGenerationIteration struct {
+	// AdjustedSchema: Optional. The previous schema version adjusted by the model.
+	AdjustedSchema *GoogleCloudDocumentaiV1SchemaVersion `json:"adjustedSchema,omitempty"`
+	// GeneratedSchema: Required. The schema version generated by the model.
+	GeneratedSchema *GoogleCloudDocumentaiV1SchemaVersion `json:"generatedSchema,omitempty"`
+	// Prompt: Optional. The prompt used for the iteration.
+	Prompt string `json:"prompt,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdjustedSchema") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdjustedSchema") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1SchemaGenerationIteration) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1SchemaGenerationIteration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1SchemaVersion: SchemaVersion is a version of the
+// Schema which is created in SchemaGroup.
+type GoogleCloudDocumentaiV1SchemaVersion struct {
+	// CreateTime: Output only. The time when the SchemaVersion was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Optional. The user-defined name of the SchemaVersion.
+	DisplayName string `json:"displayName,omitempty"`
+	// Labels: Optional. The GCP labels for the SchemaVersion.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The resource name of the SchemaVersion. Format:
+	// `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{sch
+	// ema_version}`
+	Name string `json:"name,omitempty"`
+	// Schema: Required. The schema of the SchemaVersion.
+	Schema *GoogleCloudDocumentaiV1DocumentSchema `json:"schema,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1SchemaVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1SchemaVersion
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6694,6 +8048,198 @@ func (s GoogleCloudDocumentaiV1beta3DocumentIdUnmanagedDocumentId) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta3DocumentSchema: The schema defines the output of
+// the processed document by a processor.
+type GoogleCloudDocumentaiV1beta3DocumentSchema struct {
+	// Description: Description of the schema.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Display name to show to users.
+	DisplayName string `json:"displayName,omitempty"`
+	// EntityTypes: Entity types of the schema.
+	EntityTypes []*GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType `json:"entityTypes,omitempty"`
+	// Metadata: Metadata of the schema.
+	Metadata *GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata `json:"metadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3DocumentSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentSchema
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType: EntityType is the
+// wrapper of a label of the corresponding model with detailed attributes and
+// limitations for entity-based processors. Multiple types can also compose a
+// dependency tree to represent nested types.
+type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType struct {
+	// BaseTypes: The entity type that this type is derived from. For now, one and
+	// only one should be set.
+	BaseTypes []string `json:"baseTypes,omitempty"`
+	// Description: The description of the entity type. Could be used to provide
+	// more information about the entity type for model calls.
+	Description string `json:"description,omitempty"`
+	// DisplayName: User defined name for the type.
+	DisplayName string `json:"displayName,omitempty"`
+	// EntityTypeMetadata: Metadata for the entity type.
+	EntityTypeMetadata *GoogleCloudDocumentaiV1beta3EntityTypeMetadata `json:"entityTypeMetadata,omitempty"`
+	// EnumValues: If specified, lists all the possible values for this entity.
+	// This should not be more than a handful of values. If the number of values is
+	// >10 or could change frequently use the `EntityType.value_ontology` field and
+	// specify a list of all possible values in a value ontology file.
+	EnumValues *GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues `json:"enumValues,omitempty"`
+	// Name: Name of the type. It must be unique within the schema file and cannot
+	// be a "Common Type". The following naming conventions are used: - Use
+	// `snake_casing`. - Name matching is case-sensitive. - Maximum 64 characters.
+	// - Must start with a letter. - Allowed characters: ASCII letters
+	// `[a-z0-9_-]`. (For backward compatibility internal infrastructure and
+	// tooling can handle any ascii character.) - The `/` is sometimes used to
+	// denote a property of a type. For example `line_item/amount`. This convention
+	// is deprecated, but will still be honored for backward compatibility.
+	Name string `json:"name,omitempty"`
+	// Properties: Description the nested structure, or composition of an entity.
+	Properties []*GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty `json:"properties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues: Defines the
+// a list of enum values.
+type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues struct {
+	// Values: The individual values that this enum values type can include.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty: Defines
+// properties that can be part of the entity type.
+type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty struct {
+	// Description: The description of the property. Could be used to provide more
+	// information about the property for model calls.
+	Description string `json:"description,omitempty"`
+	// DisplayName: User defined name for the property.
+	DisplayName string `json:"displayName,omitempty"`
+	// Method: Specifies how the entity's value is obtained.
+	//
+	// Possible values:
+	//   "METHOD_UNSPECIFIED" - Unspecified method. It defaults to `EXTRACT`.
+	//   "EXTRACT" - The entity's value is directly extracted as-is from the
+	// document text.
+	//   "DERIVE" - The entity's value is derived through inference and is not
+	// necessarily an exact text extraction from the document.
+	Method string `json:"method,omitempty"`
+	// Name: The name of the property. Follows the same guidelines as the
+	// EntityType name.
+	Name string `json:"name,omitempty"`
+	// OccurrenceType: Occurrence type limits the number of instances an entity
+	// type appears in the document.
+	//
+	// Possible values:
+	//   "OCCURRENCE_TYPE_UNSPECIFIED" - Unspecified occurrence type.
+	//   "OPTIONAL_ONCE" - There will be zero or one instance of this entity type.
+	// The same entity instance may be mentioned multiple times.
+	//   "OPTIONAL_MULTIPLE" - The entity type will appear zero or multiple times.
+	//   "REQUIRED_ONCE" - The entity type will only appear exactly once. The same
+	// entity instance may be mentioned multiple times.
+	//   "REQUIRED_MULTIPLE" - The entity type will appear once or more times.
+	OccurrenceType string `json:"occurrenceType,omitempty"`
+	// PropertyMetadata: Any additional metadata about the property can be added
+	// here.
+	PropertyMetadata *GoogleCloudDocumentaiV1beta3PropertyMetadata `json:"propertyMetadata,omitempty"`
+	// ValueType: A reference to the value type of the property. This type is
+	// subject to the same conventions as the `Entity.base_types` field.
+	ValueType string `json:"valueType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata: Metadata for global
+// schema behavior.
+type GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata struct {
+	// DocumentAllowMultipleLabels: If true, on a given page, there can be multiple
+	// `document` annotations covering it.
+	DocumentAllowMultipleLabels bool `json:"documentAllowMultipleLabels,omitempty"`
+	// DocumentSplitter: If true, a `document` entity type can be applied to
+	// subdocument (splitting). Otherwise, it can only be applied to the entire
+	// document (classification).
+	DocumentSplitter bool `json:"documentSplitter,omitempty"`
+	// PrefixedNamingOnProperties: If set, all the nested entities must be prefixed
+	// with the parents.
+	PrefixedNamingOnProperties bool `json:"prefixedNamingOnProperties,omitempty"`
+	// SkipNamingValidation: If set, we will skip the naming format validation in
+	// the schema. So the string values in `DocumentSchema.EntityType.name` and
+	// `DocumentSchema.EntityType.Property.name` will not be checked.
+	SkipNamingValidation bool `json:"skipNamingValidation,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DocumentAllowMultipleLabels") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocumentAllowMultipleLabels") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3EnableProcessorMetadata: The long-running
 // operation metadata for the EnableProcessor method.
 type GoogleCloudDocumentaiV1beta3EnableProcessorMetadata struct {
@@ -6721,6 +8267,29 @@ func (s GoogleCloudDocumentaiV1beta3EnableProcessorMetadata) MarshalJSON() ([]by
 // the EnableProcessor method. Intentionally empty proto for adding fields in
 // future.
 type GoogleCloudDocumentaiV1beta3EnableProcessorResponse struct {
+}
+
+// GoogleCloudDocumentaiV1beta3EntityTypeMetadata: Metadata about an entity
+// type.
+type GoogleCloudDocumentaiV1beta3EntityTypeMetadata struct {
+	// Inactive: Whether the entity type should be considered inactive.
+	Inactive bool `json:"inactive,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Inactive") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Inactive") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3EntityTypeMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EntityTypeMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionMetadata: Metadata of
@@ -6766,6 +8335,125 @@ type GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse struct {
 
 func (s GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3EvaluationMetrics: Evaluation metrics, either in
+// aggregate or about a specific entity.
+type GoogleCloudDocumentaiV1beta3EvaluationMetrics struct {
+	// F1Score: The calculated f1 score.
+	F1Score float64 `json:"f1Score,omitempty"`
+	// FalseNegativesCount: The amount of false negatives.
+	FalseNegativesCount int64 `json:"falseNegativesCount,omitempty"`
+	// FalsePositivesCount: The amount of false positives.
+	FalsePositivesCount int64 `json:"falsePositivesCount,omitempty"`
+	// GroundTruthDocumentCount: The amount of documents with a ground truth
+	// occurrence.
+	GroundTruthDocumentCount int64 `json:"groundTruthDocumentCount,omitempty"`
+	// GroundTruthOccurrencesCount: The amount of occurrences in ground truth
+	// documents.
+	GroundTruthOccurrencesCount int64 `json:"groundTruthOccurrencesCount,omitempty"`
+	// Precision: The calculated precision.
+	Precision float64 `json:"precision,omitempty"`
+	// PredictedDocumentCount: The amount of documents with a predicted occurrence.
+	PredictedDocumentCount int64 `json:"predictedDocumentCount,omitempty"`
+	// PredictedOccurrencesCount: The amount of occurrences in predicted documents.
+	PredictedOccurrencesCount int64 `json:"predictedOccurrencesCount,omitempty"`
+	// Recall: The calculated recall.
+	Recall float64 `json:"recall,omitempty"`
+	// TotalDocumentsCount: The amount of documents that had an occurrence of this
+	// label.
+	TotalDocumentsCount int64 `json:"totalDocumentsCount,omitempty"`
+	// TruePositivesCount: The amount of true positives.
+	TruePositivesCount int64 `json:"truePositivesCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "F1Score") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "F1Score") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3EvaluationMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationMetrics
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EvaluationMetrics) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationMetrics
+	var s1 struct {
+		F1Score   gensupport.JSONFloat64 `json:"f1Score"`
+		Precision gensupport.JSONFloat64 `json:"precision"`
+		Recall    gensupport.JSONFloat64 `json:"recall"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.F1Score = float64(s1.F1Score)
+	s.Precision = float64(s1.Precision)
+	s.Recall = float64(s1.Recall)
+	return nil
+}
+
+// GoogleCloudDocumentaiV1beta3EvaluationReference: Gives a short summary of an
+// evaluation, and links to the evaluation itself.
+type GoogleCloudDocumentaiV1beta3EvaluationReference struct {
+	// AggregateMetrics: An aggregate of the statistics for the evaluation with
+	// fuzzy matching on.
+	AggregateMetrics *GoogleCloudDocumentaiV1beta3EvaluationMetrics `json:"aggregateMetrics,omitempty"`
+	// AggregateMetricsExact: An aggregate of the statistics for the evaluation
+	// with fuzzy matching off.
+	AggregateMetricsExact *GoogleCloudDocumentaiV1beta3EvaluationMetrics `json:"aggregateMetricsExact,omitempty"`
+	// Evaluation: The resource name of the evaluation.
+	Evaluation string `json:"evaluation,omitempty"`
+	// Operation: The resource name of the Long Running Operation for the
+	// evaluation.
+	Operation string `json:"operation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AggregateMetrics") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AggregateMetrics") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3EvaluationReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3FieldExtractionMetadata: Metadata for how this
+// field value is extracted.
+type GoogleCloudDocumentaiV1beta3FieldExtractionMetadata struct {
+	// SummaryOptions: Summary options config.
+	SummaryOptions *GoogleCloudDocumentaiV1beta3SummaryOptions `json:"summaryOptions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SummaryOptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SummaryOptions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3FieldExtractionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3FieldExtractionMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6972,6 +8660,320 @@ func (s GoogleCloudDocumentaiV1beta3ImportProcessorVersionResponse) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta3Processor: The first-class citizen for Document
+// AI. Each processor defines how to extract structural information from a
+// document.
+type GoogleCloudDocumentaiV1beta3Processor struct {
+	// ActiveSchemaVersion: Optional. SchemaVersion used by the Processor. It is
+	// the same as Processor's DatasetSchema.schema_version Format is
+	// `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{sch
+	// ema_version}
+	ActiveSchemaVersion string `json:"activeSchemaVersion,omitempty"`
+	// CreateTime: Output only. The time the processor was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DefaultProcessorVersion: The default processor version.
+	DefaultProcessorVersion string `json:"defaultProcessorVersion,omitempty"`
+	// DisplayName: The display name of the processor.
+	DisplayName string `json:"displayName,omitempty"`
+	// KmsKeyName: The KMS key (https://cloud.google.com/security-key-management)
+	// used for encryption and decryption in CMEK scenarios.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// Name: Output only. Immutable. The resource name of the processor. Format:
+	// `projects/{project}/locations/{location}/processors/{processor}`
+	Name string `json:"name,omitempty"`
+	// ProcessEndpoint: Output only. Immutable. The http endpoint that can be
+	// called to invoke processing.
+	ProcessEndpoint string `json:"processEndpoint,omitempty"`
+	// ProcessorVersionAliases: Output only. The processor version aliases.
+	ProcessorVersionAliases []*GoogleCloudDocumentaiV1beta3ProcessorVersionAlias `json:"processorVersionAliases,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+	// State: Output only. The state of the processor.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The processor is in an unspecified state.
+	//   "ENABLED" - The processor is enabled, i.e., has an enabled version which
+	// can currently serve processing requests and all the feature dependencies
+	// have been successfully initialized.
+	//   "DISABLED" - The processor is disabled.
+	//   "ENABLING" - The processor is being enabled, will become `ENABLED` if
+	// successful.
+	//   "DISABLING" - The processor is being disabled, will become `DISABLED` if
+	// successful.
+	//   "CREATING" - The processor is being created, will become either `ENABLED`
+	// (for successful creation) or `FAILED` (for failed ones). Once a processor is
+	// in this state, it can then be used for document processing, but the feature
+	// dependencies of the processor might not be fully created yet.
+	//   "FAILED" - The processor failed during creation or initialization of
+	// feature dependencies. The user should delete the processor and recreate one
+	// as all the functionalities of the processor are disabled.
+	//   "DELETING" - The processor is being deleted, will be removed if
+	// successful.
+	State string `json:"state,omitempty"`
+	// Type: The processor type, such as: `OCR_PROCESSOR`, `INVOICE_PROCESSOR`. To
+	// get a list of processor types, see FetchProcessorTypes.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActiveSchemaVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActiveSchemaVersion") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3Processor) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3Processor
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ProcessorVersion: A processor version is an
+// implementation of a processor. Each processor can have multiple versions,
+// pretrained by Google internally or uptrained by the customer. A processor
+// can only have one default version at a time. Its document-processing
+// behavior is defined by that version.
+type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
+	// CreateTime: Output only. The time the processor version was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DeprecationInfo: Output only. If set, information about the eventual
+	// deprecation of this version.
+	DeprecationInfo *GoogleCloudDocumentaiV1beta3ProcessorVersionDeprecationInfo `json:"deprecationInfo,omitempty"`
+	// DisplayName: The display name of the processor version.
+	DisplayName string `json:"displayName,omitempty"`
+	// DocumentSchema: Output only. The schema of the processor version. Describes
+	// the output.
+	DocumentSchema *GoogleCloudDocumentaiV1beta3DocumentSchema `json:"documentSchema,omitempty"`
+	// GenAiModelInfo: Output only. Information about Generative AI model-based
+	// processor versions.
+	GenAiModelInfo *GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfo `json:"genAiModelInfo,omitempty"`
+	// GoogleManaged: Output only. Denotes that this `ProcessorVersion` is managed
+	// by Google.
+	GoogleManaged bool `json:"googleManaged,omitempty"`
+	// KmsKeyName: Output only. The KMS key name used for encryption.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// KmsKeyVersionName: Output only. The KMS key version with which data is
+	// encrypted.
+	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
+	// LatestEvaluation: Output only. The most recently invoked evaluation for the
+	// processor version.
+	LatestEvaluation *GoogleCloudDocumentaiV1beta3EvaluationReference `json:"latestEvaluation,omitempty"`
+	// ModelType: Output only. The model type of this processor version.
+	//
+	// Possible values:
+	//   "MODEL_TYPE_UNSPECIFIED" - The processor version has unspecified model
+	// type.
+	//   "MODEL_TYPE_GENERATIVE" - The processor version has generative model type.
+	//   "MODEL_TYPE_CUSTOM" - The processor version has custom model type.
+	ModelType string `json:"modelType,omitempty"`
+	// Name: Identifier. The resource name of the processor version. Format:
+	// `projects/{project}/locations/{location}/processors/{processor}/processorVers
+	// ions/{processor_version}`
+	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+	// State: Output only. The state of the processor version.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The processor version is in an unspecified state.
+	//   "DEPLOYED" - The processor version is deployed and can be used for
+	// processing.
+	//   "DEPLOYING" - The processor version is being deployed.
+	//   "UNDEPLOYED" - The processor version is not deployed and cannot be used
+	// for processing.
+	//   "UNDEPLOYING" - The processor version is being undeployed.
+	//   "CREATING" - The processor version is being created.
+	//   "DELETING" - The processor version is being deleted.
+	//   "FAILED" - The processor version failed and is in an indeterminate state.
+	//   "IMPORTING" - The processor version is being imported.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3ProcessorVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ProcessorVersionAlias: Contains the alias and
+// the aliased resource name of processor version.
+type GoogleCloudDocumentaiV1beta3ProcessorVersionAlias struct {
+	// Alias: The alias in the form of `processor_version` resource name.
+	Alias string `json:"alias,omitempty"`
+	// ProcessorVersion: The resource name of aliased processor version.
+	ProcessorVersion string `json:"processorVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Alias") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Alias") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3ProcessorVersionAlias) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersionAlias
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ProcessorVersionDeprecationInfo: Information
+// about the upcoming deprecation of this processor version.
+type GoogleCloudDocumentaiV1beta3ProcessorVersionDeprecationInfo struct {
+	// DeprecationTime: The time at which this processor version will be
+	// deprecated.
+	DeprecationTime string `json:"deprecationTime,omitempty"`
+	// ReplacementProcessorVersion: If set, the processor version that will be used
+	// as a replacement.
+	ReplacementProcessorVersion string `json:"replacementProcessorVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeprecationTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeprecationTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3ProcessorVersionDeprecationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersionDeprecationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfo: Information
+// about Generative AI model-based processor versions.
+type GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfo struct {
+	// CustomGenAiModelInfo: Information for a custom Generative AI model created
+	// by the user.
+	CustomGenAiModelInfo *GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoCustomGenAiModelInfo `json:"customGenAiModelInfo,omitempty"`
+	// FoundationGenAiModelInfo: Information for a pretrained Google-managed
+	// foundation model.
+	FoundationGenAiModelInfo *GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo `json:"foundationGenAiModelInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomGenAiModelInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomGenAiModelInfo") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoCustomGenAiModelInf
+// o: Information for a custom Generative AI model created by the user. These
+// are created with `Create New Version` in either the `Call foundation model`
+// or `Fine tuning` tabs.
+type GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoCustomGenAiModelInfo struct {
+	// BaseProcessorVersionId: The base processor version ID for the custom model.
+	BaseProcessorVersionId string `json:"baseProcessorVersionId,omitempty"`
+	// CustomModelType: The type of custom model created by the user.
+	//
+	// Possible values:
+	//   "CUSTOM_MODEL_TYPE_UNSPECIFIED" - The model type is unspecified.
+	//   "VERSIONED_FOUNDATION" - The model is a versioned foundation model.
+	//   "FINE_TUNED" - The model is a finetuned foundation model.
+	CustomModelType string `json:"customModelType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseProcessorVersionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseProcessorVersionId") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoCustomGenAiModelInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoCustomGenAiModelInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoFoundationGenAiMode
+// lInfo: Information for a pretrained Google-managed foundation model.
+type GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo struct {
+	// FinetuningAllowed: Whether finetuning is allowed for this base processor
+	// version.
+	FinetuningAllowed bool `json:"finetuningAllowed,omitempty"`
+	// MinTrainLabeledDocuments: The minimum number of labeled documents in the
+	// training dataset required for finetuning.
+	MinTrainLabeledDocuments int64 `json:"minTrainLabeledDocuments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FinetuningAllowed") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FinetuningAllowed") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3PropertyMetadata: Metadata about a property.
+type GoogleCloudDocumentaiV1beta3PropertyMetadata struct {
+	// FieldExtractionMetadata: Field extraction metadata on the property.
+	FieldExtractionMetadata *GoogleCloudDocumentaiV1beta3FieldExtractionMetadata `json:"fieldExtractionMetadata,omitempty"`
+	// Inactive: Whether the property should be considered as "inactive".
+	Inactive bool `json:"inactive,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldExtractionMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldExtractionMetadata") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3PropertyMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3PropertyMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3ReviewDocumentOperationMetadata: The
 // long-running operation metadata for the ReviewDocument method.
 type GoogleCloudDocumentaiV1beta3ReviewDocumentOperationMetadata struct {
@@ -7113,6 +9115,42 @@ func (s GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionMetadata) MarshalJ
 type GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionResponse struct {
 }
 
+// GoogleCloudDocumentaiV1beta3SummaryOptions: Metadata for document
+// summarization.
+type GoogleCloudDocumentaiV1beta3SummaryOptions struct {
+	// Format: The format the summary should be in.
+	//
+	// Possible values:
+	//   "FORMAT_UNSPECIFIED" - Default.
+	//   "PARAGRAPH" - Format the output in paragraphs.
+	//   "BULLETS" - Format the output in bullets.
+	Format string `json:"format,omitempty"`
+	// Length: How long the summary should be.
+	//
+	// Possible values:
+	//   "LENGTH_UNSPECIFIED" - Default.
+	//   "BRIEF" - A brief summary of one or two sentences.
+	//   "MODERATE" - A paragraph-length summary.
+	//   "COMPREHENSIVE" - The longest option available.
+	Length string `json:"length,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Format") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Format") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3SummaryOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3SummaryOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata: The metadata that
 // represents a processor version being created.
 type GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata struct {
@@ -7244,6 +9282,29 @@ type GoogleCloudDocumentaiV1beta3UpdateDatasetOperationMetadata struct {
 
 func (s GoogleCloudDocumentaiV1beta3UpdateDatasetOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3UpdateDatasetOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3UpdateProcessorVersionMetadata: The long-running
+// operation metadata for the UpdateProcessorVersion method.
+type GoogleCloudDocumentaiV1beta3UpdateProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata for the long-running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommonMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3UpdateProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3UpdateProcessorVersionMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11288,6 +13349,1277 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall) Pages(
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsSchemasCreateCall struct {
+	s                                 *Service
+	parent                            string
+	googleclouddocumentaiv1nextschema *GoogleCloudDocumentaiV1NextSchema
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Create: Creates a schema.
+//
+//   - parent: The parent (project and location) under which to create the
+//     Schema. Format: `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsSchemasService) Create(parent string, googleclouddocumentaiv1nextschema *GoogleCloudDocumentaiV1NextSchema) *ProjectsLocationsSchemasCreateCall {
+	c := &ProjectsLocationsSchemasCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddocumentaiv1nextschema = googleclouddocumentaiv1nextschema
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemasCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemasCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemasCreateCall) Context(ctx context.Context) *ProjectsLocationsSchemasCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemasCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemasCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddocumentaiv1nextschema)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/schemas")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.schemas.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDocumentaiV1NextSchema.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemasCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1NextSchema, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDocumentaiV1NextSchema{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemasDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a schema.
+//
+//   - name: The name of the Schema to be deleted. Format:
+//     `projects/{project}/locations/{location}/schemas/{schema}`.
+func (r *ProjectsLocationsSchemasService) Delete(name string) *ProjectsLocationsSchemasDeleteCall {
+	c := &ProjectsLocationsSchemasDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": If set to true, any child
+// resources of this Schema will also be deleted. (Otherwise, the request will
+// only work if the Schema has no child resources.)
+func (c *ProjectsLocationsSchemasDeleteCall) Force(force bool) *ProjectsLocationsSchemasDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemasDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemasDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemasDeleteCall) Context(ctx context.Context) *ProjectsLocationsSchemasDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemasDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemasDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.schemas.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemasDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemasGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a schema.
+//
+//   - name: The name of the Schema to get. Format:
+//     `projects/{project}/locations/{location}/schemas/{schema}`.
+func (r *ProjectsLocationsSchemasService) Get(name string) *ProjectsLocationsSchemasGetCall {
+	c := &ProjectsLocationsSchemasGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemasGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemasGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemasGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemasGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemasGetCall) Context(ctx context.Context) *ProjectsLocationsSchemasGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemasGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemasGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.schemas.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDocumentaiV1NextSchema.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemasGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1NextSchema, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDocumentaiV1NextSchema{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemasListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Schemas.
+//
+// - parent: Format: `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsSchemasService) List(parent string) *ProjectsLocationsSchemasListCall {
+	c := &ProjectsLocationsSchemasListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// schema groups to return. If unspecified, at most `10` Schema will be
+// returned. The maximum value is `20`. Values above `20` will be coerced to
+// `20`.
+func (c *ProjectsLocationsSchemasListCall) PageSize(pageSize int64) *ProjectsLocationsSchemasListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": We will return the schema
+// groups sorted by creation time. The page token will point to the next
+// Schema.
+func (c *ProjectsLocationsSchemasListCall) PageToken(pageToken string) *ProjectsLocationsSchemasListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemasListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemasListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemasListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemasListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemasListCall) Context(ctx context.Context) *ProjectsLocationsSchemasListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemasListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemasListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/schemas")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.schemas.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDocumentaiV1ListSchemasResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemasListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1ListSchemasResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDocumentaiV1ListSchemasResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSchemasListCall) Pages(ctx context.Context, f func(*GoogleCloudDocumentaiV1ListSchemasResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsSchemasPatchCall struct {
+	s                                 *Service
+	name                              string
+	googleclouddocumentaiv1nextschema *GoogleCloudDocumentaiV1NextSchema
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Patch: Updates a schema. Editable fields are: - `display_name` - `labels`
+//
+//   - name: Identifier. The resource name of the Schema. Format:
+//     `projects/{project}/locations/{location}/schemas/{schema}`.
+func (r *ProjectsLocationsSchemasService) Patch(name string, googleclouddocumentaiv1nextschema *GoogleCloudDocumentaiV1NextSchema) *ProjectsLocationsSchemasPatchCall {
+	c := &ProjectsLocationsSchemasPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddocumentaiv1nextschema = googleclouddocumentaiv1nextschema
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The update mask to
+// apply to the resource. **Note:** Only the following fields can be updated: -
+// display_name. - labels.
+func (c *ProjectsLocationsSchemasPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSchemasPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemasPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemasPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemasPatchCall) Context(ctx context.Context) *ProjectsLocationsSchemasPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemasPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemasPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddocumentaiv1nextschema)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.schemas.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDocumentaiV1NextSchema.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemasPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1NextSchema, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDocumentaiV1NextSchema{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemasSchemaVersionsCreateCall struct {
+	s                                    *Service
+	parent                               string
+	googleclouddocumentaiv1schemaversion *GoogleCloudDocumentaiV1SchemaVersion
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Create: Creates a schema version.
+//
+//   - parent: The parent (project and location) under which to create the
+//     SchemaVersion. Format:
+//     `projects/{project}/locations/{location}/schemas/{schema}`.
+func (r *ProjectsLocationsSchemasSchemaVersionsService) Create(parent string, googleclouddocumentaiv1schemaversion *GoogleCloudDocumentaiV1SchemaVersion) *ProjectsLocationsSchemasSchemaVersionsCreateCall {
+	c := &ProjectsLocationsSchemasSchemaVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddocumentaiv1schemaversion = googleclouddocumentaiv1schemaversion
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemasSchemaVersionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemasSchemaVersionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemasSchemaVersionsCreateCall) Context(ctx context.Context) *ProjectsLocationsSchemasSchemaVersionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemasSchemaVersionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemasSchemaVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddocumentaiv1schemaversion)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/schemaVersions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.schemaVersions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.schemas.schemaVersions.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDocumentaiV1SchemaVersion.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemasSchemaVersionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1SchemaVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDocumentaiV1SchemaVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.schemaVersions.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemasSchemaVersionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a schema version.
+//
+//   - name: The name of the SchemaVersion to delete. Format:
+//     `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{s
+//     chema_version}`.
+func (r *ProjectsLocationsSchemasSchemaVersionsService) Delete(name string) *ProjectsLocationsSchemasSchemaVersionsDeleteCall {
+	c := &ProjectsLocationsSchemasSchemaVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemasSchemaVersionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemasSchemaVersionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemasSchemaVersionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsSchemasSchemaVersionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemasSchemaVersionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemasSchemaVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.schemaVersions.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.schemas.schemaVersions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemasSchemaVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.schemaVersions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemasSchemaVersionsGenerateCall struct {
+	s                                                   *Service
+	parent                                              string
+	googleclouddocumentaiv1generateschemaversionrequest *GoogleCloudDocumentaiV1GenerateSchemaVersionRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// Generate: Generates a schema version.
+//
+//   - parent: The parent (project, location and schema) under which to generate
+//     the SchemaVersion. Format:
+//     `projects/{project}/locations/{location}/schemas/{schema}`.
+func (r *ProjectsLocationsSchemasSchemaVersionsService) Generate(parent string, googleclouddocumentaiv1generateschemaversionrequest *GoogleCloudDocumentaiV1GenerateSchemaVersionRequest) *ProjectsLocationsSchemasSchemaVersionsGenerateCall {
+	c := &ProjectsLocationsSchemasSchemaVersionsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddocumentaiv1generateschemaversionrequest = googleclouddocumentaiv1generateschemaversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemasSchemaVersionsGenerateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemasSchemaVersionsGenerateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemasSchemaVersionsGenerateCall) Context(ctx context.Context) *ProjectsLocationsSchemasSchemaVersionsGenerateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemasSchemaVersionsGenerateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemasSchemaVersionsGenerateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddocumentaiv1generateschemaversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/schemaVersions:generate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.schemaVersions.generate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.schemas.schemaVersions.generate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDocumentaiV1GenerateSchemaVersionResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemasSchemaVersionsGenerateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1GenerateSchemaVersionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDocumentaiV1GenerateSchemaVersionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.schemaVersions.generate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemasSchemaVersionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a schema version.
+//
+//   - name: The name of the SchemaVersion to get. Format:
+//     `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{s
+//     chema_version}`.
+func (r *ProjectsLocationsSchemasSchemaVersionsService) Get(name string) *ProjectsLocationsSchemasSchemaVersionsGetCall {
+	c := &ProjectsLocationsSchemasSchemaVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemasSchemaVersionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemasSchemaVersionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemasSchemaVersionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemasSchemaVersionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemasSchemaVersionsGetCall) Context(ctx context.Context) *ProjectsLocationsSchemasSchemaVersionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemasSchemaVersionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemasSchemaVersionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.schemaVersions.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.schemas.schemaVersions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDocumentaiV1SchemaVersion.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemasSchemaVersionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1SchemaVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDocumentaiV1SchemaVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.schemaVersions.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSchemasSchemaVersionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists SchemaVersions.
+//
+// - parent: Format: `projects/{project}/locations/{location}/schemas/{schema}`.
+func (r *ProjectsLocationsSchemasSchemaVersionsService) List(parent string) *ProjectsLocationsSchemasSchemaVersionsListCall {
+	c := &ProjectsLocationsSchemasSchemaVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// SchemaVersion to return. If unspecified, at most `10` SchemaVersion will be
+// returned. The maximum value is `20`. Values above `20` will be coerced to
+// `20`.
+func (c *ProjectsLocationsSchemasSchemaVersionsListCall) PageSize(pageSize int64) *ProjectsLocationsSchemasSchemaVersionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": We will return the
+// SchemaVersion sorted by creation time. The page token will point to the next
+// SchemaVersion.
+func (c *ProjectsLocationsSchemasSchemaVersionsListCall) PageToken(pageToken string) *ProjectsLocationsSchemasSchemaVersionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemasSchemaVersionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemasSchemaVersionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSchemasSchemaVersionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSchemasSchemaVersionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemasSchemaVersionsListCall) Context(ctx context.Context) *ProjectsLocationsSchemasSchemaVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemasSchemaVersionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemasSchemaVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/schemaVersions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.schemaVersions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.schemas.schemaVersions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDocumentaiV1ListSchemaVersionsResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemasSchemaVersionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1ListSchemaVersionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDocumentaiV1ListSchemaVersionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.schemaVersions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSchemasSchemaVersionsListCall) Pages(ctx context.Context, f func(*GoogleCloudDocumentaiV1ListSchemaVersionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsSchemasSchemaVersionsPatchCall struct {
+	s                                    *Service
+	name                                 string
+	googleclouddocumentaiv1schemaversion *GoogleCloudDocumentaiV1SchemaVersion
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Patch: Updates a schema version. Editable fields are: - `display_name` -
+// `labels`
+//
+//   - name: Identifier. The resource name of the SchemaVersion. Format:
+//     `projects/{project}/locations/{location}/schemas/{schema}/schemaVersions/{s
+//     chema_version}`.
+func (r *ProjectsLocationsSchemasSchemaVersionsService) Patch(name string, googleclouddocumentaiv1schemaversion *GoogleCloudDocumentaiV1SchemaVersion) *ProjectsLocationsSchemasSchemaVersionsPatchCall {
+	c := &ProjectsLocationsSchemasSchemaVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddocumentaiv1schemaversion = googleclouddocumentaiv1schemaversion
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The update mask to
+// apply to the resource. **Note:** Only the following fields can be updated: -
+// display_name. - labels.
+func (c *ProjectsLocationsSchemasSchemaVersionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSchemasSchemaVersionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSchemasSchemaVersionsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsSchemasSchemaVersionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSchemasSchemaVersionsPatchCall) Context(ctx context.Context) *ProjectsLocationsSchemasSchemaVersionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSchemasSchemaVersionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSchemasSchemaVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddocumentaiv1schemaversion)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.schemaVersions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.schemas.schemaVersions.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDocumentaiV1SchemaVersion.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSchemasSchemaVersionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1SchemaVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDocumentaiV1SchemaVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "documentai.projects.locations.schemas.schemaVersions.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsOperationsGetCall struct {

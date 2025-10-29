@@ -877,6 +877,8 @@ type IntentPayload struct {
 	CreateIntent *CreateSubscriptionIntent `json:"createIntent,omitempty"`
 	// EntitleIntent: The request to entitle a subscription.
 	EntitleIntent *EntitleSubscriptionIntent `json:"entitleIntent,omitempty"`
+	// IntentOptions: Optional. The additional features for the intent.
+	IntentOptions *IntentPayloadIntentOptions `json:"intentOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateIntent") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -892,6 +894,30 @@ type IntentPayload struct {
 
 func (s IntentPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod IntentPayload
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IntentPayloadIntentOptions: The options for the intent.
+type IntentPayloadIntentOptions struct {
+	// EnableOfferOverride: Optional. If true, Google may use a different product
+	// and promotion id from the ones in the `create_intent` based on the user's
+	// eligibility. Only applicable for certain YouTube free trial offers.
+	EnableOfferOverride bool `json:"enableOfferOverride,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableOfferOverride") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableOfferOverride") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IntentPayloadIntentOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod IntentPayloadIntentOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

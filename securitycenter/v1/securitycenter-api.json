@@ -1769,6 +1769,7 @@
           ]
         },
         "updateOrganizationSettings": {
+          "deprecated": true,
           "description": "Updates an organization's settings.",
           "flatPath": "v1/organizations/{organizationsId}/organizationSettings",
           "httpMethod": "PATCH",
@@ -5943,7 +5944,7 @@
       }
     }
   },
-  "revision": "20251017",
+  "revision": "20251024",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Access": {

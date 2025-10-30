@@ -782,6 +782,30 @@ func (s Error) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// EventFilter: Represents a filter for included data on a stream object.
+type EventFilter struct {
+	// SqlWhereClause: An SQL-query Where clause selecting which data should be
+	// included, not including the "WHERE" keyword. E.g., "t.key1 = 'value1' AND
+	// t.key2 = 'value2'".
+	SqlWhereClause string `json:"sqlWhereClause,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SqlWhereClause") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SqlWhereClause") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EventFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod EventFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FetchStaticIpsResponse: Response message for a 'FetchStaticIps' response.
 type FetchStaticIpsResponse struct {
 	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
@@ -1025,6 +1049,11 @@ type ListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*Operation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1263,8 +1292,7 @@ type Merge struct {
 
 // MongodbChangeStreamPosition: MongoDB change stream position
 type MongodbChangeStreamPosition struct {
-	// StartTime: Required. The timestamp (in epoch seconds) to start change stream
-	// from.
+	// StartTime: Required. The timestamp to start change stream from.
 	StartTime string `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "StartTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3314,6 +3342,26 @@ func (s StandardConnectionFormat) MarshalJSON() ([]byte, error) {
 // StartBackfillJobRequest: Request for manually initiating a backfill job for
 // a specific stream object.
 type StartBackfillJobRequest struct {
+	// EventFilter: Optional. Optional event filter. If not set, or empty, the
+	// backfill will be performed on the entire object. This is currently used for
+	// partial backfill and only supported for SQL Server sources.
+	EventFilter *EventFilter `json:"eventFilter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventFilter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventFilter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StartBackfillJobRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod StartBackfillJobRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartBackfillJobResponse: Response for manually initiating a backfill job
@@ -5239,6 +5287,19 @@ func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

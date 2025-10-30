@@ -5798,6 +5798,8 @@ type OneTimeProductPurchaseOptionRegionalPricingAndAvailabilityConfig struct {
 	// AVAILABLE.
 	//   "AVAILABLE_IF_RELEASED" - The purchase option is initially unavailable,
 	// but made available via a released pre-order offer.
+	//   "AVAILABLE_FOR_OFFERS_ONLY" - The purchase option is unavailable but
+	// offers linked to it (i.e. Play Points offer) are available.
 	Availability string `json:"availability,omitempty"`
 	// Price: The price of the purchase option in the specified region. Must be set
 	// in the currency that is linked to the specified region.
@@ -5880,6 +5882,10 @@ func (s OneTimeProductTaxAndComplianceSettings) MarshalJSON() ([]byte, error) {
 type OneTimePurchaseDetails struct {
 	// OfferId: The offer ID of the one-time purchase offer.
 	OfferId string `json:"offerId,omitempty"`
+	// PreorderDetails: The details of a pre-order purchase. Only set if it is a
+	// pre-order purchase. Note that this field will be set even after pre-order is
+	// fulfilled.
+	PreorderDetails *PreorderDetails `json:"preorderDetails,omitempty"`
 	// PurchaseOptionId: ID of the purchase option. This field is set for both
 	// purchase options and variant offers. For purchase options, this ID
 	// identifies the purchase option itself. For variant offers, this ID refers to
@@ -6358,6 +6364,34 @@ func (s PointsDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PreorderDetails: Details of a pre-order purchase.
+type PreorderDetails struct {
+}
+
+// PreorderOfferDetails: Offer details information related to a preorder line
+// item.
+type PreorderOfferDetails struct {
+	// PreorderReleaseTime: The time when a preordered item is released for a
+	// preorder purchase.
+	PreorderReleaseTime string `json:"preorderReleaseTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PreorderReleaseTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PreorderReleaseTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PreorderOfferDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PreorderOfferDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PrepaidBasePlanType: Represents a base plan that does not automatically
 // renew at the end of the base plan, and must be manually renewed by the user.
 type PrepaidBasePlanType struct {
@@ -6543,6 +6577,9 @@ type ProductOfferDetails struct {
 	// OfferToken: The per-transaction offer token used to make this purchase line
 	// item.
 	OfferToken string `json:"offerToken,omitempty"`
+	// PreorderOfferDetails: Offer details for a preorder offer. This will only be
+	// set for preorders.
+	PreorderOfferDetails *PreorderOfferDetails `json:"preorderOfferDetails,omitempty"`
 	// PurchaseOptionId: The purchase option ID.
 	PurchaseOptionId string `json:"purchaseOptionId,omitempty"`
 	// Quantity: The quantity associated with the purchase of the inapp product.

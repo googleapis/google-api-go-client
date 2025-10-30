@@ -1215,6 +1215,18 @@ func (r *BuildingInsightsService) FindClosest() *BuildingInsightsFindClosestCall
 	return c
 }
 
+// ExactQualityRequired sets the optional parameter "exactQualityRequired":
+// Whether to require exact quality of the imagery. If set to false, the
+// `required_quality` field is interpreted as the minimum required quality,
+// such that HIGH quality imagery may be returned when `required_quality` is
+// set to MEDIUM. If set to true, `required_quality` is interpreted as the
+// exact required quality and only `MEDIUM` quality imagery is returned if
+// `required_quality` is set to `MEDIUM`.
+func (c *BuildingInsightsFindClosestCall) ExactQualityRequired(exactQualityRequired bool) *BuildingInsightsFindClosestCall {
+	c.urlParams_.Set("exactQualityRequired", fmt.Sprint(exactQualityRequired))
+	return c
+}
+
 // Experiments sets the optional parameter "experiments": Specifies the pre-GA
 // features to enable.
 //

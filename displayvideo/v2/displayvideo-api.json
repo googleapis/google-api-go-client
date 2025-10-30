@@ -9081,7 +9081,7 @@
       }
     }
   },
-  "revision": "20251023",
+  "revision": "20251027",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActivateManualTriggerRequest": {
@@ -15929,12 +15929,14 @@
           "enum": [
             "SUSPICIOUS_ACTIVITY_UNSPECIFIED",
             "SUSPICIOUS_ACTIVITY_HR",
-            "SUSPICIOUS_ACTIVITY_HMR"
+            "SUSPICIOUS_ACTIVITY_HMR",
+            "SUSPICIOUS_ACTIVITY_FD"
           ],
           "enumDescriptions": [
             "This enum is only a placeholder and it doesn't specify any ad fraud prevention options.",
             "Ad Fraud - Exclude High Risk.",
-            "Ad Fraud - Exclude High and Moderate Risk."
+            "Ad Fraud - Exclude High and Moderate Risk.",
+            "Ad Fraud - Exclude Fraudulent Device."
           ],
           "type": "string"
         },

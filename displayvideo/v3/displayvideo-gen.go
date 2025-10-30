@@ -864,7 +864,6 @@ type AdGroup struct {
 	// in-stream and bumper ads.
 	//   "AD_GROUP_FORMAT_MASTHEAD" - Masthead Ad that is surfaced on the top slot
 	// on the YouTube homepage.
-	//   "AD_GROUP_FORMAT_DEMAND_GEN" - Demand Gen ads.
 	AdGroupFormat string `json:"adGroupFormat,omitempty"`
 	// AdGroupId: The unique ID of the ad group. Assigned by the system.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
@@ -930,7 +929,10 @@ func (s AdGroup) MarshalJSON() ([]byte, error) {
 type AdGroupAd struct {
 	// AdGroupAdId: The unique ID of the ad. Assigned by the system.
 	AdGroupAdId int64 `json:"adGroupAdId,omitempty,string"`
-	// AdGroupId: The unique ID of the ad group that the ad belongs to.
+	// AdGroupId: The unique ID of the ad group that the ad belongs to. *Caution*:
+	// Parent ad groups for Demand Gen ads are not currently retrieveable using
+	// `advertisers.adGroups.list` or `advertisers.adGroups.get`. Demand Gen ads
+	// can be identified by the absence of the `ad_details` union field.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
 	// AdPolicy: The policy approval status of the ad.
 	AdPolicy *AdPolicy `json:"adPolicy,omitempty"`
@@ -1038,32 +1040,34 @@ func (s AdGroupAssignedTargetingOption) MarshalJSON() ([]byte, error) {
 
 // AdPolicy: A single ad policy associated with an ad group ad.
 type AdPolicy struct {
-	// AdPolicyApprovalStatus: The policy approval status of an ad. Indicating the
-	// ad policy approval decision.
+	// AdPolicyApprovalStatus: The policy approval status of an ad, indicating the
+	// approval decision.
 	//
 	// Possible values:
 	//   "AD_POLICY_APPROVAL_STATUS_UNKNOWN" - Unknown or not specified.
 	//   "DISAPPROVED" - Will not serve.
-	//   "APPROVED_LIMITED" - Serves with restrictions.
-	//   "APPROVED" - Serves without restrictions.
+	//   "APPROVED_LIMITED" - Will serve with restrictions.
+	//   "APPROVED" - Will serve without restrictions.
 	//   "AREA_OF_INTEREST_ONLY" - Will not serve in targeted countries, but may
 	// serve for users who are searching for information about the targeted
 	// countries.
 	AdPolicyApprovalStatus string `json:"adPolicyApprovalStatus,omitempty"`
-	// AdPolicyReviewStatus: The policy review status of an ad. Indicating where
-	// the review process the ad is currently at.
+	// AdPolicyReviewStatus: The policy review status of an ad, indicating where in
+	// the review process the ad is currently.
 	//
 	// Possible values:
 	//   "AD_POLICY_REVIEW_STATUS_UNKNOWN" - Unknown or not specified.
 	//   "REVIEW_IN_PROGRESS" - Currently under review.
-	//   "REVIEWED" - Primary review complete. Other reviews may be continuing.
-	//   "UNDER_APPEAL" - The resource has been resubmitted for approval or its
-	// policy decision has been appealed.
-	//   "ELIGIBLE_MAY_SERVE" - The resource is eligible and may be serving but
-	// could still undergo further review.
+	//   "REVIEWED" - Primary review complete. Other reviews may still be in
+	// progress.
+	//   "UNDER_APPEAL" - Resubmitted for approval or a policy decision has been
+	// appealed.
+	//   "ELIGIBLE_MAY_SERVE" - Deemed eligible and may be serving. Further review
+	// could still follow.
 	AdPolicyReviewStatus string `json:"adPolicyReviewStatus,omitempty"`
-	// AdPolicyTopicEntry: The policy topic entries for the ad, including the
-	// topic, restriction level, and guidance on how to fix policy issues.
+	// AdPolicyTopicEntry: The entries for each policy topic identified as relating
+	// to the ad. Each entry includes the topic, restriction level, and guidance on
+	// how to fix policy issues.
 	AdPolicyTopicEntry []*AdPolicyTopicEntry `json:"adPolicyTopicEntry,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdPolicyApprovalStatus") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1083,13 +1087,11 @@ func (s AdPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyCriterionRestriction: Represents a criterion that is restricted.
-// Today only used to represent a country restriction. Used by both policy
-// evidence and policy constraints.
+// AdPolicyCriterionRestriction: Represents a country restriction.
 type AdPolicyCriterionRestriction struct {
-	// CountryCriterionId: Only used today to represent a country criterion id.
+	// CountryCriterionId: The country criterion id.
 	CountryCriterionId int64 `json:"countryCriterionId,omitempty,string"`
-	// CountryLabel: Localized name for the country. Could be empty.
+	// CountryLabel: Localized name for the country. May be empty.
 	CountryLabel string `json:"countryLabel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CountryCriterionId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1109,17 +1111,18 @@ func (s AdPolicyCriterionRestriction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicAppealInfo: Appeal related information for a policy topic.
+// AdPolicyTopicAppealInfo: Information on how to appeal a policy decision.
 type AdPolicyTopicAppealInfo struct {
-	// AppealFormLink: Only available when appeal_type is APPEAL_FORM.
+	// AppealFormLink: Only available when appeal_type is `APPEAL_FORM`.
 	AppealFormLink string `json:"appealFormLink,omitempty"`
-	// AppealType: Indicate whether the policy topic can be self-service appeal or
-	// appeal form.
+	// AppealType: Whether the decision can be appealed through a self-service
+	// appeal or an appeal form.
 	//
 	// Possible values:
 	//   "AD_POLICY_APPEAL_TYPE_UNKNOWN" - Unknown or not specified.
-	//   "SELF_SERVICE_APPEAL" - The policy topic can be self-service appeal.
-	//   "APPEAL_FORM" - The policy topic needs to be appealed through appeal form.
+	//   "SELF_SERVICE_APPEAL" - The decision can be appealed through a
+	// self-service appeal.
+	//   "APPEAL_FORM" - The decision can be appealed using an appeal form.
 	AppealType string `json:"appealType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppealFormLink") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1139,8 +1142,7 @@ func (s AdPolicyTopicAppealInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicConstraint: Additional constraints information that explains
-// restrictions applied to this policy.
+// AdPolicyTopicConstraint: Details on ad serving constraints.
 type AdPolicyTopicConstraint struct {
 	// CertificateDomainMismatchCountryList: Countries where the resource's domain
 	// is not covered by the certificates associated with it.
@@ -1156,7 +1158,7 @@ type AdPolicyTopicConstraint struct {
 	// GlobalCertificateMissing: Certificate is required to serve in any country.
 	GlobalCertificateMissing *AdPolicyTopicConstraintAdPolicyGlobalCertificateMissingConstraint `json:"globalCertificateMissing,omitempty"`
 	// RequestCertificateFormLink: Link to the form to request a certificate for
-	// the policy topic constraint.
+	// the constraint.
 	RequestCertificateFormLink string `json:"requestCertificateFormLink,omitempty"`
 	// ResellerConstraint: Reseller constraint.
 	ResellerConstraint *AdPolicyTopicConstraintAdPolicyResellerConstraint `json:"resellerConstraint,omitempty"`
@@ -1219,9 +1221,10 @@ type AdPolicyTopicConstraintAdPolicyGlobalCertificateMissingConstraint struct {
 type AdPolicyTopicConstraintAdPolicyResellerConstraint struct {
 }
 
-// AdPolicyTopicEntry: Policy topic entry.
+// AdPolicyTopicEntry: An entry describing how an ad has been identified as
+// relating to an ad policy.
 type AdPolicyTopicEntry struct {
-	// AppealInfo: Ad policy appeal related information for the policy topic.
+	// AppealInfo: Information on how to appeal the policy decision.
 	AppealInfo *AdPolicyTopicAppealInfo `json:"appealInfo,omitempty"`
 	// HelpCenterLink: Ad policy help center link for the policy topic.
 	HelpCenterLink string `json:"helpCenterLink,omitempty"`
@@ -1229,9 +1232,9 @@ type AdPolicyTopicEntry struct {
 	//
 	// Possible values:
 	//   "AD_POLICY_DECISION_TYPE_UNKNOWN" - Unknown or not specified.
-	//   "PURSUANT_TO_NOTICE" - The decision is from legal notice, court order, or
-	// trademark content owner complaint, etc.
-	//   "GOOGLE_INVESTIGATION" - The decision is from the Google owned
+	//   "PURSUANT_TO_NOTICE" - The decision is from a legal notice, court order,
+	// or trademark content owner complaint, etc.
+	//   "GOOGLE_INVESTIGATION" - The decision is from a Google-owned
 	// investigation.
 	PolicyDecisionType string `json:"policyDecisionType,omitempty"`
 	// PolicyEnforcementMeans: The policy enforcement means used in the policy
@@ -1243,19 +1246,21 @@ type AdPolicyTopicEntry struct {
 	//   "HUMAN_REVIEW" - A human was partially or fully involved in the decision
 	// enforcement process.
 	PolicyEnforcementMeans string `json:"policyEnforcementMeans,omitempty"`
-	// PolicyLabel: Localized label text for policy. (Trademarks in text, Contains
-	// Alcohol, etc.)
+	// PolicyLabel: Localized label text for policy. Examples include "Trademarks
+	// in text", "Contains Alcohol", etc.
 	PolicyLabel string `json:"policyLabel,omitempty"`
-	// PolicyTopic: The policy topic of an ad policy topic entry. (TRADEMARKS,
-	// ALCOHOL, etc.)
+	// PolicyTopic: The policy topic. Examples include "TRADEMARKS", "ALCOHOL",
+	// etc.
 	PolicyTopic string `json:"policyTopic,omitempty"`
-	// PolicyTopicConstraints: The policy topic constraints.
+	// PolicyTopicConstraints: The serving constraints relevant to the policy
+	// decision.
 	PolicyTopicConstraints []*AdPolicyTopicConstraint `json:"policyTopicConstraints,omitempty"`
-	// PolicyTopicDescription: Short summary description of the policy topic.
+	// PolicyTopicDescription: A short summary description of the policy topic.
 	PolicyTopicDescription string `json:"policyTopicDescription,omitempty"`
-	// PolicyTopicEvidences: The policy topic evidences.
+	// PolicyTopicEvidences: The evidence used in the policy decision.
 	PolicyTopicEvidences []*AdPolicyTopicEvidence `json:"policyTopicEvidences,omitempty"`
-	// PolicyTopicType: The policy topic entry type.
+	// PolicyTopicType: How ad serving will be affected due to the relation to the
+	// ad policy topic.
 	//
 	// Possible values:
 	//   "AD_POLICY_TOPIC_ENTRY_TYPE_UNKNOWN" - Unknown or not specified.
@@ -1263,9 +1268,11 @@ type AdPolicyTopicEntry struct {
 	//   "FULLY_LIMITED" - The resource will not serve in all targeted countries.
 	//   "LIMITED" - The resource cannot serve in some countries.
 	//   "DESCRIPTIVE" - The resource can serve.
-	//   "BROADENING" - The resource cannot serve to entry in any way.
-	//   "AREA_OF_INTEREST_ONLY" - The resource is only serving in classroom
-	// account.
+	//   "BROADENING" - The resource can serve, and may serve beyond normal
+	// coverage.
+	//   "AREA_OF_INTEREST_ONLY" - The resource is constrained for all targeted
+	// countries, but may serve for users who are searching for information about
+	// the targeted countries.
 	PolicyTopicType string `json:"policyTopicType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppealInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1285,23 +1292,22 @@ func (s AdPolicyTopicEntry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicEvidence: Additional evidence information that explains a
-// policy decision.
+// AdPolicyTopicEvidence: Evidence information used in the policy decision.
 type AdPolicyTopicEvidence struct {
 	// Counterfeit: Counterfeit enforcement that caused a policy violation.
 	Counterfeit *AdPolicyTopicEvidenceCounterfeit `json:"counterfeit,omitempty"`
-	// DestinationMismatch: Mismatch between the ad destinations URLs.
+	// DestinationMismatch: A mismatch between the ad destination URLs.
 	DestinationMismatch *AdPolicyTopicEvidenceDestinationMismatch `json:"destinationMismatch,omitempty"`
-	// DestinationNotWorking: Destination not working because of HTTP error or DNS
-	// error.
+	// DestinationNotWorking: Information on HTTP or DNS errors related to the ad
+	// destination.
 	DestinationNotWorking *AdPolicyTopicEvidenceDestinationNotWorking `json:"destinationNotWorking,omitempty"`
 	// DestinationTextList: The text in the destination of the ad that is causing a
 	// policy violation.
 	DestinationTextList *AdPolicyTopicEvidenceDestinationTextList `json:"destinationTextList,omitempty"`
 	// HttpCode: HTTP code returned when the final URL was crawled.
 	HttpCode int64 `json:"httpCode,omitempty"`
-	// LanguageCode: The language the ad was detected to be written in. This is an
-	// IETF language tag such as "en-US".
+	// LanguageCode: The language the ad was detected to be written in. This field
+	// uses IETF language tags, such as "en-US".
 	LanguageCode string `json:"languageCode,omitempty"`
 	// LegalRemoval: Legal related regulation enforcement that caused a policy
 	// violation.
@@ -1333,10 +1339,10 @@ func (s AdPolicyTopicEvidence) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicEvidenceCounterfeit: Counterfeit enforcement that caused a
-// policy violation.
+// AdPolicyTopicEvidenceCounterfeit: Details on the counterfeit enforcement
+// that caused a policy violation.
 type AdPolicyTopicEvidenceCounterfeit struct {
-	// Owners: The content or product owners that make the complainants.
+	// Owners: The content or product owners that made a complaint.
 	Owners []string `json:"owners,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Owners") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1356,14 +1362,14 @@ func (s AdPolicyTopicEvidenceCounterfeit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicEvidenceDestinationMismatch: A list of destination mismatch URL
-// types.
+// AdPolicyTopicEvidenceDestinationMismatch: Details on a mismatch between
+// destination URL types.
 type AdPolicyTopicEvidenceDestinationMismatch struct {
-	// UriTypes: The set of URLs that do not match each other. The list can include
-	// single or multiple uri types. Example 1: [DISPLAY_URL, FINAL_URL] means ad
-	// display URL does not match with the ad final URL. Example 2: [FINAL_URL]
-	// means ad final URL did not match the crawled url, which is also considered
-	// as destinationmismatch.
+	// UriTypes: The set of URLs that do not match. The list can include single or
+	// multiple uri types. Example 1: [`DISPLAY_URL`, `FINAL_URL`] means ad display
+	// URL does not match with the ad final URL. Example 2: [`FINAL_URL`] means ad
+	// final URL did not match the crawled url, which is also considered as
+	// destination mismatch.
 	//
 	// Possible values:
 	//   "AD_POLICY_TOPIC_EVIDENCE_DESTINATION_MISMATCH_URL_TYPE_UNKNOWN" - Not
@@ -1392,17 +1398,17 @@ func (s AdPolicyTopicEvidenceDestinationMismatch) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicEvidenceDestinationNotWorking: Evidence details for destination
-// not working policy violations.
+// AdPolicyTopicEvidenceDestinationNotWorking: Details for on HTTP or DNS
+// errors related to the ad destination.
 type AdPolicyTopicEvidenceDestinationNotWorking struct {
-	// Device: The device platform of the not working url.
+	// Device: The device where visiting the URL resulted in the error.
 	//
 	// Possible values:
 	//   "AD_POLICY_TOPIC_EVIDENCE_DESTINATION_NOT_WORKING_DEVICE_TYPE_UNKNOWN" -
 	// Not specified or unknown.
-	//   "DESKTOP" - Landing page doesn't work on desktop device.
-	//   "ANDROID" - Landing page doesn't work on Android device.
-	//   "IOS" - Landing page doesn't work on iOS device.
+	//   "DESKTOP" - Desktop device.
+	//   "ANDROID" - Android device.
+	//   "IOS" - iOS device.
 	Device string `json:"device,omitempty"`
 	// DnsErrorType: The type of DNS error.
 	//
@@ -1418,7 +1424,7 @@ type AdPolicyTopicEvidenceDestinationNotWorking struct {
 	ExpandedUri string `json:"expandedUri,omitempty"`
 	// HttpErrorCode: The HTTP error code.
 	HttpErrorCode int64 `json:"httpErrorCode,omitempty,string"`
-	// LastCheckedTime: The last checked time of the not working url.
+	// LastCheckedTime: The last time the error was seen when navigating to URL.
 	LastCheckedTime string `json:"lastCheckedTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Device") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1462,24 +1468,24 @@ func (s AdPolicyTopicEvidenceDestinationTextList) MarshalJSON() ([]byte, error) 
 }
 
 // AdPolicyTopicEvidenceLegalRemoval: Legal related regulation enforcement,
-// either from DMCA or local legal.
+// either from DMCA or local legal regulation.
 type AdPolicyTopicEvidenceLegalRemoval struct {
-	// ComplaintType: The legal removal complaint type.
+	// ComplaintType: The type of complaint causing the legal removal.
 	//
 	// Possible values:
 	//   "AD_POLICY_TOPIC_EVIDENCE_LEGAL_REMOVAL_COMPLAINT_TYPE_UNKNOWN" - Not
 	// specified or unknown.
-	//   "COPYRIGHT" - Only applies to DMCA.
-	//   "COURT_ORDER" - Only applies to local legal.
-	//   "LOCAL_LEGAL" - Only applies to local legal.
+	//   "COPYRIGHT" - Copyright. Only applies to DMCA.
+	//   "COURT_ORDER" - Court order. Only applies to local legal.
+	//   "LOCAL_LEGAL" - Local legal regulation. Only applies to local legal.
 	ComplaintType string `json:"complaintType,omitempty"`
-	// CountryRestrictions: The restricted countries due to the legal removal.
+	// CountryRestrictions: The countries restricted due to the legal removal.
 	CountryRestrictions []*AdPolicyCriterionRestriction `json:"countryRestrictions,omitempty"`
-	// Dmca: Whether the restriction is from DMCA regulation.
+	// Dmca: Details on the DMCA regulation legal removal.
 	Dmca *AdPolicyTopicEvidenceLegalRemovalDmca `json:"dmca,omitempty"`
-	// LocalLegal: Whether the restriction is from local legal regulation.
+	// LocalLegal: Details on the local legal regulation legal removal.
 	LocalLegal *AdPolicyTopicEvidenceLegalRemovalLocalLegal `json:"localLegal,omitempty"`
-	// RestrictedUris: The urls that are restricted due to the legal removal.
+	// RestrictedUris: The urls restricted due to the legal removal.
 	RestrictedUris []string `json:"restrictedUris,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ComplaintType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1499,9 +1505,9 @@ func (s AdPolicyTopicEvidenceLegalRemoval) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicEvidenceLegalRemovalDmca: DMCA related regulation enforcement.
+// AdPolicyTopicEvidenceLegalRemovalDmca: DMCA complaint details.
 type AdPolicyTopicEvidenceLegalRemovalDmca struct {
-	// Complainant: The entity who makes the legal complaint.
+	// Complainant: The entity who made the legal complaint.
 	Complainant string `json:"complainant,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Complainant") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1521,8 +1527,7 @@ func (s AdPolicyTopicEvidenceLegalRemovalDmca) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicEvidenceLegalRemovalLocalLegal: Local legal related regulation
-// enforcement.
+// AdPolicyTopicEvidenceLegalRemovalLocalLegal: Local legal regulation details.
 type AdPolicyTopicEvidenceLegalRemovalLocalLegal struct {
 	// LawType: Type of law for the legal notice.
 	LawType string `json:"lawType,omitempty"`
@@ -1544,10 +1549,10 @@ func (s AdPolicyTopicEvidenceLegalRemovalLocalLegal) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicEvidenceRegionalRequirements: T&S proactive enforcement for
-// policies meant to address regional requirements. This is considered as
-// Google owned investigation instead of regulation notice since it's a T&S
-// proactive enforcement.
+// AdPolicyTopicEvidenceRegionalRequirements: Trust & Safety (T&S) proactive
+// enforcement for policies meant to address regional requirements. This is
+// considered a Google-owned investigation instead of a regulation notice since
+// it's proactive T&S enforcement.
 type AdPolicyTopicEvidenceRegionalRequirements struct {
 	// RegionalRequirementsEntries: List of regional requirements.
 	RegionalRequirementsEntries []*AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry `json:"regionalRequirementsEntries,omitempty"`
@@ -1572,9 +1577,9 @@ func (s AdPolicyTopicEvidenceRegionalRequirements) MarshalJSON() ([]byte, error)
 // AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry: Policy
 // level regional legal violation details.
 type AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry struct {
-	// CountryRestrictions: The restricted countries due to the legal policy.
+	// CountryRestrictions: The countries restricted due to the legal policy.
 	CountryRestrictions []*AdPolicyCriterionRestriction `json:"countryRestrictions,omitempty"`
-	// LegalPolicy: The legal policy that is violated.
+	// LegalPolicy: The legal policy that is being violated.
 	LegalPolicy string `json:"legalPolicy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CountryRestrictions") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1621,7 +1626,7 @@ func (s AdPolicyTopicEvidenceTextList) MarshalJSON() ([]byte, error) {
 // AdPolicyTopicEvidenceTrademark: Trademark terms that caused a policy
 // violation.
 type AdPolicyTopicEvidenceTrademark struct {
-	// CountryRestrictions: Criteria that are geo restrictions.
+	// CountryRestrictions: Countries where the policy violation is relevant.
 	CountryRestrictions []*AdPolicyCriterionRestriction `json:"countryRestrictions,omitempty"`
 	// Owner: The trademark content owner.
 	Owner string `json:"owner,omitempty"`
@@ -2830,9 +2835,9 @@ type AlgorithmRulesSignal struct {
 	//   "VIDEO_DELIVERY_TYPE" - Video delivery type. Value is stored in the
 	// contentStreamTypeValue field of the comparison value. The comparisonOperator
 	// field must be set to `LIST_CONTAINS`.
-	//   "VIDEO_GENRE_ID" - Video genre id. Value is stored in the int64Value field
-	// of the comparison value. The comparisonOperator field must be set to
-	// `LIST_CONTAINS`.
+	//   "VIDEO_GENRE_ID" - Video genre id. Value is stored in the
+	// contentGenreIdValue field of the comparison value. The comparisonOperator
+	// field must be set to `LIST_CONTAINS`.
 	ImpressionSignal string `json:"impressionSignal,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActiveViewSignal") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10808,6 +10813,7 @@ type IntegralAdScience struct {
 	// doesn't specify any ad fraud prevention options.
 	//   "SUSPICIOUS_ACTIVITY_HR" - Ad Fraud - Exclude High Risk.
 	//   "SUSPICIOUS_ACTIVITY_HMR" - Ad Fraud - Exclude High and Moderate Risk.
+	//   "SUSPICIOUS_ACTIVITY_FD" - Ad Fraud - Exclude Fraudulent Device.
 	ExcludedAdFraudRisk string `json:"excludedAdFraudRisk,omitempty"`
 	// ExcludedAdultRisk: Brand Safety - **Adult content**.
 	//

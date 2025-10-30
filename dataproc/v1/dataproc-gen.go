@@ -5548,7 +5548,9 @@ func (s PySparkBatch) MarshalJSON() ([]byte, error) {
 type PySparkJob struct {
 	// ArchiveUris: Optional. HCFS URIs of archives to be extracted into the
 	// working directory of each executor. Supported file types: .jar, .tar,
-	// .tar.gz, .tgz, and .zip.
+	// .tar.gz, .tgz, and .zip.Note: Spark applications must be deployed in cluster
+	// mode (https://spark.apache.org/docs/latest/cluster-overview.html) for
+	// correct environment propagation.
 	ArchiveUris []string `json:"archiveUris,omitempty"`
 	// Args: Optional. The arguments to pass to the driver. Do not include
 	// arguments, such as --conf, that can be set as job properties, since a

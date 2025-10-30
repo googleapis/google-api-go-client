@@ -930,9 +930,10 @@ func (s ActiveViewVideoViewabilityMetricConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdAsset: A single ad asset. Next ID: 6
+// AdAsset: A single ad asset.
 type AdAsset struct {
-	// AdAssetId: Output only. Asset ID of the ad asset.
+	// AdAssetId: Output only. The ID of the ad asset. Referred to as the asset ID
+	// when assigned to an ad.
 	AdAssetId int64 `json:"adAssetId,omitempty,string"`
 	// AdAssetType: Required. The type of the ad asset.
 	//
@@ -959,7 +960,7 @@ type AdAsset struct {
 	EntityStatus string `json:"entityStatus,omitempty"`
 	// Name: Identifier. The resource name of the ad asset.
 	Name string `json:"name,omitempty"`
-	// YoutubeVideoAsset: The youtube video asset of the ad asset.
+	// YoutubeVideoAsset: Youtube video asset data.
 	YoutubeVideoAsset *YoutubeVideoAsset `json:"youtubeVideoAsset,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1000,7 +1001,6 @@ type AdGroup struct {
 	// in-stream and bumper ads.
 	//   "AD_GROUP_FORMAT_MASTHEAD" - Masthead Ad that is surfaced on the top slot
 	// on the YouTube homepage.
-	//   "AD_GROUP_FORMAT_DEMAND_GEN" - Demand Gen ads.
 	AdGroupFormat string `json:"adGroupFormat,omitempty"`
 	// AdGroupId: The unique ID of the ad group. Assigned by the system.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
@@ -1066,7 +1066,10 @@ func (s AdGroup) MarshalJSON() ([]byte, error) {
 type AdGroupAd struct {
 	// AdGroupAdId: The unique ID of the ad. Assigned by the system.
 	AdGroupAdId int64 `json:"adGroupAdId,omitempty,string"`
-	// AdGroupId: The unique ID of the ad group that the ad belongs to.
+	// AdGroupId: The unique ID of the ad group that the ad belongs to. *Caution*:
+	// Parent ad groups for Demand Gen ads are not currently retrieveable using
+	// `advertisers.adGroups.list` or `advertisers.adGroups.get`. Demand Gen ads
+	// can be identified by the absence of the `ad_details` union field.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
 	// AdPolicy: The policy approval status of the ad.
 	AdPolicy *AdPolicy `json:"adPolicy,omitempty"`
@@ -1174,32 +1177,34 @@ func (s AdGroupAssignedTargetingOption) MarshalJSON() ([]byte, error) {
 
 // AdPolicy: A single ad policy associated with an ad group ad.
 type AdPolicy struct {
-	// AdPolicyApprovalStatus: The policy approval status of an ad. Indicating the
-	// ad policy approval decision.
+	// AdPolicyApprovalStatus: The policy approval status of an ad, indicating the
+	// approval decision.
 	//
 	// Possible values:
 	//   "AD_POLICY_APPROVAL_STATUS_UNKNOWN" - Unknown or not specified.
 	//   "DISAPPROVED" - Will not serve.
-	//   "APPROVED_LIMITED" - Serves with restrictions.
-	//   "APPROVED" - Serves without restrictions.
+	//   "APPROVED_LIMITED" - Will serve with restrictions.
+	//   "APPROVED" - Will serve without restrictions.
 	//   "AREA_OF_INTEREST_ONLY" - Will not serve in targeted countries, but may
 	// serve for users who are searching for information about the targeted
 	// countries.
 	AdPolicyApprovalStatus string `json:"adPolicyApprovalStatus,omitempty"`
-	// AdPolicyReviewStatus: The policy review status of an ad. Indicating where
-	// the review process the ad is currently at.
+	// AdPolicyReviewStatus: The policy review status of an ad, indicating where in
+	// the review process the ad is currently.
 	//
 	// Possible values:
 	//   "AD_POLICY_REVIEW_STATUS_UNKNOWN" - Unknown or not specified.
 	//   "REVIEW_IN_PROGRESS" - Currently under review.
-	//   "REVIEWED" - Primary review complete. Other reviews may be continuing.
-	//   "UNDER_APPEAL" - The resource has been resubmitted for approval or its
-	// policy decision has been appealed.
-	//   "ELIGIBLE_MAY_SERVE" - The resource is eligible and may be serving but
-	// could still undergo further review.
+	//   "REVIEWED" - Primary review complete. Other reviews may still be in
+	// progress.
+	//   "UNDER_APPEAL" - Resubmitted for approval or a policy decision has been
+	// appealed.
+	//   "ELIGIBLE_MAY_SERVE" - Deemed eligible and may be serving. Further review
+	// could still follow.
 	AdPolicyReviewStatus string `json:"adPolicyReviewStatus,omitempty"`
-	// AdPolicyTopicEntry: The policy topic entries for the ad, including the
-	// topic, restriction level, and guidance on how to fix policy issues.
+	// AdPolicyTopicEntry: The entries for each policy topic identified as relating
+	// to the ad. Each entry includes the topic, restriction level, and guidance on
+	// how to fix policy issues.
 	AdPolicyTopicEntry []*AdPolicyTopicEntry `json:"adPolicyTopicEntry,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdPolicyApprovalStatus") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1219,13 +1224,11 @@ func (s AdPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyCriterionRestriction: Represents a criterion that is restricted.
-// Today only used to represent a country restriction. Used by both policy
-// evidence and policy constraints.
+// AdPolicyCriterionRestriction: Represents a country restriction.
 type AdPolicyCriterionRestriction struct {
-	// CountryCriterionId: Only used today to represent a country criterion id.
+	// CountryCriterionId: The country criterion id.
 	CountryCriterionId int64 `json:"countryCriterionId,omitempty,string"`
-	// CountryLabel: Localized name for the country. Could be empty.
+	// CountryLabel: Localized name for the country. May be empty.
 	CountryLabel string `json:"countryLabel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CountryCriterionId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1245,17 +1248,18 @@ func (s AdPolicyCriterionRestriction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicAppealInfo: Appeal related information for a policy topic.
+// AdPolicyTopicAppealInfo: Information on how to appeal a policy decision.
 type AdPolicyTopicAppealInfo struct {
-	// AppealFormLink: Only available when appeal_type is APPEAL_FORM.
+	// AppealFormLink: Only available when appeal_type is `APPEAL_FORM`.
 	AppealFormLink string `json:"appealFormLink,omitempty"`
-	// AppealType: Indicate whether the policy topic can be self-service appeal or
-	// appeal form.
+	// AppealType: Whether the decision can be appealed through a self-service
+	// appeal or an appeal form.
 	//
 	// Possible values:
 	//   "AD_POLICY_APPEAL_TYPE_UNKNOWN" - Unknown or not specified.
-	//   "SELF_SERVICE_APPEAL" - The policy topic can be self-service appeal.
-	//   "APPEAL_FORM" - The policy topic needs to be appealed through appeal form.
+	//   "SELF_SERVICE_APPEAL" - The decision can be appealed through a
+	// self-service appeal.
+	//   "APPEAL_FORM" - The decision can be appealed using an appeal form.
 	AppealType string `json:"appealType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppealFormLink") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1275,8 +1279,7 @@ func (s AdPolicyTopicAppealInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicConstraint: Additional constraints information that explains
-// restrictions applied to this policy.
+// AdPolicyTopicConstraint: Details on ad serving constraints.
 type AdPolicyTopicConstraint struct {
 	// CertificateDomainMismatchCountryList: Countries where the resource's domain
 	// is not covered by the certificates associated with it.
@@ -1292,7 +1295,7 @@ type AdPolicyTopicConstraint struct {
 	// GlobalCertificateMissing: Certificate is required to serve in any country.
 	GlobalCertificateMissing *AdPolicyTopicConstraintAdPolicyGlobalCertificateMissingConstraint `json:"globalCertificateMissing,omitempty"`
 	// RequestCertificateFormLink: Link to the form to request a certificate for
-	// the policy topic constraint.
+	// the constraint.
 	RequestCertificateFormLink string `json:"requestCertificateFormLink,omitempty"`
 	// ResellerConstraint: Reseller constraint.
 	ResellerConstraint *AdPolicyTopicConstraintAdPolicyResellerConstraint `json:"resellerConstraint,omitempty"`
@@ -1355,9 +1358,10 @@ type AdPolicyTopicConstraintAdPolicyGlobalCertificateMissingConstraint struct {
 type AdPolicyTopicConstraintAdPolicyResellerConstraint struct {
 }
 
-// AdPolicyTopicEntry: Policy topic entry.
+// AdPolicyTopicEntry: An entry describing how an ad has been identified as
+// relating to an ad policy.
 type AdPolicyTopicEntry struct {
-	// AppealInfo: Ad policy appeal related information for the policy topic.
+	// AppealInfo: Information on how to appeal the policy decision.
 	AppealInfo *AdPolicyTopicAppealInfo `json:"appealInfo,omitempty"`
 	// HelpCenterLink: Ad policy help center link for the policy topic.
 	HelpCenterLink string `json:"helpCenterLink,omitempty"`
@@ -1365,9 +1369,9 @@ type AdPolicyTopicEntry struct {
 	//
 	// Possible values:
 	//   "AD_POLICY_DECISION_TYPE_UNKNOWN" - Unknown or not specified.
-	//   "PURSUANT_TO_NOTICE" - The decision is from legal notice, court order, or
-	// trademark content owner complaint, etc.
-	//   "GOOGLE_INVESTIGATION" - The decision is from the Google owned
+	//   "PURSUANT_TO_NOTICE" - The decision is from a legal notice, court order,
+	// or trademark content owner complaint, etc.
+	//   "GOOGLE_INVESTIGATION" - The decision is from a Google-owned
 	// investigation.
 	PolicyDecisionType string `json:"policyDecisionType,omitempty"`
 	// PolicyEnforcementMeans: The policy enforcement means used in the policy
@@ -1379,19 +1383,21 @@ type AdPolicyTopicEntry struct {
 	//   "HUMAN_REVIEW" - A human was partially or fully involved in the decision
 	// enforcement process.
 	PolicyEnforcementMeans string `json:"policyEnforcementMeans,omitempty"`
-	// PolicyLabel: Localized label text for policy. (Trademarks in text, Contains
-	// Alcohol, etc.)
+	// PolicyLabel: Localized label text for policy. Examples include "Trademarks
+	// in text", "Contains Alcohol", etc.
 	PolicyLabel string `json:"policyLabel,omitempty"`
-	// PolicyTopic: The policy topic of an ad policy topic entry. (TRADEMARKS,
-	// ALCOHOL, etc.)
+	// PolicyTopic: The policy topic. Examples include "TRADEMARKS", "ALCOHOL",
+	// etc.
 	PolicyTopic string `json:"policyTopic,omitempty"`
-	// PolicyTopicConstraints: The policy topic constraints.
+	// PolicyTopicConstraints: The serving constraints relevant to the policy
+	// decision.
 	PolicyTopicConstraints []*AdPolicyTopicConstraint `json:"policyTopicConstraints,omitempty"`
-	// PolicyTopicDescription: Short summary description of the policy topic.
+	// PolicyTopicDescription: A short summary description of the policy topic.
 	PolicyTopicDescription string `json:"policyTopicDescription,omitempty"`
-	// PolicyTopicEvidences: The policy topic evidences.
+	// PolicyTopicEvidences: The evidence used in the policy decision.
 	PolicyTopicEvidences []*AdPolicyTopicEvidence `json:"policyTopicEvidences,omitempty"`
-	// PolicyTopicType: The policy topic entry type.
+	// PolicyTopicType: How ad serving will be affected due to the relation to the
+	// ad policy topic.
 	//
 	// Possible values:
 	//   "AD_POLICY_TOPIC_ENTRY_TYPE_UNKNOWN" - Unknown or not specified.
@@ -1399,9 +1405,11 @@ type AdPolicyTopicEntry struct {
 	//   "FULLY_LIMITED" - The resource will not serve in all targeted countries.
 	//   "LIMITED" - The resource cannot serve in some countries.
 	//   "DESCRIPTIVE" - The resource can serve.
-	//   "BROADENING" - The resource cannot serve to entry in any way.
-	//   "AREA_OF_INTEREST_ONLY" - The resource is only serving in classroom
-	// account.
+	//   "BROADENING" - The resource can serve, and may serve beyond normal
+	// coverage.
+	//   "AREA_OF_INTEREST_ONLY" - The resource is constrained for all targeted
+	// countries, but may serve for users who are searching for information about
+	// the targeted countries.
 	PolicyTopicType string `json:"policyTopicType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppealInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1421,23 +1429,22 @@ func (s AdPolicyTopicEntry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicEvidence: Additional evidence information that explains a
-// policy decision.
+// AdPolicyTopicEvidence: Evidence information used in the policy decision.
 type AdPolicyTopicEvidence struct {
 	// Counterfeit: Counterfeit enforcement that caused a policy violation.
 	Counterfeit *AdPolicyTopicEvidenceCounterfeit `json:"counterfeit,omitempty"`
-	// DestinationMismatch: Mismatch between the ad destinations URLs.
+	// DestinationMismatch: A mismatch between the ad destination URLs.
 	DestinationMismatch *AdPolicyTopicEvidenceDestinationMismatch `json:"destinationMismatch,omitempty"`
-	// DestinationNotWorking: Destination not working because of HTTP error or DNS
-	// error.
+	// DestinationNotWorking: Information on HTTP or DNS errors related to the ad
+	// destination.
 	DestinationNotWorking *AdPolicyTopicEvidenceDestinationNotWorking `json:"destinationNotWorking,omitempty"`
 	// DestinationTextList: The text in the destination of the ad that is causing a
 	// policy violation.
 	DestinationTextList *AdPolicyTopicEvidenceDestinationTextList `json:"destinationTextList,omitempty"`
 	// HttpCode: HTTP code returned when the final URL was crawled.
 	HttpCode int64 `json:"httpCode,omitempty"`
-	// LanguageCode: The language the ad was detected to be written in. This is an
-	// IETF language tag such as "en-US".
+	// LanguageCode: The language the ad was detected to be written in. This field
+	// uses IETF language tags, such as "en-US".
 	LanguageCode string `json:"languageCode,omitempty"`
 	// LegalRemoval: Legal related regulation enforcement that caused a policy
 	// violation.
@@ -1469,10 +1476,10 @@ func (s AdPolicyTopicEvidence) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicEvidenceCounterfeit: Counterfeit enforcement that caused a
-// policy violation.
+// AdPolicyTopicEvidenceCounterfeit: Details on the counterfeit enforcement
+// that caused a policy violation.
 type AdPolicyTopicEvidenceCounterfeit struct {
-	// Owners: The content or product owners that make the complainants.
+	// Owners: The content or product owners that made a complaint.
 	Owners []string `json:"owners,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Owners") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1492,14 +1499,14 @@ func (s AdPolicyTopicEvidenceCounterfeit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicEvidenceDestinationMismatch: A list of destination mismatch URL
-// types.
+// AdPolicyTopicEvidenceDestinationMismatch: Details on a mismatch between
+// destination URL types.
 type AdPolicyTopicEvidenceDestinationMismatch struct {
-	// UriTypes: The set of URLs that do not match each other. The list can include
-	// single or multiple uri types. Example 1: [DISPLAY_URL, FINAL_URL] means ad
-	// display URL does not match with the ad final URL. Example 2: [FINAL_URL]
-	// means ad final URL did not match the crawled url, which is also considered
-	// as destinationmismatch.
+	// UriTypes: The set of URLs that do not match. The list can include single or
+	// multiple uri types. Example 1: [`DISPLAY_URL`, `FINAL_URL`] means ad display
+	// URL does not match with the ad final URL. Example 2: [`FINAL_URL`] means ad
+	// final URL did not match the crawled url, which is also considered as
+	// destination mismatch.
 	//
 	// Possible values:
 	//   "AD_POLICY_TOPIC_EVIDENCE_DESTINATION_MISMATCH_URL_TYPE_UNKNOWN" - Not
@@ -1528,17 +1535,17 @@ func (s AdPolicyTopicEvidenceDestinationMismatch) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicEvidenceDestinationNotWorking: Evidence details for destination
-// not working policy violations.
+// AdPolicyTopicEvidenceDestinationNotWorking: Details for on HTTP or DNS
+// errors related to the ad destination.
 type AdPolicyTopicEvidenceDestinationNotWorking struct {
-	// Device: The device platform of the not working url.
+	// Device: The device where visiting the URL resulted in the error.
 	//
 	// Possible values:
 	//   "AD_POLICY_TOPIC_EVIDENCE_DESTINATION_NOT_WORKING_DEVICE_TYPE_UNKNOWN" -
 	// Not specified or unknown.
-	//   "DESKTOP" - Landing page doesn't work on desktop device.
-	//   "ANDROID" - Landing page doesn't work on Android device.
-	//   "IOS" - Landing page doesn't work on iOS device.
+	//   "DESKTOP" - Desktop device.
+	//   "ANDROID" - Android device.
+	//   "IOS" - iOS device.
 	Device string `json:"device,omitempty"`
 	// DnsErrorType: The type of DNS error.
 	//
@@ -1554,7 +1561,7 @@ type AdPolicyTopicEvidenceDestinationNotWorking struct {
 	ExpandedUri string `json:"expandedUri,omitempty"`
 	// HttpErrorCode: The HTTP error code.
 	HttpErrorCode int64 `json:"httpErrorCode,omitempty,string"`
-	// LastCheckedTime: The last checked time of the not working url.
+	// LastCheckedTime: The last time the error was seen when navigating to URL.
 	LastCheckedTime string `json:"lastCheckedTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Device") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1598,24 +1605,24 @@ func (s AdPolicyTopicEvidenceDestinationTextList) MarshalJSON() ([]byte, error) 
 }
 
 // AdPolicyTopicEvidenceLegalRemoval: Legal related regulation enforcement,
-// either from DMCA or local legal.
+// either from DMCA or local legal regulation.
 type AdPolicyTopicEvidenceLegalRemoval struct {
-	// ComplaintType: The legal removal complaint type.
+	// ComplaintType: The type of complaint causing the legal removal.
 	//
 	// Possible values:
 	//   "AD_POLICY_TOPIC_EVIDENCE_LEGAL_REMOVAL_COMPLAINT_TYPE_UNKNOWN" - Not
 	// specified or unknown.
-	//   "COPYRIGHT" - Only applies to DMCA.
-	//   "COURT_ORDER" - Only applies to local legal.
-	//   "LOCAL_LEGAL" - Only applies to local legal.
+	//   "COPYRIGHT" - Copyright. Only applies to DMCA.
+	//   "COURT_ORDER" - Court order. Only applies to local legal.
+	//   "LOCAL_LEGAL" - Local legal regulation. Only applies to local legal.
 	ComplaintType string `json:"complaintType,omitempty"`
-	// CountryRestrictions: The restricted countries due to the legal removal.
+	// CountryRestrictions: The countries restricted due to the legal removal.
 	CountryRestrictions []*AdPolicyCriterionRestriction `json:"countryRestrictions,omitempty"`
-	// Dmca: Whether the restriction is from DMCA regulation.
+	// Dmca: Details on the DMCA regulation legal removal.
 	Dmca *AdPolicyTopicEvidenceLegalRemovalDmca `json:"dmca,omitempty"`
-	// LocalLegal: Whether the restriction is from local legal regulation.
+	// LocalLegal: Details on the local legal regulation legal removal.
 	LocalLegal *AdPolicyTopicEvidenceLegalRemovalLocalLegal `json:"localLegal,omitempty"`
-	// RestrictedUris: The urls that are restricted due to the legal removal.
+	// RestrictedUris: The urls restricted due to the legal removal.
 	RestrictedUris []string `json:"restrictedUris,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ComplaintType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1635,9 +1642,9 @@ func (s AdPolicyTopicEvidenceLegalRemoval) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicEvidenceLegalRemovalDmca: DMCA related regulation enforcement.
+// AdPolicyTopicEvidenceLegalRemovalDmca: DMCA complaint details.
 type AdPolicyTopicEvidenceLegalRemovalDmca struct {
-	// Complainant: The entity who makes the legal complaint.
+	// Complainant: The entity who made the legal complaint.
 	Complainant string `json:"complainant,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Complainant") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1657,8 +1664,7 @@ func (s AdPolicyTopicEvidenceLegalRemovalDmca) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicEvidenceLegalRemovalLocalLegal: Local legal related regulation
-// enforcement.
+// AdPolicyTopicEvidenceLegalRemovalLocalLegal: Local legal regulation details.
 type AdPolicyTopicEvidenceLegalRemovalLocalLegal struct {
 	// LawType: Type of law for the legal notice.
 	LawType string `json:"lawType,omitempty"`
@@ -1680,10 +1686,10 @@ func (s AdPolicyTopicEvidenceLegalRemovalLocalLegal) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdPolicyTopicEvidenceRegionalRequirements: T&S proactive enforcement for
-// policies meant to address regional requirements. This is considered as
-// Google owned investigation instead of regulation notice since it's a T&S
-// proactive enforcement.
+// AdPolicyTopicEvidenceRegionalRequirements: Trust & Safety (T&S) proactive
+// enforcement for policies meant to address regional requirements. This is
+// considered a Google-owned investigation instead of a regulation notice since
+// it's proactive T&S enforcement.
 type AdPolicyTopicEvidenceRegionalRequirements struct {
 	// RegionalRequirementsEntries: List of regional requirements.
 	RegionalRequirementsEntries []*AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry `json:"regionalRequirementsEntries,omitempty"`
@@ -1708,9 +1714,9 @@ func (s AdPolicyTopicEvidenceRegionalRequirements) MarshalJSON() ([]byte, error)
 // AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry: Policy
 // level regional legal violation details.
 type AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry struct {
-	// CountryRestrictions: The restricted countries due to the legal policy.
+	// CountryRestrictions: The countries restricted due to the legal policy.
 	CountryRestrictions []*AdPolicyCriterionRestriction `json:"countryRestrictions,omitempty"`
-	// LegalPolicy: The legal policy that is violated.
+	// LegalPolicy: The legal policy that is being violated.
 	LegalPolicy string `json:"legalPolicy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CountryRestrictions") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1757,7 +1763,7 @@ func (s AdPolicyTopicEvidenceTextList) MarshalJSON() ([]byte, error) {
 // AdPolicyTopicEvidenceTrademark: Trademark terms that caused a policy
 // violation.
 type AdPolicyTopicEvidenceTrademark struct {
-	// CountryRestrictions: Criteria that are geo restrictions.
+	// CountryRestrictions: Countries where the policy violation is relevant.
 	CountryRestrictions []*AdPolicyCriterionRestriction `json:"countryRestrictions,omitempty"`
 	// Owner: The trademark content owner.
 	Owner string `json:"owner,omitempty"`
@@ -2966,9 +2972,9 @@ type AlgorithmRulesSignal struct {
 	//   "VIDEO_DELIVERY_TYPE" - Video delivery type. Value is stored in the
 	// contentStreamTypeValue field of the comparison value. The comparisonOperator
 	// field must be set to `LIST_CONTAINS`.
-	//   "VIDEO_GENRE_ID" - Video genre id. Value is stored in the int64Value field
-	// of the comparison value. The comparisonOperator field must be set to
-	// `LIST_CONTAINS`.
+	//   "VIDEO_GENRE_ID" - Video genre id. Value is stored in the
+	// contentGenreIdValue field of the comparison value. The comparisonOperator
+	// field must be set to `LIST_CONTAINS`.
 	ImpressionSignal string `json:"impressionSignal,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActiveViewSignal") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4308,8 +4314,8 @@ func (s BudgetSummary) MarshalJSON() ([]byte, error) {
 
 // BulkCreateAdAssetsRequest: A request message for BulkCreateAdAssets.
 type BulkCreateAdAssetsRequest struct {
-	// AdAssets: Required. Ad assets to create. Only supports youtube video assets
-	// for now.
+	// AdAssets: Required. Ad assets to create. Only supports assets of AdAssetType
+	// `AD_ASSET_TYPE_YOUTUBE_VIDEO`.
 	AdAssets []*AdAsset `json:"adAssets,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdAssets") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4331,7 +4337,7 @@ func (s BulkCreateAdAssetsRequest) MarshalJSON() ([]byte, error) {
 
 // BulkCreateAdAssetsResponse: A response message for BulkCreateAdAssets.
 type BulkCreateAdAssetsResponse struct {
-	// AdAssets: The uploaded video ad assets, if successful.
+	// AdAssets: The created ad assets.
 	AdAssets []*AdAsset `json:"adAssets,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -6528,8 +6534,8 @@ func (s CounterEvent) MarshalJSON() ([]byte, error) {
 
 // CreateAdAssetRequest: A request message for CreateAdAsset.
 type CreateAdAssetRequest struct {
-	// AdAsset: Required. Ad assets to create. Only supports youtube video assets
-	// for now.
+	// AdAsset: Required. The ad asset to create. Only supports assets of
+	// AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`.
 	AdAsset *AdAsset `json:"adAsset,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdAsset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -11026,6 +11032,7 @@ type IntegralAdScience struct {
 	// doesn't specify any ad fraud prevention options.
 	//   "SUSPICIOUS_ACTIVITY_HR" - Ad Fraud - Exclude High Risk.
 	//   "SUSPICIOUS_ACTIVITY_HMR" - Ad Fraud - Exclude High and Moderate Risk.
+	//   "SUSPICIOUS_ACTIVITY_FD" - Ad Fraud - Exclude Fraudulent Device.
 	ExcludedAdFraudRisk string `json:"excludedAdFraudRisk,omitempty"`
 	// ExcludedAdultRisk: Brand Safety - **Adult content**.
 	//
@@ -12321,7 +12328,9 @@ func (s LineItemFlight) MarshalJSON() ([]byte, error) {
 
 // ListAdAssetsResponse: A response message for ListAdAssets.
 type ListAdAssetsResponse struct {
-	// AdAssets: The list of ad assets. This list will be absent if empty.
+	// AdAssets: The list of ad assets. The list will only contain assets of
+	// AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`. This list will be absent if
+	// empty.
 	AdAssets []*AdAsset `json:"adAssets,omitempty"`
 	// NextPageToken: A token to retrieve the next page of results. Pass this value
 	// in the page_token field in the subsequent call to `ListAdAssets` method to
@@ -13394,10 +13403,12 @@ func (s ListUsersResponse) MarshalJSON() ([]byte, error) {
 // ListYoutubeAssetAssociationsResponse: Response message for
 // YoutubeAssetAssociationService.ListYoutubeAssetAssociations.
 type ListYoutubeAssetAssociationsResponse struct {
-	// NextPageToken: A token to retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass this value
+	// in the page_token field in the subsequent call to
+	// `ListYoutubeAssetAssociations` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// YoutubeAssetAssociations: The list of associations. This list will be absent
-	// if empty.
+	// YoutubeAssetAssociations: The list of asset associations. This list will be
+	// absent if empty.
 	YoutubeAssetAssociations []*YoutubeAssetAssociation `json:"youtubeAssetAssociations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -16742,10 +16753,10 @@ func (s UniversalAdId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UploadAdAssetRequest: A request message for UploadAdAsset. Next ID: 6
+// UploadAdAssetRequest: A request message for UploadAdAsset.
 type UploadAdAssetRequest struct {
-	// AdAssetType: Required. The type of the ad asset. Only supports image assets
-	// for now.
+	// AdAssetType: Required. The type of the ad asset. Only `AD_ASSET_TYPE_IMAGE`
+	// is supported.
 	//
 	// Possible values:
 	//   "AD_ASSET_TYPE_UNSPECIFIED" - The ad asset type is unspecified.
@@ -16776,7 +16787,7 @@ func (s UploadAdAssetRequest) MarshalJSON() ([]byte, error) {
 
 // UploadAdAssetResponse: A response message for UploadAdAsset.
 type UploadAdAssetResponse struct {
-	// AdAsset: The uploaded ad asset, if successful.
+	// AdAsset: The created ad asset.
 	AdAsset *AdAsset `json:"adAsset,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -17486,33 +17497,35 @@ func (s YoutubeAndPartnersSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// YoutubeAssetAssociation: A YouTube asset association between one linked
-// entity and one YouTube asset.
+// YoutubeAssetAssociation: An association between a resource and a YouTube
+// asset.
 type YoutubeAssetAssociation struct {
-	// LinkedYoutubeAsset: Required. The linked YouTube asset in the association.
+	// LinkedYoutubeAsset: Required. The YouTube asset associated with the
+	// resource.
 	LinkedYoutubeAsset *YoutubeAssetAssociationLinkedYouTubeAsset `json:"linkedYoutubeAsset,omitempty"`
-	// Name: Identifier. The resource name of the association. For line item level
+	// Name: Identifier. The resource name of the association. For line item-level
 	// associations: The name pattern is
 	// `advertisers/{advertiser_id}/lineItems/{line_item_id}/youtubeAssetTypes/{yout
 	// ube_asset_type}/youtubeAssetAssociations/{youtube_asset_association_id}`.
-	// For ad group level associations: The name pattern is
+	// For ad group-level associations: The name pattern is
 	// `advertisers/{advertiser_id}/adGroups/{ad_group_id}/youtubeAssetTypes/{youtub
 	// e_asset_type}/youtubeAssetAssociations/{youtube_asset_association_id}`. For
-	// location and affiliate location associations: {youtube_asset_association_id}
-	// is the linked asset set ID if the YouTube asset type (location or affiliate
-	// location) is enabled on the linked line item or ad group, 0 if disabled. For
-	// sitelink associations: {youtube_asset_association_id} is the linked asset
-	// ID.
+	// `YOUTUBE_ASSET_TYPE_LOCATION` and `YOUTUBE_ASSET_TYPE_AFFILIATE_LOCATION`
+	// associations: `youtube_asset_association_id` is the ID of the asset set
+	// linked, or 0 if the location_matching_type or
+	// affiliate_location_matching_type is `DISABLED`. For
+	// `YOUTUBE_ASSET_TYPE_SITELINK` associations: `youtube_asset_association_id`
+	// is be the ID of the sitelink asset linked.
 	Name string `json:"name,omitempty"`
-	// YoutubeAssetType: Required. The type of the linked YouTube asset in the
-	// association.
+	// YoutubeAssetType: Required. The type of YouTube asset associated with the
+	// resource.
 	//
 	// Possible values:
 	//   "YOUTUBE_ASSET_TYPE_UNSPECIFIED" - YouTube asset type is not specified or
 	// is unknown in this version.
-	//   "YOUTUBE_ASSET_TYPE_LOCATION" - Location asset
-	//   "YOUTUBE_ASSET_TYPE_AFFILIATE_LOCATION" - Affiliate location asset
-	//   "YOUTUBE_ASSET_TYPE_SITELINK" - Sitelink asset
+	//   "YOUTUBE_ASSET_TYPE_LOCATION" - Location asset.
+	//   "YOUTUBE_ASSET_TYPE_AFFILIATE_LOCATION" - Affiliate location asset.
+	//   "YOUTUBE_ASSET_TYPE_SITELINK" - Sitelink asset.
 	YoutubeAssetType string `json:"youtubeAssetType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -17539,10 +17552,9 @@ func (s YoutubeAssetAssociation) MarshalJSON() ([]byte, error) {
 // matches eligible affiliate location assets for serving.
 type YoutubeAssetAssociationAffiliateLocationAssetFilter struct {
 	// AffiliateLocationMatchingFunction: Optional. The matching function that
-	// contains details about how the affiliate location asset filter matches
-	// affiliate location assets. When creating associations with affiliate
-	// location asset filters: This field is required only for affiliate location
-	// asset filters of AffiliateLocationMatchingType#SELECTED_CHAINS.
+	// determines how the affiliate location asset filter matches affiliate
+	// location assets. This field is required and can only be set for if
+	// affiliate_location_matching_type is `SELECTED_CHAINS`.
 	AffiliateLocationMatchingFunction *YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationMatchingFunction `json:"affiliateLocationMatchingFunction,omitempty"`
 	// AffiliateLocationMatchingType: Required. The matching type of this affiliate
 	// location asset filter.
@@ -17552,8 +17564,7 @@ type YoutubeAssetAssociationAffiliateLocationAssetFilter struct {
 	// matching type is not specified or is unknown in this version.
 	//   "SELECT_ALL" - All available affiliate location assets are eligible for
 	// serving.
-	//   "SELECTED_CHAINS" - The affiliate location assets that match particular
-	// chains can serve.
+	//   "SELECTED_CHAINS" - The selected affiliate location assets can serve.
 	//   "DISABLED" - No affiliate location assets can serve.
 	AffiliateLocationMatchingType string `json:"affiliateLocationMatchingType,omitempty"`
 	// AssetSetId: Output only. The ID of the asset set that matches the affiliate
@@ -17580,7 +17591,7 @@ func (s YoutubeAssetAssociationAffiliateLocationAssetFilter) MarshalJSON() ([]by
 }
 
 // YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationChain: A
-// chain for affiliate locations.
+// chain of affiliate locations.
 type YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationChain struct {
 	// ChainId: Required. ID of the affiliate location chain.
 	ChainId int64 `json:"chainId,omitempty,string"`
@@ -17605,9 +17616,8 @@ func (s YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationChai
 // YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationMatchingF
 // unction: The matching function for an affiliate location asset filter.
 type YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationMatchingFunction struct {
-	// Chains: Optional. The chains that match the affiliate location assets for
-	// serving. This is required to set when linking with affiliate location asset
-	// filters of AffiliateLocationMatchingType#SELECTED_CHAINS.
+	// Chains: Optional. The selected affiliate location chain IDs. This field is
+	// required if affiliate_location_matching_type is `SELECTED_CHAINS`.
 	Chains []*YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationChain `json:"chains,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Chains") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -17627,14 +17637,18 @@ func (s YoutubeAssetAssociationAffiliateLocationAssetFilterAffiliateLocationMatc
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// YoutubeAssetAssociationLinkedYouTubeAsset: The YouTube asset linked with the
-// entity in a YouTube asset association.
+// YoutubeAssetAssociationLinkedYouTubeAsset: A YouTube asset linked to a
+// resource in a YoutubeAssetAssociation.
 type YoutubeAssetAssociationLinkedYouTubeAsset struct {
-	// AffiliateLocationAssetFilter: The linked affiliate location asset filter.
+	// AffiliateLocationAssetFilter: An affiliate location asset filter. This can
+	// be set only when youtube_asset_type is
+	// `YOUTUBE_ASSET_TYPE_AFFILIATE_LOCATION`.
 	AffiliateLocationAssetFilter *YoutubeAssetAssociationAffiliateLocationAssetFilter `json:"affiliateLocationAssetFilter,omitempty"`
-	// LocationAssetFilter: The linked location asset filter.
+	// LocationAssetFilter: A location asset filter. This can be set only when
+	// youtube_asset_type is `YOUTUBE_ASSET_TYPE_LOCATION`.
 	LocationAssetFilter *YoutubeAssetAssociationLocationAssetFilter `json:"locationAssetFilter,omitempty"`
-	// SitelinkAsset: The linked sitelink asset.
+	// SitelinkAsset: A sitelink asset. This can be set only when
+	// youtube_asset_type is `YOUTUBE_ASSET_TYPE_SITELINK`.
 	SitelinkAsset *YoutubeAssetAssociationSitelinkAsset `json:"sitelinkAsset,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "AffiliateLocationAssetFilter") to unconditionally include in API requests.
@@ -17660,13 +17674,10 @@ type YoutubeAssetAssociationLocationAssetFilter struct {
 	// AssetSetId: Output only. The ID of the asset set that matches the location
 	// assets eligible for serving.
 	AssetSetId int64 `json:"assetSetId,omitempty,string"`
-	// LocationMatchingFunction: Optional. The matching function that contains
-	// details about how the location asset filter matches location assets. This
-	// field should only be set for location asset filters of
-	// LocationMatchingType#FILTER or LocationMatchingType#SELECTED_ASSETS. When
-	// creating associations with location asset filters: This field is required
-	// only for location asset filters of LocationMatchingType#FILTER or
-	// LocationMatchingType#SELECTED_ASSETS.
+	// LocationMatchingFunction: Optional. The matching function that determines
+	// how the location asset filter matches location assets. This field is
+	// required and can only be set for if location_matching_type is `FILTER` or
+	// `SELECTED_ASSETS`.
 	LocationMatchingFunction *YoutubeAssetAssociationLocationAssetFilterLocationMatchingFunction `json:"locationMatchingFunction,omitempty"`
 	// LocationMatchingType: Required. The matching type of this location asset
 	// filter.
@@ -17675,9 +17686,9 @@ type YoutubeAssetAssociationLocationAssetFilter struct {
 	//   "LOCATION_MATCHING_TYPE_UNSPECIFIED" - Location matching type is not
 	// specified or is unknown in this version.
 	//   "SELECT_ALL" - All available location assets are eligible for serving.
-	//   "FILTER" - The location assets that match business name and / or label
-	// filters can serve.
-	//   "SELECTED_ASSETS" - Only the location assets selected can serve.
+	//   "FILTER" - The location assets that match a provided business name and/or
+	// label filters can serve.
+	//   "SELECTED_ASSETS" - Only the selected location assets can serve.
 	//   "DISABLED" - No location assets can serve.
 	LocationMatchingType string `json:"locationMatchingType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssetSetId") to
@@ -17701,19 +17712,15 @@ func (s YoutubeAssetAssociationLocationAssetFilter) MarshalJSON() ([]byte, error
 // YoutubeAssetAssociationLocationAssetFilterLocationMatchingFunction: The
 // matching function for a location asset filter.
 type YoutubeAssetAssociationLocationAssetFilterLocationMatchingFunction struct {
-	// Business: Optional. The business name filter. This can be set only when
-	// linking with location asset filters of LocationMatchingType#FILTER. This is
-	// optional when linking with location asset filters of
-	// LocationMatchingType#FILTER.
+	// Business: Optional. The business name to match with. This field is optional
+	// and can only be set if location_matching_type is `FILTER`.
 	Business string `json:"business,omitempty"`
-	// Labels: Optional. The label filters. Label filters are OR'ed together. This
-	// can be set only when linking with location asset filters of
-	// LocationMatchingType#FILTER. This is optional when linking with location
-	// asset filters of LocationMatchingType#FILTER.
+	// Labels: Optional. The labels to match with. Labels are logically OR'ed
+	// together. This field is optional and can only be set if
+	// location_matching_type is `FILTER`.
 	Labels []string `json:"labels,omitempty"`
-	// LocationAssetIds: Optional. The selected location asset IDs. This is
-	// required to set when linking with location asset filters of
-	// LocationMatchingType#SELECTED_ASSETS.
+	// LocationAssetIds: Optional. The selected location asset IDs. This field is
+	// required if location_matching_type is `SELECTED_ASSETS`.
 	LocationAssetIds googleapi.Int64s `json:"locationAssetIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Business") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -17783,10 +17790,10 @@ func (s YoutubeChannelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// YoutubeVideoAsset: The youtube video asset data of the ad asset.
+// YoutubeVideoAsset: Data for a YouTube video ad asset.
 type YoutubeVideoAsset struct {
-	// YoutubeVideoId: Required. The youtube video id of the asset. This is the 11
-	// char string value used in the Youtube video URL.
+	// YoutubeVideoId: Required. The YouTube video id of the asset. This is the 11
+	// char string value used in the YouTube video URL.
 	YoutubeVideoId string `json:"youtubeVideoId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "YoutubeVideoId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -18879,10 +18886,11 @@ type AdvertisersAdAssetsBulkCreateCall struct {
 	header_                   http.Header
 }
 
-// BulkCreate: BulkCreate video assets for Ad. Only supports youtube video
-// assets for now.
+// BulkCreate: Creates multiple ad assets in a single request. Returns the
+// newly-created ad assets if successful. Only supports the creation of assets
+// of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`.
 //
-// - advertiserId: The ID of the advertiser this ad asset belongs to.
+// - advertiserId: The ID of the advertiser these ad assets belong to.
 func (r *AdvertisersAdAssetsService) BulkCreate(advertiserId int64, bulkcreateadassetsrequest *BulkCreateAdAssetsRequest) *AdvertisersAdAssetsBulkCreateCall {
 	c := &AdvertisersAdAssetsBulkCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -18984,8 +18992,9 @@ type AdvertisersAdAssetsCreateCall struct {
 	header_              http.Header
 }
 
-// Create: Create a video asset for Ad. Only supports youtube video assets for
-// now.
+// Create: Creates an ad asset. Returns the newly-created ad asset if
+// successful. Only supports the creation of assets of AdAssetType
+// `AD_ASSET_TYPE_YOUTUBE_VIDEO`.
 //
 // - advertiserId: The ID of the advertiser this ad asset belongs to.
 func (r *AdvertisersAdAssetsService) Create(advertiserId int64, createadassetrequest *CreateAdAssetRequest) *AdvertisersAdAssetsCreateCall {
@@ -19089,10 +19098,12 @@ type AdvertisersAdAssetsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get an ad asset by ad asset ID. Only supports youtube video assets.
+// Get: Gets an ad asset. Only supports the retrieval of assets of AdAssetType
+// `AD_ASSET_TYPE_YOUTUBE_VIDEO`.
 //
-// - adAssetId: The ID of the ad asset to fetch.
-// - advertiserId: The ID of the advertiser this ad asset belongs to.
+//   - adAssetId: The ID of the ad asset to fetch. Only supports assets of
+//     AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`.
+//   - advertiserId: The ID of the advertiser this ad asset belongs to.
 func (r *AdvertisersAdAssetsService) Get(advertiserId int64, adAssetId int64) *AdvertisersAdAssetsGetCall {
 	c := &AdvertisersAdAssetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19201,20 +19212,22 @@ type AdvertisersAdAssetsListCall struct {
 	header_      http.Header
 }
 
-// List: List ad assets by advertiser ID. Only supports youtube video ad
-// assets.
+// List: Lists ad assets under an advertiser ID. Only supports the retrieval of
+// assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`.
 //
-// - advertiserId: The ID of the advertiser to list assets for.
+// - advertiserId: The ID of the advertiser the ad assets belong to.
 func (r *AdvertisersAdAssetsService) List(advertiserId int64) *AdvertisersAdAssetsListCall {
 	c := &AdvertisersAdAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression to restrict
-// the ad assets to return. The supported fields are: *
-// `youtubeVideoAsset.youtubeVideoId` * `entityStatus` Examples: *
-// `entityStatus=ENTITY_STATUS_ACTIVE`
+// Filter sets the optional parameter "filter": Allows filtering of the results
+// by ad asset fields. Supported syntax: * A restriction has the form of
+// `{field} {operator} {value}`. * All fields must use the `EQUALS (=)`
+// operator. Supported fields: * `youtubeVideoAsset.youtubeVideoId` *
+// `entityStatus` Examples: * All active YouTube video ad assets under an
+// advertiser: `entityStatus=ENTITY_STATUS_ACTIVE`
 func (c *AdvertisersAdAssetsListCall) Filter(filter string) *AdvertisersAdAssetsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -19224,7 +19237,7 @@ func (c *AdvertisersAdAssetsListCall) Filter(filter string) *AdvertisersAdAssets
 // list. Acceptable values are: * `entityStatus` *
 // `youtubeVideoAsset.youtubeVideoId` * `adAssetId` (default) The default
 // sorting order is ascending. To specify descending order for a field, a
-// suffix "desc" should be added to the field name. Example: `assetId desc`.
+// suffix "desc" should be added to the field name. Example: `adAssetId desc`.
 func (c *AdvertisersAdAssetsListCall) OrderBy(orderBy string) *AdvertisersAdAssetsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -19240,7 +19253,7 @@ func (c *AdvertisersAdAssetsListCall) PageSize(pageSize int64) *AdvertisersAdAss
 
 // PageToken sets the optional parameter "pageToken": A token identifying a
 // page of results the server should return. Typically, this is the value of
-// next_page_token returned from the previous call to `ListAssets` method. If
+// next_page_token returned from the previous call to `ListAdAssets` method. If
 // not specified, the first page of results will be returned.
 func (c *AdvertisersAdAssetsListCall) PageToken(pageToken string) *AdvertisersAdAssetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -19370,8 +19383,9 @@ type AdvertisersAdAssetsUploadCall struct {
 	header_              http.Header
 }
 
-// Upload: Uploads an ad asset. Returns the ID of the newly uploaded ad asset
-// if successful.
+// Upload: Uploads and creates an ad asset. Returns the ID of the newly-created
+// ad asset if successful. Only supports the uploading of assets with the
+// AdAssetType `AD_ASSET_TYPE_IMAGE`.
 //
 // - advertiserId: The ID of the advertiser this ad asset belongs to.
 func (r *AdvertisersAdAssetsService) Upload(advertiserId int64, uploadadassetrequest *UploadAdAssetRequest) *AdvertisersAdAssetsUploadCall {
@@ -20631,12 +20645,13 @@ type AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall stru
 	header_                 http.Header
 }
 
-// Create: Creates a new association between an entity (line item or ad group)
-// and a YouTube asset. Returns the newly created association if successful.
+// Create: Creates a new association between the identified resource and a
+// YouTube asset. Returns the newly-created association. *Warning:* This method
+// is only available to an informed subset of users.
 //
-// - adGroupId: The unique ID of the ad group linked.
-// - advertiserId: The ID of the advertiser this request is for.
-// - youtubeAssetType: The type of the linked YouTube asset in the association.
+// - adGroupId: The ID of an ad group.
+// - advertiserId: The ID of the advertiser that the linked entity belongs to.
+// - youtubeAssetType: The type of YouTube asset associated with the resource.
 func (r *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsService) Create(advertiserId int64, adGroupId int64, youtubeAssetType string, youtubeassetassociation *YoutubeAssetAssociation) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall {
 	c := &AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -20647,7 +20662,7 @@ func (r *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsService) Cr
 }
 
 // LinkedEntityLineItemId sets the optional parameter
-// "linkedEntity.lineItemId": The unique ID of the line item linked.
+// "linkedEntity.lineItemId": The ID of a line item.
 func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall) LinkedEntityLineItemId(linkedEntityLineItemId int64) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall {
 	c.urlParams_.Set("linkedEntity.lineItemId", fmt.Sprint(linkedEntityLineItemId))
 	return c
@@ -20751,19 +20766,20 @@ type AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall stru
 	header_                   http.Header
 }
 
-// Delete: Deletes an existing association between an entity (line item or ad
-// group) and a YouTube asset.
+// Delete: Deletes an existing association between the identified resource and
+// a YouTube asset. *Warning:* This method is only available to an informed
+// subset of users.
 //
-//   - adGroupId: The unique ID of the ad group linked.
-//   - advertiserId: The ID of the advertiser this request is for.
+//   - adGroupId: The ID of an ad group.
+//   - advertiserId: The ID of the advertiser that the linked entity belongs to.
 //   - youtubeAssetAssociationId: The ID of the YouTube asset in the association.
-//     For location associations: This should be the ID of the asset set linked,
-//     or 0 if the association stands for location asset is disabled. For
-//     affiliate location associations: This should be the ID of the asset set
-//     linked, or 0 if the association stands for affiliate location asset is
-//     disabled. For sitelink associations: This should be the ID of the sitelink
-//     asset linked.
-//   - youtubeAssetType: The YouTube asset type this request is for.
+//     For `YOUTUBE_ASSET_TYPE_LOCATION` and
+//     `YOUTUBE_ASSET_TYPE_AFFILIATE_LOCATION` associations: This should be the
+//     ID of the asset set linked, or 0 if the location_asset_filter or
+//     affiliate_location_asset_filter is `DISABLED`. For
+//     `YOUTUBE_ASSET_TYPE_SITELINK` associations: This should be the ID of the
+//     sitelink asset linked.
+//   - youtubeAssetType: The type of YouTube asset associated with the resource.
 func (r *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsService) Delete(advertiserId int64, adGroupId int64, youtubeAssetType string, youtubeAssetAssociationId int64) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall {
 	c := &AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -20774,7 +20790,7 @@ func (r *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsService) De
 }
 
 // LinkedEntityLineItemId sets the optional parameter
-// "linkedEntity.lineItemId": The unique ID of the line item linked.
+// "linkedEntity.lineItemId": The ID of a line item.
 func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall) LinkedEntityLineItemId(linkedEntityLineItemId int64) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall {
 	c.urlParams_.Set("linkedEntity.lineItemId", fmt.Sprint(linkedEntityLineItemId))
 	return c
@@ -20874,11 +20890,12 @@ type AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall struct
 	header_          http.Header
 }
 
-// List: Lists the YouTube asset associations for given resource.
+// List: Lists the YouTube asset associations linked to the given resource.
 //
-// - adGroupId: The unique ID of the ad group linked.
-// - advertiserId: The ID of the advertiser this request is for.
-// - youtubeAssetType: The type of YouTube asset in the association.
+//   - adGroupId: The ID of an ad group.
+//   - advertiserId: The ID of the advertiser that the linked entity belongs to.
+//   - youtubeAssetType: The type of YouTube asset being associated with the
+//     resource.
 func (r *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsService) List(advertiserId int64, adGroupId int64, youtubeAssetType string) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
 	c := &AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -20888,16 +20905,16 @@ func (r *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsService) Li
 }
 
 // LinkedEntityLineItemId sets the optional parameter
-// "linkedEntity.lineItemId": The unique ID of the line item linked.
+// "linkedEntity.lineItemId": The ID of a line item.
 func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall) LinkedEntityLineItemId(linkedEntityLineItemId int64) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
 	c.urlParams_.Set("linkedEntity.lineItemId", fmt.Sprint(linkedEntityLineItemId))
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort the
-// list. The only acceptable values are:
-// `linkedYoutubeAsset.locationAssetFilter.assetSetId`,
-// `linkedYoutubeAsset.affiliateLocationAssetFilter.assetSetId`,
+// list. The only acceptable values are: *
+// `linkedYoutubeAsset.locationAssetFilter.assetSetId`, *
+// `linkedYoutubeAsset.affiliateLocationAssetFilter.assetSetId`, *
 // `linkedYoutubeAsset.sitelinkAsset.assetId` The default sorting order is
 // ascending. To specify descending order for a field, a suffix " desc" should
 // be added to the field name. Example:
@@ -20908,14 +20925,18 @@ func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall) O
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Must
-// be between `1` and `10000`. If unspecified will default to `100`.
+// be between `1` and `10000`. If unspecified will default to `100`. Returns
+// error code `INVALID_ARGUMENT` if an invalid value is specified.
 func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall) PageSize(pageSize int64) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// page of results the server should return. Typically, this is the value of
+// next_page_token returned from the previous call to
+// `ListYoutubeAssetAssociations` method. If not specified, the first page of
+// results will be returned.
 func (c *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall) PageToken(pageToken string) *AdvertisersAdGroupsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -27824,12 +27845,13 @@ type AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall str
 	header_                 http.Header
 }
 
-// Create: Creates a new association between an entity (line item or ad group)
-// and a YouTube asset. Returns the newly created association if successful.
+// Create: Creates a new association between the identified resource and a
+// YouTube asset. Returns the newly-created association. *Warning:* This method
+// is only available to an informed subset of users.
 //
-// - advertiserId: The ID of the advertiser this request is for.
-// - lineItemId: The unique ID of the line item linked.
-// - youtubeAssetType: The type of the linked YouTube asset in the association.
+// - advertiserId: The ID of the advertiser that the linked entity belongs to.
+// - lineItemId: The ID of a line item.
+// - youtubeAssetType: The type of YouTube asset associated with the resource.
 func (r *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsService) Create(advertiserId int64, lineItemId int64, youtubeAssetType string, youtubeassetassociation *YoutubeAssetAssociation) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall {
 	c := &AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -27840,7 +27862,7 @@ func (r *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsService) C
 }
 
 // LinkedEntityAdGroupId sets the optional parameter "linkedEntity.adGroupId":
-// The unique ID of the ad group linked.
+// The ID of an ad group.
 func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall) LinkedEntityAdGroupId(linkedEntityAdGroupId int64) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsCreateCall {
 	c.urlParams_.Set("linkedEntity.adGroupId", fmt.Sprint(linkedEntityAdGroupId))
 	return c
@@ -27944,19 +27966,20 @@ type AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall str
 	header_                   http.Header
 }
 
-// Delete: Deletes an existing association between an entity (line item or ad
-// group) and a YouTube asset.
+// Delete: Deletes an existing association between the identified resource and
+// a YouTube asset. *Warning:* This method is only available to an informed
+// subset of users.
 //
-//   - advertiserId: The ID of the advertiser this request is for.
-//   - lineItemId: The unique ID of the line item linked.
+//   - advertiserId: The ID of the advertiser that the linked entity belongs to.
+//   - lineItemId: The ID of a line item.
 //   - youtubeAssetAssociationId: The ID of the YouTube asset in the association.
-//     For location associations: This should be the ID of the asset set linked,
-//     or 0 if the association stands for location asset is disabled. For
-//     affiliate location associations: This should be the ID of the asset set
-//     linked, or 0 if the association stands for affiliate location asset is
-//     disabled. For sitelink associations: This should be the ID of the sitelink
-//     asset linked.
-//   - youtubeAssetType: The YouTube asset type this request is for.
+//     For `YOUTUBE_ASSET_TYPE_LOCATION` and
+//     `YOUTUBE_ASSET_TYPE_AFFILIATE_LOCATION` associations: This should be the
+//     ID of the asset set linked, or 0 if the location_asset_filter or
+//     affiliate_location_asset_filter is `DISABLED`. For
+//     `YOUTUBE_ASSET_TYPE_SITELINK` associations: This should be the ID of the
+//     sitelink asset linked.
+//   - youtubeAssetType: The type of YouTube asset associated with the resource.
 func (r *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsService) Delete(advertiserId int64, lineItemId int64, youtubeAssetType string, youtubeAssetAssociationId int64) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall {
 	c := &AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -27967,7 +27990,7 @@ func (r *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsService) D
 }
 
 // LinkedEntityAdGroupId sets the optional parameter "linkedEntity.adGroupId":
-// The unique ID of the ad group linked.
+// The ID of an ad group.
 func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall) LinkedEntityAdGroupId(linkedEntityAdGroupId int64) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsDeleteCall {
 	c.urlParams_.Set("linkedEntity.adGroupId", fmt.Sprint(linkedEntityAdGroupId))
 	return c
@@ -28067,11 +28090,12 @@ type AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall struc
 	header_          http.Header
 }
 
-// List: Lists the YouTube asset associations for given resource.
+// List: Lists the YouTube asset associations linked to the given resource.
 //
-// - advertiserId: The ID of the advertiser this request is for.
-// - lineItemId: The unique ID of the line item linked.
-// - youtubeAssetType: The type of YouTube asset in the association.
+//   - advertiserId: The ID of the advertiser that the linked entity belongs to.
+//   - lineItemId: The ID of a line item.
+//   - youtubeAssetType: The type of YouTube asset being associated with the
+//     resource.
 func (r *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsService) List(advertiserId int64, lineItemId int64, youtubeAssetType string) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
 	c := &AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -28081,16 +28105,16 @@ func (r *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsService) L
 }
 
 // LinkedEntityAdGroupId sets the optional parameter "linkedEntity.adGroupId":
-// The unique ID of the ad group linked.
+// The ID of an ad group.
 func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall) LinkedEntityAdGroupId(linkedEntityAdGroupId int64) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
 	c.urlParams_.Set("linkedEntity.adGroupId", fmt.Sprint(linkedEntityAdGroupId))
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort the
-// list. The only acceptable values are:
-// `linkedYoutubeAsset.locationAssetFilter.assetSetId`,
-// `linkedYoutubeAsset.affiliateLocationAssetFilter.assetSetId`,
+// list. The only acceptable values are: *
+// `linkedYoutubeAsset.locationAssetFilter.assetSetId`, *
+// `linkedYoutubeAsset.affiliateLocationAssetFilter.assetSetId`, *
 // `linkedYoutubeAsset.sitelinkAsset.assetId` The default sorting order is
 // ascending. To specify descending order for a field, a suffix " desc" should
 // be added to the field name. Example:
@@ -28101,14 +28125,18 @@ func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall) 
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Must
-// be between `1` and `10000`. If unspecified will default to `100`.
+// be between `1` and `10000`. If unspecified will default to `100`. Returns
+// error code `INVALID_ARGUMENT` if an invalid value is specified.
 func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall) PageSize(pageSize int64) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// page of results the server should return. Typically, this is the value of
+// next_page_token returned from the previous call to
+// `ListYoutubeAssetAssociations` method. If not specified, the first page of
+// results will be returned.
 func (c *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall) PageToken(pageToken string) *AdvertisersLineItemsYoutubeAssetTypesYoutubeAssetAssociationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

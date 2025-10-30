@@ -8458,6 +8458,7 @@ type IntegralAdScience struct {
 	// doesn't specify any ad fraud prevention options.
 	//   "SUSPICIOUS_ACTIVITY_HR" - Ad Fraud - Exclude High Risk.
 	//   "SUSPICIOUS_ACTIVITY_HMR" - Ad Fraud - Exclude High and Moderate Risk.
+	//   "SUSPICIOUS_ACTIVITY_FD" - Ad Fraud - Exclude Fraudulent Device.
 	ExcludedAdFraudRisk string `json:"excludedAdFraudRisk,omitempty"`
 	// ExcludedAdultRisk: Brand Safety - **Adult content**.
 	//

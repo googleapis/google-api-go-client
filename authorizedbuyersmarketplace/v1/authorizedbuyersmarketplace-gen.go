@@ -2803,6 +2803,121 @@ func (c *BiddersFinalizedDealsListCall) Pages(ctx context.Context, f func(*ListF
 	}
 }
 
+type BiddersFinalizedDealsSetReadyToServeCall struct {
+	s                      *Service
+	deal                   string
+	setreadytoserverequest *SetReadyToServeRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// SetReadyToServe: Sets the given finalized deal as ready to serve. By
+// default, deals are set as ready to serve as soon as they're finalized. If
+// you want to opt out of the default behavior, and manually indicate that
+// deals are ready to serve, ask your Technical Account Manager to add you to
+// the allowlist. If you choose to use this method, finalized deals belonging
+// to the bidder and its child seats don't start serving until after you call
+// `setReadyToServe`, and after the deals become active. For example, you can
+// use this method to delay receiving bid requests until your creative is
+// ready. In addition, bidders can use the URL path
+// "/v1/bidders/{accountId}/finalizedDeals/{dealId}" to set ready to serve for
+// the finalized deals belong to itself, its child seats and all their clients.
+// This method only applies to programmatic guaranteed deals.
+//
+//   - deal: Format: `buyers/{accountId}/finalizedDeals/{dealId}` or
+//     `bidders/{accountId}/finalizedDeals/{dealId}`.
+func (r *BiddersFinalizedDealsService) SetReadyToServe(deal string, setreadytoserverequest *SetReadyToServeRequest) *BiddersFinalizedDealsSetReadyToServeCall {
+	c := &BiddersFinalizedDealsSetReadyToServeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.deal = deal
+	c.setreadytoserverequest = setreadytoserverequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *BiddersFinalizedDealsSetReadyToServeCall) Fields(s ...googleapi.Field) *BiddersFinalizedDealsSetReadyToServeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *BiddersFinalizedDealsSetReadyToServeCall) Context(ctx context.Context) *BiddersFinalizedDealsSetReadyToServeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *BiddersFinalizedDealsSetReadyToServeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersFinalizedDealsSetReadyToServeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.setreadytoserverequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+deal}:setReadyToServe")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"deal": c.deal,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.bidders.finalizedDeals.setReadyToServe", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "authorizedbuyersmarketplace.bidders.finalizedDeals.setReadyToServe" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FinalizedDeal.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *BiddersFinalizedDealsSetReadyToServeCall) Do(opts ...googleapi.CallOption) (*FinalizedDeal, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FinalizedDeal{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.bidders.finalizedDeals.setReadyToServe", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type BuyersAuctionPackagesGetCall struct {
 	s            *Service
 	name         string
@@ -5521,9 +5636,13 @@ type BuyersFinalizedDealsSetReadyToServeCall struct {
 // to the bidder and its child seats don't start serving until after you call
 // `setReadyToServe`, and after the deals become active. For example, you can
 // use this method to delay receiving bid requests until your creative is
-// ready. This method only applies to programmatic guaranteed deals.
+// ready. In addition, bidders can use the URL path
+// "/v1/bidders/{accountId}/finalizedDeals/{dealId}" to set ready to serve for
+// the finalized deals belong to itself, its child seats and all their clients.
+// This method only applies to programmatic guaranteed deals.
 //
-// - deal: Format: `buyers/{accountId}/finalizedDeals/{dealId}`.
+//   - deal: Format: `buyers/{accountId}/finalizedDeals/{dealId}` or
+//     `bidders/{accountId}/finalizedDeals/{dealId}`.
 func (r *BuyersFinalizedDealsService) SetReadyToServe(deal string, setreadytoserverequest *SetReadyToServeRequest) *BuyersFinalizedDealsSetReadyToServeCall {
 	c := &BuyersFinalizedDealsSetReadyToServeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.deal = deal

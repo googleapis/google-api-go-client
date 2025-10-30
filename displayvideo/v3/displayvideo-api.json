@@ -9268,7 +9268,7 @@
       }
     }
   },
-  "revision": "20251023",
+  "revision": "20251027",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActiveViewVideoViewabilityMetricConfig": {
@@ -9401,8 +9401,7 @@
             "AD_GROUP_FORMAT_AUDIO",
             "AD_GROUP_FORMAT_RESPONSIVE",
             "AD_GROUP_FORMAT_REACH",
-            "AD_GROUP_FORMAT_MASTHEAD",
-            "AD_GROUP_FORMAT_DEMAND_GEN"
+            "AD_GROUP_FORMAT_MASTHEAD"
           ],
           "enumDescriptions": [
             "Format value is not specified or is unknown in this version.",
@@ -9413,8 +9412,7 @@
             "Non-skippable in-stream audio ads.",
             "Responsive ads.",
             "[Effective reach ad groups] (https://support.google.com/displayvideo/answer/9173684), including in-stream and bumper ads.",
-            "Masthead Ad that is surfaced on the top slot on the YouTube homepage.",
-            "Demand Gen ads."
+            "Masthead Ad that is surfaced on the top slot on the YouTube homepage."
           ],
           "type": "string"
         },
@@ -9486,7 +9484,7 @@
           "type": "string"
         },
         "adGroupId": {
-          "description": "The unique ID of the ad group that the ad belongs to.",
+          "description": "The unique ID of the ad group that the ad belongs to. *Caution*: Parent ad groups for Demand Gen ads are not currently retrieveable using `advertisers.adGroups.list` or `advertisers.adGroups.get`. Demand Gen ads can be identified by the absence of the `ad_details` union field.",
           "format": "int64",
           "type": "string"
         },
@@ -9590,7 +9588,7 @@
       "id": "AdPolicy",
       "properties": {
         "adPolicyApprovalStatus": {
-          "description": "The policy approval status of an ad. Indicating the ad policy approval decision.",
+          "description": "The policy approval status of an ad, indicating the approval decision.",
           "enum": [
             "AD_POLICY_APPROVAL_STATUS_UNKNOWN",
             "DISAPPROVED",
@@ -9601,14 +9599,14 @@
           "enumDescriptions": [
             "Unknown or not specified.",
             "Will not serve.",
-            "Serves with restrictions.",
-            "Serves without restrictions.",
+            "Will serve with restrictions.",
+            "Will serve without restrictions.",
             "Will not serve in targeted countries, but may serve for users who are searching for information about the targeted countries."
           ],
           "type": "string"
         },
         "adPolicyReviewStatus": {
-          "description": "The policy review status of an ad. Indicating where the review process the ad is currently at.",
+          "description": "The policy review status of an ad, indicating where in the review process the ad is currently.",
           "enum": [
             "AD_POLICY_REVIEW_STATUS_UNKNOWN",
             "REVIEW_IN_PROGRESS",
@@ -9619,14 +9617,14 @@
           "enumDescriptions": [
             "Unknown or not specified.",
             "Currently under review.",
-            "Primary review complete. Other reviews may be continuing.",
-            "The resource has been resubmitted for approval or its policy decision has been appealed.",
-            "The resource is eligible and may be serving but could still undergo further review."
+            "Primary review complete. Other reviews may still be in progress.",
+            "Resubmitted for approval or a policy decision has been appealed.",
+            "Deemed eligible and may be serving. Further review could still follow."
           ],
           "type": "string"
         },
         "adPolicyTopicEntry": {
-          "description": "The policy topic entries for the ad, including the topic, restriction level, and guidance on how to fix policy issues.",
+          "description": "The entries for each policy topic identified as relating to the ad. Each entry includes the topic, restriction level, and guidance on how to fix policy issues.",
           "items": {
             "$ref": "AdPolicyTopicEntry"
           },
@@ -9636,31 +9634,31 @@
       "type": "object"
     },
     "AdPolicyCriterionRestriction": {
-      "description": "Represents a criterion that is restricted. Today only used to represent a country restriction. Used by both policy evidence and policy constraints.",
+      "description": "Represents a country restriction.",
       "id": "AdPolicyCriterionRestriction",
       "properties": {
         "countryCriterionId": {
-          "description": "Only used today to represent a country criterion id.",
+          "description": "The country criterion id.",
           "format": "int64",
           "type": "string"
         },
         "countryLabel": {
-          "description": "Localized name for the country. Could be empty.",
+          "description": "Localized name for the country. May be empty.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "AdPolicyTopicAppealInfo": {
-      "description": "Appeal related information for a policy topic.",
+      "description": "Information on how to appeal a policy decision.",
       "id": "AdPolicyTopicAppealInfo",
       "properties": {
         "appealFormLink": {
-          "description": "Only available when appeal_type is APPEAL_FORM.",
+          "description": "Only available when appeal_type is `APPEAL_FORM`.",
           "type": "string"
         },
         "appealType": {
-          "description": "Indicate whether the policy topic can be self-service appeal or appeal form.",
+          "description": "Whether the decision can be appealed through a self-service appeal or an appeal form.",
           "enum": [
             "AD_POLICY_APPEAL_TYPE_UNKNOWN",
             "SELF_SERVICE_APPEAL",
@@ -9668,8 +9666,8 @@
           ],
           "enumDescriptions": [
             "Unknown or not specified.",
-            "The policy topic can be self-service appeal.",
-            "The policy topic needs to be appealed through appeal form."
+            "The decision can be appealed through a self-service appeal.",
+            "The decision can be appealed using an appeal form."
           ],
           "type": "string"
         }
@@ -9677,7 +9675,7 @@
       "type": "object"
     },
     "AdPolicyTopicConstraint": {
-      "description": "Additional constraints information that explains restrictions applied to this policy.",
+      "description": "Details on ad serving constraints.",
       "id": "AdPolicyTopicConstraint",
       "properties": {
         "certificateDomainMismatchCountryList": {
@@ -9701,7 +9699,7 @@
           "description": "Certificate is required to serve in any country."
         },
         "requestCertificateFormLink": {
-          "description": "Link to the form to request a certificate for the policy topic constraint.",
+          "description": "Link to the form to request a certificate for the constraint.",
           "type": "string"
         },
         "resellerConstraint": {
@@ -9744,12 +9742,12 @@
       "type": "object"
     },
     "AdPolicyTopicEntry": {
-      "description": "Policy topic entry.",
+      "description": "An entry describing how an ad has been identified as relating to an ad policy.",
       "id": "AdPolicyTopicEntry",
       "properties": {
         "appealInfo": {
           "$ref": "AdPolicyTopicAppealInfo",
-          "description": "Ad policy appeal related information for the policy topic."
+          "description": "Information on how to appeal the policy decision."
         },
         "helpCenterLink": {
           "description": "Ad policy help center link for the policy topic.",
@@ -9764,8 +9762,8 @@
           ],
           "enumDescriptions": [
             "Unknown or not specified.",
-            "The decision is from legal notice, court order, or trademark content owner complaint, etc.",
-            "The decision is from the Google owned investigation."
+            "The decision is from a legal notice, court order, or trademark content owner complaint, etc.",
+            "The decision is from a Google-owned investigation."
           ],
           "type": "string"
         },
@@ -9784,33 +9782,33 @@
           "type": "string"
         },
         "policyLabel": {
-          "description": "Localized label text for policy. (Trademarks in text, Contains Alcohol, etc.)",
+          "description": "Localized label text for policy. Examples include \"Trademarks in text\", \"Contains Alcohol\", etc.",
           "type": "string"
         },
         "policyTopic": {
-          "description": "The policy topic of an ad policy topic entry. (TRADEMARKS, ALCOHOL, etc.)",
+          "description": "The policy topic. Examples include \"TRADEMARKS\", \"ALCOHOL\", etc.",
           "type": "string"
         },
         "policyTopicConstraints": {
-          "description": "The policy topic constraints.",
+          "description": "The serving constraints relevant to the policy decision.",
           "items": {
             "$ref": "AdPolicyTopicConstraint"
           },
           "type": "array"
         },
         "policyTopicDescription": {
-          "description": "Short summary description of the policy topic.",
+          "description": "A short summary description of the policy topic.",
           "type": "string"
         },
         "policyTopicEvidences": {
-          "description": "The policy topic evidences.",
+          "description": "The evidence used in the policy decision.",
           "items": {
             "$ref": "AdPolicyTopicEvidence"
           },
           "type": "array"
         },
         "policyTopicType": {
-          "description": "The policy topic entry type.",
+          "description": "How ad serving will be affected due to the relation to the ad policy topic.",
           "enum": [
             "AD_POLICY_TOPIC_ENTRY_TYPE_UNKNOWN",
             "PROHIBITED",
@@ -9826,8 +9824,8 @@
             "The resource will not serve in all targeted countries.",
             "The resource cannot serve in some countries.",
             "The resource can serve.",
-            "The resource cannot serve to entry in any way.",
-            "The resource is only serving in classroom account."
+            "The resource can serve, and may serve beyond normal coverage.",
+            "The resource is constrained for all targeted countries, but may serve for users who are searching for information about the targeted countries."
           ],
           "type": "string"
         }
@@ -9835,7 +9833,7 @@
       "type": "object"
     },
     "AdPolicyTopicEvidence": {
-      "description": "Additional evidence information that explains a policy decision.",
+      "description": "Evidence information used in the policy decision.",
       "id": "AdPolicyTopicEvidence",
       "properties": {
         "counterfeit": {
@@ -9844,11 +9842,11 @@
         },
         "destinationMismatch": {
           "$ref": "AdPolicyTopicEvidenceDestinationMismatch",
-          "description": "Mismatch between the ad destinations URLs."
+          "description": "A mismatch between the ad destination URLs."
         },
         "destinationNotWorking": {
           "$ref": "AdPolicyTopicEvidenceDestinationNotWorking",
-          "description": "Destination not working because of HTTP error or DNS error."
+          "description": "Information on HTTP or DNS errors related to the ad destination."
         },
         "destinationTextList": {
           "$ref": "AdPolicyTopicEvidenceDestinationTextList",
@@ -9860,7 +9858,7 @@
           "type": "integer"
         },
         "languageCode": {
-          "description": "The language the ad was detected to be written in. This is an IETF language tag such as \"en-US\".",
+          "description": "The language the ad was detected to be written in. This field uses IETF language tags, such as \"en-US\".",
           "type": "string"
         },
         "legalRemoval": {
@@ -9887,11 +9885,11 @@
       "type": "object"
     },
     "AdPolicyTopicEvidenceCounterfeit": {
-      "description": "Counterfeit enforcement that caused a policy violation.",
+      "description": "Details on the counterfeit enforcement that caused a policy violation.",
       "id": "AdPolicyTopicEvidenceCounterfeit",
       "properties": {
         "owners": {
-          "description": "The content or product owners that make the complainants.",
+          "description": "The content or product owners that made a complaint.",
           "items": {
             "type": "string"
           },
@@ -9901,11 +9899,11 @@
       "type": "object"
     },
     "AdPolicyTopicEvidenceDestinationMismatch": {
-      "description": "A list of destination mismatch URL types.",
+      "description": "Details on a mismatch between destination URL types.",
       "id": "AdPolicyTopicEvidenceDestinationMismatch",
       "properties": {
         "uriTypes": {
-          "description": "The set of URLs that do not match each other. The list can include single or multiple uri types. Example 1: [DISPLAY_URL, FINAL_URL] means ad display URL does not match with the ad final URL. Example 2: [FINAL_URL] means ad final URL did not match the crawled url, which is also considered as destinationmismatch.",
+          "description": "The set of URLs that do not match. The list can include single or multiple uri types. Example 1: [`DISPLAY_URL`, `FINAL_URL`] means ad display URL does not match with the ad final URL. Example 2: [`FINAL_URL`] means ad final URL did not match the crawled url, which is also considered as destination mismatch.",
           "items": {
             "enum": [
               "AD_POLICY_TOPIC_EVIDENCE_DESTINATION_MISMATCH_URL_TYPE_UNKNOWN",
@@ -9931,11 +9929,11 @@
       "type": "object"
     },
     "AdPolicyTopicEvidenceDestinationNotWorking": {
-      "description": "Evidence details for destination not working policy violations.",
+      "description": "Details for on HTTP or DNS errors related to the ad destination.",
       "id": "AdPolicyTopicEvidenceDestinationNotWorking",
       "properties": {
         "device": {
-          "description": "The device platform of the not working url.",
+          "description": "The device where visiting the URL resulted in the error.",
           "enum": [
             "AD_POLICY_TOPIC_EVIDENCE_DESTINATION_NOT_WORKING_DEVICE_TYPE_UNKNOWN",
             "DESKTOP",
@@ -9944,9 +9942,9 @@
           ],
           "enumDescriptions": [
             "Not specified or unknown.",
-            "Landing page doesn't work on desktop device.",
-            "Landing page doesn't work on Android device.",
-            "Landing page doesn't work on iOS device."
+            "Desktop device.",
+            "Android device.",
+            "iOS device."
           ],
           "type": "string"
         },
@@ -9974,7 +9972,7 @@
           "type": "string"
         },
         "lastCheckedTime": {
-          "description": "The last checked time of the not working url.",
+          "description": "The last time the error was seen when navigating to URL.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -9996,11 +9994,11 @@
       "type": "object"
     },
     "AdPolicyTopicEvidenceLegalRemoval": {
-      "description": "Legal related regulation enforcement, either from DMCA or local legal.",
+      "description": "Legal related regulation enforcement, either from DMCA or local legal regulation.",
       "id": "AdPolicyTopicEvidenceLegalRemoval",
       "properties": {
         "complaintType": {
-          "description": "The legal removal complaint type.",
+          "description": "The type of complaint causing the legal removal.",
           "enum": [
             "AD_POLICY_TOPIC_EVIDENCE_LEGAL_REMOVAL_COMPLAINT_TYPE_UNKNOWN",
             "COPYRIGHT",
@@ -10009,14 +10007,14 @@
           ],
           "enumDescriptions": [
             "Not specified or unknown.",
-            "Only applies to DMCA.",
-            "Only applies to local legal.",
-            "Only applies to local legal."
+            "Copyright. Only applies to DMCA.",
+            "Court order. Only applies to local legal.",
+            "Local legal regulation. Only applies to local legal."
           ],
           "type": "string"
         },
         "countryRestrictions": {
-          "description": "The restricted countries due to the legal removal.",
+          "description": "The countries restricted due to the legal removal.",
           "items": {
             "$ref": "AdPolicyCriterionRestriction"
           },
@@ -10024,14 +10022,14 @@
         },
         "dmca": {
           "$ref": "AdPolicyTopicEvidenceLegalRemovalDmca",
-          "description": "Whether the restriction is from DMCA regulation."
+          "description": "Details on the DMCA regulation legal removal."
         },
         "localLegal": {
           "$ref": "AdPolicyTopicEvidenceLegalRemovalLocalLegal",
-          "description": "Whether the restriction is from local legal regulation."
+          "description": "Details on the local legal regulation legal removal."
         },
         "restrictedUris": {
-          "description": "The urls that are restricted due to the legal removal.",
+          "description": "The urls restricted due to the legal removal.",
           "items": {
             "type": "string"
           },
@@ -10041,18 +10039,18 @@
       "type": "object"
     },
     "AdPolicyTopicEvidenceLegalRemovalDmca": {
-      "description": "DMCA related regulation enforcement.",
+      "description": "DMCA complaint details.",
       "id": "AdPolicyTopicEvidenceLegalRemovalDmca",
       "properties": {
         "complainant": {
-          "description": "The entity who makes the legal complaint.",
+          "description": "The entity who made the legal complaint.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "AdPolicyTopicEvidenceLegalRemovalLocalLegal": {
-      "description": "Local legal related regulation enforcement.",
+      "description": "Local legal regulation details.",
       "id": "AdPolicyTopicEvidenceLegalRemovalLocalLegal",
       "properties": {
         "lawType": {
@@ -10063,7 +10061,7 @@
       "type": "object"
     },
     "AdPolicyTopicEvidenceRegionalRequirements": {
-      "description": "T\u0026S proactive enforcement for policies meant to address regional requirements. This is considered as Google owned investigation instead of regulation notice since it's a T\u0026S proactive enforcement.",
+      "description": "Trust \u0026 Safety (T\u0026S) proactive enforcement for policies meant to address regional requirements. This is considered a Google-owned investigation instead of a regulation notice since it's proactive T\u0026S enforcement.",
       "id": "AdPolicyTopicEvidenceRegionalRequirements",
       "properties": {
         "regionalRequirementsEntries": {
@@ -10081,14 +10079,14 @@
       "id": "AdPolicyTopicEvidenceRegionalRequirementsRegionalRequirementsEntry",
       "properties": {
         "countryRestrictions": {
-          "description": "The restricted countries due to the legal policy.",
+          "description": "The countries restricted due to the legal policy.",
           "items": {
             "$ref": "AdPolicyCriterionRestriction"
           },
           "type": "array"
         },
         "legalPolicy": {
-          "description": "The legal policy that is violated.",
+          "description": "The legal policy that is being violated.",
           "type": "string"
         }
       },
@@ -10113,7 +10111,7 @@
       "id": "AdPolicyTopicEvidenceTrademark",
       "properties": {
         "countryRestrictions": {
-          "description": "Criteria that are geo restrictions.",
+          "description": "Countries where the policy violation is relevant.",
           "items": {
             "$ref": "AdPolicyCriterionRestriction"
           },
@@ -11331,7 +11329,7 @@
             "Creative height and width in pixels. Value is stored in the creativeDimensionValue field of the comparison value.",
             "Video content duration. Value is stored in the contentDurationValue field of the comparison value. The comparisonOperator field must be set to `LIST_CONTAINS`.",
             "Video delivery type. Value is stored in the contentStreamTypeValue field of the comparison value. The comparisonOperator field must be set to `LIST_CONTAINS`.",
-            "Video genre id. Value is stored in the int64Value field of the comparison value. The comparisonOperator field must be set to `LIST_CONTAINS`."
+            "Video genre id. Value is stored in the contentGenreIdValue field of the comparison value. The comparisonOperator field must be set to `LIST_CONTAINS`."
           ],
           "type": "string"
         }
@@ -18459,12 +18457,14 @@
           "enum": [
             "SUSPICIOUS_ACTIVITY_UNSPECIFIED",
             "SUSPICIOUS_ACTIVITY_HR",
-            "SUSPICIOUS_ACTIVITY_HMR"
+            "SUSPICIOUS_ACTIVITY_HMR",
+            "SUSPICIOUS_ACTIVITY_FD"
           ],
           "enumDescriptions": [
             "This enum is only a placeholder and it doesn't specify any ad fraud prevention options.",
             "Ad Fraud - Exclude High Risk.",
-            "Ad Fraud - Exclude High and Moderate Risk."
+            "Ad Fraud - Exclude High and Moderate Risk.",
+            "Ad Fraud - Exclude Fraudulent Device."
           ],
           "type": "string"
         },

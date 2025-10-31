@@ -395,10 +395,6 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// example when a stable account identifier is not yet known in the initial
 	// request.
 	AccountId string `json:"accountId,omitempty"`
-	// Annotation: Optional. The annotation that is assigned to the Event. This
-	// field can be left empty to provide reasons that apply to an event without
-	// concluding whether the event is legitimate or fraudulent.
-	//
 	// Possible values:
 	//   "ANNOTATION_UNSPECIFIED" - Default unspecified type.
 	//   "LEGITIMATE" - Provides information that the event turned out to be
@@ -421,9 +417,6 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// authentication provider, provide phone authentication details for fraud
 	// detection purposes.
 	PhoneAuthenticationEvent *GoogleCloudRecaptchaenterpriseV1PhoneAuthenticationEvent `json:"phoneAuthenticationEvent,omitempty"`
-	// Reasons: Optional. Reasons for the annotation that are assigned to the
-	// event.
-	//
 	// Possible values:
 	//   "REASON_UNSPECIFIED" - Unspecified reason. Do not use.
 	//   "CHARGEBACK" - Indicates that the transaction had a chargeback issued with

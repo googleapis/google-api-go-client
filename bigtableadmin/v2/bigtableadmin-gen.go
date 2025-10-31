@@ -1110,9 +1110,10 @@ type ColumnFamily struct {
 	// ValueType: The type of data stored in each of this family's cell values,
 	// including its full encoding. If omitted, the family only serves raw untyped
 	// bytes. For now, only the `Aggregate` type is supported. `Aggregate` can only
-	// be set at family creation and is immutable afterwards. If `value_type` is
-	// `Aggregate`, written data must be compatible with: * `value_type.input_type`
-	// for `AddInput` mutations
+	// be set at family creation and is immutable afterwards. This field is
+	// mutually exclusive with `sql_type`. If `value_type` is `Aggregate`, written
+	// data must be compatible with: * `value_type.input_type` for `AddInput`
+	// mutations
 	ValueType *Type `json:"valueType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GcRule") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -13979,9 +13980,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

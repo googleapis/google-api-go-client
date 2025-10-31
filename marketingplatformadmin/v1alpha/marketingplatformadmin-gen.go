@@ -128,9 +128,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Organizations = NewOrganizationsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -231,6 +228,102 @@ func (s AnalyticsAccountLink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BillInfo: Contains the bill amount.
+type BillInfo struct {
+	// BaseFee: The amount of the monthly base fee.
+	BaseFee *Money `json:"baseFee,omitempty"`
+	// EventFee: The amount of the event fee.
+	EventFee *Money `json:"eventFee,omitempty"`
+	// PriceProtectionCredit: The amount of the price protection credit, this is
+	// only available for eligible customers.
+	PriceProtectionCredit *Money `json:"priceProtectionCredit,omitempty"`
+	// Total: The total amount of the bill.
+	Total *Money `json:"total,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseFee") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseFee") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BillInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod BillInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ClientData: Contains the client data.
+type ClientData struct {
+	// EndDate: The end date of the contract between the sales org and the end
+	// client.
+	EndDate *Date `json:"endDate,omitempty"`
+	// Organization: The end client that has/had contract with the requested sales
+	// org.
+	Organization *Organization `json:"organization,omitempty"`
+	// StartDate: The start date of the contract between the sales org and the end
+	// client.
+	StartDate *Date `json:"startDate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndDate") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndDate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClientData) MarshalJSON() ([]byte, error) {
+	type NoMethod ClientData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Date: Represents a whole or partial calendar date, such as a birthday. The
+// time of day and time zone are either specified elsewhere or are
+// insignificant. The date is relative to the Gregorian Calendar. This can
+// represent one of the following: * A full date, with non-zero year, month,
+// and day values. * A month and day, with a zero year (for example, an
+// anniversary). * A year on its own, with a zero month and a zero day. * A
+// year and month, with a zero day (for example, a credit card expiration
+// date). Related types: * google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
+type Date struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and month,
+	// or 0 to specify a year by itself or a year and month where the day isn't
+	// significant.
+	Day int64 `json:"day,omitempty"`
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year without
+	// a month and day.
+	Month int64 `json:"month,omitempty"`
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a date
+	// without a year.
+	Year int64 `json:"year,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Date) MarshalJSON() ([]byte, error) {
+	type NoMethod Date
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -238,6 +331,56 @@ func (s AnalyticsAccountLink) MarshalJSON() ([]byte, error) {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// FindSalesPartnerManagedClientsRequest: Request message for
+// FindSalesPartnerManagedClients RPC.
+type FindSalesPartnerManagedClientsRequest struct {
+	// IsActive: Optional. If set, only active and just ended clients will be
+	// returned.
+	IsActive bool `json:"isActive,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsActive") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsActive") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FindSalesPartnerManagedClientsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod FindSalesPartnerManagedClientsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FindSalesPartnerManagedClientsResponse: Response message for
+// FindSalesPartnerManagedClients RPC.
+type FindSalesPartnerManagedClientsResponse struct {
+	// ClientData: The clients managed by the sales org.
+	ClientData []*ClientData `json:"clientData,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ClientData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FindSalesPartnerManagedClientsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FindSalesPartnerManagedClientsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAnalyticsAccountLinksResponse: Response message for
@@ -269,6 +412,66 @@ func (s ListAnalyticsAccountLinksResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListOrganizationsResponse: Response message for ListOrganizations RPC.
+type ListOrganizationsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Organizations: The Organization resource that the user has access to, which
+	// includes the org id and display name.
+	Organizations []*Organization `json:"organizations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListOrganizationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListOrganizationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Money: Represents an amount of money with its currency type.
+type Money struct {
+	// CurrencyCode: The three-letter currency code defined in ISO 4217.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+	// Nanos: Number of nano (10^-9) units of the amount. The value must be between
+	// -999,999,999 and +999,999,999 inclusive. If `units` is positive, `nanos`
+	// must be positive or zero. If `units` is zero, `nanos` can be positive, zero,
+	// or negative. If `units` is negative, `nanos` must be negative or zero. For
+	// example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
+	Nanos int64 `json:"nanos,omitempty"`
+	// Units: The whole units of the amount. For example if `currencyCode` is
+	// "USD", then 1 unit is one US dollar.
+	Units int64 `json:"units,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Money) MarshalJSON() ([]byte, error) {
+	type NoMethod Money
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Organization: A resource message representing a Google Marketing Platform
 // organization.
 type Organization struct {
@@ -295,6 +498,110 @@ type Organization struct {
 
 func (s Organization) MarshalJSON() ([]byte, error) {
 	type NoMethod Organization
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PropertyUsage: Contains the count of events received by the property, along
+// with metadata that influences the volume of `billable` events.
+type PropertyUsage struct {
+	// AccountId: The ID of the property's parent account.
+	AccountId int64 `json:"accountId,omitempty,string"`
+	// BillableEventCount: The number of events for which the property is billed in
+	// the requested month.
+	BillableEventCount int64 `json:"billableEventCount,omitempty,string"`
+	// DisplayName: The display name of the property.
+	DisplayName string `json:"displayName,omitempty"`
+	// Property: The name of the Google Analytics Admin API property resource.
+	// Format: analyticsadmin.googleapis.com/properties/{property_id}
+	Property string `json:"property,omitempty"`
+	// PropertyType: The subtype of the analytics property. This affects the
+	// billable event count.
+	//
+	// Possible values:
+	//   "ANALYTICS_PROPERTY_TYPE_UNSPECIFIED" - Unknown or unspecified property
+	// type
+	//   "ANALYTICS_PROPERTY_TYPE_ORDINARY" - Ordinary Google Analytics property
+	//   "ANALYTICS_PROPERTY_TYPE_SUBPROPERTY" - Google Analytics subproperty
+	//   "ANALYTICS_PROPERTY_TYPE_ROLLUP" - Google Analytics rollup property
+	PropertyType string `json:"propertyType,omitempty"`
+	// ServiceLevel: The service level of the property.
+	//
+	// Possible values:
+	//   "ANALYTICS_SERVICE_LEVEL_UNSPECIFIED" - Service level unspecified.
+	//   "ANALYTICS_SERVICE_LEVEL_STANDARD" - The standard version of Google
+	// Analytics.
+	//   "ANALYTICS_SERVICE_LEVEL_360" - The premium version of Google Analytics.
+	ServiceLevel string `json:"serviceLevel,omitempty"`
+	// TotalEventCount: Total event count that the property received during the
+	// requested month.
+	TotalEventCount int64 `json:"totalEventCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccountId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PropertyUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod PropertyUsage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReportPropertyUsageRequest: Request message for ReportPropertyUsage RPC.
+type ReportPropertyUsageRequest struct {
+	// Month: Required. The target month to list property usages. Format: YYYY-MM.
+	// For example, "2025-05"
+	Month string `json:"month,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Month") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Month") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReportPropertyUsageRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportPropertyUsageRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReportPropertyUsageResponse: Response message for ReportPropertyUsage RPC.
+type ReportPropertyUsageResponse struct {
+	// BillInfo: Bill amount in the specified organization and month. Will be empty
+	// if user only has access to usage data.
+	BillInfo *BillInfo `json:"billInfo,omitempty"`
+	// PropertyUsages: Usage data for all properties in the specified organization
+	// and month.
+	PropertyUsages []*PropertyUsage `json:"propertyUsages,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BillInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BillInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReportPropertyUsageResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportPropertyUsageResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -337,6 +644,113 @@ func (s SetPropertyServiceLevelRequest) MarshalJSON() ([]byte, error) {
 type SetPropertyServiceLevelResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+type OrganizationsFindSalesPartnerManagedClientsCall struct {
+	s                                     *Service
+	organization                          string
+	findsalespartnermanagedclientsrequest *FindSalesPartnerManagedClientsRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// FindSalesPartnerManagedClients: Returns a list of clients managed by the
+// sales partner organization. User needs to be an OrgAdmin/BillingAdmin on the
+// sales partner organization in order to view the end clients.
+//
+//   - organization: The name of the sales partner organization. Format:
+//     organizations/{org_id}.
+func (r *OrganizationsService) FindSalesPartnerManagedClients(organization string, findsalespartnermanagedclientsrequest *FindSalesPartnerManagedClientsRequest) *OrganizationsFindSalesPartnerManagedClientsCall {
+	c := &OrganizationsFindSalesPartnerManagedClientsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	c.findsalespartnermanagedclientsrequest = findsalespartnermanagedclientsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsFindSalesPartnerManagedClientsCall) Fields(s ...googleapi.Field) *OrganizationsFindSalesPartnerManagedClientsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsFindSalesPartnerManagedClientsCall) Context(ctx context.Context) *OrganizationsFindSalesPartnerManagedClientsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsFindSalesPartnerManagedClientsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsFindSalesPartnerManagedClientsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.findsalespartnermanagedclientsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+organization}:findSalesPartnerManagedClients")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization": c.organization,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "marketingplatformadmin.organizations.findSalesPartnerManagedClients", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "marketingplatformadmin.organizations.findSalesPartnerManagedClients" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FindSalesPartnerManagedClientsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsFindSalesPartnerManagedClientsCall) Do(opts ...googleapi.CallOption) (*FindSalesPartnerManagedClientsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FindSalesPartnerManagedClientsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "marketingplatformadmin.organizations.findSalesPartnerManagedClients", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type OrganizationsGetCall struct {
@@ -446,6 +860,259 @@ func (c *OrganizationsGetCall) Do(opts ...googleapi.CallOption) (*Organization, 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "marketingplatformadmin.organizations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of organizations that the user has access to.
+func (r *OrganizationsService) List() *OrganizationsListCall {
+	c := &OrganizationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// organizations to return in one call. The service may return fewer than this
+// value. If unspecified, at most 50 organizations will be returned. The
+// maximum value is 1000; values above 1000 will be coerced to 1000.
+func (c *OrganizationsListCall) PageSize(pageSize int64) *OrganizationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous ListOrganizations call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListOrganizations` must match the call that provided the page token.
+func (c *OrganizationsListCall) PageToken(pageToken string) *OrganizationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsListCall) Fields(s ...googleapi.Field) *OrganizationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsListCall) IfNoneMatch(entityTag string) *OrganizationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsListCall) Context(ctx context.Context) *OrganizationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/organizations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "marketingplatformadmin.organizations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "marketingplatformadmin.organizations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListOrganizationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsListCall) Do(opts ...googleapi.CallOption) (*ListOrganizationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListOrganizationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "marketingplatformadmin.organizations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsListCall) Pages(ctx context.Context, f func(*ListOrganizationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsReportPropertyUsageCall struct {
+	s                          *Service
+	organization               string
+	reportpropertyusagerequest *ReportPropertyUsageRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// ReportPropertyUsage: Get the usage and billing data for properties within
+// the organization for the specified month. Per direct client org, user needs
+// to be OrgAdmin/BillingAdmin on the organization in order to view the billing
+// and usage data. Per sales partner client org, user needs to be
+// OrgAdmin/BillingAdmin on the sales partner org in order to view the billing
+// and usage data, or OrgAdmin/BillingAdmin on the sales partner client org in
+// order to view the usage data only.
+//
+//   - organization: Specifies the organization whose property usage will be
+//     listed. Format: organizations/{org_id}.
+func (r *OrganizationsService) ReportPropertyUsage(organization string, reportpropertyusagerequest *ReportPropertyUsageRequest) *OrganizationsReportPropertyUsageCall {
+	c := &OrganizationsReportPropertyUsageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	c.reportpropertyusagerequest = reportpropertyusagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsReportPropertyUsageCall) Fields(s ...googleapi.Field) *OrganizationsReportPropertyUsageCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsReportPropertyUsageCall) Context(ctx context.Context) *OrganizationsReportPropertyUsageCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsReportPropertyUsageCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsReportPropertyUsageCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.reportpropertyusagerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+organization}:reportPropertyUsage")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization": c.organization,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "marketingplatformadmin.organizations.reportPropertyUsage", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "marketingplatformadmin.organizations.reportPropertyUsage" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ReportPropertyUsageResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsReportPropertyUsageCall) Do(opts ...googleapi.CallOption) (*ReportPropertyUsageResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ReportPropertyUsageResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "marketingplatformadmin.organizations.reportPropertyUsage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

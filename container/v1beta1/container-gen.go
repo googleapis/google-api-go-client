@@ -302,8 +302,7 @@ type AcceleratorConfig struct {
 	// instance.
 	AcceleratorCount int64 `json:"acceleratorCount,omitempty,string"`
 	// AcceleratorType: The accelerator type resource name. List of supported
-	// accelerators here
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/gpus)
+	// accelerators here (https://cloud.google.com/compute/docs/gpus)
 	AcceleratorType string `json:"acceleratorType,omitempty"`
 	// GpuDriverInstallationConfig: The configuration for auto installation of GPU
 	// driver.
@@ -493,7 +492,7 @@ type AddonsConfig struct {
 	// is deprecated, and will be disabled in 1.15. It is recommended to use the
 	// Cloud Console to manage and monitor your Kubernetes clusters, workloads and
 	// applications. For more information, see:
-	// https://{$universe.dns_names.final_documentation_domain}/kubernetes-engine/docs/concepts/dashboards
+	// https://cloud.google.com/kubernetes-engine/docs/concepts/dashboards
 	KubernetesDashboard *KubernetesDashboard `json:"kubernetesDashboard,omitempty"`
 	// LustreCsiDriverConfig: Configuration for the Lustre CSI driver.
 	LustreCsiDriverConfig *LustreCsiDriverConfig `json:"lustreCsiDriverConfig,omitempty"`
@@ -866,7 +865,7 @@ type AutoprovisioningNodePoolDefaults struct {
 	// projects/[KEY_PROJECT_ID]/locations/[LOCATION]/keyRings/[RING_NAME]/cryptoKey
 	// s/[KEY_NAME]. For more information about protecting resources with Cloud KMS
 	// Keys please see:
-	// https://{$universe.dns_names.final_documentation_domain}/compute/docs/disks/customer-managed-encryption
+	// https://cloud.google.com/compute/docs/disks/customer-managed-encryption
 	BootDiskKmsKey string `json:"bootDiskKmsKey,omitempty"`
 	// DiskSizeGb: Size of the disk attached to each node, specified in GB. The
 	// smallest allowed disk size is 10GB. If unspecified, the default disk size is
@@ -877,8 +876,8 @@ type AutoprovisioningNodePoolDefaults struct {
 	// 'pd-standard'
 	DiskType string `json:"diskType,omitempty"`
 	// ImageType: The image type to use for NAP created node. Please see
-	// https://{$universe.dns_names.final_documentation_domain}/kubernetes-engine/docs/concepts/node-images
-	// for available image types.
+	// https://cloud.google.com/kubernetes-engine/docs/concepts/node-images for
+	// available image types.
 	ImageType string `json:"imageType,omitempty"`
 	// InsecureKubeletReadonlyPortEnabled: DEPRECATED. Use
 	// NodePoolAutoConfig.NodeKubeletConfig instead.
@@ -890,7 +889,7 @@ type AutoprovisioningNodePoolDefaults struct {
 	// platform. Applicable values are the friendly names of CPU platforms, such as
 	// minCpuPlatform: Intel Haswell or minCpuPlatform: Intel Sandy Bridge. For
 	// more information, read how to specify min CPU platform
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/instances/specify-min-cpu-platform).
+	// (https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform).
 	// This field is deprecated, min_cpu_platform should be specified using
 	// `cloud.google.com/requested-min-cpu-platform` label selector on the pod. To
 	// unset the min cpu platform field pass "automatic" as field value.
@@ -901,10 +900,10 @@ type AutoprovisioningNodePoolDefaults struct {
 	// `https://www.googleapis.com/auth/compute` is required for mounting
 	// persistent storage on your nodes. *
 	// `https://www.googleapis.com/auth/devstorage.read_only` is required for
-	// communicating with **gcr.io** (the Google Container Registry
-	// (https://{$universe.dns_names.final_documentation_domain}/container-registry/)).
-	// If unspecified, no scopes are added, unless Cloud Logging or Cloud
-	// Monitoring are enabled, in which case their required scopes will be added.
+	// communicating with **gcr.io** (the Artifact Registry
+	// (https://cloud.google.com/artifact-registry/)). If unspecified, no scopes
+	// are added, unless Cloud Logging or Cloud Monitoring are enabled, in which
+	// case their required scopes will be added.
 	OauthScopes []string `json:"oauthScopes,omitempty"`
 	// ServiceAccount: The Google Cloud Platform Service Account to be used by the
 	// node VMs. Specify the email address of the Service Account; otherwise, if no
@@ -1217,13 +1216,13 @@ type CancelOperationRequest struct {
 	OperationId string `json:"operationId,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the operation resides. This field has been deprecated and replaced
-	// by the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the
+	// operation resides. This field has been deprecated and replaced by the name
+	// field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1431,7 +1430,7 @@ type Cluster struct {
 	// Deprecated. Call Kubernetes API directly to retrieve node information.
 	CurrentNodeCount int64 `json:"currentNodeCount,omitempty"`
 	// CurrentNodeVersion: Output only. Deprecated, use NodePool.version
-	// (https://{$universe.dns_names.final_documentation_domain}/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters.nodePools)
+	// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters.nodePools)
 	// instead. The current version of the node software components. If they are
 	// currently at multiple versions because they're in the process of being
 	// upgraded, this reflects the minimum version of all nodes.
@@ -1494,13 +1493,13 @@ type Cluster struct {
 	InitialClusterVersion string `json:"initialClusterVersion,omitempty"`
 	// InitialNodeCount: The number of nodes to create in this cluster. You must
 	// ensure that your Compute Engine resource quota
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/quotas) is
-	// sufficient for this number of instances. You must also have available
-	// firewall and routes quota. For requests, this field should only be used in
-	// lieu of a "node_pool" object, since this configuration (along with the
-	// "node_config") will be used to create a "NodePool" object with an
-	// auto-generated name. Do not use this and a node_pool at the same time. This
-	// field is deprecated, use node_pool.initial_node_count instead.
+	// (https://cloud.google.com/compute/quotas) is sufficient for this number of
+	// instances. You must also have available firewall and routes quota. For
+	// requests, this field should only be used in lieu of a "node_pool" object,
+	// since this configuration (along with the "node_config") will be used to
+	// create a "NodePool" object with an auto-generated name. Do not use this and
+	// a node_pool at the same time. This field is deprecated, use
+	// node_pool.initial_node_count instead.
 	InitialNodeCount int64 `json:"initialNodeCount,omitempty"`
 	// InstanceGroupUrls: Output only. Deprecated. Use
 	// node_pools.instance_group_urls.
@@ -1512,19 +1511,19 @@ type Cluster struct {
 	// LegacyAbac: Configuration for the legacy ABAC authorization mode.
 	LegacyAbac *LegacyAbac `json:"legacyAbac,omitempty"`
 	// Location: Output only. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/regions-zones/regions-zones#available)
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
 	// or region
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/regions-zones/regions-zones#available)
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
 	// in which the cluster resides.
 	Location string `json:"location,omitempty"`
 	// Locations: The list of Google Compute Engine zones
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster's nodes should be located. This field provides a
-	// default value if NodePool.Locations
-	// (https://{$universe.dns_names.final_documentation_domain}/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations)
+	// (https://cloud.google.com/compute/docs/zones#available) in which the
+	// cluster's nodes should be located. This field provides a default value if
+	// NodePool.Locations
+	// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations)
 	// are not specified during node pool creation. Warning: changing cluster
 	// locations will update the NodePool.Locations
-	// (https://{$universe.dns_names.final_documentation_domain}/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations)
+	// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations)
 	// of all node pools and will result in nodes being added and/or removed.
 	Locations []string `json:"locations,omitempty"`
 	// LoggingConfig: Logging configuration for the cluster.
@@ -1576,10 +1575,9 @@ type Cluster struct {
 	// Must start with a letter. * Must end with a number or a letter.
 	Name string `json:"name,omitempty"`
 	// Network: The name of the Google Compute Engine network
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/networks-and-firewalls#networks)
-	// to which the cluster is connected. If left unspecified, the `default`
-	// network will be used. On output this shows the network ID instead of the
-	// name.
+	// (https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to
+	// which the cluster is connected. If left unspecified, the `default` network
+	// will be used. On output this shows the network ID instead of the name.
 	Network string `json:"network,omitempty"`
 	// NetworkConfig: Configuration for cluster networking.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
@@ -1689,9 +1687,8 @@ type Cluster struct {
 	// information about the current status of this cluster, if available.
 	StatusMessage string `json:"statusMessage,omitempty"`
 	// Subnetwork: The name of the Google Compute Engine subnetwork
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/subnetworks)
-	// to which the cluster is connected. On output this shows the subnetwork ID
-	// instead of the name.
+	// (https://cloud.google.com/compute/docs/subnetworks) to which the cluster is
+	// connected. On output this shows the subnetwork ID instead of the name.
 	Subnetwork string `json:"subnetwork,omitempty"`
 	// TpuConfig: Configuration for Cloud TPU support; This field is deprecated due
 	// to the deprecation of 2VM TPU. The end of life date for 2VM TPU is
@@ -1719,9 +1716,8 @@ type Cluster struct {
 	// Accounts in IAM policies.
 	WorkloadIdentityConfig *WorkloadIdentityConfig `json:"workloadIdentityConfig,omitempty"`
 	// Zone: Output only. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field is deprecated, use location
-	// instead.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field is deprecated, use location instead.
 	Zone string `json:"zone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1749,8 +1745,8 @@ func (s Cluster) MarshalJSON() ([]byte, error) {
 // of the cluster and create/delete node pools based on the current needs.
 type ClusterAutoscaling struct {
 	// AutoprovisioningLocations: The list of Google Compute Engine zones
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the NodePool's nodes can be created by NAP.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the
+	// NodePool's nodes can be created by NAP.
 	AutoprovisioningLocations []string `json:"autoprovisioningLocations,omitempty"`
 	// AutoprovisioningNodePoolDefaults: AutoprovisioningNodePoolDefaults contains
 	// defaults for a node pool created by NAP.
@@ -1896,8 +1892,8 @@ type ClusterUpdate struct {
 	//   "LEGACY_DATAPATH" - Use the IPTables implementation based on kube-proxy.
 	//   "ADVANCED_DATAPATH" - Use the eBPF based GKE Dataplane V2 with additional
 	// features. See the [GKE Dataplane V2
-	// documentation](https://{$universe.dns_names.final_documentation_domain}/kuber
-	// netes-engine/docs/how-to/dataplane-v2) for more.
+	// documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/datapla
+	// ne-v2) for more.
 	DesiredDatapathProvider string `json:"desiredDatapathProvider,omitempty"`
 	// DesiredDefaultEnablePrivateNodes: Override the default setting of whether
 	// future created nodes have private IP addresses only, namely
@@ -1964,11 +1960,11 @@ type ClusterUpdate struct {
 	// Subsetting configuration.
 	DesiredL4ilbSubsettingConfig *ILBSubsettingConfig `json:"desiredL4ilbSubsettingConfig,omitempty"`
 	// DesiredLocations: The desired list of Google Compute Engine zones
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster's nodes should be located. This list must always
-	// include the cluster's primary zone. Warning: changing cluster locations will
-	// update the locations of all node pools and will result in nodes being added
-	// and/or removed.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the
+	// cluster's nodes should be located. This list must always include the
+	// cluster's primary zone. Warning: changing cluster locations will update the
+	// locations of all node pools and will result in nodes being added and/or
+	// removed.
 	DesiredLocations []string `json:"desiredLocations,omitempty"`
 	// DesiredLoggingConfig: The desired logging configuration.
 	DesiredLoggingConfig *LoggingConfig `json:"desiredLoggingConfig,omitempty"`
@@ -2097,6 +2093,9 @@ type ClusterUpdate struct {
 	DesiredResourceUsageExportConfig *ResourceUsageExportConfig `json:"desiredResourceUsageExportConfig,omitempty"`
 	// DesiredSecretManagerConfig: Enable/Disable Secret Manager Config.
 	DesiredSecretManagerConfig *SecretManagerConfig `json:"desiredSecretManagerConfig,omitempty"`
+	// DesiredSecretSyncConfig: Configuration for sync Secret Manager secrets as
+	// k8s secrets.
+	DesiredSecretSyncConfig *SecretSyncConfig `json:"desiredSecretSyncConfig,omitempty"`
 	// DesiredSecurityPostureConfig: Enable/Disable Security Posture API features
 	// for the cluster.
 	DesiredSecurityPostureConfig *SecurityPostureConfig `json:"desiredSecurityPostureConfig,omitempty"`
@@ -2249,13 +2248,12 @@ type CompleteIPRotationRequest struct {
 	Name string `json:"name,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2490,20 +2488,19 @@ func (s CostManagementConfig) MarshalJSON() ([]byte, error) {
 // CreateClusterRequest: CreateClusterRequest creates a cluster.
 type CreateClusterRequest struct {
 	// Cluster: Required. A cluster resource
-	// (https://{$universe.dns_names.final_documentation_domain}/container-engine/reference/rest/v1beta1/projects.locations.clusters)
+	// (https://cloud.google.com/container-engine/reference/rest/v1beta1/projects.locations.clusters)
 	Cluster *Cluster `json:"cluster,omitempty"`
 	// Parent: The parent (project and location) where the cluster will be created.
 	// Specified in the format `projects/*/locations/*`.
 	Parent string `json:"parent,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the parent field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the parent field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the parent field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cluster") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2537,13 +2534,12 @@ type CreateNodePoolRequest struct {
 	Parent string `json:"parent,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the parent field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the parent field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the parent field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3013,16 +3009,16 @@ type EphemeralStorageConfig struct {
 	// LocalSsdCount: Number of local SSDs to use to back ephemeral storage. Uses
 	// NVMe interfaces. The limit for this value is dependent upon the maximum
 	// number of disk available on a machine per zone. See:
-	// https://{$universe.dns_names.final_documentation_domain}/compute/docs/disks/local-ssd
-	// for more information. A zero (or unset) value has different meanings
-	// depending on machine type being used: 1. For pre-Gen3 machines, which
-	// support flexible numbers of local ssds, zero (or unset) means to disable
-	// using local SSDs as ephemeral storage. 2. For Gen3 machines which dictate a
-	// specific number of local ssds, zero (or unset) means to use the default
-	// number of local ssds that goes with that machine type. For example, for a
-	// c3-standard-8-lssd machine, 2 local ssds would be provisioned. For
-	// c3-standard-8 (which doesn't support local ssds), 0 will be provisioned. See
-	// https://{$universe.dns_names.final_documentation_domain}/compute/docs/disks/local-ssd#choose_number_local_ssds
+	// https://cloud.google.com/compute/docs/disks/local-ssd for more information.
+	// A zero (or unset) value has different meanings depending on machine type
+	// being used: 1. For pre-Gen3 machines, which support flexible numbers of
+	// local ssds, zero (or unset) means to disable using local SSDs as ephemeral
+	// storage. 2. For Gen3 machines which dictate a specific number of local ssds,
+	// zero (or unset) means to use the default number of local ssds that goes with
+	// that machine type. For example, for a c3-standard-8-lssd machine, 2 local
+	// ssds would be provisioned. For c3-standard-8 (which doesn't support local
+	// ssds), 0 will be provisioned. See
+	// https://cloud.google.com/compute/docs/disks/local-ssd#choose_number_local_ssds
 	// for more info.
 	LocalSsdCount int64 `json:"localSsdCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LocalSsdCount") to
@@ -3054,13 +3050,13 @@ type EphemeralStorageLocalSsdConfig struct {
 	// numbers of local ssds, zero (or unset) means to disable using local SSDs as
 	// ephemeral storage. The limit for this value is dependent upon the maximum
 	// number of disk available on a machine per zone. See:
-	// https://{$universe.dns_names.final_documentation_domain}/compute/docs/disks/local-ssd
-	// for more information. 2. For Gen3 machines which dictate a specific number
-	// of local ssds, zero (or unset) means to use the default number of local ssds
-	// that goes with that machine type. For example, for a c3-standard-8-lssd
-	// machine, 2 local ssds would be provisioned. For c3-standard-8 (which doesn't
-	// support local ssds), 0 will be provisioned. See
-	// https://{$universe.dns_names.final_documentation_domain}/compute/docs/disks/local-ssd#choose_number_local_ssds
+	// https://cloud.google.com/compute/docs/disks/local-ssd for more information.
+	// 2. For Gen3 machines which dictate a specific number of local ssds, zero (or
+	// unset) means to use the default number of local ssds that goes with that
+	// machine type. For example, for a c3-standard-8-lssd machine, 2 local ssds
+	// would be provisioned. For c3-standard-8 (which doesn't support local ssds),
+	// 0 will be provisioned. See
+	// https://cloud.google.com/compute/docs/disks/local-ssd#choose_number_local_ssds
 	// for more info.
 	LocalSsdCount int64 `json:"localSsdCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataCacheCount") to
@@ -3333,8 +3329,8 @@ func (s Fleet) MarshalJSON() ([]byte, error) {
 }
 
 // GCPSecretManagerCertificateConfig: GCPSecretManagerCertificateConfig
-// configures a secret from Google Secret Manager
-// (https://{$universe.dns_names.final_documentation_domain}/secret-manager).
+// configures a secret from Secret Manager
+// (https://cloud.google.com/secret-manager).
 type GCPSecretManagerCertificateConfig struct {
 	// SecretUri: Secret URI, in the form
 	// "projects/$PROJECT_ID/secrets/$SECRET_NAME/versions/$VERSION". Version can
@@ -4537,17 +4533,16 @@ func (s ListUsableSubnetworksResponse) MarshalJSON() ([]byte, error) {
 type LocalNvmeSsdBlockConfig struct {
 	// LocalSsdCount: Number of local NVMe SSDs to use. The limit for this value is
 	// dependent upon the maximum number of disk available on a machine per zone.
-	// See:
-	// https://{$universe.dns_names.final_documentation_domain}/compute/docs/disks/local-ssd
-	// for more information. A zero (or unset) value has different meanings
-	// depending on machine type being used: 1. For pre-Gen3 machines, which
-	// support flexible numbers of local ssds, zero (or unset) means to disable
-	// using local SSDs as ephemeral storage. 2. For Gen3 machines which dictate a
-	// specific number of local ssds, zero (or unset) means to use the default
-	// number of local ssds that goes with that machine type. For example, for a
-	// c3-standard-8-lssd machine, 2 local ssds would be provisioned. For
-	// c3-standard-8 (which doesn't support local ssds), 0 will be provisioned. See
-	// https://{$universe.dns_names.final_documentation_domain}/compute/docs/disks/local-ssd#choose_number_local_ssds
+	// See: https://cloud.google.com/compute/docs/disks/local-ssd for more
+	// information. A zero (or unset) value has different meanings depending on
+	// machine type being used: 1. For pre-Gen3 machines, which support flexible
+	// numbers of local ssds, zero (or unset) means to disable using local SSDs as
+	// ephemeral storage. 2. For Gen3 machines which dictate a specific number of
+	// local ssds, zero (or unset) means to use the default number of local ssds
+	// that goes with that machine type. For example, for a c3-standard-8-lssd
+	// machine, 2 local ssds would be provisioned. For c3-standard-8 (which doesn't
+	// support local ssds), 0 will be provisioned. See
+	// https://cloud.google.com/compute/docs/disks/local-ssd#choose_number_local_ssds
 	// for more info.
 	LocalSsdCount int64 `json:"localSsdCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LocalSsdCount") to
@@ -4872,7 +4867,7 @@ type MasterAuth struct {
 	// username must be non-empty. Warning: basic authentication is deprecated, and
 	// will be removed in GKE control plane versions 1.19 and newer. For a list of
 	// recommended authentication methods, see:
-	// https://{$universe.dns_names.final_documentation_domain}/kubernetes-engine/docs/how-to/api-server-authentication
+	// https://cloud.google.com/kubernetes-engine/docs/how-to/api-server-authentication
 	Password string `json:"password,omitempty"`
 	// Username: The username to use for HTTP basic authentication to the master
 	// endpoint. For clusters v1.6.0 and later, basic authentication can be
@@ -4880,7 +4875,7 @@ type MasterAuth struct {
 	// string). Warning: basic authentication is deprecated, and will be removed in
 	// GKE control plane versions 1.19 and newer. For a list of recommended
 	// authentication methods, see:
-	// https://{$universe.dns_names.final_documentation_domain}/kubernetes-engine/docs/how-to/api-server-authentication
+	// https://cloud.google.com/kubernetes-engine/docs/how-to/api-server-authentication
 	Username string `json:"username,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClientCertificate") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5136,8 +5131,8 @@ type NetworkConfig struct {
 	//   "LEGACY_DATAPATH" - Use the IPTables implementation based on kube-proxy.
 	//   "ADVANCED_DATAPATH" - Use the eBPF based GKE Dataplane V2 with additional
 	// features. See the [GKE Dataplane V2
-	// documentation](https://{$universe.dns_names.final_documentation_domain}/kuber
-	// netes-engine/docs/how-to/dataplane-v2) for more.
+	// documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/datapla
+	// ne-v2) for more.
 	DatapathProvider string `json:"datapathProvider,omitempty"`
 	// DefaultEnablePrivateNodes: Controls whether by default nodes have private IP
 	// addresses only. It is invalid to specify both
@@ -5181,8 +5176,8 @@ type NetworkConfig struct {
 	// encrypted using inter-node transparent encryption.
 	InTransitEncryptionConfig string `json:"inTransitEncryptionConfig,omitempty"`
 	// Network: Output only. The relative name of the Google Compute Engine network
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/networks-and-firewalls#networks)
-	// to which the cluster is connected. Example:
+	// (https://cloud.google.com/compute/docs/networks-and-firewalls#networks) to
+	// which the cluster is connected. Example:
 	// projects/my-project/global/networks/my-network
 	Network string `json:"network,omitempty"`
 	// NetworkPerformanceConfig: Network bandwidth tier configuration.
@@ -5204,9 +5199,8 @@ type NetworkConfig struct {
 	// with externalIPs field are blocked or not.
 	ServiceExternalIpsConfig *ServiceExternalIPsConfig `json:"serviceExternalIpsConfig,omitempty"`
 	// Subnetwork: Output only. The relative name of the Google Compute Engine
-	// subnetwork
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/vpc)
-	// to which the cluster is connected. Example:
+	// subnetwork (https://cloud.google.com/compute/docs/vpc) to which the cluster
+	// is connected. Example:
 	// projects/my-project/regions/us-central1/subnetworks/my-subnet
 	Subnetwork string `json:"subnetwork,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DatapathProvider") to
@@ -5375,7 +5369,7 @@ func (s NetworkTierConfig) MarshalJSON() ([]byte, error) {
 
 // NodeAffinity: Specifies the NodeAffinity key, values, and affinity operator
 // according to shared sole tenant node group affinities
-// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/nodes/sole-tenant-nodes#node_affinity_and_anti-affinity).
+// (https://cloud.google.com/compute/docs/nodes/sole-tenant-nodes#node_affinity_and_anti-affinity).
 type NodeAffinity struct {
 	// Key: Key for NodeAffinity.
 	Key string `json:"key,omitempty"`
@@ -5411,9 +5405,8 @@ func (s NodeAffinity) MarshalJSON() ([]byte, error) {
 // AutoprovisioningNodePoolDefaults instead.
 type NodeConfig struct {
 	// Accelerators: A list of hardware accelerators to be attached to each node.
-	// See
-	// https://{$universe.dns_names.final_documentation_domain}/compute/docs/gpus
-	// for more information about support for GPUs.
+	// See https://cloud.google.com/compute/docs/gpus for more information about
+	// support for GPUs.
 	Accelerators []*AcceleratorConfig `json:"accelerators,omitempty"`
 	// AdvancedMachineFeatures: Advanced features for the Compute Engine VM.
 	AdvancedMachineFeatures *AdvancedMachineFeatures `json:"advancedMachineFeatures,omitempty"`
@@ -5424,7 +5417,7 @@ type NodeConfig struct {
 	// projects/[KEY_PROJECT_ID]/locations/[LOCATION]/keyRings/[RING_NAME]/cryptoKey
 	// s/[KEY_NAME]. For more information about protecting resources with Cloud KMS
 	// Keys please see:
-	// https://{$universe.dns_names.final_documentation_domain}/compute/docs/disks/customer-managed-encryption
+	// https://cloud.google.com/compute/docs/disks/customer-managed-encryption
 	BootDiskKmsKey string `json:"bootDiskKmsKey,omitempty"`
 	// ConfidentialNodes: Confidential nodes config. All the nodes in the node pool
 	// will be Confidential VM once enabled.
@@ -5475,8 +5468,8 @@ type NodeConfig struct {
 	HostMaintenancePolicy *HostMaintenancePolicy `json:"hostMaintenancePolicy,omitempty"`
 	// ImageType: The image type to use for this node. Note that for a given image
 	// type, the latest version of it will be used. Please see
-	// https://{$universe.dns_names.final_documentation_domain}/kubernetes-engine/docs/concepts/node-images
-	// for available image types.
+	// https://cloud.google.com/kubernetes-engine/docs/concepts/node-images for
+	// available image types.
 	ImageType string `json:"imageType,omitempty"`
 	// KubeletConfig: Node kubelet configs.
 	KubeletConfig *NodeKubeletConfig `json:"kubeletConfig,omitempty"`
@@ -5495,8 +5488,7 @@ type NodeConfig struct {
 	// LocalSsdCount: The number of local SSD disks to be attached to the node. The
 	// limit for this value is dependent upon the maximum number of disks available
 	// on a machine per zone. See:
-	// https://{$universe.dns_names.final_documentation_domain}/compute/docs/disks/local-ssd
-	// for more information.
+	// https://cloud.google.com/compute/docs/disks/local-ssd for more information.
 	LocalSsdCount int64 `json:"localSsdCount,omitempty"`
 	// LocalSsdEncryptionMode: Specifies which method should be used for encrypting
 	// the Local SSDs attached to the node.
@@ -5515,8 +5507,8 @@ type NodeConfig struct {
 	// LoggingConfig: Logging configuration.
 	LoggingConfig *NodePoolLoggingConfig `json:"loggingConfig,omitempty"`
 	// MachineType: The name of a Google Compute Engine machine type
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/machine-types).
-	// If unspecified, the default machine type is `e2-medium`.
+	// (https://cloud.google.com/compute/docs/machine-types). If unspecified, the
+	// default machine type is `e2-medium`.
 	MachineType string `json:"machineType,omitempty"`
 	// MaxRunDuration: The maximum duration for the nodes to exist. If unspecified,
 	// the nodes can exist indefinitely.
@@ -5542,12 +5534,12 @@ type NodeConfig struct {
 	// values are the friendly names of CPU platforms, such as `minCpuPlatform:
 	// "Intel Haswell" or `minCpuPlatform: "Intel Sandy Bridge". For more
 	// information, read how to specify min CPU platform
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/instances/specify-min-cpu-platform).
+	// (https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform).
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 	// NodeGroup: Setting this field will assign instances of this pool to run on
 	// the specified node group. This is useful for running workloads on sole
 	// tenant nodes
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/nodes/sole-tenant-nodes).
+	// (https://cloud.google.com/compute/docs/nodes/sole-tenant-nodes).
 	NodeGroup string `json:"nodeGroup,omitempty"`
 	// OauthScopes: The set of Google API scopes to be made available on all of the
 	// node VMs under the "default" service account. The following scopes are
@@ -5555,18 +5547,18 @@ type NodeConfig struct {
 	// `https://www.googleapis.com/auth/compute` is required for mounting
 	// persistent storage on your nodes. *
 	// `https://www.googleapis.com/auth/devstorage.read_only` is required for
-	// communicating with **gcr.io** (the Google Container Registry
-	// (https://{$universe.dns_names.final_documentation_domain}/container-registry/)).
-	// If unspecified, no scopes are added, unless Cloud Logging or Cloud
-	// Monitoring are enabled, in which case their required scopes will be added.
+	// communicating with **gcr.io** (the Artifact Registry
+	// (https://cloud.google.com/artifact-registry/)). If unspecified, no scopes
+	// are added, unless Cloud Logging or Cloud Monitoring are enabled, in which
+	// case their required scopes will be added.
 	OauthScopes []string `json:"oauthScopes,omitempty"`
 	// Preemptible: Whether the nodes are created as preemptible VM instances. See:
-	// https://{$universe.dns_names.final_documentation_domain}/compute/docs/instances/preemptible
-	// for more information about preemptible VM instances.
+	// https://cloud.google.com/compute/docs/instances/preemptible for more
+	// information about preemptible VM instances.
 	Preemptible bool `json:"preemptible,omitempty"`
 	// ReservationAffinity: The optional reservation affinity. Setting this field
 	// will apply the specified Zonal Compute Reservation
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/instances/reserving-zonal-resources)
+	// (https://cloud.google.com/compute/docs/instances/reserving-zonal-resources)
 	// to this node pool.
 	ReservationAffinity *ReservationAffinity `json:"reservationAffinity,omitempty"`
 	// ResourceLabels: The resource labels for the node pool to use to annotate any
@@ -6011,22 +6003,21 @@ type NodePool struct {
 	// up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 	// InitialNodeCount: The initial node count for the pool. You must ensure that
-	// your Compute Engine resource quota
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/quotas) is
-	// sufficient for this number of instances. You must also have available
+	// your Compute Engine resource quota (https://cloud.google.com/compute/quotas)
+	// is sufficient for this number of instances. You must also have available
 	// firewall and routes quota.
 	InitialNodeCount int64 `json:"initialNodeCount,omitempty"`
 	// InstanceGroupUrls: Output only. The resource URLs of the managed instance
 	// groups
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/instance-groups/creating-groups-of-managed-instances)
+	// (https://cloud.google.com/compute/docs/instance-groups/creating-groups-of-managed-instances)
 	// associated with this node pool. During the node pool blue-green upgrade
 	// operation, the URLs contain both blue and green resources.
 	InstanceGroupUrls []string `json:"instanceGroupUrls,omitempty"`
 	// Locations: The list of Google Compute Engine zones
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the NodePool's nodes should be located. If this value is
-	// unspecified during node pool creation, the Cluster.Locations
-	// (https://{$universe.dns_names.final_documentation_domain}/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters#Cluster.FIELDS.locations)
+	// (https://cloud.google.com/compute/docs/zones#available) in which the
+	// NodePool's nodes should be located. If this value is unspecified during node
+	// pool creation, the Cluster.Locations
+	// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters#Cluster.FIELDS.locations)
 	// value will be used, instead. Warning: changing node pool locations will
 	// result in nodes being added and/or removed.
 	Locations []string `json:"locations,omitempty"`
@@ -6080,7 +6071,7 @@ type NodePool struct {
 	UpgradeSettings *UpgradeSettings `json:"upgradeSettings,omitempty"`
 	// Version: The version of Kubernetes running on this NodePool's nodes. If
 	// unspecified, it defaults as described here
-	// (https://{$universe.dns_names.final_documentation_domain}/kubernetes-engine/versioning#specifying_node_version).
+	// (https://cloud.google.com/kubernetes-engine/versioning#specifying_node_version).
 	Version string `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -6393,9 +6384,9 @@ type Operation struct {
 	// Error: The error result of the operation in case of failure.
 	Error *Status `json:"error,omitempty"`
 	// Location: Output only. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/regions-zones/regions-zones#available)
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
 	// or region
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/regions-zones/regions-zones#available)
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
 	// in which the cluster resides.
 	Location string `json:"location,omitempty"`
 	// Name: Output only. The server-assigned ID for the operation.
@@ -6418,26 +6409,25 @@ type Operation struct {
 	//   "UPGRADE_MASTER" - The cluster version is being updated. Note that this
 	// includes "upgrades" to the same version, which are simply a recreation. This
 	// also includes
-	// [auto-upgrades](https://{$universe.dns_names.final_documentation_domain}/kube
-	// rnetes-engine/docs/concepts/cluster-upgrades#upgrading_automatically). For
-	// more details, see [documentation on cluster
-	// upgrades](https://{$universe.dns_names.final_documentation_domain}/kubernetes
-	// -engine/docs/concepts/cluster-upgrades#cluster_upgrades).
+	// [auto-upgrades](https://cloud.google.com/kubernetes-engine/docs/concepts/clus
+	// ter-upgrades#upgrading_automatically). For more details, see [documentation
+	// on cluster
+	// upgrades](https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-up
+	// grades#cluster_upgrades).
 	//   "UPGRADE_NODES" - A node pool is being updated. Despite calling this an
 	// "upgrade", this includes most forms of updates to node pools. This also
 	// includes
-	// [auto-upgrades](https://{$universe.dns_names.final_documentation_domain}/kube
-	// rnetes-engine/docs/how-to/node-auto-upgrades). This operation sets the
-	// progress field and may be canceled. The upgrade strategy depends on [node
-	// pool
-	// configuration](https://{$universe.dns_names.final_documentation_domain}/kuber
-	// netes-engine/docs/concepts/node-pool-upgrade-strategies). The nodes are
-	// generally still usable during this operation.
+	// [auto-upgrades](https://cloud.google.com/kubernetes-engine/docs/how-to/node-a
+	// uto-upgrades). This operation sets the progress field and may be canceled.
+	// The upgrade strategy depends on [node pool
+	// configuration](https://cloud.google.com/kubernetes-engine/docs/concepts/node-
+	// pool-upgrade-strategies). The nodes are generally still usable during this
+	// operation.
 	//   "REPAIR_CLUSTER" - A problem has been detected with the control plane and
 	// is being repaired. This operation type is initiated by GKE. For more
 	// details, see [documentation on
-	// repairs](https://{$universe.dns_names.final_documentation_domain}/kubernetes-
-	// engine/docs/concepts/maintenance-windows-and-exclusions#repairs).
+	// repairs](https://cloud.google.com/kubernetes-engine/docs/concepts/maintenance
+	// -windows-and-exclusions#repairs).
 	//   "UPDATE_CLUSTER" - The cluster is being updated. This is a broad category
 	// of operations and includes operations that only change metadata as well as
 	// those that must recreate the entire cluster. If the control plane must be
@@ -6446,16 +6436,14 @@ type Operation struct {
 	// separate operations and the update may not be completely functional until
 	// the node pools recreations finish. Node recreations will generally follow
 	// [maintenance
-	// policies](https://{$universe.dns_names.final_documentation_domain}/kubernetes
-	// -engine/docs/concepts/maintenance-windows-and-exclusions). Some
-	// GKE-initiated operations use this type. This includes certain types of
-	// auto-upgrades and incident mitigations.
+	// policies](https://cloud.google.com/kubernetes-engine/docs/concepts/maintenanc
+	// e-windows-and-exclusions). Some GKE-initiated operations use this type. This
+	// includes certain types of auto-upgrades and incident mitigations.
 	//   "CREATE_NODE_POOL" - A node pool is being created. The node pool should be
 	// assumed to be unusable until this operation finishes. In the event of an
 	// error, the node pool may be partially created. If enabled, [node
-	// autoprovisioning](https://{$universe.dns_names.final_documentation_domain}/ku
-	// bernetes-engine/docs/how-to/node-auto-provisioning) may have automatically
-	// initiated such operations.
+	// autoprovisioning](https://cloud.google.com/kubernetes-engine/docs/how-to/node
+	// -auto-provisioning) may have automatically initiated such operations.
 	//   "DELETE_NODE_POOL" - The node pool is being deleted. The node pool should
 	// be assumed to be unusable as soon as this operation starts.
 	//   "SET_NODE_POOL_MANAGEMENT" - The node pool's manamagent field is being
@@ -6463,11 +6451,10 @@ type Operation struct {
 	// most other operations.
 	//   "AUTO_REPAIR_NODES" - A problem has been detected with nodes and [they are
 	// being
-	// repaired](https://{$universe.dns_names.final_documentation_domain}/kubernetes
-	// -engine/docs/how-to/node-auto-repair). This operation type is initiated by
-	// GKE, typically automatically. This operation may be concurrent with other
-	// operations and there may be multiple repairs occurring on the same node
-	// pool.
+	// repaired](https://cloud.google.com/kubernetes-engine/docs/how-to/node-auto-re
+	// pair). This operation type is initiated by GKE, typically automatically.
+	// This operation may be concurrent with other operations and there may be
+	// multiple repairs occurring on the same node pool.
 	//   "AUTO_UPGRADE_NODES" - Unused. Automatic node upgrade uses UPGRADE_NODES.
 	//   "SET_LABELS" - Unused. Updating labels uses UPDATE_CLUSTER.
 	//   "SET_MASTER_AUTH" - Unused. Updating master auth uses UPDATE_CLUSTER.
@@ -6482,8 +6469,8 @@ type Operation struct {
 	// is initiated by GKE. These operations are often performed preemptively to
 	// ensure that the control plane has sufficient resources and is not typically
 	// an indication of issues. For more details, see [documentation on
-	// resizes](https://{$universe.dns_names.final_documentation_domain}/kubernetes-
-	// engine/docs/concepts/maintenance-windows-and-exclusions#repairs).
+	// resizes](https://cloud.google.com/kubernetes-engine/docs/concepts/maintenance
+	// -windows-and-exclusions#repairs).
 	//   "FLEET_FEATURE_UPGRADE" - Fleet features of GKE Enterprise are being
 	// upgraded. The cluster should be assumed to be blocked for other upgrades
 	// until the operation finishes.
@@ -6521,9 +6508,8 @@ type Operation struct {
 	// s/my-cluster/nodePools/my-np/node/my-node`
 	TargetLink string `json:"targetLink,omitempty"`
 	// Zone: Output only. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the operation is taking place. This field is deprecated, use
-	// location instead.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the
+	// operation is taking place. This field is deprecated, use location instead.
 	Zone string `json:"zone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -6706,7 +6692,7 @@ type PlacementPolicy struct {
 	// the node pool. If not found, InvalidArgument error is returned.
 	PolicyName string `json:"policyName,omitempty"`
 	// TpuTopology: TPU placement topology for pod slice node pool.
-	// https://{$universe.dns_names.final_documentation_domain}/tpu/docs/types-topologies#tpu_topologies
+	// https://cloud.google.com/tpu/docs/types-topologies#tpu_topologies
 	TpuTopology string `json:"tpuTopology,omitempty"`
 	// Type: The type of placement.
 	//
@@ -7333,7 +7319,7 @@ func (s ReleaseChannelConfig) MarshalJSON() ([]byte, error) {
 }
 
 // ReservationAffinity: ReservationAffinity
-// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/instances/reserving-zonal-resources)
+// (https://cloud.google.com/compute/docs/instances/reserving-zonal-resources)
 // is the configuration of desired reservation which instances could take
 // capacity from.
 type ReservationAffinity struct {
@@ -7372,7 +7358,7 @@ func (s ReservationAffinity) MarshalJSON() ([]byte, error) {
 }
 
 // ResourceLabels: Collection of Resource Manager labels
-// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-labels).
+// (https://cloud.google.com/resource-manager/docs/creating-managing-labels).
 type ResourceLabels struct {
 	// Labels: Map of node label keys and node label values.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -7424,8 +7410,8 @@ func (s ResourceLimit) MarshalJSON() ([]byte, error) {
 // ResourceManagerTags: A map of resource manager tag keys and values to be
 // attached to the nodes for managing Compute Engine firewalls using Network
 // Firewall Policies. Tags must be according to specifications in
-// https://{$universe.dns_names.final_documentation_domain}/vpc/docs/tags-firewalls-overview#specifications.
-// A maximum of 5 tag key-value pairs can be specified. Existing tags will be
+// https://cloud.google.com/vpc/docs/tags-firewalls-overview#specifications. A
+// maximum of 5 tag key-value pairs can be specified. Existing tags will be
 // replaced with new values.
 type ResourceManagerTags struct {
 	// Tags: Tags must be in one of the following formats ([KEY]=[VALUE]) 1.
@@ -7498,16 +7484,15 @@ type RollbackNodePoolUpgradeRequest struct {
 	NodePoolId string `json:"nodePoolId,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// RespectPdb: Option for rollback to ignore the PodDisruptionBudget. Default
 	// value is false.
 	RespectPdb bool `json:"respectPdb,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7837,13 +7822,12 @@ type SetAddonsConfigRequest struct {
 	Name string `json:"name,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AddonsConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7882,15 +7866,14 @@ type SetLabelsRequest struct {
 	Name string `json:"name,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// ResourceLabels: Required. The labels to set for that cluster.
 	ResourceLabels map[string]string `json:"resourceLabels,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7924,13 +7907,12 @@ type SetLegacyAbacRequest struct {
 	Name string `json:"name,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7956,24 +7938,23 @@ type SetLocationsRequest struct {
 	// been deprecated and replaced by the name field.
 	ClusterId string `json:"clusterId,omitempty"`
 	// Locations: Required. The desired list of Google Compute Engine zones
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster's nodes should be located. Changing the locations a
-	// cluster is in will result in nodes being either created or removed from the
-	// cluster, depending on whether locations are being added or removed. This
-	// list must always include the cluster's primary zone.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the
+	// cluster's nodes should be located. Changing the locations a cluster is in
+	// will result in nodes being either created or removed from the cluster,
+	// depending on whether locations are being added or removed. This list must
+	// always include the cluster's primary zone.
 	Locations []string `json:"locations,omitempty"`
 	// Name: The name (project, location, cluster) of the cluster to set locations.
 	// Specified in the format `projects/*/locations/*/clusters/*`.
 	Name string `json:"name,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8013,13 +7994,12 @@ type SetLoggingServiceRequest struct {
 	Name string `json:"name,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8053,11 +8033,11 @@ type SetMaintenancePolicyRequest struct {
 	Name string `json:"name,omitempty"`
 	// ProjectId: Required. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	ProjectId string `json:"projectId,omitempty"`
 	// Zone: Required. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8099,15 +8079,14 @@ type SetMasterAuthRequest struct {
 	Name string `json:"name,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Update: Required. A description of the update.
 	Update *MasterAuth `json:"update,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8147,13 +8126,12 @@ type SetMonitoringServiceRequest struct {
 	Name string `json:"name,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8188,13 +8166,12 @@ type SetNetworkPolicyRequest struct {
 	NetworkPolicy *NetworkPolicy `json:"networkPolicy,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8231,13 +8208,12 @@ type SetNodePoolAutoscalingRequest struct {
 	NodePoolId string `json:"nodePoolId,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Autoscaling") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8274,13 +8250,12 @@ type SetNodePoolManagementRequest struct {
 	NodePoolId string `json:"nodePoolId,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8316,13 +8291,12 @@ type SetNodePoolSizeRequest struct {
 	NodePoolId string `json:"nodePoolId,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8478,15 +8452,14 @@ type StartIPRotationRequest struct {
 	Name string `json:"name,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// RotateCredentials: Whether to rotate credentials during IP rotation.
 	RotateCredentials bool `json:"rotateCredentials,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8854,15 +8827,14 @@ type UpdateClusterRequest struct {
 	Name string `json:"name,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Update: Required. A description of the update.
 	Update *ClusterUpdate `json:"update,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8923,13 +8895,12 @@ type UpdateMasterRequest struct {
 	Name string `json:"name,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8953,9 +8924,8 @@ func (s UpdateMasterRequest) MarshalJSON() ([]byte, error) {
 // node pool.
 type UpdateNodePoolRequest struct {
 	// Accelerators: A list of hardware accelerators to be attached to each node.
-	// See
-	// https://{$universe.dns_names.final_documentation_domain}/compute/docs/gpus
-	// for more information about support for GPUs.
+	// See https://cloud.google.com/compute/docs/gpus for more information about
+	// support for GPUs.
 	Accelerators []*AcceleratorConfig `json:"accelerators,omitempty"`
 	// BootDisk: The desired boot disk config for nodes in the node pool. Initiates
 	// an upgrade operation that migrates the nodes in the node pool to the
@@ -8991,8 +8961,8 @@ type UpdateNodePoolRequest struct {
 	// Gvnic: Enable or disable gvnic on the node pool.
 	Gvnic *VirtualNIC `json:"gvnic,omitempty"`
 	// ImageType: Required. The desired image type for the node pool. Please see
-	// https://{$universe.dns_names.final_documentation_domain}/kubernetes-engine/docs/concepts/node-images
-	// for available image types.
+	// https://cloud.google.com/kubernetes-engine/docs/concepts/node-images for
+	// available image types.
 	ImageType string `json:"imageType,omitempty"`
 	// KubeletConfig: Node kubelet configs.
 	KubeletConfig *NodeKubeletConfig `json:"kubeletConfig,omitempty"`
@@ -9003,17 +8973,17 @@ type UpdateNodePoolRequest struct {
 	// LinuxNodeConfig: Parameters that can be configured on Linux nodes.
 	LinuxNodeConfig *LinuxNodeConfig `json:"linuxNodeConfig,omitempty"`
 	// Locations: The desired list of Google Compute Engine zones
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the node pool's nodes should be located. Changing the locations for
-	// a node pool will result in nodes being either created or removed from the
-	// node pool, depending on whether locations are being added or removed.
-	// Warning: It is recommended to update node pool locations in a standalone API
-	// call. Do not combine a location update with changes to other fields (such as
-	// `tags`, `labels`, `taints`, etc.) in the same request. Otherwise, the API
-	// performs a structural modification where changes to other fields will only
-	// apply to newly created nodes and will not be applied to existing nodes in
-	// the node pool. To ensure all nodes are updated consistently, use a separate
-	// API call for location changes.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the node
+	// pool's nodes should be located. Changing the locations for a node pool will
+	// result in nodes being either created or removed from the node pool,
+	// depending on whether locations are being added or removed. Warning: It is
+	// recommended to update node pool locations in a standalone API call. Do not
+	// combine a location update with changes to other fields (such as `tags`,
+	// `labels`, `taints`, etc.) in the same request. Otherwise, the API performs a
+	// structural modification where changes to other fields will only apply to
+	// newly created nodes and will not be applied to existing nodes in the node
+	// pool. To ensure all nodes are updated consistently, use a separate API call
+	// for location changes.
 	Locations []string `json:"locations,omitempty"`
 	// LoggingConfig: Logging configuration.
 	LoggingConfig *NodePoolLoggingConfig `json:"loggingConfig,omitempty"`
@@ -9043,7 +9013,7 @@ type UpdateNodePoolRequest struct {
 	NodeVersion string `json:"nodeVersion,omitempty"`
 	// ProjectId: Deprecated. The Google Developers Console project ID or project
 	// number
-	// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 	// QueuedProvisioning: Specifies the configuration of queued provisioning.
@@ -9075,9 +9045,8 @@ type UpdateNodePoolRequest struct {
 	// pool.
 	WorkloadMetadataConfig *WorkloadMetadataConfig `json:"workloadMetadataConfig,omitempty"`
 	// Zone: Deprecated. The name of the Google Compute Engine zone
-	// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-	// in which the cluster resides. This field has been deprecated and replaced by
-	// the name field.
+	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
+	// resides. This field has been deprecated and replaced by the name field.
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Accelerators") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10022,7 +9991,7 @@ func (r *ProjectsLocationsService) GetServerConfig(name string) *ProjectsLocatio
 
 // ProjectId sets the optional parameter "projectId": Deprecated. The Google
 // Developers Console project ID or project number
-// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 // This field has been deprecated and replaced by the name field.
 func (c *ProjectsLocationsGetServerConfigCall) ProjectId(projectId string) *ProjectsLocationsGetServerConfigCall {
 	c.urlParams_.Set("projectId", projectId)
@@ -10030,8 +9999,7 @@ func (c *ProjectsLocationsGetServerConfigCall) ProjectId(projectId string) *Proj
 }
 
 // Zone sets the optional parameter "zone": Deprecated. The name of the Google
-// Compute Engine zone
-// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
+// Compute Engine zone (https://cloud.google.com/compute/docs/zones#available)
 // to return operations for. This field has been deprecated and replaced by the
 // name field.
 func (c *ProjectsLocationsGetServerConfigCall) Zone(zone string) *ProjectsLocationsGetServerConfigCall {
@@ -10470,8 +10438,8 @@ type ProjectsLocationsClustersCreateCall struct {
 // Create: Creates a cluster, consisting of the specified number and type of
 // Google Compute Engine instances. By default, the cluster is created in the
 // project's default network
-// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/networks-and-firewalls#networks).
-// One firewall is added for the cluster. After cluster creation, the Kubelet
+// (https://cloud.google.com/compute/docs/networks-and-firewalls#networks). One
+// firewall is added for the cluster. After cluster creation, the kubelet
 // creates routes for each node to allow the containers on that node to
 // communicate with all other instances in the cluster. Finally, an entry is
 // added to the project's global metadata indicating which CIDR range the
@@ -10602,7 +10570,7 @@ func (c *ProjectsLocationsClustersDeleteCall) ClusterId(clusterId string) *Proje
 
 // ProjectId sets the optional parameter "projectId": Deprecated. The Google
 // Developers Console project ID or project number
-// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 // This field has been deprecated and replaced by the name field.
 func (c *ProjectsLocationsClustersDeleteCall) ProjectId(projectId string) *ProjectsLocationsClustersDeleteCall {
 	c.urlParams_.Set("projectId", projectId)
@@ -10610,8 +10578,7 @@ func (c *ProjectsLocationsClustersDeleteCall) ProjectId(projectId string) *Proje
 }
 
 // Zone sets the optional parameter "zone": Deprecated. The name of the Google
-// Compute Engine zone
-// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
+// Compute Engine zone (https://cloud.google.com/compute/docs/zones#available)
 // in which the cluster resides. This field has been deprecated and replaced by
 // the name field.
 func (c *ProjectsLocationsClustersDeleteCall) Zone(zone string) *ProjectsLocationsClustersDeleteCall {
@@ -10847,7 +10814,7 @@ func (c *ProjectsLocationsClustersGetCall) ClusterId(clusterId string) *Projects
 
 // ProjectId sets the optional parameter "projectId": Deprecated. The Google
 // Developers Console project ID or project number
-// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 // This field has been deprecated and replaced by the name field.
 func (c *ProjectsLocationsClustersGetCall) ProjectId(projectId string) *ProjectsLocationsClustersGetCall {
 	c.urlParams_.Set("projectId", projectId)
@@ -10855,8 +10822,7 @@ func (c *ProjectsLocationsClustersGetCall) ProjectId(projectId string) *Projects
 }
 
 // Zone sets the optional parameter "zone": Deprecated. The name of the Google
-// Compute Engine zone
-// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
+// Compute Engine zone (https://cloud.google.com/compute/docs/zones#available)
 // in which the cluster resides. This field has been deprecated and replaced by
 // the name field.
 func (c *ProjectsLocationsClustersGetCall) Zone(zone string) *ProjectsLocationsClustersGetCall {
@@ -11090,7 +11056,7 @@ func (r *ProjectsLocationsClustersService) List(parent string) *ProjectsLocation
 
 // ProjectId sets the optional parameter "projectId": Deprecated. The Google
 // Developers Console project ID or project number
-// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 // This field has been deprecated and replaced by the parent field.
 func (c *ProjectsLocationsClustersListCall) ProjectId(projectId string) *ProjectsLocationsClustersListCall {
 	c.urlParams_.Set("projectId", projectId)
@@ -11098,8 +11064,7 @@ func (c *ProjectsLocationsClustersListCall) ProjectId(projectId string) *Project
 }
 
 // Zone sets the optional parameter "zone": Deprecated. The name of the Google
-// Compute Engine zone
-// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
+// Compute Engine zone (https://cloud.google.com/compute/docs/zones#available)
 // in which the cluster resides, or "-" for all zones. This field has been
 // deprecated and replaced by the parent field.
 func (c *ProjectsLocationsClustersListCall) Zone(zone string) *ProjectsLocationsClustersListCall {
@@ -11419,7 +11384,7 @@ type ProjectsLocationsClustersSetLocationsCall struct {
 
 // SetLocations: Sets the locations for a specific cluster. Deprecated. Use
 // projects.locations.clusters.update
-// (https://{$universe.dns_names.final_documentation_domain}/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters/update)
+// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters/update)
 // instead.
 //
 //   - name: The name (project, location, cluster) of the cluster to set
@@ -12702,7 +12667,7 @@ func (c *ProjectsLocationsClustersNodePoolsDeleteCall) NodePoolId(nodePoolId str
 
 // ProjectId sets the optional parameter "projectId": Deprecated. The Google
 // Developers Console project ID or project number
-// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 // This field has been deprecated and replaced by the name field.
 func (c *ProjectsLocationsClustersNodePoolsDeleteCall) ProjectId(projectId string) *ProjectsLocationsClustersNodePoolsDeleteCall {
 	c.urlParams_.Set("projectId", projectId)
@@ -12710,8 +12675,7 @@ func (c *ProjectsLocationsClustersNodePoolsDeleteCall) ProjectId(projectId strin
 }
 
 // Zone sets the optional parameter "zone": Deprecated. The name of the Google
-// Compute Engine zone
-// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
+// Compute Engine zone (https://cloud.google.com/compute/docs/zones#available)
 // in which the cluster resides. This field has been deprecated and replaced by
 // the name field.
 func (c *ProjectsLocationsClustersNodePoolsDeleteCall) Zone(zone string) *ProjectsLocationsClustersNodePoolsDeleteCall {
@@ -12956,7 +12920,7 @@ func (c *ProjectsLocationsClustersNodePoolsGetCall) NodePoolId(nodePoolId string
 
 // ProjectId sets the optional parameter "projectId": Deprecated. The Google
 // Developers Console project ID or project number
-// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 // This field has been deprecated and replaced by the name field.
 func (c *ProjectsLocationsClustersNodePoolsGetCall) ProjectId(projectId string) *ProjectsLocationsClustersNodePoolsGetCall {
 	c.urlParams_.Set("projectId", projectId)
@@ -12964,8 +12928,7 @@ func (c *ProjectsLocationsClustersNodePoolsGetCall) ProjectId(projectId string) 
 }
 
 // Zone sets the optional parameter "zone": Deprecated. The name of the Google
-// Compute Engine zone
-// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
+// Compute Engine zone (https://cloud.google.com/compute/docs/zones#available)
 // in which the cluster resides. This field has been deprecated and replaced by
 // the name field.
 func (c *ProjectsLocationsClustersNodePoolsGetCall) Zone(zone string) *ProjectsLocationsClustersNodePoolsGetCall {
@@ -13094,7 +13057,7 @@ func (c *ProjectsLocationsClustersNodePoolsListCall) ClusterId(clusterId string)
 
 // ProjectId sets the optional parameter "projectId": Deprecated. The Google
 // Developers Console project ID or project number
-// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 // This field has been deprecated and replaced by the parent field.
 func (c *ProjectsLocationsClustersNodePoolsListCall) ProjectId(projectId string) *ProjectsLocationsClustersNodePoolsListCall {
 	c.urlParams_.Set("projectId", projectId)
@@ -13102,8 +13065,7 @@ func (c *ProjectsLocationsClustersNodePoolsListCall) ProjectId(projectId string)
 }
 
 // Zone sets the optional parameter "zone": Deprecated. The name of the Google
-// Compute Engine zone
-// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
+// Compute Engine zone (https://cloud.google.com/compute/docs/zones#available)
 // in which the cluster resides. This field has been deprecated and replaced by
 // the parent field.
 func (c *ProjectsLocationsClustersNodePoolsListCall) Zone(zone string) *ProjectsLocationsClustersNodePoolsListCall {
@@ -13977,7 +13939,7 @@ func (c *ProjectsLocationsOperationsGetCall) OperationId(operationId string) *Pr
 
 // ProjectId sets the optional parameter "projectId": Deprecated. The Google
 // Developers Console project ID or project number
-// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 // This field has been deprecated and replaced by the name field.
 func (c *ProjectsLocationsOperationsGetCall) ProjectId(projectId string) *ProjectsLocationsOperationsGetCall {
 	c.urlParams_.Set("projectId", projectId)
@@ -13985,8 +13947,7 @@ func (c *ProjectsLocationsOperationsGetCall) ProjectId(projectId string) *Projec
 }
 
 // Zone sets the optional parameter "zone": Deprecated. The name of the Google
-// Compute Engine zone
-// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
+// Compute Engine zone (https://cloud.google.com/compute/docs/zones#available)
 // in which the cluster resides. This field has been deprecated and replaced by
 // the name field.
 func (c *ProjectsLocationsOperationsGetCall) Zone(zone string) *ProjectsLocationsOperationsGetCall {
@@ -14107,7 +14068,7 @@ func (r *ProjectsLocationsOperationsService) List(parent string) *ProjectsLocati
 
 // ProjectId sets the optional parameter "projectId": Deprecated. The Google
 // Developers Console project ID or project number
-// (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 // This field has been deprecated and replaced by the parent field.
 func (c *ProjectsLocationsOperationsListCall) ProjectId(projectId string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("projectId", projectId)
@@ -14115,8 +14076,7 @@ func (c *ProjectsLocationsOperationsListCall) ProjectId(projectId string) *Proje
 }
 
 // Zone sets the optional parameter "zone": Deprecated. The name of the Google
-// Compute Engine zone
-// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
+// Compute Engine zone (https://cloud.google.com/compute/docs/zones#available)
 // to return operations for, or `-` for all zones. This field has been
 // deprecated and replaced by the parent field.
 func (c *ProjectsLocationsOperationsListCall) Zone(zone string) *ProjectsLocationsOperationsListCall {
@@ -14231,12 +14191,12 @@ type ProjectsZonesGetServerconfigCall struct {
 //
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     to return operations for. This field has been deprecated and replaced by
-//     the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) to return
+//     operations for. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesService) GetServerconfig(projectId string, zone string) *ProjectsZonesGetServerconfigCall {
 	c := &ProjectsZonesGetServerconfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14360,12 +14320,12 @@ type ProjectsZonesClustersAddonsCall struct {
 //     been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersService) Addons(projectId string, zone string, clusterId string, setaddonsconfigrequest *SetAddonsConfigRequest) *ProjectsZonesClustersAddonsCall {
 	c := &ProjectsZonesClustersAddonsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14478,12 +14438,12 @@ type ProjectsZonesClustersCompleteIpRotationCall struct {
 //     deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersService) CompleteIpRotation(projectId string, zone string, clusterId string, completeiprotationrequest *CompleteIPRotationRequest) *ProjectsZonesClustersCompleteIpRotationCall {
 	c := &ProjectsZonesClustersCompleteIpRotationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14592,8 +14552,8 @@ type ProjectsZonesClustersCreateCall struct {
 // Create: Creates a cluster, consisting of the specified number and type of
 // Google Compute Engine instances. By default, the cluster is created in the
 // project's default network
-// (https://{$universe.dns_names.final_documentation_domain}/compute/docs/networks-and-firewalls#networks).
-// One firewall is added for the cluster. After cluster creation, the Kubelet
+// (https://cloud.google.com/compute/docs/networks-and-firewalls#networks). One
+// firewall is added for the cluster. After cluster creation, the kubelet
 // creates routes for each node to allow the containers on that node to
 // communicate with all other instances in the cluster. Finally, an entry is
 // added to the project's global metadata indicating which CIDR range the
@@ -14601,12 +14561,12 @@ type ProjectsZonesClustersCreateCall struct {
 //
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the parent field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the parent field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the parent
+//     field.
 func (r *ProjectsZonesClustersService) Create(projectId string, zone string, createclusterrequest *CreateClusterRequest) *ProjectsZonesClustersCreateCall {
 	c := &ProjectsZonesClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14720,12 +14680,12 @@ type ProjectsZonesClustersDeleteCall struct {
 //     been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersService) Delete(projectId string, zone string, clusterId string) *ProjectsZonesClustersDeleteCall {
 	c := &ProjectsZonesClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -14960,12 +14920,12 @@ type ProjectsZonesClustersGetCall struct {
 //     been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersService) Get(projectId string, zone string, clusterId string) *ProjectsZonesClustersGetCall {
 	c := &ProjectsZonesClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15093,12 +15053,12 @@ type ProjectsZonesClustersLegacyAbacCall struct {
 //     been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersService) LegacyAbac(projectId string, zone string, clusterId string, setlegacyabacrequest *SetLegacyAbacRequest) *ProjectsZonesClustersLegacyAbacCall {
 	c := &ProjectsZonesClustersLegacyAbacCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15209,12 +15169,12 @@ type ProjectsZonesClustersListCall struct {
 //
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the parent field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides, or "-" for all zones. This field has been
-//     deprecated and replaced by the parent field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides, or "-" for all zones. This field has been deprecated and
+//     replaced by the parent field.
 func (r *ProjectsZonesClustersService) List(projectId string, zone string) *ProjectsZonesClustersListCall {
 	c := &ProjectsZonesClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15336,19 +15296,19 @@ type ProjectsZonesClustersLocationsCall struct {
 
 // Locations: Sets the locations for a specific cluster. Deprecated. Use
 // projects.locations.clusters.update
-// (https://{$universe.dns_names.final_documentation_domain}/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters/update)
+// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters/update)
 // instead.
 //
 //   - clusterId: Deprecated. The name of the cluster to upgrade. This field has
 //     been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersService) Locations(projectId string, zone string, clusterId string, setlocationsrequest *SetLocationsRequest) *ProjectsZonesClustersLocationsCall {
 	c := &ProjectsZonesClustersLocationsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15461,12 +15421,12 @@ type ProjectsZonesClustersLoggingCall struct {
 //     been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersService) Logging(projectId string, zone string, clusterId string, setloggingservicerequest *SetLoggingServiceRequest) *ProjectsZonesClustersLoggingCall {
 	c := &ProjectsZonesClustersLoggingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15579,12 +15539,12 @@ type ProjectsZonesClustersMasterCall struct {
 //     been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersService) Master(projectId string, zone string, clusterId string, updatemasterrequest *UpdateMasterRequest) *ProjectsZonesClustersMasterCall {
 	c := &ProjectsZonesClustersMasterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15697,12 +15657,12 @@ type ProjectsZonesClustersMonitoringCall struct {
 //     been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersService) Monitoring(projectId string, zone string, clusterId string, setmonitoringservicerequest *SetMonitoringServiceRequest) *ProjectsZonesClustersMonitoringCall {
 	c := &ProjectsZonesClustersMonitoringCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15815,12 +15775,12 @@ type ProjectsZonesClustersResourceLabelsCall struct {
 //     deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersService) ResourceLabels(projectId string, zone string, clusterId string, setlabelsrequest *SetLabelsRequest) *ProjectsZonesClustersResourceLabelsCall {
 	c := &ProjectsZonesClustersResourceLabelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15931,10 +15891,10 @@ type ProjectsZonesClustersSetMaintenancePolicyCall struct {
 //
 //   - clusterId: The name of the cluster to update.
 //   - projectId: The Google Developers Console project ID or project number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //   - zone: The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides.
 func (r *ProjectsZonesClustersService) SetMaintenancePolicy(projectId string, zone string, clusterId string, setmaintenancepolicyrequest *SetMaintenancePolicyRequest) *ProjectsZonesClustersSetMaintenancePolicyCall {
 	c := &ProjectsZonesClustersSetMaintenancePolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -16049,12 +16009,12 @@ type ProjectsZonesClustersSetMasterAuthCall struct {
 //     been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersService) SetMasterAuth(projectId string, zone string, clusterId string, setmasterauthrequest *SetMasterAuthRequest) *ProjectsZonesClustersSetMasterAuthCall {
 	c := &ProjectsZonesClustersSetMasterAuthCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -16167,12 +16127,12 @@ type ProjectsZonesClustersSetNetworkPolicyCall struct {
 //     deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersService) SetNetworkPolicy(projectId string, zone string, clusterId string, setnetworkpolicyrequest *SetNetworkPolicyRequest) *ProjectsZonesClustersSetNetworkPolicyCall {
 	c := &ProjectsZonesClustersSetNetworkPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -16285,12 +16245,12 @@ type ProjectsZonesClustersStartIpRotationCall struct {
 //     deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersService) StartIpRotation(projectId string, zone string, clusterId string, startiprotationrequest *StartIPRotationRequest) *ProjectsZonesClustersStartIpRotationCall {
 	c := &ProjectsZonesClustersStartIpRotationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -16403,12 +16363,12 @@ type ProjectsZonesClustersUpdateCall struct {
 //     been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersService) Update(projectId string, zone string, clusterId string, updateclusterrequest *UpdateClusterRequest) *ProjectsZonesClustersUpdateCall {
 	c := &ProjectsZonesClustersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -16524,12 +16484,12 @@ type ProjectsZonesClustersNodePoolsAutoscalingCall struct {
 //     has been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersNodePoolsService) Autoscaling(projectId string, zone string, clusterId string, nodePoolId string, setnodepoolautoscalingrequest *SetNodePoolAutoscalingRequest) *ProjectsZonesClustersNodePoolsAutoscalingCall {
 	c := &ProjectsZonesClustersNodePoolsAutoscalingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -16644,12 +16604,12 @@ type ProjectsZonesClustersNodePoolsCreateCall struct {
 //     deprecated and replaced by the parent field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the parent field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the parent field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the parent
+//     field.
 func (r *ProjectsZonesClustersNodePoolsService) Create(projectId string, zone string, clusterId string, createnodepoolrequest *CreateNodePoolRequest) *ProjectsZonesClustersNodePoolsCreateCall {
 	c := &ProjectsZonesClustersNodePoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -16764,12 +16724,12 @@ type ProjectsZonesClustersNodePoolsDeleteCall struct {
 //     has been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersNodePoolsService) Delete(projectId string, zone string, clusterId string, nodePoolId string) *ProjectsZonesClustersNodePoolsDeleteCall {
 	c := &ProjectsZonesClustersNodePoolsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -17010,12 +16970,12 @@ type ProjectsZonesClustersNodePoolsGetCall struct {
 //     deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersNodePoolsService) Get(projectId string, zone string, clusterId string, nodePoolId string) *ProjectsZonesClustersNodePoolsGetCall {
 	c := &ProjectsZonesClustersNodePoolsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -17144,12 +17104,12 @@ type ProjectsZonesClustersNodePoolsListCall struct {
 //     deprecated and replaced by the parent field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the parent field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the parent field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the parent
+//     field.
 func (r *ProjectsZonesClustersNodePoolsService) List(projectId string, zone string, clusterId string) *ProjectsZonesClustersNodePoolsListCall {
 	c := &ProjectsZonesClustersNodePoolsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -17281,12 +17241,12 @@ type ProjectsZonesClustersNodePoolsRollbackCall struct {
 //     has been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersNodePoolsService) Rollback(projectId string, zone string, clusterId string, nodePoolId string, rollbacknodepoolupgraderequest *RollbackNodePoolUpgradeRequest) *ProjectsZonesClustersNodePoolsRollbackCall {
 	c := &ProjectsZonesClustersNodePoolsRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -17404,12 +17364,12 @@ type ProjectsZonesClustersNodePoolsSetManagementCall struct {
 //     has been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersNodePoolsService) SetManagement(projectId string, zone string, clusterId string, nodePoolId string, setnodepoolmanagementrequest *SetNodePoolManagementRequest) *ProjectsZonesClustersNodePoolsSetManagementCall {
 	c := &ProjectsZonesClustersNodePoolsSetManagementCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -17529,12 +17489,12 @@ type ProjectsZonesClustersNodePoolsSetSizeCall struct {
 //     has been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersNodePoolsService) SetSize(projectId string, zone string, clusterId string, nodePoolId string, setnodepoolsizerequest *SetNodePoolSizeRequest) *ProjectsZonesClustersNodePoolsSetSizeCall {
 	c := &ProjectsZonesClustersNodePoolsSetSizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -17652,12 +17612,12 @@ type ProjectsZonesClustersNodePoolsUpdateCall struct {
 //     has been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesClustersNodePoolsService) Update(projectId string, zone string, clusterId string, nodePoolId string, updatenodepoolrequest *UpdateNodePoolRequest) *ProjectsZonesClustersNodePoolsUpdateCall {
 	c := &ProjectsZonesClustersNodePoolsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -17772,12 +17732,12 @@ type ProjectsZonesOperationsCancelCall struct {
 //     field has been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the operation resides. This field has been deprecated and
-//     replaced by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     operation resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesOperationsService) Cancel(projectId string, zone string, operationId string, canceloperationrequest *CancelOperationRequest) *ProjectsZonesOperationsCancelCall {
 	c := &ProjectsZonesOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -17890,12 +17850,12 @@ type ProjectsZonesOperationsGetCall struct {
 //     field has been deprecated and replaced by the name field.
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the name field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     in which the cluster resides. This field has been deprecated and replaced
-//     by the name field.
+//     (https://cloud.google.com/compute/docs/zones#available) in which the
+//     cluster resides. This field has been deprecated and replaced by the name
+//     field.
 func (r *ProjectsZonesOperationsService) Get(projectId string, zone string, operationId string) *ProjectsZonesOperationsGetCall {
 	c := &ProjectsZonesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -18019,12 +17979,12 @@ type ProjectsZonesOperationsListCall struct {
 //
 //   - projectId: Deprecated. The Google Developers Console project ID or project
 //     number
-//     (https://{$universe.dns_names.final_documentation_domain}/resource-manager/docs/creating-managing-projects).
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 //     This field has been deprecated and replaced by the parent field.
 //   - zone: Deprecated. The name of the Google Compute Engine zone
-//     (https://{$universe.dns_names.final_documentation_domain}/compute/docs/zones#available)
-//     to return operations for, or `-` for all zones. This field has been
-//     deprecated and replaced by the parent field.
+//     (https://cloud.google.com/compute/docs/zones#available) to return
+//     operations for, or `-` for all zones. This field has been deprecated and
+//     replaced by the parent field.
 func (r *ProjectsZonesOperationsService) List(projectId string, zone string) *ProjectsZonesOperationsListCall {
 	c := &ProjectsZonesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

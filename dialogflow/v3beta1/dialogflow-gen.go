@@ -3579,6 +3579,9 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
 	// `request_headers` and `secret_versions_for_request_headers`, the value in
 	// `secret_versions_for_request_headers` will be used.
 	SecretVersionsForRequestHeaders map[string]GoogleCloudDialogflowCxV3WebhookGenericWebServiceSecretVersionHeaderValue `json:"secretVersionsForRequestHeaders,omitempty"`
+	// ServiceAccountAuthConfig: Optional. Configuration for service account
+	// authentication.
+	ServiceAccountAuthConfig *GoogleCloudDialogflowCxV3WebhookGenericWebServiceServiceAccountAuthConfig `json:"serviceAccountAuthConfig,omitempty"`
 	// ServiceAgentAuth: Optional. Indicate the auth token type generated from the
 	// Diglogflow service agent
 	// (https://cloud.google.com/iam/docs/service-agents#dialogflow-service-agent).
@@ -3689,6 +3692,35 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebServiceSecretVersionHeaderValue s
 
 func (s GoogleCloudDialogflowCxV3WebhookGenericWebServiceSecretVersionHeaderValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3WebhookGenericWebServiceSecretVersionHeaderValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookGenericWebServiceServiceAccountAuthConfig:
+// Configuration for authentication using a service account.
+type GoogleCloudDialogflowCxV3WebhookGenericWebServiceServiceAccountAuthConfig struct {
+	// ServiceAccount: Required. The email address of the service account used to
+	// authenticate the webhook call. Dialogflow uses this service account to
+	// exchange an access token and the access token is then sent in the
+	// `Authorization` header of the webhook request. The service account must have
+	// the `roles/iam.serviceAccountTokenCreator` role granted to the Dialogflow
+	// service agent
+	// (https://cloud.google.com/iam/docs/service-agents#dialogflow-service-agent).
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ServiceAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3WebhookGenericWebServiceServiceAccountAuthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookGenericWebServiceServiceAccountAuthConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5289,6 +5321,28 @@ type GoogleCloudDialogflowCxV3beta1Changelog struct {
 
 func (s GoogleCloudDialogflowCxV3beta1Changelog) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1Changelog
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1CodeBlock: Represents a code block.
+type GoogleCloudDialogflowCxV3beta1CodeBlock struct {
+	// Code: Optional. Source code of the block in Python.
+	Code string `json:"code,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1CodeBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1CodeBlock
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11148,6 +11202,9 @@ func (s GoogleCloudDialogflowCxV3beta1Phrase) MarshalJSON() ([]byte, error) {
 // beginning of the invoked, and a list of output parameters to store the
 // playbook result.
 type GoogleCloudDialogflowCxV3beta1Playbook struct {
+	// CodeBlock: Optional. The playbook's scoped code block, which may implement
+	// handlers and actions.
+	CodeBlock *GoogleCloudDialogflowCxV3beta1CodeBlock `json:"codeBlock,omitempty"`
 	// CreateTime: Output only. The timestamp of initial playbook creation.
 	CreateTime string `json:"createTime,omitempty"`
 	// DisplayName: Required. The human-readable name of the playbook, unique
@@ -11160,6 +11217,11 @@ type GoogleCloudDialogflowCxV3beta1Playbook struct {
 	// Handlers: Optional. A list of registered handlers to execute based on the
 	// specified triggers.
 	Handlers []*GoogleCloudDialogflowCxV3beta1Handler `json:"handlers,omitempty"`
+	// InlineActions: Optional. Output only. Names of inline actions scoped to this
+	// playbook. These actions are in addition to those belonging to referenced
+	// tools, child playbooks, and flows, e.g. actions that are defined in the
+	// playbook's code block.
+	InlineActions []string `json:"inlineActions,omitempty"`
 	// InputParameterDefinitions: Optional. Defined structured input parameters for
 	// this playbook.
 	InputParameterDefinitions []*GoogleCloudDialogflowCxV3beta1ParameterDefinition `json:"inputParameterDefinitions,omitempty"`
@@ -11201,13 +11263,13 @@ type GoogleCloudDialogflowCxV3beta1Playbook struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "CodeBlock") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// NullFields is a list of field names (e.g. "CodeBlock") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -13416,6 +13478,8 @@ type GoogleCloudDialogflowCxV3beta1ToolAuthentication struct {
 	BearerTokenConfig *GoogleCloudDialogflowCxV3beta1ToolAuthenticationBearerTokenConfig `json:"bearerTokenConfig,omitempty"`
 	// OauthConfig: Config for OAuth.
 	OauthConfig *GoogleCloudDialogflowCxV3beta1ToolAuthenticationOAuthConfig `json:"oauthConfig,omitempty"`
+	// ServiceAccountAuthConfig: Configuration for service account authentication.
+	ServiceAccountAuthConfig *GoogleCloudDialogflowCxV3beta1ToolAuthenticationServiceAccountAuthConfig `json:"serviceAccountAuthConfig,omitempty"`
 	// ServiceAgentAuthConfig: Config for Diglogflow service agent
 	// (https://cloud.google.com/iam/docs/service-agents#dialogflow-service-agent)
 	// auth.
@@ -13550,6 +13614,35 @@ type GoogleCloudDialogflowCxV3beta1ToolAuthenticationOAuthConfig struct {
 
 func (s GoogleCloudDialogflowCxV3beta1ToolAuthenticationOAuthConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ToolAuthenticationOAuthConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1ToolAuthenticationServiceAccountAuthConfig:
+// Configuration for authentication using a service account.
+type GoogleCloudDialogflowCxV3beta1ToolAuthenticationServiceAccountAuthConfig struct {
+	// ServiceAccount: Required. The email address of the service account used to
+	// authenticate the tool call. Dialogflow uses this service account to exchange
+	// an access token and the access token is then sent in the `Authorization`
+	// header of the tool request. The service account must have the
+	// `roles/iam.serviceAccountTokenCreator` role granted to the Dialogflow
+	// service agent
+	// (https://cloud.google.com/iam/docs/service-agents#dialogflow-service-agent).
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ServiceAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1ToolAuthenticationServiceAccountAuthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ToolAuthenticationServiceAccountAuthConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15006,6 +15099,9 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebService struct {
 	// `request_headers` and `secret_versions_for_request_headers`, the value in
 	// `secret_versions_for_request_headers` will be used.
 	SecretVersionsForRequestHeaders map[string]GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceSecretVersionHeaderValue `json:"secretVersionsForRequestHeaders,omitempty"`
+	// ServiceAccountAuthConfig: Optional. Configuration for service account
+	// authentication.
+	ServiceAccountAuthConfig *GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceServiceAccountAuthConfig `json:"serviceAccountAuthConfig,omitempty"`
 	// ServiceAgentAuth: Optional. Indicate the auth token type generated from the
 	// Diglogflow service agent
 	// (https://cloud.google.com/iam/docs/service-agents#dialogflow-service-agent).
@@ -15116,6 +15212,35 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceSecretVersionHeaderVa
 
 func (s GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceSecretVersionHeaderValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceSecretVersionHeaderValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceServiceAccountAuthConfi
+// g: Configuration for authentication using a service account.
+type GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceServiceAccountAuthConfig struct {
+	// ServiceAccount: Required. The email address of the service account used to
+	// authenticate the webhook call. Dialogflow uses this service account to
+	// exchange an access token and the access token is then sent in the
+	// `Authorization` header of the webhook request. The service account must have
+	// the `roles/iam.serviceAccountTokenCreator` role granted to the Dialogflow
+	// service agent
+	// (https://cloud.google.com/iam/docs/service-agents#dialogflow-service-agent).
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ServiceAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceServiceAccountAuthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceServiceAccountAuthConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -24068,9 +24193,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

@@ -1563,7 +1563,7 @@ type DeletionMetadata struct {
 	// Possible values:
 	//   "DELETION_TYPE_UNSPECIFIED" - This value is unused.
 	//   "CREATOR" - User deleted their own message.
-	//   "SPACE_OWNER" - A space manager deleted the message.
+	//   "SPACE_OWNER" - An owner or manager deleted the message.
 	//   "ADMIN" - A Google Workspace administrator deleted the message.
 	// Administrators can delete any message in the space, including messages sent
 	// by any space member or Chat app.

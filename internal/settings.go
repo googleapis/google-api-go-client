@@ -28,19 +28,57 @@ const (
 	defaultUniverseDomain   = "googleapis.com"
 )
 
+// CredentialsType specifies the type of JSON credentials being provided
+// to a loading function such as option.WithAuthCredentialsFile or
+// option.WithAuthCredentialsJSON.
+type CredentialsType int
+
+const (
+	// Unknown represents an unknown JSON file type.
+	Unknown CredentialsType = iota
+	// ServiceAccount represents a service account file type.
+	ServiceAccount
+	// User represents a user credentials file type.
+	User
+	// ImpersonatedServiceAccount represents an impersonated service account file type.
+	//
+	// IMPORTANT:
+	// This credential type does not validate the credential configuration. A security
+	// risk occurs when a credential configuration configured with malicious urls
+	// is used.
+	// You should validate credential configurations provided by untrusted sources.
+	// See [Security requirements when using credential configurations from an external
+	// source] https://cloud.google.com/docs/authentication/external/externally-sourced-credentials
+	// for more details.
+	ImpersonatedServiceAccount
+	// ExternalAccount represents an external account file type.
+	//
+	// IMPORTANT:
+	// This credential type does not validate the credential configuration. A security
+	// risk occurs when a credential configuration configured with malicious urls
+	// is used.
+	// You should validate credential configurations provided by untrusted sources.
+	// See [Security requirements when using credential configurations from an external
+	// source] https://cloud.google.com/docs/authentication/external/externally-sourced-credentials
+	// for more details.
+	ExternalAccount
+)
+
 // DialSettings holds information needed to establish a connection with a
 // Google API service.
 type DialSettings struct {
-	Endpoint                      string
-	DefaultEndpoint               string
-	DefaultEndpointTemplate       string
-	DefaultMTLSEndpoint           string
-	Scopes                        []string
-	DefaultScopes                 []string
-	EnableJwtWithScope            bool
-	TokenSource                   oauth2.TokenSource
-	Credentials                   *google.Credentials
-	CredentialsFile               string // if set, Token Source is ignored.
+	Endpoint                string
+	DefaultEndpoint         string
+	DefaultEndpointTemplate string
+	DefaultMTLSEndpoint     string
+	Scopes                  []string
+	DefaultScopes           []string
+	EnableJwtWithScope      bool
+	TokenSource             oauth2.TokenSource
+	Credentials             *google.Credentials
+	// Deprecated: Use AuthCredentialsFile instead, due to security risk.
+	CredentialsFile string
+	// Deprecated: Use AuthCredentialsJSON instead, due to security risk.
 	CredentialsJSON               []byte
 	InternalCredentials           *google.Credentials
 	UserAgent                     string
@@ -72,6 +110,9 @@ type DialSettings struct {
 
 	// New Auth library Options
 	AuthCredentials      *auth.Credentials
+	AuthCredentialsJSON  []byte
+	AuthCredentialsFile  string
+	AuthCredentialsType  CredentialsType
 	EnableNewAuthLibrary bool
 
 	// TODO(b/372244283): Remove after b/358175516 has been fixed
@@ -113,10 +154,40 @@ func (ds *DialSettings) IsNewAuthLibraryEnabled() bool {
 	if ds.AuthCredentials != nil {
 		return true
 	}
+	if len(ds.AuthCredentialsJSON) > 0 {
+		return true
+	}
+	if ds.AuthCredentialsFile != "" {
+		return true
+	}
 	if b, err := strconv.ParseBool(os.Getenv(newAuthLibEnvVar)); err == nil {
 		return b
 	}
 	return false
+}
+
+// GetAuthCredentialsJSON returns the AuthCredentialsJSON and AuthCredentialsType, if set.
+// Otherwise it falls back to the deprecated CredentialsJSON with an Unknown type.
+//
+// Use AuthCredentialsJSON if provided, as it is the safer, recommended option.
+// CredentialsJSON is populated by the deprecated WithCredentialsJSON.
+func (ds *DialSettings) GetAuthCredentialsJSON() ([]byte, CredentialsType) {
+	if len(ds.AuthCredentialsJSON) > 0 {
+		return ds.AuthCredentialsJSON, ds.AuthCredentialsType
+	}
+	return ds.CredentialsJSON, Unknown
+}
+
+// GetAuthCredentialsFile returns the AuthCredentialsFile and AuthCredentialsType, if set.
+// Otherwise it falls back to the deprecated CredentialsFile with an Unknown type.
+//
+// Use AuthCredentialsFile if provided, as it is the safer, recommended option.
+// CredentialsFile is populated by the deprecated WithCredentialsFile.
+func (ds *DialSettings) GetAuthCredentialsFile() (string, CredentialsType) {
+	if ds.AuthCredentialsFile != "" {
+		return ds.AuthCredentialsFile, ds.AuthCredentialsType
+	}
+	return ds.CredentialsFile, Unknown
 }
 
 // Validate reports an error if ds is invalid.
@@ -124,7 +195,7 @@ func (ds *DialSettings) Validate() error {
 	if ds.SkipValidation {
 		return nil
 	}
-	hasCreds := ds.APIKey != "" || ds.TokenSource != nil || ds.CredentialsFile != "" || ds.Credentials != nil
+	hasCreds := ds.APIKey != "" || ds.TokenSource != nil || ds.CredentialsFile != "" || ds.Credentials != nil || ds.AuthCredentials != nil || len(ds.AuthCredentialsJSON) > 0 || ds.AuthCredentialsFile != ""
 	if ds.NoAuth && hasCreds {
 		return errors.New("options.WithoutAuthentication is incompatible with any option that provides credentials")
 	}
@@ -136,6 +207,15 @@ func (ds *DialSettings) Validate() error {
 		nCreds++
 	}
 	if len(ds.CredentialsJSON) > 0 {
+		nCreds++
+	}
+	if ds.AuthCredentials != nil {
+		nCreds++
+	}
+	if len(ds.AuthCredentialsJSON) > 0 {
+		nCreds++
+	}
+	if ds.AuthCredentialsFile != "" {
 		nCreds++
 	}
 	if ds.CredentialsFile != "" {

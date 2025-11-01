@@ -3687,6 +3687,8 @@ type StorageDatabasecenterPartnerapiV1mainConfigBasedSignalData struct {
 	// exposed to public access.
 	//   "SIGNAL_TYPE_UNENCRYPTED_CONNECTIONS" - Represents if a resources requires
 	// all incoming connections to use SSL or not.
+	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Represents if a resource version is in
+	// extended support.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4106,6 +4108,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
 	// policy.
+	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -4607,6 +4610,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
 	// policy.
+	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4661,6 +4665,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData struct {
 	// exposed to public access.
 	//   "SIGNAL_TYPE_UNENCRYPTED_CONNECTIONS" - Represents if a resources requires
 	// all incoming connections to use SSL or not.
+	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Represents if a resource version is in
+	// extended support.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5841,9 +5847,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

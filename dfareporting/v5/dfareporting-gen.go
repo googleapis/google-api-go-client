@@ -1485,6 +1485,9 @@ type Ad struct {
 	//   "IN_STREAM_VIDEO"
 	//   "IN_STREAM_AUDIO"
 	Compatibility string `json:"compatibility,omitempty"`
+	// ContextualKeywordTargeting: Optional. Contextual keyword targeting
+	// information for this ad.
+	ContextualKeywordTargeting *ContextualKeywordTargeting `json:"contextualKeywordTargeting,omitempty"`
 	// CreateInfo: Information about the creation of this ad. This is a read-only
 	// field.
 	CreateInfo *LastModifiedInfo `json:"createInfo,omitempty"`
@@ -3197,6 +3200,51 @@ func (s ContentSourceMetaData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ContextualKeyword: Contains information about a Contextual Keyword that can
+// be targeted by ads.
+type ContextualKeyword struct {
+	// Keyword: The keyword that can be targeted by ads.
+	Keyword string `json:"keyword,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Keyword") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Keyword") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContextualKeyword) MarshalJSON() ([]byte, error) {
+	type NoMethod ContextualKeyword
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContextualKeywordTargeting: Contextual Keyword Targeting.
+type ContextualKeywordTargeting struct {
+	// Keywords: Contextual keywords that this ad targets
+	Keywords []*ContextualKeyword `json:"keywords,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Keywords") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Keywords") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContextualKeywordTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod ContextualKeywordTargeting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Conversion: A Conversion represents when a user successfully performs a
 // desired action after seeing an ad.
 type Conversion struct {
@@ -3630,6 +3678,12 @@ type Creative struct {
 	//   "CREATIVE_AUTHORING_SOURCE_ADOBE" - Creative authoring source is Adobe.
 	//   "CREATIVE_AUTHORING_SOURCE_TYPEFACE_AI" - Creative authoring source is
 	// Typeface.ai.
+	//   "CREATIVE_AUTHORING_SOURCE_REMBRAND" - Creative authoring source is
+	// Rembrand.
+	//   "CREATIVE_AUTHORING_SOURCE_TRACKTO_STUDIO" - Creative authoring source is
+	// Trackto.
+	//   "CREATIVE_AUTHORING_SOURCE_BORNLOGIC" - Creative authoring source is
+	// Bornlogic.
 	AuthoringSource string `json:"authoringSource,omitempty"`
 	// AuthoringTool: Authoring tool for HTML5 banner creatives. This is a
 	// read-only field. Applicable to the following creative types: HTML5_BANNER.
@@ -9218,7 +9272,7 @@ type Placement struct {
 	// `11`, Roku OneView DSP * `12`, TabMo Hawk * `13`, The Trade Desk * `14`,
 	// Xandr Invest DSP * `15`, Yahoo DSP * `16`, Zeta Global * `17`, Scaleout *
 	// `18`, Bidtellect * `19`, Unicorn * `20`, Teads * `21`, Quantcast * `22`,
-	// Cognitiv
+	// Cognitiv * `23`, AdTheorent * `24`, DeepIntent * `25`, Pulsepoint
 	AdServingPlatformId int64 `json:"adServingPlatformId,omitempty,string"`
 	// AdditionalSizes: Additional sizes associated with this placement. When
 	// inserting or updating a placement, only the size ID field is used.
@@ -11062,6 +11116,7 @@ type Site struct {
 	// OneView DSP * `12`, TabMo Hawk * `13`, The Trade Desk * `14`, Xandr Invest
 	// DSP * `15`, Yahoo DSP * `16`, Zeta Global * `17`, Scaleout * `18`,
 	// Bidtellect * `19`, Unicorn * `20`, Teads * `21`, Quantcast * `22`, Cognitiv
+	// * `23`, AdTheorent * `24`, DeepIntent * `25`, Pulsepoint
 	AdServingPlatformId int64 `json:"adServingPlatformId,omitempty,string"`
 	// Approved: Whether this site is approved.
 	Approved bool `json:"approved,omitempty"`
@@ -12046,6 +12101,8 @@ type TargetingTemplate struct {
 	// AdvertiserIdDimensionValue: Dimension value for the ID of the advertiser.
 	// This is a read-only, auto-generated field.
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
+	// ContextualKeywordTargeting: Optional. Contextual keyword targeting criteria.
+	ContextualKeywordTargeting *ContextualKeywordTargeting `json:"contextualKeywordTargeting,omitempty"`
 	// DayPartTargeting: Time and day targeting criteria.
 	DayPartTargeting *DayPartTargeting `json:"dayPartTargeting,omitempty"`
 	// GeoTargeting: Geographical targeting criteria.
@@ -12465,6 +12522,7 @@ type UniversalAdId struct {
 	//   "CLEARCAST"
 	//   "DCM"
 	//   "ARPP"
+	//   "CUSV"
 	Registry string `json:"registry,omitempty"`
 	// Value: ID value for this creative. Only alphanumeric characters and the
 	// following symbols are valid: "_/\-". Maximum length is 64 characters. Read

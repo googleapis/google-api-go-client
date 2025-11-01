@@ -647,10 +647,6 @@ type GoogleCloudRunV2Container struct {
 	Ports []*GoogleCloudRunV2ContainerPort `json:"ports,omitempty"`
 	// Resources: Compute Resource requirements by this container.
 	Resources *GoogleCloudRunV2ResourceRequirements `json:"resources,omitempty"`
-	// Source: Optional. Location of the source .tar.gz file in Cloud Storage.
-	// examples: - gs://bucket/object.tar.gz. -
-	// gs://bucket/object.tar.gz#1234567890 (with object generation)
-	Source string `json:"source,omitempty"`
 	// StartupProbe: Startup probe of application within the container. All other
 	// probes are disabled if a startup probe is provided, until it succeeds.
 	// Container will not be added to service endpoints if the probe fails.

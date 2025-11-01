@@ -4692,8 +4692,7 @@ type ProjectsLocationsServicesSchemasListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Schemas in a given project and location. Note that only
-// `schemas/main` is supported, so this will always return at most one Schema.
+// List: Lists Schemas in a given project and location.
 //
 // - parent: Value of parent.
 func (r *ProjectsLocationsServicesSchemasService) List(parent string) *ProjectsLocationsServicesSchemasListCall {

@@ -857,6 +857,14 @@ type GoogleFirebaseAppdistroV1alphaDeviceExecution struct {
 	CrawlGraphUri string `json:"crawlGraphUri,omitempty"`
 	// Device: Required. The device that the test was run on.
 	Device *GoogleFirebaseAppdistroV1alphaTestDevice `json:"device,omitempty"`
+	// ExecutionType: Output only. The type of execution for the test.
+	//
+	// Possible values:
+	//   "EXECUTION_TYPE_UNSPECIFIED" - Execution type unspecified.
+	//   "AI" - An AI-driven test.
+	//   "ACTION_BASED_REPLAY" - A replay of a previous test run.
+	//   "AI_REPLAY" - A failed replay that was rerun using the AI agent.
+	ExecutionType string `json:"executionType,omitempty"`
 	// FailedReason: Output only. The reason why the test failed.
 	//
 	// Possible values:

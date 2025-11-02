@@ -898,6 +898,9 @@ type GceSetup struct {
 	EnableIpForwarding bool `json:"enableIpForwarding,omitempty"`
 	// GpuDriverConfig: Optional. Configuration for GPU drivers.
 	GpuDriverConfig *GPUDriverConfig `json:"gpuDriverConfig,omitempty"`
+	// InstanceId: Output only. The unique ID of the Compute Engine instance
+	// resource.
+	InstanceId string `json:"instanceId,omitempty"`
 	// MachineType: Optional. The machine type of the VM instance.
 	// https://cloud.google.com/compute/docs/machine-resource
 	MachineType string `json:"machineType,omitempty"`

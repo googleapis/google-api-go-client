@@ -2811,7 +2811,7 @@ func (s UpcomingMaintenanceEvent) MarshalJSON() ([]byte, error) {
 type ViolationDetails struct {
 	// Asset: The name of the asset.
 	Asset string `json:"asset,omitempty"`
-	// Observed: Details of the violation.
+	// Observed: Details of the violation. TODO(b/452163887)
 	Observed map[string]string `json:"observed,omitempty"`
 	// ServiceAccount: The service account associated with the resource.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
@@ -3038,9 +3038,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

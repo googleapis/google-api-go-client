@@ -896,6 +896,10 @@ type CreateSnapshotRequest struct {
 	// the CreateSnapshot request. Format is
 	// `projects/{project}/subscriptions/{sub}`.
 	Subscription string `json:"subscription,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2258,6 +2262,10 @@ type Subscription struct {
 	// error with the resource to which it pushes messages. See the more detailed
 	// error state in the corresponding configuration.
 	State string `json:"state,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// Topic: Required. The name of the topic from which this subscription is
 	// receiving messages. Format is `projects/{project}/topics/{topic}`. The value
 	// of this field will be `_deleted-topic_` if the topic has been deleted.
@@ -2423,6 +2431,10 @@ type Topic struct {
 	// encountered a permanent error. See the more detailed error state in the
 	// corresponding ingestion source configuration.
 	State string `json:"state,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: "123/environment": "production",
+	// "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

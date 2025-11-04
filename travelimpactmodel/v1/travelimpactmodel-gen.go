@@ -630,10 +630,11 @@ type Scope3FlightSegment struct {
 	//   "BUSINESS" - Business class.
 	//   "FIRST" - First class.
 	CabinClass string `json:"cabinClass,omitempty"`
-	// CarrierCode: Optional. IATA carrier code, e.g. `KE`. This is required if
-	// specific flight matching is desired. Otherwise, this is unused for typical
-	// flight and distance-based emissions models. This could be both operating and
-	// marketing carrier code (i.e. codeshare is covered).
+	// CarrierCode: Optional. 2-character IATA carrier code
+	// (https://www.iata.org/en/publications/directories/code-search/), e.g. `KE`.
+	// This is required if specific flight matching is desired. Otherwise, this is
+	// unused for typical flight and distance-based emissions models. This could be
+	// both operating and marketing carrier code (i.e. codeshare is covered).
 	CarrierCode string `json:"carrierCode,omitempty"`
 	// DepartureDate: Required. Date of the flight in the time zone of the origin
 	// airport. Only year is required for typical flight and distance-based
@@ -642,32 +643,34 @@ type Scope3FlightSegment struct {
 	// Correspondingly, if a specific date is not provided for TIM emissions, we
 	// will fallback to typical flight (or distance-based) emissions.
 	DepartureDate *Date `json:"departureDate,omitempty"`
-	// Destination: Optional. IATA airport code for flight destination, e.g. `ICN`.
-	// This is used to match specific flight if provided alongside origin, carrier,
-	// and flight number. If there is no match, we will first try to match the
-	// flight to a typical flight between the provided origin and destination
-	// airports. Otherwise, we will use the distance-based emissions model if the
-	// flight distance is provided.
+	// Destination: Optional. 3-character IATA airport code
+	// (https://www.iata.org/en/publications/directories/code-search/) for flight
+	// destination, e.g. `ICN`. This is used to match specific flight if provided
+	// alongside origin, carrier, and flight number. If there is no match, we will
+	// first try to match the flight to a typical flight between the provided
+	// origin and destination airports. Otherwise, we will use the distance-based
+	// emissions model if the flight distance is provided.
 	Destination string `json:"destination,omitempty"`
-	// DistanceKm: Optional. Distance in kilometers, e.g. `2423`. This is used to
-	// match a flight to distance-based emissions when origin and destination are
-	// not provided or there are no matching typical flights. This field supports
-	// values between 0 and 2.5e16 km.
+	// DistanceKm: Optional. Distance in kilometers, e.g. `2423`, from [1, 2.5e16)
+	// km. This is used to match a flight to distance-based emissions when origin
+	// and destination are not provided or there are no matching typical flights.
 	DistanceKm int64 `json:"distanceKm,omitempty,string"`
-	// FlightNumber: Optional. Flight number, e.g. `71`. This is first used to
-	// match a specific flight if a flight number is specified alongside origin,
-	// destination, and carrier. If a flight number is not specified, we will first
-	// try to match the flight to a typical flight between the provided origin and
-	// destination airports. If that fails and/or origin & destination are not
-	// provided, we will use the distance-based emissions model based on the flight
-	// distance provided.
+	// FlightNumber: Optional. Up to 4-digit flight number
+	// (https://en.wikipedia.org/wiki/Flight_number), e.g. `71`, from [1, 9999].
+	// This is first used to match a specific flight if a flight number is
+	// specified alongside origin, destination, and carrier. If a flight number is
+	// not specified, we will first try to match the flight to a typical flight
+	// between the provided origin and destination airports. If that fails and/or
+	// origin & destination are not provided, we will use the distance-based
+	// emissions model based on the flight distance provided.
 	FlightNumber int64 `json:"flightNumber,omitempty"`
-	// Origin: Optional. IATA airport code for flight origin, e.g. `YVR`. This is
-	// used to match specific flight if provided alongside destination, carrier,
-	// and flight number. If there is no match, we will first try to match the
-	// flight to a typical flight between the provided origin and destination
-	// airports. Otherwise, we will use the distance-based emissions model if the
-	// flight distance is provided.
+	// Origin: Optional. 3-character IATA airport code
+	// (https://www.iata.org/en/publications/directories/code-search/) for flight
+	// origin, e.g. `YVR`. This is used to match specific flight if provided
+	// alongside destination, carrier, and flight number. If there is no match, we
+	// will first try to match the flight to a typical flight between the provided
+	// origin and destination airports. Otherwise, we will use the distance-based
+	// emissions model if the flight distance is provided.
 	Origin string `json:"origin,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CabinClass") to
 	// unconditionally include in API requests. By default, fields with empty or

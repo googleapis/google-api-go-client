@@ -292,6 +292,9 @@ type Counters struct {
 	FailedObjectCount int64 `json:"failedObjectCount,omitempty,string"`
 	// SucceededObjectCount: Output only. Number of objects completed.
 	SucceededObjectCount int64 `json:"succeededObjectCount,omitempty,string"`
+	// TotalBytesFound: Output only. Number of bytes found from source. This field
+	// is only populated for jobs with a prefix list object configuration.
+	TotalBytesFound int64 `json:"totalBytesFound,omitempty,string"`
 	// TotalObjectCount: Output only. Number of objects listed.
 	TotalObjectCount int64 `json:"totalObjectCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "FailedObjectCount") to
@@ -500,6 +503,10 @@ type Job struct {
 	// Description: Optional. A description provided by the user for the job. Its
 	// max length is 1024 bytes when Unicode-encoded.
 	Description string `json:"description,omitempty"`
+	// DryRun: Optional. If true, the job will run in dry run mode, returning the
+	// total object count and, if the object configuration is a prefix list, the
+	// bytes found from source. No transformations will be performed.
+	DryRun bool `json:"dryRun,omitempty"`
 	// ErrorSummaries: Output only. Summarizes errors encountered with sample error
 	// log entries.
 	ErrorSummaries []*ErrorSummary `json:"errorSummaries,omitempty"`

@@ -868,7 +868,7 @@
       }
     }
   },
-  "revision": "20251030",
+  "revision": "20251103",
   "rootUrl": "https://firebaseappdistribution.googleapis.com/",
   "schemas": {
     "AndroidxCrawlerOutputPoint": {
@@ -1403,6 +1403,10 @@
             "APK is built for a preview SDK which is unsupported."
           ],
           "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "Identifier. The name of the device execution resource. Format: `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_id}/deviceExecutions/{device_execution}`",
           "type": "string"
         },
         "resultsStoragePath": {

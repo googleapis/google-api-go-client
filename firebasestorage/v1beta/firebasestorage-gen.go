@@ -235,7 +235,7 @@ type DefaultBucket struct {
 	Bucket *Bucket `json:"bucket,omitempty"`
 	// Location: Immutable. Location of the default bucket.
 	Location string `json:"location,omitempty"`
-	// Name: Resource name of the default bucket.
+	// Name: Identifier. Resource name of the default bucket.
 	Name string `json:"name,omitempty"`
 	// StorageClass: Immutable. Storage class of the default bucket. Supported
 	// values are available at

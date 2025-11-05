@@ -900,6 +900,10 @@ type GoogleFirebaseAppdistroV1alphaDeviceExecution struct {
 	//   "INVALID_APK_PREVIEW_SDK" - APK is built for a preview SDK which is
 	// unsupported.
 	InconclusiveReason string `json:"inconclusiveReason,omitempty"`
+	// Name: Identifier. The name of the device execution resource. Format:
+	// `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_id
+	// }/deviceExecutions/{device_execution}`
+	Name string `json:"name,omitempty"`
 	// ResultsStoragePath: Output only. The path to a directory in Cloud Storage
 	// that will eventually contain the results for this execution. For example,
 	// gs://bucket/Nexus5-18-en-portrait.

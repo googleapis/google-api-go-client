@@ -2993,7 +2993,7 @@ type PolicyBasedRoute struct {
 	Kind string `json:"kind,omitempty"`
 	// Labels: User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Immutable. A unique name of the resource in the form of
+	// Name: Immutable. Identifier. A unique name of the resource in the form of
 	// `projects/{project_number}/locations/global/PolicyBasedRoutes/{policy_based_r
 	// oute_id}`
 	Name string `json:"name,omitempty"`
@@ -4680,9 +4680,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

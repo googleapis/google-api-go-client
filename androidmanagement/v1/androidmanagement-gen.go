@@ -5514,6 +5514,9 @@ type NonComplianceDetail struct {
 	//   "DEFAULT_APPLICATION_SETTING_FAILED_FOR_SCOPE" - The default application
 	// setting failed to apply for a specific scope. defaultApplicationContext is
 	// set. nonComplianceReason is set to INVALID_VALUE or APP_NOT_INSTALLED.
+	//   "PRIVATE_DNS_HOST_NOT_SERVING" - The specified host for private DNS is a
+	// valid hostname but was found to not be a private DNS server.
+	// nonComplianceReason is set to INVALID_VALUE.
 	SpecificNonComplianceReason string `json:"specificNonComplianceReason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CurrentValue") to
 	// unconditionally include in API requests. By default, fields with empty or

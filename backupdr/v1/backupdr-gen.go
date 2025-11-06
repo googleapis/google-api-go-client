@@ -3577,6 +3577,8 @@ type ListDataSourceReferencesResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
 	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

@@ -1604,7 +1604,7 @@ func (s MarketplaceTargeting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MediaPlanner: Describes a single Media Planner account.
+// MediaPlanner: Represents a media planner account.
 type MediaPlanner struct {
 	// AccountId: Output only. Account ID of the media planner.
 	AccountId string `json:"accountId,omitempty"`

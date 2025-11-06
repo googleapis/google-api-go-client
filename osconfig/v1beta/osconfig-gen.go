@@ -1291,6 +1291,17 @@ type PatchConfig struct {
 	//   "ALWAYS" - Always reboot the machine after the update completes.
 	//   "NEVER" - Never reboot the machine after the update completes.
 	RebootConfig string `json:"rebootConfig,omitempty"`
+	// SkipUnpatchableVms: Optional. Enables enhanced reporting for the patch job:
+	// 1. Allows the patch job to skip unpatchable instances, reporting them as
+	// SKIPPED. An instance can be unpatchable for two reasons: a. The instance
+	// runs Container-Optimized OS (COS), which cannot be patched. b. The patch
+	// job's configuration prohibits patching on Managed Instance Groups (MIGs)
+	// through the PatchConfig.migInstancesAllowed field, and the instance is part
+	// of one. 2. The system reports the patch job as SUCCEEDED if it completes
+	// without errors, regardless of whether any instances were SKIPPED. 3. The
+	// system reports the patch job as COMPLETED_WITH_INACTIVE_VMS if it completes
+	// without errors, but some instances were INACTIVE and therefore not patched.
+	SkipUnpatchableVms bool `json:"skipUnpatchableVms,omitempty"`
 	// WindowsUpdate: Windows update settings. Use this override the default
 	// windows patch rules.
 	WindowsUpdate *WindowsUpdateSettings `json:"windowsUpdate,omitempty"`
@@ -1501,6 +1512,8 @@ type PatchJob struct {
 	// on.
 	//   "PATCHING" - Instances are being patched.
 	//   "SUCCEEDED" - Patch job completed successfully.
+	//   "COMPLETED_WITH_INACTIVE_VMS" - The patch job completed without errors,
+	// but some instances were inactive and therefore not patched.
 	//   "COMPLETED_WITH_ERRORS" - Patch job completed but there were errors.
 	//   "CANCELED" - The patch job was canceled.
 	//   "TIMED_OUT" - The patch job timed out.
@@ -1579,6 +1592,10 @@ type PatchJobInstanceDetails struct {
 	//   "NO_AGENT_DETECTED" - The service could not detect the presence of the
 	// agent. Check to ensure that the agent is installed, running, and able to
 	// communicate with the service.
+	//   "SKIPPED" - The instance was skipped during patching due to one of two
+	// reasons: 1. The instance runs Container-Optimized OS (COS), which cannot be
+	// patched. 2. The patch job's configuration prohibits patching on Managed
+	// Instance Groups (MIGs), and the instance is part of one.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttemptCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1631,6 +1648,8 @@ type PatchJobInstanceDetailsSummary struct {
 	PrePatchStepInstanceCount int64 `json:"prePatchStepInstanceCount,omitempty,string"`
 	// RebootingInstanceCount: Number of instances rebooting.
 	RebootingInstanceCount int64 `json:"rebootingInstanceCount,omitempty,string"`
+	// SkippedInstanceCount: Number of instances that were skipped during patching.
+	SkippedInstanceCount int64 `json:"skippedInstanceCount,omitempty,string"`
 	// StartedInstanceCount: Number of instances that have started.
 	StartedInstanceCount int64 `json:"startedInstanceCount,omitempty,string"`
 	// SucceededInstanceCount: Number of instances that have completed

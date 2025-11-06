@@ -363,7 +363,7 @@ type GoogleFirebaseAppdistroV1Release struct {
 	// single release.
 	FirebaseConsoleUri string `json:"firebaseConsoleUri,omitempty"`
 	// Name: The name of the release resource. Format:
-	// `projects/{project_number}/apps/{app_id}/releases/{release_id}`
+	// `projects/{project_number}/apps/{app}/releases/{release}`
 	Name string `json:"name,omitempty"`
 	// ReleaseNotes: Notes of the release.
 	ReleaseNotes *GoogleFirebaseAppdistroV1ReleaseNotes `json:"releaseNotes,omitempty"`
@@ -679,7 +679,7 @@ func (s GoogleFirebaseAppdistroV1alphaAssertionDetails) MarshalJSON() ([]byte, e
 type GoogleFirebaseAppdistroV1alphaBatchDeleteTestCasesRequest struct {
 	// Names: Required. The name of the test cases to delete. A maximum number of
 	// 1000 test cases can be deleted in one batch Format:
-	// `projects/{project_number}/apps/{app_id}/testCases/{test_case_id}`
+	// `projects/{project_number}/apps/{app}/testCases/{test_case}`
 	Names []string `json:"names,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Names") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -901,8 +901,8 @@ type GoogleFirebaseAppdistroV1alphaDeviceExecution struct {
 	// unsupported.
 	InconclusiveReason string `json:"inconclusiveReason,omitempty"`
 	// Name: Identifier. The name of the device execution resource. Format:
-	// `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_id
-	// }/deviceExecutions/{device_execution}`
+	// `projects/{project_number}/apps/{app}/releases/{release}/tests/{test}/deviceE
+	// xecutions/{device_execution}`
 	Name string `json:"name,omitempty"`
 	// ResultsStoragePath: Output only. The path to a directory in Cloud Storage
 	// that will eventually contain the results for this execution. For example,
@@ -1574,8 +1574,7 @@ type GoogleFirebaseAppdistroV1alphaReleaseTest struct {
 	// only.
 	LoginCredential *GoogleFirebaseAppdistroV1alphaLoginCredential `json:"loginCredential,omitempty"`
 	// Name: The name of the release test resource. Format:
-	// `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_id
-	// }`
+	// `projects/{project_number}/apps/{app}/releases/{release}/tests/{test}`
 	Name string `json:"name,omitempty"`
 	// TestCase: Optional. The test case that was used to generate this release
 	// test. Note: The test case may have changed or been deleted since the release
@@ -1738,7 +1737,7 @@ type GoogleFirebaseAppdistroV1alphaTestCase struct {
 	// DisplayName: Required. Display name of the test case.
 	DisplayName string `json:"displayName,omitempty"`
 	// Name: Identifier. The name of the test case resource. Format:
-	// `projects/{project_number}/apps/{app_id}/testCases/{test_case_id}`
+	// `projects/{project_number}/apps/{app}/testCases/{test_case}`
 	Name string `json:"name,omitempty"`
 	// PrerequisiteTestCase: Optional. Test case that must be run before this test
 	// case.
@@ -1770,7 +1769,7 @@ type GoogleFirebaseAppdistroV1alphaTestConfig struct {
 	// release test is created with multiple goals.
 	DisplayName string `json:"displayName,omitempty"`
 	// Name: Identifier. The name of the test configuration resource. Format:
-	// `projects/{project_number}/apps/{app_id}/testConfig`
+	// `projects/{project_number}/apps/{app}/testConfig`
 	Name string `json:"name,omitempty"`
 	// RoboCrawler: Optional. Configuration for Robo crawler
 	RoboCrawler *GoogleFirebaseAppdistroV1alphaRoboCrawler `json:"roboCrawler,omitempty"`
@@ -1895,7 +1894,7 @@ type GoogleFirebaseAppdistroV1alphaUpdateTestCaseRequest struct {
 	AllowMissing bool `json:"allowMissing,omitempty"`
 	// TestCase: Required. The test case to update. The test case's `name` field is
 	// used to identify the test case to update. Format:
-	// `projects/{project_number}/apps/{app_id}/testCases/{test_case_id}`
+	// `projects/{project_number}/apps/{app}/testCases/{test_case}`
 	TestCase *GoogleFirebaseAppdistroV1alphaTestCase `json:"testCase,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowMissing") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2860,7 +2859,7 @@ type ProjectsAppsGetTestConfigCall struct {
 // GetTestConfig: Gets configuration for automated tests.
 //
 //   - name: The name of the `TestConfig` resource to retrieve. Format:
-//     `projects/{project_number}/apps/{app_id}/testConfig`.
+//     `projects/{project_number}/apps/{app}/testConfig`.
 func (r *ProjectsAppsService) GetTestConfig(name string) *ProjectsAppsGetTestConfigCall {
 	c := &ProjectsAppsGetTestConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2971,7 +2970,7 @@ type ProjectsAppsUpdateTestConfigCall struct {
 // UpdateTestConfig: Updates automated test configuration.
 //
 //   - name: Identifier. The name of the test configuration resource. Format:
-//     `projects/{project_number}/apps/{app_id}/testConfig`.
+//     `projects/{project_number}/apps/{app}/testConfig`.
 func (r *ProjectsAppsService) UpdateTestConfig(name string, googlefirebaseappdistrov1alphatestconfig *GoogleFirebaseAppdistroV1alphaTestConfig) *ProjectsAppsUpdateTestConfigCall {
 	c := &ProjectsAppsUpdateTestConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3083,8 +3082,7 @@ type ProjectsAppsReleasesTestsCancelCall struct {
 // Cancel: Abort automated test run on release.
 //
 //   - name: The name of the release test resource. Format:
-//     `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_
-//     id}`.
+//     `projects/{project_number}/apps/{app}/releases/{release}/tests/{test}`.
 func (r *ProjectsAppsReleasesTestsService) Cancel(name string) *ProjectsAppsReleasesTestsCancelCall {
 	c := &ProjectsAppsReleasesTestsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3195,7 +3193,7 @@ type ProjectsAppsReleasesTestsCreateCall struct {
 // Create: Run automated test(s) on release.
 //
 //   - parent: The name of the release resource, which is the parent of the test
-//     Format: `projects/{project_number}/apps/{app_id}/releases/{release_id}`.
+//     Format: `projects/{project_number}/apps/{app}/releases/{release}`.
 func (r *ProjectsAppsReleasesTestsService) Create(parent string, googlefirebaseappdistrov1alphareleasetest *GoogleFirebaseAppdistroV1alphaReleaseTest) *ProjectsAppsReleasesTestsCreateCall {
 	c := &ProjectsAppsReleasesTestsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3309,8 +3307,7 @@ type ProjectsAppsReleasesTestsGetCall struct {
 // Get: Get results for automated test run on release.
 //
 //   - name: The name of the release test resource. Format:
-//     `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_
-//     id}`.
+//     `projects/{project_number}/apps/{app}/releases/{release}/tests/{test}`.
 func (r *ProjectsAppsReleasesTestsService) Get(name string) *ProjectsAppsReleasesTestsGetCall {
 	c := &ProjectsAppsReleasesTestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3421,7 +3418,7 @@ type ProjectsAppsReleasesTestsListCall struct {
 // List: List results for automated tests run on release.
 //
 //   - parent: The name of the release resource, which is the parent of the tests
-//     Format: `projects/{project_number}/apps/{app_id}/releases/{release_id}`.
+//     Format: `projects/{project_number}/apps/{app}/releases/{release}`.
 func (r *ProjectsAppsReleasesTestsService) List(parent string) *ProjectsAppsReleasesTestsListCall {
 	c := &ProjectsAppsReleasesTestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3590,7 +3587,7 @@ type ProjectsAppsTestCasesBatchDeleteCall struct {
 // BatchDelete: Deletes multiple test cases.
 //
 //   - parent: The parent resource of the test cases being deleted. Format:
-//     `projects/{project_number}/apps/{app_id}`.
+//     `projects/{project_number}/apps/{app}`.
 func (r *ProjectsAppsTestCasesService) BatchDelete(parent string, googlefirebaseappdistrov1alphabatchdeletetestcasesrequest *GoogleFirebaseAppdistroV1alphaBatchDeleteTestCasesRequest) *ProjectsAppsTestCasesBatchDeleteCall {
 	c := &ProjectsAppsTestCasesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3695,7 +3692,7 @@ type ProjectsAppsTestCasesBatchUpdateCall struct {
 // BatchUpdate: Updates multiple test cases.
 //
 //   - parent: The parent resource of the test cases being updated. Format:
-//     `projects/{project_number}/apps/{app_id}`.
+//     `projects/{project_number}/apps/{app}`.
 func (r *ProjectsAppsTestCasesService) BatchUpdate(parent string, googlefirebaseappdistrov1alphabatchupdatetestcasesrequest *GoogleFirebaseAppdistroV1alphaBatchUpdateTestCasesRequest) *ProjectsAppsTestCasesBatchUpdateCall {
 	c := &ProjectsAppsTestCasesBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3801,7 +3798,7 @@ type ProjectsAppsTestCasesClearTestCaseCacheCall struct {
 // device(s).
 //
 //   - testCase: The name of the test case resource for which to clear the cache.
-//     Format: `projects/{project_number}/apps/{app_id}/testCases/{test_case_id}`.
+//     Format: `projects/{project_number}/apps/{app}/testCases/{test_case}`.
 func (r *ProjectsAppsTestCasesService) ClearTestCaseCache(testCase string, googlefirebaseappdistrov1alphacleartestcasecacherequest *GoogleFirebaseAppdistroV1alphaClearTestCaseCacheRequest) *ProjectsAppsTestCasesClearTestCaseCacheCall {
 	c := &ProjectsAppsTestCasesClearTestCaseCacheCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.testCase = testCase
@@ -3906,7 +3903,7 @@ type ProjectsAppsTestCasesCreateCall struct {
 // Create: Create a new test case.
 //
 //   - parent: The parent resource where this test case will be created. Format:
-//     `projects/{project_number}/apps/{app_id}`.
+//     `projects/{project_number}/apps/{app}`.
 func (r *ProjectsAppsTestCasesService) Create(parent string, googlefirebaseappdistrov1alphatestcase *GoogleFirebaseAppdistroV1alphaTestCase) *ProjectsAppsTestCasesCreateCall {
 	c := &ProjectsAppsTestCasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4018,7 +4015,7 @@ type ProjectsAppsTestCasesDeleteCall struct {
 // Delete: Delete a test case.
 //
 //   - name: The name of the test case resource to delete. Format:
-//     `projects/{project_number}/apps/{app_id}/testCases/{test_case_id}`.
+//     `projects/{project_number}/apps/{app}/testCases/{test_case}`.
 func (r *ProjectsAppsTestCasesService) Delete(name string) *ProjectsAppsTestCasesDeleteCall {
 	c := &ProjectsAppsTestCasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4118,7 +4115,7 @@ type ProjectsAppsTestCasesGetCall struct {
 // Get: Get a test case.
 //
 //   - name: The name of the test case resource to retrieve. Format:
-//     `projects/{project_number}/apps/{app_id}/testCases/{test_case_id}`.
+//     `projects/{project_number}/apps/{app}/testCases/{test_case}`.
 func (r *ProjectsAppsTestCasesService) Get(name string) *ProjectsAppsTestCasesGetCall {
 	c := &ProjectsAppsTestCasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4229,7 +4226,7 @@ type ProjectsAppsTestCasesListCall struct {
 // List: List test cases.
 //
 //   - parent: The parent resource from which to list test cases. Format:
-//     `projects/{project_number}/apps/{app_id}`.
+//     `projects/{project_number}/apps/{app}`.
 func (r *ProjectsAppsTestCasesService) List(parent string) *ProjectsAppsTestCasesListCall {
 	c := &ProjectsAppsTestCasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4379,7 +4376,7 @@ type ProjectsAppsTestCasesPatchCall struct {
 // Patch: Update a test case.
 //
 //   - name: Identifier. The name of the test case resource. Format:
-//     `projects/{project_number}/apps/{app_id}/testCases/{test_case_id}`.
+//     `projects/{project_number}/apps/{app}/testCases/{test_case}`.
 func (r *ProjectsAppsTestCasesService) Patch(name string, googlefirebaseappdistrov1alphatestcase *GoogleFirebaseAppdistroV1alphaTestCase) *ProjectsAppsTestCasesPatchCall {
 	c := &ProjectsAppsTestCasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

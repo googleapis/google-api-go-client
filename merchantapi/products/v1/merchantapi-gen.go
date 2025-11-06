@@ -1448,6 +1448,9 @@ type ProductAttributes struct {
 	SellOnGoogleQuantity int64 `json:"sellOnGoogleQuantity,omitempty,string"`
 	// Shipping: Shipping rules.
 	Shipping []*Shipping `json:"shipping,omitempty"`
+	// ShippingHandlingBusinessDays: The business days during which orders can be
+	// handled. If not provided, Monday to Friday business days will be assumed.
+	ShippingHandlingBusinessDays []*ShippingBusinessDaysConfig `json:"shippingHandlingBusinessDays,omitempty"`
 	// ShippingHeight: Height of the item for shipping.
 	ShippingHeight *ShippingDimension `json:"shippingHeight,omitempty"`
 	// ShippingLabel: The shipping label of the product, used to group product in
@@ -1455,6 +1458,9 @@ type ProductAttributes struct {
 	ShippingLabel string `json:"shippingLabel,omitempty"`
 	// ShippingLength: Length of the item for shipping.
 	ShippingLength *ShippingDimension `json:"shippingLength,omitempty"`
+	// ShippingTransitBusinessDays: The business days during which orders are in
+	// transit. If not provided, Monday to Friday business days will be assumed.
+	ShippingTransitBusinessDays []*ShippingBusinessDaysConfig `json:"shippingTransitBusinessDays,omitempty"`
 	// ShippingWeight: Weight of the item for shipping.
 	ShippingWeight *ShippingWeight `json:"shippingWeight,omitempty"`
 	// ShippingWidth: Width of the item for shipping.
@@ -2135,6 +2141,39 @@ type Shipping struct {
 
 func (s Shipping) MarshalJSON() ([]byte, error) {
 	type NoMethod Shipping
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ShippingBusinessDaysConfig: The business days during which orders are on
+// their path to fulfillment. If not provided, Monday to Friday business days
+// will be assumed.
+type ShippingBusinessDaysConfig struct {
+	// BusinessDays: Effective days of the week considered for the delivery time
+	// calculation. May not be empty. The more business days included the faster
+	// the delivery. Can be set through individual days (e.g. `MTWRF`), or day
+	// ranges (e.g. `Mon-Fri`). For more information about accepted formats, see
+	// Shipping handling business days
+	// (https://support.google.com/merchants/answer/16072859).
+	BusinessDays string `json:"businessDays,omitempty"`
+	// Country: The CLDR territory code
+	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) of the
+	// country to which an item will ship.
+	Country string `json:"country,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BusinessDays") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BusinessDays") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ShippingBusinessDaysConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ShippingBusinessDaysConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

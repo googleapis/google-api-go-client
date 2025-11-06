@@ -1672,11 +1672,14 @@ type AccountUser struct {
 	Admin bool `json:"admin,omitempty"`
 	// EmailAddress: User's email address.
 	EmailAddress string `json:"emailAddress,omitempty"`
-	// OrderManager: Whether user is an order manager.
+	// OrderManager: This role is deprecated and can no longer be assigned. Any
+	// value set will be ignored.
 	OrderManager bool `json:"orderManager,omitempty"`
-	// PaymentsAnalyst: Whether user can access payment statements.
+	// PaymentsAnalyst: This role is deprecated and can no longer be assigned. Any
+	// value set will be ignored.
 	PaymentsAnalyst bool `json:"paymentsAnalyst,omitempty"`
-	// PaymentsManager: Whether user can manage payment settings.
+	// PaymentsManager: This role is deprecated and can no longer be assigned. Any
+	// value set will be ignored.
 	PaymentsManager bool `json:"paymentsManager,omitempty"`
 	// ReadOnly: Optional. Whether user has standard read-only access.
 	ReadOnly bool `json:"readOnly,omitempty"`

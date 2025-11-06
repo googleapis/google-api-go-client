@@ -838,8 +838,8 @@ func (s GoogleFirebaseAppdistroV1BatchAddTestersResponse) MarshalJSON() ([]byte,
 // `BatchDeleteReleases`.
 type GoogleFirebaseAppdistroV1BatchDeleteReleasesRequest struct {
 	// Names: Required. The names of the release resources to delete. Format:
-	// `projects/{project_number}/apps/{app_id}/releases/{release_id}` A maximum of
-	// 100 releases can be deleted per request.
+	// `projects/{project_number}/apps/{app}/releases/{release}` A maximum of 100
+	// releases can be deleted per request.
 	Names []string `json:"names,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Names") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1216,7 +1216,7 @@ type GoogleFirebaseAppdistroV1Release struct {
 	// single release.
 	FirebaseConsoleUri string `json:"firebaseConsoleUri,omitempty"`
 	// Name: The name of the release resource. Format:
-	// `projects/{project_number}/apps/{app_id}/releases/{release_id}`
+	// `projects/{project_number}/apps/{app}/releases/{release}`
 	Name string `json:"name,omitempty"`
 	// ReleaseNotes: Notes of the release.
 	ReleaseNotes *GoogleFirebaseAppdistroV1ReleaseNotes `json:"releaseNotes,omitempty"`
@@ -1565,7 +1565,7 @@ type MediaUploadCall struct {
 // with the same binary already exists.
 //
 //   - app: The name of the app resource. Format:
-//     `projects/{project_number}/apps/{app_id}`.
+//     `projects/{project_number}/apps/{app}`.
 func (r *MediaService) Upload(app string, googlefirebaseappdistrov1uploadreleaserequest *GoogleFirebaseAppdistroV1UploadReleaseRequest) *MediaUploadCall {
 	c := &MediaUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.app = app
@@ -1732,7 +1732,7 @@ type ProjectsAppsGetAabInfoCall struct {
 // GetAabInfo: Gets Android App Bundle (AAB) information for a Firebase app.
 //
 //   - name: The name of the `AabInfo` resource to retrieve. Format:
-//     `projects/{project_number}/apps/{app_id}/aabInfo`.
+//     `projects/{project_number}/apps/{app}/aabInfo`.
 func (r *ProjectsAppsService) GetAabInfo(name string) *ProjectsAppsGetAabInfoCall {
 	c := &ProjectsAppsGetAabInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1844,7 +1844,7 @@ type ProjectsAppsReleasesBatchDeleteCall struct {
 // request.
 //
 //   - parent: The name of the app resource, which is the parent of the release
-//     resources. Format: `projects/{project_number}/apps/{app_id}`.
+//     resources. Format: `projects/{project_number}/apps/{app}`.
 func (r *ProjectsAppsReleasesService) BatchDelete(parent string, googlefirebaseappdistrov1batchdeletereleasesrequest *GoogleFirebaseAppdistroV1BatchDeleteReleasesRequest) *ProjectsAppsReleasesBatchDeleteCall {
 	c := &ProjectsAppsReleasesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1953,7 +1953,7 @@ type ProjectsAppsReleasesDistributeCall struct {
 // `INVALID_ARGUMENT` if it contains a group that doesn't exist.
 //
 //   - name: The name of the release resource to distribute. Format:
-//     `projects/{project_number}/apps/{app_id}/releases/{release_id}`.
+//     `projects/{project_number}/apps/{app}/releases/{release}`.
 func (r *ProjectsAppsReleasesService) Distribute(name string, googlefirebaseappdistrov1distributereleaserequest *GoogleFirebaseAppdistroV1DistributeReleaseRequest) *ProjectsAppsReleasesDistributeCall {
 	c := &ProjectsAppsReleasesDistributeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2058,7 +2058,7 @@ type ProjectsAppsReleasesGetCall struct {
 // Get: Gets a release.
 //
 //   - name: The name of the release resource to retrieve. Format:
-//     projects/{project_number}/apps/{app_id}/releases/{release_id}.
+//     projects/{project_number}/apps/{app}/releases/{release}.
 func (r *ProjectsAppsReleasesService) Get(name string) *ProjectsAppsReleasesGetCall {
 	c := &ProjectsAppsReleasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2169,7 +2169,7 @@ type ProjectsAppsReleasesListCall struct {
 // List: Lists releases. By default, sorts by `createTime` in descending order.
 //
 //   - parent: The name of the app resource, which is the parent of the release
-//     resources. Format: `projects/{project_number}/apps/{app_id}`.
+//     resources. Format: `projects/{project_number}/apps/{app}`.
 func (r *ProjectsAppsReleasesService) List(parent string) *ProjectsAppsReleasesListCall {
 	c := &ProjectsAppsReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2342,7 +2342,7 @@ type ProjectsAppsReleasesPatchCall struct {
 // Patch: Updates a release.
 //
 //   - name: The name of the release resource. Format:
-//     `projects/{project_number}/apps/{app_id}/releases/{release_id}`.
+//     `projects/{project_number}/apps/{app}/releases/{release}`.
 func (r *ProjectsAppsReleasesService) Patch(name string, googlefirebaseappdistrov1release *GoogleFirebaseAppdistroV1Release) *ProjectsAppsReleasesPatchCall {
 	c := &ProjectsAppsReleasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

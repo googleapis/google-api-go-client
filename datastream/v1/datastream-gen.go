@@ -1478,6 +1478,13 @@ type MongodbSourceConfig struct {
 	ExcludeObjects *MongodbCluster `json:"excludeObjects,omitempty"`
 	// IncludeObjects: MongoDB collections to include in the stream.
 	IncludeObjects *MongodbCluster `json:"includeObjects,omitempty"`
+	// JsonMode: Optional. MongoDB JSON mode to use for the stream.
+	//
+	// Possible values:
+	//   "MONGODB_JSON_MODE_UNSPECIFIED" - Unspecified JSON mode.
+	//   "STRICT" - Strict JSON mode.
+	//   "CANONICAL" - Canonical JSON mode.
+	JsonMode string `json:"jsonMode,omitempty"`
 	// MaxConcurrentBackfillTasks: Optional. Maximum number of concurrent backfill
 	// tasks. The number should be non-negative and less than or equal to 50. If
 	// not set (or set to 0), the system's default value is used

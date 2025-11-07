@@ -494,6 +494,32 @@ func (s GoogleCloudRunV2CloudSqlInstance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRunV2CloudStorageSource: Cloud Storage source.
+type GoogleCloudRunV2CloudStorageSource struct {
+	// Bucket: Required. The Cloud Storage bucket name.
+	Bucket string `json:"bucket,omitempty"`
+	// Generation: Optional. The Cloud Storage object generation.
+	Generation int64 `json:"generation,omitempty,string"`
+	// Object: Required. The Cloud Storage object name.
+	Object string `json:"object,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2CloudStorageSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2CloudStorageSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRunV2Condition: Defines a status condition for a resource.
 type GoogleCloudRunV2Condition struct {
 	// ExecutionReason: Output only. A reason for the execution condition.
@@ -647,6 +673,8 @@ type GoogleCloudRunV2Container struct {
 	Ports []*GoogleCloudRunV2ContainerPort `json:"ports,omitempty"`
 	// Resources: Compute Resource requirements by this container.
 	Resources *GoogleCloudRunV2ResourceRequirements `json:"resources,omitempty"`
+	// SourceCode: Optional. Location of the source.
+	SourceCode *GoogleCloudRunV2SourceCode `json:"sourceCode,omitempty"`
 	// StartupProbe: Startup probe of application within the container. All other
 	// probes are disabled if a startup probe is provided, until it succeeds.
 	// Container will not be added to service endpoints if the probe fails.
@@ -2706,6 +2734,28 @@ func (s GoogleCloudRunV2ServiceScaling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRunV2SourceCode: Source type for the container.
+type GoogleCloudRunV2SourceCode struct {
+	// CloudStorageSource: The source is a Cloud Storage bucket.
+	CloudStorageSource *GoogleCloudRunV2CloudStorageSource `json:"cloudStorageSource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudStorageSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudStorageSource") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2SourceCode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2SourceCode
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRunV2StorageSource: Location of the source in an archive file in
 // Google Cloud Storage.
 type GoogleCloudRunV2StorageSource struct {
@@ -4248,6 +4298,9 @@ func (s GoogleDevtoolsCloudbuildV1BuildStep) MarshalJSON() ([]byte, error) {
 
 // GoogleDevtoolsCloudbuildV1BuiltImage: An image built by the pipeline.
 type GoogleDevtoolsCloudbuildV1BuiltImage struct {
+	// ArtifactRegistryPackage: Output only. Path to the artifact in Artifact
+	// Registry.
+	ArtifactRegistryPackage string `json:"artifactRegistryPackage,omitempty"`
 	// Digest: Docker Registry 2.0 digest.
 	Digest string `json:"digest,omitempty"`
 	// Name: Name used to push the container image to Google Container Registry, as
@@ -4256,15 +4309,15 @@ type GoogleDevtoolsCloudbuildV1BuiltImage struct {
 	// PushTiming: Output only. Stores timing information for pushing the specified
 	// image.
 	PushTiming *GoogleDevtoolsCloudbuildV1TimeSpan `json:"pushTiming,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Digest") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ArtifactRegistryPackage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Digest") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ArtifactRegistryPackage") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5167,6 +5220,9 @@ func (s GoogleDevtoolsCloudbuildV1TimeSpan) MarshalJSON() ([]byte, error) {
 // GoogleDevtoolsCloudbuildV1UploadedGoModule: A Go module artifact uploaded to
 // Artifact Registry using the GoModule directive.
 type GoogleDevtoolsCloudbuildV1UploadedGoModule struct {
+	// ArtifactRegistryPackage: Output only. Path to the artifact in Artifact
+	// Registry.
+	ArtifactRegistryPackage string `json:"artifactRegistryPackage,omitempty"`
 	// FileHashes: Hash types and values of the Go Module Artifact.
 	FileHashes *GoogleDevtoolsCloudbuildV1FileHashes `json:"fileHashes,omitempty"`
 	// PushTiming: Output only. Stores timing information for pushing the specified
@@ -5174,15 +5230,15 @@ type GoogleDevtoolsCloudbuildV1UploadedGoModule struct {
 	PushTiming *GoogleDevtoolsCloudbuildV1TimeSpan `json:"pushTiming,omitempty"`
 	// Uri: URI of the uploaded artifact.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FileHashes") to
+	// ForceSendFields is a list of field names (e.g. "ArtifactRegistryPackage") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FileHashes") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ArtifactRegistryPackage") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5195,6 +5251,9 @@ func (s GoogleDevtoolsCloudbuildV1UploadedGoModule) MarshalJSON() ([]byte, error
 // GoogleDevtoolsCloudbuildV1UploadedMavenArtifact: A Maven artifact uploaded
 // using the MavenArtifact directive.
 type GoogleDevtoolsCloudbuildV1UploadedMavenArtifact struct {
+	// ArtifactRegistryPackage: Output only. Path to the artifact in Artifact
+	// Registry.
+	ArtifactRegistryPackage string `json:"artifactRegistryPackage,omitempty"`
 	// FileHashes: Hash types and values of the Maven Artifact.
 	FileHashes *GoogleDevtoolsCloudbuildV1FileHashes `json:"fileHashes,omitempty"`
 	// PushTiming: Output only. Stores timing information for pushing the specified
@@ -5202,15 +5261,15 @@ type GoogleDevtoolsCloudbuildV1UploadedMavenArtifact struct {
 	PushTiming *GoogleDevtoolsCloudbuildV1TimeSpan `json:"pushTiming,omitempty"`
 	// Uri: URI of the uploaded artifact.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FileHashes") to
+	// ForceSendFields is a list of field names (e.g. "ArtifactRegistryPackage") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FileHashes") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ArtifactRegistryPackage") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5223,6 +5282,9 @@ func (s GoogleDevtoolsCloudbuildV1UploadedMavenArtifact) MarshalJSON() ([]byte, 
 // GoogleDevtoolsCloudbuildV1UploadedNpmPackage: An npm package uploaded to
 // Artifact Registry using the NpmPackage directive.
 type GoogleDevtoolsCloudbuildV1UploadedNpmPackage struct {
+	// ArtifactRegistryPackage: Output only. Path to the artifact in Artifact
+	// Registry.
+	ArtifactRegistryPackage string `json:"artifactRegistryPackage,omitempty"`
 	// FileHashes: Hash types and values of the npm package.
 	FileHashes *GoogleDevtoolsCloudbuildV1FileHashes `json:"fileHashes,omitempty"`
 	// PushTiming: Output only. Stores timing information for pushing the specified
@@ -5230,15 +5292,15 @@ type GoogleDevtoolsCloudbuildV1UploadedNpmPackage struct {
 	PushTiming *GoogleDevtoolsCloudbuildV1TimeSpan `json:"pushTiming,omitempty"`
 	// Uri: URI of the uploaded npm package.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FileHashes") to
+	// ForceSendFields is a list of field names (e.g. "ArtifactRegistryPackage") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FileHashes") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ArtifactRegistryPackage") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5251,6 +5313,9 @@ func (s GoogleDevtoolsCloudbuildV1UploadedNpmPackage) MarshalJSON() ([]byte, err
 // GoogleDevtoolsCloudbuildV1UploadedPythonPackage: Artifact uploaded using the
 // PythonPackage directive.
 type GoogleDevtoolsCloudbuildV1UploadedPythonPackage struct {
+	// ArtifactRegistryPackage: Output only. Path to the artifact in Artifact
+	// Registry.
+	ArtifactRegistryPackage string `json:"artifactRegistryPackage,omitempty"`
 	// FileHashes: Hash types and values of the Python Artifact.
 	FileHashes *GoogleDevtoolsCloudbuildV1FileHashes `json:"fileHashes,omitempty"`
 	// PushTiming: Output only. Stores timing information for pushing the specified
@@ -5258,15 +5323,15 @@ type GoogleDevtoolsCloudbuildV1UploadedPythonPackage struct {
 	PushTiming *GoogleDevtoolsCloudbuildV1TimeSpan `json:"pushTiming,omitempty"`
 	// Uri: URI of the uploaded artifact.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FileHashes") to
+	// ForceSendFields is a list of field names (e.g. "ArtifactRegistryPackage") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FileHashes") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ArtifactRegistryPackage") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

@@ -16134,7 +16134,8 @@ type GoogleCloudDialogflowV2ConversationEvent struct {
 	// when a telephone call is answered, or a conversation is created via the API.
 	//   "CONVERSATION_FINISHED" - An existing conversation has closed. This is
 	// fired when a telephone call is terminated, or a conversation is closed via
-	// the API.
+	// the API. The event is fired for every CompleteConversation call, even if the
+	// conversation is already closed.
 	//   "HUMAN_INTERVENTION_NEEDED" - An existing conversation has received
 	// notification from Dialogflow that human intervention is required.
 	//   "NEW_MESSAGE" - An existing conversation has received a new message,
@@ -19942,7 +19943,8 @@ type GoogleCloudDialogflowV2beta1ConversationEvent struct {
 	// when a telephone call is answered, or a conversation is created via the API.
 	//   "CONVERSATION_FINISHED" - An existing conversation has closed. This is
 	// fired when a telephone call is terminated, or a conversation is closed via
-	// the API.
+	// the API. The event is fired for every CompleteConversation call, even if the
+	// conversation is already closed.
 	//   "HUMAN_INTERVENTION_NEEDED" - An existing conversation has received
 	// notification from Dialogflow that human intervention is required.
 	//   "NEW_MESSAGE" - An existing conversation has received a new message,

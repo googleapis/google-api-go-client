@@ -1637,9 +1637,9 @@ func (s Form) MarshalJSON() ([]byte, error) {
 type GeminiGem struct {
 	// Id: Gems resource id.
 	Id string `json:"id,omitempty"`
-	// Title: Title of the Gem. Read-only.
+	// Title: Title of the Gem.
 	Title string `json:"title,omitempty"`
-	// Url: URL that can be used to access the Gem. Read-only.
+	// Url: URL that can be used to access the Gem.
 	Url string `json:"url,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2723,9 +2723,9 @@ func (s Name) MarshalJSON() ([]byte, error) {
 type NotebookLmNotebook struct {
 	// Id: Notebook resource id.
 	Id string `json:"id,omitempty"`
-	// Title: Title of the Notebook. Read-only.
+	// Title: Title of the Notebook.
 	Title string `json:"title,omitempty"`
-	// Url: URL that can be used to access the Notebook. Read-only.
+	// Url: URL that can be used to access the Notebook.
 	Url string `json:"url,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

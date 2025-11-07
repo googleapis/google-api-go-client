@@ -1026,6 +1026,36 @@ func (s GoogleChromeManagementV1ChromeAppSiteAccess) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1CountActiveDevicesResponse: Response containing the
+// number of active devices.
+type GoogleChromeManagementV1CountActiveDevicesResponse struct {
+	// SevenDaysCount: Number of active devices in the 7 days leading up to the
+	// date specified in the request.
+	SevenDaysCount int64 `json:"sevenDaysCount,omitempty,string"`
+	// ThirtyDaysCount: Number of active devices in the 30 days leading up to the
+	// date specified in the request.
+	ThirtyDaysCount int64 `json:"thirtyDaysCount,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "SevenDaysCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SevenDaysCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1CountActiveDevicesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1CountActiveDevicesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1CountChromeAppRequestsResponse: Response containing
 // summary of requested app installations.
 type GoogleChromeManagementV1CountChromeAppRequestsResponse struct {
@@ -1273,6 +1303,77 @@ type GoogleChromeManagementV1CountChromeVersionsResponse struct {
 
 func (s GoogleChromeManagementV1CountChromeVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1CountChromeVersionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1CountDevicesPerBootTypeResponse: Response containing
+// the number of devices with the given boot type.
+type GoogleChromeManagementV1CountDevicesPerBootTypeResponse struct {
+	// DevBootTypeCount: Number of devices with dev boot type.
+	DevBootTypeCount int64 `json:"devBootTypeCount,omitempty,string"`
+	// UnreportedBootTypeCount: Number of devices with unreported boot type.
+	UnreportedBootTypeCount int64 `json:"unreportedBootTypeCount,omitempty,string"`
+	// VerifiedBootTypeCount: Number of devices with verified boot type.
+	VerifiedBootTypeCount int64 `json:"verifiedBootTypeCount,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DevBootTypeCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DevBootTypeCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1CountDevicesPerBootTypeResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1CountDevicesPerBootTypeResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1CountDevicesPerReleaseChannelResponse: Response
+// containing the number of devices with the given channel.
+type GoogleChromeManagementV1CountDevicesPerReleaseChannelResponse struct {
+	// BetaChannelCount: Number of devices with beta release channel.
+	BetaChannelCount int64 `json:"betaChannelCount,omitempty,string"`
+	// CanaryChannelCount: Number of devices with canary release channel.
+	CanaryChannelCount int64 `json:"canaryChannelCount,omitempty,string"`
+	// DevChannelCount: Number of devices with dev release channel.
+	DevChannelCount int64 `json:"devChannelCount,omitempty,string"`
+	// LtcChannelCount: Number of devices with ltc release channel.
+	LtcChannelCount int64 `json:"ltcChannelCount,omitempty,string"`
+	// LtsChannelCount: Number of devices with lts release channel.
+	LtsChannelCount int64 `json:"ltsChannelCount,omitempty,string"`
+	// StableChannelCount: Number of devices with stable release channel.
+	StableChannelCount int64 `json:"stableChannelCount,omitempty,string"`
+	// UnreportedChannelCount: Number of devices with an unreported release
+	// channel.
+	UnreportedChannelCount int64 `json:"unreportedChannelCount,omitempty,string"`
+	// UnsupportedChannelCount: Number of devices with unsupported release channel.
+	UnsupportedChannelCount int64 `json:"unsupportedChannelCount,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BetaChannelCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BetaChannelCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1CountDevicesPerReleaseChannelResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1CountDevicesPerReleaseChannelResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7753,6 +7854,139 @@ func (c *CustomersProfilesCommandsListCall) Pages(ctx context.Context, f func(*G
 	}
 }
 
+type CustomersReportsCountActiveDevicesCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// CountActiveDevices: Get a count of active devices per set time frames.
+//
+//   - customer: Obfuscated customer ID prefixed with "customers/C" or
+//     "customers/my_customer".
+func (r *CustomersReportsService) CountActiveDevices(customer string) *CustomersReportsCountActiveDevicesCall {
+	c := &CustomersReportsCountActiveDevicesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// DateDay sets the optional parameter "date.day": Day of a month. Must be from
+// 1 to 31 and valid for the year and month, or 0 to specify a year by itself
+// or a year and month where the day isn't significant.
+func (c *CustomersReportsCountActiveDevicesCall) DateDay(dateDay int64) *CustomersReportsCountActiveDevicesCall {
+	c.urlParams_.Set("date.day", fmt.Sprint(dateDay))
+	return c
+}
+
+// DateMonth sets the optional parameter "date.month": Month of a year. Must be
+// from 1 to 12, or 0 to specify a year without a month and day.
+func (c *CustomersReportsCountActiveDevicesCall) DateMonth(dateMonth int64) *CustomersReportsCountActiveDevicesCall {
+	c.urlParams_.Set("date.month", fmt.Sprint(dateMonth))
+	return c
+}
+
+// DateYear sets the optional parameter "date.year": Year of the date. Must be
+// from 1 to 9999, or 0 to specify a date without a year.
+func (c *CustomersReportsCountActiveDevicesCall) DateYear(dateYear int64) *CustomersReportsCountActiveDevicesCall {
+	c.urlParams_.Set("date.year", fmt.Sprint(dateYear))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersReportsCountActiveDevicesCall) Fields(s ...googleapi.Field) *CustomersReportsCountActiveDevicesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersReportsCountActiveDevicesCall) IfNoneMatch(entityTag string) *CustomersReportsCountActiveDevicesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersReportsCountActiveDevicesCall) Context(ctx context.Context) *CustomersReportsCountActiveDevicesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersReportsCountActiveDevicesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersReportsCountActiveDevicesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/reports:countActiveDevices")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.reports.countActiveDevices", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.reports.countActiveDevices" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementV1CountActiveDevicesResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersReportsCountActiveDevicesCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1CountActiveDevicesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementV1CountActiveDevicesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.reports.countActiveDevices", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type CustomersReportsCountChromeBrowsersNeedingAttentionCall struct {
 	s            *Service
 	customer     string
@@ -8558,6 +8792,272 @@ func (c *CustomersReportsCountChromeVersionsCall) Pages(ctx context.Context, f f
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type CustomersReportsCountDevicesPerBootTypeCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// CountDevicesPerBootType: Get a count of devices per boot type.
+//
+//   - customer: Obfuscated customer ID prefixed with "customers/C" or
+//     "customers/my_customer".
+func (r *CustomersReportsService) CountDevicesPerBootType(customer string) *CustomersReportsCountDevicesPerBootTypeCall {
+	c := &CustomersReportsCountDevicesPerBootTypeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// DateDay sets the optional parameter "date.day": Day of a month. Must be from
+// 1 to 31 and valid for the year and month, or 0 to specify a year by itself
+// or a year and month where the day isn't significant.
+func (c *CustomersReportsCountDevicesPerBootTypeCall) DateDay(dateDay int64) *CustomersReportsCountDevicesPerBootTypeCall {
+	c.urlParams_.Set("date.day", fmt.Sprint(dateDay))
+	return c
+}
+
+// DateMonth sets the optional parameter "date.month": Month of a year. Must be
+// from 1 to 12, or 0 to specify a year without a month and day.
+func (c *CustomersReportsCountDevicesPerBootTypeCall) DateMonth(dateMonth int64) *CustomersReportsCountDevicesPerBootTypeCall {
+	c.urlParams_.Set("date.month", fmt.Sprint(dateMonth))
+	return c
+}
+
+// DateYear sets the optional parameter "date.year": Year of the date. Must be
+// from 1 to 9999, or 0 to specify a date without a year.
+func (c *CustomersReportsCountDevicesPerBootTypeCall) DateYear(dateYear int64) *CustomersReportsCountDevicesPerBootTypeCall {
+	c.urlParams_.Set("date.year", fmt.Sprint(dateYear))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersReportsCountDevicesPerBootTypeCall) Fields(s ...googleapi.Field) *CustomersReportsCountDevicesPerBootTypeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersReportsCountDevicesPerBootTypeCall) IfNoneMatch(entityTag string) *CustomersReportsCountDevicesPerBootTypeCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersReportsCountDevicesPerBootTypeCall) Context(ctx context.Context) *CustomersReportsCountDevicesPerBootTypeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersReportsCountDevicesPerBootTypeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersReportsCountDevicesPerBootTypeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/reports:countDevicesPerBootType")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.reports.countDevicesPerBootType", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.reports.countDevicesPerBootType" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementV1CountDevicesPerBootTypeResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersReportsCountDevicesPerBootTypeCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1CountDevicesPerBootTypeResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementV1CountDevicesPerBootTypeResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.reports.countDevicesPerBootType", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersReportsCountDevicesPerReleaseChannelCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// CountDevicesPerReleaseChannel: Get a count of devices per channel.
+//
+//   - customer: Obfuscated customer ID prefixed with "customers/C" or
+//     "customers/my_customer".
+func (r *CustomersReportsService) CountDevicesPerReleaseChannel(customer string) *CustomersReportsCountDevicesPerReleaseChannelCall {
+	c := &CustomersReportsCountDevicesPerReleaseChannelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// DateDay sets the optional parameter "date.day": Day of a month. Must be from
+// 1 to 31 and valid for the year and month, or 0 to specify a year by itself
+// or a year and month where the day isn't significant.
+func (c *CustomersReportsCountDevicesPerReleaseChannelCall) DateDay(dateDay int64) *CustomersReportsCountDevicesPerReleaseChannelCall {
+	c.urlParams_.Set("date.day", fmt.Sprint(dateDay))
+	return c
+}
+
+// DateMonth sets the optional parameter "date.month": Month of a year. Must be
+// from 1 to 12, or 0 to specify a year without a month and day.
+func (c *CustomersReportsCountDevicesPerReleaseChannelCall) DateMonth(dateMonth int64) *CustomersReportsCountDevicesPerReleaseChannelCall {
+	c.urlParams_.Set("date.month", fmt.Sprint(dateMonth))
+	return c
+}
+
+// DateYear sets the optional parameter "date.year": Year of the date. Must be
+// from 1 to 9999, or 0 to specify a date without a year.
+func (c *CustomersReportsCountDevicesPerReleaseChannelCall) DateYear(dateYear int64) *CustomersReportsCountDevicesPerReleaseChannelCall {
+	c.urlParams_.Set("date.year", fmt.Sprint(dateYear))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersReportsCountDevicesPerReleaseChannelCall) Fields(s ...googleapi.Field) *CustomersReportsCountDevicesPerReleaseChannelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersReportsCountDevicesPerReleaseChannelCall) IfNoneMatch(entityTag string) *CustomersReportsCountDevicesPerReleaseChannelCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersReportsCountDevicesPerReleaseChannelCall) Context(ctx context.Context) *CustomersReportsCountDevicesPerReleaseChannelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersReportsCountDevicesPerReleaseChannelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersReportsCountDevicesPerReleaseChannelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/reports:countDevicesPerReleaseChannel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.reports.countDevicesPerReleaseChannel", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.reports.countDevicesPerReleaseChannel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementV1CountDevicesPerReleaseChannelResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersReportsCountDevicesPerReleaseChannelCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1CountDevicesPerReleaseChannelResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementV1CountDevicesPerReleaseChannelResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.reports.countDevicesPerReleaseChannel", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type CustomersReportsCountInstalledAppsCall struct {

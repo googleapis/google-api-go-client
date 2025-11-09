@@ -868,7 +868,7 @@
       }
     }
   },
-  "revision": "20251104",
+  "revision": "20251107",
   "rootUrl": "https://firebaseappdistribution.googleapis.com/",
   "schemas": {
     "AndroidxCrawlerOutputPoint": {
@@ -1407,6 +1407,11 @@
         },
         "name": {
           "description": "Identifier. The name of the device execution resource. Format: `projects/{project_number}/apps/{app}/releases/{release}/tests/{test}/deviceExecutions/{device_execution}`",
+          "type": "string"
+        },
+        "originDeviceExecution": {
+          "description": "Output only. The device execution from which cached steps were used during this execution. Note: This field is only populated for ACTION_BASED_REPLAY executions. If the original device execution no longer exists, this field will be empty. Format: `projects/{project_number}/apps/{app}/releases/{release}/tests/{test}/deviceExecutions/{device_execution}`",
+          "readOnly": true,
           "type": "string"
         },
         "resultsStoragePath": {

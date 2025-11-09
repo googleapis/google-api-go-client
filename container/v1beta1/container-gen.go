@@ -503,6 +503,8 @@ type AddonsConfig struct {
 	// ParallelstoreCsiDriverConfig: Configuration for the Cloud Storage
 	// Parallelstore CSI driver.
 	ParallelstoreCsiDriverConfig *ParallelstoreCsiDriverConfig `json:"parallelstoreCsiDriverConfig,omitempty"`
+	// PodSnapshotConfig: Configuration for the Pod Snapshot feature.
+	PodSnapshotConfig *PodSnapshotConfig `json:"podSnapshotConfig,omitempty"`
 	// RayOperatorConfig: Optional. Configuration for Ray Operator addon.
 	RayOperatorConfig *RayOperatorConfig `json:"rayOperatorConfig,omitempty"`
 	// StatefulHaConfig: Optional. Configuration for the StatefulHA add-on.
@@ -1270,6 +1272,60 @@ func (s CertificateAuthorityDomainConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CertificateConfig: CertificateConfig configures certificate for the
+// registry.
+type CertificateConfig struct {
+	// GcpSecretManagerSecretUri: The URI configures a secret from Secret Manager
+	// (https://cloud.google.com/secret-manager) in the format
+	// "projects/$PROJECT_ID/secrets/$SECRET_NAME/versions/$VERSION" for global
+	// secret or
+	// "projects/$PROJECT_ID/locations/$REGION/secrets/$SECRET_NAME/versions/$VERSIO
+	// N" for regional secret. Version can be fixed (e.g. "2") or "latest"
+	GcpSecretManagerSecretUri string `json:"gcpSecretManagerSecretUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GcpSecretManagerSecretUri")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcpSecretManagerSecretUri") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CertificateConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CertificateConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CertificateConfigPair: CertificateConfigPair configures pairs of
+// certificates, which is used for client certificate and key pairs under a
+// registry.
+type CertificateConfigPair struct {
+	// Cert: Cert configures the client certificate.
+	Cert *CertificateConfig `json:"cert,omitempty"`
+	// Key: Key configures the client private key. Optional.
+	Key *CertificateConfig `json:"key,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cert") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cert") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CertificateConfigPair) MarshalJSON() ([]byte, error) {
+	type NoMethod CertificateConfigPair
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CheckAutopilotCompatibilityResponse: CheckAutopilotCompatibilityResponse has
 // a list of compatibility issues.
 type CheckAutopilotCompatibilityResponse struct {
@@ -1423,6 +1479,10 @@ type Cluster struct {
 	// CreateTime: Output only. The time the cluster was created, in RFC3339
 	// (https://www.ietf.org/rfc/rfc3339.txt) text format.
 	CreateTime string `json:"createTime,omitempty"`
+	// CurrentEmulatedVersion: Output only. The current emulated version of the
+	// master endpoint. The version is in minor version format, e.g. 1.30. No value
+	// or empty string means the cluster has no emulated version.
+	CurrentEmulatedVersion string `json:"currentEmulatedVersion,omitempty"`
 	// CurrentMasterVersion: Output only. The current software version of the
 	// master endpoint.
 	CurrentMasterVersion string `json:"currentMasterVersion,omitempty"`
@@ -1643,6 +1703,9 @@ type Cluster struct {
 	// ResourceUsageExportConfig: Configuration for exporting resource usages.
 	// Resource usage export is disabled when this config unspecified.
 	ResourceUsageExportConfig *ResourceUsageExportConfig `json:"resourceUsageExportConfig,omitempty"`
+	// RollbackSafeUpgrade: The rollback safe upgrade information of the cluster.
+	// This field is used when user manually triggers a rollback safe upgrade.
+	RollbackSafeUpgrade *RollbackSafeUpgrade `json:"rollbackSafeUpgrade,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
@@ -2091,6 +2154,8 @@ type ClusterUpdate struct {
 	// DesiredResourceUsageExportConfig: The desired configuration for exporting
 	// resource usage.
 	DesiredResourceUsageExportConfig *ResourceUsageExportConfig `json:"desiredResourceUsageExportConfig,omitempty"`
+	// DesiredRollbackSafeUpgrade: The desired rollback safe upgrade configuration.
+	DesiredRollbackSafeUpgrade *RollbackSafeUpgrade `json:"desiredRollbackSafeUpgrade,omitempty"`
 	// DesiredSecretManagerConfig: Enable/Disable Secret Manager Config.
 	DesiredSecretManagerConfig *SecretManagerConfig `json:"desiredSecretManagerConfig,omitempty"`
 	// DesiredSecretSyncConfig: Configuration for sync Secret Manager secrets as
@@ -2214,6 +2279,8 @@ type ClusterUpgradeInfo struct {
 	//   "SYSTEM_CONFIG" - SYSTEM_CONFIG indicates the cluster upgrade is paused by
 	// system config.
 	PausedReason []string `json:"pausedReason,omitempty"`
+	// RollbackSafeUpgradeStatus: The cluster's rollback-safe upgrade status.
+	RollbackSafeUpgradeStatus *RollbackSafeUpgradeStatus `json:"rollbackSafeUpgradeStatus,omitempty"`
 	// UpgradeDetails: The list of past auto upgrades.
 	UpgradeDetails []*UpgradeDetails `json:"upgradeDetails,omitempty"`
 
@@ -2234,6 +2301,58 @@ type ClusterUpgradeInfo struct {
 
 func (s ClusterUpgradeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ClusterUpgradeInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CompatibilityStatus: CompatibilityStatus is the status regarding the control
+// plane's compatibility.
+type CompatibilityStatus struct {
+	// DowngradableVersion: Output only. The GKE version that the cluster can be
+	// safely downgraded to if the cluster is emulating the previous minor version.
+	// It is usually the cluster's previous version before a minor version upgrade.
+	DowngradableVersion string `json:"downgradableVersion,omitempty"`
+	// EmulatedVersionTime: Output only. Last time the control plane became
+	// available after a minor version binary upgrade with emulated version set. It
+	// indicates the last time the cluster entered the rollback safe mode.
+	EmulatedVersionTime string `json:"emulatedVersionTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DowngradableVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DowngradableVersion") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CompatibilityStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod CompatibilityStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CompleteControlPlaneUpgradeRequest: CompleteControlPlaneUpgradeRequest sets
+// the name of target cluster to complete upgrade.
+type CompleteControlPlaneUpgradeRequest struct {
+	// Version: API request version that initiates this operation.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Version") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Version") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CompleteControlPlaneUpgradeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CompleteControlPlaneUpgradeRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2416,6 +2535,10 @@ type ContainerdConfig struct {
 	// PrivateRegistryAccessConfig: PrivateRegistryAccessConfig is used to
 	// configure access configuration for private container registries.
 	PrivateRegistryAccessConfig *PrivateRegistryAccessConfig `json:"privateRegistryAccessConfig,omitempty"`
+	// RegistryHosts: RegistryHostConfig configures containerd registry host
+	// configuration. Each registry_hosts represents a hosts.toml file. At most 25
+	// registry_hosts are allowed.
+	RegistryHosts []*RegistryHostConfig `json:"registryHosts,omitempty"`
 	// WritableCgroups: Optional. WritableCgroups defines writable cgroups
 	// configuration for the node pool.
 	WritableCgroups *WritableCgroups `json:"writableCgroups,omitempty"`
@@ -3715,6 +3838,60 @@ func (s HorizontalPodAutoscaling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// HostConfig: HostConfig configures the registry host under a given Server.
+type HostConfig struct {
+	// Ca: CA configures the registry host certificate.
+	Ca []*CertificateConfig `json:"ca,omitempty"`
+	// Capabilities: Capabilities represent the capabilities of the registry host,
+	// specifying what operations a host is capable of performing. If not set,
+	// containerd enables all capabilities by default.
+	//
+	// Possible values:
+	//   "HOST_CAPABILITY_UNSPECIFIED" - UNKNOWN should never be set.
+	//   "HOST_CAPABILITY_PULL" - Pull represents the capability to fetch manifests
+	// and blobs by digest.
+	//   "HOST_CAPABILITY_RESOLVE" - Resolve represents the capability to fetch
+	// manifests by name.
+	//   "HOST_CAPABILITY_PUSH" - Push represents the capability to push blobs and
+	// manifests.
+	Capabilities []string `json:"capabilities,omitempty"`
+	// Client: Client configures the registry host client certificate and key.
+	Client []*CertificateConfigPair `json:"client,omitempty"`
+	// DialTimeout: Specifies the maximum duration allowed for a connection attempt
+	// to complete. A shorter timeout helps reduce delays when falling back to the
+	// original registry if the mirror is unreachable. Maximum allowed value is
+	// 180s. If not set, containerd sets default 30s. The value should be a decimal
+	// number of seconds with an `s` suffix.
+	DialTimeout string `json:"dialTimeout,omitempty"`
+	// Header: Header configures the registry host headers.
+	Header []*RegistryHeader `json:"header,omitempty"`
+	// Host: Host configures the registry host/mirror. It supports fully qualified
+	// domain names (FQDN) and IP addresses: Specifying port is supported.
+	// Wildcards are NOT supported. Examples: - my.customdomain.com - 10.0.1.2:5000
+	Host string `json:"host,omitempty"`
+	// OverridePath: OverridePath is used to indicate the host's API root endpoint
+	// is defined in the URL path rather than by the API specification. This may be
+	// used with non-compliant OCI registries which are missing the /v2 prefix. If
+	// not set, containerd sets default false.
+	OverridePath bool `json:"overridePath,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Ca") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Ca") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HostConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod HostConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // HostMaintenancePolicy: HostMaintenancePolicy contains the maintenance policy
 // for the hosts on which the GKE VMs run on.
 type HostMaintenancePolicy struct {
@@ -4689,7 +4866,9 @@ type LustreCsiDriverConfig struct {
 	// port conflict with the gke-metadata-server. This field is required ONLY
 	// under the following conditions: 1. The GKE node version is older than
 	// 1.33.2-gke.4655000. 2. You're connecting to a Lustre instance that has the
-	// 'gke-support-enabled' flag.
+	// 'gke-support-enabled' flag. Deprecated: This flag is no longer required as
+	// of GKE node version 1.33.2-gke.4655000, unless you are connecting to a
+	// Lustre instance that has the `gke-support-enabled` flag.
 	EnableLegacyLustrePort bool `json:"enableLegacyLustrePort,omitempty"`
 	// Enabled: Whether the Lustre CSI driver is enabled for this cluster.
 	Enabled bool `json:"enabled,omitempty"`
@@ -4841,6 +5020,26 @@ func (s ManagedPrometheusConfig) MarshalJSON() ([]byte, error) {
 
 // Master: Master is the configuration for components on master.
 type Master struct {
+	// CompatibilityStatus: Output only. The compatibility status of the control
+	// plane. It should be empty if the cluster does not have emulated version. For
+	// details, see go/user-initiated-rollbackable-upgrade-design.
+	CompatibilityStatus *CompatibilityStatus `json:"compatibilityStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CompatibilityStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CompatibilityStatus") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Master) MarshalJSON() ([]byte, error) {
+	type NoMethod Master
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MasterAuth: The authentication information for accessing the master
@@ -6798,6 +6997,29 @@ func (s PodSecurityPolicyConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PodSnapshotConfig: PodSnapshotConfig is the configuration for GKE Pod
+// Snapshots feature.
+type PodSnapshotConfig struct {
+	// Enabled: Whether or not the Pod Snapshots feature is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PodSnapshotConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PodSnapshotConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PolicyBinding: Binauthz policy that applies to this cluster.
 type PolicyBinding struct {
 	// Name: The relative resource name of the binauthz platform policy to
@@ -7227,6 +7449,62 @@ func (s RecurringTimeWindow) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RegistryHeader: RegistryHeader configures headers for the registry.
+type RegistryHeader struct {
+	// Key: Key configures the header key.
+	Key string `json:"key,omitempty"`
+	// Value: Value configures the header value.
+	Value []string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RegistryHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod RegistryHeader
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RegistryHostConfig: RegistryHostConfig configures the top-level structure
+// for a single containerd registry server's configuration, which represents
+// one hosts.toml file on the node. It will override the same fqdns in
+// PrivateRegistryAccessConfig.
+type RegistryHostConfig struct {
+	// Hosts: HostConfig configures a list of host-specific configurations for the
+	// server. Each server can have at most 10 host configurations.
+	Hosts []*HostConfig `json:"hosts,omitempty"`
+	// Server: Defines the host name of the registry server, which will be used to
+	// create configuration file as /etc/containerd/hosts.d//hosts.toml. It
+	// supports fully qualified domain names (FQDN) and IP addresses: Specifying
+	// port is supported. Wildcards are NOT supported. Examples: -
+	// my.customdomain.com - 10.0.1.2:5000
+	Server string `json:"server,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hosts") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hosts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RegistryHostConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RegistryHostConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ReleaseChannel: ReleaseChannel indicates which release channel a cluster is
 // subscribed to. Release channels are arranged in order of risk. When a
 // cluster is subscribed to a release channel, Google maintains both the master
@@ -7509,6 +7787,66 @@ type RollbackNodePoolUpgradeRequest struct {
 
 func (s RollbackNodePoolUpgradeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RollbackNodePoolUpgradeRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RollbackSafeUpgrade: RollbackSafeUpgrade is the configuration for the
+// rollback safe upgrade.
+type RollbackSafeUpgrade struct {
+	// ControlPlaneSoakDuration: A user-defined period for the cluster remains in
+	// the rollbackable state. ex: {seconds: 21600}.
+	ControlPlaneSoakDuration string `json:"controlPlaneSoakDuration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ControlPlaneSoakDuration")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ControlPlaneSoakDuration") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RollbackSafeUpgrade) MarshalJSON() ([]byte, error) {
+	type NoMethod RollbackSafeUpgrade
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RollbackSafeUpgradeStatus: RollbackSafeUpgradeStatus contains the
+// rollback-safe upgrade status of a cluster.
+type RollbackSafeUpgradeStatus struct {
+	// ControlPlaneUpgradeRollbackEndTime: The rollback-safe mode expiration time.
+	ControlPlaneUpgradeRollbackEndTime string `json:"controlPlaneUpgradeRollbackEndTime,omitempty"`
+	// Mode: The mode of the rollback-safe upgrade.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - MODE_UNSPECIFIED means it's in regular upgrade mode.
+	//   "KCP_MINOR_UPGRADE_ROLLBACK_SAFE_MODE" -
+	// KCP_MINOR_UPGRADE_ROLLBACK_SAFE_MODE means it's in rollback-safe mode after
+	// a KCP minor version step-one upgrade.
+	Mode string `json:"mode,omitempty"`
+	// PreviousVersion: The GKE version that the cluster previously used before
+	// step-one upgrade.
+	PreviousVersion string `json:"previousVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ControlPlaneUpgradeRollbackEndTime") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "ControlPlaneUpgradeRollbackEndTime") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RollbackSafeUpgradeStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod RollbackSafeUpgradeStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9110,6 +9448,8 @@ func (s UpgradeAvailableEvent) MarshalJSON() ([]byte, error) {
 type UpgradeDetails struct {
 	// EndTime: The end timestamp of the upgrade.
 	EndTime string `json:"endTime,omitempty"`
+	// InitialEmulatedVersion: The emulated version before the upgrade.
+	InitialEmulatedVersion string `json:"initialEmulatedVersion,omitempty"`
 	// InitialVersion: The version before the upgrade.
 	InitialVersion string `json:"initialVersion,omitempty"`
 	// StartTime: The start timestamp of the upgrade.
@@ -9130,6 +9470,8 @@ type UpgradeDetails struct {
 	//   "CANCELED" - Upgrade has been canceled.
 	//   "RUNNING" - Upgrade is running.
 	State string `json:"state,omitempty"`
+	// TargetEmulatedVersion: The emulated version after the upgrade.
+	TargetEmulatedVersion string `json:"targetEmulatedVersion,omitempty"`
 	// TargetVersion: The version after the upgrade.
 	TargetVersion string `json:"targetVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
@@ -10318,6 +10660,112 @@ func (c *ProjectsLocationsClustersCheckAutopilotCompatibilityCall) Do(opts ...go
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "container.projects.locations.clusters.checkAutopilotCompatibility", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsClustersCompleteControlPlaneUpgradeCall struct {
+	s                                  *Service
+	name                               string
+	completecontrolplaneupgraderequest *CompleteControlPlaneUpgradeRequest
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// CompleteControlPlaneUpgrade: CompleteControlPlaneUpgrade completes the
+// rollback-safe upgrade by performing the step two upgrade for a specific
+// cluster.
+//
+//   - name: The name (project, location, cluster) of the cluster to complete
+//     upgrade. Specified in the format `projects/*/locations/*/clusters/*`.
+func (r *ProjectsLocationsClustersService) CompleteControlPlaneUpgrade(name string, completecontrolplaneupgraderequest *CompleteControlPlaneUpgradeRequest) *ProjectsLocationsClustersCompleteControlPlaneUpgradeCall {
+	c := &ProjectsLocationsClustersCompleteControlPlaneUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.completecontrolplaneupgraderequest = completecontrolplaneupgraderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersCompleteControlPlaneUpgradeCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersCompleteControlPlaneUpgradeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersCompleteControlPlaneUpgradeCall) Context(ctx context.Context) *ProjectsLocationsClustersCompleteControlPlaneUpgradeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersCompleteControlPlaneUpgradeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersCompleteControlPlaneUpgradeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.completecontrolplaneupgraderequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:completeControlPlaneUpgrade")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "container.projects.locations.clusters.completeControlPlaneUpgrade", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "container.projects.locations.clusters.completeControlPlaneUpgrade" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersCompleteControlPlaneUpgradeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "container.projects.locations.clusters.completeControlPlaneUpgrade", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14418,6 +14866,112 @@ func (c *ProjectsZonesClustersAddonsCall) Do(opts ...googleapi.CallOption) (*Ope
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "container.projects.zones.clusters.addons", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsZonesClustersCompleteControlPlaneUpgradeCall struct {
+	s                                  *Service
+	name                               string
+	completecontrolplaneupgraderequest *CompleteControlPlaneUpgradeRequest
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// CompleteControlPlaneUpgrade: CompleteControlPlaneUpgrade completes the
+// rollback-safe upgrade by performing the step two upgrade for a specific
+// cluster.
+//
+//   - name: The name (project, location, cluster) of the cluster to complete
+//     upgrade. Specified in the format `projects/*/locations/*/clusters/*`.
+func (r *ProjectsZonesClustersService) CompleteControlPlaneUpgrade(name string, completecontrolplaneupgraderequest *CompleteControlPlaneUpgradeRequest) *ProjectsZonesClustersCompleteControlPlaneUpgradeCall {
+	c := &ProjectsZonesClustersCompleteControlPlaneUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.completecontrolplaneupgraderequest = completecontrolplaneupgraderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsZonesClustersCompleteControlPlaneUpgradeCall) Fields(s ...googleapi.Field) *ProjectsZonesClustersCompleteControlPlaneUpgradeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsZonesClustersCompleteControlPlaneUpgradeCall) Context(ctx context.Context) *ProjectsZonesClustersCompleteControlPlaneUpgradeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsZonesClustersCompleteControlPlaneUpgradeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsZonesClustersCompleteControlPlaneUpgradeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.completecontrolplaneupgraderequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:completeControlPlaneUpgrade")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "container.projects.zones.clusters.completeControlPlaneUpgrade", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "container.projects.zones.clusters.completeControlPlaneUpgrade" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsZonesClustersCompleteControlPlaneUpgradeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "container.projects.zones.clusters.completeControlPlaneUpgrade", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

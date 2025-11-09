@@ -1664,7 +1664,7 @@ func (s DatabaseResourceId) MarshalJSON() ([]byte, error) {
 }
 
 // DatabaseResourceMetadata: Common model for database resource instance
-// metadata. Next ID: 29
+// metadata. Next ID: 30
 type DatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *AvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -1737,6 +1737,9 @@ type DatabaseResourceMetadata struct {
 	// primary.
 	//   "SUB_RESOURCE_TYPE_OTHER" - For rest of the other categories.
 	InstanceType string `json:"instanceType,omitempty"`
+	// IsDeletionProtectionEnabled: Optional. Whether deletion protection is
+	// enabled for this resource.
+	IsDeletionProtectionEnabled bool `json:"isDeletionProtectionEnabled,omitempty"`
 	// Location: The resource location. REQUIRED
 	Location string `json:"location,omitempty"`
 	// MachineConfiguration: Machine configuration for this resource.

@@ -1161,6 +1161,60 @@ func (s CertificateAuthorityDomainConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CertificateConfig: CertificateConfig configures certificate for the
+// registry.
+type CertificateConfig struct {
+	// GcpSecretManagerSecretUri: The URI configures a secret from Secret Manager
+	// (https://cloud.google.com/secret-manager) in the format
+	// "projects/$PROJECT_ID/secrets/$SECRET_NAME/versions/$VERSION" for global
+	// secret or
+	// "projects/$PROJECT_ID/locations/$REGION/secrets/$SECRET_NAME/versions/$VERSIO
+	// N" for regional secret. Version can be fixed (e.g. "2") or "latest"
+	GcpSecretManagerSecretUri string `json:"gcpSecretManagerSecretUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GcpSecretManagerSecretUri")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcpSecretManagerSecretUri") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CertificateConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CertificateConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CertificateConfigPair: CertificateConfigPair configures pairs of
+// certificates, which is used for client certificate and key pairs under a
+// registry.
+type CertificateConfigPair struct {
+	// Cert: Cert configures the client certificate.
+	Cert *CertificateConfig `json:"cert,omitempty"`
+	// Key: Key configures the client private key. Optional.
+	Key *CertificateConfig `json:"key,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cert") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cert") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CertificateConfigPair) MarshalJSON() ([]byte, error) {
+	type NoMethod CertificateConfigPair
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CheckAutopilotCompatibilityResponse: CheckAutopilotCompatibilityResponse has
 // a list of compatibility issues.
 type CheckAutopilotCompatibilityResponse struct {
@@ -2213,6 +2267,10 @@ type ContainerdConfig struct {
 	// PrivateRegistryAccessConfig: PrivateRegistryAccessConfig is used to
 	// configure access configuration for private container registries.
 	PrivateRegistryAccessConfig *PrivateRegistryAccessConfig `json:"privateRegistryAccessConfig,omitempty"`
+	// RegistryHosts: RegistryHostConfig configures containerd registry host
+	// configuration. Each registry_hosts represents a hosts.toml file. At most 25
+	// registry_hosts are allowed.
+	RegistryHosts []*RegistryHostConfig `json:"registryHosts,omitempty"`
 	// WritableCgroups: Optional. WritableCgroups defines writable cgroups
 	// configuration for the node pool.
 	WritableCgroups *WritableCgroups `json:"writableCgroups,omitempty"`
@@ -3372,6 +3430,60 @@ func (s HorizontalPodAutoscaling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// HostConfig: HostConfig configures the registry host under a given Server.
+type HostConfig struct {
+	// Ca: CA configures the registry host certificate.
+	Ca []*CertificateConfig `json:"ca,omitempty"`
+	// Capabilities: Capabilities represent the capabilities of the registry host,
+	// specifying what operations a host is capable of performing. If not set,
+	// containerd enables all capabilities by default.
+	//
+	// Possible values:
+	//   "HOST_CAPABILITY_UNSPECIFIED" - UNKNOWN should never be set.
+	//   "HOST_CAPABILITY_PULL" - Pull represents the capability to fetch manifests
+	// and blobs by digest.
+	//   "HOST_CAPABILITY_RESOLVE" - Resolve represents the capability to fetch
+	// manifests by name.
+	//   "HOST_CAPABILITY_PUSH" - Push represents the capability to push blobs and
+	// manifests.
+	Capabilities []string `json:"capabilities,omitempty"`
+	// Client: Client configures the registry host client certificate and key.
+	Client []*CertificateConfigPair `json:"client,omitempty"`
+	// DialTimeout: Specifies the maximum duration allowed for a connection attempt
+	// to complete. A shorter timeout helps reduce delays when falling back to the
+	// original registry if the mirror is unreachable. Maximum allowed value is
+	// 180s. If not set, containerd sets default 30s. The value should be a decimal
+	// number of seconds with an `s` suffix.
+	DialTimeout string `json:"dialTimeout,omitempty"`
+	// Header: Header configures the registry host headers.
+	Header []*RegistryHeader `json:"header,omitempty"`
+	// Host: Host configures the registry host/mirror. It supports fully qualified
+	// domain names (FQDN) and IP addresses: Specifying port is supported.
+	// Wildcards are NOT supported. Examples: - my.customdomain.com - 10.0.1.2:5000
+	Host string `json:"host,omitempty"`
+	// OverridePath: OverridePath is used to indicate the host's API root endpoint
+	// is defined in the URL path rather than by the API specification. This may be
+	// used with non-compliant OCI registries which are missing the /v2 prefix. If
+	// not set, containerd sets default false.
+	OverridePath bool `json:"overridePath,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Ca") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Ca") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HostConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod HostConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // HttpCacheControlResponseHeader: RFC-2616: cache control support
 type HttpCacheControlResponseHeader struct {
 	// Age: 14.6 response cache age, in seconds since the response is generated
@@ -4177,7 +4289,9 @@ type LustreCsiDriverConfig struct {
 	// port conflict with the gke-metadata-server. This field is required ONLY
 	// under the following conditions: 1. The GKE node version is older than
 	// 1.33.2-gke.4655000. 2. You're connecting to a Lustre instance that has the
-	// 'gke-support-enabled' flag.
+	// 'gke-support-enabled' flag. Deprecated: This flag is no longer required as
+	// of GKE node version 1.33.2-gke.4655000, unless you are connecting to a
+	// Lustre instance that has the `gke-support-enabled` flag.
 	EnableLegacyLustrePort bool `json:"enableLegacyLustrePort,omitempty"`
 	// Enabled: Whether the Lustre CSI driver is enabled for this cluster.
 	Enabled bool `json:"enabled,omitempty"`
@@ -6576,6 +6690,62 @@ type RecurringTimeWindow struct {
 
 func (s RecurringTimeWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod RecurringTimeWindow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RegistryHeader: RegistryHeader configures headers for the registry.
+type RegistryHeader struct {
+	// Key: Key configures the header key.
+	Key string `json:"key,omitempty"`
+	// Value: Value configures the header value.
+	Value []string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RegistryHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod RegistryHeader
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RegistryHostConfig: RegistryHostConfig configures the top-level structure
+// for a single containerd registry server's configuration, which represents
+// one hosts.toml file on the node. It will override the same fqdns in
+// PrivateRegistryAccessConfig.
+type RegistryHostConfig struct {
+	// Hosts: HostConfig configures a list of host-specific configurations for the
+	// server. Each server can have at most 10 host configurations.
+	Hosts []*HostConfig `json:"hosts,omitempty"`
+	// Server: Defines the host name of the registry server, which will be used to
+	// create configuration file as /etc/containerd/hosts.d//hosts.toml. It
+	// supports fully qualified domain names (FQDN) and IP addresses: Specifying
+	// port is supported. Wildcards are NOT supported. Examples: -
+	// my.customdomain.com - 10.0.1.2:5000
+	Server string `json:"server,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hosts") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hosts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RegistryHostConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RegistryHostConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

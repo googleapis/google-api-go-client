@@ -904,6 +904,13 @@ type GoogleFirebaseAppdistroV1alphaDeviceExecution struct {
 	// `projects/{project_number}/apps/{app}/releases/{release}/tests/{test}/deviceE
 	// xecutions/{device_execution}`
 	Name string `json:"name,omitempty"`
+	// OriginDeviceExecution: Output only. The device execution from which cached
+	// steps were used during this execution. Note: This field is only populated
+	// for ACTION_BASED_REPLAY executions. If the original device execution no
+	// longer exists, this field will be empty. Format:
+	// `projects/{project_number}/apps/{app}/releases/{release}/tests/{test}/deviceE
+	// xecutions/{device_execution}`
+	OriginDeviceExecution string `json:"originDeviceExecution,omitempty"`
 	// ResultsStoragePath: Output only. The path to a directory in Cloud Storage
 	// that will eventually contain the results for this execution. For example,
 	// gs://bucket/Nexus5-18-en-portrait.

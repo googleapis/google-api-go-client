@@ -16,6 +16,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/internal"
+	"google.golang.org/api/option"
 	"google.golang.org/grpc"
 )
 
@@ -256,5 +257,45 @@ func TestGRPCAPIKey_GetRequestMetadata(t *testing.T) {
 		if diff := cmp.Diff(want, got); diff != "" {
 			t.Errorf("mismatch (-want +got):\n%s", diff)
 		}
+	}
+}
+
+func TestConfiguredGRPCConnPoolSize(t *testing.T) {
+	tests := []struct {
+		name     string
+		opts     []option.ClientOption
+		wantSize int
+		wantErr  bool
+	}{
+		{
+			name:     "No options",
+			opts:     []option.ClientOption{},
+			wantSize: 0,
+			wantErr:  false,
+		},
+		{
+			name:     "WithGRPCConnectionPool(5)",
+			opts:     []option.ClientOption{option.WithGRPCConnectionPool(5)},
+			wantSize: 5,
+			wantErr:  false,
+		},
+		{
+			name:     "WithGRPCConnectionPool(0)",
+			opts:     []option.ClientOption{option.WithGRPCConnectionPool(0)},
+			wantSize: 0,
+			wantErr:  false,
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			gotSize, err := UserConfiguredGRPCConnPoolSize(tc.opts...)
+			if (err != nil) != tc.wantErr {
+				t.Errorf("ConfiguredGRPCConnPoolSize() returned error: %v, wantErr: %v", err, tc.wantErr)
+			}
+			if !tc.wantErr && gotSize != tc.wantSize {
+				t.Errorf("ConfiguredGRPCConnPoolSize() = %d, want %d", gotSize, tc.wantSize)
+			}
+		})
 	}
 }

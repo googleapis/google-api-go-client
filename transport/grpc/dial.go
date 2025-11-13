@@ -552,6 +552,16 @@ func processAndValidateOpts(opts []option.ClientOption) (*internal.DialSettings,
 	return &o, nil
 }
 
+// UserConfiguredGRPCConnPoolSize processes the client options and returns the configured
+// gRPC connection pool size. It returns an error if the provided options are invalid.
+func UserConfiguredGRPCConnPoolSize(opts ...option.ClientOption) (int, error) {
+	o, err := processAndValidateOpts(opts)
+	if err != nil {
+		return 0, err
+	}
+	return o.GRPCConnPoolSize, nil
+}
+
 type connPoolOption struct{ ConnPool }
 
 // WithConnPool returns a ClientOption that specifies the ConnPool

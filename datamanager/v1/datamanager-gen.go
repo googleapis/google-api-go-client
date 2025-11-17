@@ -287,6 +287,41 @@ func (s AudienceMember) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AwsWrappedKeyInfo: A data encryption key wrapped by an AWS KMS key.
+type AwsWrappedKeyInfo struct {
+	// EncryptedDek: Required. The base64 encoded encrypted data encryption key.
+	EncryptedDek string `json:"encryptedDek,omitempty"`
+	// KekUri: Required. The URI of the AWS KMS key used to decrypt the DEK. Should
+	// be in the format of "arn:{partition}:kms:{region}:{account_id}:key/{key_id}"
+	KekUri string `json:"kekUri,omitempty"`
+	// KeyType: Required. The type of algorithm used to encrypt the data.
+	//
+	// Possible values:
+	//   "KEY_TYPE_UNSPECIFIED" - Unspecified key type. Should never be used.
+	//   "XCHACHA20_POLY1305" - Algorithm XChaCha20-Poly1305
+	KeyType string `json:"keyType,omitempty"`
+	// RoleArn: Required. The Amazon Resource Name of the IAM Role to assume for
+	// KMS decryption access. Should be in the format of
+	// "arn:{partition}:iam::{account_id}:role/{role_name}"
+	RoleArn string `json:"roleArn,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncryptedDek") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptedDek") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AwsWrappedKeyInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsWrappedKeyInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CartData: The cart data associated with the event.
 type CartData struct {
 	// Items: Optional. The list of items associated with the event.
@@ -481,15 +516,17 @@ func (s DeviceInfo) MarshalJSON() ([]byte, error) {
 
 // EncryptionInfo: Encryption information for the data being ingested.
 type EncryptionInfo struct {
+	// AwsWrappedKeyInfo: Amazon Web Services wrapped key information.
+	AwsWrappedKeyInfo *AwsWrappedKeyInfo `json:"awsWrappedKeyInfo,omitempty"`
 	// GcpWrappedKeyInfo: Google Cloud Platform wrapped key information.
 	GcpWrappedKeyInfo *GcpWrappedKeyInfo `json:"gcpWrappedKeyInfo,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GcpWrappedKeyInfo") to
+	// ForceSendFields is a list of field names (e.g. "AwsWrappedKeyInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GcpWrappedKeyInfo") to include in
+	// NullFields is a list of field names (e.g. "AwsWrappedKeyInfo") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -556,6 +593,8 @@ type ErrorCount struct {
 	// because it was rejected by its attestation condition.
 	//   "PROCESSING_ERROR_REASON_KEK_PERMISSION_DENIED" - The system did not have
 	// the permissions needed to access the KEK.
+	//   "PROCESSING_ERROR_REASON_AWS_AUTH_FAILED" - The system failed to
+	// authenticate with AWS.
 	//   "PROCESSING_ERROR_REASON_USER_IDENTIFIER_DECRYPTION_ERROR" - Failed to
 	// decrypt the UserIdentifier data using the DEK.
 	//   "PROCESSING_ERROR_OPERATING_ACCOUNT_MISMATCH_FOR_AD_IDENTIFIER" - The user
@@ -611,9 +650,17 @@ type Event struct {
 	// AdIdentifiers: Optional. Identifiers and other information used to match the
 	// conversion event with other online activity (such as ad clicks).
 	AdIdentifiers *AdIdentifiers `json:"adIdentifiers,omitempty"`
+	// AdditionalEventParameters: Optional. A bucket of any event parameters
+	// (https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events)
+	// to be included within the event that were not already specified using other
+	// structured fields.
+	AdditionalEventParameters []*EventParameter `json:"additionalEventParameters,omitempty"`
 	// CartData: Optional. Information about the transaction and items associated
 	// with the event.
 	CartData *CartData `json:"cartData,omitempty"`
+	// ClientId: Optional. A unique identifier for the user instance of a web
+	// client for this GA4 web stream.
+	ClientId string `json:"clientId,omitempty"`
 	// Consent: Optional. Information about whether the associated user has
 	// provided different types of consent.
 	Consent *Consent `json:"consent,omitempty"`
@@ -633,6 +680,8 @@ type Event struct {
 	// EventDeviceInfo: Optional. Information gathered about the device being used
 	// (if any) when the event happened.
 	EventDeviceInfo *DeviceInfo `json:"eventDeviceInfo,omitempty"`
+	// EventName: Optional. The name of the event. Required for GA4 events.
+	EventName string `json:"eventName,omitempty"`
 	// EventSource: Optional. Signal for where the event happened (web, app,
 	// in-store, etc.).
 	//
@@ -658,6 +707,9 @@ type Event struct {
 	// UserData: Optional. Pieces of user provided data, representing the user the
 	// event is associated with.
 	UserData *UserData `json:"userData,omitempty"`
+	// UserId: Optional. A unique identifier for a user, as defined by the
+	// advertiser.
+	UserId string `json:"userId,omitempty"`
 	// UserProperties: Optional. Advertiser-assessed information about the user at
 	// the time that the event happened.
 	UserProperties *UserProperties `json:"userProperties,omitempty"`
@@ -691,6 +743,31 @@ func (s *Event) UnmarshalJSON(data []byte) error {
 	}
 	s.ConversionValue = float64(s1.ConversionValue)
 	return nil
+}
+
+// EventParameter: Event parameter for GA4 events.
+type EventParameter struct {
+	// ParameterName: Required. The name of the parameter to use.
+	ParameterName string `json:"parameterName,omitempty"`
+	// Value: Required. The string representation of the value of the parameter to
+	// set.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ParameterName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ParameterName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EventParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod EventParameter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExperimentalField: Experimental field representing unofficial fields.
@@ -1078,6 +1155,14 @@ func (s IngestUserDataStatus) MarshalJSON() ([]byte, error) {
 
 // Item: Represents an item in the cart associated with the event.
 type Item struct {
+	// AdditionalItemParameters: Optional. A bucket of any event parameters related
+	// to an item
+	// (https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events)
+	// to be included within the event that were not already specified using other
+	// structured fields.
+	AdditionalItemParameters []*ItemParameter `json:"additionalItemParameters,omitempty"`
+	// ItemId: Optional. A unique identifier to reference the item.
+	ItemId string `json:"itemId,omitempty"`
 	// MerchantProductId: Optional. The product ID within the Merchant Center
 	// account.
 	MerchantProductId string `json:"merchantProductId,omitempty"`
@@ -1086,15 +1171,15 @@ type Item struct {
 	// UnitPrice: Optional. The unit price excluding tax, shipping, and any
 	// transaction level discounts.
 	UnitPrice float64 `json:"unitPrice,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MerchantProductId") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AdditionalItemParameters")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MerchantProductId") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdditionalItemParameters") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1116,6 +1201,34 @@ func (s *Item) UnmarshalJSON(data []byte) error {
 	}
 	s.UnitPrice = float64(s1.UnitPrice)
 	return nil
+}
+
+// ItemParameter: A bucket of any event parameters related to an item
+// (https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events)
+// to be included within the event that were not already specified using other
+// structured fields.
+type ItemParameter struct {
+	// ParameterName: Required. The name of the parameter to use.
+	ParameterName string `json:"parameterName,omitempty"`
+	// Value: Required. The string representation of the value of the parameter to
+	// set.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ParameterName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ParameterName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ItemParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod ItemParameter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MobileData: Mobile IDs for the audience. At least one mobile ID is required.
@@ -1182,6 +1295,7 @@ type ProductAccount struct {
 	//   "DISPLAY_VIDEO_PARTNER" - Display & Video 360 partner.
 	//   "DISPLAY_VIDEO_ADVERTISER" - Display & Video 360 advertiser.
 	//   "DATA_PARTNER" - Data Partner.
+	//   "GOOGLE_ANALYTICS_PROPERTY" - Google Analytics.
 	AccountType string `json:"accountType,omitempty"`
 	// Product: Deprecated. Use `account_type` instead.
 	//
@@ -1562,6 +1676,11 @@ func (s UserIdentifier) MarshalJSON() ([]byte, error) {
 // that the event happened. See
 // https://support.google.com/google-ads/answer/14007601 for more details.
 type UserProperties struct {
+	// AdditionalUserProperties: Optional. A bucket of any additional user
+	// properties
+	// (https://developers.google.com/analytics/devguides/collection/protocol/ga4/user-properties)
+	// for the user associated with this event.
+	AdditionalUserProperties []*UserProperty `json:"additionalUserProperties,omitempty"`
 	// CustomerType: Optional. Type of the customer associated with the event.
 	//
 	// Possible values:
@@ -1581,21 +1700,48 @@ type UserProperties struct {
 	//   "MEDIUM" - The customer is medium value.
 	//   "HIGH" - The customer is high value.
 	CustomerValueBucket string `json:"customerValueBucket,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CustomerType") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AdditionalUserProperties")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CustomerType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdditionalUserProperties") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s UserProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod UserProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserProperty: A bucket of any additional user properties
+// (https://developers.google.com/analytics/devguides/collection/protocol/ga4/user-properties)
+// for the user associated with this event.
+type UserProperty struct {
+	// PropertyName: Required. The name of the user property to use.
+	PropertyName string `json:"propertyName,omitempty"`
+	// Value: Required. The string representation of the value of the user property
+	// to use.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PropertyName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PropertyName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserProperty) MarshalJSON() ([]byte, error) {
+	type NoMethod UserProperty
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1621,6 +1767,8 @@ type WarningCount struct {
 	//   "PROCESSING_WARNING_REASON_USER_IDENTIFIER_DECRYPTION_ERROR" - Failed to
 	// decrypt th UserIdentifier data using the DEK.
 	//   "PROCESSING_WARNING_REASON_INTERNAL_ERROR" - Internal error.
+	//   "PROCESSING_WARNING_REASON_AWS_AUTH_FAILED" - The system failed to
+	// authenticate with AWS.
 	Reason string `json:"reason,omitempty"`
 	// RecordCount: The count of records that have a warning.
 	RecordCount int64 `json:"recordCount,omitempty,string"`

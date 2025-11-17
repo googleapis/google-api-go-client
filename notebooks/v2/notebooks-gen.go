@@ -898,6 +898,9 @@ type GceSetup struct {
 	EnableIpForwarding bool `json:"enableIpForwarding,omitempty"`
 	// GpuDriverConfig: Optional. Configuration for GPU drivers.
 	GpuDriverConfig *GPUDriverConfig `json:"gpuDriverConfig,omitempty"`
+	// InstanceId: Output only. The unique ID of the Compute Engine instance
+	// resource.
+	InstanceId string `json:"instanceId,omitempty"`
 	// MachineType: Optional. The machine type of the VM instance.
 	// https://cloud.google.com/compute/docs/machine-resource
 	MachineType string `json:"machineType,omitempty"`
@@ -2098,9 +2101,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

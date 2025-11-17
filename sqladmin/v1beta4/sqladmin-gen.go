@@ -540,8 +540,7 @@ type Backup struct {
 	//   "POSTGRES_15" - The database version is PostgreSQL 15.
 	//   "POSTGRES_16" - The database version is PostgreSQL 16.
 	//   "POSTGRES_17" - The database version is PostgreSQL 17.
-	//   "POSTGRES_18" - The database version is AGBALA. The database version is
-	// PostgreSQL 18.
+	//   "POSTGRES_18" - The database version is PostgreSQL 18.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -883,8 +882,7 @@ type BackupRun struct {
 	//   "POSTGRES_15" - The database version is PostgreSQL 15.
 	//   "POSTGRES_16" - The database version is PostgreSQL 16.
 	//   "POSTGRES_17" - The database version is PostgreSQL 17.
-	//   "POSTGRES_18" - The database version is AGBALA. The database version is
-	// PostgreSQL 18.
+	//   "POSTGRES_18" - The database version is PostgreSQL 18.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -1252,8 +1250,7 @@ type ConnectSettings struct {
 	//   "POSTGRES_15" - The database version is PostgreSQL 15.
 	//   "POSTGRES_16" - The database version is PostgreSQL 16.
 	//   "POSTGRES_17" - The database version is PostgreSQL 17.
-	//   "POSTGRES_18" - The database version is AGBALA. The database version is
-	// PostgreSQL 18.
+	//   "POSTGRES_18" - The database version is PostgreSQL 18.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -1584,8 +1581,7 @@ type DatabaseInstance struct {
 	//   "POSTGRES_15" - The database version is PostgreSQL 15.
 	//   "POSTGRES_16" - The database version is PostgreSQL 16.
 	//   "POSTGRES_17" - The database version is PostgreSQL 17.
-	//   "POSTGRES_18" - The database version is AGBALA. The database version is
-	// PostgreSQL 18.
+	//   "POSTGRES_18" - The database version is PostgreSQL 18.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -2586,8 +2582,7 @@ type Flag struct {
 	//   "POSTGRES_15" - The database version is PostgreSQL 15.
 	//   "POSTGRES_16" - The database version is PostgreSQL 16.
 	//   "POSTGRES_17" - The database version is PostgreSQL 17.
-	//   "POSTGRES_18" - The database version is AGBALA. The database version is
-	// PostgreSQL 18.
+	//   "POSTGRES_18" - The database version is PostgreSQL 18.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -4550,8 +4545,7 @@ type PreCheckMajorVersionUpgradeContext struct {
 	//   "POSTGRES_15" - The database version is PostgreSQL 15.
 	//   "POSTGRES_16" - The database version is PostgreSQL 16.
 	//   "POSTGRES_17" - The database version is PostgreSQL 17.
-	//   "POSTGRES_18" - The database version is AGBALA. The database version is
-	// PostgreSQL 18.
+	//   "POSTGRES_18" - The database version is PostgreSQL 18.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019

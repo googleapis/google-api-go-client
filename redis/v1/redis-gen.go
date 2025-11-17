@@ -1077,6 +1077,8 @@ type ConfigBasedSignalData struct {
 	// exposed to public access.
 	//   "SIGNAL_TYPE_UNENCRYPTED_CONNECTIONS" - Represents if a resources requires
 	// all incoming connections to use SSL or not.
+	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Represents if a resource version is in
+	// extended support.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1577,6 +1579,7 @@ type DatabaseResourceHealthSignalData struct {
 	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
 	// policy.
+	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -1661,7 +1664,7 @@ func (s DatabaseResourceId) MarshalJSON() ([]byte, error) {
 }
 
 // DatabaseResourceMetadata: Common model for database resource instance
-// metadata. Next ID: 29
+// metadata. Next ID: 30
 type DatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *AvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -1734,6 +1737,9 @@ type DatabaseResourceMetadata struct {
 	// primary.
 	//   "SUB_RESOURCE_TYPE_OTHER" - For rest of the other categories.
 	InstanceType string `json:"instanceType,omitempty"`
+	// IsDeletionProtectionEnabled: Optional. Whether deletion protection is
+	// enabled for this resource.
+	IsDeletionProtectionEnabled bool `json:"isDeletionProtectionEnabled,omitempty"`
 	// Location: The resource location. REQUIRED
 	Location string `json:"location,omitempty"`
 	// MachineConfiguration: Machine configuration for this resource.
@@ -2078,6 +2084,7 @@ type DatabaseResourceRecommendationSignalData struct {
 	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
 	// policy.
+	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2132,6 +2139,8 @@ type DatabaseResourceSignalData struct {
 	// exposed to public access.
 	//   "SIGNAL_TYPE_UNENCRYPTED_CONNECTIONS" - Represents if a resources requires
 	// all incoming connections to use SSL or not.
+	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Represents if a resource version is in
+	// extended support.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4119,24 +4128,6 @@ type ResourceMaintenanceSchedule struct {
 	// capture if the maintenance window is in Week1, Week2, Week5, etc. Non
 	// production resources are usually part of early phase. For more details,
 	// refer to Cloud SQL resources -
-	// https://cloud.google.com/sql/docs/mysql/maintenance Deprecated. Use phase
-	// instead.
-	//
-	// Possible values:
-	//   "WINDOW_PHASE_UNSPECIFIED" - Phase is unspecified.
-	//   "WINDOW_PHASE_ANY" - Any phase.
-	//   "WINDOW_PHASE_WEEK1" - Week 1.
-	//   "WINDOW_PHASE_WEEK2" - Week 2.
-	//   "WINDOW_PHASE_WEEK5" - Week 5.
-	Phase string `json:"phase,omitempty"`
-	// Time: Optional. Preferred time to start the maintenance operation on the
-	// specified day.
-	Time *TimeOfDay `json:"time,omitempty"`
-	// Week: Optional. Phase of the maintenance window. This is to capture order of
-	// maintenance. For example, for Cloud SQL resources, this can be used to
-	// capture if the maintenance window is in Week1, Week2, Week5, etc. Non
-	// production resources are usually part of early phase. For more details,
-	// refer to Cloud SQL resources -
 	// https://cloud.google.com/sql/docs/mysql/maintenance
 	//
 	// Possible values:
@@ -4145,7 +4136,10 @@ type ResourceMaintenanceSchedule struct {
 	//   "WEEK1" - Week 1.
 	//   "WEEK2" - Week 2.
 	//   "WEEK5" - Week 5.
-	Week string `json:"week,omitempty"`
+	Phase string `json:"phase,omitempty"`
+	// Time: Optional. Preferred time to start the maintenance operation on the
+	// specified day.
+	Time *TimeOfDay `json:"time,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -4677,9 +4671,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

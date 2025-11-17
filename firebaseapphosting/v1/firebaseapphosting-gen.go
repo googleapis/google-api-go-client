@@ -568,7 +568,11 @@ func (s CodebaseSource) MarshalJSON() ([]byte, error) {
 
 // Config: Additional configuration of the backend for this build.
 type Config struct {
-	// Env: Optional. Environment variables for this build.
+	// Env: Optional. Supplied environment variables for a specific build. Provided
+	// at Build creation time and immutable afterwards. This field is only
+	// applicable for Builds using a build image - (e.g., ContainerSource or
+	// ArchiveSource with locally_build_source) Attempts to set this for other
+	// build types will result in an error
 	Env []*EnvironmentVariable `json:"env,omitempty"`
 	// RunConfig: Optional. Additional configuration of the Cloud Run `service`
 	// (https://cloud.google.com/run/docs/reference/rest/v2/projects.locations.services#resource:-service).

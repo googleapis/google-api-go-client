@@ -5267,15 +5267,15 @@ type GooglePrivacyDlpV2ExclusionRule struct {
 	// Possible values:
 	//   "MATCHING_TYPE_UNSPECIFIED" - Invalid.
 	//   "MATCHING_TYPE_FULL_MATCH" - Full match. - Dictionary: join of Dictionary
-	// results matched complete finding quote - Regex: all regex matches fill a
-	// finding quote start to end - Exclude info type: completely inside affecting
-	// info types findings
+	// results matched the complete finding quote - Regex: all regex matches fill a
+	// finding quote from start to end - Exclude infoType: completely inside
+	// affecting infoTypes findings
 	//   "MATCHING_TYPE_PARTIAL_MATCH" - Partial match. - Dictionary: at least one
 	// of the tokens in the finding matches - Regex: substring of the finding
-	// matches - Exclude info type: intersects with affecting info types findings
+	// matches - Exclude infoType: intersects with affecting infoTypes findings
 	//   "MATCHING_TYPE_INVERSE_MATCH" - Inverse match. - Dictionary: no tokens in
 	// the finding match the dictionary - Regex: finding doesn't match the regex -
-	// Exclude info type: no intersection with affecting info types findings
+	// Exclude infoType: no intersection with affecting infoTypes findings
 	MatchingType string `json:"matchingType,omitempty"`
 	// Regex: Regular expression which defines the rule.
 	Regex *GooglePrivacyDlpV2Regex `json:"regex,omitempty"`

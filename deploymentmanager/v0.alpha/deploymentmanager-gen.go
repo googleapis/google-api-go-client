@@ -1734,12 +1734,14 @@ type OperationWarnings struct {
 	// the creation of a VM that uses global DNS.
 	//   "RATE_LIMIT_EXCEEDED" - Resource can't be retrieved due to api quota
 	// exceeded.
-	//   "RESERVED_ENTRY_135" - Reserved entries for quickly adding new warnings
+	//   "UPCOMING_MAINTENANCES_UNAVAILABLE" - Upcoming maintenance schedule is
+	// unavailable for the resource.
+	//   "RESERVED_ENTRY_136" - Reserved entries for quickly adding new warnings
 	// without breaking dependent clients.
-	//   "RESERVED_ENTRY_136"
 	//   "RESERVED_ENTRY_139"
 	//   "RESERVED_ENTRY_141"
 	//   "RESERVED_ENTRY_142"
+	//   "RESERVED_ENTRY_143"
 	Code string `json:"code,omitempty"`
 	// Data: [Output Only] Metadata about this warning in key: value format. For
 	// example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
@@ -2179,12 +2181,14 @@ type ResourceWarnings struct {
 	// the creation of a VM that uses global DNS.
 	//   "RATE_LIMIT_EXCEEDED" - Resource can't be retrieved due to api quota
 	// exceeded.
-	//   "RESERVED_ENTRY_135" - Reserved entries for quickly adding new warnings
+	//   "UPCOMING_MAINTENANCES_UNAVAILABLE" - Upcoming maintenance schedule is
+	// unavailable for the resource.
+	//   "RESERVED_ENTRY_136" - Reserved entries for quickly adding new warnings
 	// without breaking dependent clients.
-	//   "RESERVED_ENTRY_136"
 	//   "RESERVED_ENTRY_139"
 	//   "RESERVED_ENTRY_141"
 	//   "RESERVED_ENTRY_142"
+	//   "RESERVED_ENTRY_143"
 	Code string `json:"code,omitempty"`
 	// Data: [Output Only] Metadata about this warning in key: value format. For
 	// example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
@@ -2492,12 +2496,14 @@ type ResourceUpdateWarnings struct {
 	// the creation of a VM that uses global DNS.
 	//   "RATE_LIMIT_EXCEEDED" - Resource can't be retrieved due to api quota
 	// exceeded.
-	//   "RESERVED_ENTRY_135" - Reserved entries for quickly adding new warnings
+	//   "UPCOMING_MAINTENANCES_UNAVAILABLE" - Upcoming maintenance schedule is
+	// unavailable for the resource.
+	//   "RESERVED_ENTRY_136" - Reserved entries for quickly adding new warnings
 	// without breaking dependent clients.
-	//   "RESERVED_ENTRY_136"
 	//   "RESERVED_ENTRY_139"
 	//   "RESERVED_ENTRY_141"
 	//   "RESERVED_ENTRY_142"
+	//   "RESERVED_ENTRY_143"
 	Code string `json:"code,omitempty"`
 	// Data: [Output Only] Metadata about this warning in key: value format. For
 	// example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }

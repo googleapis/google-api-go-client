@@ -3999,6 +3999,9 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
 	// `request_headers` and `secret_versions_for_request_headers`, the value in
 	// `secret_versions_for_request_headers` will be used.
 	SecretVersionsForRequestHeaders map[string]GoogleCloudDialogflowCxV3WebhookGenericWebServiceSecretVersionHeaderValue `json:"secretVersionsForRequestHeaders,omitempty"`
+	// ServiceAccountAuthConfig: Optional. Configuration for service account
+	// authentication.
+	ServiceAccountAuthConfig *GoogleCloudDialogflowCxV3WebhookGenericWebServiceServiceAccountAuthConfig `json:"serviceAccountAuthConfig,omitempty"`
 	// ServiceAgentAuth: Optional. Indicate the auth token type generated from the
 	// Diglogflow service agent
 	// (https://cloud.google.com/iam/docs/service-agents#dialogflow-service-agent).
@@ -4109,6 +4112,35 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebServiceSecretVersionHeaderValue s
 
 func (s GoogleCloudDialogflowCxV3WebhookGenericWebServiceSecretVersionHeaderValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3WebhookGenericWebServiceSecretVersionHeaderValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookGenericWebServiceServiceAccountAuthConfig:
+// Configuration for authentication using a service account.
+type GoogleCloudDialogflowCxV3WebhookGenericWebServiceServiceAccountAuthConfig struct {
+	// ServiceAccount: Required. The email address of the service account used to
+	// authenticate the webhook call. Dialogflow uses this service account to
+	// exchange an access token and the access token is then sent in the
+	// `Authorization` header of the webhook request. The service account must have
+	// the `roles/iam.serviceAccountTokenCreator` role granted to the Dialogflow
+	// service agent
+	// (https://cloud.google.com/iam/docs/service-agents#dialogflow-service-agent).
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ServiceAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3WebhookGenericWebServiceServiceAccountAuthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookGenericWebServiceServiceAccountAuthConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7452,6 +7484,9 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebService struct {
 	// `request_headers` and `secret_versions_for_request_headers`, the value in
 	// `secret_versions_for_request_headers` will be used.
 	SecretVersionsForRequestHeaders map[string]GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceSecretVersionHeaderValue `json:"secretVersionsForRequestHeaders,omitempty"`
+	// ServiceAccountAuthConfig: Optional. Configuration for service account
+	// authentication.
+	ServiceAccountAuthConfig *GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceServiceAccountAuthConfig `json:"serviceAccountAuthConfig,omitempty"`
 	// ServiceAgentAuth: Optional. Indicate the auth token type generated from the
 	// Diglogflow service agent
 	// (https://cloud.google.com/iam/docs/service-agents#dialogflow-service-agent).
@@ -7562,6 +7597,35 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceSecretVersionHeaderVa
 
 func (s GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceSecretVersionHeaderValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceSecretVersionHeaderValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceServiceAccountAuthConfi
+// g: Configuration for authentication using a service account.
+type GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceServiceAccountAuthConfig struct {
+	// ServiceAccount: Required. The email address of the service account used to
+	// authenticate the webhook call. Dialogflow uses this service account to
+	// exchange an access token and the access token is then sent in the
+	// `Authorization` header of the webhook request. The service account must have
+	// the `roles/iam.serviceAccountTokenCreator` role granted to the Dialogflow
+	// service agent
+	// (https://cloud.google.com/iam/docs/service-agents#dialogflow-service-agent).
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ServiceAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceServiceAccountAuthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceServiceAccountAuthConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9658,7 +9722,8 @@ type GoogleCloudDialogflowV2ConversationEvent struct {
 	// when a telephone call is answered, or a conversation is created via the API.
 	//   "CONVERSATION_FINISHED" - An existing conversation has closed. This is
 	// fired when a telephone call is terminated, or a conversation is closed via
-	// the API.
+	// the API. The event is fired for every CompleteConversation call, even if the
+	// conversation is already closed.
 	//   "HUMAN_INTERVENTION_NEEDED" - An existing conversation has received
 	// notification from Dialogflow that human intervention is required.
 	//   "NEW_MESSAGE" - An existing conversation has received a new message,
@@ -11939,7 +12004,7 @@ type GoogleCloudDialogflowV2GeneratorEvaluationConfigSummarizationConfig struct 
 	EnableAccuracyEvaluation bool `json:"enableAccuracyEvaluation,omitempty"`
 	// EnableCompletenessEvaluation: Optional. Enable completeness evaluation.
 	EnableCompletenessEvaluation bool `json:"enableCompletenessEvaluation,omitempty"`
-	// EvaluatorVersion: Output only. Version for summarization evaluation.
+	// EvaluatorVersion: Optional. Version for summarization evaluation.
 	EvaluatorVersion string `json:"evaluatorVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccuracyEvaluationVersion")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -18985,9 +19050,9 @@ type GoogleCloudDialogflowV2ToolTLSConfigCACert struct {
 	// or unspecified, Dialogflow will use Google's default trust store to verify
 	// certificates. N.B. Make sure the HTTPS server certificates are signed with
 	// "subject alt name". For instance a certificate can be self-signed using the
-	// following command, openssl x509 -req -days 200 -in example.com.csr \
+	// following command, ``` openssl x509 -req -days 200 -in example.com.csr \
 	// -signkey example.com.key \ -out example.com.crt \ -extfile <(printf
-	// "\nsubjectAltName='DNS:www.example.com'")
+	// "\nsubjectAltName='DNS:www.example.com'") ```
 	Cert string `json:"cert,omitempty"`
 	// DisplayName: Required. The name of the allowed custom CA certificates. This
 	// can be used to disambiguate the custom CA certificates.
@@ -19844,7 +19909,8 @@ type GoogleCloudDialogflowV2beta1ConversationEvent struct {
 	// when a telephone call is answered, or a conversation is created via the API.
 	//   "CONVERSATION_FINISHED" - An existing conversation has closed. This is
 	// fired when a telephone call is terminated, or a conversation is closed via
-	// the API.
+	// the API. The event is fired for every CompleteConversation call, even if the
+	// conversation is already closed.
 	//   "HUMAN_INTERVENTION_NEEDED" - An existing conversation has received
 	// notification from Dialogflow that human intervention is required.
 	//   "NEW_MESSAGE" - An existing conversation has received a new message,
@@ -39668,9 +39734,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

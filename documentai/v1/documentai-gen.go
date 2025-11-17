@@ -297,7 +297,7 @@ type ProjectsOperationsService struct {
 
 // CloudAiDocumentaiLabHifiaToolsValidationValidatorInput: Definition of the
 // validation rules. Those are the input to the validator logic and they are
-// used to validate a document.
+// used to validate a document. Next ID: 3
 type CloudAiDocumentaiLabHifiaToolsValidationValidatorInput struct {
 	ValidationRules []*CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRule `json:"validationRules,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ValidationRules") to
@@ -318,6 +318,8 @@ func (s CloudAiDocumentaiLabHifiaToolsValidationValidatorInput) MarshalJSON() ([
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRule: Next
+// ID: 9
 type CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRule struct {
 	ChildAlignmentRule *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleChildAlignmentRule `json:"childAlignmentRule,omitempty"`
 	// Description: Description of the validation rule. This has no use but for
@@ -329,6 +331,8 @@ type CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRule struct
 	FormValidation      *CloudAiDocumentaiLabHifiaToolsValidationValidatorInputValidationRuleFormValidation      `json:"formValidation,omitempty"`
 	// Name: Name of the validation rule.
 	Name string `json:"name,omitempty"`
+	// RuleId: Unique identifier of the rule. Optional.
+	RuleId string `json:"ruleId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChildAlignmentRule") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10203,9 +10207,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

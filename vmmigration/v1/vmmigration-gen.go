@@ -1388,6 +1388,13 @@ type ComputeEngineTargetDefaults struct {
 	SecureBoot bool `json:"secureBoot,omitempty"`
 	// ServiceAccount: Optional. The service account to associate the VM with.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// StoragePool: Optional. If specified this will be the storage pool in which
+	// the disk is created. This is the full path of the storage pool resource, for
+	// example:
+	// "projects/my-project/zones/us-central1-a/storagePools/my-storage-pool". The
+	// storage pool must be in the same project and zone as the target disks. The
+	// storage pool's type must match the disk type.
+	StoragePool string `json:"storagePool,omitempty"`
 	// TargetProject: The full path of the resource of type TargetProject which
 	// represents the Compute Engine project in which to create this VM.
 	TargetProject string `json:"targetProject,omitempty"`
@@ -1501,6 +1508,13 @@ type ComputeEngineTargetDetails struct {
 	SecureBoot bool `json:"secureBoot,omitempty"`
 	// ServiceAccount: The service account to associate the VM with.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// StoragePool: Optional. The storage pool used for the VM disks. If specified
+	// this will be the storage pool in which the disk is created. This is the full
+	// path of the storage pool resource, for example:
+	// "projects/my-project/zones/us-central1-a/storagePools/my-storage-pool". The
+	// storage pool must be in the same project and zone as the target disks. The
+	// storage pool's type must match the disk type.
+	StoragePool string `json:"storagePool,omitempty"`
 	// VmName: The name of the VM to create.
 	VmName string `json:"vmName,omitempty"`
 	// Zone: The zone in which to create the VM.
@@ -1746,8 +1760,8 @@ func (s CycleStep) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DataDiskImageImport: Mentions that the image import is not using OS
-// adaptation process.
+// DataDiskImageImport: Used when the image import is not using OS adaptation
+// process.
 type DataDiskImageImport struct {
 }
 

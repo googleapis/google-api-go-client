@@ -1294,6 +1294,10 @@ type BackupPlan struct {
 	// value should be greater than or equal to minimum enforced log retention
 	// duration of the backup vault.
 	LogRetentionDays int64 `json:"logRetentionDays,omitempty,string"`
+	// MaxCustomOnDemandRetentionDays: Optional. Optional field to configure the
+	// maximum number of days for which a backup can be retained. This field is
+	// only applicable for on-demand backups taken with custom retention value.
+	MaxCustomOnDemandRetentionDays int64 `json:"maxCustomOnDemandRetentionDays,omitempty"`
 	// Name: Output only. Identifier. The resource name of the `BackupPlan`.
 	// Format: `projects/{project}/locations/{location}/backupPlans/{backup_plan}`
 	Name string `json:"name,omitempty"`
@@ -3573,6 +3577,8 @@ type ListDataSourceReferencesResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
 	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -5068,6 +5074,11 @@ func (s Trial) MarshalJSON() ([]byte, error) {
 
 // TriggerBackupRequest: Request message for triggering a backup.
 type TriggerBackupRequest struct {
+	// CustomRetentionDays: Optional. The duration for which backup data will be
+	// kept, while taking an on-demand backup with custom retention. It is defined
+	// in "days". It is mutually exclusive with rule_id. This field is required if
+	// rule_id is not provided.
+	CustomRetentionDays int64 `json:"customRetentionDays,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
 	// know to ignore the request if it has already been completed. The server will
@@ -5083,15 +5094,15 @@ type TriggerBackupRequest struct {
 	// RuleId: Optional. backup rule_id for which a backup needs to be triggered.
 	// If not specified, on-demand backup with custom retention will be triggered.
 	RuleId string `json:"ruleId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// ForceSendFields is a list of field names (e.g. "CustomRetentionDays") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RequestId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CustomRetentionDays") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5437,9 +5448,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

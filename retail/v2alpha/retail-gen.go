@@ -3782,7 +3782,8 @@ func (s GoogleCloudRetailV2alphaExportMetadata) MarshalJSON() ([]byte, error) {
 // GoogleCloudRetailV2alphaExportProductsRequest: Request message for
 // ExportProducts method.
 type GoogleCloudRetailV2alphaExportProductsRequest struct {
-	// Filter: This field is deprecated. Any filter provided will be ignored.
+	// Filter: Deprecated: This field is deprecated. Any filter provided will be
+	// ignored.
 	Filter string `json:"filter,omitempty"`
 	// OutputConfig: Required. The output location of the data.
 	OutputConfig *GoogleCloudRetailV2alphaOutputConfig `json:"outputConfig,omitempty"`
@@ -3836,27 +3837,8 @@ func (s GoogleCloudRetailV2alphaExportProductsResponse) MarshalJSON() ([]byte, e
 // GoogleCloudRetailV2alphaExportUserEventsRequest: Request message for the
 // `ExportUserEvents` method.
 type GoogleCloudRetailV2alphaExportUserEventsRequest struct {
-	// Filter: A filtering expression to specify restrictions on returned events.
-	// The expression is a sequence of terms. Each term applies a restriction to
-	// the returned user events. Use this expression to restrict results to a
-	// specific time range or to filter events by eventType. For example,
-	// `eventTime > "2012-04-23T18:25:43.511Z" eventsMissingCatalogItems
-	// eventTime<"2012-04-23T18:25:43.511Z" eventType=search` We expect only three
-	// types of fields: * `eventTime`: This can be specified twice, once with a
-	// less than operator and once with a greater than operator. The `eventTime`
-	// restriction should result in one, contiguous, valid, `eventTime` range. *
-	// `eventType`: Boolean operators `OR` and `NOT` are supported if the
-	// expression is enclosed in parentheses and the operators are separated from
-	// the tag values by a space. * `eventsMissingCatalogItems`: This restricts
-	// results to events for which catalog items were not found in the catalog. The
-	// default behavior is to return only those events for which catalog items were
-	// found. Some examples of valid filters expressions: * Example 1: `eventTime >
-	// "2012-04-23T18:25:43.511Z" eventTime < "2012-04-23T18:30:43.511Z" * Example
-	// 2: `eventTime > "2012-04-23T18:25:43.511Z" eventType = detail-page-view` *
-	// Example 3: `eventsMissingCatalogItems eventType = (NOT search) eventTime <
-	// "2018-04-23T18:30:43.511Z" * Example 4: `eventTime >
-	// "2012-04-23T18:25:43.511Z" * Example 5: `eventType = (detail-page-view OR
-	// search)` * Example 6: `eventsMissingCatalogItems`
+	// Filter: Deprecated: This field is deprecated. Any filter provided will be
+	// ignored.
 	Filter string `json:"filter,omitempty"`
 	// OutputConfig: Required. The output location of the data.
 	OutputConfig *GoogleCloudRetailV2alphaOutputConfig `json:"outputConfig,omitempty"`

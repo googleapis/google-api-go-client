@@ -367,9 +367,12 @@ type AclRule struct {
 	// - "writer" - Provides read and write access to the calendar. Private events
 	// will appear to users with writer access, and event details will be visible.
 	// Provides read access to the calendar's ACLs.
-	// - "owner" - Provides ownership of the calendar. This role has all of the
-	// permissions of the writer role with the additional ability to manipulate
-	// ACLs.
+	// - "owner" - Provides manager access to the calendar. This role has all of
+	// the permissions of the writer role with the additional ability to modify
+	// access levels of other users.
+	// Important: the owner role is different from the calendar's data owner. A
+	// calendar has a single data owner, but can have multiple users with owner
+	// role.
 	Role string `json:"role,omitempty"`
 	// Scope: The extent to which calendar access is granted by this ACL rule.
 	Scope *AclRuleScope `json:"scope,omitempty"`
@@ -429,6 +432,9 @@ type Calendar struct {
 	// ConferenceProperties: Conferencing properties for this calendar, for example
 	// what types of conferences are allowed.
 	ConferenceProperties *ConferenceProperties `json:"conferenceProperties,omitempty"`
+	// DataOwner: The email of the owner of the calendar. Set only for secondary
+	// calendars. Read-only.
+	DataOwner string `json:"dataOwner,omitempty"`
 	// Description: Description of the calendar. Optional.
 	Description string `json:"description,omitempty"`
 	// Etag: ETag of the resource.
@@ -510,9 +516,12 @@ type CalendarListEntry struct {
 	// - "writer" - Provides read and write access to the calendar. Private events
 	// will appear to users with writer access, and event details will be visible.
 	//
-	// - "owner" - Provides ownership of the calendar. This role has all of the
-	// permissions of the writer role with the additional ability to see and
-	// manipulate ACLs.
+	// - "owner" - Provides manager access to the calendar. This role has all of
+	// the permissions of the writer role with the additional ability to see and
+	// modify access levels of other users.
+	// Important: the owner role is different from the calendar's data owner. A
+	// calendar has a single data owner, but can have multiple users with owner
+	// role.
 	AccessRole string `json:"accessRole,omitempty"`
 	// BackgroundColor: The main color of the calendar in the hexadecimal format
 	// "#0088aa". This property supersedes the index-based colorId property. To set
@@ -527,6 +536,9 @@ type CalendarListEntry struct {
 	// ConferenceProperties: Conferencing properties for this calendar, for example
 	// what types of conferences are allowed.
 	ConferenceProperties *ConferenceProperties `json:"conferenceProperties,omitempty"`
+	// DataOwner: The email of the owner of the calendar. Set only for secondary
+	// calendars. Read-only.
+	DataOwner string `json:"dataOwner,omitempty"`
 	// DefaultReminders: The default reminders that the authenticated user has for
 	// this calendar.
 	DefaultReminders []*EventReminder `json:"defaultReminders,omitempty"`
@@ -1897,9 +1909,12 @@ type Events struct {
 	// - "writer" - The user has read and write access to the calendar. Private
 	// events will appear to users with writer access, and event details will be
 	// visible.
-	// - "owner" - The user has ownership of the calendar. This role has all of the
-	// permissions of the writer role with the additional ability to see and
-	// manipulate ACLs.
+	// - "owner" - The user has manager access to the calendar. This role has all
+	// of the permissions of the writer role with the additional ability to see and
+	// modify access levels of other users.
+	// Important: the owner role is different from the calendar's data owner. A
+	// calendar has a single data owner, but can have multiple users with owner
+	// role.
 	AccessRole string `json:"accessRole,omitempty"`
 	// DefaultReminders: The default reminders on the calendar for the
 	// authenticated user. These reminders apply to all events on this calendar
@@ -4178,6 +4193,16 @@ type CalendarsInsertCall struct {
 }
 
 // Insert: Creates a secondary calendar.
+// The authenticated user for the request is made the data owner of the new
+// calendar.
+//
+// Note: We recommend to authenticate as the intended data owner of the
+// calendar. You can use domain-wide delegation of authority to allow
+// applications to act on behalf of a specific user. Don't use a service
+// account for authentication. If you use a service account for authentication,
+// the service account is the data owner, which can lead to unexpected
+// behavior. For example, if a service account is the data owner, data
+// ownership cannot be transferred.
 func (r *CalendarsService) Insert(calendar *Calendar) *CalendarsInsertCall {
 	c := &CalendarsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendar = calendar

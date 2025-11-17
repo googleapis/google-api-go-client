@@ -1217,7 +1217,7 @@ type InsightsConfig struct {
 	// ArtifactConfigs: Optional. The artifact configurations of the artifacts that
 	// are deployed.
 	ArtifactConfigs []*ArtifactConfig `json:"artifactConfigs,omitempty"`
-	// CreateTime: Output only. [Output only] Create timestamp
+	// CreateTime: Output only. Create timestamp.
 	CreateTime string `json:"createTime,omitempty"`
 	// Errors: Output only. Any errors that occurred while setting up the
 	// InsightsConfig. Each error will be in the format: `field_name:
@@ -1248,7 +1248,7 @@ type InsightsConfig struct {
 	//   "COMPLETE" - The initial discovery process is complete.
 	//   "ERROR" - The InsightsConfig is in an error state.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update timestamp
+	// UpdateTime: Output only. Update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2171,9 +2171,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -6095,7 +6095,7 @@ type ProjectsLocationsInsightsConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete a single Insight.
+// Delete: Deletes a single Insight.
 //
 // - name: Value for parent.
 func (r *ProjectsLocationsInsightsConfigsService) Delete(name string) *ProjectsLocationsInsightsConfigsDeleteCall {

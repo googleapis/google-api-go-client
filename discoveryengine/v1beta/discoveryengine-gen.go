@@ -10539,6 +10539,33 @@ func (s GoogleCloudDiscoveryengineV1alphaDedicatedCrawlRateTimeSeries) MarshalJS
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaDeleteAgentMetadata: Metadata related to
+// the progress of the AgentService.DeleteAgent operation. This will be
+// returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaDeleteAgentMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDeleteAgentMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDeleteAgentMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaDeleteCmekConfigMetadata: Metadata related
 // to the progress of the CmekConfigService.DeleteCmekConfig operation. This
 // will be returned by the google.longrunning.Operation.metadata field.
@@ -14095,12 +14122,12 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements)
 	// for more details.
 	UserLabels map[string]string `json:"userLabels,omitempty"`
-	// UserPseudoId: A unique identifier for tracking visitors. For example, this
-	// could be implemented with an HTTP cookie, which should be able to uniquely
-	// identify a visitor on a single device. This unique identifier should not
-	// change if the visitor logs in or out of the website. This field should NOT
-	// have a fixed value such as `unknown_visitor`. This should be the same
-	// identifier as UserEvent.user_pseudo_id and
+	// UserPseudoId: Optional. A unique identifier for tracking visitors. For
+	// example, this could be implemented with an HTTP cookie, which should be able
+	// to uniquely identify a visitor on a single device. This unique identifier
+	// should not change if the visitor logs in or out of the website. This field
+	// should NOT have a fixed value such as `unknown_visitor`. This should be the
+	// same identifier as UserEvent.user_pseudo_id and
 	// CompleteQueryRequest.user_pseudo_id The field must be a UTF-8 encoded string
 	// with a length limit of 128 characters. Otherwise, an `INVALID_ARGUMENT`
 	// error is returned.
@@ -16102,13 +16129,14 @@ type GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequest struct {
 	// UserInfo: Optional. Information about the end user. This should be the same
 	// identifier information as UserEvent.user_info and SearchRequest.user_info.
 	UserInfo *GoogleCloudDiscoveryengineV1betaUserInfo `json:"userInfo,omitempty"`
-	// UserPseudoId: A unique identifier for tracking visitors. For example, this
-	// could be implemented with an HTTP cookie, which should be able to uniquely
-	// identify a visitor on a single device. This unique identifier should not
-	// change if the visitor logs in or out of the website. This field should NOT
-	// have a fixed value such as `unknown_visitor`. This should be the same
-	// identifier as UserEvent.user_pseudo_id and SearchRequest.user_pseudo_id. The
-	// field must be a UTF-8 encoded string with a length limit of 128
+	// UserPseudoId: Optional. A unique identifier for tracking visitors. For
+	// example, this could be implemented with an HTTP cookie, which should be able
+	// to uniquely identify a visitor on a single device. This unique identifier
+	// should not change if the visitor logs in or out of the website. This field
+	// should NOT have a fixed value such as `unknown_visitor`. This should be the
+	// same identifier as UserEvent.user_pseudo_id and
+	// SearchRequest.user_pseudo_id. The field must be a UTF-8 encoded string with
+	// a length limit of 128
 	UserPseudoId string `json:"userPseudoId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BoostSpec") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -26805,12 +26833,12 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements)
 	// for more details.
 	UserLabels map[string]string `json:"userLabels,omitempty"`
-	// UserPseudoId: A unique identifier for tracking visitors. For example, this
-	// could be implemented with an HTTP cookie, which should be able to uniquely
-	// identify a visitor on a single device. This unique identifier should not
-	// change if the visitor logs in or out of the website. This field should NOT
-	// have a fixed value such as `unknown_visitor`. This should be the same
-	// identifier as UserEvent.user_pseudo_id and
+	// UserPseudoId: Optional. A unique identifier for tracking visitors. For
+	// example, this could be implemented with an HTTP cookie, which should be able
+	// to uniquely identify a visitor on a single device. This unique identifier
+	// should not change if the visitor logs in or out of the website. This field
+	// should NOT have a fixed value such as `unknown_visitor`. This should be the
+	// same identifier as UserEvent.user_pseudo_id and
 	// CompleteQueryRequest.user_pseudo_id The field must be a UTF-8 encoded string
 	// with a length limit of 128 characters. Otherwise, an `INVALID_ARGUMENT`
 	// error is returned.

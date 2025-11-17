@@ -915,9 +915,10 @@ func (s RegionalInventoryDataSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SupplementalProductDataSource: The supplemental data source for local and
-// online products. After creation, you should make sure to link the
-// supplemental product data source into one or more primary product data
+// SupplementalProductDataSource: The supplemental data source
+// (https://developers.google.com/merchant/api/guides/data-sources/api-sources#link-supplemental-data-source)
+// for local and online products. After creation,you should make sure to link
+// the supplemental product data source into one or more primary product data
 // sources.
 type SupplementalProductDataSource struct {
 	// ContentLanguage: Optional. Immutable. The two-letter ISO 639-1 language of

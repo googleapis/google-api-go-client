@@ -747,6 +747,33 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FunctionalType: The functional type of a service or workload.
+type FunctionalType struct {
+	// Type: Output only. The functional type of a service or workload.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified type.
+	//   "AGENT" - Agent type.
+	//   "MCP_SERVER" - MCP Server type.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FunctionalType) MarshalJSON() ([]byte, error) {
+	type NoMethod FunctionalType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListApplicationsResponse: Response for ListApplications.
 type ListApplicationsResponse struct {
 	// Applications: List of Applications.
@@ -1460,6 +1487,8 @@ func (s ServiceProjectAttachment) MarshalJSON() ([]byte, error) {
 // ServiceProperties: Properties of an underlying cloud resource that can
 // comprise a Service.
 type ServiceProperties struct {
+	// FunctionalType: Output only. The type of the service.
+	FunctionalType *FunctionalType `json:"functionalType,omitempty"`
 	// GcpProject: Output only. The service project identifier that the underlying
 	// cloud resource resides in.
 	GcpProject string `json:"gcpProject,omitempty"`
@@ -1469,15 +1498,15 @@ type ServiceProperties struct {
 	// Zone: Output only. The location that the underlying resource resides in if
 	// it is zonal, for example, us-west1-a).
 	Zone string `json:"zone,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GcpProject") to
+	// ForceSendFields is a list of field names (e.g. "FunctionalType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GcpProject") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "FunctionalType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1692,6 +1721,8 @@ func (s Workload) MarshalJSON() ([]byte, error) {
 // WorkloadProperties: Properties of an underlying compute resource represented
 // by the Workload.
 type WorkloadProperties struct {
+	// FunctionalType: Output only. The type of the workload.
+	FunctionalType *FunctionalType `json:"functionalType,omitempty"`
 	// GcpProject: Output only. The service project identifier that the underlying
 	// cloud resource resides in. Empty for non-cloud resources.
 	GcpProject string `json:"gcpProject,omitempty"`
@@ -1701,15 +1732,15 @@ type WorkloadProperties struct {
 	// Zone: Output only. The location that the underlying compute resource resides
 	// in if it is zonal (for example, us-west1-a).
 	Zone string `json:"zone,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GcpProject") to
+	// ForceSendFields is a list of field names (e.g. "FunctionalType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GcpProject") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "FunctionalType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1977,9 +2008,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

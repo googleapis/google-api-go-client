@@ -24,17 +24,6 @@ import (
 type CredentialsType = internal.CredentialsType
 
 const (
-	// Unknown represents an unknown JSON file type.
-	//
-	// IMPORTANT:
-	// This credential type does not validate the credential configuration. A security
-	// risk occurs when a credential configuration configured with malicious urls
-	// is used.
-	// You should validate credential configurations provided by untrusted sources.
-	// See [Security requirements when using credential configurations from an external
-	// source] https://cloud.google.com/docs/authentication/external/externally-sourced-credentials
-	// for more details.
-	Unknown CredentialsType = internal.Unknown
 	// ServiceAccount represents a service account file type.
 	ServiceAccount = internal.ServiceAccount
 	// User represents a user credentials file type.

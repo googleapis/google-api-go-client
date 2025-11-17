@@ -30,13 +30,40 @@ import (
 // ClientOption is for configuring a Google API client or transport.
 type ClientOption = option.ClientOption
 
-type credentialsType int
+// CredentialsType specifies the type of JSON credentials being provided
+// to a loading function such as [WithAuthCredentialsFile] or
+// [WithAuthCredentialsJSON].
+type CredentialsType = option.CredentialsType
 
 const (
-	unknownCredType credentialsType = iota
-	serviceAccount
-	impersonatedServiceAccount
-	externalAccount
+	// unknownCredType is a private CredentialsType representing an unknown JSON file type.
+	unknownCredType = internal.Unknown
+	// ServiceAccount represents a service account file type.
+	ServiceAccount = option.ServiceAccount
+	// User represents a user credentials file type.
+	User = option.User
+	// ImpersonatedServiceAccount represents an impersonated service account file type.
+	//
+	// IMPORTANT:
+	// This credential type does not validate the credential configuration. A security
+	// risk occurs when a credential configuration configured with malicious urls
+	// is used.
+	// You should validate credential configurations provided by untrusted sources.
+	// See [Security requirements when using credential configurations from an external
+	// source] https://cloud.google.com/docs/authentication/external/externally-sourced-credentials
+	// for more details.
+	ImpersonatedServiceAccount = option.ImpersonatedServiceAccount
+	// ExternalAccount represents an external account file type.
+	//
+	// IMPORTANT:
+	// This credential type does not validate the credential configuration. A security
+	// risk occurs when a credential configuration configured with malicious urls
+	// is used.
+	// You should validate credential configurations provided by untrusted sources.
+	// See [Security requirements when using credential configurations from an external
+	// source] https://cloud.google.com/docs/authentication/external/externally-sourced-credentials
+	// for more details.
+	ExternalAccount = option.ExternalAccount
 )
 
 // NewClient creates a HTTP Client that automatically adds an ID token to each
@@ -148,7 +175,7 @@ func tokenSourceFromBytes(ctx context.Context, data []byte, audience string, ds 
 		return nil, err
 	}
 	switch allowedType {
-	case serviceAccount:
+	case ServiceAccount:
 		cfg, err := google.JWTConfigFromJSON(data, ds.GetScopes()...)
 		if err != nil {
 			return nil, err
@@ -168,7 +195,7 @@ func tokenSourceFromBytes(ctx context.Context, data []byte, audience string, ds 
 			return nil, err
 		}
 		return oauth2.ReuseTokenSource(tok, ts), nil
-	case impersonatedServiceAccount, externalAccount:
+	case ImpersonatedServiceAccount, ExternalAccount:
 		type url struct {
 			ServiceAccountImpersonationURL string `json:"service_account_impersonation_url"`
 		}
@@ -184,20 +211,20 @@ func tokenSourceFromBytes(ctx context.Context, data []byte, audience string, ds 
 			TargetPrincipal: account,
 			IncludeEmail:    true,
 		}
-		ts, err := impersonate.IDTokenSource(ctx, config, option.WithCredentialsJSON(data))
+		ts, err := impersonate.IDTokenSource(ctx, config, option.WithAuthCredentialsJSON(allowedType, data))
 		if err != nil {
 			return nil, err
 		}
 		return ts, nil
 	default:
-		return nil, fmt.Errorf("idtoken: unsupported credentials type")
+		return nil, fmt.Errorf("idtoken: unsupported credentials type: %d", allowedType)
 	}
 }
 
 // getAllowedType returns the credentials type of type credentialsType, and an error.
 // allowed types are "service_account" and "impersonated_service_account"
-func getAllowedType(data []byte) (credentialsType, error) {
-	var t credentialsType
+func getAllowedType(data []byte) (CredentialsType, error) {
+	var t CredentialsType
 	if len(data) == 0 {
 		return t, fmt.Errorf("idtoken: credential provided is 0 bytes")
 	}
@@ -211,14 +238,14 @@ func getAllowedType(data []byte) (credentialsType, error) {
 	return t, nil
 }
 
-func parseCredType(typeString string) credentialsType {
+func parseCredType(typeString string) CredentialsType {
 	switch typeString {
 	case "service_account":
-		return serviceAccount
+		return ServiceAccount
 	case "impersonated_service_account":
-		return impersonatedServiceAccount
+		return ImpersonatedServiceAccount
 	case "external_account":
-		return externalAccount
+		return ExternalAccount
 	default:
 		return unknownCredType
 	}
@@ -234,51 +261,6 @@ type withCustomClaims map[string]interface{}
 func (w withCustomClaims) Apply(o *internal.DialSettings) {
 	o.CustomClaims = w
 }
-
-// CredentialsType specifies the type of JSON credentials being provided
-// to a loading function such as [WithAuthCredentialsFile] or
-// [WithAuthCredentialsJSON].
-type CredentialsType = option.CredentialsType
-
-const (
-	// Unknown represents an unknown JSON file type.
-	//
-	// IMPORTANT:
-	// This credential type does not validate the credential configuration. A security
-	// risk occurs when a credential configuration configured with malicious urls
-	// is used.
-	// You should validate credential configurations provided by untrusted sources.
-	// See [Security requirements when using credential configurations from an external
-	// source] https://cloud.google.com/docs/authentication/external/externally-sourced-credentials
-	// for more details.
-	Unknown = option.Unknown
-	// ServiceAccount represents a service account file type.
-	ServiceAccount = option.ServiceAccount
-	// User represents a user credentials file type.
-	User = option.User
-	// ImpersonatedServiceAccount represents an impersonated service account file type.
-	//
-	// IMPORTANT:
-	// This credential type does not validate the credential configuration. A security
-	// risk occurs when a credential configuration configured with malicious urls
-	// is used.
-	// You should validate credential configurations provided by untrusted sources.
-	// See [Security requirements when using credential configurations from an external
-	// source] https://cloud.google.com/docs/authentication/external/externally-sourced-credentials
-	// for more details.
-	ImpersonatedServiceAccount = option.ImpersonatedServiceAccount
-	// ExternalAccount represents an external account file type.
-	//
-	// IMPORTANT:
-	// This credential type does not validate the credential configuration. A security
-	// risk occurs when a credential configuration configured with malicious urls
-	// is used.
-	// You should validate credential configurations provided by untrusted sources.
-	// See [Security requirements when using credential configurations from an external
-	// source] https://cloud.google.com/docs/authentication/external/externally-sourced-credentials
-	// for more details.
-	ExternalAccount = option.ExternalAccount
-)
 
 // WithCredentialsFile returns a ClientOption that authenticates
 // API calls with the given service account or refresh token JSON

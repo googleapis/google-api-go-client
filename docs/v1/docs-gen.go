@@ -4211,15 +4211,15 @@ func (s RichLink) MarshalJSON() ([]byte, error) {
 
 // RichLinkProperties: Properties specific to a RichLink.
 type RichLinkProperties struct {
-	// MimeType: Output only. The MIME type
+	// MimeType: The MIME type
 	// (https://developers.google.com/drive/api/v3/mime-types) of the RichLink, if
 	// there's one (for example, when it's a file in Drive).
 	MimeType string `json:"mimeType,omitempty"`
-	// Title: Output only. The title of the RichLink as displayed in the link. This
-	// title matches the title of the linked resource at the time of the insertion
-	// or last update of the link. This field is always present.
+	// Title: The title of the RichLink as displayed in the link. This title
+	// matches the title of the linked resource at the time of the insertion or
+	// last update of the link. This field is always present.
 	Title string `json:"title,omitempty"`
-	// Uri: Output only. The URI to the RichLink. This is always present.
+	// Uri: The URI to the RichLink. This is always present.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MimeType") to
 	// unconditionally include in API requests. By default, fields with empty or

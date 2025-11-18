@@ -2400,8 +2400,6 @@ type StoragePool struct {
 	//   "RESTORING" - Storage Pool State is Restoring
 	//   "DISABLED" - Storage Pool State is Disabled
 	//   "ERROR" - Storage Pool State is Error
-	//   "DEGRADED" - Storage Pool State is Degraded The storage pool is
-	// operational, but with reduced performance.
 	State string `json:"state,omitempty"`
 	// StateDetails: Output only. State details of the storage pool
 	StateDetails string `json:"stateDetails,omitempty"`

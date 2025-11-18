@@ -1087,6 +1087,14 @@ type Rollout struct {
 	Control *RolloutControl `json:"control,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// EffectiveUnitFilter: Optional. Output only. Output only snapshot of the
+	// effective unit filter at Rollout start time. Contains a
+	// CEL(https://github.com/google/cel-spec) expression consisting of a
+	// conjunction of Rollout.unit_filter and RolloutKind.unit_filter. This field
+	// captures the filter applied by the Rollout to determine the Unit population.
+	// If the associated RolloutKind's unit_filter is modified after the rollout is
+	// started, it will not be updated here.
+	EffectiveUnitFilter string `json:"effectiveUnitFilter,omitempty"`
 	// EndTime: Optional. Output only. The time when the rollout finished execution
 	// (regardless of success, failure, or cancellation). Will be empty if the
 	// rollout hasn't finished yet. Once set, the rollout is in terminal state and
@@ -2233,9 +2241,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

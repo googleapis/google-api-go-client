@@ -12114,7 +12114,7 @@ func (s GoogleCloudDialogflowV2HumanAgentAssistantConfig) MarshalJSON() ([]byte,
 
 // GoogleCloudDialogflowV2HumanAgentAssistantConfigConversationModelConfig:
 // Custom conversation models used in agent assist feature. Supported feature:
-// ARTICLE_SUGGESTION, SMART_COMPOSE, SMART_REPLY, CONVERSATION_SUMMARIZATION.
+// ARTICLE_SUGGESTION, SMART_COMPOSE, SMART_REPLY, CONVERSATION_SUMMARIZATION
 type GoogleCloudDialogflowV2HumanAgentAssistantConfigConversationModelConfig struct {
 	// BaselineModelVersion: Version of current baseline model. It will be ignored
 	// if model is set. Valid versions are: - Article Suggestion baseline model: -
@@ -15570,6 +15570,24 @@ func (s GoogleCloudDialogflowV2OutputAudioConfig) MarshalJSON() ([]byte, error) 
 // GoogleCloudDialogflowV2Participant: Represents a conversation participant
 // (human agent, virtual agent, end-user).
 type GoogleCloudDialogflowV2Participant struct {
+	// AgentDesktopSource: Optional. For tracking the utilization of prebuilt Agent
+	// Assist integration modules. This field is only inscope for Integration type
+	// that include UI Modules, Backend Modules, and Agent Desktop connector, it is
+	// out of scope for CCaaS and Direct Integration. For each human agent,
+	// prebuilt UI Modules needs to trigger the UpdateParticipant API to update
+	// this field. Both CreateParticipantRequest and UpdateParticipantRequest will
+	// be supported.
+	//
+	// Possible values:
+	//   "AGENT_DESKTOP_SOURCE_UNSPECIFIED" - Agent Desktop Source is not
+	// specified.
+	//   "LIVE_PERSON" - Agent Desktop Source is Live Person.
+	//   "GENESYS_CLOUD" - Agent Desktop Source is Genesys Cloud.
+	//   "TWILIO" - Agent Desktop Source is Twilio.
+	//   "SALESFORCE" - Agent Desktop Source is Salesforce.
+	//   "OTHER" - UI Modules are in use but the desktop is either not currently
+	// released or setting this field to the applicable desktop.
+	AgentDesktopSource string `json:"agentDesktopSource,omitempty"`
 	// DocumentsMetadataFilters: Optional. Key-value filters on the metadata of
 	// documents returned by article suggestion. If specified, article suggestion
 	// only returns suggested documents that match all filters in their
@@ -15616,15 +15634,15 @@ type GoogleCloudDialogflowV2Participant struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "DocumentsMetadataFilters")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AgentDesktopSource") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DocumentsMetadataFilters") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentDesktopSource") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

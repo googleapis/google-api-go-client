@@ -310,7 +310,32 @@ type LocalInventory struct {
 	// LocalInventoryAttributes: Optional. A list of local inventory attributes.
 	LocalInventoryAttributes *LocalInventoryAttributes `json:"localInventoryAttributes,omitempty"`
 	// Name: Output only. The name of the `LocalInventory` resource. Format:
-	// `accounts/{account}/products/{product}/localInventories/{store_code}`
+	// `accounts/{account}/products/{product}/localInventories/{store_code}` The
+	// {product} segment is a unique identifier for the product. This identifier
+	// must be unique within a merchant account and generally follows the
+	// structure: `content_language~feed_label~offer_id`. Example: `en~US~sku123`
+	// For legacy local products, the structure is:
+	// `local~content_language~feed_label~offer_id`. Example: `local~en~US~sku123`
+	// The format of the {product} segment in the URL is automatically detected by
+	// the server, supporting two options: 1. **Encoded Format**: The `{product}`
+	// segment is an unpadded base64url encoded string (RFC 4648 Section 5). The
+	// decoded string must result in the `content_language~feed_label~offer_id`
+	// structure. This encoding MUST be used if any part of the product identifier
+	// (like `offer_id`) contains characters such as `/`, `%`, or `~`. * Example:
+	// To represent the product ID `en~US~sku/123`, the `{product}` segment must be
+	// the base64url encoding of this string, which is `ZW5-VVMtc2t1LzEyMw`. The
+	// full resource name for the product would be
+	// `accounts/123/products/ZW5-VVMtc2t1LzEyMw`. 2. **Plain Format**: The
+	// `{product}` segment is the tilde-separated string
+	// `content_language~feed_label~offer_id`. This format is suitable only when
+	// `content_language`, `feed_label`, and `offer_id` do not contain
+	// URL-problematic characters like `/`, `%`, or `~`. We recommend using the
+	// **Encoded Format** for all product IDs to ensure correct parsing, especially
+	// those containing special characters. The presence of tilde (`~`) characters
+	// in the `{product}` segment is used to differentiate between the two formats.
+	// Note: For calls to the v1beta version, the plain format is
+	// `channel~content_language~feed_label~offer_id`, for example:
+	// `accounts/123/products/online~en~US~sku123`.
 	Name string `json:"name,omitempty"`
 	// StoreCode: Required. Immutable. Store code (the store ID from your Business
 	// Profile) of the physical store the product is sold in. See the Local product
@@ -582,8 +607,32 @@ type RegionalInventory struct {
 	// ignored if set by the client.
 	Account int64 `json:"account,omitempty,string"`
 	// Name: Output only. The name of the `RegionalInventory` resource. Format:
-	// `{regional_inventory.name=accounts/{account}/products/{product}/regionalInven
-	// tories/{region}`
+	// `accounts/{account}/products/{product}/regionalInventories/{region}` The
+	// {product} segment is a unique identifier for the product. This identifier
+	// must be unique within a merchant account and generally follows the
+	// structure: `content_language~feed_label~offer_id`. Example: `en~US~sku123`
+	// For legacy local products, the structure is:
+	// `local~content_language~feed_label~offer_id`. Example: `local~en~US~sku123`
+	// The format of the {product} segment in the URL is automatically detected by
+	// the server, supporting two options: 1. **Encoded Format**: The `{product}`
+	// segment is an unpadded base64url encoded string (RFC 4648 Section 5). The
+	// decoded string must result in the `content_language~feed_label~offer_id`
+	// structure. This encoding MUST be used if any part of the product identifier
+	// (like `offer_id`) contains characters such as `/`, `%`, or `~`. * Example:
+	// To represent the product ID `en~US~sku/123`, the `{product}` segment must be
+	// the base64url encoding of this string, which is `ZW5-VVMtc2t1LzEyMw`. The
+	// full resource name for the product would be
+	// `accounts/123/products/ZW5-VVMtc2t1LzEyMw`. 2. **Plain Format**: The
+	// `{product}` segment is the tilde-separated string
+	// `content_language~feed_label~offer_id`. This format is suitable only when
+	// `content_language`, `feed_label`, and `offer_id` do not contain
+	// URL-problematic characters like `/`, `%`, or `~`. We recommend using the
+	// **Encoded Format** for all product IDs to ensure correct parsing, especially
+	// those containing special characters. The presence of tilde (`~`) characters
+	// in the `{product}` segment is used to differentiate between the two formats.
+	// Note: For calls to the v1beta version, the plain format is
+	// `channel~content_language~feed_label~offer_id`, for example:
+	// `accounts/123/products/online~en~US~sku123`.
 	Name string `json:"name,omitempty"`
 	// Region: Required. Immutable. ID of the region for this `RegionalInventory`
 	// resource. See the Regional availability and pricing
@@ -653,7 +702,7 @@ func (s RegionalInventoryAttributes) MarshalJSON() ([]byte, error) {
 
 type AccountsProductsLocalInventoriesDeleteCall struct {
 	s          *Service
-	name       string
+	nameid     string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
@@ -667,10 +716,35 @@ type AccountsProductsLocalInventoriesDeleteCall struct {
 //
 //   - name: The name of the local inventory for the given product to delete.
 //     Format:
-//     `accounts/{account}/products/{product}/localInventories/{store_code}`.
-func (r *AccountsProductsLocalInventoriesService) Delete(name string) *AccountsProductsLocalInventoriesDeleteCall {
+//     `accounts/{account}/products/{product}/localInventories/{store_code}` The
+//     {product} segment is a unique identifier for the product. This identifier
+//     must be unique within a merchant account and generally follows the
+//     structure: `content_language~feed_label~offer_id`. Example: `en~US~sku123`
+//     For legacy local products, the structure is:
+//     `local~content_language~feed_label~offer_id`. Example:
+//     `local~en~US~sku123` The format of the {product} segment in the URL is
+//     automatically detected by the server, supporting two options: 1. **Encoded
+//     Format**: The `{product}` segment is an unpadded base64url encoded string
+//     (RFC 4648 Section 5). The decoded string must result in the
+//     `content_language~feed_label~offer_id` structure. This encoding MUST be
+//     used if any part of the product identifier (like `offer_id`) contains
+//     characters such as `/`, `%`, or `~`. * Example: To represent the product
+//     ID `en~US~sku/123`, the `{product}` segment must be the base64url encoding
+//     of this string, which is `ZW5-VVMtc2t1LzEyMw`. The full resource name for
+//     the product would be `accounts/123/products/ZW5-VVMtc2t1LzEyMw`. 2.
+//     **Plain Format**: The `{product}` segment is the tilde-separated string
+//     `content_language~feed_label~offer_id`. This format is suitable only when
+//     `content_language`, `feed_label`, and `offer_id` do not contain
+//     URL-problematic characters like `/`, `%`, or `~`. We recommend using the
+//     **Encoded Format** for all product IDs to ensure correct parsing,
+//     especially those containing special characters. The presence of tilde
+//     (`~`) characters in the `{product}` segment is used to differentiate
+//     between the two formats. Note: For calls to the v1beta version, the plain
+//     format is `channel~content_language~feed_label~offer_id`, for example:
+//     `accounts/123/products/online~en~US~sku123`.
+func (r *AccountsProductsLocalInventoriesService) Delete(nameid string) *AccountsProductsLocalInventoriesDeleteCall {
 	c := &AccountsProductsLocalInventoriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
+	c.nameid = nameid
 	return c
 }
 
@@ -709,7 +783,7 @@ func (c *AccountsProductsLocalInventoriesDeleteCall) doRequest(alt string) (*htt
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"name": c.nameid,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.products.localInventories.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
@@ -756,7 +830,7 @@ func (c *AccountsProductsLocalInventoriesDeleteCall) Do(opts ...googleapi.CallOp
 
 type AccountsProductsLocalInventoriesInsertCall struct {
 	s              *Service
-	parent         string
+	parentid       string
 	localinventory *LocalInventory
 	urlParams_     gensupport.URLParams
 	ctx_           context.Context
@@ -770,10 +844,35 @@ type AccountsProductsLocalInventoriesInsertCall struct {
 // products.
 //
 //   - parent: The account and product where this inventory will be inserted.
-//     Format: `accounts/{account}/products/{product}`.
-func (r *AccountsProductsLocalInventoriesService) Insert(parent string, localinventory *LocalInventory) *AccountsProductsLocalInventoriesInsertCall {
+//     Format: `accounts/{account}/products/{product}` The {product} segment is a
+//     unique identifier for the product. This identifier must be unique within a
+//     merchant account and generally follows the structure:
+//     `content_language~feed_label~offer_id`. Example: `en~US~sku123` For legacy
+//     local products, the structure is:
+//     `local~content_language~feed_label~offer_id`. Example:
+//     `local~en~US~sku123` The format of the {product} segment in the URL is
+//     automatically detected by the server, supporting two options: 1. **Encoded
+//     Format**: The `{product}` segment is an unpadded base64url encoded string
+//     (RFC 4648 Section 5). The decoded string must result in the
+//     `content_language~feed_label~offer_id` structure. This encoding MUST be
+//     used if any part of the product identifier (like `offer_id`) contains
+//     characters such as `/`, `%`, or `~`. * Example: To represent the product
+//     ID `en~US~sku/123`, the `{product}` segment must be the base64url encoding
+//     of this string, which is `ZW5-VVMtc2t1LzEyMw`. The full resource name for
+//     the product would be `accounts/123/products/ZW5-VVMtc2t1LzEyMw`. 2.
+//     **Plain Format**: The `{product}` segment is the tilde-separated string
+//     `content_language~feed_label~offer_id`. This format is suitable only when
+//     `content_language`, `feed_label`, and `offer_id` do not contain
+//     URL-problematic characters like `/`, `%`, or `~`. We recommend using the
+//     **Encoded Format** for all product IDs to ensure correct parsing,
+//     especially those containing special characters. The presence of tilde
+//     (`~`) characters in the `{product}` segment is used to differentiate
+//     between the two formats. Note: For calls to the v1beta version, the plain
+//     format is `channel~content_language~feed_label~offer_id`, for example:
+//     `accounts/123/products/online~en~US~sku123`.
+func (r *AccountsProductsLocalInventoriesService) Insert(parentid string, localinventory *LocalInventory) *AccountsProductsLocalInventoriesInsertCall {
 	c := &AccountsProductsLocalInventoriesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
+	c.parentid = parentid
 	c.localinventory = localinventory
 	return c
 }
@@ -817,7 +916,7 @@ func (c *AccountsProductsLocalInventoriesInsertCall) doRequest(alt string) (*htt
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
+		"parent": c.parentid,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.products.localInventories.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
@@ -864,7 +963,7 @@ func (c *AccountsProductsLocalInventoriesInsertCall) Do(opts ...googleapi.CallOp
 
 type AccountsProductsLocalInventoriesListCall struct {
 	s            *Service
-	parent       string
+	parentid     string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -878,10 +977,35 @@ type AccountsProductsLocalInventoriesListCall struct {
 // product for a given account.
 //
 //   - parent: The `name` of the parent product to list local inventories for.
-//     Format: `accounts/{account}/products/{product}`.
-func (r *AccountsProductsLocalInventoriesService) List(parent string) *AccountsProductsLocalInventoriesListCall {
+//     Format: `accounts/{account}/products/{product}` The {product} segment is a
+//     unique identifier for the product. This identifier must be unique within a
+//     merchant account and generally follows the structure:
+//     `content_language~feed_label~offer_id`. Example: `en~US~sku123` For legacy
+//     local products, the structure is:
+//     `local~content_language~feed_label~offer_id`. Example:
+//     `local~en~US~sku123` The format of the {product} segment in the URL is
+//     automatically detected by the server, supporting two options: 1. **Encoded
+//     Format**: The `{product}` segment is an unpadded base64url encoded string
+//     (RFC 4648 Section 5). The decoded string must result in the
+//     `content_language~feed_label~offer_id` structure. This encoding MUST be
+//     used if any part of the product identifier (like `offer_id`) contains
+//     characters such as `/`, `%`, or `~`. * Example: To represent the product
+//     ID `en~US~sku/123`, the `{product}` segment must be the base64url encoding
+//     of this string, which is `ZW5-VVMtc2t1LzEyMw`. The full resource name for
+//     the product would be `accounts/123/products/ZW5-VVMtc2t1LzEyMw`. 2.
+//     **Plain Format**: The `{product}` segment is the tilde-separated string
+//     `content_language~feed_label~offer_id`. This format is suitable only when
+//     `content_language`, `feed_label`, and `offer_id` do not contain
+//     URL-problematic characters like `/`, `%`, or `~`. We recommend using the
+//     **Encoded Format** for all product IDs to ensure correct parsing,
+//     especially those containing special characters. The presence of tilde
+//     (`~`) characters in the `{product}` segment is used to differentiate
+//     between the two formats. Note: For calls to the v1beta version, the plain
+//     format is `channel~content_language~feed_label~offer_id`, for example:
+//     `accounts/123/products/online~en~US~sku123`.
+func (r *AccountsProductsLocalInventoriesService) List(parentid string) *AccountsProductsLocalInventoriesListCall {
 	c := &AccountsProductsLocalInventoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
+	c.parentid = parentid
 	return c
 }
 
@@ -952,7 +1076,7 @@ func (c *AccountsProductsLocalInventoriesListCall) doRequest(alt string) (*http.
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
+		"parent": c.parentid,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.products.localInventories.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
@@ -1021,7 +1145,7 @@ func (c *AccountsProductsLocalInventoriesListCall) Pages(ctx context.Context, f 
 
 type AccountsProductsRegionalInventoriesDeleteCall struct {
 	s          *Service
-	name       string
+	nameid     string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
@@ -1034,10 +1158,35 @@ type AccountsProductsRegionalInventoriesDeleteCall struct {
 // attempting a delete again.
 //
 //   - name: The name of the `RegionalInventory` resource to delete. Format:
-//     `accounts/{account}/products/{product}/regionalInventories/{region}`.
-func (r *AccountsProductsRegionalInventoriesService) Delete(name string) *AccountsProductsRegionalInventoriesDeleteCall {
+//     `accounts/{account}/products/{product}/regionalInventories/{region}` The
+//     {product} segment is a unique identifier for the product. This identifier
+//     must be unique within a merchant account and generally follows the
+//     structure: `content_language~feed_label~offer_id`. Example: `en~US~sku123`
+//     For legacy local products, the structure is:
+//     `local~content_language~feed_label~offer_id`. Example:
+//     `local~en~US~sku123` The format of the {product} segment in the URL is
+//     automatically detected by the server, supporting two options: 1. **Encoded
+//     Format**: The `{product}` segment is an unpadded base64url encoded string
+//     (RFC 4648 Section 5). The decoded string must result in the
+//     `content_language~feed_label~offer_id` structure. This encoding MUST be
+//     used if any part of the product identifier (like `offer_id`) contains
+//     characters such as `/`, `%`, or `~`. * Example: To represent the product
+//     ID `en~US~sku/123`, the `{product}` segment must be the base64url encoding
+//     of this string, which is `ZW5-VVMtc2t1LzEyMw`. The full resource name for
+//     the product would be `accounts/123/products/ZW5-VVMtc2t1LzEyMw`. 2.
+//     **Plain Format**: The `{product}` segment is the tilde-separated string
+//     `content_language~feed_label~offer_id`. This format is suitable only when
+//     `content_language`, `feed_label`, and `offer_id` do not contain
+//     URL-problematic characters like `/`, `%`, or `~`. We recommend using the
+//     **Encoded Format** for all product IDs to ensure correct parsing,
+//     especially those containing special characters. The presence of tilde
+//     (`~`) characters in the `{product}` segment is used to differentiate
+//     between the two formats. Note: For calls to the v1beta version, the plain
+//     format is `channel~content_language~feed_label~offer_id`, for example:
+//     `accounts/123/products/online~en~US~sku123`.
+func (r *AccountsProductsRegionalInventoriesService) Delete(nameid string) *AccountsProductsRegionalInventoriesDeleteCall {
 	c := &AccountsProductsRegionalInventoriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
+	c.nameid = nameid
 	return c
 }
 
@@ -1076,7 +1225,7 @@ func (c *AccountsProductsRegionalInventoriesDeleteCall) doRequest(alt string) (*
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"name": c.nameid,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.products.regionalInventories.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
@@ -1123,7 +1272,7 @@ func (c *AccountsProductsRegionalInventoriesDeleteCall) Do(opts ...googleapi.Cal
 
 type AccountsProductsRegionalInventoriesInsertCall struct {
 	s                 *Service
-	parent            string
+	parentid          string
 	regionalinventory *RegionalInventory
 	urlParams_        gensupport.URLParams
 	ctx_              context.Context
@@ -1136,10 +1285,35 @@ type AccountsProductsRegionalInventoriesInsertCall struct {
 // for the new or updated `RegionalInventory` resource to appear in products.
 //
 //   - parent: The account and product where this inventory will be inserted.
-//     Format: `accounts/{account}/products/{product}`.
-func (r *AccountsProductsRegionalInventoriesService) Insert(parent string, regionalinventory *RegionalInventory) *AccountsProductsRegionalInventoriesInsertCall {
+//     Format: `accounts/{account}/products/{product}` The {product} segment is a
+//     unique identifier for the product. This identifier must be unique within a
+//     merchant account and generally follows the structure:
+//     `content_language~feed_label~offer_id`. Example: `en~US~sku123` For legacy
+//     local products, the structure is:
+//     `local~content_language~feed_label~offer_id`. Example:
+//     `local~en~US~sku123` The format of the {product} segment in the URL is
+//     automatically detected by the server, supporting two options: 1. **Encoded
+//     Format**: The `{product}` segment is an unpadded base64url encoded string
+//     (RFC 4648 Section 5). The decoded string must result in the
+//     `content_language~feed_label~offer_id` structure. This encoding MUST be
+//     used if any part of the product identifier (like `offer_id`) contains
+//     characters such as `/`, `%`, or `~`. * Example: To represent the product
+//     ID `en~US~sku/123`, the `{product}` segment must be the base64url encoding
+//     of this string, which is `ZW5-VVMtc2t1LzEyMw`. The full resource name for
+//     the product would be `accounts/123/products/ZW5-VVMtc2t1LzEyMw`. 2.
+//     **Plain Format**: The `{product}` segment is the tilde-separated string
+//     `content_language~feed_label~offer_id`. This format is suitable only when
+//     `content_language`, `feed_label`, and `offer_id` do not contain
+//     URL-problematic characters like `/`, `%`, or `~`. We recommend using the
+//     **Encoded Format** for all product IDs to ensure correct parsing,
+//     especially those containing special characters. The presence of tilde
+//     (`~`) characters in the `{product}` segment is used to differentiate
+//     between the two formats. Note: For calls to the v1beta version, the plain
+//     format is `channel~content_language~feed_label~offer_id`, for example:
+//     `accounts/123/products/online~en~US~sku123`.
+func (r *AccountsProductsRegionalInventoriesService) Insert(parentid string, regionalinventory *RegionalInventory) *AccountsProductsRegionalInventoriesInsertCall {
 	c := &AccountsProductsRegionalInventoriesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
+	c.parentid = parentid
 	c.regionalinventory = regionalinventory
 	return c
 }
@@ -1183,7 +1357,7 @@ func (c *AccountsProductsRegionalInventoriesInsertCall) doRequest(alt string) (*
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
+		"parent": c.parentid,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.products.regionalInventories.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
@@ -1231,7 +1405,7 @@ func (c *AccountsProductsRegionalInventoriesInsertCall) Do(opts ...googleapi.Cal
 
 type AccountsProductsRegionalInventoriesListCall struct {
 	s            *Service
-	parent       string
+	parentid     string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -1245,10 +1419,35 @@ type AccountsProductsRegionalInventoriesListCall struct {
 // product for a given account.
 //
 //   - parent: The `name` of the parent product to list `RegionalInventory`
-//     resources for. Format: `accounts/{account}/products/{product}`.
-func (r *AccountsProductsRegionalInventoriesService) List(parent string) *AccountsProductsRegionalInventoriesListCall {
+//     resources for. Format: `accounts/{account}/products/{product}` The
+//     {product} segment is a unique identifier for the product. This identifier
+//     must be unique within a merchant account and generally follows the
+//     structure: `content_language~feed_label~offer_id`. Example: `en~US~sku123`
+//     For legacy local products, the structure is:
+//     `local~content_language~feed_label~offer_id`. Example:
+//     `local~en~US~sku123` The format of the {product} segment in the URL is
+//     automatically detected by the server, supporting two options: 1. **Encoded
+//     Format**: The `{product}` segment is an unpadded base64url encoded string
+//     (RFC 4648 Section 5). The decoded string must result in the
+//     `content_language~feed_label~offer_id` structure. This encoding MUST be
+//     used if any part of the product identifier (like `offer_id`) contains
+//     characters such as `/`, `%`, or `~`. * Example: To represent the product
+//     ID `en~US~sku/123`, the `{product}` segment must be the base64url encoding
+//     of this string, which is `ZW5-VVMtc2t1LzEyMw`. The full resource name for
+//     the product would be `accounts/123/products/ZW5-VVMtc2t1LzEyMw`. 2.
+//     **Plain Format**: The `{product}` segment is the tilde-separated string
+//     `content_language~feed_label~offer_id`. This format is suitable only when
+//     `content_language`, `feed_label`, and `offer_id` do not contain
+//     URL-problematic characters like `/`, `%`, or `~`. We recommend using the
+//     **Encoded Format** for all product IDs to ensure correct parsing,
+//     especially those containing special characters. The presence of tilde
+//     (`~`) characters in the `{product}` segment is used to differentiate
+//     between the two formats. Note: For calls to the v1beta version, the plain
+//     format is `channel~content_language~feed_label~offer_id`, for example:
+//     `accounts/123/products/online~en~US~sku123`.
+func (r *AccountsProductsRegionalInventoriesService) List(parentid string) *AccountsProductsRegionalInventoriesListCall {
 	c := &AccountsProductsRegionalInventoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
+	c.parentid = parentid
 	return c
 }
 
@@ -1320,7 +1519,7 @@ func (c *AccountsProductsRegionalInventoriesListCall) doRequest(alt string) (*ht
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
+		"parent": c.parentid,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.products.regionalInventories.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)

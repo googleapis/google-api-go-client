@@ -2902,9 +2902,14 @@ type GoogleCloudContactcenterinsightsV1Dimension struct {
 	//   "AGENT_DEPLOYMENT_ID" - The dimension is keyed by the agent deployment ID.
 	//   "AGENT_ASSIST_SUPERVISOR_ID" - The dimension is keyed by the supervisor ID
 	// of the assigned human supervisor for virtual agents.
+	//   "LABEL_KEY" - The dimension is keyed by label keys.
+	//   "LABEL_VALUE" - The dimension is keyed by label values.
+	//   "LABEL_KEY_AND_VALUE" - The dimension is keyed by label key-value pairs.
 	DimensionKey string `json:"dimensionKey,omitempty"`
 	// IssueDimensionMetadata: Output only. Metadata about the issue dimension.
 	IssueDimensionMetadata *GoogleCloudContactcenterinsightsV1DimensionIssueDimensionMetadata `json:"issueDimensionMetadata,omitempty"`
+	// LabelDimensionMetadata: Output only. Metadata about conversation labels.
+	LabelDimensionMetadata *GoogleCloudContactcenterinsightsV1DimensionLabelDimensionMetadata `json:"labelDimensionMetadata,omitempty"`
 	// MediumDimensionMetadata: Output only. Metadata about the conversation medium
 	// dimension.
 	MediumDimensionMetadata *GoogleCloudContactcenterinsightsV1DimensionMediumDimensionMetadata `json:"mediumDimensionMetadata,omitempty"`
@@ -3101,6 +3106,31 @@ type GoogleCloudContactcenterinsightsV1DimensionIssueDimensionMetadata struct {
 
 func (s GoogleCloudContactcenterinsightsV1DimensionIssueDimensionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1DimensionIssueDimensionMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1DimensionLabelDimensionMetadata: Metadata
+// about conversation labels.
+type GoogleCloudContactcenterinsightsV1DimensionLabelDimensionMetadata struct {
+	// LabelKey: Optional. The label key.
+	LabelKey string `json:"labelKey,omitempty"`
+	// LabelValue: Optional. The label value.
+	LabelValue string `json:"labelValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LabelKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LabelKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1DimensionLabelDimensionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1DimensionLabelDimensionMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9012,9 +9042,14 @@ type GoogleCloudContactcenterinsightsV1alpha1Dimension struct {
 	//   "AGENT_DEPLOYMENT_ID" - The dimension is keyed by the agent deployment ID.
 	//   "AGENT_ASSIST_SUPERVISOR_ID" - The dimension is keyed by the supervisor ID
 	// of the assigned human supervisor for virtual agents.
+	//   "LABEL_KEY" - The dimension is keyed by label keys.
+	//   "LABEL_VALUE" - The dimension is keyed by label values.
+	//   "LABEL_KEY_AND_VALUE" - The dimension is keyed by label key-value pairs.
 	DimensionKey string `json:"dimensionKey,omitempty"`
 	// IssueDimensionMetadata: Output only. Metadata about the issue dimension.
 	IssueDimensionMetadata *GoogleCloudContactcenterinsightsV1alpha1DimensionIssueDimensionMetadata `json:"issueDimensionMetadata,omitempty"`
+	// LabelDimensionMetadata: Output only. Metadata about conversation labels.
+	LabelDimensionMetadata *GoogleCloudContactcenterinsightsV1alpha1DimensionLabelDimensionMetadata `json:"labelDimensionMetadata,omitempty"`
 	// MediumDimensionMetadata: Output only. Metadata about the conversation medium
 	// dimension.
 	MediumDimensionMetadata *GoogleCloudContactcenterinsightsV1alpha1DimensionMediumDimensionMetadata `json:"mediumDimensionMetadata,omitempty"`
@@ -9212,6 +9247,31 @@ type GoogleCloudContactcenterinsightsV1alpha1DimensionIssueDimensionMetadata str
 
 func (s GoogleCloudContactcenterinsightsV1alpha1DimensionIssueDimensionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1DimensionIssueDimensionMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1DimensionLabelDimensionMetadata:
+// Metadata about conversation labels.
+type GoogleCloudContactcenterinsightsV1alpha1DimensionLabelDimensionMetadata struct {
+	// LabelKey: Optional. The label key.
+	LabelKey string `json:"labelKey,omitempty"`
+	// LabelValue: Optional. The label value.
+	LabelValue string `json:"labelValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LabelKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LabelKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1DimensionLabelDimensionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1DimensionLabelDimensionMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12237,8 +12297,8 @@ type GoogleLongrunningListOperationsResponse struct {
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -19202,9 +19262,9 @@ func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) P
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall {
@@ -27729,9 +27789,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

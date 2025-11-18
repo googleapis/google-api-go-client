@@ -350,6 +350,11 @@ type AwsS3Data struct {
 	// name that ends with a '/'. This field is treated as an object prefix. As
 	// such, it should generally not begin with a '/'.
 	Path string `json:"path,omitempty"`
+	// PrivateNetworkService: Service Directory Service to be used as the endpoint
+	// for transfers from a custom VPC. Format:
+	// `projects/{project_id}/locations/{location}/namespaces/{namespace}/services/{
+	// service}`
+	PrivateNetworkService string `json:"privateNetworkService,omitempty"`
 	// RoleArn: The Amazon Resource Name (ARN) of the role to support temporary
 	// credentials via `AssumeRoleWithWebIdentity`. For more information about
 	// ARNs, see IAM ARNs
@@ -409,6 +414,11 @@ type AzureBlobStorageData struct {
 	// name that ends with a '/'. This field is treated as an object prefix. As
 	// such, it should generally not begin with a '/'.
 	Path string `json:"path,omitempty"`
+	// PrivateNetworkService: Service Directory Service to be used as the endpoint
+	// for transfers from a custom VPC. Format:
+	// `projects/{project_id}/locations/{location}/namespaces/{namespace}/services/{
+	// service}`
+	PrivateNetworkService string `json:"privateNetworkService,omitempty"`
 	// StorageAccount: Required. The name of the Azure Storage account.
 	StorageAccount string `json:"storageAccount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AzureCredentials") to
@@ -1253,6 +1263,9 @@ type ObjectConditions struct {
 	// `last_modified_since` to the start of the day * `last_modified_before` to
 	// the end of the day
 	LastModifiedSince string `json:"lastModifiedSince,omitempty"`
+	// MatchGlob: Optional. If specified, only objects matching this glob are
+	// transferred.
+	MatchGlob string `json:"matchGlob,omitempty"`
 	// MaxTimeElapsedSinceLastModification: Ensures that objects are not
 	// transferred if a specific maximum time has elapsed since the "last
 	// modification time". When a TransferOperation begins, objects with a "last

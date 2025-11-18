@@ -6357,8 +6357,8 @@ func (s NamedRange) MarshalJSON() ([]byte, error) {
 // NumberFormat: The number format of a cell.
 type NumberFormat struct {
 	// Pattern: Pattern string used for formatting. If not set, a default pattern
-	// based on the user's locale will be used if necessary for the given type. See
-	// the Date and Number Formats guide
+	// based on the spreadsheet's locale will be used if necessary for the given
+	// type. See the Date and Number Formats guide
 	// (https://developers.google.com/workspace/sheets/api/guides/formats) for more
 	// information about the supported patterns.
 	Pattern string `json:"pattern,omitempty"`

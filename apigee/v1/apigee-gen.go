@@ -2872,6 +2872,12 @@ func (s GoogleCloudApigeeV1Attributes) MarshalJSON() ([]byte, error) {
 // GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest: Request for
 // BatchComputeSecurityAssessmentResults.
 type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest struct {
+	// ApiHubApis: An array of API Hub APIs to assess. A maximum of 1 API can be
+	// assessed.
+	ApiHubApis *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestApiHubApiArray `json:"apiHubApis,omitempty"`
+	// ApiHubGateways: An array of API Hub Gateways to assess. A maximum of 3
+	// gateways can be assessed.
+	ApiHubGateways *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestApiHubGatewayArray `json:"apiHubGateways,omitempty"`
 	// Include: Include only these resources.
 	Include *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArray `json:"include,omitempty"`
 	// IncludeAllResources: Include all resources under the scope.
@@ -2886,16 +2892,18 @@ type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest struct {
 	PageToken string `json:"pageToken,omitempty"`
 	// Profile: Required. Name of the profile that is used for computation.
 	Profile string `json:"profile,omitempty"`
-	// Scope: Optional. Scope of the resources for the computation. For Apigee, the
-	// environment is the scope of the resources.
+	// Scope: Optional. Scope of the resources for the computation. When computing
+	// scores for Apigee proxies, the scope should be set to the environment of the
+	// resources. When computing scores for API Hub deployments, api_hub_scope
+	// should be set instead.
 	Scope string `json:"scope,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Include") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ApiHubApis") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Include") to include in API
+	// NullFields is a list of field names (e.g. "ApiHubApis") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2904,6 +2912,55 @@ type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest struct {
 
 func (s GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestApiHubApiArray
+// : Message for the array of API Hub APIs.
+type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestApiHubApiArray struct {
+	// Apis: Required. The array of API Hub API IDs. Format:
+	// `projects/{project}/locations/{location}/apis/{api}`
+	Apis []string `json:"apis,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Apis") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Apis") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestApiHubApiArray) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestApiHubApiArray
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestApiHubGatewayA
+// rray: Message for the array of API Hub Gateways.
+type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestApiHubGatewayArray struct {
+	// Gateways: Required. The array of API Hub Gateway IDs. Format:
+	// `projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance
+	// }`
+	Gateways []string `json:"gateways,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Gateways") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Gateways") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestApiHubGatewayArray) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestApiHubGatewayArray
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2940,13 +2997,16 @@ func (s GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceA
 // GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArrayR
 // esource: Resource for which we are computing security assessment.
 type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArrayResource struct {
-	// Name: Required. Name of this resource.
+	// Name: Required. Name of this resource. For an Apigee API Proxy, this should
+	// be the id of the API proxy. For an API Hub Deployment, this should be the id
+	// of the deployment.
 	Name string `json:"name,omitempty"`
 	// Type: Required. Type of this resource.
 	//
 	// Possible values:
 	//   "RESOURCE_TYPE_UNSPECIFIED" - ResourceType not specified.
 	//   "API_PROXY" - Resource is an Apigee Proxy.
+	//   "API_HUB_DEPLOYMENT" - Resource is an API Hub deployment.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -10126,7 +10186,12 @@ func (s GoogleCloudApigeeV1SecurityAssessmentResult) MarshalJSON() ([]byte, erro
 // GoogleCloudApigeeV1SecurityAssessmentResultResource: Resource for which we
 // are computing security assessment.
 type GoogleCloudApigeeV1SecurityAssessmentResultResource struct {
-	// Name: Required. Name of this resource.
+	// ApiHubDeploymentDetails: Output only. Additional details for the API Hub
+	// deployment.
+	ApiHubDeploymentDetails *GoogleCloudApigeeV1SecurityAssessmentResultResourceApiHubDeploymentDetails `json:"apiHubDeploymentDetails,omitempty"`
+	// Name: Required. Name of this resource. For an Apigee API Proxy, this should
+	// be the id of the API proxy. For an API Hub Deployment, this should be the id
+	// of the deployment.
 	Name string `json:"name,omitempty"`
 	// ResourceRevisionId: The revision id for the resource. In case of Apigee,
 	// this is proxy revision id.
@@ -10136,22 +10201,63 @@ type GoogleCloudApigeeV1SecurityAssessmentResultResource struct {
 	// Possible values:
 	//   "RESOURCE_TYPE_UNSPECIFIED" - ResourceType not specified.
 	//   "API_PROXY" - Resource is an Apigee Proxy.
+	//   "API_HUB_DEPLOYMENT" - Resource is an API Hub deployment.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ApiHubDeploymentDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "ApiHubDeploymentDetails") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudApigeeV1SecurityAssessmentResultResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityAssessmentResultResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityAssessmentResultResourceApiHubDeploymentDetails:
+// Additional details if the resource is an API Hub deployment.
+type GoogleCloudApigeeV1SecurityAssessmentResultResourceApiHubDeploymentDetails struct {
+	// DisplayName: The display name of the API Hub deployment.
+	DisplayName string `json:"displayName,omitempty"`
+	// Gateway: The gateway for the API Hub deployment. Format:
+	// `projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance
+	// }`
+	Gateway string `json:"gateway,omitempty"`
+	// GatewayType: The gateway type for the API Hub deployment.
+	//
+	// Possible values:
+	//   "API_HUB_GATEWAY_TYPE_UNSPECIFIED" - Gateway type is not specified.
+	//   "APIGEE_X" - Gateway is Apigee X for API Hub.
+	//   "APIGEE_HYBRID" - Gateway is Apigee Hybrid for API Hub.
+	//   "APIGEE_EDGE" - Gateway is Apigee Edge for API Hub.
+	//   "APIGEE_OPDK" - Gateway is Apigee OPDK for API Hub.
+	GatewayType string `json:"gatewayType,omitempty"`
+	// ResourceUri: The resource uri for the API Hub deployment.
+	ResourceUri string `json:"resourceUri,omitempty"`
+	// SourceProject: The source project for the API Hub deployment.
+	SourceProject string `json:"sourceProject,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1SecurityAssessmentResultResourceApiHubDeploymentDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityAssessmentResultResourceApiHubDeploymentDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10212,6 +10318,7 @@ type GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommend
 	//   "VERDICT_UNSPECIFIED" - The verdict is unspecified.
 	//   "PASS" - The assessment has passed.
 	//   "FAIL" - The assessment has failed.
+	//   "NOT_APPLICABLE" - The verdict is not applicable.
 	Verdict string `json:"verdict,omitempty"`
 	// Weight: The weight of the assessment which was set in the profile.
 	//
@@ -10647,6 +10754,15 @@ type GoogleCloudApigeeV1SecurityProfileV2 struct {
 	// ProfileAssessmentConfigs: Required. The configuration for each assessment in
 	// this profile. Key is the name/id of the assessment.
 	ProfileAssessmentConfigs map[string]GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfig `json:"profileAssessmentConfigs,omitempty"`
+	// RiskAssessmentType: Optional. The risk assessment type of the security
+	// profile. Defaults to ADVANCED_API_SECURITY.
+	//
+	// Possible values:
+	//   "RISK_ASSESSMENT_TYPE_UNSPECIFIED" - Risk assessment type is not
+	// specified.
+	//   "APIGEE" - Risk assessment type is Apigee.
+	//   "API_HUB" - Risk assessment type is API Hub.
+	RiskAssessmentType string `json:"riskAssessmentType,omitempty"`
 	// UpdateTime: Output only. The time of the security profile update.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -10673,6 +10789,8 @@ func (s GoogleCloudApigeeV1SecurityProfileV2) MarshalJSON() ([]byte, error) {
 // GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfig: The
 // configuration definition for a specific assessment.
 type GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfig struct {
+	// Include: Include only these Gateway Types.
+	Include *GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfigApiHubGatewayTypeArray `json:"include,omitempty"`
 	// Weight: The weight of the assessment.
 	//
 	// Possible values:
@@ -10681,13 +10799,13 @@ type GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfig struct {
 	//   "MODERATE" - The weight is moderate.
 	//   "MAJOR" - The weight is major.
 	Weight string `json:"weight,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Weight") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Include") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Weight") to include in API
+	// NullFields is a list of field names (e.g. "Include") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -10696,6 +10814,36 @@ type GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfig struct {
 
 func (s GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfigApiHubGatewayTypeA
+// rray: Message for the array of API Hub Gateway Types.
+type GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfigApiHubGatewayTypeArray struct {
+	// GatewayTypes: Required. The array of API Hub Gateway Types.
+	//
+	// Possible values:
+	//   "API_HUB_GATEWAY_TYPE_UNSPECIFIED" - Gateway type is not specified.
+	//   "APIGEE_X" - Gateway is Apigee X for API Hub.
+	//   "APIGEE_HYBRID" - Gateway is Apigee Hybrid for API Hub.
+	//   "APIGEE_EDGE" - Gateway is Apigee Edge for API Hub.
+	//   "APIGEE_OPDK" - Gateway is Apigee OPDK for API Hub.
+	GatewayTypes []string `json:"gatewayTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GatewayTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GatewayTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfigApiHubGatewayTypeArray) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfigApiHubGatewayTypeArray
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -50979,6 +51127,23 @@ func (r *OrganizationsSecurityProfilesV2Service) Delete(name string) *Organizati
 	return c
 }
 
+// RiskAssessmentType sets the optional parameter "riskAssessmentType": The
+// risk assessment type of the security profile. Defaults to
+// ADVANCED_API_SECURITY.
+//
+// Possible values:
+//
+//	"RISK_ASSESSMENT_TYPE_UNSPECIFIED" - Risk assessment type is not
+//
+// specified.
+//
+//	"APIGEE" - Risk assessment type is Apigee.
+//	"API_HUB" - Risk assessment type is API Hub.
+func (c *OrganizationsSecurityProfilesV2DeleteCall) RiskAssessmentType(riskAssessmentType string) *OrganizationsSecurityProfilesV2DeleteCall {
+	c.urlParams_.Set("riskAssessmentType", riskAssessmentType)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -51076,6 +51241,23 @@ type OrganizationsSecurityProfilesV2GetCall struct {
 func (r *OrganizationsSecurityProfilesV2Service) Get(name string) *OrganizationsSecurityProfilesV2GetCall {
 	c := &OrganizationsSecurityProfilesV2GetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// RiskAssessmentType sets the optional parameter "riskAssessmentType": The
+// risk assessment type of the security profile. Defaults to
+// ADVANCED_API_SECURITY.
+//
+// Possible values:
+//
+//	"RISK_ASSESSMENT_TYPE_UNSPECIFIED" - Risk assessment type is not
+//
+// specified.
+//
+//	"APIGEE" - Risk assessment type is Apigee.
+//	"API_HUB" - Risk assessment type is API Hub.
+func (c *OrganizationsSecurityProfilesV2GetCall) RiskAssessmentType(riskAssessmentType string) *OrganizationsSecurityProfilesV2GetCall {
+	c.urlParams_.Set("riskAssessmentType", riskAssessmentType)
 	return c
 }
 
@@ -51202,6 +51384,23 @@ func (c *OrganizationsSecurityProfilesV2ListCall) PageSize(pageSize int64) *Orga
 // subsequent page.
 func (c *OrganizationsSecurityProfilesV2ListCall) PageToken(pageToken string) *OrganizationsSecurityProfilesV2ListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// RiskAssessmentType sets the optional parameter "riskAssessmentType": The
+// risk assessment type of the security profiles. Defaults to
+// ADVANCED_API_SECURITY.
+//
+// Possible values:
+//
+//	"RISK_ASSESSMENT_TYPE_UNSPECIFIED" - Risk assessment type is not
+//
+// specified.
+//
+//	"APIGEE" - Risk assessment type is Apigee.
+//	"API_HUB" - Risk assessment type is API Hub.
+func (c *OrganizationsSecurityProfilesV2ListCall) RiskAssessmentType(riskAssessmentType string) *OrganizationsSecurityProfilesV2ListCall {
+	c.urlParams_.Set("riskAssessmentType", riskAssessmentType)
 	return c
 }
 

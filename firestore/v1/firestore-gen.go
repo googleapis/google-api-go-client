@@ -2107,8 +2107,8 @@ func (s GoogleFirestoreAdminV1ExportDocumentsMetadata) MarshalJSON() ([]byte, er
 // GoogleFirestoreAdminV1ExportDocumentsRequest: The request for
 // FirestoreAdmin.ExportDocuments.
 type GoogleFirestoreAdminV1ExportDocumentsRequest struct {
-	// CollectionIds: Which collection IDs to export. Unspecified means all
-	// collections. Each collection ID in this list must be unique.
+	// CollectionIds: IDs of the collection groups to export. Unspecified means all
+	// collection groups. Each collection group in this list must be unique.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 	// NamespaceIds: An empty list represents all namespaces. This is the preferred
 	// usage for databases that don't use namespaces. An empty string element
@@ -2344,9 +2344,9 @@ func (s GoogleFirestoreAdminV1ImportDocumentsMetadata) MarshalJSON() ([]byte, er
 // GoogleFirestoreAdminV1ImportDocumentsRequest: The request for
 // FirestoreAdmin.ImportDocuments.
 type GoogleFirestoreAdminV1ImportDocumentsRequest struct {
-	// CollectionIds: Which collection IDs to import. Unspecified means all
-	// collections included in the import. Each collection ID in this list must be
-	// unique.
+	// CollectionIds: IDs of the collection groups to import. Unspecified means all
+	// collection groups that were included in the export. Each collection group in
+	// this list must be unique.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 	// InputUriPrefix: Location of the exported files. This must match the
 	// output_uri_prefix of an ExportDocumentsResponse from an export that has

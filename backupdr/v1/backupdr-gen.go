@@ -774,6 +774,24 @@ type Backup struct {
 	// BackupApplianceLocks: Optional. The list of BackupLocks taken by the
 	// accessor Backup Appliance.
 	BackupApplianceLocks []*BackupLock `json:"backupApplianceLocks,omitempty"`
+	// BackupRetentionInheritance: Output only. Setting for how the enforced
+	// retention end time is inherited. This value is copied from this backup's
+	// BackupVault.
+	//
+	// Possible values:
+	//   "BACKUP_RETENTION_INHERITANCE_UNSPECIFIED" - Inheritance behavior not set.
+	// This will default to `INHERIT_VAULT_RETENTION`.
+	//   "INHERIT_VAULT_RETENTION" - The enforced retention end time of a backup
+	// will be inherited from the backup vault's
+	// `backup_minimum_enforced_retention_duration` field. This is the default
+	// behavior.
+	//   "MATCH_BACKUP_EXPIRE_TIME" - The enforced retention end time of a backup
+	// will always match the expire time of the backup. If this is set, the
+	// backup's enforced retention end time will be set to match the expire time
+	// during creation of the backup. When updating, the ERET and expire time must
+	// be updated together and have the same value. Invalid update requests will be
+	// rejected by the server.
+	BackupRetentionInheritance string `json:"backupRetentionInheritance,omitempty"`
 	// BackupType: Output only. Type of the backup, unspecified, scheduled or
 	// ondemand.
 	//
@@ -812,6 +830,9 @@ type Backup struct {
 	// GcpResource: Output only. Unique identifier of the GCP resource that is
 	// being backed up.
 	GcpResource *BackupGcpResource `json:"gcpResource,omitempty"`
+	// KmsKeyVersions: Optional. Output only. The list of KMS key versions used to
+	// encrypt the backup.
+	KmsKeyVersions []string `json:"kmsKeyVersions,omitempty"`
 	// Labels: Optional. Resource labels to represent user provided metadata. No
 	// labels currently defined.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -1537,6 +1558,23 @@ type BackupVault struct {
 	// retention period impacts potential storage costs post introductory trial. We
 	// recommend starting with a short duration of 3 days or less.
 	BackupMinimumEnforcedRetentionDuration string `json:"backupMinimumEnforcedRetentionDuration,omitempty"`
+	// BackupRetentionInheritance: Optional. Setting for how a backup's enforced
+	// retention end time is inherited.
+	//
+	// Possible values:
+	//   "BACKUP_RETENTION_INHERITANCE_UNSPECIFIED" - Inheritance behavior not set.
+	// This will default to `INHERIT_VAULT_RETENTION`.
+	//   "INHERIT_VAULT_RETENTION" - The enforced retention end time of a backup
+	// will be inherited from the backup vault's
+	// `backup_minimum_enforced_retention_duration` field. This is the default
+	// behavior.
+	//   "MATCH_BACKUP_EXPIRE_TIME" - The enforced retention end time of a backup
+	// will always match the expire time of the backup. If this is set, the
+	// backup's enforced retention end time will be set to match the expire time
+	// during creation of the backup. When updating, the ERET and expire time must
+	// be updated together and have the same value. Invalid update requests will be
+	// rejected by the server.
+	BackupRetentionInheritance string `json:"backupRetentionInheritance,omitempty"`
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Deletable: Output only. Set to true when there are no backups nested under
@@ -1548,6 +1586,8 @@ type BackupVault struct {
 	// EffectiveTime: Optional. Time after which the BackupVault resource is
 	// locked.
 	EffectiveTime string `json:"effectiveTime,omitempty"`
+	// EncryptionConfig: Optional. The encryption config of the backup vault.
+	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
 	// Etag: Optional. Server specified ETag for the backup vault resource to
 	// prevent simultaneous updates from overwiting each other.
 	Etag string `json:"etag,omitempty"`
@@ -2736,6 +2776,33 @@ func (s DisplayDevice) MarshalJSON() ([]byte, error) {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EncryptionConfig: Message describing the EncryptionConfig of backup vault.
+// This determines how data within the vault is encrypted at rest.
+type EncryptionConfig struct {
+	// KmsKeyName: Optional. The Cloud KMS key name to encrypt backups in this
+	// backup vault. Must be in the same region as the vault. Some workload backups
+	// like compute disk backups may use their inherited source key instead.
+	// Format:
+	// projects/{project}/locations/{location}/keyRings/{ring}/cryptoKeys/{key}
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Entry: A key/value pair to be used for storing metadata.
@@ -4461,6 +4528,15 @@ func (s ResourceBackupConfig) MarshalJSON() ([]byte, error) {
 
 // RestoreBackupRequest: Request message for restoring from a Backup.
 type RestoreBackupRequest struct {
+	// ClearOverridesFieldMask: Optional. A field mask used to clear server-side
+	// default values for fields within the `instance_properties` oneof. When a
+	// field in this mask is cleared, the server will not apply its default logic
+	// (like inheriting a value from the source) for that field. The most common
+	// current use case is clearing default encryption keys. Examples of field mask
+	// paths: - Compute Instance Disks:
+	// `compute_instance_restore_properties.disks.*.disk_encryption_key` - Single
+	// Disk: `disk_restore_properties.disk_encryption_key`
+	ClearOverridesFieldMask string `json:"clearOverridesFieldMask,omitempty"`
 	// ComputeInstanceRestoreProperties: Compute Engine instance properties to be
 	// overridden during restore.
 	ComputeInstanceRestoreProperties *ComputeInstanceRestoreProperties `json:"computeInstanceRestoreProperties,omitempty"`
@@ -4486,18 +4562,16 @@ type RestoreBackupRequest struct {
 	// exception that zero UUID is not supported
 	// (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "ComputeInstanceRestoreProperties") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted from
-	// API requests. See
+	// ForceSendFields is a list of field names (e.g. "ClearOverridesFieldMask") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g.
-	// "ComputeInstanceRestoreProperties") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
-	// more details.
+	// NullFields is a list of field names (e.g. "ClearOverridesFieldMask") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
@@ -5079,6 +5153,8 @@ type TriggerBackupRequest struct {
 	// in "days". It is mutually exclusive with rule_id. This field is required if
 	// rule_id is not provided.
 	CustomRetentionDays int64 `json:"customRetentionDays,omitempty"`
+	// Labels: Optional. Labels to be applied on the backup.
+	Labels map[string]string `json:"labels,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
 	// know to ignore the request if it has already been completed. The server will

@@ -3992,6 +3992,7 @@ type GoogleCloudDataplexV1DataScanEvent struct {
 	//   "TRIGGER_UNSPECIFIED" - An unspecified trigger type.
 	//   "ON_DEMAND" - Data scan triggers on demand.
 	//   "SCHEDULE" - Data scan triggers as per schedule.
+	//   "ONE_TIME" - Data scan is run one time on creation.
 	Trigger string `json:"trigger,omitempty"`
 	// Type: The type of the data scan.
 	//
@@ -8486,6 +8487,9 @@ func (s GoogleCloudDataplexV1TaskTriggerSpec) MarshalJSON() ([]byte, error) {
 type GoogleCloudDataplexV1Trigger struct {
 	// OnDemand: The scan runs once via RunDataScan API.
 	OnDemand *GoogleCloudDataplexV1TriggerOnDemand `json:"onDemand,omitempty"`
+	// OneTime: The scan runs once, and does not create an associated ScanJob child
+	// resource.
+	OneTime *GoogleCloudDataplexV1TriggerOneTime `json:"oneTime,omitempty"`
 	// Schedule: The scan is scheduled to run periodically.
 	Schedule *GoogleCloudDataplexV1TriggerSchedule `json:"schedule,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "OnDemand") to
@@ -8509,6 +8513,32 @@ func (s GoogleCloudDataplexV1Trigger) MarshalJSON() ([]byte, error) {
 // GoogleCloudDataplexV1TriggerOnDemand: The scan runs once via RunDataScan
 // API.
 type GoogleCloudDataplexV1TriggerOnDemand struct {
+}
+
+// GoogleCloudDataplexV1TriggerOneTime: The scan runs once using create API.
+type GoogleCloudDataplexV1TriggerOneTime struct {
+	// TtlAfterScanCompletion: Optional. Time to live for OneTime scans. default
+	// value is 24 hours, minimum value is 0 seconds, and maximum value is 365
+	// days. The time is calculated from the data scan job completion time. If
+	// value is set as 0 seconds, the scan will be immediately deleted upon job
+	// completion, regardless of whether the job succeeded or failed.
+	TtlAfterScanCompletion string `json:"ttlAfterScanCompletion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TtlAfterScanCompletion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TtlAfterScanCompletion") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1TriggerOneTime) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1TriggerOneTime
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDataplexV1TriggerSchedule: The scan is scheduled to run

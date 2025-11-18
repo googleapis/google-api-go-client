@@ -168,6 +168,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.Addons = NewProjectsLocationsAddonsService(s)
 	rs.ApiHubInstances = NewProjectsLocationsApiHubInstancesService(s)
 	rs.Apis = NewProjectsLocationsApisService(s)
 	rs.Attributes = NewProjectsLocationsAttributesService(s)
@@ -185,6 +186,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 
 type ProjectsLocationsService struct {
 	s *Service
+
+	Addons *ProjectsLocationsAddonsService
 
 	ApiHubInstances *ProjectsLocationsApiHubInstancesService
 
@@ -209,6 +212,15 @@ type ProjectsLocationsService struct {
 	Plugins *ProjectsLocationsPluginsService
 
 	RuntimeProjectAttachments *ProjectsLocationsRuntimeProjectAttachmentsService
+}
+
+func NewProjectsLocationsAddonsService(s *Service) *ProjectsLocationsAddonsService {
+	rs := &ProjectsLocationsAddonsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAddonsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsApiHubInstancesService(s *Service) *ProjectsLocationsApiHubInstancesService {
@@ -467,6 +479,110 @@ type GoogleCloudApihubV1ActionExecutionDetail struct {
 
 func (s GoogleCloudApihubV1ActionExecutionDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApihubV1ActionExecutionDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1Addon: Addon resource.
+type GoogleCloudApihubV1Addon struct {
+	// Config: Required. The configuration of the addon.
+	Config *GoogleCloudApihubV1AddonConfig `json:"config,omitempty"`
+	// CreateTime: Output only. The time at which the addon was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DataSource: Required. The data source on which the addon operates. This
+	// determines which field in the `config` oneof is used.
+	//
+	// Possible values:
+	//   "DATA_SOURCE_UNSPECIFIED" - The data source of the addon is not specified.
+	//   "PLUGIN_INSTANCE" - Addon operates on data collected from specific plugin
+	// instances.
+	//   "ALL_DATA" - Addon operates on all data in the API hub.
+	DataSource string `json:"dataSource,omitempty"`
+	// Description: Optional. The description of the addon.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Required. The display name of the addon.
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Identifier. The name of the addon to enable. Format:
+	// `projects/{project}/locations/{location}/addons/{addon}`.
+	Name string `json:"name,omitempty"`
+	// State: Output only. The state of the addon.
+	//
+	// Possible values:
+	//   "ADDON_STATE_UNSPECIFIED" - The addon state is not specified.
+	//   "ACTIVE" - The addon is active.
+	//   "UPDATING" - The addon is being updated.
+	//   "ERROR" - The addon is in error state.
+	//   "INACTIVE" - The addon is inactive.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The time at which the addon was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1Addon) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1Addon
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1AddonConfig: Configuration for the addon.
+type GoogleCloudApihubV1AddonConfig struct {
+	// AllDataAddonConfig: Configuration for addons which act on all data in the
+	// API hub.
+	AllDataAddonConfig *GoogleCloudApihubV1AllDataAddonConfig `json:"allDataAddonConfig,omitempty"`
+	// GatewayPluginAddonConfig: Configuration for gateway plugin addons.
+	GatewayPluginAddonConfig *GoogleCloudApihubV1GatewayPluginAddonConfig `json:"gatewayPluginAddonConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllDataAddonConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllDataAddonConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1AddonConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1AddonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1AllDataAddonConfig: Configuration for addons which act on
+// all data in the API hub. This is used to specify if the addon is enabled for
+// all data in the API hub.
+type GoogleCloudApihubV1AllDataAddonConfig struct {
+	// Enabled: Required. If true, the addon is enabled for all data in the API
+	// hub.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1AllDataAddonConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1AllDataAddonConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -866,6 +982,87 @@ type GoogleCloudApihubV1ApiOperation struct {
 
 func (s GoogleCloudApihubV1ApiOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApihubV1ApiOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1ApigeeEdgeConfig: Configuration for Apigee Edge gateways.
+// Applicability of a filter is determined by the filter being provided. If
+// none of the filters are provided the addon will be enabled for all data
+// brought in by the gateway plugin instance.
+type GoogleCloudApihubV1ApigeeEdgeConfig struct {
+	// EnvironmentFilter: Optional. The filter to apply on the resources managed by
+	// the gateway plugin instance. If provided this filter applies environment
+	// specific filtering.
+	EnvironmentFilter *GoogleCloudApihubV1EnvironmentFilter `json:"environmentFilter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnvironmentFilter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnvironmentFilter") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1ApigeeEdgeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1ApigeeEdgeConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1ApigeeOPDKConfig: Configuration for Apigee OPDK gateways.
+// Applicability of a filter is determined by the filter being provided. If
+// none of the filters are provided the addon will be enabled for all data
+// brought in by the gateway plugin instance.
+type GoogleCloudApihubV1ApigeeOPDKConfig struct {
+	// EnvironmentFilter: Optional. The filter to apply on the resources managed by
+	// the gateway plugin instance. If provided this filter applies environment
+	// specific filtering.
+	EnvironmentFilter *GoogleCloudApihubV1EnvironmentFilter `json:"environmentFilter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnvironmentFilter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnvironmentFilter") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1ApigeeOPDKConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1ApigeeOPDKConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1ApigeeXHybridConfig: Configuration for Apigee X and
+// Apigee Hybrid gateways. Applicability of a filter is determined by the
+// filter being provided. If none of the filters are provided the addon will be
+// enabled for all data brought in by the gateway plugin instance.
+type GoogleCloudApihubV1ApigeeXHybridConfig struct {
+	// EnvironmentFilter: Optional. The filter to apply on the resources managed by
+	// the gateway plugin instance. If provided this filter applies environment
+	// specific filtering.
+	EnvironmentFilter *GoogleCloudApihubV1EnvironmentFilter `json:"environmentFilter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnvironmentFilter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnvironmentFilter") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1ApigeeXHybridConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1ApigeeXHybridConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2039,6 +2236,33 @@ func (s GoogleCloudApihubV1EnumAttributeValues) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApihubV1EnvironmentFilter: Filter for environments.
+type GoogleCloudApihubV1EnvironmentFilter struct {
+	// AllEnvironments: Optional. Indicates if this filter should match all
+	// environments or only a subset of environments. If set to true, all
+	// environments are matched.
+	AllEnvironments bool `json:"allEnvironments,omitempty"`
+	// Environments: Optional. If provided, only environments in this list are
+	// matched. This field is ignored if `all_environments` is true.
+	Environments []string `json:"environments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllEnvironments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllEnvironments") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1EnvironmentFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1EnvironmentFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApihubV1ExecutePluginInstanceActionRequest: The
 // ExecutePluginInstanceAction method's request.
 type GoogleCloudApihubV1ExecutePluginInstanceActionRequest struct {
@@ -2140,6 +2364,64 @@ type GoogleCloudApihubV1ExternalApi struct {
 
 func (s GoogleCloudApihubV1ExternalApi) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApihubV1ExternalApi
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1GatewayPluginAddonConfig: Configuration for gateway
+// plugin addons. This is used to specify the list of gateway plugin configs
+// for which the addon is enabled.
+type GoogleCloudApihubV1GatewayPluginAddonConfig struct {
+	// GatewayPluginConfigs: Required. The list of gateway plugin configs for which
+	// the addon is enabled. Each gateway plugin config should have a unique plugin
+	// instance.
+	GatewayPluginConfigs []*GoogleCloudApihubV1GatewayPluginConfig `json:"gatewayPluginConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GatewayPluginConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GatewayPluginConfigs") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1GatewayPluginAddonConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1GatewayPluginAddonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1GatewayPluginConfig: Configuration for a gateway plugin.
+// This is used to specify configs for different gateways.
+type GoogleCloudApihubV1GatewayPluginConfig struct {
+	// ApigeeEdgeConfig: Configuration for Apigee Edge gateways.
+	ApigeeEdgeConfig *GoogleCloudApihubV1ApigeeEdgeConfig `json:"apigeeEdgeConfig,omitempty"`
+	// ApigeeOpdkConfig: Configuration for Apigee OPDK gateways.
+	ApigeeOpdkConfig *GoogleCloudApihubV1ApigeeOPDKConfig `json:"apigeeOpdkConfig,omitempty"`
+	// ApigeeXHybridConfig: Configuration for Apigee X and Apigee Hybrid gateways.
+	ApigeeXHybridConfig *GoogleCloudApihubV1ApigeeXHybridConfig `json:"apigeeXHybridConfig,omitempty"`
+	// PluginInstance: Required. The name of the gateway plugin instance for which
+	// the config is to be specified. Format:
+	// projects/{project}/locations/{location}/plugins/{plugin}/pluginInstances/{plu
+	// gin_instance}
+	PluginInstance string `json:"pluginInstance,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApigeeEdgeConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApigeeEdgeConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1GatewayPluginConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1GatewayPluginConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2507,6 +2789,34 @@ func (s GoogleCloudApihubV1LintResponse) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudApihubV1LintSpecRequest: The LintSpec method's request.
 type GoogleCloudApihubV1LintSpecRequest struct {
+}
+
+// GoogleCloudApihubV1ListAddonsResponse: The ListAddons method's response.
+type GoogleCloudApihubV1ListAddonsResponse struct {
+	// Addons: The list of addons.
+	Addons []*GoogleCloudApihubV1Addon `json:"addons,omitempty"`
+	// NextPageToken: A token to retrieve the next page of results, or empty if
+	// there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Addons") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Addons") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1ListAddonsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1ListAddonsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudApihubV1ListApiOperationsResponse: The ListApiOperations method's
@@ -2993,6 +3303,31 @@ type GoogleCloudApihubV1LookupRuntimeProjectAttachmentResponse struct {
 
 func (s GoogleCloudApihubV1LookupRuntimeProjectAttachmentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApihubV1LookupRuntimeProjectAttachmentResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1ManageAddonConfigRequest: The ManageAddonConfig method's
+// request.
+type GoogleCloudApihubV1ManageAddonConfigRequest struct {
+	// Config: Required. The config of the addon to be managed. This config will
+	// replace the config present in the addon. The type of the config should match
+	// the config type already present in the addon.
+	Config *GoogleCloudApihubV1AddonConfig `json:"config,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1ManageAddonConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1ManageAddonConfigRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3546,6 +3881,10 @@ type GoogleCloudApihubV1PluginInstance struct {
 	// `projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance
 	// }`
 	Name string `json:"name,omitempty"`
+	// SourceEnvironmentsConfig: Optional. The source environment's config present
+	// in the gateway instance linked to the plugin instance. The key is the
+	// `source_environment` name from the SourceEnvironment message.
+	SourceEnvironmentsConfig map[string]GoogleCloudApihubV1SourceEnvironment `json:"sourceEnvironmentsConfig,omitempty"`
 	// SourceProjectId: Optional. The source project id of the plugin instance.
 	// This will be the id of runtime project in case of gcp based plugins and org
 	// id in case of non gcp based plugins. This field will be a required field for
@@ -4024,6 +4363,40 @@ type GoogleCloudApihubV1Secret struct {
 
 func (s GoogleCloudApihubV1Secret) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApihubV1Secret
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1SourceEnvironment: Message representing the source
+// environment details.
+type GoogleCloudApihubV1SourceEnvironment struct {
+	// CreateTime: Optional. The time at which the environment was created at the
+	// source.
+	CreateTime string `json:"createTime,omitempty"`
+	// SourceEnvironment: Required. The name of the environment at the source. This
+	// should map to Deployment.
+	SourceEnvironment string `json:"sourceEnvironment,omitempty"`
+	// SourceEnvironmentUri: The location where additional information about source
+	// environments can be found. The location should be relative path of the
+	// environment manifest with respect to a plugin instance.
+	SourceEnvironmentUri string `json:"sourceEnvironmentUri,omitempty"`
+	// UpdateTime: Optional. The time at which the environment was last updated at
+	// the source.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1SourceEnvironment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1SourceEnvironment
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5352,6 +5725,385 @@ func (c *ProjectsLocationsSearchResourcesCall) Pages(ctx context.Context, f func
 		}
 		c.googlecloudapihubv1searchresourcesrequest.PageToken = x.NextPageToken
 	}
+}
+
+type ProjectsLocationsAddonsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get an addon.
+//
+//   - name: The name of the addon to get. Format:
+//     `projects/{project}/locations/{location}/addons/{addon}`.
+func (r *ProjectsLocationsAddonsService) Get(name string) *ProjectsLocationsAddonsGetCall {
+	c := &ProjectsLocationsAddonsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAddonsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAddonsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAddonsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAddonsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAddonsGetCall) Context(ctx context.Context) *ProjectsLocationsAddonsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAddonsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAddonsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apihub.projects.locations.addons.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apihub.projects.locations.addons.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApihubV1Addon.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAddonsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApihubV1Addon, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApihubV1Addon{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.addons.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAddonsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List addons.
+//
+//   - parent: The parent resource where this addon will be created. Format:
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsAddonsService) List(parent string) *ProjectsLocationsAddonsListCall {
+	c := &ProjectsLocationsAddonsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression that filters the
+// list of addons. The only supported filter is `plugin_instance_name`. It can
+// be used to filter addons that are enabled for a given plugin instance. The
+// format of the filter is `plugin_instance_name =
+// "projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance
+// }".
+func (c *ProjectsLocationsAddonsListCall) Filter(filter string) *ProjectsLocationsAddonsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of hub
+// addons to return. The service may return fewer than this value. If
+// unspecified, at most 50 hub addons will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsAddonsListCall) PageSize(pageSize int64) *ProjectsLocationsAddonsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAddons` call. Provide this to retrieve the subsequent
+// page. When paginating, all other parameters (except page_size) provided to
+// `ListAddons` must match the call that provided the page token.
+func (c *ProjectsLocationsAddonsListCall) PageToken(pageToken string) *ProjectsLocationsAddonsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAddonsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAddonsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAddonsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAddonsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAddonsListCall) Context(ctx context.Context) *ProjectsLocationsAddonsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAddonsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAddonsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/addons")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apihub.projects.locations.addons.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apihub.projects.locations.addons.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApihubV1ListAddonsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAddonsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApihubV1ListAddonsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApihubV1ListAddonsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.addons.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAddonsListCall) Pages(ctx context.Context, f func(*GoogleCloudApihubV1ListAddonsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAddonsManageConfigCall struct {
+	s                                           *Service
+	name                                        string
+	googlecloudapihubv1manageaddonconfigrequest *GoogleCloudApihubV1ManageAddonConfigRequest
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// ManageConfig: Manage addon config. This RPC is used for managing the config
+// of the addon. Calling this RPC moves the addon into an updating state until
+// the long-running operation succeeds.
+//
+//   - name: The name of the addon for which the config is to be managed. Format:
+//     `projects/{project}/locations/{location}/addons/{addon}`.
+func (r *ProjectsLocationsAddonsService) ManageConfig(name string, googlecloudapihubv1manageaddonconfigrequest *GoogleCloudApihubV1ManageAddonConfigRequest) *ProjectsLocationsAddonsManageConfigCall {
+	c := &ProjectsLocationsAddonsManageConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapihubv1manageaddonconfigrequest = googlecloudapihubv1manageaddonconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAddonsManageConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsAddonsManageConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAddonsManageConfigCall) Context(ctx context.Context) *ProjectsLocationsAddonsManageConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAddonsManageConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAddonsManageConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapihubv1manageaddonconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:manageConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apihub.projects.locations.addons.manageConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apihub.projects.locations.addons.manageConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAddonsManageConfigCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.addons.manageConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsApiHubInstancesCreateCall struct {

@@ -3914,6 +3914,10 @@ type Release struct {
 	// TargetSnapshots: Output only. Snapshot of the targets taken at release
 	// creation time.
 	TargetSnapshots []*Target `json:"targetSnapshots,omitempty"`
+	// ToolVersions: Optional. The tool versions to use for this release and all
+	// subsequent operations involving this release. If unset, then it will freeze
+	// the tool versions at the time of release creation.
+	ToolVersions *ToolVersions `json:"toolVersions,omitempty"`
 	// Uid: Output only. Unique identifier of the `Release`.
 	Uid string `json:"uid,omitempty"`
 
@@ -3940,19 +3944,38 @@ func (s Release) MarshalJSON() ([]byte, error) {
 // ReleaseCondition: ReleaseCondition contains all conditions relevant to a
 // Release.
 type ReleaseCondition struct {
+	// DockerVersionSupportedCondition: Output only. Details around the support
+	// state of the release's Docker version.
+	DockerVersionSupportedCondition *ToolVersionSupportedCondition `json:"dockerVersionSupportedCondition,omitempty"`
+	// HelmVersionSupportedCondition: Output only. Details around the support state
+	// of the release's Helm version.
+	HelmVersionSupportedCondition *ToolVersionSupportedCondition `json:"helmVersionSupportedCondition,omitempty"`
+	// KptVersionSupportedCondition: Output only. Details around the support state
+	// of the release's Kpt version.
+	KptVersionSupportedCondition *ToolVersionSupportedCondition `json:"kptVersionSupportedCondition,omitempty"`
+	// KubectlVersionSupportedCondition: Output only. Details around the support
+	// state of the release's Kubectl version.
+	KubectlVersionSupportedCondition *ToolVersionSupportedCondition `json:"kubectlVersionSupportedCondition,omitempty"`
+	// KustomizeVersionSupportedCondition: Output only. Details around the support
+	// state of the release's Kustomize version.
+	KustomizeVersionSupportedCondition *ToolVersionSupportedCondition `json:"kustomizeVersionSupportedCondition,omitempty"`
 	// ReleaseReadyCondition: Details around the Releases's overall status.
 	ReleaseReadyCondition *ReleaseReadyCondition `json:"releaseReadyCondition,omitempty"`
 	// SkaffoldSupportedCondition: Details around the support state of the
 	// release's Skaffold version.
 	SkaffoldSupportedCondition *SkaffoldSupportedCondition `json:"skaffoldSupportedCondition,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ReleaseReadyCondition") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// SkaffoldVersionSupportedCondition: Output only. Details around the support
+	// state of the release's Skaffold version.
+	SkaffoldVersionSupportedCondition *ToolVersionSupportedCondition `json:"skaffoldVersionSupportedCondition,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DockerVersionSupportedCondition") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ReleaseReadyCondition") to
-	// include in API requests with the JSON null value. By default, fields with
+	// NullFields is a list of field names (e.g. "DockerVersionSupportedCondition")
+	// to include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
@@ -5886,6 +5909,82 @@ type TimedPromoteReleaseRule struct {
 
 func (s TimedPromoteReleaseRule) MarshalJSON() ([]byte, error) {
 	type NoMethod TimedPromoteReleaseRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ToolVersionSupportedCondition: ToolVersionSupportedCondition contains
+// information about when support for the release's version of a Tool ends.
+type ToolVersionSupportedCondition struct {
+	// MaintenanceModeTime: Output only. The time at which this release's version
+	// of the Tool will enter maintenance mode.
+	MaintenanceModeTime string `json:"maintenanceModeTime,omitempty"`
+	// Status: Output only. True if the version of Tool used by this release is
+	// supported.
+	Status bool `json:"status,omitempty"`
+	// SupportExpirationTime: Output only. The time at which this release's version
+	// of the Tool will no longer be supported.
+	SupportExpirationTime string `json:"supportExpirationTime,omitempty"`
+	// ToolVersionSupportState: Output only. The Tool support state for this
+	// release's version of the Tool.
+	//
+	// Possible values:
+	//   "TOOL_VERSION_SUPPORT_STATE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "TOOL_VERSION_SUPPORT_STATE_SUPPORTED" - This Tool version is currently
+	// supported.
+	//   "TOOL_VERSION_SUPPORT_STATE_MAINTENANCE_MODE" - This Tool version is in
+	// maintenance mode.
+	//   "TOOL_VERSION_SUPPORT_STATE_UNSUPPORTED" - This Tool version is no longer
+	// supported.
+	ToolVersionSupportState string `json:"toolVersionSupportState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaintenanceModeTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaintenanceModeTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ToolVersionSupportedCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod ToolVersionSupportedCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ToolVersions: Details of ToolVersions for the release.
+type ToolVersions struct {
+	// Docker: Optional. The docker version to use for Cloud Deploy operations.
+	Docker string `json:"docker,omitempty"`
+	// Helm: Optional. The helm version to use for Cloud Deploy operations.
+	Helm string `json:"helm,omitempty"`
+	// Kpt: Optional. The kpt version to use for Cloud Deploy operations.
+	Kpt string `json:"kpt,omitempty"`
+	// Kubectl: Optional. The kubectl version to use for Cloud Deploy operations.
+	Kubectl string `json:"kubectl,omitempty"`
+	// Kustomize: Optional. The kustomize version to use for Cloud Deploy
+	// operations.
+	Kustomize string `json:"kustomize,omitempty"`
+	// Skaffold: Optional. The skaffold version to use for Cloud Deploy operations.
+	Skaffold string `json:"skaffold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Docker") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Docker") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ToolVersions) MarshalJSON() ([]byte, error) {
+	type NoMethod ToolVersions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

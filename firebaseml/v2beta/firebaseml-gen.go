@@ -1070,6 +1070,13 @@ type GoogleCloudAiplatformV1beta1FunctionCall struct {
 	// Name: Optional. The name of the function to call. Matches
 	// [FunctionDeclaration.name].
 	Name string `json:"name,omitempty"`
+	// PartialArgs: Optional. The partial argument value of the function call. If
+	// provided, represents the arguments/fields that are streamed incrementally.
+	PartialArgs []*GoogleCloudAiplatformV1beta1PartialArg `json:"partialArgs,omitempty"`
+	// WillContinue: Optional. Whether this is the last part of the FunctionCall.
+	// If true, another partial message for the current FunctionCall is expected to
+	// follow.
+	WillContinue bool `json:"willContinue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1114,6 +1121,11 @@ type GoogleCloudAiplatformV1beta1FunctionCallingConfig struct {
 	// "allowed_function_names", else the predicted function calls will be any one
 	// of the provided "function_declarations".
 	Mode string `json:"mode,omitempty"`
+	// StreamFunctionCallArguments: Optional. When set to true, arguments of a
+	// single function call will be streamed out in multiple
+	// parts/contents/responses. Partial parameter results will be returned in the
+	// [FunctionCall.partial_args] field.
+	StreamFunctionCallArguments bool `json:"streamFunctionCallArguments,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedFunctionNames") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1827,6 +1839,14 @@ type GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig struct {
 	// The model will make a best effort to stay within this budget. This can be
 	// used to control the trade-off between response quality and latency.
 	ThinkingBudget int64 `json:"thinkingBudget,omitempty"`
+	// ThinkingLevel: Optional. The number of thoughts tokens that the model should
+	// generate.
+	//
+	// Possible values:
+	//   "THINKING_LEVEL_UNSPECIFIED" - Unspecified thinking level.
+	//   "LOW" - Low thinking level.
+	//   "HIGH" - High thinking level.
+	ThinkingLevel string `json:"thinkingLevel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IncludeThoughts") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2227,6 +2247,10 @@ type GoogleCloudAiplatformV1beta1ImageConfig struct {
 	AspectRatio string `json:"aspectRatio,omitempty"`
 	// ImageOutputOptions: Optional. The image output format for generated images.
 	ImageOutputOptions *GoogleCloudAiplatformV1beta1ImageConfigImageOutputOptions `json:"imageOutputOptions,omitempty"`
+	// ImageSize: Optional. Specifies the size of generated images. Supported
+	// values are `1K`, `2K`, `4K`. If not specified, the model will use default
+	// value `1K`.
+	ImageSize string `json:"imageSize,omitempty"`
 	// PersonGeneration: Optional. Controls whether the model can generate people.
 	//
 	// Possible values:
@@ -2513,6 +2537,9 @@ type GoogleCloudAiplatformV1beta1Part struct {
 	// InlineData: Optional. The inline data content of the part. This can be used
 	// to include images, audio, or video in a request.
 	InlineData *GoogleCloudAiplatformV1beta1Blob `json:"inlineData,omitempty"`
+	// MediaResolution: per part media resolution. Media resolution for the input
+	// media.
+	MediaResolution *GoogleCloudAiplatformV1beta1PartMediaResolution `json:"mediaResolution,omitempty"`
 	// Text: Optional. The text content of the part.
 	Text string `json:"text,omitempty"`
 	// Thought: Optional. Indicates whether the `part` represents the model's
@@ -2540,6 +2567,88 @@ type GoogleCloudAiplatformV1beta1Part struct {
 func (s GoogleCloudAiplatformV1beta1Part) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1Part
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1PartMediaResolution: per part media resolution.
+// Media resolution for the input media.
+type GoogleCloudAiplatformV1beta1PartMediaResolution struct {
+	// Level: The tokenization quality used for given media.
+	//
+	// Possible values:
+	//   "MEDIA_RESOLUTION_UNSPECIFIED" - Media resolution has not been set.
+	//   "MEDIA_RESOLUTION_LOW" - Media resolution set to low.
+	//   "MEDIA_RESOLUTION_MEDIUM" - Media resolution set to medium.
+	//   "MEDIA_RESOLUTION_HIGH" - Media resolution set to high.
+	Level string `json:"level,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Level") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Level") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1PartMediaResolution) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1PartMediaResolution
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1PartialArg: Partial argument value of the
+// function call.
+type GoogleCloudAiplatformV1beta1PartialArg struct {
+	// BoolValue: Optional. Represents a boolean value.
+	BoolValue bool `json:"boolValue,omitempty"`
+	// JsonPath: Required. A JSON Path (RFC 9535) to the argument being streamed.
+	// https://datatracker.ietf.org/doc/html/rfc9535. e.g. "$.foo.bar[0].data".
+	JsonPath string `json:"jsonPath,omitempty"`
+	// NullValue: Optional. Represents a null value.
+	//
+	// Possible values:
+	//   "NULL_VALUE" - Null value.
+	NullValue string `json:"nullValue,omitempty"`
+	// NumberValue: Optional. Represents a double value.
+	NumberValue float64 `json:"numberValue,omitempty"`
+	// StringValue: Optional. Represents a string value.
+	StringValue string `json:"stringValue,omitempty"`
+	// WillContinue: Optional. Whether this is not the last part of the same
+	// json_path. If true, another PartialArg message for the current json_path is
+	// expected to follow.
+	WillContinue bool `json:"willContinue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1PartialArg) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1PartialArg
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1beta1PartialArg) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1beta1PartialArg
+	var s1 struct {
+		NumberValue gensupport.JSONFloat64 `json:"numberValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.NumberValue = float64(s1.NumberValue)
+	return nil
 }
 
 // GoogleCloudAiplatformV1beta1PrebuiltVoiceConfig: Configuration for a

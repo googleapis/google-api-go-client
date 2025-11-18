@@ -1570,7 +1570,7 @@ type ChromeOsDevice struct {
 	AutoUpdateThrough string `json:"autoUpdateThrough,omitempty"`
 	// BacklightInfo: Output only. Contains backlight information for the device.
 	BacklightInfo []*BacklightInfo `json:"backlightInfo,omitempty"`
-	// BluetoothAdapterInfo: Output only. Information about bluetooth adapters of
+	// BluetoothAdapterInfo: Output only. Information about Bluetooth adapters of
 	// the device.
 	BluetoothAdapterInfo []*BluetoothAdapterInfo `json:"bluetoothAdapterInfo,omitempty"`
 	// BootMode: The boot mode for the device. The possible values are: *

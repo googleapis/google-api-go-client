@@ -974,6 +974,8 @@ type FolderOperationError struct {
 	// to delete contains active resources.
 	//   "DELETED_FOLDER_HEIGHT_VIOLATION" - The attempted action would violate the
 	// max deleted folder depth constraint.
+	//   "FOLDER_TO_DELETE_CONFIGURED_CAPABILITY_VIOLATION" - The folder being
+	// deleted has a configured capability.
 	ErrorMessageId string `json:"errorMessageId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ErrorMessageId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1322,9 +1324,7 @@ func (s ListTagKeysResponse) MarshalJSON() ([]byte, error) {
 // ListTagValuesResponse: The ListTagValues response.
 type ListTagValuesResponse struct {
 	// NextPageToken: A pagination token returned from a previous call to
-	// `ListTagValues` that indicates from where listing should continue. This is
-	// currently not used, but the server may at any point start supplying a valid
-	// token.
+	// `ListTagValues` that indicates from where listing should continue.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// TagValues: A possibly paginated list of TagValues that are direct
 	// descendants of the specified parent TagKey.
@@ -2023,6 +2023,10 @@ func (s TagHold) MarshalJSON() ([]byte, error) {
 
 // TagKey: A TagKey, used to group a set of TagValues.
 type TagKey struct {
+	// AllowedValuesRegex: Optional. Regular expression constraint for freeform tag
+	// values. If present, it implicitly allows freeform values (constrained by the
+	// regex).
+	AllowedValuesRegex string `json:"allowedValuesRegex,omitempty"`
 	// CreateTime: Output only. Creation time.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. User-assigned description of the TagKey. Must not
@@ -2080,15 +2084,15 @@ type TagKey struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "AllowedValuesRegex") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllowedValuesRegex") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4642,7 +4646,7 @@ func (c *LocationsTagBindingCollectionsGetCall) Do(opts ...googleapi.CallOption)
 	return ret, nil
 }
 
-type LocationsTagBindingCollectionsUpdateCall struct {
+type LocationsTagBindingCollectionsPatchCall struct {
 	s                    *Service
 	name                 string
 	tagbindingcollection *TagBindingCollection
@@ -4651,7 +4655,8 @@ type LocationsTagBindingCollectionsUpdateCall struct {
 	header_              http.Header
 }
 
-// Update: Updates tag bindings directly attached to a GCP resource.
+// Patch: Updates tag bindings directly attached to a GCP resource. Update_mask
+// can be kept empty or "*".
 //
 //   - name: Identifier. The name of the TagBindingCollection, following the
 //     convention:
@@ -4660,37 +4665,44 @@ type LocationsTagBindingCollectionsUpdateCall struct {
 //     resource the TagBindings are bound to.
 //     "locations/global/tagBindingCollections/%2f%2fcloudresourcemanager.googleap
 //     is.com%2fprojects%2f123".
-func (r *LocationsTagBindingCollectionsService) Update(name string, tagbindingcollection *TagBindingCollection) *LocationsTagBindingCollectionsUpdateCall {
-	c := &LocationsTagBindingCollectionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *LocationsTagBindingCollectionsService) Patch(name string, tagbindingcollection *TagBindingCollection) *LocationsTagBindingCollectionsPatchCall {
+	c := &LocationsTagBindingCollectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.tagbindingcollection = tagbindingcollection
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": An update mask to
+// selectively update fields.
+func (c *LocationsTagBindingCollectionsPatchCall) UpdateMask(updateMask string) *LocationsTagBindingCollectionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *LocationsTagBindingCollectionsUpdateCall) Fields(s ...googleapi.Field) *LocationsTagBindingCollectionsUpdateCall {
+func (c *LocationsTagBindingCollectionsPatchCall) Fields(s ...googleapi.Field) *LocationsTagBindingCollectionsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *LocationsTagBindingCollectionsUpdateCall) Context(ctx context.Context) *LocationsTagBindingCollectionsUpdateCall {
+func (c *LocationsTagBindingCollectionsPatchCall) Context(ctx context.Context) *LocationsTagBindingCollectionsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *LocationsTagBindingCollectionsUpdateCall) Header() http.Header {
+func (c *LocationsTagBindingCollectionsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *LocationsTagBindingCollectionsUpdateCall) doRequest(alt string) (*http.Response, error) {
+func (c *LocationsTagBindingCollectionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.tagbindingcollection)
 	if err != nil {
@@ -4700,7 +4712,7 @@ func (c *LocationsTagBindingCollectionsUpdateCall) doRequest(alt string) (*http.
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
+	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4708,16 +4720,16 @@ func (c *LocationsTagBindingCollectionsUpdateCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.locations.tagBindingCollections.update", "request", internallog.HTTPRequest(req, body.Bytes()))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.locations.tagBindingCollections.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "cloudresourcemanager.locations.tagBindingCollections.update" call.
+// Do executes the "cloudresourcemanager.locations.tagBindingCollections.patch" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *Operation.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
-func (c *LocationsTagBindingCollectionsUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+func (c *LocationsTagBindingCollectionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4747,7 +4759,7 @@ func (c *LocationsTagBindingCollectionsUpdateCall) Do(opts ...googleapi.CallOpti
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.locations.tagBindingCollections.update", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.locations.tagBindingCollections.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

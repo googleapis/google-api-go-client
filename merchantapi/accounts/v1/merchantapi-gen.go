@@ -167,6 +167,7 @@ func NewAccountsService(s *APIService) *AccountsService {
 	rs.GbpAccounts = NewAccountsGbpAccountsService(s)
 	rs.Homepage = NewAccountsHomepageService(s)
 	rs.Issues = NewAccountsIssuesService(s)
+	rs.Limits = NewAccountsLimitsService(s)
 	rs.OmnichannelSettings = NewAccountsOmnichannelSettingsService(s)
 	rs.OnlineReturnPolicies = NewAccountsOnlineReturnPoliciesService(s)
 	rs.Programs = NewAccountsProgramsService(s)
@@ -199,6 +200,8 @@ type AccountsService struct {
 	Homepage *AccountsHomepageService
 
 	Issues *AccountsIssuesService
+
+	Limits *AccountsLimitsService
 
 	OmnichannelSettings *AccountsOmnichannelSettingsService
 
@@ -300,6 +303,15 @@ type AccountsIssuesService struct {
 	s *APIService
 }
 
+func NewAccountsLimitsService(s *APIService) *AccountsLimitsService {
+	rs := &AccountsLimitsService{s: s}
+	return rs
+}
+
+type AccountsLimitsService struct {
+	s *APIService
+}
+
 func NewAccountsOmnichannelSettingsService(s *APIService) *AccountsOmnichannelSettingsService {
 	rs := &AccountsOmnichannelSettingsService{s: s}
 	rs.LfpProviders = NewAccountsOmnichannelSettingsLfpProvidersService(s)
@@ -398,10 +410,22 @@ type AccountsTermsOfServiceAgreementStatesService struct {
 
 func NewAccountsUsersService(s *APIService) *AccountsUsersService {
 	rs := &AccountsUsersService{s: s}
+	rs.Me = NewAccountsUsersMeService(s)
 	return rs
 }
 
 type AccountsUsersService struct {
+	s *APIService
+
+	Me *AccountsUsersMeService
+}
+
+func NewAccountsUsersMeService(s *APIService) *AccountsUsersMeService {
+	rs := &AccountsUsersMeService{s: s}
+	return rs
+}
+
+type AccountsUsersMeService struct {
 	s *APIService
 }
 
@@ -610,6 +634,35 @@ func (s AccountIssue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AccountLimit: A limit of a certain type that is applied to an account.
+type AccountLimit struct {
+	// Name: Identifier. The limit part of the name will be a combination of the
+	// type and the scope. For example: `accounts/123/limits/products~ADS_NON_EEA`
+	// Format: `accounts/{account}/limits/{limit}`
+	Name string `json:"name,omitempty"`
+	// Products: The limit for products.
+	Products *ProductLimit `json:"products,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AccountLimit) MarshalJSON() ([]byte, error) {
+	type NoMethod AccountLimit
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AccountManagement: `AccountManagement` payload.
 type AccountManagement struct {
 }
@@ -694,6 +747,10 @@ type AccountService struct {
 	// the provider access to create and manage the business's ad campaigns,
 	// including setting up campaigns, adjusting bids, and optimizing performance.
 	CampaignsManagement *CampaignsManagement `json:"campaignsManagement,omitempty"`
+	// ComparisonShopping: Service type for comparison shopping. The provider is a
+	// CSS (Comparison Shopping Service) managing the account. See
+	// https://support.google.com/merchants/answer/12653197
+	ComparisonShopping *ComparisonShopping `json:"comparisonShopping,omitempty"`
 	// ExternalAccountId: Immutable. An optional, immutable identifier that Google
 	// uses to refer to this account when communicating with the provider. This
 	// should be the unique account ID within the provider's system (for example,
@@ -762,6 +819,30 @@ type AddAccountService struct {
 	// (https://support.google.com/merchants/answer/188487) for the account.
 	// Payload for service type Account Aggregation.
 	AccountAggregation *AccountAggregation `json:"accountAggregation,omitempty"`
+	// AccountManagement: The provider manages this account. Payload for service
+	// type Account Management.
+	AccountManagement *AccountManagement `json:"accountManagement,omitempty"`
+	// CampaignsManagement: The provider manages campaigns for this account.
+	// Payload for service type campaigns management.
+	CampaignsManagement *CampaignsManagement `json:"campaignsManagement,omitempty"`
+	// ComparisonShopping: The provider is a CSS (Comparison Shopping Service) of
+	// this account. Payload for service type Comparison Shopping.
+	ComparisonShopping *ComparisonShopping `json:"comparisonShopping,omitempty"`
+	// ExternalAccountId: Immutable. An optional, immutable identifier that Google
+	// uses to refer to this account when communicating with the provider. This
+	// should be the unique account ID within the provider's system (for example,
+	// your shop ID in Shopify). If you have multiple accounts with the same
+	// provider - for instance, different accounts for various regions — the
+	// `external_account_id` differentiates between them, ensuring accurate linking
+	// and integration between Google and the provider. The external account ID
+	// must be specified for the campaigns management service type. The external
+	// account ID must not be specified for the account aggregation service type.
+	// The external account ID is optional / may be specified for all other service
+	// types.
+	ExternalAccountId string `json:"externalAccountId,omitempty"`
+	// ProductsManagement: The provider manages products for this account. Payload
+	// for service type products management.
+	ProductsManagement *ProductsManagement `json:"productsManagement,omitempty"`
 	// Provider: Required. The provider of the service. Either the reference to an
 	// account such as `providers/123` or a well-known service provider (one of
 	// `providers/GOOGLE_ADS` or `providers/GOOGLE_BUSINESS_PROFILE`).
@@ -792,6 +873,9 @@ type AddUser struct {
 	// UserId: Required. The email address of the user (for example,
 	// `john.doe@gmail.com`).
 	UserId string `json:"userId,omitempty"`
+	// VerificationMailSettings: Optional. Settings related to configuring the
+	// verification email that is sent after adding a user.
+	VerificationMailSettings *VerificationMailSettings `json:"verificationMailSettings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "User") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1532,6 +1616,10 @@ func (s ClaimHomepageRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ComparisonShopping: `ComparisonShopping` payload.
+type ComparisonShopping struct {
+}
+
 // CreateAndConfigureAccountRequest: Request message for the
 // `CreateAndConfigureAccount` method.
 type CreateAndConfigureAccountRequest struct {
@@ -1545,6 +1633,10 @@ type CreateAndConfigureAccountRequest struct {
 	// method. Additional `account_management` or `product_management` services may
 	// be provided.
 	Service []*AddAccountService `json:"service,omitempty"`
+	// SetAlias: Optional. If a relationship is created with a provider, you can
+	// set an alias for it with this field. The calling user must be an admin on
+	// the provider to be able to set an alias.
+	SetAlias []*SetAliasForRelationship `json:"setAlias,omitempty"`
 	// User: Optional. Users to be added to the account.
 	User []*AddUser `json:"user,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
@@ -2633,6 +2725,35 @@ func (s ListAccountIssuesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListAccountLimitsResponse: Response message for the `ListAccountLimits`
+// method.
+type ListAccountLimitsResponse struct {
+	// AccountLimits: The limits for the given account.
+	AccountLimits []*AccountLimit `json:"accountLimits,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AccountLimits") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccountLimits") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAccountLimitsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAccountLimitsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListAccountRelationshipsResponse: Response after trying to list account
 // relationships.
 type ListAccountRelationshipsResponse struct {
@@ -3626,6 +3747,36 @@ func (s ProductChange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ProductLimit: The limit for products.
+type ProductLimit struct {
+	// Limit: Required. The maximum number of products that are allowed in the
+	// account in the given scope.
+	Limit int64 `json:"limit,omitempty,string"`
+	// Scope: Required. The scope of the product limit.
+	//
+	// Possible values:
+	//   "SCOPE_UNSPECIFIED" - Default value. Should not be used.
+	//   "ADS_NON_EEA" - Limit for products in non-EEA countries.
+	//   "ADS_EEA" - Limit for products in EEA countries.
+	Scope string `json:"scope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Limit") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Limit") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProductLimit) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductLimit
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ProductStatusChangeMessage: The message that the merchant will receive to
 // notify about product status change event
 type ProductStatusChangeMessage struct {
@@ -4153,6 +4304,35 @@ type Service struct {
 
 func (s Service) MarshalJSON() ([]byte, error) {
 	type NoMethod Service
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SetAliasForRelationship: Set an alias for a relationship between a provider
+// and the account to be created.
+type SetAliasForRelationship struct {
+	// AccountIdAlias: Required. The unique ID of this account in the provider's
+	// system. The value must be unique across all accounts on the platform for
+	// this provider.
+	AccountIdAlias string `json:"accountIdAlias,omitempty"`
+	// Provider: Required. The provider of the service. This is a reference to an
+	// account such as `providers/123` or `accounts/123`. The same provider must be
+	// specified in at least one of the `service` fields.
+	Provider string `json:"provider,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccountIdAlias") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccountIdAlias") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SetAliasForRelationship) MarshalJSON() ([]byte, error) {
+	type NoMethod SetAliasForRelationship
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4713,6 +4893,43 @@ type Value struct {
 func (s Value) MarshalJSON() ([]byte, error) {
 	type NoMethod Value
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VerificationMailSettings: Settings related to the verification email that is
+// sent after adding a user.
+type VerificationMailSettings struct {
+	// VerificationMailMode: Optional. Mode of the verification mail. If not set,
+	// the default is `SEND_VERIFICATION_MAIL`.
+	//
+	// Possible values:
+	//   "VERIFICATION_MAIL_MODE_UNSPECIFIED" - Default first member of every enum.
+	// Do not use.
+	//   "SEND_VERIFICATION_MAIL" - An invitation email is sent to the user added
+	// shortly after.
+	//   "SUPPRESS_VERIFICATION_MAIL" - No invitation email is sent. This can be
+	// useful if the user is expected to accept the invitation through the API
+	// without needing another notification.
+	VerificationMailMode string `json:"verificationMailMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "VerificationMailMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "VerificationMailMode") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VerificationMailSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod VerificationMailSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VerifySelfRequest: Request message for the `VerifySelf` method.
+type VerifySelfRequest struct {
 }
 
 // Warehouse: A fulfillment warehouse, which stores and handles inventory.
@@ -8012,6 +8229,273 @@ func (c *AccountsIssuesListCall) Do(opts ...googleapi.CallOption) (*ListAccountI
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsIssuesListCall) Pages(ctx context.Context, f func(*ListAccountIssuesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type AccountsLimitsGetCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves an account limit.
+//
+//   - name: The name of the limit to retrieve. Format:
+//     `accounts/{account}/limits/{limit}` For example:
+//     `accounts/123/limits/products~ADS_NON_EEA`.
+func (r *AccountsLimitsService) Get(name string) *AccountsLimitsGetCall {
+	c := &AccountsLimitsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsLimitsGetCall) Fields(s ...googleapi.Field) *AccountsLimitsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsLimitsGetCall) IfNoneMatch(entityTag string) *AccountsLimitsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsLimitsGetCall) Context(ctx context.Context) *AccountsLimitsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsLimitsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsLimitsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.limits.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.limits.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AccountLimit.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountsLimitsGetCall) Do(opts ...googleapi.CallOption) (*AccountLimit, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AccountLimit{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.limits.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountsLimitsListCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the limits of an account.
+//
+// - parent: The parent account. Format: `accounts/{account}`.
+func (r *AccountsLimitsService) List(parent string) *AccountsLimitsListCall {
+	c := &AccountsLimitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Required. A filter on the limit
+// `type` is required, for example, `type = "products".
+func (c *AccountsLimitsListCall) Filter(filter string) *AccountsLimitsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// limits to return. The service may return fewer than this value. If
+// unspecified, at most 100 limits will be returned. The maximum value is 100;
+// values above 100 will be coerced to 100.
+func (c *AccountsLimitsListCall) PageSize(pageSize int64) *AccountsLimitsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAccountLimits` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListAccountLimits` must match the call that provided the page token.
+func (c *AccountsLimitsListCall) PageToken(pageToken string) *AccountsLimitsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsLimitsListCall) Fields(s ...googleapi.Field) *AccountsLimitsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsLimitsListCall) IfNoneMatch(entityTag string) *AccountsLimitsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsLimitsListCall) Context(ctx context.Context) *AccountsLimitsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsLimitsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsLimitsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1/{+parent}/limits")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.limits.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.limits.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAccountLimitsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsLimitsListCall) Do(opts ...googleapi.CallOption) (*ListAccountLimitsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAccountLimitsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.limits.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsLimitsListCall) Pages(ctx context.Context, f func(*ListAccountLimitsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -13123,6 +13607,111 @@ func (c *AccountsUsersPatchCall) Do(opts ...googleapi.CallOption) (*User, error)
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.users.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountsUsersMeVerifySelfCall struct {
+	s                 *APIService
+	account           string
+	verifyselfrequest *VerifySelfRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// VerifySelf: Updates the user that is represented by the caller from pending
+// to verified.
+//
+//   - account: The name of the account under which the caller is a user. Format:
+//     `accounts/{account}`.
+func (r *AccountsUsersMeService) VerifySelf(account string, verifyselfrequest *VerifySelfRequest) *AccountsUsersMeVerifySelfCall {
+	c := &AccountsUsersMeVerifySelfCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.account = account
+	c.verifyselfrequest = verifyselfrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsUsersMeVerifySelfCall) Fields(s ...googleapi.Field) *AccountsUsersMeVerifySelfCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsUsersMeVerifySelfCall) Context(ctx context.Context) *AccountsUsersMeVerifySelfCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsUsersMeVerifySelfCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsUsersMeVerifySelfCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.verifyselfrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1/{+account}/users/me:verifySelf")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"account": c.account,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "merchantapi.accounts.users.me.verifySelf", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.users.me.verifySelf" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *User.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountsUsersMeVerifySelfCall) Do(opts ...googleapi.CallOption) (*User, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &User{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "merchantapi.accounts.users.me.verifySelf", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

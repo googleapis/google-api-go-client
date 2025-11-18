@@ -2515,7 +2515,7 @@
       }
     }
   },
-  "revision": "20251029",
+  "revision": "20251109",
   "rootUrl": "https://netapp.googleapis.com/",
   "schemas": {
     "ActiveDirectory": {
@@ -4606,8 +4606,7 @@
             "UPDATING",
             "RESTORING",
             "DISABLED",
-            "ERROR",
-            "DEGRADED"
+            "ERROR"
           ],
           "enumDescriptions": [
             "Unspecified Storage Pool State",
@@ -4617,8 +4616,7 @@
             "Storage Pool State is Updating",
             "Storage Pool State is Restoring",
             "Storage Pool State is Disabled",
-            "Storage Pool State is Error",
-            "Storage Pool State is Degraded The storage pool is operational, but with reduced performance."
+            "Storage Pool State is Error"
           ],
           "readOnly": true,
           "type": "string"

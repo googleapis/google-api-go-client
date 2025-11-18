@@ -386,6 +386,75 @@ func (s BareMetalAdminApiServerArgument) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BareMetalAdminBgpLbConfig: BareMetalAdminBgpLbConfig represents
+// configuration parameters for a Border Gateway Protocol (BGP) load balancer.
+type BareMetalAdminBgpLbConfig struct {
+	// AddressPools: Required. AddressPools is a list of non-overlapping IP pools
+	// used by load balancer typed services. All addresses must be routable to load
+	// balancer nodes. IngressVIP must be included in the pools.
+	AddressPools []*BareMetalAdminLoadBalancerAddressPool `json:"addressPools,omitempty"`
+	// Asn: Required. BGP autonomous system number (ASN) of the cluster. This field
+	// can be updated after cluster creation.
+	Asn int64 `json:"asn,omitempty,string"`
+	// BgpPeerConfigs: Required. The list of BGP peers that the cluster will
+	// connect to. At least one peer must be configured for each control plane
+	// node. Control plane nodes will connect to these peers to advertise the
+	// control plane VIP. The Services load balancer also uses these peers by
+	// default. This field can be updated after cluster creation.
+	BgpPeerConfigs []*BareMetalAdminBgpPeerConfig `json:"bgpPeerConfigs,omitempty"`
+	// LoadBalancerNodePoolConfig: Specifies the node pool running data plane load
+	// balancing. L2 connectivity is required among nodes in this pool. If missing,
+	// the control plane node pool is used for data plane load balancing.
+	LoadBalancerNodePoolConfig *BareMetalAdminLoadBalancerNodePoolConfig `json:"loadBalancerNodePoolConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AddressPools") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AddressPools") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BareMetalAdminBgpLbConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BareMetalAdminBgpLbConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BareMetalAdminBgpPeerConfig: BareMetalAdminBgpPeerConfig represents
+// configuration parameters for a Border Gateway Protocol (BGP) peer.
+type BareMetalAdminBgpPeerConfig struct {
+	// Asn: Required. BGP autonomous system number (ASN) for the network that
+	// contains the external peer device.
+	Asn int64 `json:"asn,omitempty,string"`
+	// ControlPlaneNodes: The IP address of the control plane node that connects to
+	// the external peer. If you don't specify any control plane nodes, all control
+	// plane nodes can connect to the external peer. If you specify one or more IP
+	// addresses, only the nodes specified participate in peering sessions.
+	ControlPlaneNodes []string `json:"controlPlaneNodes,omitempty"`
+	// IpAddress: Required. The IP address of the external peer device.
+	IpAddress string `json:"ipAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Asn") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Asn") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BareMetalAdminBgpPeerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BareMetalAdminBgpPeerConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BareMetalAdminCluster: Resource that represents a bare metal admin cluster.
 type BareMetalAdminCluster struct {
 	// Annotations: Annotations on the bare metal admin cluster. This field has the
@@ -664,30 +733,90 @@ func (s BareMetalAdminIslandModeCidrConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BareMetalAdminLoadBalancerAddressPool: Represents an IP pool used by the
+// load balancer.
+type BareMetalAdminLoadBalancerAddressPool struct {
+	// Addresses: Required. The addresses that are part of this pool. Each address
+	// must be either in the CIDR form (1.2.3.0/24) or range form
+	// (1.2.3.1-1.2.3.5).
+	Addresses []string `json:"addresses,omitempty"`
+	// AvoidBuggyIps: If true, avoid using IPs ending in .0 or .255. This avoids
+	// buggy consumer devices mistakenly dropping IPv4 traffic for those special IP
+	// addresses.
+	AvoidBuggyIps bool `json:"avoidBuggyIps,omitempty"`
+	// ManualAssign: If true, prevent IP addresses from being automatically
+	// assigned.
+	ManualAssign bool `json:"manualAssign,omitempty"`
+	// Pool: Required. The name of the address pool.
+	Pool string `json:"pool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Addresses") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Addresses") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BareMetalAdminLoadBalancerAddressPool) MarshalJSON() ([]byte, error) {
+	type NoMethod BareMetalAdminLoadBalancerAddressPool
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BareMetalAdminLoadBalancerConfig: BareMetalAdminLoadBalancerConfig specifies
 // the load balancer configuration.
 type BareMetalAdminLoadBalancerConfig struct {
+	// BgpLbConfig: Configuration for BGP typed load balancers.
+	BgpLbConfig *BareMetalAdminBgpLbConfig `json:"bgpLbConfig,omitempty"`
 	// ManualLbConfig: Manually configured load balancers.
 	ManualLbConfig *BareMetalAdminManualLbConfig `json:"manualLbConfig,omitempty"`
 	// PortConfig: Configures the ports that the load balancer will listen on.
 	PortConfig *BareMetalAdminPortConfig `json:"portConfig,omitempty"`
 	// VipConfig: The VIPs used by the load balancer.
 	VipConfig *BareMetalAdminVipConfig `json:"vipConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ManualLbConfig") to
+	// ForceSendFields is a list of field names (e.g. "BgpLbConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ManualLbConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BgpLbConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s BareMetalAdminLoadBalancerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BareMetalAdminLoadBalancerConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BareMetalAdminLoadBalancerNodePoolConfig: Specifies the load balancer's node
+// pool configuration.
+type BareMetalAdminLoadBalancerNodePoolConfig struct {
+	// NodePoolConfig: The generic configuration for a node pool running a load
+	// balancer.
+	NodePoolConfig *BareMetalNodePoolConfig `json:"nodePoolConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NodePoolConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NodePoolConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BareMetalAdminLoadBalancerNodePoolConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BareMetalAdminLoadBalancerNodePoolConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -792,20 +921,52 @@ func (s BareMetalAdminManualLbConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BareMetalAdminMultipleNetworkInterfacesConfig: Specifies the multiple
+// networking interfaces cluster configuration.
+type BareMetalAdminMultipleNetworkInterfacesConfig struct {
+	// Enabled: Whether to enable multiple network interfaces for your pods. When
+	// set network_config.advanced_networking is automatically set to true.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BareMetalAdminMultipleNetworkInterfacesConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BareMetalAdminMultipleNetworkInterfacesConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BareMetalAdminNetworkConfig: BareMetalAdminNetworkConfig specifies the
 // cluster network configuration.
 type BareMetalAdminNetworkConfig struct {
+	// AdvancedNetworking: Enables the use of advanced Anthos networking features,
+	// such as Bundled Load Balancing with BGP or the egress NAT gateway. Setting
+	// configuration for advanced networking features will automatically set this
+	// flag.
+	AdvancedNetworking bool `json:"advancedNetworking,omitempty"`
 	// IslandModeCidr: Configuration for Island mode CIDR.
 	IslandModeCidr *BareMetalAdminIslandModeCidrConfig `json:"islandModeCidr,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IslandModeCidr") to
+	// MultipleNetworkInterfacesConfig: Configuration for multiple network
+	// interfaces.
+	MultipleNetworkInterfacesConfig *BareMetalAdminMultipleNetworkInterfacesConfig `json:"multipleNetworkInterfacesConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdvancedNetworking") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IslandModeCidr") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdvancedNetworking") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -11075,6 +11236,13 @@ func (c *ProjectsLocationsVmwareAdminClustersCreateCall) AllowPreflightFailure(a
 	return c
 }
 
+// SkipValidations sets the optional parameter "skipValidations": If set, skip
+// the specified validations.
+func (c *ProjectsLocationsVmwareAdminClustersCreateCall) SkipValidations(skipValidations ...string) *ProjectsLocationsVmwareAdminClustersCreateCall {
+	c.urlParams_.SetMulti("skipValidations", append([]string{}, skipValidations...))
+	return c
+}
+
 // ValidateOnly sets the optional parameter "validateOnly": Validate the
 // request without actually doing any updates.
 func (c *ProjectsLocationsVmwareAdminClustersCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsVmwareAdminClustersCreateCall {
@@ -11750,6 +11918,13 @@ func (r *ProjectsLocationsVmwareAdminClustersService) Patch(name string, vmwarea
 	c := &ProjectsLocationsVmwareAdminClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.vmwareadmincluster = vmwareadmincluster
+	return c
+}
+
+// SkipValidations sets the optional parameter "skipValidations": If set, the
+// server-side preflight checks will be skipped.
+func (c *ProjectsLocationsVmwareAdminClustersPatchCall) SkipValidations(skipValidations ...string) *ProjectsLocationsVmwareAdminClustersPatchCall {
+	c.urlParams_.SetMulti("skipValidations", append([]string{}, skipValidations...))
 	return c
 }
 
@@ -12514,6 +12689,13 @@ func (r *ProjectsLocationsVmwareClustersService) Create(parent string, vmwareclu
 // hence a update cluster is required to fix the cluster.
 func (c *ProjectsLocationsVmwareClustersCreateCall) AllowPreflightFailure(allowPreflightFailure bool) *ProjectsLocationsVmwareClustersCreateCall {
 	c.urlParams_.Set("allowPreflightFailure", fmt.Sprint(allowPreflightFailure))
+	return c
+}
+
+// SkipValidations sets the optional parameter "skipValidations": List of
+// validations to skip during cluster creation.
+func (c *ProjectsLocationsVmwareClustersCreateCall) SkipValidations(skipValidations ...string) *ProjectsLocationsVmwareClustersCreateCall {
+	c.urlParams_.SetMulti("skipValidations", append([]string{}, skipValidations...))
 	return c
 }
 
@@ -13339,6 +13521,12 @@ func (r *ProjectsLocationsVmwareClustersService) Patch(name string, vmwarecluste
 	c := &ProjectsLocationsVmwareClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.vmwarecluster = vmwarecluster
+	return c
+}
+
+// SkipValidations sets the optional parameter "skipValidations":
+func (c *ProjectsLocationsVmwareClustersPatchCall) SkipValidations(skipValidations ...string) *ProjectsLocationsVmwareClustersPatchCall {
+	c.urlParams_.SetMulti("skipValidations", append([]string{}, skipValidations...))
 	return c
 }
 

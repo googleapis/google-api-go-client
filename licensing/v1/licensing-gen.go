@@ -98,7 +98,7 @@ const mtlsBasePath = "https://licensing.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage G Suite licenses for your domain
+	// View and manage Google Workspace licenses for your domain
 	AppsLicensingScope = "https://www.googleapis.com/auth/apps.licensing"
 )
 

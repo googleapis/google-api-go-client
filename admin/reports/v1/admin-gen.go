@@ -103,10 +103,10 @@ const mtlsBasePath = "https://admin.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View audit reports for your G Suite domain
+	// View audit reports for your Google Workspace domain
 	AdminReportsAuditReadonlyScope = "https://www.googleapis.com/auth/admin.reports.audit.readonly"
 
-	// View usage reports for your G Suite domain
+	// View usage reports for your Google Workspace domain
 	AdminReportsUsageReadonlyScope = "https://www.googleapis.com/auth/admin.reports.usage.readonly"
 )
 

@@ -818,7 +818,7 @@ type Attachment struct {
 	// DriveDataRef: Output only. A reference to the Google Drive attachment. This
 	// field is used with the Google Drive API.
 	DriveDataRef *DriveDataRef `json:"driveDataRef,omitempty"`
-	// Name: Optional. Resource name of the attachment, in the form
+	// Name: Identifier. Resource name of the attachment. Format:
 	// `spaces/{space}/messages/{message}/attachments/{attachment}`.
 	Name string `json:"name,omitempty"`
 	// Source: Output only. The source of the attachment.
@@ -2245,8 +2245,11 @@ type GoogleAppsCardV1Card struct {
 	//   "REPLACE" - Default value. The card is shown by replacing the view of the
 	// top card in the card stack.
 	DisplayStyle string `json:"displayStyle,omitempty"`
-	// ExpressionData: The expression data for the card. Only supported by Google
-	// Workspace Workflow, but not Google Chat apps or Google Workspace add-ons.
+	// ExpressionData: The expression data for the card. Available for Google
+	// Workspace add-ons that extend Google Workspace flows, which is available as
+	// part of the Gemini Alpha program
+	// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
+	// apps.
 	ExpressionData []*GoogleAppsCardV1ExpressionData `json:"expressionData,omitempty"`
 	// FixedFooter: The fixed footer shown at the bottom of this card. Setting
 	// `fixedFooter` without specifying a `primaryButton` or a `secondaryButton`
@@ -2686,8 +2689,10 @@ func (s GoogleAppsCardV1Columns) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1CommonWidgetAction: Represents an action that is not
-// specific to a widget. Only supported by Google Workspace Workflow, but not
-// Google Chat apps or Google Workspace add-ons.
+// specific to a widget. Available for Google Workspace add-ons that extend
+// Google Workspace flows, which is available as part of the Gemini Alpha
+// program (https://support.google.com/a/answer/14170809). Unavailable for
+// Google Chat apps.
 type GoogleAppsCardV1CommonWidgetAction struct {
 	// UpdateVisibilityAction: The action to update the visibility of a widget.
 	UpdateVisibilityAction *GoogleAppsCardV1UpdateVisibilityAction `json:"updateVisibilityAction,omitempty"`
@@ -2710,8 +2715,10 @@ func (s GoogleAppsCardV1CommonWidgetAction) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Condition: Represents a condition that can be used to
-// trigger an action. Only supported by Google Workspace Workflow, but not
-// Google Chat apps or Google Workspace add-ons.
+// trigger an action. Available for Google Workspace add-ons that extend Google
+// Workspace flows, which is available as part of the Gemini Alpha program
+// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
+// apps.
 type GoogleAppsCardV1Condition struct {
 	// ActionRuleId: The unique identifier of the ActionRule.
 	ActionRuleId string `json:"actionRuleId,omitempty"`
@@ -2737,8 +2744,10 @@ func (s GoogleAppsCardV1Condition) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1DataSourceConfig: A configuration object that helps
-// configure the data sources for a widget. Only supported by Google Workspace
-// Workflow, but not Google Chat apps or Google Workspace add-ons.
+// configure the data sources for a widget. Available for Google Workspace
+// add-ons that extend Google Workspace flows, which is available as part of
+// the Gemini Alpha program (https://support.google.com/a/answer/14170809).
+// Unavailable for Google Chat apps.
 type GoogleAppsCardV1DataSourceConfig struct {
 	// PlatformDataSource: The data is from a Google Workspace application.
 	PlatformDataSource *GoogleAppsCardV1PlatformDataSource `json:"platformDataSource,omitempty"`
@@ -2776,8 +2785,10 @@ func (s GoogleAppsCardV1DataSourceConfig) MarshalJSON() ([]byte, error) {
 type GoogleAppsCardV1DateTimePicker struct {
 	// HostAppDataSource: A data source that's unique to a Google Workspace host
 	// application, such as Gmail emails, Google Calendar events, or Google Chat
-	// messages. Only supported by Google Workspace Workflows, but not Google Chat
-	// API or Google Workspace Add-ons.
+	// messages. Available for Google Workspace add-ons that extend Google
+	// Workspace flows, which is available as part of the Gemini Alpha program
+	// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
+	// apps.
 	HostAppDataSource *HostAppDataSourceMarkup `json:"hostAppDataSource,omitempty"`
 	// Label: The text that prompts users to input a date, a time, or a date and
 	// time. For example, if users are scheduling an appointment, use a label such
@@ -2920,8 +2931,10 @@ type GoogleAppsCardV1Divider struct {
 }
 
 // GoogleAppsCardV1EventAction: Represents an actionthat can be performed on an
-// ui element. Only supported by Google Workspace Workflow, but not Google Chat
-// apps or Google Workspace add-ons.
+// ui element. Available for Google Workspace add-ons that extend Google
+// Workspace flows, which is available as part of the Gemini Alpha program
+// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
+// apps.
 type GoogleAppsCardV1EventAction struct {
 	// ActionRuleId: The unique identifier of the ActionRule.
 	ActionRuleId string `json:"actionRuleId,omitempty"`
@@ -2949,8 +2962,10 @@ func (s GoogleAppsCardV1EventAction) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1ExpressionData: Represents the data that is used to evaluate
-// an expression. Only supported by Google Workspace Workflow, but not Google
-// Chat apps or Google Workspace add-ons.
+// an expression. Available for Google Workspace add-ons that extend Google
+// Workspace flows, which is available as part of the Gemini Alpha program
+// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
+// apps.
 type GoogleAppsCardV1ExpressionData struct {
 	// Conditions: The list of conditions that are determined by the expression
 	// evaluation result.
@@ -2980,8 +2995,10 @@ func (s GoogleAppsCardV1ExpressionData) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1ExpressionDataCondition: Represents a condition that is
-// evaluated using CEL. Only supported by Google Workspace Workflow, but not
-// Google Chat apps or Google Workspace add-ons.
+// evaluated using CEL. Available for Google Workspace add-ons that extend
+// Google Workspace flows, which is available as part of the Gemini Alpha
+// program (https://support.google.com/a/answer/14170809). Unavailable for
+// Google Chat apps.
 type GoogleAppsCardV1ExpressionDataCondition struct {
 	// ConditionType: The type of the condition.
 	//
@@ -3553,8 +3570,10 @@ type GoogleAppsCardV1Section struct {
 	Header string `json:"header,omitempty"`
 	// Id: A unique ID assigned to the section that's used to identify the section
 	// to be mutated. The ID has a character limit of 64 characters and should be
-	// in the format of `[a-zA-Z0-9-]+`. Only supported by Google Workspace
-	// Workflow, but not Google Chat apps or Google Workspace add-ons.
+	// in the format of `[a-zA-Z0-9-]+`. Available for Google Workspace add-ons
+	// that extend Google Workspace flows, which is available as part of the Gemini
+	// Alpha program (https://support.google.com/a/answer/14170809). Unavailable
+	// for Google Chat apps.
 	Id string `json:"id,omitempty"`
 	// UncollapsibleWidgetsCount: The number of uncollapsible widgets which remain
 	// visible even when a section is collapsed. For example, when a section
@@ -3603,15 +3622,19 @@ type GoogleAppsCardV1SelectionInput struct {
 	// control. This field provides more fine-grained control over the data source.
 	// If specified, the `multi_select_max_selected_items` field,
 	// `multi_select_min_query_length` field, `external_data_source` field and
-	// `platform_data_source` field are ignored. Only supported by Google Workspace
-	// Workflow, but not Google Chat apps or Google Workspace add-ons.
+	// `platform_data_source` field are ignored. Available for Google Workspace
+	// add-ons that extend Google Workspace flows, which is available as part of
+	// the Gemini Alpha program (https://support.google.com/a/answer/14170809).
+	// Unavailable for Google Chat apps.
 	DataSourceConfigs []*GoogleAppsCardV1DataSourceConfig `json:"dataSourceConfigs,omitempty"`
 	// ExternalDataSource: An external data source, such as a relational database.
 	ExternalDataSource *GoogleAppsCardV1Action `json:"externalDataSource,omitempty"`
 	// HintText: Optional. Text that appears below the selection input field meant
 	// to assist users by prompting them to enter a certain value. This text is
-	// always visible. Only supported by Google Workspace Workflows, but not Google
-	// Chat API or Google Workspace Add-ons.
+	// always visible. Available for Google Workspace add-ons that extend Google
+	// Workspace flows, which is available as part of the Gemini Alpha program
+	// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
+	// apps.
 	HintText string `json:"hintText,omitempty"`
 	// Items: An array of selectable items. For example, an array of radio buttons
 	// or checkboxes. Supports up to 100 items.
@@ -3858,8 +3881,10 @@ type GoogleAppsCardV1TextInput struct {
 	HintText string `json:"hintText,omitempty"`
 	// HostAppDataSource: A data source that's unique to a Google Workspace host
 	// application, such as Gmail emails, Google Calendar events, or Google Chat
-	// messages. Only supported by Google Workspace Workflow, but not Google Chat
-	// apps or Google Workspace add-ons.
+	// messages. Available for Google Workspace add-ons that extend Google
+	// Workspace flows, which is available as part of the Gemini Alpha program
+	// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
+	// apps.
 	HostAppDataSource *HostAppDataSourceMarkup `json:"hostAppDataSource,omitempty"`
 	// InitialSuggestions: Suggested values that users can enter. These values
 	// appear when users click inside the text input field. As users type, the
@@ -3974,8 +3999,11 @@ func (s GoogleAppsCardV1TextParagraph) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1Trigger: Represents a trigger. Only supported by Google
-// Workspace Workflow, but not Google Chat apps or Google Workspace add-ons.
+// GoogleAppsCardV1Trigger: Represents a trigger. Available for Google
+// Workspace add-ons that extend Google Workspace flows, which is available as
+// part of the Gemini Alpha program
+// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
+// apps.
 type GoogleAppsCardV1Trigger struct {
 	// ActionRuleId: The unique identifier of the ActionRule.
 	ActionRuleId string `json:"actionRuleId,omitempty"`
@@ -3998,8 +4026,10 @@ func (s GoogleAppsCardV1Trigger) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1UpdateVisibilityAction: Represents an action that updates
-// the visibility of a widget. Only supported by Google Workspace Workflow, but
-// not Google Chat apps or Google Workspace add-ons.
+// the visibility of a widget. Available for Google Workspace add-ons that
+// extend Google Workspace flows, which is available as part of the Gemini
+// Alpha program (https://support.google.com/a/answer/14170809). Unavailable
+// for Google Chat apps.
 type GoogleAppsCardV1UpdateVisibilityAction struct {
 	// Visibility: The new visibility.
 	//
@@ -4114,8 +4144,10 @@ type GoogleAppsCardV1Widget struct {
 	// the following JSON creates a divider: ``` "divider": { } ```
 	Divider *GoogleAppsCardV1Divider `json:"divider,omitempty"`
 	// EventActions: Specifies the event actions that can be performed on the
-	// widget. Only supported by Google Workspace Workflow, but not Google Chat
-	// apps or Google Workspace add-ons.
+	// widget. Available for Google Workspace add-ons that extend Google Workspace
+	// flows, which is available as part of the Gemini Alpha program
+	// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
+	// apps.
 	EventActions []*GoogleAppsCardV1EventAction `json:"eventActions,omitempty"`
 	// Grid: Displays a grid with a collection of items. A grid supports any number
 	// of columns and items. The number of rows is determined by the upper bounds
@@ -4146,8 +4178,10 @@ type GoogleAppsCardV1Widget struct {
 	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
 	// Id: A unique ID assigned to the widget that's used to identify the widget to
 	// be mutated. The ID has a character limit of 64 characters and should be in
-	// the format of `[a-zA-Z0-9-]+` and. Only supported by Google Workspace
-	// Workflow, but not Google Chat apps or Google Workspace add-ons.
+	// the format of `[a-zA-Z0-9-]+` and. Available for Google Workspace add-ons
+	// that extend Google Workspace flows, which is available as part of the Gemini
+	// Alpha program (https://support.google.com/a/answer/14170809). Unavailable
+	// for Google Chat apps.
 	Id string `json:"id,omitempty"`
 	// Image: Displays an image. For example, the following JSON creates an image
 	// with alternative text: ``` "image": { "imageUrl":
@@ -4182,8 +4216,10 @@ type GoogleAppsCardV1Widget struct {
 	// { "text": " *bold text*" } ```
 	TextParagraph *GoogleAppsCardV1TextParagraph `json:"textParagraph,omitempty"`
 	// Visibility: Specifies whether the widget is visible or hidden. The default
-	// value is `VISIBLE`. Only supported by Google Workspace Workflow, but not
-	// Google Chat apps or Google Workspace add-ons.
+	// value is `VISIBLE`. Available for Google Workspace add-ons that extend
+	// Google Workspace flows, which is available as part of the Gemini Alpha
+	// program (https://support.google.com/a/answer/14170809). Unavailable for
+	// Google Chat apps.
 	//
 	// Possible values:
 	//   "VISIBILITY_UNSPECIFIED" - Unspecified visibility. Do not use.

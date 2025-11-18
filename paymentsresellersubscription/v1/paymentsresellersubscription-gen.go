@@ -1276,6 +1276,17 @@ func (s PromotionIntroductoryPricingDetailsIntroductoryPricingSpec) MarshalJSON(
 type ResumeSubscriptionRequest struct {
 	// CycleOptions: Optional. The cycle options for the subscription.
 	CycleOptions *CycleOptions `json:"cycleOptions,omitempty"`
+	// ResumeMode: Required. The mode to resume the subscription.
+	//
+	// Possible values:
+	//   "RESUME_MODE_UNSPECIFIED" - Reserved for invalid or unexpected value. Do
+	// not use.
+	//   "RESUME_MODE_CYCLE_OPTIONS" - Resume the subscription using the input from
+	// `cycle_options`.
+	//   "RESUME_MODE_RESTORE_EXISTING_BILLING_SCHEDULE" - Resume the subscription
+	// with the existing billing schedule. The subscription's next renewal time
+	// must still be in the future for this mode to be applicable.
+	ResumeMode string `json:"resumeMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CycleOptions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

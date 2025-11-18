@@ -6666,8 +6666,8 @@ type Policy struct {
 	SafeBootDisabled bool `json:"safeBootDisabled,omitempty"`
 	// ScreenCaptureDisabled: Whether screen capture is disabled.
 	ScreenCaptureDisabled bool `json:"screenCaptureDisabled,omitempty"`
-	// SetUserIconDisabled: Whether changing the user icon is disabled. The setting
-	// has effect only on fully managed devices.
+	// SetUserIconDisabled: Whether changing the user icon is disabled. This
+	// applies only on devices running Android 7 and above.
 	SetUserIconDisabled bool `json:"setUserIconDisabled,omitempty"`
 	// SetWallpaperDisabled: Whether changing the wallpaper is disabled.
 	SetWallpaperDisabled bool `json:"setWallpaperDisabled,omitempty"`
@@ -6675,8 +6675,6 @@ type Policy struct {
 	// may be specified.
 	SetupActions []*SetupAction `json:"setupActions,omitempty"`
 	// ShareLocationDisabled: Whether location sharing is disabled.
-	// share_location_disabled is supported for both fully managed devices and
-	// personally owned work profiles.
 	ShareLocationDisabled bool `json:"shareLocationDisabled,omitempty"`
 	// ShortSupportMessage: A message displayed to the user in the settings screen
 	// wherever functionality has been disabled by the admin. If the message is

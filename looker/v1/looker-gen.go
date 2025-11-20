@@ -608,6 +608,8 @@ type Instance struct {
 	Name string `json:"name,omitempty"`
 	// OauthConfig: Looker instance OAuth login settings.
 	OauthConfig *OAuthConfig `json:"oauthConfig,omitempty"`
+	// PeriodicExportConfig: Optional. Configuration for periodic export.
+	PeriodicExportConfig *PeriodicExportConfig `json:"periodicExportConfig,omitempty"`
 	// PlatformEdition: Platform edition.
 	//
 	// Possible values:
@@ -823,8 +825,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1051,6 +1053,35 @@ type OperationMetadata struct {
 
 func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PeriodicExportConfig: Configuration for periodic export.
+type PeriodicExportConfig struct {
+	// GcsUri: Required. Cloud Storage bucket URI for periodic export. Format:
+	// gs://{bucket_name}
+	GcsUri string `json:"gcsUri,omitempty"`
+	// KmsKey: Required. Name of the CMEK key in KMS. Format:
+	// projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypt
+	// o_key}
+	KmsKey string `json:"kmsKey,omitempty"`
+	// StartTime: Required. Time in UTC to start the periodic export job.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GcsUri") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcsUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PeriodicExportConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PeriodicExportConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3364,9 +3395,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

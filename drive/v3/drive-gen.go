@@ -849,8 +849,8 @@ type Comment struct {
 	// on defining anchor properties, refer to Manage comments and replies
 	// (https://developers.google.com/workspace/drive/api/v3/manage-comments).
 	Anchor string `json:"anchor,omitempty"`
-	// AssigneeEmailAddress: Output only. The email of the user who is assigned to
-	// this comment, if none is assigned this will be unset.
+	// AssigneeEmailAddress: Output only. The email address of the user assigned to
+	// this comment. If no user is assigned, the field is unset.
 	AssigneeEmailAddress string `json:"assigneeEmailAddress,omitempty"`
 	// Author: Output only. The author of the comment. The author's email address
 	// and permission ID will not be populated.
@@ -870,9 +870,8 @@ type Comment struct {
 	// Kind: Output only. Identifies what kind of resource this is. Value: the
 	// fixed string "drive#comment".
 	Kind string `json:"kind,omitempty"`
-	// MentionedEmailAddresses: Output only. The emails of the users who were
-	// mentioned in this comment, if none were mentioned this will be an empty
-	// list.
+	// MentionedEmailAddresses: Output only. A list of email addresses for users
+	// mentioned in this comment. If no users are mentioned, the list is empty.
 	MentionedEmailAddresses []string `json:"mentionedEmailAddresses,omitempty"`
 	// ModifiedTime: The last time the comment or any of its replies was modified
 	// (RFC 3339 date-time).
@@ -2670,8 +2669,8 @@ type Reply struct {
 	// Action: The action the reply performed to the parent comment. Valid values
 	// are: * `resolve` * `reopen`
 	Action string `json:"action,omitempty"`
-	// AssigneeEmailAddress: Output only. The email of the user who is assigned to
-	// this reply, if none is assigned this will be unset.
+	// AssigneeEmailAddress: Output only. The email address of the user assigned to
+	// this comment. If no user is assigned, the field is unset.
 	AssigneeEmailAddress string `json:"assigneeEmailAddress,omitempty"`
 	// Author: Output only. The author of the reply. The author's email address and
 	// permission ID will not be populated.
@@ -2692,8 +2691,8 @@ type Reply struct {
 	// Kind: Output only. Identifies what kind of resource this is. Value: the
 	// fixed string "drive#reply".
 	Kind string `json:"kind,omitempty"`
-	// MentionedEmailAddresses: Output only. The emails of the users who were
-	// mentioned in this reply, if none were mentioned this will be an empty list.
+	// MentionedEmailAddresses: Output only. A list of email addresses for users
+	// mentioned in this comment. If no users are mentioned, the list is empty.
 	MentionedEmailAddresses []string `json:"mentionedEmailAddresses,omitempty"`
 	// ModifiedTime: The last time the reply was modified (RFC 3339 date-time).
 	ModifiedTime string `json:"modifiedTime,omitempty"`
@@ -9738,6 +9737,12 @@ type RevisionsListCall struct {
 // List: Lists a file's revisions. For more information, see Manage file
 // revisions
 // (https://developers.google.com/workspace/drive/api/guides/manage-revisions).
+// **Important:** The list of revisions returned by this method might be
+// incomplete for files with a large revision history, including frequently
+// edited Google Docs, Sheets, and Slides. Older revisions might be omitted
+// from the response, meaning the first revision returned may not be the oldest
+// existing revision. The revision history visible in the Workspace editor user
+// interface might be more complete than the list returned by the API.
 //
 // - fileId: The ID of the file.
 func (r *RevisionsService) List(fileId string) *RevisionsListCall {

@@ -112,7 +112,7 @@ const (
 	// See and download your contacts
 	ContactsReadonlyScope = "https://www.googleapis.com/auth/contacts.readonly"
 
-	// See and download your organization's GSuite directory
+	// See and download your organization's Google Workspace directory
 	DirectoryReadonlyScope = "https://www.googleapis.com/auth/directory.readonly"
 
 	// View your street addresses

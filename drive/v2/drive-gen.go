@@ -12336,7 +12336,13 @@ type RevisionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists a file's revisions.
+// List: Lists a file's revisions. **Important:** The list of revisions
+// returned by this method might be incomplete for files with a large revision
+// history, including frequently edited Google Docs, Sheets, and Slides. Older
+// revisions might be omitted from the response, meaning the first revision
+// returned may not be the oldest existing revision. The revision history
+// visible in the Workspace editor user interface might be more complete than
+// the list returned by the API.
 //
 // - fileId: The ID of the file.
 func (r *RevisionsService) List(fileId string) *RevisionsListCall {

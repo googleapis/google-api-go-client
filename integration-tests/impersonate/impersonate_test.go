@@ -71,7 +71,7 @@ func TestImpersonatedCredentials(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			svc, err := storage.NewService(ctx,
-				option.WithCredentialsFile(tt.baseSALocation),
+				option.WithAuthCredentialsFile(option.ServiceAccount, tt.baseSALocation),
 				option.ImpersonateCredentials(writerSA, tt.delgates...),
 			)
 			if err != nil {

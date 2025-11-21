@@ -129,7 +129,7 @@ func getClientID(keyFileName string) (string, error) {
 }
 
 func generateGoogleToken(keyFileName string) (string, error) {
-	ts, err := idtoken.NewTokenSource(context.Background(), oidcAudience, option.WithCredentialsFile(keyFileName))
+	ts, err := idtoken.NewTokenSource(context.Background(), oidcAudience, option.WithAuthCredentialsFile(option.ServiceAccount, keyFileName))
 	if err != nil {
 		return "", nil
 	}
@@ -175,7 +175,7 @@ func testBYOID(t *testing.T, c config) {
 	writeConfig(t, c, func(name string) {
 		// Once the default credentials are obtained,
 		// we should be able to access Google Cloud resources.
-		dnsService, err := dns.NewService(context.Background(), option.WithCredentialsFile(name))
+		dnsService, err := dns.NewService(context.Background(), option.WithAuthCredentialsFile(option.ExternalAccount, name))
 		if err != nil {
 			t.Fatalf("Could not establish DNS Service: %v", err)
 		}

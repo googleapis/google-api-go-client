@@ -2415,13 +2415,13 @@ type AccountsProductsGetCall struct {
 // minutes before the updated final product can be retrieved.
 //
 //   - name: The name of the product. Format:
-//     `accounts/{account}/products/{product}` The {product} segment is a unique
-//     identifier for the product. This identifier must be unique within a
+//     `accounts/{account}/products/{product}` The `{product}` segment is a
+//     unique identifier for the product. This identifier must be unique within a
 //     merchant account and generally follows the structure:
 //     `content_language~feed_label~offer_id`. Example: `en~US~sku123` For legacy
 //     local products, the structure is:
 //     `local~content_language~feed_label~offer_id`. Example:
-//     `local~en~US~sku123` The format of the {product} segment in the URL is
+//     `local~en~US~sku123` The format of the `{product}` segment in the URL is
 //     automatically detected by the server, supporting two options: 1. **Encoded
 //     Format**: The `{product}` segment is an unpadded base64url encoded string
 //     (RFC 4648 Section 5). The decoded string must result in the

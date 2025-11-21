@@ -431,6 +431,10 @@ type AuctionPackage struct {
 	// media planner selected as the owner of this auction package. This is a seat
 	// ID in the DSP's namespace that was provided to the media planner.
 	EligibleSeatIds []string `json:"eligibleSeatIds,omitempty"`
+	// FloorPriceCpm: Output only. The minimum price a buyer has to bid to compete
+	// in this auction package. If this is field is not populated, there is no
+	// floor price.
+	FloorPriceCpm *Money `json:"floorPriceCpm,omitempty"`
 	// Name: Immutable. The unique identifier for the auction package. Format:
 	// `buyers/{accountId}/auctionPackages/{auctionPackageId}` The
 	// auction_package_id part of name is sent in the BidRequest to all RTB bidders

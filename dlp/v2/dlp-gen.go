@@ -3265,7 +3265,7 @@ func (s GooglePrivacyDlpV2DataRiskLevel) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2DataSourceType: Message used to identify the type of
 // resource being profiled.
 type GooglePrivacyDlpV2DataSourceType struct {
-	// DataSource: An identifying string to the type of resource being profiled.
+	// DataSource: A string that identifies the type of resource being profiled.
 	// Current values: * google/bigquery/table * google/project * google/sql/table
 	// * google/gcs/bucket
 	DataSource string `json:"dataSource,omitempty"`
@@ -11631,7 +11631,7 @@ func (s GooglePrivacyDlpV2VertexDatasetRegexes) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2VertexDatasetResourceReference: Identifies a single Vertex
-// AI resource. Currently only datasets are supported.
+// AI resource. Only datasets are supported.
 type GooglePrivacyDlpV2VertexDatasetResourceReference struct {
 	// DatasetResourceName: Required. The name of the Vertex AI resource. If set
 	// within a project-level configuration, the specified resource must be within

@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20251116",
+  "revision": "20251117",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -930,7 +930,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Required. The name of the function to call. Must start with a letter or an underscore. Must be a-z, A-Z, 0-9, or contain underscores, dots and dashes, with a maximum length of 64.",
+          "description": "Required. The name of the function to call. Must start with a letter or an underscore. Must be a-z, A-Z, 0-9, or contain underscores, dots, colons and dashes, with a maximum length of 64.",
           "type": "string"
         },
         "parameters": {
@@ -2169,6 +2169,22 @@
       },
       "type": "object"
     },
+    "GoogleCloudAiplatformV1beta1ReplicatedVoiceConfig": {
+      "description": "The configuration for the replicated voice to use.",
+      "id": "GoogleCloudAiplatformV1beta1ReplicatedVoiceConfig",
+      "properties": {
+        "mimeType": {
+          "description": "Optional. The mimetype of the voice sample. Currently only mime_type=audio/pcm is supported, which is raw mono 16-bit signed little-endian pcm data, with 24k sampling rate.",
+          "type": "string"
+        },
+        "voiceSampleAudio": {
+          "description": "Optional. The sample of the custom voice.",
+          "format": "byte",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudAiplatformV1beta1Retrieval": {
       "description": "Defines a retrieval tool that model can call to access external knowledge.",
       "id": "GoogleCloudAiplatformV1beta1Retrieval",
@@ -2975,6 +2991,10 @@
         "prebuiltVoiceConfig": {
           "$ref": "GoogleCloudAiplatformV1beta1PrebuiltVoiceConfig",
           "description": "The configuration for a prebuilt voice."
+        },
+        "replicatedVoiceConfig": {
+          "$ref": "GoogleCloudAiplatformV1beta1ReplicatedVoiceConfig",
+          "description": "Optional. The configuration for a replicated voice. This enables users to replicate a voice from an audio sample."
         }
       },
       "type": "object"

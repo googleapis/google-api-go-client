@@ -11325,7 +11325,7 @@ type PoliciesGetCall struct {
 
 // Get: Get a policy.
 //
-// - name: The name of the policy to retrieve. Format: "policies/{policy}".
+// - name: The name of the policy to retrieve. Format: `policies/{policy}`.
 func (r *PoliciesService) Get(name string) *PoliciesGetCall {
 	c := &PoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

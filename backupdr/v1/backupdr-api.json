@@ -1373,12 +1373,12 @@
                           ],
                           "parameters": {
                             "filter": {
-                              "description": "Optional. A filter expression that filters the results fetched in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. Supported fields:",
+                              "description": "Optional. A filter expression that filters the results fetched in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. Supported fields: * name * state * backup_type * create_time * expire_time * enforced_retention_end_time * gcp_backup_plan_info.backup_plan * cloud_sql_instance_backup_properties.instance_tier * cloud_sql_instance_backup_properties.database_installed_version",
                               "location": "query",
                               "type": "string"
                             },
                             "orderBy": {
-                              "description": "Optional. A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending.",
+                              "description": "Optional. A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending. Supported fields: * name",
                               "location": "query",
                               "type": "string"
                             },
@@ -2199,6 +2199,34 @@
             },
             "trial": {
               "methods": {
+                "end": {
+                  "description": "Ends the trial for a project",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/trial:end",
+                  "httpMethod": "POST",
+                  "id": "backupdr.projects.locations.trial.end",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The parent resource where this trial will be ended.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/trial:end",
+                  "request": {
+                    "$ref": "EndTrialRequest"
+                  },
+                  "response": {
+                    "$ref": "Trial"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "subscribe": {
                   "description": "Subscribes to a trial for a project",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/trial:subscribe",
@@ -2234,7 +2262,7 @@
       }
     }
   },
-  "revision": "20251105",
+  "revision": "20251112",
   "rootUrl": "https://backupdr.googleapis.com/",
   "schemas": {
     "AbandonBackupRequest": {
@@ -4613,6 +4641,27 @@
       "properties": {
         "kmsKeyName": {
           "description": "Optional. The Cloud KMS key name to encrypt backups in this backup vault. Must be in the same region as the vault. Some workload backups like compute disk backups may use their inherited source key instead. Format: projects/{project}/locations/{location}/keyRings/{ring}/cryptoKeys/{key}",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "EndTrialRequest": {
+      "description": "Request message for ending a trial.",
+      "id": "EndTrialRequest",
+      "properties": {
+        "endReason": {
+          "description": "Required. The reason for ending the trial.",
+          "enum": [
+            "END_REASON_UNSPECIFIED",
+            "MOVE_TO_PAID",
+            "DISCONTINUED"
+          ],
+          "enumDescriptions": [
+            "End reason not set.",
+            "Trial is deliberately ended by the user to transition to paid usage.",
+            "Trial is discontinued before expiration."
+          ],
           "type": "string"
         }
       },

@@ -1155,8 +1155,8 @@ type GoogleCloudAiplatformV1beta1FunctionDeclaration struct {
 	// it to decide how and whether to call the function.
 	Description string `json:"description,omitempty"`
 	// Name: Required. The name of the function to call. Must start with a letter
-	// or an underscore. Must be a-z, A-Z, 0-9, or contain underscores, dots and
-	// dashes, with a maximum length of 64.
+	// or an underscore. Must be a-z, A-Z, 0-9, or contain underscores, dots,
+	// colons and dashes, with a maximum length of 64.
 	Name string `json:"name,omitempty"`
 	// Parameters: Optional. Describes the parameters to this function in JSON
 	// Schema Object format. Reflects the Open API 3.03 Parameter Object. string
@@ -2911,6 +2911,33 @@ func (s GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingRankService) Marsha
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1beta1ReplicatedVoiceConfig: The configuration for the
+// replicated voice to use.
+type GoogleCloudAiplatformV1beta1ReplicatedVoiceConfig struct {
+	// MimeType: Optional. The mimetype of the voice sample. Currently only
+	// mime_type=audio/pcm is supported, which is raw mono 16-bit signed
+	// little-endian pcm data, with 24k sampling rate.
+	MimeType string `json:"mimeType,omitempty"`
+	// VoiceSampleAudio: Optional. The sample of the custom voice.
+	VoiceSampleAudio string `json:"voiceSampleAudio,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MimeType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MimeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1ReplicatedVoiceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1ReplicatedVoiceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1beta1Retrieval: Defines a retrieval tool that model
 // can call to access external knowledge.
 type GoogleCloudAiplatformV1beta1Retrieval struct {
@@ -3850,6 +3877,9 @@ func (s *GoogleCloudAiplatformV1beta1VideoMetadata) UnmarshalJSON(data []byte) e
 type GoogleCloudAiplatformV1beta1VoiceConfig struct {
 	// PrebuiltVoiceConfig: The configuration for a prebuilt voice.
 	PrebuiltVoiceConfig *GoogleCloudAiplatformV1beta1PrebuiltVoiceConfig `json:"prebuiltVoiceConfig,omitempty"`
+	// ReplicatedVoiceConfig: Optional. The configuration for a replicated voice.
+	// This enables users to replicate a voice from an audio sample.
+	ReplicatedVoiceConfig *GoogleCloudAiplatformV1beta1ReplicatedVoiceConfig `json:"replicatedVoiceConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PrebuiltVoiceConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

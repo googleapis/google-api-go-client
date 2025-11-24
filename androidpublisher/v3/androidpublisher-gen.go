@@ -1481,6 +1481,10 @@ func (s AutoRenewingPlan) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BaseDetails: Details of a base price pricing phase.
+type BaseDetails struct {
+}
+
 // BasePlan: A single base plan for a subscription.
 type BasePlan struct {
 	// AutoRenewingBasePlanType: Set when the base plan automatically renews at a
@@ -3572,6 +3576,50 @@ func (s ExternalAccountIdentifiers) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExternalAccountIds: User account identifier in your app.
+type ExternalAccountIds struct {
+	// ObfuscatedAccountId: Optional. Specifies an optional obfuscated string that
+	// is uniquely associated with the purchaser's user account in your app. If you
+	// pass this value, Google Play can use it to detect irregular activity. Do not
+	// use this field to store any Personally Identifiable Information (PII) such
+	// as emails in cleartext. Attempting to store PII in this field will result in
+	// purchases being blocked. Google Play recommends that you use either
+	// encryption or a one-way hash to generate an obfuscated identifier to send to
+	// Google Play. This identifier is limited to 64 characters. This field can
+	// only be set for resubscription purchases. See
+	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedaccountid
+	// to set this field for purchases made using the standard in-app billing flow.
+	ObfuscatedAccountId string `json:"obfuscatedAccountId,omitempty"`
+	// ObfuscatedProfileId: Optional. Specifies an optional obfuscated string that
+	// is uniquely associated with the purchaser's user profile in your app. If you
+	// pass this value, Google Play can use it to detect irregular activity. Do not
+	// use this field to store any Personally Identifiable Information (PII) such
+	// as emails in cleartext. Attempting to store PII in this field will result in
+	// purchases being blocked. Google Play recommends that you use either
+	// encryption or a one-way hash to generate an obfuscated identifier to send to
+	// Google Play. This identifier is limited to 64 characters. This field can
+	// only be set for resubscription purchases. See
+	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedprofileid
+	// to set this field for purchases made using the standard in-app billing flow.
+	ObfuscatedProfileId string `json:"obfuscatedProfileId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObfuscatedAccountId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObfuscatedAccountId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExternalAccountIds) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalAccountIds
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExternalSubscription: Details of an external subscription.
 type ExternalSubscription struct {
 	// SubscriptionType: Required. The type of the external subscription.
@@ -3774,6 +3822,10 @@ type ExternallyHostedApk struct {
 func (s ExternallyHostedApk) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternallyHostedApk
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FreeTrialDetails: Details of a free trial pricing phase.
+type FreeTrialDetails struct {
 }
 
 // FullRefund: A full refund of the remaining amount of a transaction.
@@ -4671,6 +4723,10 @@ func (s InternalAppSharingArtifact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// IntroductoryPriceDetails: Details of an introductory price pricing phase.
+type IntroductoryPriceDetails struct {
+}
+
 // IntroductoryPriceInfo: Contains the introductory price information for a
 // subscription.
 type IntroductoryPriceInfo struct {
@@ -4706,6 +4762,50 @@ type IntroductoryPriceInfo struct {
 
 func (s IntroductoryPriceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod IntroductoryPriceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ItemReplacement: Details about a subscription line item that is being
+// replaced.
+type ItemReplacement struct {
+	// BasePlanId: The base plan ID of the subscription line item being replaced.
+	BasePlanId string `json:"basePlanId,omitempty"`
+	// OfferId: The offer ID of the subscription line item being replaced, if
+	// applicable.
+	OfferId string `json:"offerId,omitempty"`
+	// ProductId: The product ID of the subscription line item being replaced.
+	ProductId string `json:"productId,omitempty"`
+	// ReplacementMode: The replacement mode applied during the purchase.
+	//
+	// Possible values:
+	//   "REPLACEMENT_MODE_UNSPECIFIED" - Unspecified replacement mode.
+	//   "WITH_TIME_PRORATION" - The new plan will be prorated and credited from
+	// the old plan.
+	//   "CHARGE_PRORATED_PRICE" - The user will be charged a prorated price for
+	// the new plan.
+	//   "WITHOUT_PRORATION" - The new plan will replace the old one without
+	// prorating the time.
+	//   "CHARGE_FULL_PRICE" - The user will be charged the full price for the new
+	// plan.
+	//   "DEFERRED" - The old plan will be cancelled and the new plan will be
+	// effective after the old one expires.
+	//   "KEEP_EXISTING" - The plan will remain unchanged with this replacement.
+	ReplacementMode string `json:"replacementMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BasePlanId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BasePlanId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ItemReplacement) MarshalJSON() ([]byte, error) {
+	type NoMethod ItemReplacement
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5325,6 +5425,35 @@ type OfferDetails struct {
 
 func (s OfferDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod OfferDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OfferPhaseDetails: Details of a pricing phase for the entitlement period
+// funded by this order.
+type OfferPhaseDetails struct {
+	// BaseDetails: The order funds a base price period.
+	BaseDetails *BaseDetails `json:"baseDetails,omitempty"`
+	// FreeTrialDetails: The order funds a free trial period.
+	FreeTrialDetails *FreeTrialDetails `json:"freeTrialDetails,omitempty"`
+	// IntroductoryPriceDetails: The order funds an introductory pricing period.
+	IntroductoryPriceDetails *IntroductoryPriceDetails `json:"introductoryPriceDetails,omitempty"`
+	// ProrationPeriodDetails: The order funds a proration period.
+	ProrationPeriodDetails *ProrationPeriodDetails `json:"prorationPeriodDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseDetails") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OfferPhaseDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod OfferPhaseDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6204,6 +6333,37 @@ func (s OtherRegionsSubscriptionOfferPhasePrices) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OutOfAppPurchaseContext: Information specific to an out of app purchase.
+type OutOfAppPurchaseContext struct {
+	// ExpiredExternalAccountIdentifiers: User account identifier from the last
+	// expired subscription for this SKU.
+	ExpiredExternalAccountIdentifiers *ExternalAccountIdentifiers `json:"expiredExternalAccountIdentifiers,omitempty"`
+	// ExpiredPurchaseToken: The purchase token of the last expired subscription.
+	// This purchase token must only be used to help identify the user if the link
+	// between the purchaseToken and user is stored in your database. This cannot
+	// be used to call the Google Developer API if it has been more than 60 days
+	// since expiry.
+	ExpiredPurchaseToken string `json:"expiredPurchaseToken,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ExpiredExternalAccountIdentifiers") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "ExpiredExternalAccountIdentifiers") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OutOfAppPurchaseContext) MarshalJSON() ([]byte, error) {
+	type NoMethod OutOfAppPurchaseContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PageInfo: Information about the current page. List operations that supports
 // paging return only one "page" of results. This protocol buffer message
 // describes the page that has been returned.
@@ -6774,6 +6934,51 @@ type ProductPurchasesAcknowledgeRequest struct {
 
 func (s ProductPurchasesAcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductPurchasesAcknowledgeRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProrationPeriodDetails: Details of a proration period. A proration period
+// can be a period calculated during a plan change to cover existing
+// entitlements (For more information, see Allow users to upgrade, downgrade,
+// or change their subscription
+// (https://developer.android.com/google/play/billing/subscriptions#allow-users-change),
+// or a prorated period to align add-on renewal dates with the base (For more
+// information, see Rules applicable for items in the purchase
+// (https://developer.android.com/google/play/billing/subscription-with-addons#rules-base-addons)).
+type ProrationPeriodDetails struct {
+	// LinkedOrderId: The last order id of the original subscription purchase prior
+	// to the plan change. This is only populated if this proration period is from
+	// an ugrade/downgrade from a previous subscription and carries the remaining
+	// offer phase from the linked order of the previous subscription.
+	LinkedOrderId string `json:"linkedOrderId,omitempty"`
+	// OriginalOfferPhase: Represent the original offer phase from the purchased
+	// the line item if the proration period contains any of them. For example, a
+	// proration period from CHARGE_FULL_PRICE plan change may merge the 1st offer
+	// phase of the subscription offer of the new product user purchased. In this
+	// case, the original offer phase will be set here.
+	//
+	// Possible values:
+	//   "OFFER_PHASE_UNSPECIFIED" - Offer phase unspecified. This value is not
+	// used.
+	//   "BASE" - The order funds a base price period.
+	//   "INTRODUCTORY" - The order funds an introductory pricing period.
+	//   "FREE_TRIAL" - The order funds a free trial period.
+	OriginalOfferPhase string `json:"originalOfferPhase,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LinkedOrderId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LinkedOrderId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProrationPeriodDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ProrationPeriodDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8044,6 +8249,7 @@ type SubscriptionDetails struct {
 	// OfferId: The offer ID for the current subscription offer.
 	OfferId string `json:"offerId,omitempty"`
 	// OfferPhase: The pricing phase for the billing period funded by this order.
+	// Deprecated. Use offer_phase_details instead.
 	//
 	// Possible values:
 	//   "OFFER_PHASE_UNSPECIFIED" - Offer phase unspecified. This value is not
@@ -8052,6 +8258,9 @@ type SubscriptionDetails struct {
 	//   "INTRODUCTORY" - The order funds an introductory pricing period.
 	//   "FREE_TRIAL" - The order funds a free trial period.
 	OfferPhase string `json:"offerPhase,omitempty"`
+	// OfferPhaseDetails: The pricing phase details for the entitlement period
+	// funded by this order.
+	OfferPhaseDetails *OfferPhaseDetails `json:"offerPhaseDetails,omitempty"`
 	// ServicePeriodEndTime: The end of the billing period funded by this order.
 	// This is a snapshot of the billing/service period end time at the moment the
 	// order was processed, and should be used only for accounting. To get the
@@ -8481,6 +8690,10 @@ type SubscriptionPurchaseLineItem struct {
 	// ExpiryTime: Time at which the subscription expired or will expire unless the
 	// access is extended (ex. renews).
 	ExpiryTime string `json:"expiryTime,omitempty"`
+	// ItemReplacement: Details of the item being replaced. This field is only
+	// populated if this item replaced another item in a previous subscription and
+	// is only available for 60 days after the purchase time.
+	ItemReplacement *ItemReplacement `json:"itemReplacement,omitempty"`
 	// LatestSuccessfulOrderId: The order id of the latest successful order
 	// associated with this item. Not present if the item is not owned by the user
 	// yet (e.g. the item being deferred replaced to).
@@ -8550,6 +8763,12 @@ type SubscriptionPurchaseV2 struct {
 	// Convert from prepaid to auto renewing subscription. * Convert from an auto
 	// renewing subscription to prepaid. * Topup a prepaid subscription.
 	LinkedPurchaseToken string `json:"linkedPurchaseToken,omitempty"`
+	// OutOfAppPurchaseContext: Additional context for out of app purchases. This
+	// information is only present for re-subscription purchases (subscription
+	// purchases made after the previous subscription of the same product has
+	// expired) made through the Google Play subscriptions center. This field will
+	// be removed after you acknowledge the subscription.
+	OutOfAppPurchaseContext *OutOfAppPurchaseContext `json:"outOfAppPurchaseContext,omitempty"`
 	// PausedStateContext: Additional context around paused subscriptions. Only
 	// present if the subscription currently has subscription_state
 	// SUBSCRIPTION_STATE_PAUSED.
@@ -8620,6 +8839,8 @@ func (s SubscriptionPurchaseV2) MarshalJSON() ([]byte, error) {
 type SubscriptionPurchasesAcknowledgeRequest struct {
 	// DeveloperPayload: Payload to attach to the purchase.
 	DeveloperPayload string `json:"developerPayload,omitempty"`
+	// ExternalAccountIds: Optional. User account identifier in your app.
+	ExternalAccountIds *ExternalAccountIds `json:"externalAccountIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeveloperPayload") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

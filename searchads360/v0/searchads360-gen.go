@@ -582,6 +582,43 @@ func (s GoogleAdsSearchads360V0Common__DeviceInfo) MarshalJSON() ([]byte, error)
 type GoogleAdsSearchads360V0Common__EnhancedCpc struct {
 }
 
+// GoogleAdsSearchads360V0Common__FinalAppUrl: A URL for deep linking into an
+// app for the given operating system.
+type GoogleAdsSearchads360V0Common__FinalAppUrl struct {
+	// OsType: The operating system targeted by this URL. Required.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in this
+	// version.
+	//   "IOS" - The Apple IOS operating system.
+	//   "ANDROID" - The Android operating system.
+	OsType string `json:"osType,omitempty"`
+	// Url: The app deep link URL. Deep links specify a location in an app that
+	// corresponds to the content you'd like to show, and should be of the form
+	// {scheme}://{host_path} The scheme identifies which app to open. For your
+	// app, you can use a custom scheme that starts with the app's name. The host
+	// and path specify the unique location in the app where your content exists.
+	// Example: "exampleapp://productid_1234". Required.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OsType") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OsType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V0Common__FinalAppUrl) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__FinalAppUrl
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Common__FrequencyCapEntry: A rule specifying the
 // maximum number of times an ad (or some set of ads) can be shown to a user
 // over a particular time period.
@@ -1045,6 +1082,14 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// total cost of ad interactions (such as clicks for text ads or views for
 	// video ads).
 	AllConversionsValuePerCost float64 `json:"allConversionsValuePerCost,omitempty"`
+	// AverageCartSize: Average cart size is the average number of products in each
+	// order attributed to your ads. How it works: You report conversions with cart
+	// data for completed purchases on your website. Average cart size is the total
+	// number of products sold divided by the total number of orders you received.
+	// Example: You received 2 orders, the first included 3 products and the second
+	// included 2. The average cart size is 2.5 products = (3+2)/2. This metric is
+	// only available if you report conversions with cart data.
+	AverageCartSize float64 `json:"averageCartSize,omitempty"`
 	// AverageCost: The average amount you pay per interaction. This amount is the
 	// total cost of your ads divided by the total number of interactions.
 	AverageCost float64 `json:"averageCost,omitempty"`
@@ -1058,6 +1103,20 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// metrics_currency parameter at
 	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
 	AverageCpm float64 `json:"averageCpm,omitempty"`
+	// AverageImpressionFrequencyPerUser: The average number of times a unique user
+	// saw your ad during the requested time period. This metric cannot be
+	// aggregated, and can only be requested for date ranges of 92 days or less.
+	// This metric is available for following campaign types - Display, Video,
+	// Discovery and App.
+	AverageImpressionFrequencyPerUser float64 `json:"averageImpressionFrequencyPerUser,omitempty"`
+	// AverageOrderValueMicros: Average order value is the average revenue you made
+	// per order attributed to your ads. How it works: You report conversions with
+	// cart data for completed purchases on your website. Average order value is
+	// the total revenue from your orders divided by the total number of orders.
+	// Example: You received 3 orders which made $10, $15 and $20 worth of revenue.
+	// The average order value is $15 = ($10 + $15 + $20)/3. This metric is only
+	// available if you report conversions with cart data.
+	AverageOrderValueMicros int64 `json:"averageOrderValueMicros,omitempty,string"`
 	// AverageQualityScore: The average quality score.
 	AverageQualityScore float64 `json:"averageQualityScore,omitempty"`
 	// Clicks: The number of clicks.
@@ -1257,6 +1316,17 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// parameter at
 	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
 	CostMicros int64 `json:"costMicros,omitempty,string"`
+	// CostOfGoodsSoldMicros: Cost of goods sold (COGS) is the total cost of the
+	// products you sold in orders attributed to your ads. How it works: You can
+	// add a cost of goods sold value to every product in Merchant Center. If you
+	// report conversions with cart data, the products you sold are matched with
+	// their cost of goods sold value and this can be used to calculate the gross
+	// profit you made on each order. Example: Someone clicked on a Shopping ad for
+	// a hat then bought the same hat and a shirt. The hat has a cost of goods sold
+	// value of $3, the shirt has a cost of goods sold value of $5. The cost of
+	// goods sold for this order is $8 = $3 + $5. This metric is only available if
+	// you report conversions with cart data.
+	CostOfGoodsSoldMicros int64 `json:"costOfGoodsSoldMicros,omitempty,string"`
 	// CostPerAllConversions: The cost of ad interactions divided by all
 	// conversions.
 	CostPerAllConversions float64 `json:"costPerAllConversions,omitempty"`
@@ -1365,6 +1435,32 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// don't affect your account statistics. See the help page at
 	// https://support.google.com/campaignmanager/answer/6076504 for details.
 	GeneralInvalidClicks int64 `json:"generalInvalidClicks,omitempty,string"`
+	// GrossProfitMargin: Gross profit margin is the percentage gross profit you
+	// made from orders attributed to your ads, after taking out the cost of goods
+	// sold (COGS). How it works: You report conversions with cart data for
+	// completed purchases on your website. Gross profit margin is the gross profit
+	// you made divided by your total revenue and multiplied by 100%. Gross profit
+	// margin calculations only include products that have a cost of goods sold
+	// value in Merchant Center. Example: Someone bought a hat and a shirt in an
+	// order on your website. The hat is priced $10 and has a cost of goods sold
+	// value of $3. The shirt is priced $20 but has no cost of goods sold value.
+	// Gross profit margin for this order will only take into account the hat
+	// because it has a cost of goods sold value, so it's 70% = ($10 - $3)/$10 x
+	// 100%. This metric is only available if you report conversions with cart
+	// data.
+	GrossProfitMargin float64 `json:"grossProfitMargin,omitempty"`
+	// GrossProfitMicros: Gross profit is the profit you made from orders
+	// attributed to your ads minus the cost of goods sold (COGS). How it works:
+	// Gross profit is the revenue you made from sales attributed to your ads minus
+	// cost of goods sold. Gross profit calculations only include products that
+	// have a cost of goods sold value in Merchant Center. Example: Someone clicked
+	// on a Shopping ad for a hat then bought the same hat and a shirt in an order
+	// from your website. The hat is priced $10 and the shirt is priced $20. The
+	// hat has a cost of goods sold value of $3, but the shirt has no cost of goods
+	// sold value. Gross profit for this order will only take into account the hat,
+	// so it's $7 = $10 - $3. This metric is only available if you report
+	// conversions with cart data.
+	GrossProfitMicros int64 `json:"grossProfitMicros,omitempty,string"`
 	// HistoricalCreativeQualityScore: The creative historical quality score.
 	//
 	// Possible values:
@@ -1495,8 +1591,28 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// MobileFriendlyClicksPercentage: The percentage of mobile clicks that go to a
 	// mobile-friendly page.
 	MobileFriendlyClicksPercentage float64 `json:"mobileFriendlyClicksPercentage,omitempty"`
+	// Orders: Orders is the total number of purchase conversions you received
+	// attributed to your ads. How it works: You report conversions with cart data
+	// for completed purchases on your website. If a conversion is attributed to
+	// previous interactions with your ads (clicks for text or Shopping ads, views
+	// for video ads etc.) it's counted as an order. Example: Someone clicked on a
+	// Shopping ad for a hat then bought the same hat and a shirt in an order on
+	// your website. Even though they bought 2 products, this would count as 1
+	// order. This metric is only available if you report conversions with cart
+	// data.
+	Orders float64 `json:"orders,omitempty"`
 	// RawEventConversionMetrics: The raw event conversion metrics.
 	RawEventConversionMetrics []*GoogleAdsSearchads360V0Common__Value `json:"rawEventConversionMetrics,omitempty"`
+	// RevenueMicros: Revenue is the total amount you made from orders attributed
+	// to your ads. How it works: You report conversions with cart data for
+	// completed purchases on your website. Revenue is the total value of all the
+	// orders you received attributed to your ads, minus any discount. Example:
+	// Someone clicked on a Shopping ad for a hat then bought the same hat and a
+	// shirt in an order from your website. The hat is priced $10 and the shirt is
+	// priced $20. The entire order has a $5 discount. The revenue from this order
+	// is $25 = ($10 + $20) - $5. This metric is only available if you report
+	// conversions with cart data.
+	RevenueMicros int64 `json:"revenueMicros,omitempty,string"`
 	// SearchAbsoluteTopImpressionShare: The percentage of the customer's Shopping
 	// or Search ad impressions that are shown in the most prominent Shopping
 	// position. See https://support.google.com/sa360/answer/9566729 for details.
@@ -1561,6 +1677,19 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// TopImpressionPercentage: The percent of your ad impressions that are shown
 	// adjacent to the top organic search results.
 	TopImpressionPercentage float64 `json:"topImpressionPercentage,omitempty"`
+	// UniqueUsers: The number of unique users who saw your ad during the requested
+	// time period. This metric cannot be aggregated, and can only be requested for
+	// date ranges of 92 days or less. This metric is available for following
+	// campaign types - Display, Video, Discovery and App.
+	UniqueUsers int64 `json:"uniqueUsers,omitempty,string"`
+	// UnitsSold: Units sold is the total number of products sold from orders
+	// attributed to your ads. How it works: You report conversions with cart data
+	// for completed purchases on your website. Units sold is the total number of
+	// products sold from all orders attributed to your ads. Example: Someone
+	// clicked on a Shopping ad for a hat then bought the same hat, a shirt and a
+	// jacket. The units sold in this order is 3. This metric is only available if
+	// you report conversions with cart data.
+	UnitsSold float64 `json:"unitsSold,omitempty"`
 	// ValuePerAllConversions: The value of all conversions divided by the number
 	// of all conversions.
 	ValuePerAllConversions float64 `json:"valuePerAllConversions,omitempty"`
@@ -1620,9 +1749,11 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 		AllConversionsValue                               gensupport.JSONFloat64 `json:"allConversionsValue"`
 		AllConversionsValueByConversionDate               gensupport.JSONFloat64 `json:"allConversionsValueByConversionDate"`
 		AllConversionsValuePerCost                        gensupport.JSONFloat64 `json:"allConversionsValuePerCost"`
+		AverageCartSize                                   gensupport.JSONFloat64 `json:"averageCartSize"`
 		AverageCost                                       gensupport.JSONFloat64 `json:"averageCost"`
 		AverageCpc                                        gensupport.JSONFloat64 `json:"averageCpc"`
 		AverageCpm                                        gensupport.JSONFloat64 `json:"averageCpm"`
+		AverageImpressionFrequencyPerUser                 gensupport.JSONFloat64 `json:"averageImpressionFrequencyPerUser"`
 		AverageQualityScore                               gensupport.JSONFloat64 `json:"averageQualityScore"`
 		ClientAccountConversions                          gensupport.JSONFloat64 `json:"clientAccountConversions"`
 		ClientAccountConversionsValue                     gensupport.JSONFloat64 `json:"clientAccountConversionsValue"`
@@ -1648,10 +1779,12 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 		CrossSellUnitsSold                                gensupport.JSONFloat64 `json:"crossSellUnitsSold"`
 		Ctr                                               gensupport.JSONFloat64 `json:"ctr"`
 		GeneralInvalidClickRate                           gensupport.JSONFloat64 `json:"generalInvalidClickRate"`
+		GrossProfitMargin                                 gensupport.JSONFloat64 `json:"grossProfitMargin"`
 		InteractionRate                                   gensupport.JSONFloat64 `json:"interactionRate"`
 		InvalidClickRate                                  gensupport.JSONFloat64 `json:"invalidClickRate"`
 		LeadUnitsSold                                     gensupport.JSONFloat64 `json:"leadUnitsSold"`
 		MobileFriendlyClicksPercentage                    gensupport.JSONFloat64 `json:"mobileFriendlyClicksPercentage"`
+		Orders                                            gensupport.JSONFloat64 `json:"orders"`
 		SearchAbsoluteTopImpressionShare                  gensupport.JSONFloat64 `json:"searchAbsoluteTopImpressionShare"`
 		SearchBudgetLostAbsoluteTopImpressionShare        gensupport.JSONFloat64 `json:"searchBudgetLostAbsoluteTopImpressionShare"`
 		SearchBudgetLostImpressionShare                   gensupport.JSONFloat64 `json:"searchBudgetLostImpressionShare"`
@@ -1664,6 +1797,7 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 		SearchRankLostTopImpressionShare                  gensupport.JSONFloat64 `json:"searchRankLostTopImpressionShare"`
 		SearchTopImpressionShare                          gensupport.JSONFloat64 `json:"searchTopImpressionShare"`
 		TopImpressionPercentage                           gensupport.JSONFloat64 `json:"topImpressionPercentage"`
+		UnitsSold                                         gensupport.JSONFloat64 `json:"unitsSold"`
 		ValuePerAllConversions                            gensupport.JSONFloat64 `json:"valuePerAllConversions"`
 		ValuePerAllConversionsByConversionDate            gensupport.JSONFloat64 `json:"valuePerAllConversionsByConversionDate"`
 		ValuePerConversion                                gensupport.JSONFloat64 `json:"valuePerConversion"`
@@ -1690,9 +1824,11 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 	s.AllConversionsValue = float64(s1.AllConversionsValue)
 	s.AllConversionsValueByConversionDate = float64(s1.AllConversionsValueByConversionDate)
 	s.AllConversionsValuePerCost = float64(s1.AllConversionsValuePerCost)
+	s.AverageCartSize = float64(s1.AverageCartSize)
 	s.AverageCost = float64(s1.AverageCost)
 	s.AverageCpc = float64(s1.AverageCpc)
 	s.AverageCpm = float64(s1.AverageCpm)
+	s.AverageImpressionFrequencyPerUser = float64(s1.AverageImpressionFrequencyPerUser)
 	s.AverageQualityScore = float64(s1.AverageQualityScore)
 	s.ClientAccountConversions = float64(s1.ClientAccountConversions)
 	s.ClientAccountConversionsValue = float64(s1.ClientAccountConversionsValue)
@@ -1718,10 +1854,12 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 	s.CrossSellUnitsSold = float64(s1.CrossSellUnitsSold)
 	s.Ctr = float64(s1.Ctr)
 	s.GeneralInvalidClickRate = float64(s1.GeneralInvalidClickRate)
+	s.GrossProfitMargin = float64(s1.GrossProfitMargin)
 	s.InteractionRate = float64(s1.InteractionRate)
 	s.InvalidClickRate = float64(s1.InvalidClickRate)
 	s.LeadUnitsSold = float64(s1.LeadUnitsSold)
 	s.MobileFriendlyClicksPercentage = float64(s1.MobileFriendlyClicksPercentage)
+	s.Orders = float64(s1.Orders)
 	s.SearchAbsoluteTopImpressionShare = float64(s1.SearchAbsoluteTopImpressionShare)
 	s.SearchBudgetLostAbsoluteTopImpressionShare = float64(s1.SearchBudgetLostAbsoluteTopImpressionShare)
 	s.SearchBudgetLostImpressionShare = float64(s1.SearchBudgetLostImpressionShare)
@@ -1734,6 +1872,7 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 	s.SearchRankLostTopImpressionShare = float64(s1.SearchRankLostTopImpressionShare)
 	s.SearchTopImpressionShare = float64(s1.SearchTopImpressionShare)
 	s.TopImpressionPercentage = float64(s1.TopImpressionPercentage)
+	s.UnitsSold = float64(s1.UnitsSold)
 	s.ValuePerAllConversions = float64(s1.ValuePerAllConversions)
 	s.ValuePerAllConversionsByConversionDate = float64(s1.ValuePerAllConversionsByConversionDate)
 	s.ValuePerConversion = float64(s1.ValuePerConversion)
@@ -4524,6 +4663,14 @@ type GoogleAdsSearchads360V0Resources__Ad struct {
 	ExpandedDynamicSearchAd *GoogleAdsSearchads360V0Common__SearchAds360ExpandedDynamicSearchAdInfo `json:"expandedDynamicSearchAd,omitempty"`
 	// ExpandedTextAd: Immutable. Details pertaining to an expanded text ad.
 	ExpandedTextAd *GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo `json:"expandedTextAd,omitempty"`
+	// FinalAppUrls: A list of final app URLs that will be used on mobile if the
+	// user has the specific app installed.
+	FinalAppUrls []*GoogleAdsSearchads360V0Common__FinalAppUrl `json:"finalAppUrls,omitempty"`
+	// FinalMobileUrls: The list of possible final mobile URLs after all
+	// cross-domain redirects for the ad.
+	FinalMobileUrls []string `json:"finalMobileUrls,omitempty"`
+	// FinalUrlSuffix: The suffix to use when constructing a final URL.
+	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// FinalUrls: The list of possible final URLs after all cross-domain redirects
 	// for the ad.
 	FinalUrls []string `json:"finalUrls,omitempty"`
@@ -4542,6 +4689,8 @@ type GoogleAdsSearchads360V0Resources__Ad struct {
 	ResponsiveSearchAd *GoogleAdsSearchads360V0Common__SearchAds360ResponsiveSearchAdInfo `json:"responsiveSearchAd,omitempty"`
 	// TextAd: Immutable. Details pertaining to a text ad.
 	TextAd *GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo `json:"textAd,omitempty"`
+	// TrackingUrlTemplate: The URL template for constructing a tracking URL.
+	TrackingUrlTemplate string `json:"trackingUrlTemplate,omitempty"`
 	// Type: Output only. The type of ad.
 	//
 	// Possible values:
@@ -4655,6 +4804,8 @@ type GoogleAdsSearchads360V0Resources__AdGroup struct {
 	//   "ACCOUNT_PAUSED" - No ads are running for this ad group, because the
 	// account has been paused.
 	EngineStatus string `json:"engineStatus,omitempty"`
+	// FinalUrlSuffix: URL template for appending params to Final URL.
+	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// Id: Output only. The ID of the ad group.
 	Id int64 `json:"id,omitempty,string"`
 	// Labels: Output only. The resource names of labels attached to this ad group.
@@ -4696,6 +4847,8 @@ type GoogleAdsSearchads360V0Resources__AdGroup struct {
 	Status string `json:"status,omitempty"`
 	// TargetingSetting: Setting for targeting related features.
 	TargetingSetting *GoogleAdsSearchads360V0Common__TargetingSetting `json:"targetingSetting,omitempty"`
+	// TrackingUrlTemplate: The URL template for constructing a tracking URL.
+	TrackingUrlTemplate string `json:"trackingUrlTemplate,omitempty"`
 	// Type: Immutable. The type of the ad group.
 	//
 	// Possible values:
@@ -4844,8 +4997,8 @@ type GoogleAdsSearchads360V0Resources__AdGroupAdEffectiveLabel struct {
 	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
 	// ResourceName: Immutable. The resource name of the ad group ad effective
 	// label. Ad group ad effective label resource names have the form:
-	// `customers/{customer_id}/adGroupAdEffectiveLabels/{ad_group_id}~{ad_id}~{labe
-	// l_id}`
+	// `customers/{owner_customer_id}/adGroupAdEffectiveLabels/{ad_group_id}~{ad_id}
+	// ~{label_id}`
 	ResourceName string `json:"resourceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdGroupAd") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4876,7 +5029,8 @@ type GoogleAdsSearchads360V0Resources__AdGroupAdLabel struct {
 	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
 	// ResourceName: Immutable. The resource name of the ad group ad label. Ad
 	// group ad label resource names have the form:
-	// `customers/{customer_id}/adGroupAdLabels/{ad_group_id}~{ad_id}~{label_id}`
+	// `customers/{owner_customer_id}/adGroupAdLabels/{ad_group_id}~{ad_id}~{label_i
+	// d}`
 	ResourceName string `json:"resourceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdGroupAd") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5114,6 +5268,9 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterion struct {
 	//   "AD_GROUP_CRITERION_ACCOUNT_PAUSED" - Criterion has been paused since the
 	// account is paused.
 	EngineStatus string `json:"engineStatus,omitempty"`
+	// FinalMobileUrls: The list of possible final mobile URLs after all
+	// cross-domain redirects.
+	FinalMobileUrls []string `json:"finalMobileUrls,omitempty"`
 	// FinalUrlSuffix: URL template for appending params to final URL.
 	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// FinalUrls: The list of possible final URLs after all cross-domain redirects
@@ -5214,6 +5371,10 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterion struct {
 	//   "BRAND_LIST" - Brand List
 	//   "LIFE_EVENT" - Life Event
 	Type string `json:"type,omitempty"`
+	// UrlCustomParameters: The list of mappings used to substitute custom
+	// parameter tags in a `tracking_url_template`, `final_urls`, or
+	// `mobile_final_urls`.
+	UrlCustomParameters []*GoogleAdsSearchads360V0Common__CustomParameter `json:"urlCustomParameters,omitempty"`
 	// UserList: Immutable. User List.
 	UserList *GoogleAdsSearchads360V0Common__UserListInfo `json:"userList,omitempty"`
 	// Webpage: Immutable. Webpage
@@ -5266,8 +5427,8 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterionEffectiveLabel struct {
 	// ResourceName: Immutable. The resource name of the ad group criterion
 	// effective label. Ad group criterion effective label resource names have the
 	// form:
-	// `customers/{customer_id}/adGroupCriterionEffectiveLabels/{ad_group_id}~{crite
-	// rion_id}~{label_id}`
+	// `customers/{owner_customer_id}/adGroupCriterionEffectiveLabels/{ad_group_id}~
+	// {criterion_id}~{label_id}`
 	ResourceName string `json:"resourceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdGroupCriterion") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5299,8 +5460,8 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel struct {
 	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
 	// ResourceName: Immutable. The resource name of the ad group criterion label.
 	// Ad group criterion label resource names have the form:
-	// `customers/{customer_id}/adGroupCriterionLabels/{ad_group_id}~{criterion_id}~
-	// {label_id}`
+	// `customers/{owner_customer_id}/adGroupCriterionLabels/{ad_group_id}~{criterio
+	// n_id}~{label_id}`
 	ResourceName string `json:"resourceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdGroupCriterion") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5333,7 +5494,8 @@ type GoogleAdsSearchads360V0Resources__AdGroupEffectiveLabel struct {
 	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
 	// ResourceName: Immutable. The resource name of the ad group effective label.
 	// Ad group effective label resource names have the form:
-	// `customers/{customer_id}/adGroupEffectiveLabels/{ad_group_id}~{label_id}`
+	// `customers/{owner_customer_id}/adGroupEffectiveLabels/{ad_group_id}~{label_id
+	// }`
 	ResourceName string `json:"resourceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdGroup") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5364,7 +5526,7 @@ type GoogleAdsSearchads360V0Resources__AdGroupLabel struct {
 	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
 	// ResourceName: Immutable. The resource name of the ad group label. Ad group
 	// label resource names have the form:
-	// `customers/{customer_id}/adGroupLabels/{ad_group_id}~{label_id}`
+	// `customers/{owner_customer_id}/adGroupLabels/{ad_group_id}~{label_id}`
 	ResourceName string `json:"resourceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdGroup") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5436,6 +5598,12 @@ type GoogleAdsSearchads360V0Resources__Asset struct {
 	//   "DISABLED" - The asset is inactive (pending).
 	//   "REMOVED" - The asset has been removed.
 	EngineStatus string `json:"engineStatus,omitempty"`
+	// FinalMobileUrls: A list of possible final mobile URLs after all cross domain
+	// redirects.
+	FinalMobileUrls []string `json:"finalMobileUrls,omitempty"`
+	// FinalUrlSuffix: URL template for appending params to landing page URLs
+	// served with parallel tracking.
+	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 	// FinalUrls: A list of possible final URLs after all cross domain redirects.
 	FinalUrls []string `json:"finalUrls,omitempty"`
 	// Id: Output only. The ID of the asset.
@@ -5509,6 +5677,10 @@ type GoogleAdsSearchads360V0Resources__Asset struct {
 	//   "LOCATION" - Location asset.
 	//   "HOTEL_PROPERTY" - Hotel property asset.
 	Type string `json:"type,omitempty"`
+	// UrlCustomParameters: A list of mappings to be used for substituting URL
+	// custom parameter tags in the tracking_url_template, final_urls, and/or
+	// final_mobile_urls.
+	UrlCustomParameters []*GoogleAdsSearchads360V0Common__CustomParameter `json:"urlCustomParameters,omitempty"`
 	// YoutubeVideoAsset: Immutable. A YouTube video asset.
 	YoutubeVideoAsset *GoogleAdsSearchads360V0Common__YoutubeVideoAsset `json:"youtubeVideoAsset,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CallAsset") to
@@ -5651,6 +5823,8 @@ type GoogleAdsSearchads360V0Resources__AssetGroupAsset struct {
 	// Performance Max for travel goals campaign.
 	//   "DISCOVERY_CAROUSEL_CARD" - The asset is linked for use as a discovery
 	// carousel card.
+	//   "LONG_DESCRIPTION" - The asset is linked for use as a long description.
+	//   "CALL_TO_ACTION" - The asset is linked for use as a call-to-action.
 	FieldType string `json:"fieldType,omitempty"`
 	// ResourceName: Immutable. The resource name of the asset group asset. Asset
 	// group asset resource name have the form:
@@ -6362,7 +6536,38 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	// Performance Max for travel goals campaign.
 	//   "DISCOVERY_CAROUSEL_CARD" - The asset is linked for use as a discovery
 	// carousel card.
+	//   "LONG_DESCRIPTION" - The asset is linked for use as a long description.
+	//   "CALL_TO_ACTION" - The asset is linked for use as a call-to-action.
 	ExcludedParentAssetFieldTypes []string `json:"excludedParentAssetFieldTypes,omitempty"`
+	// FeedTypes: Output only. Types of feeds that are attached directly to this
+	// campaign.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in this
+	// version.
+	//   "PAGE_FEED" - Page asset set.
+	//   "DYNAMIC_EDUCATION" - Dynamic education asset set.
+	//   "MERCHANT_CENTER_FEED" - Google Merchant Center asset set.
+	//   "DYNAMIC_REAL_ESTATE" - Dynamic real estate asset set.
+	//   "DYNAMIC_CUSTOM" - Dynamic custom asset set.
+	//   "DYNAMIC_HOTELS_AND_RENTALS" - Dynamic hotels and rentals asset set.
+	//   "DYNAMIC_FLIGHTS" - Dynamic flights asset set.
+	//   "DYNAMIC_TRAVEL" - Dynamic travel asset set.
+	//   "DYNAMIC_LOCAL" - Dynamic local asset set.
+	//   "DYNAMIC_JOBS" - Dynamic jobs asset set.
+	//   "LOCATION_SYNC" - Location sync level asset set.
+	//   "BUSINESS_PROFILE_DYNAMIC_LOCATION_GROUP" - Business Profile location
+	// group asset set.
+	//   "CHAIN_DYNAMIC_LOCATION_GROUP" - Chain location group asset set which can
+	// be used for both owned locations and affiliate locations.
+	//   "STATIC_LOCATION_GROUP" - Static location group asset set which can be
+	// used for both owned locations and affiliate locations.
+	//   "HOTEL_PROPERTY" - Hotel Property asset set which is used to link a hotel
+	// property feed to Performance Max for travel goals campaigns.
+	//   "TRAVEL_FEED" - Travel Feed asset set type. Can represent either a Hotel
+	// feed or a Things to Do (activities) feed.
+	FeedTypes []string `json:"feedTypes,omitempty"`
 	// FinalUrlSuffix: Suffix used to append query parameters to landing pages that
 	// are served with parallel tracking.
 	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
@@ -6804,7 +7009,8 @@ type GoogleAdsSearchads360V0Resources__CampaignEffectiveLabel struct {
 	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
 	// ResourceName: Immutable. Name of the resource. CampaignEffectivelabel
 	// resource names have the form:
-	// `customers/{customer_id}/campaignEffectiveLabels/{campaign_id}~{label_id}`
+	// `customers/{owner_customer_id}/campaignEffectiveLabels/{campaign_id}~{label_i
+	// d}`
 	ResourceName string `json:"resourceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Campaign") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6835,7 +7041,7 @@ type GoogleAdsSearchads360V0Resources__CampaignLabel struct {
 	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
 	// ResourceName: Immutable. Name of the resource. Campaign label resource names
 	// have the form:
-	// `customers/{customer_id}/campaignLabels/{campaign_id}~{label_id}`
+	// `customers/{owner_customer_id}/campaignLabels/{campaign_id}~{label_id}`
 	ResourceName string `json:"resourceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Campaign") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6932,6 +7138,8 @@ type GoogleAdsSearchads360V0Resources__Conversion struct {
 	// Performance Max for travel goals campaign.
 	//   "DISCOVERY_CAROUSEL_CARD" - The asset is linked for use as a discovery
 	// carousel card.
+	//   "LONG_DESCRIPTION" - The asset is linked for use as a long description.
+	//   "CALL_TO_ACTION" - The asset is linked for use as a call-to-action.
 	AssetFieldType string `json:"assetFieldType,omitempty"`
 	// AssetId: Output only. ID of the asset which was interacted with during the
 	// conversion event.
@@ -7996,7 +8204,7 @@ type GoogleAdsSearchads360V0Resources__Label struct {
 	// 80, inclusive.
 	Name string `json:"name,omitempty"`
 	// ResourceName: Immutable. Name of the resource. Label resource names have the
-	// form: `customers/{customer_id}/labels/{label_id}`
+	// form: `customers/{owner_customer_id}/labels/{label_id}`
 	ResourceName string `json:"resourceName,omitempty"`
 	// Status: Output only. Status of the label. Read only.
 	//
@@ -8344,7 +8552,16 @@ func (s GoogleAdsSearchads360V0Resources__SearchAds360Field) MarshalJSON() ([]by
 // several product dimension levels. Product dimension values from Merchant
 // Center such as brand, category, custom attributes, product condition and
 // product type will reflect the state of each dimension as of the date and
-// time when the corresponding event was recorded.
+// time when the corresponding event was recorded. The number of impressions
+// and clicks that shopping_performance_view returns stats for may be different
+// from campaign reports. shopping_performance_view shows impressions and
+// clicks on products appearing in ads, while campaign reports show impressions
+// and clicks on the ads themselves. Depending on the format, an ad can show
+// from zero to several products, so the numbers may not match. In Google Ads
+// UI, you can query impressions and clicks of products appearing in ads by
+// selecting a column from "Product attributes" in the report editor. For
+// example, selecting the "Brand" column is equivalent to selecting
+// `segments.product_brand`.
 type GoogleAdsSearchads360V0Resources__ShoppingPerformanceView struct {
 	// ResourceName: Output only. The resource name of the Shopping performance
 	// view. Shopping performance view resource names have the form:
@@ -8495,6 +8712,8 @@ type GoogleAdsSearchads360V0Resources__Visit struct {
 	// Performance Max for travel goals campaign.
 	//   "DISCOVERY_CAROUSEL_CARD" - The asset is linked for use as a discovery
 	// carousel card.
+	//   "LONG_DESCRIPTION" - The asset is linked for use as a long description.
+	//   "CALL_TO_ACTION" - The asset is linked for use as a call-to-action.
 	AssetFieldType string `json:"assetFieldType,omitempty"`
 	// AssetId: Output only. ID of the asset which was interacted with during the
 	// visit event.

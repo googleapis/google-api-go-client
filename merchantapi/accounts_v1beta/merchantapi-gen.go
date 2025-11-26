@@ -2350,6 +2350,50 @@ func (s ItemUpdatesAccountLevelSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LatLng: An object that represents a latitude/longitude pair. This is
+// expressed as a pair of doubles to represent degrees latitude and degrees
+// longitude. Unless specified otherwise, this object must conform to the WGS84
+// standard. Values must be within normalized ranges.
+type LatLng struct {
+	// Latitude: The latitude in degrees. It must be in the range [-90.0, +90.0].
+	Latitude float64 `json:"latitude,omitempty"`
+	// Longitude: The longitude in degrees. It must be in the range [-180.0,
+	// +180.0].
+	Longitude float64 `json:"longitude,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Latitude") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Latitude") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LatLng) MarshalJSON() ([]byte, error) {
+	type NoMethod LatLng
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *LatLng) UnmarshalJSON(data []byte) error {
+	type NoMethod LatLng
+	var s1 struct {
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
+}
+
 // LfpLink: Collection of information related to the LFP link.
 type LfpLink struct {
 	// ExternalAccountId: Required. The account ID by which this merchant is known
@@ -3674,6 +3718,56 @@ func (s ProposeAccountServiceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RadiusArea: A radius area that defines the region area.
+type RadiusArea struct {
+	// LatLng: Required. The center of the radius area. It represents a
+	// latitude/longitude pair in decimal degrees format.
+	LatLng *LatLng `json:"latLng,omitempty"`
+	// Radius: Required. The radius distance of the area.
+	Radius float64 `json:"radius,omitempty"`
+	// RadiusUnits: Optional. The unit of the radius.
+	//
+	// Possible values:
+	//   "RADIUS_UNITS_UNSPECIFIED" - Unused default value
+	//   "MILES" - The distance is measured in miles.
+	//   "KILOMETERS" - The distance is measured in kilometers.
+	RadiusUnits string `json:"radiusUnits,omitempty"`
+	// RegionCode: Required. CLDR territory code
+	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) or the
+	// country the radius area applies to.
+	RegionCode string `json:"regionCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LatLng") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LatLng") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RadiusArea) MarshalJSON() ([]byte, error) {
+	type NoMethod RadiusArea
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *RadiusArea) UnmarshalJSON(data []byte) error {
+	type NoMethod RadiusArea
+	var s1 struct {
+		Radius gensupport.JSONFloat64 `json:"radius"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Radius = float64(s1.Radius)
+	return nil
+}
+
 // RateGroup: Shipping rate group definitions. Only the last one is allowed to
 // have an empty `applicable_shipping_labels`, which means "everything else".
 // The other `applicable_shipping_labels` must not overlap.
@@ -3734,6 +3828,8 @@ type Region struct {
 	// PostalCodeArea: Optional. A list of postal codes that defines the region
 	// area.
 	PostalCodeArea *PostalCodeArea `json:"postalCodeArea,omitempty"`
+	// RadiusArea: Optional. A radius area that defines the region area.
+	RadiusArea *RadiusArea `json:"radiusArea,omitempty"`
 	// RegionalInventoryEligible: Output only. Indicates if the region is eligible
 	// for use in the Regional Inventory configuration.
 	RegionalInventoryEligible bool `json:"regionalInventoryEligible,omitempty"`

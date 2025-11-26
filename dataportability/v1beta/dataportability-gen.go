@@ -273,6 +273,9 @@ const (
 	// Move a copy of your YouTube comments
 	DataportabilityYoutubeCommentsScope = "https://www.googleapis.com/auth/dataportability.youtube.comments"
 
+	// Move a copy of all your YouTube messages
+	DataportabilityYoutubeConversationsScope = "https://www.googleapis.com/auth/dataportability.youtube.conversations"
+
 	// Move a copy of your YouTube messages in live chat
 	DataportabilityYoutubeLiveChatScope = "https://www.googleapis.com/auth/dataportability.youtube.live_chat"
 
@@ -368,6 +371,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/dataportability.youtube.channel",
 		"https://www.googleapis.com/auth/dataportability.youtube.clips",
 		"https://www.googleapis.com/auth/dataportability.youtube.comments",
+		"https://www.googleapis.com/auth/dataportability.youtube.conversations",
 		"https://www.googleapis.com/auth/dataportability.youtube.live_chat",
 		"https://www.googleapis.com/auth/dataportability.youtube.music",
 		"https://www.googleapis.com/auth/dataportability.youtube.playable",

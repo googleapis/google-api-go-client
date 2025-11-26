@@ -2360,7 +2360,7 @@
       }
     }
   },
-  "revision": "20251115",
+  "revision": "20251120",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "About": {
@@ -3813,6 +3813,23 @@
       },
       "type": "object"
     },
+    "LatLng": {
+      "description": "An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this object must conform to the WGS84 standard. Values must be within normalized ranges.",
+      "id": "LatLng",
+      "properties": {
+        "latitude": {
+          "description": "The latitude in degrees. It must be in the range [-90.0, +90.0].",
+          "format": "double",
+          "type": "number"
+        },
+        "longitude": {
+          "description": "The longitude in degrees. It must be in the range [-180.0, +180.0].",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "LfpLink": {
       "description": "Collection of information related to the LFP link.",
       "id": "LfpLink",
@@ -4794,6 +4811,40 @@
       },
       "type": "object"
     },
+    "RadiusArea": {
+      "description": "A radius area that defines the region area.",
+      "id": "RadiusArea",
+      "properties": {
+        "latLng": {
+          "$ref": "LatLng",
+          "description": "Required. The center of the radius area. It represents a latitude/longitude pair in decimal degrees format."
+        },
+        "radius": {
+          "description": "Required. The radius distance of the area.",
+          "format": "double",
+          "type": "number"
+        },
+        "radiusUnits": {
+          "description": "Optional. The unit of the radius.",
+          "enum": [
+            "RADIUS_UNITS_UNSPECIFIED",
+            "MILES",
+            "KILOMETERS"
+          ],
+          "enumDescriptions": [
+            "Unused default value",
+            "The distance is measured in miles.",
+            "The distance is measured in kilometers."
+          ],
+          "type": "string"
+        },
+        "regionCode": {
+          "description": "Required. [CLDR territory code](http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) or the country the radius area applies to.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "RateGroup": {
       "description": "Shipping rate group definitions. Only the last one is allowed to have an empty `applicable_shipping_labels`, which means \"everything else\". The other `applicable_shipping_labels` must not overlap.",
       "id": "RateGroup",
@@ -4853,6 +4904,10 @@
         "postalCodeArea": {
           "$ref": "PostalCodeArea",
           "description": "Optional. A list of postal codes that defines the region area."
+        },
+        "radiusArea": {
+          "$ref": "RadiusArea",
+          "description": "Optional. A radius area that defines the region area."
         },
         "regionalInventoryEligible": {
           "description": "Output only. Indicates if the region is eligible for use in the Regional Inventory configuration.",

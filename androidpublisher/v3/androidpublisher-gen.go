@@ -6091,6 +6091,17 @@ type Order struct {
 	// PurchaseToken: The token provided to the user's device when the subscription
 	// or item was purchased.
 	PurchaseToken string `json:"purchaseToken,omitempty"`
+	// SalesChannel: The originating sales channel of the order.
+	//
+	// Possible values:
+	//   "SALES_CHANNEL_UNSPECIFIED" - Sales channel unspecified. This value is not
+	// used.
+	//   "IN_APP" - Standard orders that initiated from in-app.
+	//   "PC_EMULATOR" - Orders initiated from a PC emulator for in-app purchases.
+	//   "NATIVE_PC" - Orders initiated from a native PC app for in-app purchases.
+	//   "PLAY_STORE" - Orders initiated from the Google Play store.
+	//   "OUTSIDE_PLAY_STORE" - Orders initiated outside the Google Play store.
+	SalesChannel string `json:"salesChannel,omitempty"`
 	// State: The state of the order.
 	//
 	// Possible values:

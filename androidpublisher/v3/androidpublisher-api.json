@@ -5555,7 +5555,7 @@
       }
     }
   },
-  "revision": "20251119",
+  "revision": "20251124",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -9684,6 +9684,26 @@
         },
         "purchaseToken": {
           "description": "The token provided to the user's device when the subscription or item was purchased.",
+          "type": "string"
+        },
+        "salesChannel": {
+          "description": "The originating sales channel of the order.",
+          "enum": [
+            "SALES_CHANNEL_UNSPECIFIED",
+            "IN_APP",
+            "PC_EMULATOR",
+            "NATIVE_PC",
+            "PLAY_STORE",
+            "OUTSIDE_PLAY_STORE"
+          ],
+          "enumDescriptions": [
+            "Sales channel unspecified. This value is not used.",
+            "Standard orders that initiated from in-app.",
+            "Orders initiated from a PC emulator for in-app purchases.",
+            "Orders initiated from a native PC app for in-app purchases.",
+            "Orders initiated from the Google Play store.",
+            "Orders initiated outside the Google Play store."
+          ],
           "type": "string"
         },
         "state": {

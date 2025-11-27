@@ -820,6 +820,28 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type FirewallPolicyRuleOperationMetadata struct {
+	// AllocatedPriority: The priority allocated for the firewall policy rule if
+	// query parameters specified minPriority/maxPriority.
+	AllocatedPriority int64 `json:"allocatedPriority,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllocatedPriority") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllocatedPriority") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FirewallPolicyRuleOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod FirewallPolicyRuleOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GlobalSetPolicyRequest struct {
 	// Bindings: Flatten Policy to create a backward compatible wire-format.
 	// Deprecated. Use 'policy' to specify bindings.
@@ -1078,7 +1100,8 @@ type Operation struct {
 	EndTime string `json:"endTime,omitempty"`
 	// Error: [Output Only] If errors are generated during processing of the
 	// operation, this field will be populated.
-	Error *OperationError `json:"error,omitempty"`
+	Error                               *OperationError                      `json:"error,omitempty"`
+	FirewallPolicyRuleOperationMetadata *FirewallPolicyRuleOperationMetadata `json:"firewallPolicyRuleOperationMetadata,omitempty"`
 	// HttpErrorMessage: [Output Only] If the operation fails, this field contains
 	// the HTTP error message that was returned, such as `NOT FOUND`.
 	HttpErrorMessage string `json:"httpErrorMessage,omitempty"`

@@ -1636,7 +1636,7 @@
       }
     }
   },
-  "revision": "20251024",
+  "revision": "20251121",
   "rootUrl": "https://deploymentmanager.googleapis.com/",
   "schemas": {
     "AsyncOptions": {
@@ -2177,6 +2177,17 @@
       },
       "type": "object"
     },
+    "FirewallPolicyRuleOperationMetadata": {
+      "id": "FirewallPolicyRuleOperationMetadata",
+      "properties": {
+        "allocatedPriority": {
+          "description": "The priority allocated for the firewall policy rule if query parameters specified minPriority/maxPriority.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "GlobalSetPolicyRequest": {
       "id": "GlobalSetPolicyRequest",
       "properties": {
@@ -2462,6 +2473,9 @@
             }
           },
           "type": "object"
+        },
+        "firewallPolicyRuleOperationMetadata": {
+          "$ref": "FirewallPolicyRuleOperationMetadata"
         },
         "httpErrorMessage": {
           "description": "[Output Only] If the operation fails, this field contains the HTTP error message that was returned, such as `NOT FOUND`.",

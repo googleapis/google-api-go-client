@@ -158,7 +158,11 @@
                 "cloud_search",
                 "tasks",
                 "data_migration",
-                "meet_hardware"
+                "meet_hardware",
+                "directory_sync",
+                "ldap",
+                "profile",
+                "access_evaluation"
               ],
               "enumDescriptions": [
                 "The Google Workspace Access Transparency activity reports return information about different types of Access Transparency activity events.",
@@ -190,10 +194,14 @@
                 "The Cloud Search application's activity reports return information about various types of cloud_search activity events.",
                 "The Tasks application's activity reports return information about various types of Tasks activity events.",
                 "The Data Migration application's activity reports return information about various types of data migration activity events.",
-                "The Meet Hardware application's activity reports return information about various types of Meet Hardware activity events."
+                "The Meet Hardware application's activity reports return information about various types of Meet Hardware activity events.",
+                "The Directory Sync application's activity reports return information about various types of Directory Sync activity events.",
+                "The ldap application's activity reports return information about various types of ldap activity events.",
+                "The Profile application's activity reports return information about various types of Profile activity events.",
+                "The Access Evaluation activity reports return information about various types of Access Evaluation activity events."
               ],
               "location": "path",
-              "pattern": "(access_transparency)|(admin)|(assignments)|(calendar)|(chat)|(chrome)|(classroom)|(cloud_search)|(context_aware_access)|(data_studio)|(data_migration)|(drive)|(gcp)|(gmail)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(keep)|(login)|(meet)|(meet_hardware)|(mobile)|(rules)|(saml)|(token)|(user_accounts)|(vault)|(gemini_in_workspace_apps)|(tasks)",
+              "pattern": "(access_evaluation)|(access_transparency)|(admin)|(assignments)|(calendar)|(chat)|(chrome)|(classroom)|(cloud_search)|(context_aware_access)|(data_studio)|(data_migration)|(directory_sync)|(drive)|(gcp)|(gmail)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(keep)|(ldap)|(login)|(meet)|(meet_hardware)|(mobile)|(profile)|(rules)|(saml)|(token)|(user_accounts)|(vault)|(gemini_in_workspace_apps)|(tasks)",
               "required": true,
               "type": "string"
             },
@@ -650,7 +658,7 @@
       }
     }
   },
-  "revision": "20251120",
+  "revision": "20251124",
   "rootUrl": "https://admin.googleapis.com/",
   "schemas": {
     "Activities": {

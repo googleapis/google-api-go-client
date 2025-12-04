@@ -98,7 +98,8 @@ const mtlsBasePath = "https://alertcenter.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See and delete your domain's G Suite alerts, and send alert feedback
+	// See and delete your domain's Google Workspace alerts, and send alert
+	// feedback
 	AppsAlertsScope = "https://www.googleapis.com/auth/apps.alerts"
 )
 
@@ -1689,6 +1690,8 @@ type ResourceInfo struct {
 	DeviceId string `json:"deviceId,omitempty"`
 	// DocumentId: Drive file ID.
 	DocumentId string `json:"documentId,omitempty"`
+	// MessageId: RFC2822 message ID.
+	MessageId string `json:"messageId,omitempty"`
 	// ResourceTitle: Title of the resource, for example email subject, or document
 	// title.
 	ResourceTitle string `json:"resourceTitle,omitempty"`

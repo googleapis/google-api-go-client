@@ -772,6 +772,18 @@ type Cluster struct {
 	// MaintenanceUpdatePolicy: Optional. The maintenance update policy determines
 	// when to allow or deny updates.
 	MaintenanceUpdatePolicy *MaintenanceUpdatePolicy `json:"maintenanceUpdatePolicy,omitempty"`
+	// MaintenanceVersionSelectionPolicy: Input only. Policy to use to
+	// automatically select the maintenance version to which to update the
+	// cluster's instances.
+	//
+	// Possible values:
+	//   "MAINTENANCE_VERSION_SELECTION_POLICY_UNSPECIFIED" - The maintenance
+	// version selection policy is not specified.
+	//   "MAINTENANCE_VERSION_SELECTION_POLICY_LATEST" - Use the latest available
+	// maintenance version.
+	//   "MAINTENANCE_VERSION_SELECTION_POLICY_DEFAULT" - Use the current default
+	// maintenance version.
+	MaintenanceVersionSelectionPolicy string `json:"maintenanceVersionSelectionPolicy,omitempty"`
 	// MigrationSource: Output only. Cluster created via DMS migration.
 	MigrationSource *MigrationSource `json:"migrationSource,omitempty"`
 	// Name: Output only. The name of the cluster resource with the format: *
@@ -1746,6 +1758,10 @@ type Instance struct {
 	// MachineConfig: Configurations for the machines that host the underlying
 	// database engine.
 	MachineConfig *MachineConfig `json:"machineConfig,omitempty"`
+	// MaintenanceVersionName: Output only. Maintenance version of the instance,
+	// for example: POSTGRES_15.2025_07_15.04_00. Output only. Update this field
+	// via the parent cluster's maintenance_version field(s).
+	MaintenanceVersionName string `json:"maintenanceVersionName,omitempty"`
 	// Name: Output only. The name of the instance resource with the format: *
 	// projects/{project}/locations/{region}/clusters/{cluster_id}/instances/{instan
 	// ce_id} where the cluster and instance ID segments should satisfy the regex
@@ -3927,7 +3943,7 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceId) MarshalJSON() (
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata: Common model
-// for database resource instance metadata. Next ID: 29
+// for database resource instance metadata. Next ID: 30
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -4000,6 +4016,9 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// primary.
 	//   "SUB_RESOURCE_TYPE_OTHER" - For rest of the other categories.
 	InstanceType string `json:"instanceType,omitempty"`
+	// IsDeletionProtectionEnabled: Optional. Whether deletion protection is
+	// enabled for this resource.
+	IsDeletionProtectionEnabled bool `json:"isDeletionProtectionEnabled,omitempty"`
 	// Location: The resource location. REQUIRED
 	Location string `json:"location,omitempty"`
 	// MachineConfiguration: Machine configuration for this resource.
@@ -5978,6 +5997,24 @@ func (r *ProjectsLocationsBackupsService) Get(name string) *ProjectsLocationsBac
 	return c
 }
 
+// View sets the optional parameter "view": The view of the backup to return.
+//
+// Possible values:
+//
+//	"BACKUP_VIEW_UNSPECIFIED" - Value unspecified, equivalent to BASIC.
+//	"BACKUP_VIEW_BASIC" - Responses include all fields that aren't explicitly
+//
+// gated behind another view.
+//
+//	"BACKUP_VIEW_CLUSTER_DELETED" - Response include all the field from BASIC
+//
+// plus the field cluster_deleted, which specifies if the cluster corresponding
+// to this backup is deleted.
+func (c *ProjectsLocationsBackupsGetCall) View(view string) *ProjectsLocationsBackupsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -6112,6 +6149,24 @@ func (c *ProjectsLocationsBackupsListCall) PageSize(pageSize int64) *ProjectsLoc
 // page of results the server should return.
 func (c *ProjectsLocationsBackupsListCall) PageToken(pageToken string) *ProjectsLocationsBackupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": The view of the backup to return.
+//
+// Possible values:
+//
+//	"BACKUP_VIEW_UNSPECIFIED" - Value unspecified, equivalent to BASIC.
+//	"BACKUP_VIEW_BASIC" - Responses include all fields that aren't explicitly
+//
+// gated behind another view.
+//
+//	"BACKUP_VIEW_CLUSTER_DELETED" - Response include all the field from BASIC
+//
+// plus the field cluster_deleted, which specifies if the cluster corresponding
+// to this backup is deleted.
+func (c *ProjectsLocationsBackupsListCall) View(view string) *ProjectsLocationsBackupsListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 

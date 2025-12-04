@@ -141,7 +141,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		return nil, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
-	s.Media = NewMediaService(s)
 	s.Projects = NewProjectsService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
@@ -167,8 +166,6 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
-	Media *MediaService
-
 	Projects *ProjectsService
 }
 
@@ -177,15 +174,6 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
-}
-
-func NewMediaService(s *Service) *MediaService {
-	rs := &MediaService{s: s}
-	return rs
-}
-
-type MediaService struct {
-	s *Service
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -619,10 +607,34 @@ type ProjectsLocationsCollectionsEnginesService struct {
 
 func NewProjectsLocationsCollectionsEnginesAssistantsService(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsService {
 	rs := &ProjectsLocationsCollectionsEnginesAssistantsService{s: s}
+	rs.Agents = NewProjectsLocationsCollectionsEnginesAssistantsAgentsService(s)
 	return rs
 }
 
 type ProjectsLocationsCollectionsEnginesAssistantsService struct {
+	s *Service
+
+	Agents *ProjectsLocationsCollectionsEnginesAssistantsAgentsService
+}
+
+func NewProjectsLocationsCollectionsEnginesAssistantsAgentsService(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsAgentsService {
+	rs := &ProjectsLocationsCollectionsEnginesAssistantsAgentsService{s: s}
+	rs.Operations = NewProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsService(s)
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsService struct {
+	s *Service
+
+	Operations *ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsService
+}
+
+func NewProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsService(s *Service) *ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsService {
+	rs := &ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsService struct {
 	s *Service
 }
 
@@ -1081,6 +1093,7 @@ type ProjectsLocationsUserEventsService struct {
 
 func NewProjectsLocationsUserStoresService(s *Service) *ProjectsLocationsUserStoresService {
 	rs := &ProjectsLocationsUserStoresService{s: s}
+	rs.LicenseConfigsUsageStats = NewProjectsLocationsUserStoresLicenseConfigsUsageStatsService(s)
 	rs.UserLicenses = NewProjectsLocationsUserStoresUserLicensesService(s)
 	return rs
 }
@@ -1088,7 +1101,18 @@ func NewProjectsLocationsUserStoresService(s *Service) *ProjectsLocationsUserSto
 type ProjectsLocationsUserStoresService struct {
 	s *Service
 
+	LicenseConfigsUsageStats *ProjectsLocationsUserStoresLicenseConfigsUsageStatsService
+
 	UserLicenses *ProjectsLocationsUserStoresUserLicensesService
+}
+
+func NewProjectsLocationsUserStoresLicenseConfigsUsageStatsService(s *Service) *ProjectsLocationsUserStoresLicenseConfigsUsageStatsService {
+	rs := &ProjectsLocationsUserStoresLicenseConfigsUsageStatsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsUserStoresLicenseConfigsUsageStatsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsUserStoresUserLicensesService(s *Service) *ProjectsLocationsUserStoresUserLicensesService {
@@ -1107,502 +1131,6 @@ func NewProjectsOperationsService(s *Service) *ProjectsOperationsService {
 
 type ProjectsOperationsService struct {
 	s *Service
-}
-
-// GdataBlobstore2Info: Information to read/write to blobstore2.
-type GdataBlobstore2Info struct {
-	// BlobGeneration: The blob generation id.
-	BlobGeneration int64 `json:"blobGeneration,omitempty,string"`
-	// BlobId: The blob id, e.g., /blobstore/prod/playground/scotty
-	BlobId string `json:"blobId,omitempty"`
-	// DownloadReadHandle: Read handle passed from Bigstore -> Scotty for a GCS
-	// download. This is a signed, serialized blobstore2.ReadHandle proto which
-	// must never be set outside of Bigstore, and is not applicable to non-GCS
-	// media downloads.
-	DownloadReadHandle string `json:"downloadReadHandle,omitempty"`
-	// ReadToken: The blob read token. Needed to read blobs that have not been
-	// replicated. Might not be available until the final call.
-	ReadToken string `json:"readToken,omitempty"`
-	// UploadMetadataContainer: Metadata passed from Blobstore -> Scotty for a new
-	// GCS upload. This is a signed, serialized blobstore2.BlobMetadataContainer
-	// proto which must never be consumed outside of Bigstore, and is not
-	// applicable to non-GCS media uploads.
-	UploadMetadataContainer string `json:"uploadMetadataContainer,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BlobGeneration") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BlobGeneration") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GdataBlobstore2Info) MarshalJSON() ([]byte, error) {
-	type NoMethod GdataBlobstore2Info
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GdataCompositeMedia: A sequence of media data references representing
-// composite data. Introduced to support Bigstore composite objects. For
-// details, visit http://go/bigstore-composites.
-type GdataCompositeMedia struct {
-	// BlobRef: Blobstore v1 reference, set if reference_type is BLOBSTORE_REF This
-	// should be the byte representation of a blobstore.BlobRef. Since Blobstore is
-	// deprecating v1, use blobstore2_info instead. For now, any v2 blob will also
-	// be represented in this field as v1 BlobRef.
-	BlobRef string `json:"blobRef,omitempty"`
-	// Blobstore2Info: Blobstore v2 info, set if reference_type is BLOBSTORE_REF
-	// and it refers to a v2 blob.
-	Blobstore2Info *GdataBlobstore2Info `json:"blobstore2Info,omitempty"`
-	// CosmoBinaryReference: A binary data reference for a media download. Serves
-	// as a technology-agnostic binary reference in some Google infrastructure.
-	// This value is a serialized storage_cosmo.BinaryReference proto. Storing it
-	// as bytes is a hack to get around the fact that the cosmo proto (as well as
-	// others it includes) doesn't support JavaScript. This prevents us from
-	// including the actual type of this field.
-	CosmoBinaryReference string `json:"cosmoBinaryReference,omitempty"`
-	// Crc32cHash: crc32.c hash for the payload.
-	Crc32cHash int64 `json:"crc32cHash,omitempty"`
-	// Inline: Media data, set if reference_type is INLINE
-	Inline string `json:"inline,omitempty"`
-	// Length: Size of the data, in bytes
-	Length int64 `json:"length,omitempty,string"`
-	// Md5Hash: MD5 hash for the payload.
-	Md5Hash string `json:"md5Hash,omitempty"`
-	// ObjectId: Reference to a TI Blob, set if reference_type is BIGSTORE_REF.
-	ObjectId *GdataObjectId `json:"objectId,omitempty"`
-	// Path: Path to the data, set if reference_type is PATH
-	Path string `json:"path,omitempty"`
-	// ReferenceType: Describes what the field reference contains.
-	//
-	// Possible values:
-	//   "PATH" - Reference contains a GFS path or a local path.
-	//   "BLOB_REF" - Reference points to a blobstore object. This could be either
-	// a v1 blob_ref or a v2 blobstore2_info. Clients should check blobstore2_info
-	// first, since v1 is being deprecated.
-	//   "INLINE" - Data is included into this proto buffer
-	//   "BIGSTORE_REF" - Reference points to a bigstore object
-	//   "COSMO_BINARY_REFERENCE" - Indicates the data is stored in
-	// cosmo_binary_reference.
-	ReferenceType string `json:"referenceType,omitempty"`
-	// Sha1Hash: SHA-1 hash for the payload.
-	Sha1Hash string `json:"sha1Hash,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BlobRef") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BlobRef") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GdataCompositeMedia) MarshalJSON() ([]byte, error) {
-	type NoMethod GdataCompositeMedia
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GdataContentTypeInfo: Detailed Content-Type information from Scotty. The
-// Content-Type of the media will typically be filled in by the header or
-// Scotty's best_guess, but this extended information provides the backend with
-// more information so that it can make a better decision if needed. This is
-// only used on media upload requests from Scotty.
-type GdataContentTypeInfo struct {
-	// BestGuess: Scotty's best guess of what the content type of the file is.
-	BestGuess string `json:"bestGuess,omitempty"`
-	// FromBytes: The content type of the file derived by looking at specific bytes
-	// (i.e. "magic bytes") of the actual file.
-	FromBytes string `json:"fromBytes,omitempty"`
-	// FromFileName: The content type of the file derived from the file extension
-	// of the original file name used by the client.
-	FromFileName string `json:"fromFileName,omitempty"`
-	// FromHeader: The content type of the file as specified in the request
-	// headers, multipart headers, or RUPIO start request.
-	FromHeader string `json:"fromHeader,omitempty"`
-	// FromUrlPath: The content type of the file derived from the file extension of
-	// the URL path. The URL path is assumed to represent a file name (which is
-	// typically only true for agents that are providing a REST API).
-	FromUrlPath string `json:"fromUrlPath,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BestGuess") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BestGuess") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GdataContentTypeInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GdataContentTypeInfo
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GdataDiffChecksumsResponse: Backend response for a Diff get checksums
-// response. For details on the Scotty Diff protocol, visit
-// http://go/scotty-diff-protocol.
-type GdataDiffChecksumsResponse struct {
-	// ChecksumsLocation: Exactly one of these fields must be populated. If
-	// checksums_location is filled, the server will return the corresponding
-	// contents to the user. If object_location is filled, the server will
-	// calculate the checksums based on the content there and return that to the
-	// user. For details on the format of the checksums, see
-	// http://go/scotty-diff-protocol.
-	ChecksumsLocation *GdataCompositeMedia `json:"checksumsLocation,omitempty"`
-	// ChunkSizeBytes: The chunk size of checksums. Must be a multiple of 256KB.
-	ChunkSizeBytes int64 `json:"chunkSizeBytes,omitempty,string"`
-	// ObjectLocation: If set, calculate the checksums based on the contents and
-	// return them to the caller.
-	ObjectLocation *GdataCompositeMedia `json:"objectLocation,omitempty"`
-	// ObjectSizeBytes: The total size of the server object.
-	ObjectSizeBytes int64 `json:"objectSizeBytes,omitempty,string"`
-	// ObjectVersion: The object version of the object the checksums are being
-	// returned for.
-	ObjectVersion string `json:"objectVersion,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChecksumsLocation") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChecksumsLocation") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GdataDiffChecksumsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GdataDiffChecksumsResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GdataDiffDownloadResponse: Backend response for a Diff download response.
-// For details on the Scotty Diff protocol, visit
-// http://go/scotty-diff-protocol.
-type GdataDiffDownloadResponse struct {
-	// ObjectLocation: The original object location.
-	ObjectLocation *GdataCompositeMedia `json:"objectLocation,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ObjectLocation") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ObjectLocation") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GdataDiffDownloadResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GdataDiffDownloadResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GdataDiffUploadRequest: A Diff upload request. For details on the Scotty
-// Diff protocol, visit http://go/scotty-diff-protocol.
-type GdataDiffUploadRequest struct {
-	// ChecksumsInfo: The location of the checksums for the new object. Agents must
-	// clone the object located here, as the upload server will delete the contents
-	// once a response is received. For details on the format of the checksums, see
-	// http://go/scotty-diff-protocol.
-	ChecksumsInfo *GdataCompositeMedia `json:"checksumsInfo,omitempty"`
-	// ObjectInfo: The location of the new object. Agents must clone the object
-	// located here, as the upload server will delete the contents once a response
-	// is received.
-	ObjectInfo *GdataCompositeMedia `json:"objectInfo,omitempty"`
-	// ObjectVersion: The object version of the object that is the base version the
-	// incoming diff script will be applied to. This field will always be filled
-	// in.
-	ObjectVersion string `json:"objectVersion,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChecksumsInfo") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChecksumsInfo") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GdataDiffUploadRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GdataDiffUploadRequest
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GdataDiffUploadResponse: Backend response for a Diff upload request. For
-// details on the Scotty Diff protocol, visit http://go/scotty-diff-protocol.
-type GdataDiffUploadResponse struct {
-	// ObjectVersion: The object version of the object at the server. Must be
-	// included in the end notification response. The version in the end
-	// notification response must correspond to the new version of the object that
-	// is now stored at the server, after the upload.
-	ObjectVersion string `json:"objectVersion,omitempty"`
-	// OriginalObject: The location of the original file for a diff upload request.
-	// Must be filled in if responding to an upload start notification.
-	OriginalObject *GdataCompositeMedia `json:"originalObject,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ObjectVersion") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ObjectVersion") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GdataDiffUploadResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GdataDiffUploadResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GdataDiffVersionResponse: Backend response for a Diff get version response.
-// For details on the Scotty Diff protocol, visit
-// http://go/scotty-diff-protocol.
-type GdataDiffVersionResponse struct {
-	// ObjectSizeBytes: The total size of the server object.
-	ObjectSizeBytes int64 `json:"objectSizeBytes,omitempty,string"`
-	// ObjectVersion: The version of the object stored at the server.
-	ObjectVersion string `json:"objectVersion,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ObjectSizeBytes") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ObjectSizeBytes") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GdataDiffVersionResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GdataDiffVersionResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GdataDownloadParameters: Parameters specific to media downloads.
-type GdataDownloadParameters struct {
-	// AllowGzipCompression: A boolean to be returned in the response to Scotty.
-	// Allows/disallows gzip encoding of the payload content when the server thinks
-	// it's advantageous (hence, does not guarantee compression) which allows
-	// Scotty to GZip the response to the client.
-	AllowGzipCompression bool `json:"allowGzipCompression,omitempty"`
-	// IgnoreRange: Determining whether or not Apiary should skip the inclusion of
-	// any Content-Range header on its response to Scotty.
-	IgnoreRange bool `json:"ignoreRange,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AllowGzipCompression") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AllowGzipCompression") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GdataDownloadParameters) MarshalJSON() ([]byte, error) {
-	type NoMethod GdataDownloadParameters
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GdataMedia: A reference to data stored on the filesystem, on GFS or in
-// blobstore.
-type GdataMedia struct {
-	// Algorithm: Deprecated, use one of explicit hash type fields instead.
-	// Algorithm used for calculating the hash. As of 2011/01/21, "MD5" is the only
-	// possible value for this field. New values may be added at any time.
-	Algorithm string `json:"algorithm,omitempty"`
-	// BigstoreObjectRef: Use object_id instead.
-	BigstoreObjectRef string `json:"bigstoreObjectRef,omitempty"`
-	// BlobRef: Blobstore v1 reference, set if reference_type is BLOBSTORE_REF This
-	// should be the byte representation of a blobstore.BlobRef. Since Blobstore is
-	// deprecating v1, use blobstore2_info instead. For now, any v2 blob will also
-	// be represented in this field as v1 BlobRef.
-	BlobRef string `json:"blobRef,omitempty"`
-	// Blobstore2Info: Blobstore v2 info, set if reference_type is BLOBSTORE_REF
-	// and it refers to a v2 blob.
-	Blobstore2Info *GdataBlobstore2Info `json:"blobstore2Info,omitempty"`
-	// CompositeMedia: A composite media composed of one or more media objects, set
-	// if reference_type is COMPOSITE_MEDIA. The media length field must be set to
-	// the sum of the lengths of all composite media objects. Note: All composite
-	// media must have length specified.
-	CompositeMedia []*GdataCompositeMedia `json:"compositeMedia,omitempty"`
-	// ContentType: MIME type of the data
-	ContentType string `json:"contentType,omitempty"`
-	// ContentTypeInfo: Extended content type information provided for Scotty
-	// uploads.
-	ContentTypeInfo *GdataContentTypeInfo `json:"contentTypeInfo,omitempty"`
-	// CosmoBinaryReference: A binary data reference for a media download. Serves
-	// as a technology-agnostic binary reference in some Google infrastructure.
-	// This value is a serialized storage_cosmo.BinaryReference proto. Storing it
-	// as bytes is a hack to get around the fact that the cosmo proto (as well as
-	// others it includes) doesn't support JavaScript. This prevents us from
-	// including the actual type of this field.
-	CosmoBinaryReference string `json:"cosmoBinaryReference,omitempty"`
-	// Crc32cHash: For Scotty Uploads: Scotty-provided hashes for uploads For
-	// Scotty Downloads: (WARNING: DO NOT USE WITHOUT PERMISSION FROM THE SCOTTY
-	// TEAM.) A Hash provided by the agent to be used to verify the data being
-	// downloaded. Currently only supported for inline payloads. Further, only
-	// crc32c_hash is currently supported.
-	Crc32cHash int64 `json:"crc32cHash,omitempty"`
-	// DiffChecksumsResponse: Set if reference_type is DIFF_CHECKSUMS_RESPONSE.
-	DiffChecksumsResponse *GdataDiffChecksumsResponse `json:"diffChecksumsResponse,omitempty"`
-	// DiffDownloadResponse: Set if reference_type is DIFF_DOWNLOAD_RESPONSE.
-	DiffDownloadResponse *GdataDiffDownloadResponse `json:"diffDownloadResponse,omitempty"`
-	// DiffUploadRequest: Set if reference_type is DIFF_UPLOAD_REQUEST.
-	DiffUploadRequest *GdataDiffUploadRequest `json:"diffUploadRequest,omitempty"`
-	// DiffUploadResponse: Set if reference_type is DIFF_UPLOAD_RESPONSE.
-	DiffUploadResponse *GdataDiffUploadResponse `json:"diffUploadResponse,omitempty"`
-	// DiffVersionResponse: Set if reference_type is DIFF_VERSION_RESPONSE.
-	DiffVersionResponse *GdataDiffVersionResponse `json:"diffVersionResponse,omitempty"`
-	// DownloadParameters: Parameters for a media download.
-	DownloadParameters *GdataDownloadParameters `json:"downloadParameters,omitempty"`
-	// Filename: Original file name
-	Filename string `json:"filename,omitempty"`
-	// Hash: Deprecated, use one of explicit hash type fields instead. These two
-	// hash related fields will only be populated on Scotty based media uploads and
-	// will contain the content of the hash group in the NotificationRequest:
-	// http://cs/#google3/blobstore2/api/scotty/service/proto/upload_listener.proto&q=class:Hash
-	// Hex encoded hash value of the uploaded media.
-	Hash string `json:"hash,omitempty"`
-	// HashVerified: For Scotty uploads only. If a user sends a hash code and the
-	// backend has requested that Scotty verify the upload against the client hash,
-	// Scotty will perform the check on behalf of the backend and will reject it if
-	// the hashes don't match. This is set to true if Scotty performed this
-	// verification.
-	HashVerified bool `json:"hashVerified,omitempty"`
-	// Inline: Media data, set if reference_type is INLINE
-	Inline string `json:"inline,omitempty"`
-	// IsPotentialRetry: |is_potential_retry| is set false only when Scotty is
-	// certain that it has not sent the request before. When a client resumes an
-	// upload, this field must be set true in agent calls, because Scotty cannot be
-	// certain that it has never sent the request before due to potential failure
-	// in the session state persistence.
-	IsPotentialRetry bool `json:"isPotentialRetry,omitempty"`
-	// Length: Size of the data, in bytes
-	Length int64 `json:"length,omitempty,string"`
-	// Md5Hash: Scotty-provided MD5 hash for an upload.
-	Md5Hash string `json:"md5Hash,omitempty"`
-	// MediaId: Media id to forward to the operation GetMedia. Can be set if
-	// reference_type is GET_MEDIA.
-	MediaId string `json:"mediaId,omitempty"`
-	// ObjectId: Reference to a TI Blob, set if reference_type is BIGSTORE_REF.
-	ObjectId *GdataObjectId `json:"objectId,omitempty"`
-	// Path: Path to the data, set if reference_type is PATH
-	Path string `json:"path,omitempty"`
-	// ReferenceType: Describes what the field reference contains.
-	//
-	// Possible values:
-	//   "PATH" - Reference contains a GFS path or a local path.
-	//   "BLOB_REF" - Reference points to a blobstore object. This could be either
-	// a v1 blob_ref or a v2 blobstore2_info. Clients should check blobstore2_info
-	// first, since v1 is being deprecated.
-	//   "INLINE" - Data is included into this proto buffer
-	//   "GET_MEDIA" - Data should be accessed from the current service using the
-	// operation GetMedia.
-	//   "COMPOSITE_MEDIA" - The content for this media object is stored across
-	// multiple partial media objects under the composite_media field.
-	//   "BIGSTORE_REF" - Reference points to a bigstore object
-	//   "DIFF_VERSION_RESPONSE" - Indicates the data is stored in
-	// diff_version_response.
-	//   "DIFF_CHECKSUMS_RESPONSE" - Indicates the data is stored in
-	// diff_checksums_response.
-	//   "DIFF_DOWNLOAD_RESPONSE" - Indicates the data is stored in
-	// diff_download_response.
-	//   "DIFF_UPLOAD_REQUEST" - Indicates the data is stored in
-	// diff_upload_request.
-	//   "DIFF_UPLOAD_RESPONSE" - Indicates the data is stored in
-	// diff_upload_response.
-	//   "COSMO_BINARY_REFERENCE" - Indicates the data is stored in
-	// cosmo_binary_reference.
-	//   "ARBITRARY_BYTES" - Informs Scotty to generate a response payload with the
-	// size specified in the length field. The contents of the payload are
-	// generated by Scotty and are undefined. This is useful for testing download
-	// speeds between the user and Scotty without involving a real payload source.
-	// Note: range is not supported when using arbitrary_bytes.
-	ReferenceType string `json:"referenceType,omitempty"`
-	// Sha1Hash: Scotty-provided SHA1 hash for an upload.
-	Sha1Hash string `json:"sha1Hash,omitempty"`
-	// Sha256Hash: Scotty-provided SHA256 hash for an upload.
-	Sha256Hash string `json:"sha256Hash,omitempty"`
-	// Timestamp: Time at which the media data was last updated, in milliseconds
-	// since UNIX epoch
-	Timestamp uint64 `json:"timestamp,omitempty,string"`
-	// Token: A unique fingerprint/version id for the media data
-	Token string `json:"token,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Algorithm") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Algorithm") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GdataMedia) MarshalJSON() ([]byte, error) {
-	type NoMethod GdataMedia
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GdataObjectId: This is a copy of the tech.blob.ObjectId proto, which could
-// not be used directly here due to transitive closure issues with JavaScript
-// support; see http://b/8801763.
-type GdataObjectId struct {
-	// BucketName: The name of the bucket to which this object belongs.
-	BucketName string `json:"bucketName,omitempty"`
-	// Generation: Generation of the object. Generations are monotonically
-	// increasing across writes, allowing them to be be compared to determine which
-	// generation is newer. If this is omitted in a request, then you are
-	// requesting the live object. See http://go/bigstore-versions
-	Generation int64 `json:"generation,omitempty,string"`
-	// ObjectName: The name of the object.
-	ObjectName string `json:"objectName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BucketName") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BucketName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GdataObjectId) MarshalJSON() ([]byte, error) {
-	type NoMethod GdataObjectId
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleApiDistribution: `Distribution` contains summary statistics for a
@@ -2560,6 +2088,12 @@ func (s *GoogleCloudDiscoveryengineV1AnswerGenerationSpecUserDefinedClassifierSp
 type GoogleCloudDiscoveryengineV1Assistant struct {
 	// CustomerPolicy: Optional. Customer policy for the assistant.
 	CustomerPolicy *GoogleCloudDiscoveryengineV1AssistantCustomerPolicy `json:"customerPolicy,omitempty"`
+	// Description: Optional. Description for additional information. Expected to
+	// be shown on the configuration UI, not to the users of the assistant.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Required. The assistant display name. It must be a UTF-8
+	// encoded string with a length limit of 128 characters.
+	DisplayName string `json:"displayName,omitempty"`
 	// EnabledTools: Optional. Note: not implemented yet. Use enabled_actions
 	// instead. The enabled tools on this assistant. The keys are connector name,
 	// for example
@@ -2718,21 +2252,26 @@ func (s GoogleCloudDiscoveryengineV1AssistantCustomerPolicyModelArmorConfig) Mar
 // GoogleCloudDiscoveryengineV1AssistantGenerationConfig: Configuration for the
 // generation of the assistant response.
 type GoogleCloudDiscoveryengineV1AssistantGenerationConfig struct {
+	// AllowedModelIds: Optional. The list of models that are allowed to be used
+	// for assistant.
+	AllowedModelIds []string `json:"allowedModelIds,omitempty"`
 	// DefaultLanguage: The default language to use for the generation of the
 	// assistant response. Use an ISO 639-1 language code such as `en`. If not
 	// specified, the language will be automatically detected.
 	DefaultLanguage string `json:"defaultLanguage,omitempty"`
+	// DefaultModelId: Optional. The default model to use for assistant.
+	DefaultModelId string `json:"defaultModelId,omitempty"`
 	// SystemInstruction: System instruction, also known as the prompt preamble for
 	// LLM calls. See also
 	// https://cloud.google.com/vertex-ai/generative-ai/docs/learn/prompts/system-instructions
 	SystemInstruction *GoogleCloudDiscoveryengineV1AssistantGenerationConfigSystemInstruction `json:"systemInstruction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DefaultLanguage") to
+	// ForceSendFields is a list of field names (e.g. "AllowedModelIds") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DefaultLanguage") to include in
+	// NullFields is a list of field names (e.g. "AllowedModelIds") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4699,6 +4238,9 @@ type GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfigLayoutPars
 	// EnableImageAnnotation: Optional. If true, the LLM based annotation is added
 	// to the image during parsing.
 	EnableImageAnnotation bool `json:"enableImageAnnotation,omitempty"`
+	// EnableLlmLayoutParsing: Optional. If true, the pdf layout will be refined
+	// using an LLM.
+	EnableLlmLayoutParsing bool `json:"enableLlmLayoutParsing,omitempty"`
 	// EnableTableAnnotation: Optional. If true, the LLM based annotation is added
 	// to the table during parsing.
 	EnableTableAnnotation bool `json:"enableTableAnnotation,omitempty"`
@@ -4810,6 +4352,8 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// ChatEngineMetadata: Output only. Additional information of the Chat Engine.
 	// Only applicable if solution_type is SOLUTION_TYPE_CHAT.
 	ChatEngineMetadata *GoogleCloudDiscoveryengineV1EngineChatEngineMetadata `json:"chatEngineMetadata,omitempty"`
+	// CmekConfig: Output only. CMEK-related information for the Engine.
+	CmekConfig *GoogleCloudDiscoveryengineV1CmekConfig `json:"cmekConfig,omitempty"`
 	// CommonConfig: Common config spec that specifies the metadata of the engine.
 	CommonConfig *GoogleCloudDiscoveryengineV1EngineCommonConfig `json:"commonConfig,omitempty"`
 	// ConfigurableBillingApproach: Optional. Configuration for configurable
@@ -4863,6 +4407,14 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
 	MediaRecommendationEngineConfig *GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfig `json:"mediaRecommendationEngineConfig,omitempty"`
+	// ModelConfigs: Optional. Maps a model name to its specific configuration for
+	// this engine. This allows admin users to turn on/off individual models. This
+	// only stores models whose states are overridden by the admin. When the state
+	// is unspecified, or model_configs is empty for this model, the system will
+	// decide if this model should be available or not based on the default
+	// configuration. For example, a preview model should be disabled by default if
+	// the admin has not chosen to enable it.
+	ModelConfigs map[string]string `json:"modelConfigs,omitempty"`
 	// Name: Immutable. Identifier. The fully qualified resource name of the
 	// engine. This field must be a UTF-8 encoded string with a length limit of
 	// 1024 characters. Format:
@@ -11066,6 +10618,9 @@ type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfigLayou
 	// EnableImageAnnotation: Optional. If true, the LLM based annotation is added
 	// to the image during parsing.
 	EnableImageAnnotation bool `json:"enableImageAnnotation,omitempty"`
+	// EnableLlmLayoutParsing: Optional. If true, the pdf layout will be refined
+	// using an LLM.
+	EnableLlmLayoutParsing bool `json:"enableLlmLayoutParsing,omitempty"`
 	// EnableTableAnnotation: Optional. If true, the LLM based annotation is added
 	// to the table during parsing.
 	EnableTableAnnotation bool `json:"enableTableAnnotation,omitempty"`
@@ -11177,6 +10732,8 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// ChatEngineMetadata: Output only. Additional information of the Chat Engine.
 	// Only applicable if solution_type is SOLUTION_TYPE_CHAT.
 	ChatEngineMetadata *GoogleCloudDiscoveryengineV1alphaEngineChatEngineMetadata `json:"chatEngineMetadata,omitempty"`
+	// CmekConfig: Output only. CMEK-related information for the Engine.
+	CmekConfig *GoogleCloudDiscoveryengineV1alphaCmekConfig `json:"cmekConfig,omitempty"`
 	// CommonConfig: Common config spec that specifies the metadata of the engine.
 	CommonConfig *GoogleCloudDiscoveryengineV1alphaEngineCommonConfig `json:"commonConfig,omitempty"`
 	// ConfigurableBillingApproach: Optional. Configuration for configurable
@@ -11230,6 +10787,14 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
 	MediaRecommendationEngineConfig *GoogleCloudDiscoveryengineV1alphaEngineMediaRecommendationEngineConfig `json:"mediaRecommendationEngineConfig,omitempty"`
+	// ModelConfigs: Optional. Maps a model name to its specific configuration for
+	// this engine. This allows admin users to turn on/off individual models. This
+	// only stores models whose states are overridden by the admin. When the state
+	// is unspecified, or model_configs is empty for this model, the system will
+	// decide if this model should be available or not based on the default
+	// configuration. For example, a preview model should be disabled by default if
+	// the admin has not chosen to enable it.
+	ModelConfigs map[string]string `json:"modelConfigs,omitempty"`
 	// Name: Immutable. Identifier. The fully qualified resource name of the
 	// engine. This field must be a UTF-8 encoded string with a length limit of
 	// 1024 characters. Format:
@@ -13869,6 +13434,15 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// ContentSearchSpec: A specification for configuring the behavior of content
 	// search.
 	ContentSearchSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpec `json:"contentSearchSpec,omitempty"`
+	// CrowdingSpecs: Optional. Crowding specifications for improving result
+	// diversity. If multiple CrowdingSpecs are specified, crowding will be
+	// evaluated on each unique combination of the `field` values, and max_count
+	// will be the maximum value of `max_count` across all CrowdingSpecs. For
+	// example, if the first CrowdingSpec has `field` = "color" and `max_count` =
+	// 3, and the second CrowdingSpec has `field` = "size" and `max_count` = 2,
+	// then after 3 documents that share the same color AND size have been
+	// returned, subsequent ones should be removed or demoted.
+	CrowdingSpecs []*GoogleCloudDiscoveryengineV1alphaSearchRequestCrowdingSpec `json:"crowdingSpecs,omitempty"`
 	// CustomFineTuningSpec: Custom fine tuning configs. If set, it has higher
 	// priority than the configs set in ServingConfig.custom_fine_tuning_spec.
 	CustomFineTuningSpec *GoogleCloudDiscoveryengineV1alphaCustomFineTuningSpec `json:"customFineTuningSpec,omitempty"`
@@ -13938,6 +13512,17 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// (https://cloud.google.com/generative-ai-app-builder/docs/order-hc-results).
 	// If this field is unrecognizable, an `INVALID_ARGUMENT` is returned.
 	OrderBy string `json:"orderBy,omitempty"`
+	// PageCategories: Optional. The categories associated with a category page.
+	// Must be set for category navigation queries to achieve good search quality.
+	// The format should be the same as UserEvent.PageInfo.page_category. This
+	// field is the equivalent of the query for browse (navigation) queries. It's
+	// used by the browse model when the query is empty. If the field is empty, it
+	// will not be used by the browse model. To represent full path of a category,
+	// use '>' character to separate different hierarchies. If '>' is part of the
+	// category name, replace it with other character(s). For example, `Graphics
+	// Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents one
+	// level, can be rewritten as `Graphics Cards > RTX_4090 > Founders Edition`
+	PageCategories []string `json:"pageCategories,omitempty"`
 	// PageSize: Maximum number of Documents to return. The maximum allowed value
 	// depends on the data type. Values above the maximum value are coerced to the
 	// maximum value. * Websites with basic indexing: Default `10`, Maximum `25`. *
@@ -14671,6 +14256,48 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSummarySpecM
 
 func (s GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSummarySpecMultiModalSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSummarySpecMultiModalSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaSearchRequestCrowdingSpec: Specification
+// for crowding. Crowding improves the diversity of search results by limiting
+// the number of results that share the same field value. For example, crowding
+// on the color field with a max_count of 3 and mode DROP_CROWDED_RESULTS will
+// return at most 3 results with the same color across all pages.
+type GoogleCloudDiscoveryengineV1alphaSearchRequestCrowdingSpec struct {
+	// Field: The field to use for crowding. Documents can be crowded by a field in
+	// the Document object. Crowding field is case sensitive.
+	Field string `json:"field,omitempty"`
+	// MaxCount: The maximum number of documents to keep per value of the field.
+	// Once there are at least max_count previous results which contain the same
+	// value for the given field (according to the order specified in `order_by`),
+	// later results with the same value are "crowded away". If not specified, the
+	// default value is 1.
+	MaxCount int64 `json:"maxCount,omitempty"`
+	// Mode: Mode to use for documents that are crowded away.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Unspecified crowding mode. In this case, server
+	// behavior defaults to Mode.DROP_CROWDED_RESULTS.
+	//   "DROP_CROWDED_RESULTS" - Drop crowded results.
+	//   "DEMOTE_CROWDED_RESULTS_TO_END" - Demote crowded results to the later
+	// pages.
+	Mode string `json:"mode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Field") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSearchRequestCrowdingSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestCrowdingSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -18532,6 +18159,12 @@ func (s GoogleCloudDiscoveryengineV1betaAssistUserMetadata) MarshalJSON() ([]byt
 type GoogleCloudDiscoveryengineV1betaAssistant struct {
 	// CustomerPolicy: Optional. Customer policy for the assistant.
 	CustomerPolicy *GoogleCloudDiscoveryengineV1betaAssistantCustomerPolicy `json:"customerPolicy,omitempty"`
+	// Description: Optional. Description for additional information. Expected to
+	// be shown on the configuration UI, not to the users of the assistant.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Required. The assistant display name. It must be a UTF-8
+	// encoded string with a length limit of 128 characters.
+	DisplayName string `json:"displayName,omitempty"`
 	// EnabledTools: Optional. Note: not implemented yet. Use enabled_actions
 	// instead. The enabled tools on this assistant. The keys are connector name,
 	// for example
@@ -18833,21 +18466,26 @@ func (s GoogleCloudDiscoveryengineV1betaAssistantCustomerPolicyModelArmorConfig)
 // GoogleCloudDiscoveryengineV1betaAssistantGenerationConfig: Configuration for
 // the generation of the assistant response.
 type GoogleCloudDiscoveryengineV1betaAssistantGenerationConfig struct {
+	// AllowedModelIds: Optional. The list of models that are allowed to be used
+	// for assistant.
+	AllowedModelIds []string `json:"allowedModelIds,omitempty"`
 	// DefaultLanguage: The default language to use for the generation of the
 	// assistant response. Use an ISO 639-1 language code such as `en`. If not
 	// specified, the language will be automatically detected.
 	DefaultLanguage string `json:"defaultLanguage,omitempty"`
+	// DefaultModelId: Optional. The default model to use for assistant.
+	DefaultModelId string `json:"defaultModelId,omitempty"`
 	// SystemInstruction: System instruction, also known as the prompt preamble for
 	// LLM calls. See also
 	// https://cloud.google.com/vertex-ai/generative-ai/docs/learn/prompts/system-instructions
 	SystemInstruction *GoogleCloudDiscoveryengineV1betaAssistantGenerationConfigSystemInstruction `json:"systemInstruction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DefaultLanguage") to
+	// ForceSendFields is a list of field names (e.g. "AllowedModelIds") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DefaultLanguage") to include in
+	// NullFields is a list of field names (e.g. "AllowedModelIds") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -22104,6 +21742,9 @@ type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfigLayout
 	// EnableImageAnnotation: Optional. If true, the LLM based annotation is added
 	// to the image during parsing.
 	EnableImageAnnotation bool `json:"enableImageAnnotation,omitempty"`
+	// EnableLlmLayoutParsing: Optional. If true, the pdf layout will be refined
+	// using an LLM.
+	EnableLlmLayoutParsing bool `json:"enableLlmLayoutParsing,omitempty"`
 	// EnableTableAnnotation: Optional. If true, the LLM based annotation is added
 	// to the table during parsing.
 	EnableTableAnnotation bool `json:"enableTableAnnotation,omitempty"`
@@ -22282,6 +21923,8 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// ChatEngineMetadata: Output only. Additional information of the Chat Engine.
 	// Only applicable if solution_type is SOLUTION_TYPE_CHAT.
 	ChatEngineMetadata *GoogleCloudDiscoveryengineV1betaEngineChatEngineMetadata `json:"chatEngineMetadata,omitempty"`
+	// CmekConfig: Output only. CMEK-related information for the Engine.
+	CmekConfig *GoogleCloudDiscoveryengineV1betaCmekConfig `json:"cmekConfig,omitempty"`
 	// CommonConfig: Common config spec that specifies the metadata of the engine.
 	CommonConfig *GoogleCloudDiscoveryengineV1betaEngineCommonConfig `json:"commonConfig,omitempty"`
 	// ConfigurableBillingApproach: Optional. Configuration for configurable
@@ -22335,6 +21978,14 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
 	MediaRecommendationEngineConfig *GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfig `json:"mediaRecommendationEngineConfig,omitempty"`
+	// ModelConfigs: Optional. Maps a model name to its specific configuration for
+	// this engine. This allows admin users to turn on/off individual models. This
+	// only stores models whose states are overridden by the admin. When the state
+	// is unspecified, or model_configs is empty for this model, the system will
+	// decide if this model should be available or not based on the default
+	// configuration. For example, a preview model should be disabled by default if
+	// the admin has not chosen to enable it.
+	ModelConfigs map[string]string `json:"modelConfigs,omitempty"`
 	// Name: Immutable. Identifier. The fully qualified resource name of the
 	// engine. This field must be a UTF-8 encoded string with a length limit of
 	// 1024 characters. Format:
@@ -24178,6 +23829,61 @@ func (s GoogleCloudDiscoveryengineV1betaLicenseConfig) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaLicenseConfigUsageStats: Stats about users'
+// licenses.
+type GoogleCloudDiscoveryengineV1betaLicenseConfigUsageStats struct {
+	// LicenseConfig: Required. The LicenseConfig name.
+	LicenseConfig string `json:"licenseConfig,omitempty"`
+	// UsedLicenseCount: Required. The number of licenses used.
+	UsedLicenseCount int64 `json:"usedLicenseCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "LicenseConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LicenseConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaLicenseConfigUsageStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaLicenseConfigUsageStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaListAssistantsResponse: Response message for
+// the AssistantService.ListAssistants method.
+type GoogleCloudDiscoveryengineV1betaListAssistantsResponse struct {
+	// Assistants: All the customer's Assistants.
+	Assistants []*GoogleCloudDiscoveryengineV1betaAssistant `json:"assistants,omitempty"`
+	// NextPageToken: A token that can be sent as ListAssistantsRequest.page_token
+	// to retrieve the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Assistants") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Assistants") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaListAssistantsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaListAssistantsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaListCmekConfigsResponse: Response message
 // for CmekConfigService.ListCmekConfigs method.
 type GoogleCloudDiscoveryengineV1betaListCmekConfigsResponse struct {
@@ -24515,6 +24221,32 @@ type GoogleCloudDiscoveryengineV1betaListIdentityMappingsResponse struct {
 
 func (s GoogleCloudDiscoveryengineV1betaListIdentityMappingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaListIdentityMappingsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaListLicenseConfigsUsageStatsResponse:
+// Response message for UserLicenseService.ListLicenseConfigUsageStats method.
+type GoogleCloudDiscoveryengineV1betaListLicenseConfigsUsageStatsResponse struct {
+	// LicenseConfigUsageStats: All the customer's LicenseConfigUsageStats.
+	LicenseConfigUsageStats []*GoogleCloudDiscoveryengineV1betaLicenseConfigUsageStats `json:"licenseConfigUsageStats,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "LicenseConfigUsageStats") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LicenseConfigUsageStats") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaListLicenseConfigsUsageStatsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaListLicenseConfigsUsageStatsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -26588,6 +26320,15 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// ContentSearchSpec: A specification for configuring the behavior of content
 	// search.
 	ContentSearchSpec *GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpec `json:"contentSearchSpec,omitempty"`
+	// CrowdingSpecs: Optional. Crowding specifications for improving result
+	// diversity. If multiple CrowdingSpecs are specified, crowding will be
+	// evaluated on each unique combination of the `field` values, and max_count
+	// will be the maximum value of `max_count` across all CrowdingSpecs. For
+	// example, if the first CrowdingSpec has `field` = "color" and `max_count` =
+	// 3, and the second CrowdingSpec has `field` = "size" and `max_count` = 2,
+	// then after 3 documents that share the same color AND size have been
+	// returned, subsequent ones should be removed or demoted.
+	CrowdingSpecs []*GoogleCloudDiscoveryengineV1betaSearchRequestCrowdingSpec `json:"crowdingSpecs,omitempty"`
 	// DataStoreSpecs: Specifications that define the specific DataStores to be
 	// searched, along with configurations for those data stores. This is only
 	// considered for Engines with multiple data stores. For engines with a single
@@ -26654,6 +26395,17 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// (https://cloud.google.com/generative-ai-app-builder/docs/order-hc-results).
 	// If this field is unrecognizable, an `INVALID_ARGUMENT` is returned.
 	OrderBy string `json:"orderBy,omitempty"`
+	// PageCategories: Optional. The categories associated with a category page.
+	// Must be set for category navigation queries to achieve good search quality.
+	// The format should be the same as UserEvent.PageInfo.page_category. This
+	// field is the equivalent of the query for browse (navigation) queries. It's
+	// used by the browse model when the query is empty. If the field is empty, it
+	// will not be used by the browse model. To represent full path of a category,
+	// use '>' character to separate different hierarchies. If '>' is part of the
+	// category name, replace it with other character(s). For example, `Graphics
+	// Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents one
+	// level, can be rewritten as `Graphics Cards > RTX_4090 > Founders Edition`
+	PageCategories []string `json:"pageCategories,omitempty"`
 	// PageSize: Maximum number of Documents to return. The maximum allowed value
 	// depends on the data type. Values above the maximum value are coerced to the
 	// maximum value. * Websites with basic indexing: Default `10`, Maximum `25`. *
@@ -27382,6 +27134,48 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpecMu
 
 func (s GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpecMultiModalSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpecMultiModalSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchRequestCrowdingSpec: Specification for
+// crowding. Crowding improves the diversity of search results by limiting the
+// number of results that share the same field value. For example, crowding on
+// the color field with a max_count of 3 and mode DROP_CROWDED_RESULTS will
+// return at most 3 results with the same color across all pages.
+type GoogleCloudDiscoveryengineV1betaSearchRequestCrowdingSpec struct {
+	// Field: The field to use for crowding. Documents can be crowded by a field in
+	// the Document object. Crowding field is case sensitive.
+	Field string `json:"field,omitempty"`
+	// MaxCount: The maximum number of documents to keep per value of the field.
+	// Once there are at least max_count previous results which contain the same
+	// value for the given field (according to the order specified in `order_by`),
+	// later results with the same value are "crowded away". If not specified, the
+	// default value is 1.
+	MaxCount int64 `json:"maxCount,omitempty"`
+	// Mode: Mode to use for documents that are crowded away.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Unspecified crowding mode. In this case, server
+	// behavior defaults to Mode.DROP_CROWDED_RESULTS.
+	//   "DROP_CROWDED_RESULTS" - Drop crowded results.
+	//   "DEMOTE_CROWDED_RESULTS_TO_END" - Demote crowded results to the later
+	// pages.
+	Mode string `json:"mode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Field") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSearchRequestCrowdingSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestCrowdingSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -29768,6 +29562,8 @@ type GoogleCloudDiscoveryengineV1betaStreamAssistResponse struct {
 	// AssistToken: A global unique ID that identifies the current pair of request
 	// and stream of responses. Used for feedback and support.
 	AssistToken string `json:"assistToken,omitempty"`
+	// InvocationTools: The tool names of the tools that were invoked.
+	InvocationTools []string `json:"invocationTools,omitempty"`
 	// SessionInfo: Session information. Only included in the final
 	// StreamAssistResponse of the response stream.
 	SessionInfo *GoogleCloudDiscoveryengineV1betaStreamAssistResponseSessionInfo `json:"sessionInfo,omitempty"`
@@ -30658,8 +30454,8 @@ type GoogleLongrunningListOperationsResponse struct {
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -31090,147 +30886,6 @@ type GoogleTypeTimeZone struct {
 func (s GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeTimeZone
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-type MediaDownloadCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Download: Downloads a file from the session.
-//
-//   - name: The resource name of the Session. Format:
-//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
-//     engine}/sessions/{session}`.
-func (r *MediaService) Download(name string) *MediaDownloadCall {
-	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// FileId sets the optional parameter "fileId": Required. The ID of the file to
-// be downloaded.
-func (c *MediaDownloadCall) FileId(fileId string) *MediaDownloadCall {
-	c.urlParams_.Set("fileId", fileId)
-	return c
-}
-
-// ViewId sets the optional parameter "viewId": The ID of the view to be
-// downloaded.
-func (c *MediaDownloadCall) ViewId(viewId string) *MediaDownloadCall {
-	c.urlParams_.Set("viewId", viewId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *MediaDownloadCall) Fields(s ...googleapi.Field) *MediaDownloadCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *MediaDownloadCall) IfNoneMatch(entityTag string) *MediaDownloadCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do and Download methods.
-func (c *MediaDownloadCall) Context(ctx context.Context) *MediaDownloadCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *MediaDownloadCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:downloadFile")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.media.download", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Download fetches the API endpoint's "media" value, instead of the normal
-// API response value. If the returned error is nil, the Response is guaranteed to
-// have a 2xx status code. Callers must close the Response.Body as usual.
-func (c *MediaDownloadCall) Download(opts ...googleapi.CallOption) (*http.Response, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("media")
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		res.Body.Close()
-		return nil, gensupport.WrapError(err)
-	}
-	return res, nil
-}
-
-// Do executes the "discoveryengine.media.download" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GdataMedia.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GdataMedia, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GdataMedia{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.media.download", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
 }
 
 type ProjectsProvisionCall struct {
@@ -32717,9 +32372,9 @@ func (c *ProjectsLocationsCollectionsDataConnectorOperationsListCall) PageToken(
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsCollectionsDataConnectorOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsDataConnectorOperationsListCall {
@@ -35104,9 +34759,9 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesOperationsListCall) PageT
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsCollectionsDataStoresBranchesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsDataStoresBranchesOperationsListCall {
@@ -37132,9 +36787,9 @@ func (c *ProjectsLocationsCollectionsDataStoresModelsOperationsListCall) PageTok
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsCollectionsDataStoresModelsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsDataStoresModelsOperationsListCall {
@@ -37409,9 +37064,9 @@ func (c *ProjectsLocationsCollectionsDataStoresOperationsListCall) PageToken(pag
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsCollectionsDataStoresOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsDataStoresOperationsListCall {
@@ -38279,9 +37934,9 @@ func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) PageTo
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall {
@@ -40840,9 +40495,9 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCal
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCall {
@@ -42135,9 +41790,9 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperat
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperationsListCall {
@@ -43868,6 +43523,224 @@ func (c *ProjectsLocationsCollectionsEnginesTuneCall) Do(opts ...googleapi.CallO
 	return ret, nil
 }
 
+type ProjectsLocationsCollectionsEnginesAssistantsCreateCall struct {
+	s                                         *Service
+	parent                                    string
+	googleclouddiscoveryenginev1betaassistant *GoogleCloudDiscoveryengineV1betaAssistant
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Create: Creates an Assistant.
+//
+//   - parent: The parent resource name. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}`.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsService) Create(parent string, googleclouddiscoveryenginev1betaassistant *GoogleCloudDiscoveryengineV1betaAssistant) *ProjectsLocationsCollectionsEnginesAssistantsCreateCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1betaassistant = googleclouddiscoveryenginev1betaassistant
+	return c
+}
+
+// AssistantId sets the optional parameter "assistantId": Required. The ID to
+// use for the Assistant, which will become the final component of the
+// Assistant's resource name. This field must conform to RFC-1034
+// (https://tools.ietf.org/html/rfc1034) with a length limit of 63 characters.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCreateCall) AssistantId(assistantId string) *ProjectsLocationsCollectionsEnginesAssistantsCreateCall {
+	c.urlParams_.Set("assistantId", assistantId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCreateCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1betaassistant)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/assistants")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaAssistant.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaAssistant, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaAssistant{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an Assistant.
+//
+//   - name: Resource name of Assistant. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}/assistants/{assistant}` If the caller does not have permission to
+//     delete the Assistant, regardless of whether or not it exists, a
+//     PERMISSION_DENIED error is returned. If the Assistant to delete does not
+//     exist, a NOT_FOUND error is returned.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsService) Delete(name string) *ProjectsLocationsCollectionsEnginesAssistantsDeleteCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsCollectionsEnginesAssistantsGetCall struct {
 	s            *Service
 	name         string
@@ -43978,6 +43851,159 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsGetCall) Do(opts ...google
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all Assistants under an Engine.
+//
+//   - parent: The parent resource name. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}`.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsService) List(parent string) *ProjectsLocationsCollectionsEnginesAssistantsListCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// Assistants to return. If unspecified, defaults to 100. The maximum allowed
+// value is 1000; anything above that will be coerced down to 1000.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsEnginesAssistantsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token
+// ListAssistantsResponse.next_page_token, received from a previous
+// AssistantService.ListAssistants call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// ListAssistants must match the call that provided the page token.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsEnginesAssistantsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesAssistantsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsListCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/assistants")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaListAssistantsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaListAssistantsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaListAssistantsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsListCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1betaListAssistantsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsCollectionsEnginesAssistantsPatchCall struct {
@@ -44197,6 +44223,118 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsStreamAssistCall) Do(opts 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.streamAssist", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsService) Get(name string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsGetCall {
+	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.operations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.assistants.agents.operations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.assistants.agents.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -45891,9 +46029,9 @@ func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) PageToken(pageTo
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsEnginesOperationsListCall {
@@ -47870,9 +48008,9 @@ func (c *ProjectsLocationsCollectionsOperationsListCall) PageToken(pageToken str
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsCollectionsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsCollectionsOperationsListCall {
@@ -50150,9 +50288,9 @@ func (c *ProjectsLocationsDataStoresBranchesOperationsListCall) PageToken(pageTo
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsDataStoresBranchesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsDataStoresBranchesOperationsListCall {
@@ -52065,9 +52203,9 @@ func (c *ProjectsLocationsDataStoresModelsOperationsListCall) PageToken(pageToke
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsDataStoresModelsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsDataStoresModelsOperationsListCall {
@@ -52342,9 +52480,9 @@ func (c *ProjectsLocationsDataStoresOperationsListCall) PageToken(pageToken stri
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsDataStoresOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsDataStoresOperationsListCall {
@@ -58550,9 +58688,9 @@ func (c *ProjectsLocationsIdentityMappingStoresOperationsListCall) PageToken(pag
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsIdentityMappingStoresOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsIdentityMappingStoresOperationsListCall {
@@ -59169,9 +59307,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
@@ -61861,6 +61999,117 @@ func (c *ProjectsLocationsUserStoresPatchCall) Do(opts ...googleapi.CallOption) 
 	return ret, nil
 }
 
+type ProjectsLocationsUserStoresLicenseConfigsUsageStatsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the LicenseConfigUsageStatss associated with the project.
+//
+//   - parent: The parent branch resource name, such as
+//     `projects/{project}/locations/{location}/userStores/{user_store_id}`.
+func (r *ProjectsLocationsUserStoresLicenseConfigsUsageStatsService) List(parent string) *ProjectsLocationsUserStoresLicenseConfigsUsageStatsListCall {
+	c := &ProjectsLocationsUserStoresLicenseConfigsUsageStatsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsUserStoresLicenseConfigsUsageStatsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsUserStoresLicenseConfigsUsageStatsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsUserStoresLicenseConfigsUsageStatsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsUserStoresLicenseConfigsUsageStatsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsUserStoresLicenseConfigsUsageStatsListCall) Context(ctx context.Context) *ProjectsLocationsUserStoresLicenseConfigsUsageStatsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsUserStoresLicenseConfigsUsageStatsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUserStoresLicenseConfigsUsageStatsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/licenseConfigsUsageStats")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.userStores.licenseConfigsUsageStats.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.userStores.licenseConfigsUsageStats.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaListLicenseConfigsUsageStatsResponse.ServerR
+// esponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsUserStoresLicenseConfigsUsageStatsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaListLicenseConfigsUsageStatsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaListLicenseConfigsUsageStatsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.userStores.licenseConfigsUsageStats.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsUserStoresUserLicensesListCall struct {
 	s            *Service
 	parent       string
@@ -61880,16 +62129,22 @@ func (r *ProjectsLocationsUserStoresUserLicensesService) List(parent string) *Pr
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter for the list request.
-// Supported fields: * `license_assignment_state` Examples: *
-// `license_assignment_state = ASSIGNED` to list assigned user licenses. *
-// `license_assignment_state = NO_LICENSE` to list not licensed users. *
-// `license_assignment_state = NO_LICENSE_ATTEMPTED_LOGIN` to list users who
-// attempted login but no license assigned. * `license_assignment_state !=
-// NO_LICENSE_ATTEMPTED_LOGIN` to filter out users who attempted login but no
-// license assigned.
-func (c *ProjectsLocationsUserStoresUserLicensesListCall) Filter(filter string) *ProjectsLocationsUserStoresUserLicensesListCall {
-	c.urlParams_.Set("filter", filter)
+// OrderBy sets the optional parameter "orderBy": The order in which the
+// UserLicenses are listed. The value must be a comma-separated list of fields.
+// Default sorting order is ascending. To specify descending order for a field,
+// append a " desc" suffix. Redundant space characters in the syntax are
+// insignificant. Supported fields: * `license_assignment_state` *
+// `user_principal` * `user_profile` * `last_login_date` * `update_time` If not
+// set, the default ordering is by `user_principal`. Examples: *
+// `user_principal desc` to order by `user_principal` in descending order. *
+// `license_assignment_state` to order by `license_assignment_state` in
+// ascending order. * `last_login_date desc` to order by `last_login_date` in
+// descending order. * `update_time desc` to order by `update_time` in
+// descending order. * `last_login_date desc, user_principal` to order by
+// `last_login_date` in descending order and then by `user_principal` in
+// ascending order.
+func (c *ProjectsLocationsUserStoresUserLicensesListCall) OrderBy(orderBy string) *ProjectsLocationsUserStoresUserLicensesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
@@ -62178,9 +62433,9 @@ func (c *ProjectsOperationsListCall) PageToken(pageToken string) *ProjectsOperat
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsOperationsListCall {

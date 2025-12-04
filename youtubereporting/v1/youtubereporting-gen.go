@@ -223,6 +223,8 @@ type GdataBlobstore2Info struct {
 	BlobGeneration int64 `json:"blobGeneration,omitempty,string"`
 	// BlobId: gdata
 	BlobId string `json:"blobId,omitempty"`
+	// DownloadExternalReadToken: gdata
+	DownloadExternalReadToken string `json:"downloadExternalReadToken,omitempty"`
 	// DownloadReadHandle: gdata
 	DownloadReadHandle string `json:"downloadReadHandle,omitempty"`
 	// ReadToken: gdata

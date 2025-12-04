@@ -1217,6 +1217,8 @@ type DropInfo struct {
 	//   "HYBRID_SUBNET_REGION_MISMATCH" - Packet is dropped because the region of
 	// the hybrid subnet is different from the region of the next hop of the route
 	// matched within this hybrid subnet.
+	//   "HYBRID_SUBNET_NO_ROUTE" - Packet is dropped because no matching route was
+	// found in the hybrid subnet.
 	Cause string `json:"cause,omitempty"`
 	// DestinationGeolocationCode: Geolocation (region code) of the destination IP
 	// address (if relevant).
@@ -1647,12 +1649,16 @@ type FirewallInfo struct {
 	// implicit
 	// rules](https://cloud.google.com/functions/docs/networking/connecting-vpc#rest
 	// rict-access).
-	//   "NETWORK_FIREWALL_POLICY_RULE" - Global network firewall policy rule. For
-	// details, see [Network firewall
+	//   "NETWORK_FIREWALL_POLICY_RULE" - User-defined global network firewall
+	// policy rule. For details, see [Network firewall
 	// policies](https://cloud.google.com/vpc/docs/network-firewall-policies).
-	//   "NETWORK_REGIONAL_FIREWALL_POLICY_RULE" - Regional network firewall policy
-	// rule. For details, see [Regional network firewall
+	//   "NETWORK_REGIONAL_FIREWALL_POLICY_RULE" - User-defined regional network
+	// firewall policy rule. For details, see [Regional network firewall
 	// policies](https://cloud.google.com/firewall/docs/regional-firewall-policies).
+	//   "SYSTEM_NETWORK_FIREWALL_POLICY_RULE" - System-defined global network
+	// firewall policy rule.
+	//   "SYSTEM_REGIONAL_NETWORK_FIREWALL_POLICY_RULE" - System-defined regional
+	// network firewall policy rule.
 	//   "UNSUPPORTED_FIREWALL_POLICY_RULE" - Firewall policy rule containing
 	// attributes not yet supported in Connectivity tests. Firewall analysis is
 	// skipped if such a rule can potentially be matched. Please see the [list of
@@ -4908,7 +4914,7 @@ type OrganizationsLocationsVpcFlowLogsConfigsListCall struct {
 // List: Lists all `VpcFlowLogsConfigs` in a given organization.
 //
 //   - parent: The parent resource of the VpcFlowLogsConfig, in one of the
-//     following formats: - For project-level resourcs:
+//     following formats: - For project-level resources:
 //     `projects/{project_id}/locations/global` - For organization-level
 //     resources: `organizations/{organization_id}/locations/global`.
 func (r *OrganizationsLocationsVpcFlowLogsConfigsService) List(parent string) *OrganizationsLocationsVpcFlowLogsConfigsListCall {
@@ -7373,7 +7379,7 @@ type ProjectsLocationsVpcFlowLogsConfigsListCall struct {
 // List: Lists all `VpcFlowLogsConfigs` in a given project.
 //
 //   - parent: The parent resource of the VpcFlowLogsConfig, in one of the
-//     following formats: - For project-level resourcs:
+//     following formats: - For project-level resources:
 //     `projects/{project_id}/locations/global` - For organization-level
 //     resources: `organizations/{organization_id}/locations/global`.
 func (r *ProjectsLocationsVpcFlowLogsConfigsService) List(parent string) *ProjectsLocationsVpcFlowLogsConfigsListCall {

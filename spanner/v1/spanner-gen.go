@@ -966,9 +966,10 @@ func (s BackupScheduleSpec) MarshalJSON() ([]byte, error) {
 // BatchCreateSessionsRequest: The request for BatchCreateSessions.
 type BatchCreateSessionsRequest struct {
 	// SessionCount: Required. The number of sessions to be created in this batch
-	// call. The API can return fewer than the requested number of sessions. If a
-	// specific number of sessions are desired, the client can make additional
-	// calls to `BatchCreateSessions` (adjusting session_count as necessary).
+	// call. At least one session is created. The API can return fewer than the
+	// requested number of sessions. If a specific number of sessions are desired,
+	// the client can make additional calls to `BatchCreateSessions` (adjusting
+	// session_count as necessary).
 	SessionCount int64 `json:"sessionCount,omitempty"`
 	// SessionTemplate: Parameters to apply to each created session.
 	SessionTemplate *Session `json:"sessionTemplate,omitempty"`
@@ -3563,6 +3564,11 @@ func (s InstanceOperationProgress) MarshalJSON() ([]byte, error) {
 // InstancePartition: An isolated set of Cloud Spanner resources that databases
 // can define placements on.
 type InstancePartition struct {
+	// AutoscalingConfig: Optional. The autoscaling configuration. Autoscaling is
+	// enabled if this field is set. When autoscaling is enabled, fields in
+	// compute_capacity are treated as OUTPUT_ONLY fields and reflect the current
+	// compute capacity allocated to the instance partition.
+	AutoscalingConfig *AutoscalingConfig `json:"autoscalingConfig,omitempty"`
 	// Config: Required. The name of the instance partition's configuration. Values
 	// are of the form `projects//instanceConfigs/`. See also InstanceConfig and
 	// ListInstanceConfigs.
@@ -3629,15 +3635,15 @@ type InstancePartition struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AutoscalingConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Config") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutoscalingConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4222,6 +4228,11 @@ type ListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*Operation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections e.g. when attempting to list all resources across all supported
+	// locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -8483,6 +8494,19 @@ func (c *ProjectsInstanceConfigsOperationsListCall) PageToken(pageToken string) 
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsInstanceConfigsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsInstanceConfigsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -8948,6 +8972,19 @@ func (c *ProjectsInstanceConfigsSsdCachesOperationsListCall) PageSize(pageSize i
 // token.
 func (c *ProjectsInstanceConfigsSsdCachesOperationsListCall) PageToken(pageToken string) *ProjectsInstanceConfigsSsdCachesOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsInstanceConfigsSsdCachesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsInstanceConfigsSsdCachesOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -11850,6 +11887,19 @@ func (c *ProjectsInstancesBackupsOperationsListCall) PageSize(pageSize int64) *P
 // token.
 func (c *ProjectsInstancesBackupsOperationsListCall) PageToken(pageToken string) *ProjectsInstancesBackupsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsInstancesBackupsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsInstancesBackupsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -15326,6 +15376,19 @@ func (c *ProjectsInstancesDatabasesOperationsListCall) PageToken(pageToken strin
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsInstancesDatabasesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsInstancesDatabasesOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -18643,6 +18706,19 @@ func (c *ProjectsInstancesInstancePartitionsOperationsListCall) PageToken(pageTo
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsInstancesInstancePartitionsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsInstancesInstancePartitionsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -19108,6 +19184,19 @@ func (c *ProjectsInstancesOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsInstancesOperationsListCall) PageToken(pageToken string) *ProjectsInstancesOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// [ListOperationsResponse.unreachable] field. This can only be `true` when
+// reading across collections e.g. when `parent` is set to
+// "projects/example/locations/-". This field is not by default supported and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsInstancesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsInstancesOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

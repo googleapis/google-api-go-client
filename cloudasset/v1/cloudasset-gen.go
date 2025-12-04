@@ -5727,6 +5727,8 @@ func (s VersionedPackage) MarshalJSON() ([]byte, error) {
 // VersionedResource: Resource representation as defined by the corresponding
 // service providing the resource for a given API version.
 type VersionedResource struct {
+	// AssetExceptions: The exceptions of a resource.
+	AssetExceptions []*AssetException `json:"assetExceptions,omitempty"`
 	// Resource: JSON representation of the resource as defined by the
 	// corresponding service providing this resource. Example: If the resource is
 	// an instance provided by Compute Engine, this field will contain the JSON
@@ -5740,15 +5742,15 @@ type VersionedResource struct {
 	// `https://cloud.google.com/compute/docs/reference/rest/v1/instances`, version
 	// will be "v1".
 	Version string `json:"version,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Resource") to
+	// ForceSendFields is a list of field names (e.g. "AssetExceptions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Resource") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AssetExceptions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

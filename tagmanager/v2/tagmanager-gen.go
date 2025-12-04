@@ -647,6 +647,31 @@ func (s BuiltInVariable) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type BulkUpdateWorkspaceResponse struct {
+	// Changes: The entities that were added or updated during the bulk-update.
+	// Does not include entities that were deleted or updated by the system.
+	Changes []*Entity `json:"changes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Changes") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Changes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BulkUpdateWorkspaceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkUpdateWorkspaceResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type Client struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
@@ -2038,6 +2063,27 @@ type Parameter struct {
 
 func (s Parameter) MarshalJSON() ([]byte, error) {
 	type NoMethod Parameter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ProposedChange struct {
+	// Changes: The list of workspace changes to be applied.
+	Changes []*Entity `json:"changes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Changes") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Changes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProposedChange) MarshalJSON() ([]byte, error) {
+	type NoMethod ProposedChange
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6399,6 +6445,117 @@ func (c *AccountsContainersVersionsUpdateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.versions.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AccountsContainersWorkspacesBulkUpdateCall struct {
+	s              *Service
+	path           string
+	proposedchange *ProposedChange
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// BulkUpdate: Applies multiple entity changes to a workspace in one call. When
+// creating new entities, their entity IDs must be unique and in correct
+// format. That is, they must start with "new_" and followed by number, e.g.
+// "new_1", "new_2". Example body snippet to create myNewTag under myNewFolder
+// is: ``` "changes": [ { "folder": { "folderId": "new_1", "name":
+// "myNewFolder", ... }, "changeStatus": "ADDED" }, { "tag": { "tagId":
+// "new_2", "name": "myNewTag", "parentFolderId": "new_1", ... },
+// "changeStatus": "ADDED" } ] ```
+//
+// - path: GTM Workspace's API relative path.
+func (r *AccountsContainersWorkspacesService) BulkUpdate(path string, proposedchange *ProposedChange) *AccountsContainersWorkspacesBulkUpdateCall {
+	c := &AccountsContainersWorkspacesBulkUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.path = path
+	c.proposedchange = proposedchange
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsContainersWorkspacesBulkUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesBulkUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsContainersWorkspacesBulkUpdateCall) Context(ctx context.Context) *AccountsContainersWorkspacesBulkUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsContainersWorkspacesBulkUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesBulkUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.proposedchange)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v2/{+path}/bulk_update")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"path": c.path,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.workspaces.bulk_update", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.bulk_update" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BulkUpdateWorkspaceResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsContainersWorkspacesBulkUpdateCall) Do(opts ...googleapi.CallOption) (*BulkUpdateWorkspaceResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BulkUpdateWorkspaceResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "tagmanager.accounts.containers.workspaces.bulk_update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

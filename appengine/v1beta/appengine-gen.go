@@ -3488,6 +3488,27 @@ type Version struct {
 	// AppEngineApis: Allows App Engine second generation runtimes to access the
 	// legacy bundled services.
 	AppEngineApis bool `json:"appEngineApis,omitempty"`
+	// AppEngineBundledServices: List of specific App Engine Bundled Services that
+	// are enabled for this Version.
+	//
+	// Possible values:
+	//   "BUNDLED_SERVICE_TYPE_UNSPECIFIED" - Default, invalid value
+	//   "BUNDLED_SERVICE_TYPE_APP_IDENTITY_SERVICE" - App Identity Service
+	//   "BUNDLED_SERVICE_TYPE_BLOBSTORE" - Blobstore
+	//   "BUNDLED_SERVICE_TYPE_CAPABILITY_SERVICE" - Capability Service
+	//   "BUNDLED_SERVICE_TYPE_DATASTORE_V3" - Datastore V3
+	//   "BUNDLED_SERVICE_TYPE_DEFERRED" - Deferred
+	//   "BUNDLED_SERVICE_TYPE_IMAGES" - Images
+	//   "BUNDLED_SERVICE_TYPE_MAIL" - Mail
+	//   "BUNDLED_SERVICE_TYPE_MEMCACHE" - Memcache
+	//   "BUNDLED_SERVICE_TYPE_MODULES" - Modules
+	//   "BUNDLED_SERVICE_TYPE_NAMESPACES" - Namespaces
+	//   "BUNDLED_SERVICE_TYPE_NDB" - NDB
+	//   "BUNDLED_SERVICE_TYPE_SEARCH" - Search
+	//   "BUNDLED_SERVICE_TYPE_TASKQUEUES" - Task Queues
+	//   "BUNDLED_SERVICE_TYPE_URLFETCH" - URL Fetch
+	//   "BUNDLED_SERVICE_TYPE_USERS" - Users
+	AppEngineBundledServices []string `json:"appEngineBundledServices,omitempty"`
 	// AutomaticScaling: Automatic scaling is based on request rate, response
 	// latencies, and other application metrics. Instances are dynamically created
 	// and destroyed as needed in order to handle traffic.

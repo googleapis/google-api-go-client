@@ -486,6 +486,62 @@ func (s BatchModifyMessagesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ClassificationLabelFieldValue: Field values for a classification label.
+type ClassificationLabelFieldValue struct {
+	// FieldId: Required. The field ID for the Classification Label Value. Maps to
+	// the ID field of the Google Drive `Label.Field` object.
+	FieldId string `json:"fieldId,omitempty"`
+	// Selection: Selection choice ID for the selection option. Should only be set
+	// if the field type is `SELECTION` in the Google Drive `Label.Field` object.
+	// Maps to the id field of the Google Drive `Label.Field.SelectionOptions`
+	// resource.
+	Selection string `json:"selection,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClassificationLabelFieldValue) MarshalJSON() ([]byte, error) {
+	type NoMethod ClassificationLabelFieldValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ClassificationLabelValue: Classification Labels applied to the email
+// message. Classification Labels are different from Gmail inbox labels. Only
+// used for Google Workspace accounts. Learn more about classification labels
+// (https://support.google.com/a/answer/9292382).
+type ClassificationLabelValue struct {
+	// Fields: Field values for the given classification label ID.
+	Fields []*ClassificationLabelFieldValue `json:"fields,omitempty"`
+	// LabelId: Required. The canonical or raw alphanumeric classification label
+	// ID. Maps to the ID field of the Google Drive Label resource.
+	LabelId string `json:"labelId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClassificationLabelValue) MarshalJSON() ([]byte, error) {
+	type NoMethod ClassificationLabelValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CseIdentity: The client-side encryption (CSE) configuration for the email
 // address of an authenticated user. Gmail uses CSE configurations to save
 // drafts of client-side encrypted email messages, and to sign and send
@@ -1562,6 +1618,12 @@ func (s ListThreadsResponse) MarshalJSON() ([]byte, error) {
 
 // Message: An email message.
 type Message struct {
+	// ClassificationLabelValues: Classification Label values on the message.
+	// Available Classification Label schemas can be queried using the Google Drive
+	// Labels API. Each classification label ID must be unique. If duplicate IDs
+	// are provided, only one will be retained, and the selection is arbitrary.
+	// Only used for Google Workspace accounts.
+	ClassificationLabelValues []*ClassificationLabelValue `json:"classificationLabelValues,omitempty"`
 	// HistoryId: The ID of the last history record that modified this message.
 	HistoryId uint64 `json:"historyId,omitempty,string"`
 	// Id: The immutable ID of the message.
@@ -1594,15 +1656,15 @@ type Message struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "HistoryId") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "ClassificationLabelValues")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "HistoryId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ClassificationLabelValues") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

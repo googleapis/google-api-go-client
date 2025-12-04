@@ -2825,7 +2825,7 @@ func (s FeatureState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// FeatureUpdate: LINT.IfChange Feature config to use for Rollout.
+// FeatureUpdate: Feature config to use for Rollout.
 type FeatureUpdate struct {
 	// BinaryAuthorizationConfig: Optional. Configuration for Binary Authorization.
 	BinaryAuthorizationConfig *BinaryAuthorizationConfig `json:"binaryAuthorizationConfig,omitempty"`

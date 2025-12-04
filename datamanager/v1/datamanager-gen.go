@@ -292,7 +292,8 @@ type AwsWrappedKeyInfo struct {
 	// EncryptedDek: Required. The base64 encoded encrypted data encryption key.
 	EncryptedDek string `json:"encryptedDek,omitempty"`
 	// KekUri: Required. The URI of the AWS KMS key used to decrypt the DEK. Should
-	// be in the format of "arn:{partition}:kms:{region}:{account_id}:key/{key_id}"
+	// be in the format of `arn:{partition}:kms:{region}:{account_id}:key/{key_id}`
+	// or `aws-kms://arn:{partition}:kms:{region}:{account_id}:key/{key_id}`
 	KekUri string `json:"kekUri,omitempty"`
 	// KeyType: Required. The type of algorithm used to encrypt the data.
 	//
@@ -302,7 +303,7 @@ type AwsWrappedKeyInfo struct {
 	KeyType string `json:"keyType,omitempty"`
 	// RoleArn: Required. The Amazon Resource Name of the IAM Role to assume for
 	// KMS decryption access. Should be in the format of
-	// "arn:{partition}:iam::{account_id}:role/{role_name}"
+	// `arn:{partition}:iam::{account_id}:role/{role_name}`
 	RoleArn string `json:"roleArn,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EncryptedDek") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -801,8 +802,10 @@ type GcpWrappedKeyInfo struct {
 	// KekUri: Required. Google Cloud Platform Cloud Key Management Service
 	// resource ID (//cloud.google.com/kms/docs/getting-resource-ids). Should be in
 	// the format of
-	// "projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{key}
-	// ".
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{key}
+	// ` or
+	// `gcp-kms://projects/{project}/locations/{location}/keyRings/{key_ring}/crypto
+	// Keys/{key}`
 	KekUri string `json:"kekUri,omitempty"`
 	// KeyType: Required. The type of algorithm used to encrypt the data.
 	//

@@ -2650,10 +2650,22 @@ type Relation struct {
 	// ClusterExpressions: A list of columns or SQL expressions used to cluster the
 	// table.
 	ClusterExpressions []string `json:"clusterExpressions,omitempty"`
+	// Connection: Optional. The connection specifying the credentials to be used
+	// to read and write to external storage, such as Cloud Storage. The connection
+	// can have the form `{project}.{location}.{connection_id}` or
+	// `projects/{project}/locations/{location}/connections/{connection_id}", or be
+	// set to DEFAULT.
+	Connection string `json:"connection,omitempty"`
 	// DependencyTargets: A list of actions that this action depends on.
 	DependencyTargets []*Target `json:"dependencyTargets,omitempty"`
 	// Disabled: Whether this action is disabled (i.e. should not be run).
 	Disabled bool `json:"disabled,omitempty"`
+	// FileFormat: Optional. The file format for the BigQuery table.
+	//
+	// Possible values:
+	//   "FILE_FORMAT_UNSPECIFIED" - Default value.
+	//   "PARQUET" - Apache Parquet format.
+	FileFormat string `json:"fileFormat,omitempty"`
 	// IncrementalTableConfig: Configures `INCREMENTAL_TABLE` settings for this
 	// relation. Only set if `relation_type` is `INCREMENTAL_TABLE`.
 	IncrementalTableConfig *IncrementalTableConfig `json:"incrementalTableConfig,omitempty"`
@@ -2682,6 +2694,16 @@ type Relation struct {
 	// SelectQuery: The SELECT query which returns rows which this relation should
 	// contain.
 	SelectQuery string `json:"selectQuery,omitempty"`
+	// StorageUri: Optional. The fully qualified location prefix of the external
+	// folder where table data is stored. The URI should be in the format
+	// `gs://bucket/path_to_table/`.
+	StorageUri string `json:"storageUri,omitempty"`
+	// TableFormat: Optional. The table format for the BigQuery table.
+	//
+	// Possible values:
+	//   "TABLE_FORMAT_UNSPECIFIED" - Default value.
+	//   "ICEBERG" - Apache Iceberg format.
+	TableFormat string `json:"tableFormat,omitempty"`
 	// Tags: Arbitrary, user-defined tags on this action.
 	Tags []string `json:"tags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalOptions") to

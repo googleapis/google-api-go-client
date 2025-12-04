@@ -1297,14 +1297,19 @@ type ApplicationPolicy struct {
 	// minimumVersionCode, accessibleTrackIds, autoUpdateMode, installConstraint
 	// and installPriority cannot be set for the app. The app isn't available in
 	// the Play Store. The app installed on the device has applicationSource set to
-	// CUSTOM. The signing key certificate fingerprint of the app on the device
-	// must match one of the entries in ApplicationPolicy.signingKeyCerts .
-	// Otherwise, a NonComplianceDetail with APP_SIGNING_CERT_MISMATCH is reported.
-	// Changing the installType to and from CUSTOM uninstalls the existing app if
-	// its signing key certificate fingerprint doesn't match the one from the new
-	// app source. Removing the app from applications doesn't uninstall the
-	// existing app if it conforms to playStoreMode. See also customAppConfig. This
-	// is different from the Google Play Custom App Publishing
+	// CUSTOM. When the current installType is CUSTOM, the signing key certificate
+	// fingerprint of the existing custom app on the device must match one of the
+	// entries in ApplicationPolicy.signingKeyCerts . Otherwise, a
+	// NonComplianceDetail with APP_SIGNING_CERT_MISMATCH is reported. Changing the
+	// installType from CUSTOM to another value must match the playstore version of
+	// the application signing key certificate fingerprint. Otherwise a
+	// NonComplianceDetail with APP_SIGNING_CERT_MISMATCH is reported. Changing the
+	// installType to CUSTOM uninstalls the existing app if its signing key
+	// certificate fingerprint of the installed app doesn't match the one from the
+	// ApplicationPolicy.signingKeyCerts . Removing the app from applications
+	// doesn't uninstall the existing app if it conforms to playStoreMode. See also
+	// customAppConfig. This is different from the Google Play Custom App
+	// Publishing
 	// (https://developers.google.com/android/work/play/custom-app-api/get-started)
 	// feature.
 	InstallType string `json:"installType,omitempty"`
@@ -4820,8 +4825,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets ListOperationsRequest.return_partial_success and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -6666,8 +6671,8 @@ type Policy struct {
 	SafeBootDisabled bool `json:"safeBootDisabled,omitempty"`
 	// ScreenCaptureDisabled: Whether screen capture is disabled.
 	ScreenCaptureDisabled bool `json:"screenCaptureDisabled,omitempty"`
-	// SetUserIconDisabled: Whether changing the user icon is disabled. The setting
-	// has effect only on fully managed devices.
+	// SetUserIconDisabled: Whether changing the user icon is disabled. This
+	// applies only on devices running Android 7 and above.
 	SetUserIconDisabled bool `json:"setUserIconDisabled,omitempty"`
 	// SetWallpaperDisabled: Whether changing the wallpaper is disabled.
 	SetWallpaperDisabled bool `json:"setWallpaperDisabled,omitempty"`
@@ -6675,8 +6680,6 @@ type Policy struct {
 	// may be specified.
 	SetupActions []*SetupAction `json:"setupActions,omitempty"`
 	// ShareLocationDisabled: Whether location sharing is disabled.
-	// share_location_disabled is supported for both fully managed devices and
-	// personally owned work profiles.
 	ShareLocationDisabled bool `json:"shareLocationDisabled,omitempty"`
 	// ShortSupportMessage: A message displayed to the user in the settings screen
 	// wherever functionality has been disabled by the admin. If the message is
@@ -10508,8 +10511,8 @@ func (c *EnterprisesDevicesOperationsListCall) PageToken(pageToken string) *Ente
 // When set to true, operations that are reachable are returned as normal, and
 // those that are unreachable are returned in the
 // ListOperationsResponse.unreachable field.This can only be true when reading
-// across collections e.g. when parent is set to
-// "projects/example/locations/-".This field is not by default supported and
+// across collections. For example, when parent is set to
+// "projects/example/locations/-".This field is not supported by default and
 // will result in an UNIMPLEMENTED error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *EnterprisesDevicesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *EnterprisesDevicesOperationsListCall {

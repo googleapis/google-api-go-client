@@ -1763,6 +1763,30 @@ func (s CycleStep) MarshalJSON() ([]byte, error) {
 // DataDiskImageImport: Used when the image import is not using OS adaptation
 // process.
 type DataDiskImageImport struct {
+	// GuestOsFeatures: Optional. A list of guest OS features to apply to the
+	// imported image. These features are flags that are used by Compute Engine to
+	// enable certain capabilities for virtual machine instances that are created
+	// from the image. This field does not change the OS of the image; it only
+	// marks the image with the specified features. The user must ensure that the
+	// OS is compatible with the features. For a list of available features, see
+	// https://cloud.google.com/compute/docs/images/create-custom#guest-os-features.
+	GuestOsFeatures []string `json:"guestOsFeatures,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GuestOsFeatures") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GuestOsFeatures") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataDiskImageImport) MarshalJSON() ([]byte, error) {
+	type NoMethod DataDiskImageImport
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatacenterConnector: DatacenterConnector message describes a connector

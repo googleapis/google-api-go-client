@@ -2562,6 +2562,7 @@ type AlgorithmRulesComparisonValue struct {
 	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	//   "EXCHANGE_SNAP" - Snap.
+	//   "EXCHANGE_CADENT" - Cadent.
 	ExchangeValue string `json:"exchangeValue,omitempty"`
 	// Int64Value: Integer value.
 	Int64Value int64 `json:"int64Value,omitempty,string"`
@@ -4037,20 +4038,15 @@ func (s AuthorizedSellerStatusTargetingOptionDetails) MarshalJSON() ([]byte, err
 type BiddingStrategy struct {
 	// FixedBid: A strategy that uses a fixed bid price.
 	FixedBid *FixedBidStrategy `json:"fixedBid,omitempty"`
-	// MaximizeSpendAutoBid: A strategy that automatically adjusts the bid to
-	// optimize to your performance goal while spending the full budget. At
-	// insertion order level, the markup_type of line items cannot be set to
-	// `PARTNER_REVENUE_MODEL_MARKUP_TYPE_CPM`. In addition, when
-	// performance_goal_type is one of: *
-	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA` *
-	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC` *
-	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_AV_VIEWED` , the line_item_type of
-	// the insertion order line items must be either: *
-	// `LINE_ITEM_TYPE_DISPLAY_DEFAULT` * `LINE_ITEM_TYPE_VIDEO_DEFAULT` , and when
-	// performance_goal_type is either: *
-	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CIVA` *
-	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_IVO_TEN` the line_item_type of the
-	// insertion order line items must be `LINE_ITEM_TYPE_VIDEO_DEFAULT`.
+	// MaximizeSpendAutoBid: * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA`,
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC`, and
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_AV_VIEWED` only allow for
+	// `LINE_ITEM_TYPE_DISPLAY_DEFAULT` or `LINE_ITEM_TYPE_VIDEO_DEFAULT` line
+	// items. * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CIVA` and
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_IVO_TEN` only allow for
+	// `LINE_ITEM_TYPE_VIDEO_DEFAULT` line items. *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_REACH` only allows for
+	// `LINE_ITEM_TYPE_VIDEO_OVER_THE_TOP` line items.
 	MaximizeSpendAutoBid *MaximizeSpendBidStrategy `json:"maximizeSpendAutoBid,omitempty"`
 	// PerformanceGoalAutoBid: A strategy that automatically adjusts the bid to
 	// meet or beat a specified performance goal. It is to be used only for a line
@@ -8814,6 +8810,7 @@ type ExchangeAssignedTargetingOptionDetails struct {
 	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	//   "EXCHANGE_SNAP" - Snap.
+	//   "EXCHANGE_CADENT" - Cadent.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8952,6 +8949,7 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	//   "EXCHANGE_SNAP" - Snap.
+	//   "EXCHANGE_CADENT" - Cadent.
 	Exchange string `json:"exchange,omitempty"`
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager. The
 	// field is only relevant when Google Ad Manager is the enabled exchange.
@@ -9074,6 +9072,7 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	//   "EXCHANGE_SNAP" - Snap.
+	//   "EXCHANGE_CADENT" - Cadent.
 	Exchange string `json:"exchange,omitempty"`
 	// Status: Status of the exchange review.
 	//
@@ -9199,6 +9198,7 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	//   "EXCHANGE_SNAP" - Snap.
+	//   "EXCHANGE_CADENT" - Cadent.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10274,6 +10274,7 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	//   "EXCHANGE_SNAP" - Snap.
+	//   "EXCHANGE_CADENT" - Cadent.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Output only. The unique identifier of the guaranteed
 	// order. The guaranteed order IDs have the format
@@ -11085,6 +11086,7 @@ type InventorySource struct {
 	//   "EXCHANGE_SPOTIFY" - Spotify.
 	//   "EXCHANGE_TUBI" - Tubi.
 	//   "EXCHANGE_SNAP" - Snap.
+	//   "EXCHANGE_CADENT" - Cadent.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that this
 	// inventory source belongs to. Only applicable when commitment is
@@ -32169,7 +32171,7 @@ func (c *FloodlightGroupsFloodlightActivitiesListCall) OrderBy(orderBy string) *
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Must
-// be between `1` and `100`. If unspecified will default to `100`. Returns
+// be between `1` and `200`. If unspecified will default to `100`. Returns
 // error code `INVALID_ARGUMENT` if an invalid value is specified.
 func (c *FloodlightGroupsFloodlightActivitiesListCall) PageSize(pageSize int64) *FloodlightGroupsFloodlightActivitiesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))

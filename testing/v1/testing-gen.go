@@ -550,8 +550,8 @@ type AndroidRoboTest struct {
 	// mode. Recommended.
 	//   "ROBO_VERSION_1" - Runs Robo in UIAutomator-only mode without app
 	// resigning
-	//   "ROBO_VERSION_2" - Runs Robo in standard Espresso with UIAutomator
-	// fallback
+	//   "ROBO_VERSION_2" - Deprecated: Use ROBO_VERSION_1 instead for all use
+	// cases. Runs Robo in standard Espresso with UIAutomator fallback
 	RoboMode string `json:"roboMode,omitempty"`
 	// RoboScript: A JSON file with a sequence of actions Robo should perform as a
 	// prologue for the crawl.

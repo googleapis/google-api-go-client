@@ -1574,14 +1574,15 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1Application struct {
 	// DisplayName: Optional. An arbitrary user-provided name for the application
 	// resource. Cannot exceed 64 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// EndpointMatchers: Required. Endpoint matchers associated with an
-	// application. A combination of hostname and ports as endpoint matchers is
-	// used to match the application. Match conditions for OR logic. An array of
-	// match conditions to allow for multiple matching criteria. The rule is
-	// considered a match if one of the conditions is met. The conditions should be
-	// the following combination: (Hostname & Ports) EXAMPLES: Hostname and Ports -
-	// ("*.example.com", "443"), ("example.com" and "22"), ("example.com" and
-	// "22,33") etc
+	// EndpointMatchers: Optional. An array of conditions to match the
+	// application's network endpoint. Each element in the array is an
+	// EndpointMatcher object, which defines a specific combination of a hostname
+	// pattern and one or more ports. The application is considered matched if at
+	// least one of the EndpointMatcher conditions in this array is met (the
+	// conditions are combined using OR logic). Each EndpointMatcher must contain a
+	// hostname pattern, such as "example.com", and one or more port numbers
+	// specified as a string, such as "443". Hostname and port number examples:
+	// "*.example.com", "443" "example.com" and "22" "example.com" and "22,33"
 	EndpointMatchers []*GoogleCloudBeyondcorpSecuritygatewaysV1EndpointMatcher `json:"endpointMatchers,omitempty"`
 	// Name: Identifier. Name of the resource.
 	Name string `json:"name,omitempty"`
@@ -1699,19 +1700,19 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1ApplicationUpstreamNetwork) Marsh
 // GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeaders: Contextual headers
 // configuration.
 type GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeaders struct {
-	// DeviceInfo: Optional. Device info configuration.
+	// DeviceInfo: Optional. The device information configuration.
 	DeviceInfo *GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDeviceInfo `json:"deviceInfo,omitempty"`
-	// GroupInfo: Optional. Group info configuration.
+	// GroupInfo: Optional. Group details.
 	GroupInfo *GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedGroupInfo `json:"groupInfo,omitempty"`
 	// OutputType: Optional. Default output type for all enabled headers.
 	//
 	// Possible values:
-	//   "OUTPUT_TYPE_UNSPECIFIED" - Unspecified output type.
+	//   "OUTPUT_TYPE_UNSPECIFIED" - The unspecified output type.
 	//   "PROTOBUF" - Protobuf output type.
 	//   "JSON" - JSON output type.
 	//   "NONE" - Explicitly disable header output.
 	OutputType string `json:"outputType,omitempty"`
-	// UserInfo: Optional. User info configuration.
+	// UserInfo: Optional. User details.
 	UserInfo *GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedUserInfo `json:"userInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeviceInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1732,12 +1733,12 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeaders) MarshalJSON() 
 }
 
 // GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDeviceInfo:
-// Delegated device info configuration.
+// The delegated device information configuration.
 type GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDeviceInfo struct {
-	// OutputType: Optional. The output type of the delegated device info.
+	// OutputType: Optional. The output type details for the delegated device.
 	//
 	// Possible values:
-	//   "OUTPUT_TYPE_UNSPECIFIED" - Unspecified output type.
+	//   "OUTPUT_TYPE_UNSPECIFIED" - The unspecified output type.
 	//   "PROTOBUF" - Protobuf output type.
 	//   "JSON" - JSON output type.
 	//   "NONE" - Explicitly disable header output.
@@ -1761,12 +1762,12 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDeviceI
 }
 
 // GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedGroupInfo:
-// Delegated group info configuration.
+// The delegated group configuration details.
 type GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedGroupInfo struct {
-	// OutputType: Optional. The output type of the delegated group info.
+	// OutputType: Optional. The output type of the delegated group information.
 	//
 	// Possible values:
-	//   "OUTPUT_TYPE_UNSPECIFIED" - Unspecified output type.
+	//   "OUTPUT_TYPE_UNSPECIFIED" - The unspecified output type.
 	//   "PROTOBUF" - Protobuf output type.
 	//   "JSON" - JSON output type.
 	//   "NONE" - Explicitly disable header output.
@@ -1790,12 +1791,12 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedGroupIn
 }
 
 // GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedUserInfo:
-// Delegated user info configuration.
+// The configuration information for the delegated user.
 type GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedUserInfo struct {
-	// OutputType: Optional. The output type of the delegated user info.
+	// OutputType: Optional. The delegated user's information.
 	//
 	// Possible values:
-	//   "OUTPUT_TYPE_UNSPECIFIED" - Unspecified output type.
+	//   "OUTPUT_TYPE_UNSPECIFIED" - The unspecified output type.
 	//   "PROTOBUF" - Protobuf output type.
 	//   "JSON" - JSON output type.
 	//   "NONE" - Explicitly disable header output.
@@ -1871,7 +1872,7 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1Endpoint) MarshalJSON() ([]byte, 
 type GoogleCloudBeyondcorpSecuritygatewaysV1EndpointMatcher struct {
 	// Hostname: Required. Hostname of the application.
 	Hostname string `json:"hostname,omitempty"`
-	// Ports: Required. Ports of the application.
+	// Ports: Required. The ports of the application.
 	Ports []int64 `json:"ports,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Hostname") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2009,7 +2010,7 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1ProxyProtocolConfig struct {
 	ClientIp bool `json:"clientIp,omitempty"`
 	// ContextualHeaders: Optional. Configuration for the contextual headers.
 	ContextualHeaders *GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeaders `json:"contextualHeaders,omitempty"`
-	// GatewayIdentity: Optional. Gateway identity configuration.
+	// GatewayIdentity: Optional. The security gateway identity configuration.
 	//
 	// Possible values:
 	//   "GATEWAY_IDENTITY_UNSPECIFIED" - Unspecified gateway identity.
@@ -2018,9 +2019,9 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1ProxyProtocolConfig struct {
 	// way_id}
 	GatewayIdentity string `json:"gatewayIdentity,omitempty"`
 	// MetadataHeaders: Optional. Custom resource specific headers along with the
-	// values. The names should conform to RFC 9110: > Field names SHOULD constrain
-	// themselves to alphanumeric characters, "-", and ".", and SHOULD begin with a
-	// letter. Field values SHOULD contain only ASCII printable characters and tab.
+	// values. The names should conform to RFC 9110: >Field names can contain
+	// alphanumeric characters, hyphens, and periods, can contain only
+	// ASCII-printable characters and tabs, and must start with a letter.
 	MetadataHeaders map[string]string `json:"metadataHeaders,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedClientHeaders") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2187,7 +2188,7 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGateway) Marsh
 // GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGatewayOperationDes
 // criptor: API operation descriptor.
 type GoogleCloudBeyondcorpSecuritygatewaysV1ServiceDiscoveryApiGatewayOperationDescriptor struct {
-	// Path: Required. Contains uri path fragment where HTTP request is sent.
+	// Path: Required. Contains the URI path fragment where HTTP request is sent.
 	Path string `json:"path,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3541,9 +3542,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c

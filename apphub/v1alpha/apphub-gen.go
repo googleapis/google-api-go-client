@@ -521,6 +521,50 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Boundary: Application management boundary.
+type Boundary struct {
+	// CreateTime: Output only. Create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// CrmNode: Optional. The resource name of the CRM node being attached to the
+	// boundary. Format: `projects/{project-number}` or `projects/{project-id}`
+	CrmNode string `json:"crmNode,omitempty"`
+	// Name: Identifier. The resource name of the boundary. Format:
+	// "projects/{project}/locations/{location}/boundary"
+	Name string `json:"name,omitempty"`
+	// Type: Output only. Boundary type.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified type.
+	//   "AUTOMATIC" - The Boundary automatically includes all descendants of the
+	// CRM node.
+	//   "MANUAL" - The list of projects within the Boundary is managed by the
+	// user.
+	//   "MANAGED_AUTOMATIC" - The Boundary automatically includes all descendants
+	// of the CRM node, which is set via App Management folder capability.
+	Type string `json:"type,omitempty"`
+	// UpdateTime: Output only. Update time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Boundary) MarshalJSON() ([]byte, error) {
+	type NoMethod Boundary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
@@ -783,6 +827,28 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExtendedMetadata: Additional metadata for a Service or Workload.
+type ExtendedMetadata struct {
+	// MetadataStruct: Output only. The metadata contents.
+	MetadataStruct googleapi.RawMessage `json:"metadataStruct,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MetadataStruct") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MetadataStruct") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExtendedMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtendedMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FindUnregisteredServicesResponse: Response for FindUnregisteredServices.
 type FindUnregisteredServicesResponse struct {
 	// DiscoveredServices: List of Discovered Services.
@@ -867,6 +933,31 @@ type FunctionalType struct {
 
 func (s FunctionalType) MarshalJSON() ([]byte, error) {
 	type NoMethod FunctionalType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Identity: The identity associated with a service or workload.
+type Identity struct {
+	// Principal: Output only. Principal of the identity. Supported formats: *
+	// `sa://my-sa@xxxx.iam.gserviceaccount.com` for GCP Service Account *
+	// `principal://POOL_ID.global.PROJECT_NUMBER.workload.id.goog/ns/NAMESPACE_ID/s
+	// a/MANAGED_IDENTITY_ID` for Managed Workload Identity
+	Principal string `json:"principal,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Principal") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Principal") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Identity) MarshalJSON() ([]byte, error) {
+	type NoMethod Identity
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -997,8 +1088,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1404,6 +1495,33 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RegistrationType: The registration type of a service.
+type RegistrationType struct {
+	// Type: Output only. The registration type of a service.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified registration type. Defaults to EXCLUSIVE.
+	//   "EXCLUSIVE" - The service can only be registered to one application.
+	//   "SHARED" - The service can be registered to multiple applications.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RegistrationType) MarshalJSON() ([]byte, error) {
+	type NoMethod RegistrationType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Scope: Scope of an application.
 type Scope struct {
 	// Type: Required. Scope Type.
@@ -1548,24 +1666,33 @@ func (s ServiceProjectAttachment) MarshalJSON() ([]byte, error) {
 // ServiceProperties: Properties of an underlying cloud resource that can
 // comprise a Service.
 type ServiceProperties struct {
+	// ExtendedMetadata: Output only. Additional metadata specific to the resource
+	// type. The key is a string that identifies the type of metadata and the value
+	// is the metadata contents specific to that type. Key format:
+	// `apphub.googleapis.com/{metadataType}`
+	ExtendedMetadata map[string]ExtendedMetadata `json:"extendedMetadata,omitempty"`
 	// FunctionalType: Output only. The type of the service.
 	FunctionalType *FunctionalType `json:"functionalType,omitempty"`
 	// GcpProject: Output only. The service project identifier that the underlying
 	// cloud resource resides in.
 	GcpProject string `json:"gcpProject,omitempty"`
+	// Identity: Output only. The identity associated with the service.
+	Identity *Identity `json:"identity,omitempty"`
 	// Location: Output only. The location that the underlying resource resides in,
 	// for example, us-west1.
 	Location string `json:"location,omitempty"`
+	// RegistrationType: Output only. The registration type of the service.
+	RegistrationType *RegistrationType `json:"registrationType,omitempty"`
 	// Zone: Output only. The location that the underlying resource resides in if
 	// it is zonal, for example, us-west1-a).
 	Zone string `json:"zone,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FunctionalType") to
+	// ForceSendFields is a list of field names (e.g. "ExtendedMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FunctionalType") to include in
+	// NullFields is a list of field names (e.g. "ExtendedMetadata") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1786,24 +1913,31 @@ func (s Workload) MarshalJSON() ([]byte, error) {
 // WorkloadProperties: Properties of an underlying compute resource represented
 // by the Workload.
 type WorkloadProperties struct {
+	// ExtendedMetadata: Output only. Additional metadata specific to the resource
+	// type. The key is a string that identifies the type of metadata and the value
+	// is the metadata contents specific to that type. Key format:
+	// `apphub.googleapis.com/{metadataType}`
+	ExtendedMetadata map[string]ExtendedMetadata `json:"extendedMetadata,omitempty"`
 	// FunctionalType: Output only. The type of the workload.
 	FunctionalType *FunctionalType `json:"functionalType,omitempty"`
 	// GcpProject: Output only. The service project identifier that the underlying
 	// cloud resource resides in. Empty for non-cloud resources.
 	GcpProject string `json:"gcpProject,omitempty"`
+	// Identity: Output only. The identity associated with the workload.
+	Identity *Identity `json:"identity,omitempty"`
 	// Location: Output only. The location that the underlying compute resource
 	// resides in (for example, us-west1).
 	Location string `json:"location,omitempty"`
 	// Zone: Output only. The location that the underlying compute resource resides
 	// in if it is zonal (for example, us-west1-a).
 	Zone string `json:"zone,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FunctionalType") to
+	// ForceSendFields is a list of field names (e.g. "ExtendedMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FunctionalType") to include in
+	// NullFields is a list of field names (e.g. "ExtendedMetadata") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2052,6 +2186,116 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apphub.projects.locations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGetBoundaryCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetBoundary: Gets a Boundary.
+//
+//   - name: The name of the boundary to retrieve. Format:
+//     projects/{project}/locations/{location}/boundary.
+func (r *ProjectsLocationsService) GetBoundary(name string) *ProjectsLocationsGetBoundaryCall {
+	c := &ProjectsLocationsGetBoundaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGetBoundaryCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetBoundaryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGetBoundaryCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetBoundaryCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGetBoundaryCall) Context(ctx context.Context) *ProjectsLocationsGetBoundaryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGetBoundaryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetBoundaryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apphub.projects.locations.getBoundary", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apphub.projects.locations.getBoundary" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Boundary.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetBoundaryCall) Do(opts ...googleapi.CallOption) (*Boundary, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Boundary{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apphub.projects.locations.getBoundary", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -2329,6 +2573,137 @@ func (c *ProjectsLocationsLookupServiceProjectAttachmentCall) Do(opts ...googlea
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apphub.projects.locations.lookupServiceProjectAttachment", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsUpdateBoundaryCall struct {
+	s          *APIService
+	name       string
+	boundary   *Boundary
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// UpdateBoundary: Updates a Boundary.
+//
+//   - name: Identifier. The resource name of the boundary. Format:
+//     "projects/{project}/locations/{location}/boundary".
+func (r *ProjectsLocationsService) UpdateBoundary(name string, boundary *Boundary) *ProjectsLocationsUpdateBoundaryCall {
+	c := &ProjectsLocationsUpdateBoundaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.boundary = boundary
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsUpdateBoundaryCall) RequestId(requestId string) *ProjectsLocationsUpdateBoundaryCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
+// used to specify the fields to be overwritten in the Boundary resource by the
+// update. The fields specified in the update_mask are relative to the
+// resource, not the full request. A field will be overwritten if it is in the
+// mask. If the user does not provide a mask then all fields will be
+// overwritten.
+func (c *ProjectsLocationsUpdateBoundaryCall) UpdateMask(updateMask string) *ProjectsLocationsUpdateBoundaryCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsUpdateBoundaryCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateBoundaryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsUpdateBoundaryCall) Context(ctx context.Context) *ProjectsLocationsUpdateBoundaryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsUpdateBoundaryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUpdateBoundaryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.boundary)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apphub.projects.locations.updateBoundary", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apphub.projects.locations.updateBoundary" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsUpdateBoundaryCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apphub.projects.locations.updateBoundary", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6104,9 +6479,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

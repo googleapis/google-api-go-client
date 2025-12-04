@@ -882,6 +882,77 @@ func (s CropPropertiesSuggestionState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DateElementProperties: Properties of a DateElement.
+type DateElementProperties struct {
+	// DateFormat: Determines how the date part of the DateElement will be
+	// displayed in the document. If unset, the default value is
+	// DATE_FORMAT_MONTH_DAY_YEAR_ABBREVIATED, indicating the DateElement will be
+	// formatted as `MMM d, y` in `en_US`, or locale specific equivalent.
+	//
+	// Possible values:
+	//   "DATE_FORMAT_UNSPECIFIED" - The date format is unspecified.
+	//   "DATE_FORMAT_CUSTOM" - Output only. The date format is imported from an
+	// external source.
+	//   "DATE_FORMAT_MONTH_DAY_ABBREVIATED" - The date format is an abbreviated
+	// month followed by the day. For example, "Jan 1".
+	//   "DATE_FORMAT_MONTH_DAY_FULL" - The date format is a month followed by the
+	// day. For example, "January 01".
+	//   "DATE_FORMAT_MONTH_DAY_YEAR_ABBREVIATED" - The date format is an
+	// abbreviated month followed by the day and the year. For example, "Jan 1,
+	// 1970".
+	//   "DATE_FORMAT_ISO8601" - The date format is in ISO 8601 format. For
+	// example, "1970-01-01".
+	DateFormat string `json:"dateFormat,omitempty"`
+	// DisplayText: Output only. Indicates how the DateElement is displayed in the
+	// document.
+	DisplayText string `json:"displayText,omitempty"`
+	// Locale: The locale of the document, as defined by the Unicode Common Locale
+	// Data Repository (CLDR) project. For example, `en_US`. If unset, the default
+	// locale is `en_US`.
+	Locale string `json:"locale,omitempty"`
+	// TimeFormat: Determines how the time part of the DateElement will be
+	// displayed in the document. If unset, the default value is
+	// TIME_FORMAT_DISABLED, indicating no time should be shown.
+	//
+	// Possible values:
+	//   "TIME_FORMAT_UNSPECIFIED" - The time format is unspecified.
+	//   "TIME_FORMAT_DISABLED" - Indicates that the date does not have a time.
+	//   "TIME_FORMAT_HOUR_MINUTE" - The time format shows the hour and minute. For
+	// example, "Jan 1, 1970 12:00 PM".
+	//   "TIME_FORMAT_HOUR_MINUTE_TIMEZONE" - The time format shows the hour,
+	// minute, and timezone. For example, "Jan 1, 1970 12:00 PM UTC".
+	TimeFormat string `json:"timeFormat,omitempty"`
+	// TimeZoneId: The time zone of the DateElement, as defined by the Unicode
+	// Common Locale Data Repository (CLDR) project. For example, `America/New
+	// York`. If unset, the default time zone is `etc/UTC`.
+	TimeZoneId string `json:"timeZoneId,omitempty"`
+	// Timestamp: The point in time to represent, in seconds and nanoseconds since
+	// Unix epoch: January 1, 1970 at midnight UTC. Timestamp is expected to be in
+	// UTC. If time_zone_id is set, the timestamp is adjusted according to the time
+	// zone. For example, a timestamp of `18000` with a date format of
+	// `DATE_FORMAT_ISO8601` and time format of `TIME_FORMAT_HOUR_MINUTE` would be
+	// displayed as `1970-01-01 5:00 AM`. A timestamp of `18000` with date format
+	// of `DATE_FORMAT_8SO8601`, time format of `TIME_FORMAT_HOUR_MINUTE`, and time
+	// zone set to `America/New_York` will instead be `1970-01-01 12:00 AM`.
+	Timestamp string `json:"timestamp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateFormat") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateFormat") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DateElementProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DateElementProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeleteContentRangeRequest: Deletes content from the document.
 type DeleteContentRangeRequest struct {
 	// Range: The range of content to delete. Deleting text that crosses a
@@ -2200,6 +2271,36 @@ type InlineObjectPropertiesSuggestionState struct {
 
 func (s InlineObjectPropertiesSuggestionState) MarshalJSON() ([]byte, error) {
 	type NoMethod InlineObjectPropertiesSuggestionState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InsertDateRequest: Inserts a date at the specified location.
+type InsertDateRequest struct {
+	// DateElementProperties: The properties of the date to insert.
+	DateElementProperties *DateElementProperties `json:"dateElementProperties,omitempty"`
+	// EndOfSegmentLocation: Inserts the date at the end of the given header,
+	// footer or document body.
+	EndOfSegmentLocation *EndOfSegmentLocation `json:"endOfSegmentLocation,omitempty"`
+	// Location: Inserts the date at a specific index in the document. The date
+	// must be inserted inside the bounds of an existing Paragraph. For instance,
+	// it cannot be inserted at a table's start index (i.e. between an existing
+	// table and its preceding paragraph).
+	Location *Location `json:"location,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateElementProperties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateElementProperties") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InsertDateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertDateRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4029,6 +4130,8 @@ type Request struct {
 	DeleteTableColumn *DeleteTableColumnRequest `json:"deleteTableColumn,omitempty"`
 	// DeleteTableRow: Deletes a row from a table.
 	DeleteTableRow *DeleteTableRowRequest `json:"deleteTableRow,omitempty"`
+	// InsertDate: Inserts a date.
+	InsertDate *InsertDateRequest `json:"insertDate,omitempty"`
 	// InsertInlineImage: Inserts an inline image at the specified location.
 	InsertInlineImage *InsertInlineImageRequest `json:"insertInlineImage,omitempty"`
 	// InsertPageBreak: Inserts a page break at the specified location.
@@ -4211,15 +4314,15 @@ func (s RichLink) MarshalJSON() ([]byte, error) {
 
 // RichLinkProperties: Properties specific to a RichLink.
 type RichLinkProperties struct {
-	// MimeType: Output only. The MIME type
+	// MimeType: The MIME type
 	// (https://developers.google.com/drive/api/v3/mime-types) of the RichLink, if
 	// there's one (for example, when it's a file in Drive).
 	MimeType string `json:"mimeType,omitempty"`
-	// Title: Output only. The title of the RichLink as displayed in the link. This
-	// title matches the title of the linked resource at the time of the insertion
-	// or last update of the link. This field is always present.
+	// Title: The title of the RichLink as displayed in the link. This title
+	// matches the title of the linked resource at the time of the insertion or
+	// last update of the link. This field is always present.
 	Title string `json:"title,omitempty"`
-	// Uri: Output only. The URI to the RichLink. This is always present.
+	// Uri: The URI to the RichLink. This is always present.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MimeType") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -1636,7 +1636,7 @@
       }
     }
   },
-  "revision": "20251121",
+  "revision": "20251128",
   "rootUrl": "https://deploymentmanager.googleapis.com/",
   "schemas": {
     "AsyncOptions": {
@@ -2424,10 +2424,11 @@
               "items": {
                 "properties": {
                   "arguments": {
-                    "description": "[Output Only] Optional error details WARNING: DO NOT MAKE VISIBLE This is for internal use-only (like componentization) (thus the visibility \"none\") and in case of public exposure it is strongly recommended to follow pattern of: https://aip.dev/193 and expose as details field.",
+                    "description": "Output only. [Output Only] Optional error details WARNING: DO NOT MAKE VISIBLE This is for internal use-only (like componentization) (thus the visibility \"none\") and in case of public exposure it is strongly recommended to follow pattern of: https://aip.dev/193 and expose as details field.",
                     "items": {
                       "type": "string"
                     },
+                    "readOnly": true,
                     "type": "array"
                   },
                   "code": {
@@ -2435,7 +2436,8 @@
                     "type": "string"
                   },
                   "debugInfo": {
-                    "$ref": "DebugInfo"
+                    "$ref": "DebugInfo",
+                    "readOnly": true
                   },
                   "errorDetails": {
                     "description": "[Output Only] An optional list of messages that contain the error details. There is a set of defined message types to use for providing details.The syntax depends on the error code. For example, QuotaExceededInfo will have details when the error code is QUOTA_EXCEEDED.",
@@ -2500,7 +2502,8 @@
         },
         "kind": {
           "default": "compute#operation",
-          "description": "[Output Only] Type of the resource. Always `compute#operation` for Operation resources.",
+          "description": "Output only. [Output Only] Type of the resource. Always `compute#operation` for Operation resources.",
+          "readOnly": true,
           "type": "string"
         },
         "name": {
@@ -2508,7 +2511,8 @@
           "type": "string"
         },
         "operationGroupId": {
-          "description": "[Output Only] An ID that represents a group of operations, such as when a group of operations results from a `bulkInsert` API request.",
+          "description": "Output only. [Output Only] An ID that represents a group of operations, such as when a group of operations results from a `bulkInsert` API request.",
+          "readOnly": true,
           "type": "string"
         },
         "operationType": {
@@ -2529,7 +2533,8 @@
           "type": "string"
         },
         "selfLinkWithId": {
-          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
+          "description": "Output only. [Output Only] Server-defined URL for this resource with the resource id.",
+          "readOnly": true,
           "type": "string"
         },
         "setAutoscalerLinkOperationMetadata": {
@@ -2538,7 +2543,8 @@
         },
         "setCommonInstanceMetadataOperationMetadata": {
           "$ref": "SetCommonInstanceMetadataOperationMetadata",
-          "description": "[Output Only] If the operation is for projects.setCommonInstanceMetadata, this field will contain information on all underlying zonal actions and their state."
+          "description": "Output only. [Output Only] If the operation is for projects.setCommonInstanceMetadata, this field will contain information on all underlying zonal actions and their state.",
+          "readOnly": true
         },
         "startTime": {
           "description": "[Output Only] The time that this operation was started by the server. This value is in RFC3339 text format.",
@@ -3135,10 +3141,11 @@
               "items": {
                 "properties": {
                   "arguments": {
-                    "description": "[Output Only] Optional error details WARNING: DO NOT MAKE VISIBLE This is for internal use-only (like componentization) (thus the visibility \"none\") and in case of public exposure it is strongly recommended to follow pattern of: https://aip.dev/193 and expose as details field.",
+                    "description": "Output only. [Output Only] Optional error details WARNING: DO NOT MAKE VISIBLE This is for internal use-only (like componentization) (thus the visibility \"none\") and in case of public exposure it is strongly recommended to follow pattern of: https://aip.dev/193 and expose as details field.",
                     "items": {
                       "type": "string"
                     },
+                    "readOnly": true,
                     "type": "array"
                   },
                   "code": {
@@ -3146,7 +3153,8 @@
                     "type": "string"
                   },
                   "debugInfo": {
-                    "$ref": "DebugInfo"
+                    "$ref": "DebugInfo",
+                    "readOnly": true
                   },
                   "errorDetails": {
                     "description": "[Output Only] An optional list of messages that contain the error details. There is a set of defined message types to use for providing details.The syntax depends on the error code. For example, QuotaExceededInfo will have details when the error code is QUOTA_EXCEEDED.",

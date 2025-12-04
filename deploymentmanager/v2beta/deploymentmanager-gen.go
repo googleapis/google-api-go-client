@@ -1444,13 +1444,14 @@ type Operation struct {
 	// value is in RFC3339 text format.
 	InsertTime                           string                                `json:"insertTime,omitempty"`
 	InstancesBulkInsertOperationMetadata *InstancesBulkInsertOperationMetadata `json:"instancesBulkInsertOperationMetadata,omitempty"`
-	// Kind: [Output Only] Type of the resource. Always `compute#operation` for
-	// Operation resources.
+	// Kind: Output only. [Output Only] Type of the resource. Always
+	// `compute#operation` for Operation resources.
 	Kind string `json:"kind,omitempty"`
 	// Name: [Output Only] Name of the operation.
 	Name string `json:"name,omitempty"`
-	// OperationGroupId: [Output Only] An ID that represents a group of operations,
-	// such as when a group of operations results from a `bulkInsert` API request.
+	// OperationGroupId: Output only. [Output Only] An ID that represents a group
+	// of operations, such as when a group of operations results from a
+	// `bulkInsert` API request.
 	OperationGroupId string `json:"operationGroupId,omitempty"`
 	// OperationType: [Output Only] The type of operation, such as `insert`,
 	// `update`, or `delete`, and so on.
@@ -1466,15 +1467,15 @@ type Operation struct {
 	Region string `json:"region,omitempty"`
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
-	// SelfLinkWithId: [Output Only] Server-defined URL for this resource with the
-	// resource id.
+	// SelfLinkWithId: Output only. [Output Only] Server-defined URL for this
+	// resource with the resource id.
 	SelfLinkWithId string `json:"selfLinkWithId,omitempty"`
 	// SetAutoscalerLinkOperationMetadata: This field is used internally by the
 	// Autoscaler team and should not be promoted to "alpha/beta/v1".
 	SetAutoscalerLinkOperationMetadata *SetAutoscalerLinkOperationMetadata `json:"setAutoscalerLinkOperationMetadata,omitempty"`
-	// SetCommonInstanceMetadataOperationMetadata: [Output Only] If the operation
-	// is for projects.setCommonInstanceMetadata, this field will contain
-	// information on all underlying zonal actions and their state.
+	// SetCommonInstanceMetadataOperationMetadata: Output only. [Output Only] If
+	// the operation is for projects.setCommonInstanceMetadata, this field will
+	// contain information on all underlying zonal actions and their state.
 	SetCommonInstanceMetadataOperationMetadata *SetCommonInstanceMetadataOperationMetadata `json:"setCommonInstanceMetadataOperationMetadata,omitempty"`
 	// StartTime: [Output Only] The time that this operation was started by the
 	// server. This value is in RFC3339 text format.
@@ -1553,10 +1554,10 @@ func (s OperationError) MarshalJSON() ([]byte, error) {
 }
 
 type OperationErrorErrors struct {
-	// Arguments: [Output Only] Optional error details WARNING: DO NOT MAKE VISIBLE
-	// This is for internal use-only (like componentization) (thus the visibility
-	// "none") and in case of public exposure it is strongly recommended to follow
-	// pattern of: https://aip.dev/193 and expose as details field.
+	// Arguments: Output only. [Output Only] Optional error details WARNING: DO NOT
+	// MAKE VISIBLE This is for internal use-only (like componentization) (thus the
+	// visibility "none") and in case of public exposure it is strongly recommended
+	// to follow pattern of: https://aip.dev/193 and expose as details field.
 	Arguments []string `json:"arguments,omitempty"`
 	// Code: [Output Only] The error type identifier for this error.
 	Code      string     `json:"code,omitempty"`
@@ -2289,10 +2290,10 @@ func (s ResourceUpdateError) MarshalJSON() ([]byte, error) {
 }
 
 type ResourceUpdateErrorErrors struct {
-	// Arguments: [Output Only] Optional error details WARNING: DO NOT MAKE VISIBLE
-	// This is for internal use-only (like componentization) (thus the visibility
-	// "none") and in case of public exposure it is strongly recommended to follow
-	// pattern of: https://aip.dev/193 and expose as details field.
+	// Arguments: Output only. [Output Only] Optional error details WARNING: DO NOT
+	// MAKE VISIBLE This is for internal use-only (like componentization) (thus the
+	// visibility "none") and in case of public exposure it is strongly recommended
+	// to follow pattern of: https://aip.dev/193 and expose as details field.
 	Arguments []string `json:"arguments,omitempty"`
 	// Code: [Output Only] The error type identifier for this error.
 	Code      string     `json:"code,omitempty"`

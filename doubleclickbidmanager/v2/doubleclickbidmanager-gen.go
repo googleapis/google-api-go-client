@@ -396,10 +396,7 @@ type Parameters struct {
 	//   "REPORT_TYPE_UNSPECIFIED" - Default value when report type is not
 	// specified or is unknown in this version.
 	//   "STANDARD" - Standard report.
-	//   "INVENTORY_AVAILABILITY" - Inventory Availability report. See the [Display
-	// & Video 360 Help Center
-	// announcement](https://support.google.com/displayvideo/answer/15874746) for
-	// more information on this deprecation.
+	//   "INVENTORY_AVAILABILITY" - Inventory Availability report.
 	//   "AUDIENCE_COMPOSITION" - Audience Composition report.
 	//   "FLOODLIGHT" - Floodlight report.
 	//   "YOUTUBE" - YouTube report.

@@ -6,7 +6,7 @@
           "description": "Manage users on your domain"
         },
         "https://www.googleapis.com/auth/apps.reports.usage.readonly": {
-          "description": "View usage reports for your G Suite domain"
+          "description": "View usage reports for your Google Workspace domain"
         }
       }
     }
@@ -2294,7 +2294,7 @@
       }
     }
   },
-  "revision": "20251115",
+  "revision": "20251202",
   "rootUrl": "https://cloudchannel.googleapis.com/",
   "schemas": {
     "GoogleCloudChannelV1ActivateEntitlementRequest": {

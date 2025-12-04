@@ -1376,9 +1376,10 @@ func (s AssetSliceSet) MarshalJSON() ([]byte, error) {
 // AutoRenewingBasePlanType: Represents a base plan that automatically renews
 // at the end of its subscription period.
 type AutoRenewingBasePlanType struct {
-	// AccountHoldDuration: Optional. Account hold period of the subscription,
-	// specified in ISO 8601 format. Acceptable values must be in days and between
-	// P0D and P60D. If not specified, the default value is P30D. The sum of
+	// AccountHoldDuration: Optional. Custom account hold period of the
+	// subscription, specified in ISO 8601 format. Acceptable values must be in
+	// days and between P0D and P60D. An empty field represents a recommended
+	// account hold, calculated as 60 days minus grace period. The sum of
 	// gracePeriodDuration and accountHoldDuration must be between P30D and P60D
 	// days, inclusive.
 	AccountHoldDuration string `json:"accountHoldDuration,omitempty"`
@@ -4619,9 +4620,10 @@ func (s InstallmentPlan) MarshalJSON() ([]byte, error) {
 // InstallmentsBasePlanType: Represents an installments base plan where a user
 // commits to a specified number of payments.
 type InstallmentsBasePlanType struct {
-	// AccountHoldDuration: Optional. Account hold period of the subscription,
-	// specified in ISO 8601 format. Acceptable values must be in days and between
-	// P0D and P60D. If not specified, the default value is P30D. The sum of
+	// AccountHoldDuration: Optional. Custom account hold period of the
+	// subscription, specified in ISO 8601 format. Acceptable values must be in
+	// days and between P0D and P60D. An empty field represents a recommended
+	// account hold, calculated as 60 days minus grace period. The sum of
 	// gracePeriodDuration and accountHoldDuration must be between P30D and P60D
 	// days, inclusive.
 	AccountHoldDuration string `json:"accountHoldDuration,omitempty"`

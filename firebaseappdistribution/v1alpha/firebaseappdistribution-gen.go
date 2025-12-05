@@ -864,6 +864,7 @@ type GoogleFirebaseAppdistroV1alphaDeviceExecution struct {
 	//   "AI" - An AI-driven test.
 	//   "ACTION_BASED_REPLAY" - A replay of a previous test run.
 	//   "AI_REPLAY" - A failed replay that was rerun using the AI agent.
+	//   "RANDOM_CRAWL" - A random Robo test.
 	ExecutionType string `json:"executionType,omitempty"`
 	// FailedReason: Output only. The reason why the test failed.
 	//
@@ -880,6 +881,9 @@ type GoogleFirebaseAppdistroV1alphaDeviceExecution struct {
 	//   "TIMED_OUT" - The crawl reached the time limit before the test could be
 	// completed.
 	FailedReason string `json:"failedReason,omitempty"`
+	// FinalAiAssertionMissing: Output only. Indicates that the test replayed saved
+	// actions and concluded without a final AI assertion.
+	FinalAiAssertionMissing bool `json:"finalAiAssertionMissing,omitempty"`
 	// InconclusiveReason: Output only. The reason why the test was inconclusive.
 	//
 	// Possible values:

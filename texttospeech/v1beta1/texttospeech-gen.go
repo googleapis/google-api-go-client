@@ -491,8 +491,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -710,8 +710,8 @@ type SynthesisInput struct {
 	// be an exact match of the phrase in the input types. If using SSML, the
 	// phrase must not be inside a phoneme tag.
 	CustomPronunciations *CustomPronunciations `json:"customPronunciations,omitempty"`
-	// Markup: Markup for HD voices specifically. This field may not be used with
-	// any other voices.
+	// Markup: Markup for Chirp 3: HD voices specifically. This field may not be
+	// used with any other voices.
 	Markup string `json:"markup,omitempty"`
 	// MultiSpeakerMarkup: The multi-speaker input to be synthesized. Only
 	// applicable for multi-speaker synthesis.
@@ -1347,9 +1347,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

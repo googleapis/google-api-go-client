@@ -4639,7 +4639,7 @@ type UsersMessagesImportCall struct {
 // delivery scanning and classification similar to receiving via SMTP. This
 // method doesn't perform SPF checks, so it might not work for some spam
 // messages, such as those attempting to perform domain spoofing. This method
-// does not send a message.
+// does not send a message. Note that the maximum size of the message is 150MB.
 //
 //   - userId: The user's email address. The special value `me` can be used to
 //     indicate the authenticated user.

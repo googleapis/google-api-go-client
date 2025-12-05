@@ -946,7 +946,7 @@
       }
     }
   },
-  "revision": "20251113",
+  "revision": "20251203",
   "rootUrl": "https://firebaseappdistribution.googleapis.com/",
   "schemas": {
     "GdataBlobstore2Info": {
@@ -960,6 +960,11 @@
         },
         "blobId": {
           "description": "The blob id, e.g., /blobstore/prod/playground/scotty",
+          "type": "string"
+        },
+        "downloadExternalReadToken": {
+          "description": "A serialized External Read Token passed from Bigstore -\u003e Scotty for a GCS download. This field must never be consumed outside of Bigstore, and is not applicable to non-GCS media uploads.",
+          "format": "byte",
           "type": "string"
         },
         "downloadReadHandle": {

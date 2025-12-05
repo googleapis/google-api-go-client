@@ -17,6 +17,7 @@ import (
 	"cloud.google.com/go/auth"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
+	"google.golang.org/api/internal/credentialstype"
 	"google.golang.org/api/internal/impersonate"
 	"google.golang.org/grpc"
 )
@@ -26,42 +27,6 @@ const (
 	newAuthLibDisabledEnVar = "GOOGLE_API_GO_EXPERIMENTAL_DISABLE_NEW_AUTH_LIB"
 	universeDomainEnvVar    = "GOOGLE_CLOUD_UNIVERSE_DOMAIN"
 	defaultUniverseDomain   = "googleapis.com"
-)
-
-// CredentialsType specifies the type of JSON credentials being provided
-// to a loading function such as option.WithAuthCredentialsFile or
-// option.WithAuthCredentialsJSON.
-type CredentialsType int
-
-const (
-	// Unknown represents an unknown JSON file type.
-	Unknown CredentialsType = iota
-	// ServiceAccount represents a service account file type.
-	ServiceAccount
-	// User represents a user credentials file type.
-	User
-	// ImpersonatedServiceAccount represents an impersonated service account file type.
-	//
-	// IMPORTANT:
-	// This credential type does not validate the credential configuration. A security
-	// risk occurs when a credential configuration configured with malicious urls
-	// is used.
-	// You should validate credential configurations provided by untrusted sources.
-	// See [Security requirements when using credential configurations from an external
-	// source] https://cloud.google.com/docs/authentication/external/externally-sourced-credentials
-	// for more details.
-	ImpersonatedServiceAccount
-	// ExternalAccount represents an external account file type.
-	//
-	// IMPORTANT:
-	// This credential type does not validate the credential configuration. A security
-	// risk occurs when a credential configuration configured with malicious urls
-	// is used.
-	// You should validate credential configurations provided by untrusted sources.
-	// See [Security requirements when using credential configurations from an external
-	// source] https://cloud.google.com/docs/authentication/external/externally-sourced-credentials
-	// for more details.
-	ExternalAccount
 )
 
 // DialSettings holds information needed to establish a connection with a
@@ -112,7 +77,7 @@ type DialSettings struct {
 	AuthCredentials      *auth.Credentials
 	AuthCredentialsJSON  []byte
 	AuthCredentialsFile  string
-	AuthCredentialsType  CredentialsType
+	AuthCredentialsType  credentialstype.CredType
 	EnableNewAuthLibrary bool
 
 	// TODO(b/372244283): Remove after b/358175516 has been fixed
@@ -171,11 +136,11 @@ func (ds *DialSettings) IsNewAuthLibraryEnabled() bool {
 //
 // Use AuthCredentialsJSON if provided, as it is the safer, recommended option.
 // CredentialsJSON is populated by the deprecated WithCredentialsJSON.
-func (ds *DialSettings) GetAuthCredentialsJSON() ([]byte, CredentialsType) {
+func (ds *DialSettings) GetAuthCredentialsJSON() ([]byte, credentialstype.CredType) {
 	if len(ds.AuthCredentialsJSON) > 0 {
 		return ds.AuthCredentialsJSON, ds.AuthCredentialsType
 	}
-	return ds.CredentialsJSON, Unknown
+	return ds.CredentialsJSON, credentialstype.Unknown
 }
 
 // GetAuthCredentialsFile returns the AuthCredentialsFile and AuthCredentialsType, if set.
@@ -183,11 +148,11 @@ func (ds *DialSettings) GetAuthCredentialsJSON() ([]byte, CredentialsType) {
 //
 // Use AuthCredentialsFile if provided, as it is the safer, recommended option.
 // CredentialsFile is populated by the deprecated WithCredentialsFile.
-func (ds *DialSettings) GetAuthCredentialsFile() (string, CredentialsType) {
+func (ds *DialSettings) GetAuthCredentialsFile() (string, credentialstype.CredType) {
 	if ds.AuthCredentialsFile != "" {
 		return ds.AuthCredentialsFile, ds.AuthCredentialsType
 	}
-	return ds.CredentialsFile, Unknown
+	return ds.CredentialsFile, credentialstype.Unknown
 }
 
 // Validate reports an error if ds is invalid.

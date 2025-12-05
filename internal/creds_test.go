@@ -12,6 +12,7 @@ import (
 	"cloud.google.com/go/auth"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
+	"google.golang.org/api/internal/credentialstype"
 )
 
 func TestCreds_DefaultServiceAccount(t *testing.T) {
@@ -363,7 +364,8 @@ func TestGetQuotaProject(t *testing.T) {
 		&DialSettings{
 			Endpoint:      "foo.googleapis.com",
 			DefaultScopes: []string{"foo"},
-		})
+		},
+		credentialstype.ServiceAccount)
 	if err != nil {
 		t.Fatalf("got %v, wanted no error", err)
 	}
@@ -379,7 +381,8 @@ func TestGetQuotaProject(t *testing.T) {
 		&DialSettings{
 			Endpoint:      "foo.googleapis.com",
 			DefaultScopes: []string{"foo"},
-		})
+		},
+		credentialstype.User)
 	if err != nil {
 		t.Fatalf("got %v, wanted no error", err)
 	}

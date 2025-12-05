@@ -4772,6 +4772,30 @@ func (s GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigRecomme
 // GoogleCloudDiscoveryengineV1EngineSearchEngineConfig: Configurations for a
 // Search Engine.
 type GoogleCloudDiscoveryengineV1EngineSearchEngineConfig struct {
+	// RequiredSubscriptionTier: Optional. The required subscription tier of this
+	// engine. They cannot be modified after engine creation. If the required
+	// subscription tier is search, user with higher license tier like assist can
+	// still access the standalone app associated with this engine.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TIER_UNSPECIFIED" - Default value.
+	//   "SUBSCRIPTION_TIER_SEARCH" - Search tier. Search tier can access VAIS
+	// search features and NotebookLM features.
+	//   "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT" - Search + assistant tier. Search
+	// + assistant tier can access VAIS search features, NotebookLM features and
+	// assistant features.
+	//   "SUBSCRIPTION_TIER_NOTEBOOK_LM" - NotebookLM tier. NotebookLM is a
+	// subscription tier can only access NotebookLM features.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_WORKER" - Frontline worker tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_STARTER" - Agentspace Starter tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS" - Agentspace Business tier.
+	//   "SUBSCRIPTION_TIER_ENTERPRISE" - Enterprise tier.
+	//   "SUBSCRIPTION_TIER_EDU" - EDU tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
+	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Frontline starter tier.
+	RequiredSubscriptionTier string `json:"requiredSubscriptionTier,omitempty"`
 	// SearchAddOns: The add-on that this search engine enables.
 	//
 	// Possible values:
@@ -4789,15 +4813,15 @@ type GoogleCloudDiscoveryengineV1EngineSearchEngineConfig struct {
 	//   "SEARCH_TIER_STANDARD" - Standard tier.
 	//   "SEARCH_TIER_ENTERPRISE" - Enterprise tier.
 	SearchTier string `json:"searchTier,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SearchAddOns") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "RequiredSubscriptionTier")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SearchAddOns") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "RequiredSubscriptionTier") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5299,6 +5323,7 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
 	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
 	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Frontline starter tier.
 	SubscriptionTier string `json:"subscriptionTier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoRenew") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11217,6 +11242,30 @@ func (s GoogleCloudDiscoveryengineV1alphaEngineRecommendationMetadata) MarshalJS
 // GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig: Configurations
 // for a Search Engine.
 type GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig struct {
+	// RequiredSubscriptionTier: Optional. The required subscription tier of this
+	// engine. They cannot be modified after engine creation. If the required
+	// subscription tier is search, user with higher license tier like assist can
+	// still access the standalone app associated with this engine.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TIER_UNSPECIFIED" - Default value.
+	//   "SUBSCRIPTION_TIER_SEARCH" - Search tier. Search tier can access VAIS
+	// search features and NotebookLM features.
+	//   "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT" - Search + assistant tier. Search
+	// + assistant tier can access VAIS search features, NotebookLM features and
+	// assistant features.
+	//   "SUBSCRIPTION_TIER_NOTEBOOK_LM" - NotebookLM tier. NotebookLM is a
+	// subscription tier can only access NotebookLM features.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_WORKER" - Frontline worker tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_STARTER" - Agentspace Starter tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS" - Agentspace Business tier.
+	//   "SUBSCRIPTION_TIER_ENTERPRISE" - Enterprise tier.
+	//   "SUBSCRIPTION_TIER_EDU" - EDU tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
+	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Frontline starter tier.
+	RequiredSubscriptionTier string `json:"requiredSubscriptionTier,omitempty"`
 	// SearchAddOns: The add-on that this search engine enables.
 	//
 	// Possible values:
@@ -11234,15 +11283,15 @@ type GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig struct {
 	//   "SEARCH_TIER_STANDARD" - Standard tier.
 	//   "SEARCH_TIER_ENTERPRISE" - Enterprise tier.
 	SearchTier string `json:"searchTier,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SearchAddOns") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "RequiredSubscriptionTier")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SearchAddOns") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "RequiredSubscriptionTier") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -12311,6 +12360,7 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
 	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
 	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Frontline starter tier.
 	SubscriptionTier string `json:"subscriptionTier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AlertPolicyResourceConfig")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -22346,6 +22396,30 @@ func (s GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigRec
 // GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig: Configurations for
 // a Search Engine.
 type GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig struct {
+	// RequiredSubscriptionTier: Optional. The required subscription tier of this
+	// engine. They cannot be modified after engine creation. If the required
+	// subscription tier is search, user with higher license tier like assist can
+	// still access the standalone app associated with this engine.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TIER_UNSPECIFIED" - Default value.
+	//   "SUBSCRIPTION_TIER_SEARCH" - Search tier. Search tier can access VAIS
+	// search features and NotebookLM features.
+	//   "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT" - Search + assistant tier. Search
+	// + assistant tier can access VAIS search features, NotebookLM features and
+	// assistant features.
+	//   "SUBSCRIPTION_TIER_NOTEBOOK_LM" - NotebookLM tier. NotebookLM is a
+	// subscription tier can only access NotebookLM features.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_WORKER" - Frontline worker tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_STARTER" - Agentspace Starter tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS" - Agentspace Business tier.
+	//   "SUBSCRIPTION_TIER_ENTERPRISE" - Enterprise tier.
+	//   "SUBSCRIPTION_TIER_EDU" - EDU tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
+	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Frontline starter tier.
+	RequiredSubscriptionTier string `json:"requiredSubscriptionTier,omitempty"`
 	// SearchAddOns: The add-on that this search engine enables.
 	//
 	// Possible values:
@@ -22363,15 +22437,15 @@ type GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig struct {
 	//   "SEARCH_TIER_STANDARD" - Standard tier.
 	//   "SEARCH_TIER_ENTERPRISE" - Enterprise tier.
 	SearchTier string `json:"searchTier,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SearchAddOns") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "RequiredSubscriptionTier")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SearchAddOns") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "RequiredSubscriptionTier") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -22792,6 +22866,8 @@ type GoogleCloudDiscoveryengineV1betaIdentityMappingEntry struct {
 	// ExternalIdentity: Required. Identity outside the customer identity provider.
 	// The length limit of external identity will be of 100 characters.
 	ExternalIdentity string `json:"externalIdentity,omitempty"`
+	// ExternalIdentityName: Optional. The name of the external identity.
+	ExternalIdentityName string `json:"externalIdentityName,omitempty"`
 	// GroupId: Group identifier. For Google Workspace user account, group_id
 	// should be the google workspace group email. For non-google identity
 	// provider, group_id is the mapped group identifier configured during the
@@ -23807,6 +23883,7 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
 	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
 	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Frontline starter tier.
 	SubscriptionTier string `json:"subscriptionTier,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -27800,6 +27877,14 @@ type GoogleCloudDiscoveryengineV1betaSearchResponse struct {
 	Results []*GoogleCloudDiscoveryengineV1betaSearchResponseSearchResult `json:"results,omitempty"`
 	// SearchLinkPromotions: Promotions for site search.
 	SearchLinkPromotions []*GoogleCloudDiscoveryengineV1betaSearchLinkPromotion `json:"searchLinkPromotions,omitempty"`
+	// SemanticState: Output only. Indicates the semantic state of the search
+	// response.
+	//
+	// Possible values:
+	//   "SEMANTIC_STATE_UNSPECIFIED" - Default value. Should not be used.
+	//   "DISABLED" - Semantic search was disabled for this search response.
+	//   "ENABLED" - Semantic search was enabled for this search response.
+	SemanticState string `json:"semanticState,omitempty"`
 	// SessionInfo: Session information. Only set if SearchRequest.session is
 	// provided. See its description for more details.
 	SessionInfo *GoogleCloudDiscoveryengineV1betaSearchResponseSessionInfo `json:"sessionInfo,omitempty"`

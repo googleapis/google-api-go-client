@@ -299,6 +299,9 @@ type Blobstore2Info struct {
 	BlobGeneration int64 `json:"blobGeneration,omitempty,string"`
 	// BlobId: # gdata.* are outside protos with mising documentation
 	BlobId string `json:"blobId,omitempty"`
+	// DownloadExternalReadToken: # gdata.* are outside protos with mising
+	// documentation
+	DownloadExternalReadToken string `json:"downloadExternalReadToken,omitempty"`
 	// DownloadReadHandle: # gdata.* are outside protos with mising documentation
 	DownloadReadHandle string `json:"downloadReadHandle,omitempty"`
 	// ReadToken: # gdata.* are outside protos with mising documentation

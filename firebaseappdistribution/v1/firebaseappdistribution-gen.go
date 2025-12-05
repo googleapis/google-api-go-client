@@ -253,6 +253,10 @@ type GdataBlobstore2Info struct {
 	BlobGeneration int64 `json:"blobGeneration,omitempty,string"`
 	// BlobId: The blob id, e.g., /blobstore/prod/playground/scotty
 	BlobId string `json:"blobId,omitempty"`
+	// DownloadExternalReadToken: A serialized External Read Token passed from
+	// Bigstore -> Scotty for a GCS download. This field must never be consumed
+	// outside of Bigstore, and is not applicable to non-GCS media uploads.
+	DownloadExternalReadToken string `json:"downloadExternalReadToken,omitempty"`
 	// DownloadReadHandle: Read handle passed from Bigstore -> Scotty for a GCS
 	// download. This is a signed, serialized blobstore2.ReadHandle proto which
 	// must never be set outside of Bigstore, and is not applicable to non-GCS

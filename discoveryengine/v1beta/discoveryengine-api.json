@@ -7390,6 +7390,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                     "https://www.googleapis.com/auth/discoveryengine.readwrite"
                   ]
                 },
@@ -8925,7 +8926,7 @@
       }
     }
   },
-  "revision": "20251116",
+  "revision": "20251203",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -11656,6 +11657,40 @@
       "description": "Configurations for a Search Engine.",
       "id": "GoogleCloudDiscoveryengineV1EngineSearchEngineConfig",
       "properties": {
+        "requiredSubscriptionTier": {
+          "description": "Optional. The required subscription tier of this engine. They cannot be modified after engine creation. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine.",
+          "enum": [
+            "SUBSCRIPTION_TIER_UNSPECIFIED",
+            "SUBSCRIPTION_TIER_SEARCH",
+            "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT",
+            "SUBSCRIPTION_TIER_NOTEBOOK_LM",
+            "SUBSCRIPTION_TIER_FRONTLINE_WORKER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_STARTER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS",
+            "SUBSCRIPTION_TIER_ENTERPRISE",
+            "SUBSCRIPTION_TIER_EDU",
+            "SUBSCRIPTION_TIER_EDU_PRO",
+            "SUBSCRIPTION_TIER_EDU_EMERGING",
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "Search tier. Search tier can access VAIS search features and NotebookLM features.",
+            "Search + assistant tier. Search + assistant tier can access VAIS search features, NotebookLM features and assistant features.",
+            "NotebookLM tier. NotebookLM is a subscription tier can only access NotebookLM features.",
+            "Frontline worker tier.",
+            "Agentspace Starter tier.",
+            "Agentspace Business tier.",
+            "Enterprise tier.",
+            "EDU tier.",
+            "EDU Pro tier.",
+            "EDU emerging market tier.",
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
+          ],
+          "type": "string"
+        },
         "searchAddOns": {
           "description": "The add-on that this search engine enables.",
           "items": {
@@ -12074,7 +12109,8 @@
             "SUBSCRIPTION_TIER_EDU",
             "SUBSCRIPTION_TIER_EDU_PRO",
             "SUBSCRIPTION_TIER_EDU_EMERGING",
-            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING"
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -12088,7 +12124,8 @@
             "EDU tier.",
             "EDU Pro tier.",
             "EDU emerging market tier.",
-            "EDU Pro emerging market tier."
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
           ],
           "type": "string"
         }
@@ -16788,6 +16825,40 @@
       "description": "Configurations for a Search Engine.",
       "id": "GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig",
       "properties": {
+        "requiredSubscriptionTier": {
+          "description": "Optional. The required subscription tier of this engine. They cannot be modified after engine creation. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine.",
+          "enum": [
+            "SUBSCRIPTION_TIER_UNSPECIFIED",
+            "SUBSCRIPTION_TIER_SEARCH",
+            "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT",
+            "SUBSCRIPTION_TIER_NOTEBOOK_LM",
+            "SUBSCRIPTION_TIER_FRONTLINE_WORKER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_STARTER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS",
+            "SUBSCRIPTION_TIER_ENTERPRISE",
+            "SUBSCRIPTION_TIER_EDU",
+            "SUBSCRIPTION_TIER_EDU_PRO",
+            "SUBSCRIPTION_TIER_EDU_EMERGING",
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "Search tier. Search tier can access VAIS search features and NotebookLM features.",
+            "Search + assistant tier. Search + assistant tier can access VAIS search features, NotebookLM features and assistant features.",
+            "NotebookLM tier. NotebookLM is a subscription tier can only access NotebookLM features.",
+            "Frontline worker tier.",
+            "Agentspace Starter tier.",
+            "Agentspace Business tier.",
+            "Enterprise tier.",
+            "EDU tier.",
+            "EDU Pro tier.",
+            "EDU emerging market tier.",
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
+          ],
+          "type": "string"
+        },
         "searchAddOns": {
           "description": "The add-on that this search engine enables.",
           "items": {
@@ -17651,7 +17722,8 @@
             "SUBSCRIPTION_TIER_EDU",
             "SUBSCRIPTION_TIER_EDU_PRO",
             "SUBSCRIPTION_TIER_EDU_EMERGING",
-            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING"
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -17665,7 +17737,8 @@
             "EDU tier.",
             "EDU Pro tier.",
             "EDU emerging market tier.",
-            "EDU Pro emerging market tier."
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
           ],
           "type": "string"
         }
@@ -24921,6 +24994,40 @@
       "description": "Configurations for a Search Engine.",
       "id": "GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig",
       "properties": {
+        "requiredSubscriptionTier": {
+          "description": "Optional. The required subscription tier of this engine. They cannot be modified after engine creation. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine.",
+          "enum": [
+            "SUBSCRIPTION_TIER_UNSPECIFIED",
+            "SUBSCRIPTION_TIER_SEARCH",
+            "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT",
+            "SUBSCRIPTION_TIER_NOTEBOOK_LM",
+            "SUBSCRIPTION_TIER_FRONTLINE_WORKER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_STARTER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS",
+            "SUBSCRIPTION_TIER_ENTERPRISE",
+            "SUBSCRIPTION_TIER_EDU",
+            "SUBSCRIPTION_TIER_EDU_PRO",
+            "SUBSCRIPTION_TIER_EDU_EMERGING",
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "Search tier. Search tier can access VAIS search features and NotebookLM features.",
+            "Search + assistant tier. Search + assistant tier can access VAIS search features, NotebookLM features and assistant features.",
+            "NotebookLM tier. NotebookLM is a subscription tier can only access NotebookLM features.",
+            "Frontline worker tier.",
+            "Agentspace Starter tier.",
+            "Agentspace Business tier.",
+            "Enterprise tier.",
+            "EDU tier.",
+            "EDU Pro tier.",
+            "EDU emerging market tier.",
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
+          ],
+          "type": "string"
+        },
         "searchAddOns": {
           "description": "The add-on that this search engine enables.",
           "items": {
@@ -25236,6 +25343,10 @@
       "properties": {
         "externalIdentity": {
           "description": "Required. Identity outside the customer identity provider. The length limit of external identity will be of 100 characters.",
+          "type": "string"
+        },
+        "externalIdentityName": {
+          "description": "Optional. The name of the external identity.",
           "type": "string"
         },
         "groupId": {
@@ -25984,7 +26095,8 @@
             "SUBSCRIPTION_TIER_EDU",
             "SUBSCRIPTION_TIER_EDU_PRO",
             "SUBSCRIPTION_TIER_EDU_EMERGING",
-            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING"
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -25998,7 +26110,8 @@
             "EDU tier.",
             "EDU Pro tier.",
             "EDU emerging market tier.",
-            "EDU Pro emerging market tier."
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
           ],
           "type": "string"
         }
@@ -28557,6 +28670,21 @@
             "$ref": "GoogleCloudDiscoveryengineV1betaSearchLinkPromotion"
           },
           "type": "array"
+        },
+        "semanticState": {
+          "description": "Output only. Indicates the semantic state of the search response.",
+          "enum": [
+            "SEMANTIC_STATE_UNSPECIFIED",
+            "DISABLED",
+            "ENABLED"
+          ],
+          "enumDescriptions": [
+            "Default value. Should not be used.",
+            "Semantic search was disabled for this search response.",
+            "Semantic search was enabled for this search response."
+          ],
+          "readOnly": true,
+          "type": "string"
         },
         "sessionInfo": {
           "$ref": "GoogleCloudDiscoveryengineV1betaSearchResponseSessionInfo",

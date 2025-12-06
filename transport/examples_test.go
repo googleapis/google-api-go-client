@@ -34,7 +34,7 @@ func Example_withCredentialsFile() {
 	//
 	// Note: Given the same set of options, transport.NewHTTPClient and
 	// transport.DialGRPC use the same credentials.
-	c, _, err := transport.NewHTTPClient(ctx, option.WithCredentialsFile("/path/to/service-account-creds.json"))
+	c, _, err := transport.NewHTTPClient(ctx, option.WithAuthCredentialsFile(option.ServiceAccount, "/path/to/service-account-creds.json"))
 	if err != nil {
 		log.Fatal(err)
 	}

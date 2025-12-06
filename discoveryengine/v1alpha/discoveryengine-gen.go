@@ -802,17 +802,44 @@ type ProjectsLocationsCollectionsEnginesServingConfigsService struct {
 
 func NewProjectsLocationsCollectionsEnginesSessionsService(s *Service) *ProjectsLocationsCollectionsEnginesSessionsService {
 	rs := &ProjectsLocationsCollectionsEnginesSessionsService{s: s}
+	rs.AlphaEvolveExperiments = NewProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsService(s)
 	rs.Answers = NewProjectsLocationsCollectionsEnginesSessionsAnswersService(s)
 	rs.Files = NewProjectsLocationsCollectionsEnginesSessionsFilesService(s)
+	rs.Operations = NewProjectsLocationsCollectionsEnginesSessionsOperationsService(s)
 	return rs
 }
 
 type ProjectsLocationsCollectionsEnginesSessionsService struct {
 	s *Service
 
+	AlphaEvolveExperiments *ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsService
+
 	Answers *ProjectsLocationsCollectionsEnginesSessionsAnswersService
 
 	Files *ProjectsLocationsCollectionsEnginesSessionsFilesService
+
+	Operations *ProjectsLocationsCollectionsEnginesSessionsOperationsService
+}
+
+func NewProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsService(s *Service) *ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsService {
+	rs := &ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsService{s: s}
+	rs.Operations = NewProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsService(s)
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsService struct {
+	s *Service
+
+	Operations *ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsService
+}
+
+func NewProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsService(s *Service) *ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsService {
+	rs := &ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsCollectionsEnginesSessionsAnswersService(s *Service) *ProjectsLocationsCollectionsEnginesSessionsAnswersService {
@@ -830,6 +857,15 @@ func NewProjectsLocationsCollectionsEnginesSessionsFilesService(s *Service) *Pro
 }
 
 type ProjectsLocationsCollectionsEnginesSessionsFilesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCollectionsEnginesSessionsOperationsService(s *Service) *ProjectsLocationsCollectionsEnginesSessionsOperationsService {
+	rs := &ProjectsLocationsCollectionsEnginesSessionsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesSessionsOperationsService struct {
 	s *Service
 }
 
@@ -4988,6 +5024,30 @@ func (s GoogleCloudDiscoveryengineV1EngineMediaRecommendationEngineConfigRecomme
 // GoogleCloudDiscoveryengineV1EngineSearchEngineConfig: Configurations for a
 // Search Engine.
 type GoogleCloudDiscoveryengineV1EngineSearchEngineConfig struct {
+	// RequiredSubscriptionTier: Optional. The required subscription tier of this
+	// engine. They cannot be modified after engine creation. If the required
+	// subscription tier is search, user with higher license tier like assist can
+	// still access the standalone app associated with this engine.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TIER_UNSPECIFIED" - Default value.
+	//   "SUBSCRIPTION_TIER_SEARCH" - Search tier. Search tier can access VAIS
+	// search features and NotebookLM features.
+	//   "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT" - Search + assistant tier. Search
+	// + assistant tier can access VAIS search features, NotebookLM features and
+	// assistant features.
+	//   "SUBSCRIPTION_TIER_NOTEBOOK_LM" - NotebookLM tier. NotebookLM is a
+	// subscription tier can only access NotebookLM features.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_WORKER" - Frontline worker tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_STARTER" - Agentspace Starter tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS" - Agentspace Business tier.
+	//   "SUBSCRIPTION_TIER_ENTERPRISE" - Enterprise tier.
+	//   "SUBSCRIPTION_TIER_EDU" - EDU tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
+	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Frontline starter tier.
+	RequiredSubscriptionTier string `json:"requiredSubscriptionTier,omitempty"`
 	// SearchAddOns: The add-on that this search engine enables.
 	//
 	// Possible values:
@@ -5005,15 +5065,15 @@ type GoogleCloudDiscoveryengineV1EngineSearchEngineConfig struct {
 	//   "SEARCH_TIER_STANDARD" - Standard tier.
 	//   "SEARCH_TIER_ENTERPRISE" - Enterprise tier.
 	SearchTier string `json:"searchTier,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SearchAddOns") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "RequiredSubscriptionTier")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SearchAddOns") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "RequiredSubscriptionTier") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5515,6 +5575,7 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
 	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
 	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Frontline starter tier.
 	SubscriptionTier string `json:"subscriptionTier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoRenew") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10149,6 +10210,9 @@ type GoogleCloudDiscoveryengineV1alphaAssistant struct {
 	// Description: Optional. Description for additional information. Expected to
 	// be shown on the configuration UI, not to the users of the assistant.
 	Description string `json:"description,omitempty"`
+	// DisableLocationContext: Optional. Indicates whether to disable user location
+	// context. By default, user location context is enabled.
+	DisableLocationContext bool `json:"disableLocationContext,omitempty"`
 	// DisplayName: Required. The assistant display name. It must be a UTF-8
 	// encoded string with a length limit of 128 characters.
 	DisplayName string `json:"displayName,omitempty"`
@@ -11456,6 +11520,7 @@ type GoogleCloudDiscoveryengineV1alphaBillingAccountLicenseConfig struct {
 	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
 	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
 	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Frontline starter tier.
 	SubscriptionTier string `json:"subscriptionTier,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -15988,6 +16053,30 @@ func (s GoogleCloudDiscoveryengineV1alphaEngineRecommendationMetadata) MarshalJS
 // GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig: Configurations
 // for a Search Engine.
 type GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig struct {
+	// RequiredSubscriptionTier: Optional. The required subscription tier of this
+	// engine. They cannot be modified after engine creation. If the required
+	// subscription tier is search, user with higher license tier like assist can
+	// still access the standalone app associated with this engine.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TIER_UNSPECIFIED" - Default value.
+	//   "SUBSCRIPTION_TIER_SEARCH" - Search tier. Search tier can access VAIS
+	// search features and NotebookLM features.
+	//   "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT" - Search + assistant tier. Search
+	// + assistant tier can access VAIS search features, NotebookLM features and
+	// assistant features.
+	//   "SUBSCRIPTION_TIER_NOTEBOOK_LM" - NotebookLM tier. NotebookLM is a
+	// subscription tier can only access NotebookLM features.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_WORKER" - Frontline worker tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_STARTER" - Agentspace Starter tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS" - Agentspace Business tier.
+	//   "SUBSCRIPTION_TIER_ENTERPRISE" - Enterprise tier.
+	//   "SUBSCRIPTION_TIER_EDU" - EDU tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
+	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Frontline starter tier.
+	RequiredSubscriptionTier string `json:"requiredSubscriptionTier,omitempty"`
 	// SearchAddOns: The add-on that this search engine enables.
 	//
 	// Possible values:
@@ -16005,15 +16094,15 @@ type GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig struct {
 	//   "SEARCH_TIER_STANDARD" - Standard tier.
 	//   "SEARCH_TIER_ENTERPRISE" - Enterprise tier.
 	SearchTier string `json:"searchTier,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SearchAddOns") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "RequiredSubscriptionTier")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SearchAddOns") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "RequiredSubscriptionTier") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -17117,6 +17206,8 @@ type GoogleCloudDiscoveryengineV1alphaIdentityMappingEntry struct {
 	// ExternalIdentity: Required. Identity outside the customer identity provider.
 	// The length limit of external identity will be of 100 characters.
 	ExternalIdentity string `json:"externalIdentity,omitempty"`
+	// ExternalIdentityName: Optional. The name of the external identity.
+	ExternalIdentityName string `json:"externalIdentityName,omitempty"`
 	// GroupId: Group identifier. For Google Workspace user account, group_id
 	// should be the google workspace group email. For non-google identity
 	// provider, group_id is the mapped group identifier configured during the
@@ -18261,6 +18352,7 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
 	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
 	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Frontline starter tier.
 	SubscriptionTier string `json:"subscriptionTier,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -23334,6 +23426,14 @@ type GoogleCloudDiscoveryengineV1alphaSearchResponse struct {
 	Results []*GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResult `json:"results,omitempty"`
 	// SearchLinkPromotions: Promotions for site search.
 	SearchLinkPromotions []*GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion `json:"searchLinkPromotions,omitempty"`
+	// SemanticState: Output only. Indicates the semantic state of the search
+	// response.
+	//
+	// Possible values:
+	//   "SEMANTIC_STATE_UNSPECIFIED" - Default value. Should not be used.
+	//   "DISABLED" - Semantic search was disabled for this search response.
+	//   "ENABLED" - Semantic search was enabled for this search response.
+	SemanticState string `json:"semanticState,omitempty"`
 	// SessionInfo: Session information. Only set if SearchRequest.session is
 	// provided. See its description for more details.
 	SessionInfo *GoogleCloudDiscoveryengineV1alphaSearchResponseSessionInfo `json:"sessionInfo,omitempty"`
@@ -29038,6 +29138,30 @@ func (s GoogleCloudDiscoveryengineV1betaEngineMediaRecommendationEngineConfigRec
 // GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig: Configurations for
 // a Search Engine.
 type GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig struct {
+	// RequiredSubscriptionTier: Optional. The required subscription tier of this
+	// engine. They cannot be modified after engine creation. If the required
+	// subscription tier is search, user with higher license tier like assist can
+	// still access the standalone app associated with this engine.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TIER_UNSPECIFIED" - Default value.
+	//   "SUBSCRIPTION_TIER_SEARCH" - Search tier. Search tier can access VAIS
+	// search features and NotebookLM features.
+	//   "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT" - Search + assistant tier. Search
+	// + assistant tier can access VAIS search features, NotebookLM features and
+	// assistant features.
+	//   "SUBSCRIPTION_TIER_NOTEBOOK_LM" - NotebookLM tier. NotebookLM is a
+	// subscription tier can only access NotebookLM features.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_WORKER" - Frontline worker tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_STARTER" - Agentspace Starter tier.
+	//   "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS" - Agentspace Business tier.
+	//   "SUBSCRIPTION_TIER_ENTERPRISE" - Enterprise tier.
+	//   "SUBSCRIPTION_TIER_EDU" - EDU tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
+	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
+	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Frontline starter tier.
+	RequiredSubscriptionTier string `json:"requiredSubscriptionTier,omitempty"`
 	// SearchAddOns: The add-on that this search engine enables.
 	//
 	// Possible values:
@@ -29055,15 +29179,15 @@ type GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig struct {
 	//   "SEARCH_TIER_STANDARD" - Standard tier.
 	//   "SEARCH_TIER_ENTERPRISE" - Enterprise tier.
 	SearchTier string `json:"searchTier,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SearchAddOns") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "RequiredSubscriptionTier")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SearchAddOns") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "RequiredSubscriptionTier") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -29781,6 +29905,7 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 	//   "SUBSCRIPTION_TIER_EDU_PRO" - EDU Pro tier.
 	//   "SUBSCRIPTION_TIER_EDU_EMERGING" - EDU emerging market tier.
 	//   "SUBSCRIPTION_TIER_EDU_PRO_EMERGING" - EDU Pro emerging market tier.
+	//   "SUBSCRIPTION_TIER_FRONTLINE_STARTER" - Frontline starter tier.
 	SubscriptionTier string `json:"subscriptionTier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoRenew") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -52246,6 +52371,15 @@ func (r *ProjectsLocationsCollectionsEnginesAssistantsService) ListAvailableAgen
 	return c
 }
 
+// AdminView sets the optional parameter "adminView": Indicates whether to
+// consider if the caller is an admin. If set, and the caller is an admin, the
+// response will consider admin-only permissions. Otherwise, a caller with
+// admin permissions will get a response as an unprivileged user.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsListAvailableAgentViewsCall) AdminView(adminView bool) *ProjectsLocationsCollectionsEnginesAssistantsListAvailableAgentViewsCall {
+	c.urlParams_.Set("adminView", fmt.Sprint(adminView))
+	return c
+}
+
 // AgentOrigin sets the optional parameter "agentOrigin": The origin of the
 // Agent.
 //
@@ -53179,6 +53313,15 @@ type ProjectsLocationsCollectionsEnginesAssistantsAgentsGetAgentViewCall struct 
 func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsService) GetAgentView(name string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetAgentViewCall {
 	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsGetAgentViewCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// AdminView sets the optional parameter "adminView": Indicates whether to
+// consider if the caller is an admin. If set, and the caller is an admin, the
+// response will consider admin-only permissions. Otherwise, a caller with
+// admin permissions will get a response as an unprivileged user.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetAgentViewCall) AdminView(adminView bool) *ProjectsLocationsCollectionsEnginesAssistantsAgentsGetAgentViewCall {
+	c.urlParams_.Set("adminView", fmt.Sprint(adminView))
 	return c
 }
 
@@ -58141,6 +58284,118 @@ func (c *ProjectsLocationsCollectionsEnginesSessionsPatchCall) Do(opts ...google
 	return ret, nil
 }
 
+type ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsService) Get(name string) *ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsGetCall {
+	c := &ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.sessions.alphaEvolveExperiments.operations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.sessions.alphaEvolveExperiments.operations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesSessionsAlphaEvolveExperimentsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.sessions.alphaEvolveExperiments.operations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsCollectionsEnginesSessionsAnswersGetCall struct {
 	s            *Service
 	name         string
@@ -58437,6 +58692,118 @@ func (c *ProjectsLocationsCollectionsEnginesSessionsFilesListCall) Pages(ctx con
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsCollectionsEnginesSessionsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsCollectionsEnginesSessionsOperationsService) Get(name string) *ProjectsLocationsCollectionsEnginesSessionsOperationsGetCall {
+	c := &ProjectsLocationsCollectionsEnginesSessionsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesSessionsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesSessionsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsEnginesSessionsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesSessionsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesSessionsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesSessionsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesSessionsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesSessionsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.sessions.operations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.sessions.operations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesSessionsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.sessions.operations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsCollectionsEnginesWidgetConfigsGetCall struct {

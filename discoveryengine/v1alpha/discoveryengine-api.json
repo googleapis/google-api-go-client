@@ -1603,6 +1603,7 @@
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                         "https://www.googleapis.com/auth/discoveryengine.readwrite"
                       ]
                     },
@@ -1629,6 +1630,7 @@
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                         "https://www.googleapis.com/auth/discoveryengine.readwrite"
                       ]
                     },
@@ -1655,6 +1657,7 @@
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                         "https://www.googleapis.com/auth/discoveryengine.readwrite"
                       ]
                     },
@@ -3360,6 +3363,7 @@
                           },
                           "scopes": [
                             "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                             "https://www.googleapis.com/auth/discoveryengine.readwrite"
                           ]
                         },
@@ -3576,6 +3580,7 @@
                           },
                           "scopes": [
                             "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                             "https://www.googleapis.com/auth/discoveryengine.readwrite"
                           ]
                         }
@@ -5167,6 +5172,11 @@
                             "parent"
                           ],
                           "parameters": {
+                            "adminView": {
+                              "description": "Optional. Indicates whether to consider if the caller is an admin. If set, and the caller is an admin, the response will consider admin-only permissions. Otherwise, a caller with admin permissions will get a response as an unprivileged user.",
+                              "location": "query",
+                              "type": "boolean"
+                            },
                             "agentOrigin": {
                               "description": "Optional. The origin of the Agent.",
                               "enum": [
@@ -5451,6 +5461,11 @@
                                 "name"
                               ],
                               "parameters": {
+                                "adminView": {
+                                  "description": "Optional. Indicates whether to consider if the caller is an admin. If set, and the caller is an admin, the response will consider admin-only permissions. Otherwise, a caller with admin permissions will get a response as an unprivileged user.",
+                                  "location": "query",
+                                  "type": "boolean"
+                                },
                                 "languageCode": {
                                   "description": "Optional. The UI language currently shown to the user. Specifying this field request that the texts in the AgentView in the response should be translated to this language.",
                                   "location": "query",
@@ -6429,6 +6444,7 @@
                           },
                           "scopes": [
                             "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                             "https://www.googleapis.com/auth/discoveryengine.readwrite"
                           ]
                         },
@@ -6645,6 +6661,7 @@
                           },
                           "scopes": [
                             "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                             "https://www.googleapis.com/auth/discoveryengine.readwrite"
                           ]
                         }
@@ -6827,6 +6844,40 @@
                         }
                       },
                       "resources": {
+                        "alphaEvolveExperiments": {
+                          "resources": {
+                            "operations": {
+                              "methods": {
+                                "get": {
+                                  "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+                                  "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/sessions/{sessionsId}/alphaEvolveExperiments/{alphaEvolveExperimentsId}/operations/{operationsId}",
+                                  "httpMethod": "GET",
+                                  "id": "discoveryengine.projects.locations.collections.engines.sessions.alphaEvolveExperiments.operations.get",
+                                  "parameterOrder": [
+                                    "name"
+                                  ],
+                                  "parameters": {
+                                    "name": {
+                                      "description": "The name of the operation resource.",
+                                      "location": "path",
+                                      "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/sessions/[^/]+/alphaEvolveExperiments/[^/]+/operations/[^/]+$",
+                                      "required": true,
+                                      "type": "string"
+                                    }
+                                  },
+                                  "path": "v1alpha/{+name}",
+                                  "response": {
+                                    "$ref": "GoogleLongrunningOperation"
+                                  },
+                                  "scopes": [
+                                    "https://www.googleapis.com/auth/cloud-platform",
+                                    "https://www.googleapis.com/auth/discoveryengine.readwrite"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        },
                         "answers": {
                           "methods": {
                             "get": {
@@ -6904,6 +6955,36 @@
                               "scopes": [
                                 "https://www.googleapis.com/auth/cloud-platform",
                                 "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+                                "https://www.googleapis.com/auth/discoveryengine.readwrite"
+                              ]
+                            }
+                          }
+                        },
+                        "operations": {
+                          "methods": {
+                            "get": {
+                              "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+                              "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/sessions/{sessionsId}/operations/{operationsId}",
+                              "httpMethod": "GET",
+                              "id": "discoveryengine.projects.locations.collections.engines.sessions.operations.get",
+                              "parameterOrder": [
+                                "name"
+                              ],
+                              "parameters": {
+                                "name": {
+                                  "description": "The name of the operation resource.",
+                                  "location": "path",
+                                  "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/sessions/[^/]+/operations/[^/]+$",
+                                  "required": true,
+                                  "type": "string"
+                                }
+                              },
+                              "path": "v1alpha/{+name}",
+                              "response": {
+                                "$ref": "GoogleLongrunningOperation"
+                              },
+                              "scopes": [
+                                "https://www.googleapis.com/auth/cloud-platform",
                                 "https://www.googleapis.com/auth/discoveryengine.readwrite"
                               ]
                             }
@@ -7169,6 +7250,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                     "https://www.googleapis.com/auth/discoveryengine.readwrite"
                   ]
                 },
@@ -7195,6 +7277,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                     "https://www.googleapis.com/auth/discoveryengine.readwrite"
                   ]
                 },
@@ -7221,6 +7304,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                     "https://www.googleapis.com/auth/discoveryengine.readwrite"
                   ]
                 },
@@ -8788,6 +8872,7 @@
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                         "https://www.googleapis.com/auth/discoveryengine.readwrite"
                       ]
                     },
@@ -9004,6 +9089,7 @@
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                         "https://www.googleapis.com/auth/discoveryengine.readwrite"
                       ]
                     }
@@ -9895,6 +9981,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                     "https://www.googleapis.com/auth/discoveryengine.readwrite"
                   ]
                 },
@@ -10716,6 +10803,7 @@
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                         "https://www.googleapis.com/auth/discoveryengine.readwrite"
                       ]
                     },
@@ -11843,7 +11931,7 @@
       }
     }
   },
-  "revision": "20251116",
+  "revision": "20251203",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -14574,6 +14662,40 @@
       "description": "Configurations for a Search Engine.",
       "id": "GoogleCloudDiscoveryengineV1EngineSearchEngineConfig",
       "properties": {
+        "requiredSubscriptionTier": {
+          "description": "Optional. The required subscription tier of this engine. They cannot be modified after engine creation. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine.",
+          "enum": [
+            "SUBSCRIPTION_TIER_UNSPECIFIED",
+            "SUBSCRIPTION_TIER_SEARCH",
+            "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT",
+            "SUBSCRIPTION_TIER_NOTEBOOK_LM",
+            "SUBSCRIPTION_TIER_FRONTLINE_WORKER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_STARTER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS",
+            "SUBSCRIPTION_TIER_ENTERPRISE",
+            "SUBSCRIPTION_TIER_EDU",
+            "SUBSCRIPTION_TIER_EDU_PRO",
+            "SUBSCRIPTION_TIER_EDU_EMERGING",
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "Search tier. Search tier can access VAIS search features and NotebookLM features.",
+            "Search + assistant tier. Search + assistant tier can access VAIS search features, NotebookLM features and assistant features.",
+            "NotebookLM tier. NotebookLM is a subscription tier can only access NotebookLM features.",
+            "Frontline worker tier.",
+            "Agentspace Starter tier.",
+            "Agentspace Business tier.",
+            "Enterprise tier.",
+            "EDU tier.",
+            "EDU Pro tier.",
+            "EDU emerging market tier.",
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
+          ],
+          "type": "string"
+        },
         "searchAddOns": {
           "description": "The add-on that this search engine enables.",
           "items": {
@@ -14992,7 +15114,8 @@
             "SUBSCRIPTION_TIER_EDU",
             "SUBSCRIPTION_TIER_EDU_PRO",
             "SUBSCRIPTION_TIER_EDU_EMERGING",
-            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING"
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -15006,7 +15129,8 @@
             "EDU tier.",
             "EDU Pro tier.",
             "EDU emerging market tier.",
-            "EDU Pro emerging market tier."
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
           ],
           "type": "string"
         }
@@ -18514,6 +18638,10 @@
           "description": "Optional. Description for additional information. Expected to be shown on the configuration UI, not to the users of the assistant.",
           "type": "string"
         },
+        "disableLocationContext": {
+          "description": "Optional. Indicates whether to disable user location context. By default, user location context is enabled.",
+          "type": "boolean"
+        },
         "displayName": {
           "description": "Required. The assistant display name. It must be a UTF-8 encoded string with a length limit of 128 characters.",
           "type": "string"
@@ -19510,7 +19638,8 @@
             "SUBSCRIPTION_TIER_EDU",
             "SUBSCRIPTION_TIER_EDU_PRO",
             "SUBSCRIPTION_TIER_EDU_EMERGING",
-            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING"
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -19524,7 +19653,8 @@
             "EDU tier.",
             "EDU Pro tier.",
             "EDU emerging market tier.",
-            "EDU Pro emerging market tier."
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
           ],
           "type": "string"
         }
@@ -23031,6 +23161,40 @@
       "description": "Configurations for a Search Engine.",
       "id": "GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig",
       "properties": {
+        "requiredSubscriptionTier": {
+          "description": "Optional. The required subscription tier of this engine. They cannot be modified after engine creation. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine.",
+          "enum": [
+            "SUBSCRIPTION_TIER_UNSPECIFIED",
+            "SUBSCRIPTION_TIER_SEARCH",
+            "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT",
+            "SUBSCRIPTION_TIER_NOTEBOOK_LM",
+            "SUBSCRIPTION_TIER_FRONTLINE_WORKER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_STARTER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS",
+            "SUBSCRIPTION_TIER_ENTERPRISE",
+            "SUBSCRIPTION_TIER_EDU",
+            "SUBSCRIPTION_TIER_EDU_PRO",
+            "SUBSCRIPTION_TIER_EDU_EMERGING",
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "Search tier. Search tier can access VAIS search features and NotebookLM features.",
+            "Search + assistant tier. Search + assistant tier can access VAIS search features, NotebookLM features and assistant features.",
+            "NotebookLM tier. NotebookLM is a subscription tier can only access NotebookLM features.",
+            "Frontline worker tier.",
+            "Agentspace Starter tier.",
+            "Agentspace Business tier.",
+            "Enterprise tier.",
+            "EDU tier.",
+            "EDU Pro tier.",
+            "EDU emerging market tier.",
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
+          ],
+          "type": "string"
+        },
         "searchAddOns": {
           "description": "The add-on that this search engine enables.",
           "items": {
@@ -23895,6 +24059,10 @@
           "description": "Required. Identity outside the customer identity provider. The length limit of external identity will be of 100 characters.",
           "type": "string"
         },
+        "externalIdentityName": {
+          "description": "Optional. The name of the external identity.",
+          "type": "string"
+        },
         "groupId": {
           "description": "Group identifier. For Google Workspace user account, group_id should be the google workspace group email. For non-google identity provider, group_id is the mapped group identifier configured during the workforcepool config.",
           "type": "string"
@@ -24738,7 +24906,8 @@
             "SUBSCRIPTION_TIER_EDU",
             "SUBSCRIPTION_TIER_EDU_PRO",
             "SUBSCRIPTION_TIER_EDU_EMERGING",
-            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING"
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -24752,7 +24921,8 @@
             "EDU tier.",
             "EDU Pro tier.",
             "EDU emerging market tier.",
-            "EDU Pro emerging market tier."
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
           ],
           "type": "string"
         }
@@ -28048,6 +28218,21 @@
             "$ref": "GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion"
           },
           "type": "array"
+        },
+        "semanticState": {
+          "description": "Output only. Indicates the semantic state of the search response.",
+          "enum": [
+            "SEMANTIC_STATE_UNSPECIFIED",
+            "DISABLED",
+            "ENABLED"
+          ],
+          "enumDescriptions": [
+            "Default value. Should not be used.",
+            "Semantic search was disabled for this search response.",
+            "Semantic search was enabled for this search response."
+          ],
+          "readOnly": true,
+          "type": "string"
         },
         "sessionInfo": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaSearchResponseSessionInfo",
@@ -32443,6 +32628,40 @@
       "description": "Configurations for a Search Engine.",
       "id": "GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig",
       "properties": {
+        "requiredSubscriptionTier": {
+          "description": "Optional. The required subscription tier of this engine. They cannot be modified after engine creation. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine.",
+          "enum": [
+            "SUBSCRIPTION_TIER_UNSPECIFIED",
+            "SUBSCRIPTION_TIER_SEARCH",
+            "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT",
+            "SUBSCRIPTION_TIER_NOTEBOOK_LM",
+            "SUBSCRIPTION_TIER_FRONTLINE_WORKER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_STARTER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS",
+            "SUBSCRIPTION_TIER_ENTERPRISE",
+            "SUBSCRIPTION_TIER_EDU",
+            "SUBSCRIPTION_TIER_EDU_PRO",
+            "SUBSCRIPTION_TIER_EDU_EMERGING",
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "Search tier. Search tier can access VAIS search features and NotebookLM features.",
+            "Search + assistant tier. Search + assistant tier can access VAIS search features, NotebookLM features and assistant features.",
+            "NotebookLM tier. NotebookLM is a subscription tier can only access NotebookLM features.",
+            "Frontline worker tier.",
+            "Agentspace Starter tier.",
+            "Agentspace Business tier.",
+            "Enterprise tier.",
+            "EDU tier.",
+            "EDU Pro tier.",
+            "EDU emerging market tier.",
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
+          ],
+          "type": "string"
+        },
         "searchAddOns": {
           "description": "The add-on that this search engine enables.",
           "items": {
@@ -33038,7 +33257,8 @@
             "SUBSCRIPTION_TIER_EDU",
             "SUBSCRIPTION_TIER_EDU_PRO",
             "SUBSCRIPTION_TIER_EDU_EMERGING",
-            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING"
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -33052,7 +33272,8 @@
             "EDU tier.",
             "EDU Pro tier.",
             "EDU emerging market tier.",
-            "EDU Pro emerging market tier."
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
           ],
           "type": "string"
         }

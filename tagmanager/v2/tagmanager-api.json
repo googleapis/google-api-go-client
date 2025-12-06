@@ -1046,7 +1046,7 @@
             "workspaces": {
               "methods": {
                 "bulk_update": {
-                  "description": "Applies multiple entity changes to a workspace in one call. When creating new entities, their entity IDs must be unique and in correct format. That is, they must start with \"new_\" and followed by number, e.g. \"new_1\", \"new_2\". Example body snippet to create myNewTag under myNewFolder is: ``` \"changes\": [ { \"folder\": { \"folderId\": \"new_1\", \"name\": \"myNewFolder\", ... }, \"changeStatus\": \"ADDED\" }, { \"tag\": { \"tagId\": \"new_2\", \"name\": \"myNewTag\", \"parentFolderId\": \"new_1\", ... }, \"changeStatus\": \"ADDED\" } ] ```",
+                  "description": "Applies multiple entity changes to a workspace in one call. When creating new entities, their entity IDs must be unique and in correct format. That is, they must start with \"new_\" and followed by number, e.g. \"new_1\", \"new_2\". Example body snippet to create myNewTag under myNewFolder is: ``` \"changes\": [ { \"folder\": { \"folderId\": \"new_1\", \"name\": \"myNewFolder\", ... }, \"changeStatus\": \"added\" }, { \"tag\": { \"tagId\": \"new_2\", \"name\": \"myNewTag\", \"parentFolderId\": \"new_1\", ... }, \"changeStatus\": \"added\" } ] ```",
                   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/bulk_update",
                   "httpMethod": "POST",
                   "id": "tagmanager.accounts.containers.workspaces.bulk_update",
@@ -3986,7 +3986,7 @@
       }
     }
   },
-  "revision": "20251201",
+  "revision": "20251203",
   "rootUrl": "https://tagmanager.googleapis.com/",
   "schemas": {
     "Account": {

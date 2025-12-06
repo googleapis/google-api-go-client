@@ -2110,6 +2110,27 @@ type GoogleCloudApigeeV1ApiProduct struct {
 	// LastModifiedAt: Response only. Modified time of this environment as
 	// milliseconds since epoch.
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
+	// LlmOperationGroup: Optional. Configuration used to group Apigee proxies with
+	// resources, method types, LLM model and quotas. The resource refers to the
+	// resource URI (excluding the base path). With this grouping, the API product
+	// creator is able to fine-tune and give precise control over which REST
+	// methods have access to specific resources, specific LLM model and how many
+	// calls can be made (using the `quota` setting). **Note:** The `api_resources`
+	// setting cannot be specified for both the API product and llm operation
+	// group; otherwise the call will fail.
+	LlmOperationGroup *GoogleCloudApigeeV1LlmOperationGroup `json:"llmOperationGroup,omitempty"`
+	// LlmQuota: Optional. Number of LLM tokens permitted per app by this API
+	// product for the specified `llm_quota_interval` and `llm_quota_time_unit`.
+	// For example, an `llm_quota` of 50,000, for an `llm_quota_interval` of 12 and
+	// an `llm_quota_time_unit` of hours means 50,000 llm tokens are allowed to be
+	// used every 12 hours.
+	LlmQuota string `json:"llmQuota,omitempty"`
+	// LlmQuotaInterval: Optional. Time interval over which the number of tokens
+	// from LLM responses is calculated.
+	LlmQuotaInterval string `json:"llmQuotaInterval,omitempty"`
+	// LlmQuotaTimeUnit: Optional. Time unit defined for the `llm_quota_interval`.
+	// Valid values include `minute`, `hour`, `day`, or `month`.
+	LlmQuotaTimeUnit string `json:"llmQuotaTimeUnit,omitempty"`
 	// Name: Internal name of the API product. Characters you can use in the name
 	// are restricted to: `A-Z0-9._\-$ %`. **Note:** The internal name cannot be
 	// edited when updating the API product.
@@ -6109,6 +6130,9 @@ type GoogleCloudApigeeV1KeyValueMap struct {
 	// of encrypted will always be `true`. Apigee X and hybrid do not support
 	// unencrypted key value maps.
 	Encrypted bool `json:"encrypted,omitempty"`
+	// MaskedValues: Optional. Flag that specifies whether entry values will be
+	// masked when returned.
+	MaskedValues bool `json:"maskedValues,omitempty"`
 	// Name: Required. ID of the key value map.
 	Name string `json:"name,omitempty"`
 
@@ -7362,6 +7386,131 @@ type GoogleCloudApigeeV1ListTraceConfigOverridesResponse struct {
 
 func (s GoogleCloudApigeeV1ListTraceConfigOverridesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListTraceConfigOverridesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1LlmOperation: Represents the pairing of REST resource
+// path, model and the actions (verbs) allowed on the resource path.
+type GoogleCloudApigeeV1LlmOperation struct {
+	// Methods: Optional. methods refers to the REST verbs as in
+	// https://httpwg.org/specs/rfc9110.html For example: GET, POST, PUT, DELETE,
+	// etc. They need to be in uppercase. When none specified, all verb types are
+	// allowed.
+	Methods []string `json:"methods,omitempty"`
+	// Model: Required. LLM model name associated with the API proxy
+	Model string `json:"model,omitempty"`
+	// Resource: Required. REST resource path associated with the API proxy or
+	// remote service.
+	Resource string `json:"resource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Methods") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Methods") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1LlmOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1LlmOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1LlmOperationConfig: Binds the resources in an API proxy
+// or remote service with the allowed REST methods and associated quota
+// enforcement.
+type GoogleCloudApigeeV1LlmOperationConfig struct {
+	// ApiSource: Required. Name of the API proxy or remote service with which the
+	// resources, methods, and quota are associated.
+	ApiSource string `json:"apiSource,omitempty"`
+	// Attributes: Optional. Custom attributes associated with the operation.
+	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
+	// LlmOperations: Required. List of resource/method/model for the API proxy to
+	// which quota will applied. **Note**: Currently, you can specify only a single
+	// resource/method/model mapping. The call will fail if more than one
+	// resource/method/model mappings are provided.
+	LlmOperations []*GoogleCloudApigeeV1LlmOperation `json:"llmOperations,omitempty"`
+	// LlmTokenQuota: Required. LLM token Quota parameters to be enforced for the
+	// resources, methods, and API source & LLM model combination. If none are
+	// specified, quota enforcement will not be done.
+	LlmTokenQuota *GoogleCloudApigeeV1LlmTokenQuota `json:"llmTokenQuota,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiSource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1LlmOperationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1LlmOperationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1LlmOperationGroup: List of LLM operation configuration
+// details associated with Apigee API proxies.
+type GoogleCloudApigeeV1LlmOperationGroup struct {
+	// OperationConfigs: Required. List of LLM operation configurations for either
+	// Apigee API proxies that are associated with this API product.
+	OperationConfigs []*GoogleCloudApigeeV1LlmOperationConfig `json:"operationConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OperationConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OperationConfigs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1LlmOperationGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1LlmOperationGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1LlmTokenQuota: LLM Token Quota contains the essential
+// parameters needed that can be applied on the resources, methods, models, API
+// source combination associated with this API product. While LLM Token Quota
+// is optional, setting it prevents requests from exceeding the provisioned
+// parameters.
+type GoogleCloudApigeeV1LlmTokenQuota struct {
+	// Interval: Required. Time interval over which the number of request messages
+	// is calculated.
+	Interval string `json:"interval,omitempty"`
+	// Limit: Required. Upper limit of LLM tokens allowed for the time interval and
+	// time unit specified. Requests exceeding this limit will be rejected.
+	Limit string `json:"limit,omitempty"`
+	// TimeUnit: Optional. Time unit defined for the `interval`. Valid values
+	// include `minute`, `hour`, `day`, or `month`. If `limit` and `interval` are
+	// valid, the default value is `hour`; otherwise, the default is null.
+	TimeUnit string `json:"timeUnit,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Interval") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Interval") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1LlmTokenQuota) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1LlmTokenQuota
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12448,8 +12597,8 @@ type GoogleLongrunningListOperationsResponse struct {
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -39312,7 +39461,7 @@ type OrganizationsEnvironmentsSecurityActionsDeleteCall struct {
 
 // Delete: Delete a SecurityAction.
 //
-//   - name: The name of the security monitoring condition to delete. Format:
+//   - name: The name of the security action to delete. Format:
 //     `organizations/{org}/environment/{env}/securityActions/{security_action}`.
 func (r *OrganizationsEnvironmentsSecurityActionsService) Delete(name string) *OrganizationsEnvironmentsSecurityActionsDeleteCall {
 	c := &OrganizationsEnvironmentsSecurityActionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -47731,9 +47880,9 @@ func (c *OrganizationsOperationsListCall) PageToken(pageToken string) *Organizat
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *OrganizationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OrganizationsOperationsListCall {

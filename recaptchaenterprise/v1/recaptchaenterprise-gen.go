@@ -363,7 +363,11 @@ type GoogleCloudRecaptchaenterpriseV1AndroidKeySettings struct {
 	// not enforced.
 	AllowAllPackageNames bool `json:"allowAllPackageNames,omitempty"`
 	// AllowedPackageNames: Optional. Android package names of apps allowed to use
-	// the key. Example: 'com.companyname.appname'
+	// the key. Example: 'com.companyname.appname' Each key supports a maximum of
+	// 250 package names. To use a key on more apps, set `allow_all_package_names`
+	// to true. When this is set, you are responsible for validating the package
+	// name by checking the `token_properties.android_package_name` field in each
+	// assessment response against your list of allowed package names.
 	AllowedPackageNames []string `json:"allowedPackageNames,omitempty"`
 	// SupportNonGoogleAppStoreDistribution: Optional. Set to true for keys that
 	// are used in an Android application that is available for download in app
@@ -395,6 +399,10 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// example when a stable account identifier is not yet known in the initial
 	// request.
 	AccountId string `json:"accountId,omitempty"`
+	// Annotation: Optional. The annotation that is assigned to the Event. This
+	// field can be left empty to provide reasons that apply to an event without
+	// concluding whether the event is legitimate or fraudulent.
+	//
 	// Possible values:
 	//   "ANNOTATION_UNSPECIFIED" - Default unspecified type.
 	//   "LEGITIMATE" - Provides information that the event turned out to be
@@ -417,6 +425,9 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// authentication provider, provide phone authentication details for fraud
 	// detection purposes.
 	PhoneAuthenticationEvent *GoogleCloudRecaptchaenterpriseV1PhoneAuthenticationEvent `json:"phoneAuthenticationEvent,omitempty"`
+	// Reasons: Optional. Reasons for the annotation that are assigned to the
+	// event.
+	//
 	// Possible values:
 	//   "REASON_UNSPECIFIED" - Unspecified reason. Do not use.
 	//   "CHARGEBACK" - Indicates that the transaction had a chargeback issued with
@@ -1302,8 +1313,12 @@ type GoogleCloudRecaptchaenterpriseV1IOSKeySettings struct {
 	// AllowAllBundleIds: Optional. If set to true, allowed_bundle_ids are not
 	// enforced.
 	AllowAllBundleIds bool `json:"allowAllBundleIds,omitempty"`
-	// AllowedBundleIds: Optional. iOS bundle ids of apps allowed to use the key.
-	// Example: 'com.companyname.productname.appname'
+	// AllowedBundleIds: Optional. iOS bundle IDs of apps allowed to use the key.
+	// Example: 'com.companyname.productname.appname' Each key supports a maximum
+	// of 250 bundle IDs. To use a key on more apps, set `allow_all_bundle_ids` to
+	// true. When this is set, you are responsible for validating the bundle id by
+	// checking the `token_properties.ios_bundle_id` field in each assessment
+	// response against your list of allowed bundle IDs.
 	AllowedBundleIds []string `json:"allowedBundleIds,omitempty"`
 	// AppleDeveloperId: Optional. Apple Developer account details for the app that
 	// is protected by the reCAPTCHA Key. reCAPTCHA leverages platform-specific
@@ -1599,7 +1614,7 @@ type GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest struct {
 	// SkipBillingCheck: Optional. If true, skips the billing check. A reCAPTCHA
 	// Enterprise key or migrated key behaves differently than a reCAPTCHA
 	// (non-Enterprise version) key when you reach a quota limit (see
-	// https://cloud.google.com/recaptcha/quotas#quota_limit). To avoid any
+	// https://docs.cloud.google.com/recaptcha/quotas#quota_limit). To avoid any
 	// disruption of your usage, we check that a billing account is present. If
 	// your usage of reCAPTCHA is under the free quota, you can safely skip the
 	// billing check and proceed with the migration. See
@@ -2669,7 +2684,11 @@ type GoogleCloudRecaptchaenterpriseV1WebKeySettings struct {
 	// AllowedDomains: Optional. Domains or subdomains of websites allowed to use
 	// the key. All subdomains of an allowed domain are automatically allowed. A
 	// valid domain requires a host and must not include any path, port, query or
-	// fragment. Examples: 'example.com' or 'subdomain.example.com'
+	// fragment. Examples: 'example.com' or 'subdomain.example.com' Each key
+	// supports a maximum of 250 domains. To use a key on more domains, set
+	// `allow_all_domains` to true. When this is set, you are responsible for
+	// validating the hostname by checking the `token_properties.hostname` field in
+	// each assessment response against your list of allowed domains.
 	AllowedDomains []string `json:"allowedDomains,omitempty"`
 	// ChallengeSecurityPreference: Optional. Settings for the frequency and
 	// difficulty at which this key triggers captcha challenges. This should only

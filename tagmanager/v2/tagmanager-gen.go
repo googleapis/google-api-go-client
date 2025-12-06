@@ -6462,9 +6462,9 @@ type AccountsContainersWorkspacesBulkUpdateCall struct {
 // format. That is, they must start with "new_" and followed by number, e.g.
 // "new_1", "new_2". Example body snippet to create myNewTag under myNewFolder
 // is: ``` "changes": [ { "folder": { "folderId": "new_1", "name":
-// "myNewFolder", ... }, "changeStatus": "ADDED" }, { "tag": { "tagId":
+// "myNewFolder", ... }, "changeStatus": "added" }, { "tag": { "tagId":
 // "new_2", "name": "myNewTag", "parentFolderId": "new_1", ... },
-// "changeStatus": "ADDED" } ] ```
+// "changeStatus": "added" } ] ```
 //
 // - path: GTM Workspace's API relative path.
 func (r *AccountsContainersWorkspacesService) BulkUpdate(path string, proposedchange *ProposedChange) *AccountsContainersWorkspacesBulkUpdateCall {

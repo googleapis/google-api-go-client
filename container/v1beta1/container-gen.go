@@ -3010,6 +3010,48 @@ func (s DesiredEnterpriseConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DisruptionEvent: DisruptionEvent is a notification sent to customers about
+// the disruption event of a resource.
+type DisruptionEvent struct {
+	// DisruptionType: The type of the disruption event.
+	//
+	// Possible values:
+	//   "DISRUPTION_TYPE_UNSPECIFIED" - DISRUPTION_TYPE_UNSPECIFIED indicates the
+	// disruption type is unspecified.
+	//   "POD_NOT_ENOUGH_PDB" - POD_NOT_ENOUGH_PDB indicates there are still
+	// running pods on the node during node drain because their evictions are
+	// blocked by PDB.
+	//   "POD_PDB_VIOLATION" - POD_PDB_VIOLATION indicates that there are force pod
+	// evictions during node drain which violate the PDB.
+	DisruptionType string `json:"disruptionType,omitempty"`
+	// PdbBlockedNode: The node whose drain is blocked by PDB. This field is set
+	// for both POD_PDB_VIOLATION and POD_NOT_ENOUGH_PDB event.
+	PdbBlockedNode string `json:"pdbBlockedNode,omitempty"`
+	// PdbBlockedPod: The pods whose evictions are blocked by PDB. This field is
+	// set for both POD_PDB_VIOLATION and POD_NOT_ENOUGH_PDB event.
+	PdbBlockedPod []*PdbBlockedPod `json:"pdbBlockedPod,omitempty"`
+	// PdbViolationTimeout: The timeout in seconds for which the node drain is
+	// blocked by PDB. After this timeout, pods are forcefully evicted. This field
+	// is only populated when event_type is POD_PDB_VIOLATION.
+	PdbViolationTimeout string `json:"pdbViolationTimeout,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisruptionType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisruptionType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DisruptionEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod DisruptionEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DnsCacheConfig: Configuration for NodeLocal DNSCache
 type DnsCacheConfig struct {
 	// Enabled: Whether NodeLocal DNSCache is enabled for this cluster.
@@ -5859,6 +5901,32 @@ func (s NodeConfigDefaults) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// NodeDrainConfig: NodeDrainConfig contains the node drain related
+// configurations for this nodepool.
+type NodeDrainConfig struct {
+	// RespectPdbDuringNodePoolDeletion: Whether to respect PDB during node pool
+	// deletion.
+	RespectPdbDuringNodePoolDeletion bool `json:"respectPdbDuringNodePoolDeletion,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "RespectPdbDuringNodePoolDeletion") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "RespectPdbDuringNodePoolDeletion") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NodeDrainConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeDrainConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // NodeKernelModuleLoading: Configuration for kernel module loading on nodes.
 type NodeKernelModuleLoading struct {
 	// Policy: Set the node module loading policy for nodes in the node pool.
@@ -6148,7 +6216,7 @@ type NodeNetworkConfig struct {
 	// `ip_allocation_policy.use_ip_aliases` is true. This field cannot be changed
 	// after the node pool has been created.
 	PodRange string `json:"podRange,omitempty"`
-	// Subnetwork: Output only. The subnetwork path for the node pool. Format:
+	// Subnetwork: The subnetwork path for the node pool. Format:
 	// projects/{project}/regions/{region}/subnetworks/{subnetwork} If the cluster
 	// is associated with multiple subnetworks, the subnetwork for the node pool is
 	// picked based on the IP utilization during node pool creation and is
@@ -6238,6 +6306,8 @@ type NodePool struct {
 	// NetworkConfig: Networking configuration for this NodePool. If specified, it
 	// overrides the cluster-level defaults.
 	NetworkConfig *NodeNetworkConfig `json:"networkConfig,omitempty"`
+	// NodeDrainConfig: Specifies the node drain configuration for this node pool.
+	NodeDrainConfig *NodeDrainConfig `json:"nodeDrainConfig,omitempty"`
 	// PlacementPolicy: Specifies the node placement policy.
 	PlacementPolicy *PlacementPolicy `json:"placementPolicy,omitempty"`
 	// PodIpv4CidrSize: Output only. The pod CIDR block size per node in this node
@@ -6888,6 +6958,31 @@ type ParentProductConfig struct {
 
 func (s ParentProductConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ParentProductConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PdbBlockedPod: The namespace/name of the pod whose eviction is blocked by
+// PDB.
+type PdbBlockedPod struct {
+	// Name: The name of the pod.
+	Name string `json:"name,omitempty"`
+	// Namespace: The namespace of the pod.
+	Namespace string `json:"namespace,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PdbBlockedPod) MarshalJSON() ([]byte, error) {
+	type NoMethod PdbBlockedPod
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9344,6 +9439,9 @@ type UpdateNodePoolRequest struct {
 	// update. Specified in the format
 	// `projects/*/locations/*/clusters/*/nodePools/*`.
 	Name string `json:"name,omitempty"`
+	// NodeDrainConfig: The desired node drain configuration for nodes in the node
+	// pool.
+	NodeDrainConfig *NodeDrainConfig `json:"nodeDrainConfig,omitempty"`
 	// NodeNetworkConfig: Node network config.
 	NodeNetworkConfig *NodeNetworkConfig `json:"nodeNetworkConfig,omitempty"`
 	// NodePoolId: Deprecated. The name of the node pool to upgrade. This field has
@@ -9553,6 +9651,9 @@ type UpgradeInfoEvent struct {
 	CurrentVersion string `json:"currentVersion,omitempty"`
 	// Description: A brief description of the event.
 	Description string `json:"description,omitempty"`
+	// DisruptionEvent: The information about the disruption event. This field is
+	// only populated when event_type is DISRUPTION_EVENT.
+	DisruptionEvent *DisruptionEvent `json:"disruptionEvent,omitempty"`
 	// EndTime: The time when the operation ended.
 	EndTime string `json:"endTime,omitempty"`
 	// EventType: The type of the event.
@@ -9568,6 +9669,8 @@ type UpgradeInfoEvent struct {
 	// versions starting with the one in the description.
 	//   "UPGRADE_LIFECYCLE" - UPGRADE_LIFECYCLE indicates the event is about the
 	// upgrade lifecycle.
+	//   "DISRUPTION_EVENT" - DISRUPTION_EVENT indicates the event is about the
+	// disruption.
 	EventType string `json:"eventType,omitempty"`
 	// ExtendedSupportEndTime: The end of extended support timestamp.
 	ExtendedSupportEndTime string `json:"extendedSupportEndTime,omitempty"`

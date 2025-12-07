@@ -407,9 +407,158 @@ func (s Critical) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Date: Represents a whole or partial calendar date, such as a birthday. The
+// time of day and time zone are either specified elsewhere or are
+// insignificant. The date is relative to the Gregorian Calendar. This can
+// represent one of the following: * A full date, with non-zero year, month,
+// and day values. * A month and day, with a zero year (for example, an
+// anniversary). * A year on its own, with a zero month and a zero day. * A
+// year and month, with a zero day (for example, a credit card expiration
+// date). Related types: * google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
+type Date struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and month,
+	// or 0 to specify a year by itself or a year and month where the day isn't
+	// significant.
+	Day int64 `json:"day,omitempty"`
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year without
+	// a month and day.
+	Month int64 `json:"month,omitempty"`
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a date
+	// without a year.
+	Year int64 `json:"year,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Date) MarshalJSON() ([]byte, error) {
+	type NoMethod Date
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DateList: List of dates.
+type DateList struct {
+	// Values: Optional. Values in the list.
+	Values []*Date `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DateList) MarshalJSON() ([]byte, error) {
+	type NoMethod DateList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DateTime: Represents civil time (or occasionally physical time). This type
+// can represent a civil time in one of a few possible ways: * When utc_offset
+// is set and time_zone is unset: a civil time on a calendar day with a
+// particular offset from UTC. * When time_zone is set and utc_offset is unset:
+// a civil time on a calendar day in a particular time zone. * When neither
+// time_zone nor utc_offset is set: a civil time on a calendar day in local
+// time. The date is relative to the Proleptic Gregorian Calendar. If year,
+// month, or day are 0, the DateTime is considered not to have a specific year,
+// month, or day respectively. This type may also be used to represent a
+// physical time if all the date and time fields are set and either case of the
+// `time_offset` oneof is set. Consider using `Timestamp` message for physical
+// time instead. If your use case also would like to store the user's timezone,
+// that can be done in another field. This type is more flexible than some
+// applications may want. Make sure to document and validate your application's
+// limitations.
+type DateTime struct {
+	// Day: Optional. Day of month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 if specifying a datetime without a day.
+	Day int64 `json:"day,omitempty"`
+	// Hours: Optional. Hours of day in 24 hour format. Should be from 0 to 23,
+	// defaults to 0 (midnight). An API may choose to allow the value "24:00:00"
+	// for scenarios like business closing time.
+	Hours int64 `json:"hours,omitempty"`
+	// Minutes: Optional. Minutes of hour of day. Must be from 0 to 59, defaults to
+	// 0.
+	Minutes int64 `json:"minutes,omitempty"`
+	// Month: Optional. Month of year. Must be from 1 to 12, or 0 if specifying a
+	// datetime without a month.
+	Month int64 `json:"month,omitempty"`
+	// Nanos: Optional. Fractions of seconds in nanoseconds. Must be from 0 to
+	// 999,999,999, defaults to 0.
+	Nanos int64 `json:"nanos,omitempty"`
+	// Seconds: Optional. Seconds of minutes of the time. Must normally be from 0
+	// to 59, defaults to 0. An API may allow the value 60 if it allows
+	// leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+	// TimeZone: Time zone.
+	TimeZone *TimeZone `json:"timeZone,omitempty"`
+	// UtcOffset: UTC offset. Must be whole seconds, between -18 hours and +18
+	// hours. For example, a UTC offset of -4:00 would be represented as { seconds:
+	// -14400 }.
+	UtcOffset string `json:"utcOffset,omitempty"`
+	// Year: Optional. Year of date. Must be from 1 to 9999, or 0 if specifying a
+	// datetime without a year.
+	Year int64 `json:"year,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DateTime) MarshalJSON() ([]byte, error) {
+	type NoMethod DateTime
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Early: LINT.IfChange First Channel to receive the updates. Meant to dev/test
 // instances
 type Early struct {
+}
+
+// EmployeeInfo: Information about a particular employee for planning purposes.
+type EmployeeInfo struct {
+	// Id: Required. Unique ID of this employee.
+	Id string `json:"id,omitempty"`
+	// UnwantedEventIntervals: Optional. A list of unwanted event intervals for
+	// this employee. The start time of the interval must be in the planning
+	// horizon.
+	UnwantedEventIntervals []*UnwantedEventInterval `json:"unwantedEventIntervals,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EmployeeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod EmployeeInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -419,6 +568,45 @@ type Early struct {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EventTemplate: Template specifying rules for generating a single event that
+// occurs during a shift. An event may represent a meeting, break, lunch, etc.
+type EventTemplate struct {
+	// DurationMinutes: Required. Fixed duration in minutes of this event.
+	DurationMinutes int64 `json:"durationMinutes,omitempty"`
+	// Id: Required. Unique ID of this template.
+	Id string `json:"id,omitempty"`
+	// MaximumMinutesAfterShiftStart: Optional. Maximum number of minutes after the
+	// beginning of a shift that this event can start.
+	MaximumMinutesAfterShiftStart int64 `json:"maximumMinutesAfterShiftStart,omitempty"`
+	// MinimumMinutesAfterShiftStart: Optional. Minimum number of minutes after the
+	// beginning of a shift that this event can start.
+	MinimumMinutesAfterShiftStart int64 `json:"minimumMinutesAfterShiftStart,omitempty"`
+	// StartTimeIncrementMinutes: Required. The time increment (in minutes) used to
+	// generate the set of possible event start times between
+	// `minimum_minutes_after_shift_start` and `maximum_minutes_after_shift_start`.
+	// For example, if the minimum minutes after shift start are 30, maximum
+	// minutes after shift start are 45, and the start time increment is 5 minutes,
+	// the event can take place 30, 35, 40, or 45 minutes after the start of the
+	// shift.
+	StartTimeIncrementMinutes int64 `json:"startTimeIncrementMinutes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DurationMinutes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DurationMinutes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EventTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod EventTemplate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FeatureConfig struct {
@@ -440,6 +628,44 @@ type FeatureConfig struct {
 
 func (s FeatureConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod FeatureConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateShiftsRequest: Request with constraints for generating shifts. The
+// shifts generated must adhere to these constraints.
+type GenerateShiftsRequest struct {
+	// EmployeeInfo: Optional. Employee information that should be considered when
+	// generating shifts.
+	EmployeeInfo []*EmployeeInfo `json:"employeeInfo,omitempty"`
+	// PlanningHorizon: Required. The solver will generate the maximum number of
+	// shifts per shift template.
+	PlanningHorizon *PlanningHorizon `json:"planningHorizon,omitempty"`
+	// ShiftTemplates: Required. Set of shift templates specifying rules for
+	// generating shifts. A shift template can be used for generating multiple
+	// shifts.
+	ShiftTemplates []*ShiftTemplate `json:"shiftTemplates,omitempty"`
+	// SolverConfig: Optional. Parameters for the solver.
+	SolverConfig *SolverConfig `json:"solverConfig,omitempty"`
+	// WorkforceDemands: Required. All the workforce demands that the generated
+	// shifts need to cover. The planning horizon is defined between the earliest
+	// start time and the latest end time across all the entries. This field cannot
+	// be empty.
+	WorkforceDemands *WorkforceDemandList `json:"workforceDemands,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EmployeeInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EmployeeInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateShiftsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateShiftsRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -745,6 +971,35 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PlanningHorizon: Specifies the time interval during which the solver should
+// generate shifts. The start time must be before the end time.
+type PlanningHorizon struct {
+	// EndTime: Required. End of the time interval for the given demand
+	// (exclusive). These values are read down to the minute; seconds and all
+	// smaller units are ignored.
+	EndTime *DateTime `json:"endTime,omitempty"`
+	// StartTime: Required. Start of the time interval for the given demand
+	// (inclusive). These values are read down to the minute; seconds and all
+	// smaller units are ignored.
+	StartTime *DateTime `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PlanningHorizon) MarshalJSON() ([]byte, error) {
+	type NoMethod PlanningHorizon
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PrivateAccess: Defines ingress and egress private traffic settings for CCAIP
 // instances.
 type PrivateAccess struct {
@@ -966,6 +1221,129 @@ func (s SAMLParams) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ShiftTemplate: Template specifying rules for generating shifts. A shift is a
+// unit of work that specifies a start time, end time, and may contain events
+// (e.g. lunch, breaks etc.). Shifts will be assigned to specific dates in the
+// response.
+type ShiftTemplate struct {
+	// AssignableEmployeeIds: Optional. A list of specific employee IDs that can be
+	// assigned to shifts generated by this template. If this field is present,
+	// there will be `EmployeeSchedule`s in the response for which the
+	// `EmployeeSchedule.employee_id` field is set to one of the IDs in this list.
+	// The number of employee schedules with an assigned employee ID will be
+	// between `minimum_employee_count` and `maximum_employee_count`. If this field
+	// is empty, between `minimum_employee_count` and `maximum_employee_count`
+	// employees can be assigned to shifts generated by this template and the
+	// employee schedules won't have an assigned employee ID. Currently, only one
+	// assignable employee ID is supported.
+	AssignableEmployeeIds []string `json:"assignableEmployeeIds,omitempty"`
+	// DaysOffCountPerWeek: Fixed number of days off per week. An employee has a
+	// given day off if they are not assigned to a shift that starts on that day. A
+	// week is 7 days and begins on Sunday.
+	DaysOffCountPerWeek int64 `json:"daysOffCountPerWeek,omitempty"`
+	// DaysOffDates: Fixed dates when shifts from this template should not be
+	// generated.
+	DaysOffDates *DateList `json:"daysOffDates,omitempty"`
+	// DurationMinutes: Required. Fixed duration of a shift generated by this
+	// template.
+	DurationMinutes int64 `json:"durationMinutes,omitempty"`
+	// EarliestStartTime: Required. Earliest time in the day that a shift can
+	// start. This value is specified with hours and minutes; seconds and nanos are
+	// ignored.
+	EarliestStartTime *TimeOfDay `json:"earliestStartTime,omitempty"`
+	// EventTemplates: Optional. Rules for generating events for each shift.
+	// Exactly one event will be included in each shift for each `EventTemplate`
+	// specified.
+	EventTemplates []*EventTemplate `json:"eventTemplates,omitempty"`
+	// Id: Required. Unique ID of this template.
+	Id string `json:"id,omitempty"`
+	// LatestStartTime: Required. Latest time in the day that a shift can start.
+	// This value is specified with hours and minutes; seconds and nanos are
+	// ignored. If this value is less than the `earliest_start_time`, it may imply
+	// an overnight shift.
+	LatestStartTime *TimeOfDay `json:"latestStartTime,omitempty"`
+	// MaximumEmployeeCount: Required. Maximum number of employees that can be
+	// assigned to all shifts generated by this template on working days.
+	MaximumEmployeeCount int64 `json:"maximumEmployeeCount,omitempty"`
+	// MinimumEmployeeCount: Optional. Minimum number of employees that can be
+	// assigned to all shifts generated by this template on working days.
+	MinimumEmployeeCount int64 `json:"minimumEmployeeCount,omitempty"`
+	// MinimumIntereventGapMinutes: Optional. Minimum minutes between the end of
+	// one event and the start of the next.
+	MinimumIntereventGapMinutes int64 `json:"minimumIntereventGapMinutes,omitempty"`
+	// StartTimeIncrementMinutes: Optional. The time increment (in minutes) used to
+	// generate the set of possible start times between `earliest_start_time` and
+	// `latest_start_time`. For example, if the earliest start time is 8:00, the
+	// latest start time is 8:30, and the start time increment is 10 minutes, then
+	// all possible start times for this shift template are: 8:00, 8:10, 8:20, and
+	// 8:30.
+	StartTimeIncrementMinutes int64 `json:"startTimeIncrementMinutes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssignableEmployeeIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssignableEmployeeIds") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ShiftTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod ShiftTemplate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SolverConfig: Specifies additional parameters for the solver generating
+// shifts.
+type SolverConfig struct {
+	// MaximumProcessingDuration: Optional. Maximum time the solver should spend on
+	// the problem. If not set, defaults to 1 minute. The choice of a time limit
+	// should depend on the size of the problem. To give an example, when solving a
+	// 7-day instance with 2 `ShiftTemplates`, each with ~20 possible start times
+	// and holding 2 events with ~30 possible start times, and two days off per
+	// week, recommended values are: <10s for fast solutions (and likely
+	// suboptimal), (10s, 300s) for good quality solutions, and >300s for an
+	// exhaustive search. Larger instances may require longer time limits. This
+	// value is not a hard limit and it does not account for the communication
+	// overhead. The expected latency to solve the problem may slightly exceed this
+	// value.
+	MaximumProcessingDuration string `json:"maximumProcessingDuration,omitempty"`
+	// ScheduleType: Required. Specifies the type of schedule to generate.
+	//
+	// Possible values:
+	//   "SCHEDULE_TYPE_UNSPECIFIED" - Unspecified schedule type. Should not be
+	// used.
+	//   "SINGLE_SHIFT" - Each `EmployeeSchedule` will include exactly one shift.
+	//   "WEEKLY_WITH_FIXED_EVENTS" - `EmployeeSchedule`s will include several
+	// shifts to generate a week-long schedule. The start and end time of events in
+	// a particular `EmployeeSchedule` will be identical. All the shifts have the
+	// same start and end time.
+	//   "WEEKLY_WITH_VARIABLE_EVENTS" - `EmployeeSchedule`s will include several
+	// shifts to generate a week-long schedule. The start and end time of events in
+	// a particular `EmployeeSchedule` can vary. All the shifts have the same start
+	// and end time. This option may result in longer solve times.
+	ScheduleType string `json:"scheduleType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaximumProcessingDuration")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaximumProcessingDuration") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SolverConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SolverConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is suitable for
 // different programming environments, including REST APIs and RPC APIs. It is
 // used by gRPC (https://github.com/grpc). Each `Status` message contains three
@@ -1036,6 +1414,32 @@ func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TimeZone: Represents a time zone from the IANA Time Zone Database
+// (https://www.iana.org/time-zones).
+type TimeZone struct {
+	// Id: IANA Time Zone Database time zone. For example "America/New_York".
+	Id string `json:"id,omitempty"`
+	// Version: Optional. IANA Time Zone Database version number. For example
+	// "2019a".
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TimeZone) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeZone
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // URIs: Message storing the URIs of the ContactCenter.
 type URIs struct {
 	// ChatBotUri: Chat Bot Uri of the ContactCenter
@@ -1062,6 +1466,31 @@ type URIs struct {
 
 func (s URIs) MarshalJSON() ([]byte, error) {
 	type NoMethod URIs
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UnwantedEventInterval: Specifies a time interval during which the overlap
+// with events (generated from event templates) should be minimal.
+type UnwantedEventInterval struct {
+	// DurationMinutes: Required. Duration of the event.
+	DurationMinutes int64 `json:"durationMinutes,omitempty"`
+	// StartTime: Required. Start time of the event.
+	StartTime *DateTime `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DurationMinutes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DurationMinutes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UnwantedEventInterval) MarshalJSON() ([]byte, error) {
+	type NoMethod UnwantedEventInterval
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1102,6 +1531,165 @@ type WeeklySchedule struct {
 func (s WeeklySchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod WeeklySchedule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkforceDemand: Specifies the number of employees required to cover the
+// demand in the given time interval. The length of the interval must be
+// strictly positive.
+type WorkforceDemand struct {
+	// EmployeeCount: Optional. Number of employees needed to cover the demand for
+	// this interval.
+	EmployeeCount int64 `json:"employeeCount,omitempty"`
+	// EndTime: Required. End of the time interval for the given demand
+	// (exclusive). These values are read down to the minute; seconds and all
+	// smaller units are ignored.
+	EndTime *DateTime `json:"endTime,omitempty"`
+	// StartTime: Required. Start of the time interval for the given demand
+	// (inclusive). These values are read down to the minute; seconds and all
+	// smaller units are ignored.
+	StartTime *DateTime `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EmployeeCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EmployeeCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkforceDemand) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkforceDemand
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkforceDemandList: List of workforce demands.
+type WorkforceDemandList struct {
+	// Values: Optional. Values in the list.
+	Values []*WorkforceDemand `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkforceDemandList) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkforceDemandList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ProjectsLocationsGenerateShiftsCall struct {
+	s                     *Service
+	parent                string
+	generateshiftsrequest *GenerateShiftsRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// GenerateShifts: Generates shifts constrained by various parameters.
+//
+//   - parent: Name of the parent resource associated with the request. Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsService) GenerateShifts(parent string, generateshiftsrequest *GenerateShiftsRequest) *ProjectsLocationsGenerateShiftsCall {
+	c := &ProjectsLocationsGenerateShiftsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.generateshiftsrequest = generateshiftsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGenerateShiftsCall) Fields(s ...googleapi.Field) *ProjectsLocationsGenerateShiftsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGenerateShiftsCall) Context(ctx context.Context) *ProjectsLocationsGenerateShiftsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGenerateShiftsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGenerateShiftsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.generateshiftsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}:generateShifts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenteraiplatform.projects.locations.generateShifts", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenteraiplatform.projects.locations.generateShifts" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGenerateShiftsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenteraiplatform.projects.locations.generateShifts", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsGetCall struct {

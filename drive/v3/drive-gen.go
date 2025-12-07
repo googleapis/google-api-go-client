@@ -163,6 +163,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.About = NewAboutService(s)
 	s.Accessproposals = NewAccessproposalsService(s)
+	s.Approvals = NewApprovalsService(s)
 	s.Apps = NewAppsService(s)
 	s.Changes = NewChangesService(s)
 	s.Channels = NewChannelsService(s)
@@ -201,6 +202,8 @@ type Service struct {
 	About *AboutService
 
 	Accessproposals *AccessproposalsService
+
+	Approvals *ApprovalsService
 
 	Apps *AppsService
 
@@ -247,6 +250,15 @@ func NewAccessproposalsService(s *Service) *AccessproposalsService {
 }
 
 type AccessproposalsService struct {
+	s *Service
+}
+
+func NewApprovalsService(s *Service) *ApprovalsService {
+	rs := &ApprovalsService{s: s}
+	return rs
+}
+
+type ApprovalsService struct {
 	s *Service
 }
 
@@ -705,6 +717,92 @@ type AppList struct {
 
 func (s AppList) MarshalJSON() ([]byte, error) {
 	type NoMethod AppList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Approval: Metadata for an approval. An approval is a review/approve process
+// for a Drive item.
+type Approval struct {
+	// ApprovalId: The Approval ID.
+	ApprovalId string `json:"approvalId,omitempty"`
+	// CompleteTime: Output only. The time time the approval was completed.
+	CompleteTime string `json:"completeTime,omitempty"`
+	// CreateTime: Output only. The time the approval was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DueTime: The time that the approval is due.
+	DueTime string `json:"dueTime,omitempty"`
+	// Initiator: The user that requested the Approval.
+	Initiator *User `json:"initiator,omitempty"`
+	// Kind: This is always drive#approval.
+	Kind string `json:"kind,omitempty"`
+	// ModifyTime: Output only. The most recent time the approval was modified.
+	ModifyTime string `json:"modifyTime,omitempty"`
+	// ReviewerResponses: The responses made on the Approval by reviewers.
+	ReviewerResponses []*ReviewerResponse `json:"reviewerResponses,omitempty"`
+	// Status: Output only. The status of the approval at the time this resource
+	// was requested.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Approval status has not been set or was set to an
+	// invalid value.
+	//   "IN_PROGRESS" - The approval process has started and not finished.
+	//   "APPROVED" - The approval process is finished and the target was approved.
+	//   "CANCELLED" - The approval process was cancelled before it finished.
+	//   "DECLINED" - The approval process is finished and the target was declined.
+	Status string `json:"status,omitempty"`
+	// TargetFileId: Target file id of the approval.
+	TargetFileId string `json:"targetFileId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ApprovalId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApprovalId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Approval) MarshalJSON() ([]byte, error) {
+	type NoMethod Approval
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ApprovalList: The response of an Approvals list request.
+type ApprovalList struct {
+	// Items: The list of Approvals. If nextPageToken is populated, then this list
+	// may be incomplete and an additional page of results should be fetched.
+	Items []*Approval `json:"items,omitempty"`
+	// Kind: This is always drive#approvalList
+	Kind string `json:"kind,omitempty"`
+	// NextPageToken: The page token for the next page of Approvals. This will be
+	// absent if the end of the Approvals list has been reached. If the token is
+	// rejected for any reason, it should be discarded, and pagination should be
+	// restarted from the first page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApprovalList) MarshalJSON() ([]byte, error) {
+	type NoMethod ApprovalList
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2794,6 +2892,38 @@ func (s ResolveAccessProposalRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ReviewerResponse: A response on an Approval made by a specific Reviewer.
+type ReviewerResponse struct {
+	// Kind: This is always drive#reviewerResponse.
+	Kind string `json:"kind,omitempty"`
+	// Response: A Reviewer’s Response for the Approval.
+	//
+	// Possible values:
+	//   "RESPONSE_UNSPECIFIED" - Response was set to an unrecognized value.
+	//   "NO_RESPONSE" - The reviewer has not yet responded
+	//   "APPROVED" - The Reviewer has approved the item.
+	//   "DECLINED" - The Reviewer has declined the item.
+	Response string `json:"response,omitempty"`
+	// Reviewer: The user that is responsible for this response.
+	Reviewer *User `json:"reviewer,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReviewerResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ReviewerResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Revision: The metadata for a revision to a file. Some resource methods (such
 // as `revisions.update`) require a `revisionId`. Use the `revisions.list`
 // method to retrieve the ID for a revision.
@@ -3738,6 +3868,264 @@ func (c *AccessproposalsResolveCall) Do(opts ...googleapi.CallOption) error {
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "drive.accessproposals.resolve", "response", internallog.HTTPResponse(res, nil))
 	return nil
+}
+
+type ApprovalsGetCall struct {
+	s            *Service
+	fileId       string
+	approvalId   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an Approval by ID.
+//
+// - approvalId: The ID of the Approval.
+// - fileId: The ID of the file the Approval is on.
+func (r *ApprovalsService) Get(fileId string, approvalId string) *ApprovalsGetCall {
+	c := &ApprovalsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.fileId = fileId
+	c.approvalId = approvalId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ApprovalsGetCall) Fields(s ...googleapi.Field) *ApprovalsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ApprovalsGetCall) IfNoneMatch(entityTag string) *ApprovalsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ApprovalsGetCall) Context(ctx context.Context) *ApprovalsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ApprovalsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApprovalsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/approvals/{approvalId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":     c.fileId,
+		"approvalId": c.approvalId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "drive.approvals.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drive.approvals.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Approval.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ApprovalsGetCall) Do(opts ...googleapi.CallOption) (*Approval, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Approval{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "drive.approvals.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ApprovalsListCall struct {
+	s            *Service
+	fileId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the Approvals on a file.
+//
+// - fileId: The ID of the file the Approval is on.
+func (r *ApprovalsService) List(fileId string) *ApprovalsListCall {
+	c := &ApprovalsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.fileId = fileId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// Approvals to return. When not set, at most 100 Approvals will be returned.
+func (c *ApprovalsListCall) PageSize(pageSize int64) *ApprovalsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token for continuing
+// a previous list request on the next page. This should be set to the value of
+// nextPageToken from a previous response.
+func (c *ApprovalsListCall) PageToken(pageToken string) *ApprovalsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ApprovalsListCall) Fields(s ...googleapi.Field) *ApprovalsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ApprovalsListCall) IfNoneMatch(entityTag string) *ApprovalsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ApprovalsListCall) Context(ctx context.Context) *ApprovalsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ApprovalsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApprovalsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/approvals")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "drive.approvals.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drive.approvals.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ApprovalList.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ApprovalsListCall) Do(opts ...googleapi.CallOption) (*ApprovalList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ApprovalList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "drive.approvals.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ApprovalsListCall) Pages(ctx context.Context, f func(*ApprovalList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type AppsGetCall struct {

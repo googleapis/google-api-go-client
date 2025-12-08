@@ -19,8 +19,8 @@ const (
 	Unknown CredType = ""
 	// ServiceAccount represents a service account file type.
 	ServiceAccount CredType = "service_account"
-	// User represents a user credentials file type.
-	User CredType = "authorized_user"
+	// AuthorizedUser represents an authorized user credentials file type.
+	AuthorizedUser CredType = "authorized_user"
 	// ImpersonatedServiceAccount represents an impersonated service account file type.
 	//
 	// IMPORTANT:
@@ -49,12 +49,9 @@ const (
 	ExternalAccountAuthorizedUser CredType = "external_account_authorized_user"
 )
 
-// knownTypes contains the canonical list of the CredType constants above that are publicly exposed to users.
-// It does not include Unknown, which is internal. This list must be updated when new public constants are
-// added above.
 var knownTypes = map[CredType]bool{
 	ServiceAccount:                true,
-	User:                          true,
+	AuthorizedUser:                true,
 	ImpersonatedServiceAccount:    true,
 	ExternalAccount:               true,
 	GDCHServiceAccount:            true,

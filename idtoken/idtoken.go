@@ -40,6 +40,8 @@ type CredentialsType = credentialstype.CredType
 const (
 	// ServiceAccount represents a service account file type.
 	ServiceAccount = credentialstype.ServiceAccount
+	// AuthorizedUser represents an authorized user credentials file type.
+	AuthorizedUser = credentialstype.AuthorizedUser
 	// ImpersonatedServiceAccount represents an impersonated service account file type.
 	//
 	// IMPORTANT:

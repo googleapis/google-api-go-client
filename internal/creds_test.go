@@ -382,7 +382,7 @@ func TestGetQuotaProject(t *testing.T) {
 			Endpoint:      "foo.googleapis.com",
 			DefaultScopes: []string{"foo"},
 		},
-		credentialstype.User)
+		credentialstype.AuthorizedUser)
 	if err != nil {
 		t.Fatalf("got %v, wanted no error", err)
 	}

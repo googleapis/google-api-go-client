@@ -8,6 +8,7 @@ package credentialstype
 import (
 	"encoding/json"
 	"fmt"
+	"slices"
 )
 
 // CredType specifies the type of JSON credentials.
@@ -44,6 +45,16 @@ const (
 	ExternalAccount CredType = "external_account"
 )
 
+// knownTypes contains the canonical list of the CredType constants above that are publicly exposed to users.
+// It does not include Unknown, which is internal. This list must be updated when new public constants are
+// added above.
+var knownTypes = map[CredType]bool{
+	ServiceAccount:             true,
+	User:                       true,
+	ImpersonatedServiceAccount: true,
+	ExternalAccount:            true,
+}
+
 // GetCredType returns the credentials type or the Unknown type,
 // or an error for empty data or failure to unmarshal JSON.
 func GetCredType(data []byte) (CredType, error) {
@@ -62,31 +73,38 @@ func GetCredType(data []byte) (CredType, error) {
 }
 
 // CheckCredentialType checks if the provided JSON bytes match the expected
-// credential type. An error is returned if the JSON is invalid, the type field
-// is missing, or the types do not match.
-func CheckCredentialType(b []byte, want CredType) error {
+// credential type and, if present, one of the allowed credential types.
+// An error is returned if the JSON is invalid, the type field is missing,
+// or the types do not match expected and (if present) allowed.
+func CheckCredentialType(b []byte, expected CredType, allowed ...CredType) error {
 	var f struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(b, &f); err != nil {
-		return fmt.Errorf("detect: unable to parse credential type: %w", err)
+		return fmt.Errorf("unable to parse credential type: %w", err)
 	}
 	if f.Type == "" {
-		return fmt.Errorf("detect: missing `type` field in credential")
+		return fmt.Errorf("missing `type` field in credential")
 	}
-	got := CredType(f.Type)
-	if got != want {
-		return fmt.Errorf("detect: credential type mismatch: got %q, want %q", got, want)
+	credType := CredType(f.Type)
+	if credType != expected {
+		return fmt.Errorf("credential type mismatch: got %q, expected %q", credType, expected)
+	}
+	if len(allowed) == 0 {
+		return nil
+	}
+	if !slices.Contains(allowed, credType) {
+		return fmt.Errorf("credential type not allowed: %q", credType)
 	}
 	return nil
 }
 
+// parseCredType returns the matching CredType for the JSON type string if
+// it is in the list of publicly exposed types, otherwise Unknown.
 func parseCredType(typeString string) CredType {
 	ct := CredType(typeString)
-	switch ct {
-	case ServiceAccount, User, ImpersonatedServiceAccount, ExternalAccount:
+	if knownTypes[ct] {
 		return ct
-	default:
-		return Unknown
 	}
+	return Unknown
 }

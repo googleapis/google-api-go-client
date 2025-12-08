@@ -11,6 +11,7 @@ import (
 	"strings"
 	"testing"
 
+	"google.golang.org/api/internal/credentialstype"
 	"google.golang.org/api/option"
 )
 
@@ -31,32 +32,65 @@ func TestNewTokenSource_Validation(t *testing.T) {
 	ctx := context.Background()
 	aud := "test-audience"
 
-	t.Run("FileMismatch", func(t *testing.T) {
-		_, err := NewTokenSource(ctx, aud, option.WithAuthCredentialsFile(ExternalAccount, saFile))
-		if err == nil {
-			t.Fatal("got nil, want error")
-		}
-		if !strings.Contains(err.Error(), "credential type mismatch") {
-			t.Errorf("got %q, want error containing 'credential type mismatch'", err)
-		}
-	})
+	userCreds := []byte(`{"type": "authorized_user"}`)
+	externalCreds := []byte(`{"type": "external_account"}`)
 
-	t.Run("JSONMismatch", func(t *testing.T) {
-		_, err := NewTokenSource(ctx, aud, option.WithAuthCredentialsJSON(ExternalAccount, []byte(serviceAccountJSON)))
-		if err == nil {
-			t.Fatal("got nil, want error")
-		}
-		if !strings.Contains(err.Error(), "credential type mismatch") {
-			t.Errorf("got %q, want error containing 'credential type mismatch'", err)
-		}
-	})
+	testCases := []struct {
+		name           string
+		opts           option.ClientOption
+		wantErr        bool
+		errContains    string
+		errNotContains string
+	}{
+		{
+			name:        "FileMismatch",
+			opts:        option.WithAuthCredentialsFile(ExternalAccount, saFile),
+			wantErr:     true,
+			errContains: "credential type mismatch",
+		},
+		{
+			name:        "JSONMismatch",
+			opts:        option.WithAuthCredentialsJSON(ExternalAccount, []byte(serviceAccountJSON)),
+			wantErr:     true,
+			errContains: "credential type mismatch",
+		},
+		{
+			name:           "FileCorrect",
+			opts:           option.WithAuthCredentialsFile(ServiceAccount, saFile),
+			wantErr:        true, // Fails later, but not with a validation error
+			errNotContains: "credential type mismatch",
+		},
+		{
+			name:        "NotAllowed",
+			opts:        option.WithAuthCredentialsJSON(credentialstype.User, userCreds),
+			wantErr:     true,
+			errContains: "credential type not allowed",
+		},
+		{
+			name:           "Allowed",
+			opts:           option.WithAuthCredentialsJSON(credentialstype.ExternalAccount, externalCreds),
+			wantErr:        true, // Fails later, but not with a validation error
+			errNotContains: "credential type not allowed",
+		},
+	}
 
-	t.Run("FileCorrect", func(t *testing.T) {
-		// This should pass the validation check, but fail later since it's not a real
-		// credential. We only care that it doesn't return a mismatch error.
-		_, err := NewTokenSource(ctx, aud, option.WithAuthCredentialsFile(ServiceAccount, saFile))
-		if err != nil && strings.Contains(err.Error(), "credential type mismatch") {
-			t.Errorf("got %q, want error NOT containing 'credential type mismatch'", err)
-		}
-	})
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			_, err := NewTokenSource(ctx, aud, tc.opts)
+
+			if tc.wantErr {
+				if err == nil {
+					t.Fatal("got nil, want error")
+				}
+				if tc.errContains != "" && !strings.Contains(err.Error(), tc.errContains) {
+					t.Errorf("got %q, want error containing %q", err, tc.errContains)
+				}
+				if tc.errNotContains != "" && strings.Contains(err.Error(), tc.errNotContains) {
+					t.Errorf("got %q, want error NOT containing %q", err, tc.errNotContains)
+				}
+			} else if err != nil {
+				t.Fatalf("got %v, want nil error", err)
+			}
+		})
+	}
 }

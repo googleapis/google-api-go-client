@@ -152,7 +152,8 @@ func newTokenSourceNewAuth(ctx context.Context, audience string, ds *internal.Di
 	}
 
 	if credsType != credentialstype.Unknown {
-		if err := credentialstype.CheckCredentialType(credsJSON, credsType); err != nil {
+		allowed := []credentialstype.CredType{ServiceAccount, ImpersonatedServiceAccount, ExternalAccount}
+		if err := credentialstype.CheckCredentialType(credsJSON, credsType, allowed...); err != nil {
 			return nil, err
 		}
 	}

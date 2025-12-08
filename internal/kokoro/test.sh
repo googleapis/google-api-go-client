@@ -58,14 +58,14 @@ exit_code=0
 
 # Run tests and tee output to log file, to be pushed to GCS as artifact.
 if [[ $KOKORO_JOB_NAME == *"continuous"* ]]; then
-    go test -race -v ./... 2>&1 | tee $KOKORO_ARTIFACTS_DIR/$KOKORO_GERRIT_CHANGE_NUMBER.txt
+    go test -race -v -timeout 45m ./... 2>&1 | tee $KOKORO_ARTIFACTS_DIR/sponge_log.log
     # Takes the kokoro output log (raw stdout) and creates a machine-parseable
     # xUnit XML file.
-    cat $KOKORO_ARTIFACTS_DIR/$KOKORO_GERRIT_CHANGE_NUMBER.txt |
-        go-junit-report -set-exit-code >sponge_log.xml
+    cat $KOKORO_ARTIFACTS_DIR/sponge_log.log | go-junit-report -set-exit-code > $KOKORO_ARTIFACTS_DIR/sponge_log.xml
     exit_code=$(($exit_code + $?))
 else
-    go test -race -v -short ./... 2>&1 | tee $KOKORO_ARTIFACTS_DIR/$KOKORO_GERRIT_CHANGE_NUMBER.txt
+    go test -race -v -short ./... 2>&1 | tee $KOKORO_ARTIFACTS_DIR/sponge_log.log
+    cat $KOKORO_ARTIFACTS_DIR/sponge_log.log | go-junit-report -set-exit-code > $KOKORO_ARTIFACTS_DIR/sponge_log.xml
     exit_code=$(($exit_code + $?))
 fi
 

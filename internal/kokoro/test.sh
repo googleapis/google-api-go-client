@@ -67,7 +67,7 @@ if [[ $KOKORO_JOB_NAME == *"continuous"* ]]; then
     cat $KOKORO_ARTIFACTS_DIR/$TESTSUITE/sponge_log.log | go-junit-report -set-exit-code > $KOKORO_ARTIFACTS_DIR/$TESTSUITE/sponge_log.xml
     exit_code=$(($exit_code + $?))
 else
-    go test -race -v -short ./... 2>&1 | tee $KOKORO_ARTIFACTS_DIR/sponge_log.log
+    go test -race -v -short ./... 2>&1 | tee $KOKORO_ARTIFACTS_DIR/$TESTSUITE/sponge_log.log
     cat $KOKORO_ARTIFACTS_DIR/$TESTSUITE/sponge_log.log | go-junit-report -set-exit-code > $KOKORO_ARTIFACTS_DIR/$TESTSUITE/sponge_log.xml
     exit_code=$(($exit_code + $?))
 fi

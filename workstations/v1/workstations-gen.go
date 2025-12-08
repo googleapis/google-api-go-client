@@ -715,6 +715,56 @@ func (s GceConfidentialInstanceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GceHyperdiskBalancedHighAvailability: A Persistent Directory backed by a
+// Compute Engine Hyperdisk Balanced High Availability Disk
+// (https://cloud.google.com/compute/docs/disks/hd-types/hyperdisk-balanced-ha).
+// This is a high-availability block storage solution that offers a balance
+// between performance and cost for most general-purpose workloads.
+type GceHyperdiskBalancedHighAvailability struct {
+	// ArchiveTimeout: Optional. Number of seconds to wait after initially creating
+	// or subsequently shutting down the workstation before converting its disk
+	// into a snapshot. This generally saves costs at the expense of greater
+	// startup time on next workstation start, as the service will need to create a
+	// disk from the archival snapshot. A value of "0s" indicates that the disk
+	// will never be archived.
+	ArchiveTimeout string `json:"archiveTimeout,omitempty"`
+	// ReclaimPolicy: Optional. Whether the persistent disk should be deleted when
+	// the workstation is deleted. Valid values are `DELETE` and `RETAIN`. Defaults
+	// to `DELETE`.
+	//
+	// Possible values:
+	//   "RECLAIM_POLICY_UNSPECIFIED" - Do not use.
+	//   "DELETE" - Delete the persistent disk when deleting the workstation.
+	//   "RETAIN" - Keep the persistent disk when deleting the workstation. An
+	// administrator must manually delete the disk.
+	ReclaimPolicy string `json:"reclaimPolicy,omitempty"`
+	// SizeGb: Optional. The GB capacity of a persistent home directory for each
+	// workstation created with this configuration. Must be empty if
+	// source_snapshot is set. Valid values are `10`, `50`, `100`, `200`, `500`, or
+	// `1000`. Defaults to `200`.
+	SizeGb int64 `json:"sizeGb,omitempty"`
+	// SourceSnapshot: Optional. Name of the snapshot to use as the source for the
+	// disk. If set, size_gb must be empty. Must be formatted as ext4 file system
+	// with no partitions.
+	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArchiveTimeout") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArchiveTimeout") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GceHyperdiskBalancedHighAvailability) MarshalJSON() ([]byte, error) {
+	type NoMethod GceHyperdiskBalancedHighAvailability
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GceInstance: A runtime using a Compute Engine instance.
 type GceInstance struct {
 	// Accelerators: Optional. A list of the type and count of accelerator cards
@@ -795,6 +845,16 @@ type GceInstance struct {
 	// ShieldedInstanceConfig: Optional. A set of Compute Engine Shielded instance
 	// options.
 	ShieldedInstanceConfig *GceShieldedInstanceConfig `json:"shieldedInstanceConfig,omitempty"`
+	// StartupScriptUri: Optional. Link to the startup script stored in Cloud
+	// Storage. This script will be run on the host workstation VM when the VM is
+	// created. The URI must be of the form gs://{bucket-name}/{object-name}. If
+	// specifying a startup script, the service account must have Permission to
+	// access the bucket and script file in Cloud Storage
+	// (https://cloud.google.com/storage/docs/access-control/iam-permissions).
+	// Otherwise, the script must be publicly accessible. Note that the service
+	// regularly updates the OS version used, and it is the responsibility of the
+	// user to ensure the script stays compatible with the OS version.
+	StartupScriptUri string `json:"startupScriptUri,omitempty"`
 	// Tags: Optional. Network tags to add to the Compute Engine VMs backing the
 	// workstations. This option applies network tags
 	// (https://cloud.google.com/vpc/docs/add-remove-network-tags) to VMs created
@@ -1110,8 +1170,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1411,17 +1471,20 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 // Updates to this field will not update existing workstations and will only
 // take effect on new workstations.
 type PersistentDirectory struct {
+	// GceHd: A PersistentDirectory backed by a Compute Engine hyperdisk high
+	// availability disk.
+	GceHd *GceHyperdiskBalancedHighAvailability `json:"gceHd,omitempty"`
 	// GcePd: A PersistentDirectory backed by a Compute Engine persistent disk.
 	GcePd *GceRegionalPersistentDisk `json:"gcePd,omitempty"`
 	// MountPath: Optional. Location of this directory in the running workstation.
 	MountPath string `json:"mountPath,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GcePd") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "GceHd") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GcePd") to include in API
+	// NullFields is a list of field names (e.g. "GceHd") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2778,9 +2841,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

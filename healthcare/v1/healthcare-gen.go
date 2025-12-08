@@ -3438,6 +3438,16 @@ type GoogleCloudHealthcareV1DicomBigQueryDestination struct {
 	// write_disposition=WRITE_EMPTY and force=true is equivalent to
 	// write_disposition=WRITE_TRUNCATE.
 	Force bool `json:"force,omitempty"`
+	// IncludeSourceStore: Optional. If true, the source store name will be
+	// included as a column in the BigQuery schema.
+	IncludeSourceStore bool `json:"includeSourceStore,omitempty"`
+	// SchemaFlattened: Optional. Setting this field will use flattened DICOM
+	// instances schema for the BigQuery table. The flattened schema will have one
+	// column for each DICOM tag.
+	SchemaFlattened *SchemaFlattened `json:"schemaFlattened,omitempty"`
+	// SchemaJson: Optional. Setting this field will store all the DICOM tags as a
+	// JSON type in a single column.
+	SchemaJson *SchemaJSON `json:"schemaJson,omitempty"`
 	// TableUri: Optional. BigQuery URI to a table, up to 2000 characters long, in
 	// the format `bq://projectId.bqDatasetId.tableId`
 	TableUri string `json:"tableUri,omitempty"`
@@ -4663,8 +4673,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5154,6 +5164,12 @@ type ProgressCounter struct {
 	Failure int64 `json:"failure,omitempty,string"`
 	// Pending: The number of units that are pending in the operation.
 	Pending int64 `json:"pending,omitempty,string"`
+	// SecondaryFailure: The number of secondary units that failed in the
+	// operation.
+	SecondaryFailure int64 `json:"secondaryFailure,omitempty,string"`
+	// SecondarySuccess: The number of secondary units that succeeded in the
+	// operation.
+	SecondarySuccess int64 `json:"secondarySuccess,omitempty,string"`
 	// Success: The number of units that succeeded in the operation.
 	Success int64 `json:"success,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Failure") to unconditionally
@@ -5634,6 +5650,12 @@ func (s SchemaConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SchemaFlattened: Using this field will flatten the DICOM instances into a
+// BigQuery table. The table will have one column for each DICOM tag. The
+// column name will be the DICOM tag's textual representation.
+type SchemaFlattened struct {
+}
+
 // SchemaGroup: An HL7v2 logical group construct.
 type SchemaGroup struct {
 	// Choice: True indicates that this is a choice group, meaning that only one of
@@ -5664,6 +5686,25 @@ type SchemaGroup struct {
 func (s SchemaGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod SchemaGroup
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SchemaJSON: Using this field will set the schema such that all DICOM tags
+// will be included in the BigQuery table as a single JSON type column. The
+// BigQuery table schema will include the following columns: *
+// `StudyInstanceUID` (Type: STRING): DICOM Tag 0020000D. * `SeriesInstanceUID`
+// (Type: STRING): DICOM Tag 0020000E. * `SOPInstanceUID` (Type: STRING): DICOM
+// Tag 00080018. * `SourceDicomStore` (Type: STRING): The name of the source
+// DICOM store. This field is only included if the `include_source_store`
+// option is set to true. * `Metadata` (Type: JSON): All DICOM tags for the
+// instance, stored in a single JSON object. * `StructuredStorageSize` (Type:
+// INTEGER): Size of the structured storage in bytes. * `DroppedTags` (Type:
+// STRING, Repeated: Yes): List of tags that were dropped during the
+// conversion. * `StorageClass` (Type: STRING): The storage class of the
+// instance. * `LastUpdated` (Type: TIMESTAMP): Timestamp of the last update to
+// the instance. * `BlobStorageSize` (Type: INTEGER): Size of the blob storage
+// in bytes. * `Type` (Type: STRING): Indicates the type of operation (e.g.,
+// INSERT, DELETE).
+type SchemaJSON struct {
 }
 
 // SchemaPackage: A schema package contains a set of schemas and type
@@ -5774,34 +5815,6 @@ type SchematizedData struct {
 
 func (s SchematizedData) MarshalJSON() ([]byte, error) {
 	type NoMethod SchematizedData
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// SearchResourcesRequest: Request to search the resources in the specified
-// FHIR store.
-type SearchResourcesRequest struct {
-	// ResourceType: Optional. The FHIR resource type to search, such as Patient or
-	// Observation. For a complete list, see the FHIR Resource Index (DSTU2
-	// (https://hl7.org/fhir/DSTU2/resourcelist.html), STU3
-	// (https://hl7.org/fhir/STU3/resourcelist.html), R4
-	// (https://hl7.org/fhir/R4/resourcelist.html)), R5
-	// (https://hl7.org/fhir/R5/resourcelist.html)).
-	ResourceType string `json:"resourceType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ResourceType") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ResourceType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s SearchResourcesRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod SearchResourcesRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6484,8 +6497,9 @@ type ValidationConfig struct {
 	// API does not currently enforce all of the rules in a StructureDefinition.
 	// The following rules are supported: - min/max - minValue/maxValue - maxLength
 	// - type - fixed[x] - pattern[x] on simple types - slicing, when using "value"
-	// as the discriminator type When a URL cannot be resolved (for example, in a
-	// type assertion), the server does not return an error.
+	// as the discriminator type - FHIRPath constraints (only when
+	// `enable_fhirpath_profile_validation` is true) When a URL cannot be resolved
+	// (for example, in a type assertion), the server does not return an error.
 	EnabledImplementationGuides []string `json:"enabledImplementationGuides,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisableFhirpathValidation")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -19473,7 +19487,7 @@ type ProjectsLocationsDatasetsFhirStoresFhirBulkExportCall struct {
 
 // BulkExport: Bulk exports all resources from the FHIR store to the specified
 // destination. Implements the FHIR implementation guide system level $export
-// (https://build.fhir.org/ig/HL7/bulk-data/export.html#endpoint---system-level-export.
+// (https://build.fhir.org/ig/HL7/bulk-data/export.html#endpoint---system-level-export).
 // The following headers must be set in the request: * `Accept`: specifies the
 // format of the `OperationOutcome` response. Only `application/fhir+json` is
 // supported. * `Prefer`: specifies whether the response is immediate or
@@ -20592,12 +20606,12 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Do(opts ...googleapi.C
 }
 
 type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
-	s                      *Service
-	parent                 string
-	searchresourcesrequest *SearchResourcesRequest
-	urlParams_             gensupport.URLParams
-	ctx_                   context.Context
-	header_                http.Header
+	s          *Service
+	parent     string
+	body_      io.Reader
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
 }
 
 // Search: Searches for resources in the given FHIR store according to criteria
@@ -20668,10 +20682,21 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).
 //
 // - parent: Name of the FHIR store to retrieve resources from.
-func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Search(parent string, searchresourcesrequest *SearchResourcesRequest) *ProjectsLocationsDatasetsFhirStoresFhirSearchCall {
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Search(parent string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirSearchCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.searchresourcesrequest = searchresourcesrequest
+	c.body_ = body_
+	return c
+}
+
+// ResourceType sets the optional parameter "resourceType": The FHIR resource
+// type to search, such as Patient or Observation. For a complete list, see the
+// FHIR Resource Index (DSTU2 (https://hl7.org/fhir/DSTU2/resourcelist.html),
+// STU3 (https://hl7.org/fhir/STU3/resourcelist.html), R4
+// (https://hl7.org/fhir/R4/resourcelist.html)), R5
+// (https://hl7.org/fhir/R5/resourcelist.html)).
+func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) ResourceType(resourceType string) *ProjectsLocationsDatasetsFhirStoresFhirSearchCall {
+	c.urlParams_.Set("resourceType", resourceType)
 	return c
 }
 
@@ -20699,13 +20724,12 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Header() http.Header
 }
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.searchresourcesrequest)
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	body := bytes.NewBuffer(nil)
+	_, err := body.ReadFrom(c.body_)
 	if err != nil {
 		return nil, err
 	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/fhir/_search")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
@@ -20727,13 +20751,13 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Do(opts ...googleapi
 }
 
 type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
-	s                      *Service
-	parent                 string
-	resourceType           string
-	searchresourcesrequest *SearchResourcesRequest
-	urlParams_             gensupport.URLParams
-	ctx_                   context.Context
-	header_                http.Header
+	s            *Service
+	parent       string
+	resourceType string
+	body_        io.Reader
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
 }
 
 // SearchType: Searches for resources in the given FHIR store according to
@@ -20810,11 +20834,11 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
 //     (https://hl7.org/fhir/STU3/resourcelist.html), R4
 //     (https://hl7.org/fhir/R4/resourcelist.html)), R5
 //     (https://hl7.org/fhir/R5/resourcelist.html)).
-func (r *ProjectsLocationsDatasetsFhirStoresFhirService) SearchType(parent string, resourceType string, searchresourcesrequest *SearchResourcesRequest) *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall {
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) SearchType(parent string, resourceType string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.resourceType = resourceType
-	c.searchresourcesrequest = searchresourcesrequest
+	c.body_ = body_
 	return c
 }
 
@@ -20842,13 +20866,12 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) Header() http.He
 }
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.searchresourcesrequest)
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	body := bytes.NewBuffer(nil)
+	_, err := body.ReadFrom(c.body_)
 	if err != nil {
 		return nil, err
 	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/fhir/{resourceType}/_search")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
@@ -23690,9 +23713,9 @@ func (c *ProjectsLocationsDatasetsOperationsListCall) PageToken(pageToken string
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsDatasetsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsDatasetsOperationsListCall {

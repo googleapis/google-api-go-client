@@ -4383,7 +4383,9 @@ func (s PasswordStatus) MarshalJSON() ([]byte, error) {
 }
 
 // PasswordValidationPolicy: Database instance local user password validation
-// policy
+// policy. This message defines the password policy for local database users.
+// When enabled, it enforces constraints on password complexity, length, and
+// reuse. Keep this policy enabled to help prevent unauthorized access.
 type PasswordValidationPolicy struct {
 	// Complexity: The complexity of the password.
 	//
@@ -4397,7 +4399,10 @@ type PasswordValidationPolicy struct {
 	DisallowCompromisedCredentials bool `json:"disallowCompromisedCredentials,omitempty"`
 	// DisallowUsernameSubstring: Disallow username as a part of the password.
 	DisallowUsernameSubstring bool `json:"disallowUsernameSubstring,omitempty"`
-	// EnablePasswordPolicy: Whether the password policy is enabled or not.
+	// EnablePasswordPolicy: Whether to enable the password policy or not. When
+	// enabled, passwords must meet complexity requirements. Keep this policy
+	// enabled to help prevent unauthorized access. Disabling this policy allows
+	// weak passwords.
 	EnablePasswordPolicy bool `json:"enablePasswordPolicy,omitempty"`
 	// MinLength: Minimum number of characters allowed.
 	MinLength int64 `json:"minLength,omitempty"`
@@ -4443,6 +4448,43 @@ type PerformDiskShrinkContext struct {
 
 func (s PerformDiskShrinkContext) MarshalJSON() ([]byte, error) {
 	type NoMethod PerformDiskShrinkContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PerformanceCaptureConfig: Performance Capture configuration.
+type PerformanceCaptureConfig struct {
+	// Enabled: Optional. Enable or disable the Performance Capture.
+	Enabled bool `json:"enabled,omitempty"`
+	// ProbeThreshold: Optional. The minimum number of consecutive readings above
+	// threshold that triggers instance state capture.
+	ProbeThreshold int64 `json:"probeThreshold,omitempty"`
+	// ProbingIntervalSeconds: Optional. The time interval in seconds between any
+	// two probes.
+	ProbingIntervalSeconds int64 `json:"probingIntervalSeconds,omitempty"`
+	// RunningThreadsThreshold: Optional. The minimum number of server threads
+	// running to trigger the capture on primary.
+	RunningThreadsThreshold int64 `json:"runningThreadsThreshold,omitempty"`
+	// SecondsBehindSourceThreshold: Optional. The minimum number of seconds
+	// replica must be lagging behind primary to trigger capture on replica.
+	SecondsBehindSourceThreshold int64 `json:"secondsBehindSourceThreshold,omitempty"`
+	// TransactionDurationThreshold: Optional. The amount of time in seconds that a
+	// transaction needs to have been open before the watcher starts recording it.
+	TransactionDurationThreshold int64 `json:"transactionDurationThreshold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PerformanceCaptureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PerformanceCaptureConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4512,6 +4554,13 @@ type PoolNodeConfig struct {
 	// Name: Output only. The name of the read pool node, to be used for retrieving
 	// metrics and logs.
 	Name string `json:"name,omitempty"`
+	// PscAutoConnections: Output only. The list of settings for requested
+	// automatically-setup Private Service Connect (PSC) consumer endpoints that
+	// can be used to connect to this read pool node.
+	PscAutoConnections []*PscAutoConnectionConfig `json:"pscAutoConnections,omitempty"`
+	// PscServiceAttachmentLink: Output only. The Private Service Connect (PSC)
+	// service attachment of the read pool node.
+	PscServiceAttachmentLink string `json:"pscServiceAttachmentLink,omitempty"`
 	// State: Output only. The current state of the read pool node.
 	//
 	// Possible values:
@@ -5258,6 +5307,9 @@ type Settings struct {
 	// PasswordValidationPolicy: The local user password validation policy of the
 	// instance.
 	PasswordValidationPolicy *PasswordValidationPolicy `json:"passwordValidationPolicy,omitempty"`
+	// PerformanceCaptureConfig: Optional. Configuration for Performance Capture,
+	// provides diagnostic metrics during high load situations.
+	PerformanceCaptureConfig *PerformanceCaptureConfig `json:"performanceCaptureConfig,omitempty"`
 	// PricingPlan: The pricing plan for this instance. This can be either
 	// `PER_USE` or `PACKAGE`. Only `PER_USE` is supported for Second Generation
 	// instances.
@@ -5559,11 +5611,6 @@ type SqlInstancesAcquireSsrsLeaseResponse struct {
 func (s SqlInstancesAcquireSsrsLeaseResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlInstancesAcquireSsrsLeaseResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// SqlInstancesAddEntraIdCertificateRequest: Request for AddEntraIdCertificate
-// RPC.
-type SqlInstancesAddEntraIdCertificateRequest struct {
 }
 
 // SqlInstancesExecuteSqlResponse: Execute SQL statements response.
@@ -9281,13 +9328,12 @@ func (c *InstancesAcquireSsrsLeaseCall) Do(opts ...googleapi.CallOption) (*SqlIn
 }
 
 type InstancesAddEntraIdCertificateCall struct {
-	s                                        *Service
-	project                                  string
-	instance                                 string
-	sqlinstancesaddentraidcertificaterequest *SqlInstancesAddEntraIdCertificateRequest
-	urlParams_                               gensupport.URLParams
-	ctx_                                     context.Context
-	header_                                  http.Header
+	s          *Service
+	project    string
+	instance   string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
 }
 
 // AddEntraIdCertificate: Adds a new Entra ID certificate for the specified
@@ -9296,11 +9342,10 @@ type InstancesAddEntraIdCertificateCall struct {
 //
 // - instance: Cloud SQL instance ID. This does not include the project ID.
 // - project: Project ID of the project that contains the instance.
-func (r *InstancesService) AddEntraIdCertificate(project string, instance string, sqlinstancesaddentraidcertificaterequest *SqlInstancesAddEntraIdCertificateRequest) *InstancesAddEntraIdCertificateCall {
+func (r *InstancesService) AddEntraIdCertificate(project string, instance string) *InstancesAddEntraIdCertificateCall {
 	c := &InstancesAddEntraIdCertificateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
-	c.sqlinstancesaddentraidcertificaterequest = sqlinstancesaddentraidcertificaterequest
 	return c
 }
 
@@ -9328,16 +9373,12 @@ func (c *InstancesAddEntraIdCertificateCall) Header() http.Header {
 }
 
 func (c *InstancesAddEntraIdCertificateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.sqlinstancesaddentraidcertificaterequest)
-	if err != nil {
-		return nil, err
-	}
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/projects/{project}/instances/{instance}/addEntraIdCertificate")
 	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequest("POST", urls, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -9346,7 +9387,7 @@ func (c *InstancesAddEntraIdCertificateCall) doRequest(alt string) (*http.Respon
 		"project":  c.project,
 		"instance": c.instance,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.addEntraIdCertificate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.instances.addEntraIdCertificate", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 

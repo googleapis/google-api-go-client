@@ -162,6 +162,16 @@ func TestParseCredType(t *testing.T) {
 			expected: ExternalAccount,
 		},
 		{
+			name:     "GDCHServiceAccount",
+			input:    "gdc_service_account",
+			expected: GDCHServiceAccount,
+		},
+		{
+			name:     "ExternalAccountAuthorizedUser",
+			input:    "external_account_authorized_user",
+			expected: ExternalAccountAuthorizedUser,
+		},
+		{
 			name:     "UnknownType",
 			input:    "not_a_real_type",
 			expected: Unknown,

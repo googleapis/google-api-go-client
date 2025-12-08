@@ -43,16 +43,22 @@ const (
 	// source] https://cloud.google.com/docs/authentication/external/externally-sourced-credentials
 	// for more details.
 	ExternalAccount CredType = "external_account"
+	// GDCHServiceAccount represents a GDCH service account file type.
+	GDCHServiceAccount CredType = "gdc_service_account"
+	// ExternalAccountAuthorizedUser represents an external account authorized user file type.
+	ExternalAccountAuthorizedUser CredType = "external_account_authorized_user"
 )
 
 // knownTypes contains the canonical list of the CredType constants above that are publicly exposed to users.
 // It does not include Unknown, which is internal. This list must be updated when new public constants are
 // added above.
 var knownTypes = map[CredType]bool{
-	ServiceAccount:             true,
-	User:                       true,
-	ImpersonatedServiceAccount: true,
-	ExternalAccount:            true,
+	ServiceAccount:                true,
+	User:                          true,
+	ImpersonatedServiceAccount:    true,
+	ExternalAccount:               true,
+	GDCHServiceAccount:            true,
+	ExternalAccountAuthorizedUser: true,
 }
 
 // GetCredType returns the credentials type or the Unknown type,

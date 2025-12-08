@@ -56,7 +56,7 @@ cd ..
 set +e # Run all tests, don't stop after the first failure.
 exit_code=0
 # give our testing a synthetic name so that sponge rendering works as expected.
-export TESTSUITE = "google-api-go-client"
+export TESTSUITE="google-api-go-client"
 mkdir $KOKORO_ARTIFACTS_DIR/$TESTSUITE
 
 # Run tests and tee output to log file, to be pushed to GCS as artifact.

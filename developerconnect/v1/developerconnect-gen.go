@@ -400,8 +400,9 @@ type BitbucketCloudConfig struct {
 	ReadAuthorizerCredential *UserCredential `json:"readAuthorizerCredential,omitempty"`
 	// WebhookSecretSecretVersion: Required. Immutable. SecretManager resource
 	// containing the webhook secret used to verify webhook events, formatted as
-	// `projects/*/secrets/*/versions/*`. This is used to validate and create
-	// webhooks.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location). This is used to validate and create webhooks.
 	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
 	// Workspace: Required. The Bitbucket Cloud Workspace ID to be connected to
 	// Google Cloud Platform.
@@ -452,7 +453,9 @@ type BitbucketDataCenterConfig struct {
 	SslCaCertificate string `json:"sslCaCertificate,omitempty"`
 	// WebhookSecretSecretVersion: Required. Immutable. SecretManager resource
 	// containing the webhook secret used to verify webhook events, formatted as
-	// `projects/*/secrets/*/versions/*`. This is used to validate webhooks.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location). This is used to validate webhooks.
 	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthorizerCredential") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -888,7 +891,9 @@ type GitHubEnterpriseConfig struct {
 	InstallationUri string `json:"installationUri,omitempty"`
 	// PrivateKeySecretVersion: Optional. SecretManager resource containing the
 	// private key of the GitHub App, formatted as
-	// `projects/*/secrets/*/versions/*`.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location).
 	PrivateKeySecretVersion string `json:"privateKeySecretVersion,omitempty"`
 	// ServerVersion: Output only. GitHub Enterprise version installed at the
 	// host_uri.
@@ -904,7 +909,9 @@ type GitHubEnterpriseConfig struct {
 	SslCaCertificate string `json:"sslCaCertificate,omitempty"`
 	// WebhookSecretSecretVersion: Optional. SecretManager resource containing the
 	// webhook secret of the GitHub App, formatted as
-	// `projects/*/secrets/*/versions/*`.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location).
 	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -938,7 +945,9 @@ type GitLabConfig struct {
 	ReadAuthorizerCredential *UserCredential `json:"readAuthorizerCredential,omitempty"`
 	// WebhookSecretSecretVersion: Required. Immutable. SecretManager resource
 	// containing the webhook secret of a GitLab project, formatted as
-	// `projects/*/secrets/*/versions/*`. This is used to validate webhooks.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location). This is used to validate webhooks.
 	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthorizerCredential") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -988,7 +997,9 @@ type GitLabEnterpriseConfig struct {
 	SslCaCertificate string `json:"sslCaCertificate,omitempty"`
 	// WebhookSecretSecretVersion: Required. Immutable. SecretManager resource
 	// containing the webhook secret of a GitLab project, formatted as
-	// `projects/*/secrets/*/versions/*`. This is used to validate webhooks.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location). This is used to validate webhooks.
 	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthorizerCredential") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1618,7 +1629,9 @@ func (s Location) MarshalJSON() ([]byte, error) {
 type OAuthCredential struct {
 	// OauthTokenSecretVersion: Required. A SecretManager resource containing the
 	// OAuth token that authorizes the connection. Format:
-	// `projects/*/secrets/*/versions/*`.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location).
 	OauthTokenSecretVersion string `json:"oauthTokenSecretVersion,omitempty"`
 	// Username: Output only. The username associated with this token.
 	Username string `json:"username,omitempty"`
@@ -2022,7 +2035,9 @@ func (s User) MarshalJSON() ([]byte, error) {
 type UserCredential struct {
 	// UserTokenSecretVersion: Required. A SecretManager resource containing the
 	// user token that authorizes the Developer Connect connection. Format:
-	// `projects/*/secrets/*/versions/*`.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location).
 	UserTokenSecretVersion string `json:"userTokenSecretVersion,omitempty"`
 	// Username: Output only. The username associated with this token.
 	Username string `json:"username,omitempty"`

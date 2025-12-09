@@ -2219,6 +2219,9 @@ type GoogleAdsSearchads360V0Common__Segments struct {
 	// GeoTargetMetro: Resource name of the geo target constant that represents a
 	// metro.
 	GeoTargetMetro string `json:"geoTargetMetro,omitempty"`
+	// GeoTargetPostalCode: Resource name of the geo target constant that
+	// represents a postal code.
+	GeoTargetPostalCode string `json:"geoTargetPostalCode,omitempty"`
 	// GeoTargetRegion: Resource name of the geo target constant that represents a
 	// region.
 	GeoTargetRegion string `json:"geoTargetRegion,omitempty"`
@@ -5159,8 +5162,8 @@ func (s GoogleAdsSearchads360V0Resources__AdGroupAudienceView) MarshalJSON() ([]
 // bid modifier.
 type GoogleAdsSearchads360V0Resources__AdGroupBidModifier struct {
 	// BidModifier: The modifier for the bid when the criterion matches. The
-	// modifier must be in the range: 0.1 - 10.0. The range is 1.0 - 6.0 for
-	// PreferredContent. Use 0 to opt out of a Device type.
+	// modifier must be in the range: 0.1 - 10.0. Use 0 to opt out of a Device
+	// type.
 	BidModifier float64 `json:"bidModifier,omitempty"`
 	// Device: Immutable. A device criterion.
 	Device *GoogleAdsSearchads360V0Common__DeviceInfo `json:"device,omitempty"`

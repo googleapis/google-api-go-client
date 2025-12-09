@@ -60,7 +60,7 @@ func TestNewTokenSource_Validation(t *testing.T) {
 			wantErr:        true, // Fails later, but not with a validation error
 			errNotContains: "credential type mismatch",
 		},
-			{
+		{
 			name:        "NotAllowed",
 			opts:        option.WithAuthCredentialsJSON(credentialstype.AuthorizedUser, userCreds),
 			wantErr:     true,

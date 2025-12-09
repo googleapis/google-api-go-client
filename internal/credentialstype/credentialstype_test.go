@@ -23,33 +23,33 @@ func TestCheckCredentialType(t *testing.T) {
 		wantErr     bool
 		errContains string
 	}{
-		        {
-		            name:        "ExpectedMismatch",
-		            jsonBytes:   serviceAccountJSON,
-		            expected:    AuthorizedUser,
-		            wantErr:     true,
-		            errContains: "credential type mismatch: got \"service_account\", expected \"authorized_user\"",
-		        },
-		        {
-		            name:        "AllowedMismatch",
-		            jsonBytes:   serviceAccountJSON,
-		            expected:    ServiceAccount,
-		            allowed:     []CredType{AuthorizedUser, ExternalAccount},
-		            wantErr:     true,
-		            errContains: "credential type not allowed: \"service_account\"",
-		        },
-		        {
-		            name:        "AllowedSuccess",
-		            jsonBytes:   serviceAccountJSON,
-		            expected:    ServiceAccount,
-		            allowed:     []CredType{ServiceAccount, AuthorizedUser},
-		            wantErr:     false,
-		        },		{
-			name:        "NoAllowedSpecified",
+		{
+			name:        "ExpectedMismatch",
+			jsonBytes:   serviceAccountJSON,
+			expected:    AuthorizedUser,
+			wantErr:     true,
+			errContains: "credential type mismatch: got \"service_account\", expected \"authorized_user\"",
+		},
+		{
+			name:        "AllowedMismatch",
 			jsonBytes:   serviceAccountJSON,
 			expected:    ServiceAccount,
-			allowed:     nil,
-			wantErr:     false,
+			allowed:     []CredType{AuthorizedUser, ExternalAccount},
+			wantErr:     true,
+			errContains: "credential type not allowed: \"service_account\"",
+		},
+		{
+			name:      "AllowedSuccess",
+			jsonBytes: serviceAccountJSON,
+			expected:  ServiceAccount,
+			allowed:   []CredType{ServiceAccount, AuthorizedUser},
+			wantErr:   false,
+		}, {
+			name:      "NoAllowedSpecified",
+			jsonBytes: serviceAccountJSON,
+			expected:  ServiceAccount,
+			allowed:   nil,
+			wantErr:   false,
 		},
 		{
 			name:        "InvalidJSON",
@@ -73,11 +73,11 @@ func TestCheckCredentialType(t *testing.T) {
 			errContains: "unable to parse credential type",
 		},
 		{
-			name:        "GetCredType_Success",
-			jsonBytes:   serviceAccountJSON,
-			expected:    ServiceAccount,
-			allowed:     nil,
-			wantErr:     false,
+			name:      "GetCredType_Success",
+			jsonBytes: serviceAccountJSON,
+			expected:  ServiceAccount,
+			allowed:   nil,
+			wantErr:   false,
 		},
 		{
 			name:        "GetCredType_EmptyJSON",
@@ -122,10 +122,10 @@ func TestCheckCredentialType(t *testing.T) {
 			err := CheckCredentialType(tc.jsonBytes, tc.expected, tc.allowed...)
 			if tc.wantErr {
 				if err == nil {
-						t.Fatal("got nil, want error")
+					t.Fatal("got nil, want error")
 				}
 				if !strings.Contains(err.Error(), tc.errContains) {
-						t.Errorf("got error = %q, want error containing %q", err, tc.errContains)
+					t.Errorf("got error = %q, want error containing %q", err, tc.errContains)
 				}
 			} else if err != nil {
 				t.Fatalf("got error = %v, want nil error", err)

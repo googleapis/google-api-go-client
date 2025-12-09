@@ -370,6 +370,8 @@ type AsymmetricDecryptResponse struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// VerifiedCiphertextCrc32c: Integrity verification field. A flag indicating
 	// whether AsymmetricDecryptRequest.ciphertext_crc32c was received by
@@ -472,6 +474,8 @@ type AsymmetricSignResponse struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// Signature: The created signature.
 	Signature string `json:"signature,omitempty"`
@@ -600,7 +604,7 @@ func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AutokeyConfig: Cloud KMS Autokey configuration for a folder or project.
+// AutokeyConfig: Cloud KMS Autokey configuration for a folder.
 type AutokeyConfig struct {
 	// Etag: Optional. A checksum computed by the server based on the value of
 	// other fields. This may be sent on update requests to ensure that the client
@@ -619,7 +623,6 @@ type AutokeyConfig struct {
 	KeyProject string `json:"keyProject,omitempty"`
 	// Name: Identifier. Name of the AutokeyConfig resource, e.g.
 	// `folders/{FOLDER_NUMBER}/autokeyConfig`
-	// `projects/{PROJECT_NUMBER}/autokeyConfig`.
 	Name string `json:"name,omitempty"`
 	// State: Output only. The state for the AutokeyConfig.
 	//
@@ -871,8 +874,11 @@ type CryptoKey struct {
 	// CryptoKey reside and where all related cryptographic operations are
 	// performed. Only applicable if CryptoKeyVersions have a ProtectionLevel of
 	// EXTERNAL_VPC, with the resource name in the format
-	// `projects/*/locations/*/ekmConnections/*`. Note, this list is non-exhaustive
-	// and may apply to additional ProtectionLevels in the future.
+	// `projects/*/locations/*/ekmConnections/*`. Only applicable if
+	// CryptoKeyVersions have a ProtectionLevel of HSM_SINGLE_TENANT, with the
+	// resource name in the format
+	// `projects/*/locations/*/singleTenantHsmInstances/*`. Note, this list is
+	// non-exhaustive and may apply to additional ProtectionLevels in the future.
 	CryptoKeyBackend string `json:"cryptoKeyBackend,omitempty"`
 	// DestroyScheduledDuration: Immutable. The period of time that versions of
 	// this key spend in the DESTROY_SCHEDULED state before transitioning to
@@ -1041,6 +1047,15 @@ type CryptoKeyVersion struct {
 	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
 	// hash-based digital signature algorithm, at security level 1. Randomized
 	// pre-hash version supporting SHA256 digests.
+	//   "PQ_SIGN_ML_DSA_44_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 1. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_65_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 3. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 5. Randomized version
+	// supporting externally-computed message representatives.
 	Algorithm string `json:"algorithm,omitempty"`
 	// Attestation: Output only. Statement that was generated and signed by the HSM
 	// at key creation time. Use this statement to verify attributes of the key as
@@ -1094,6 +1109,8 @@ type CryptoKeyVersion struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// ReimportEligible: Output only. Whether or not this key version is eligible
 	// for reimport, by being specified as a target in
@@ -1237,6 +1254,15 @@ type CryptoKeyVersionTemplate struct {
 	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
 	// hash-based digital signature algorithm, at security level 1. Randomized
 	// pre-hash version supporting SHA256 digests.
+	//   "PQ_SIGN_ML_DSA_44_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 1. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_65_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 3. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 5. Randomized version
+	// supporting externally-computed message representatives.
 	Algorithm string `json:"algorithm,omitempty"`
 	// ProtectionLevel: ProtectionLevel to use when creating a CryptoKeyVersion
 	// based on this template. Immutable. Defaults to SOFTWARE.
@@ -1248,6 +1274,8 @@ type CryptoKeyVersionTemplate struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Algorithm") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1319,6 +1347,8 @@ type DecapsulateResponse struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// SharedSecret: The decapsulated shared_secret originally encapsulated with
 	// the matching public key.
@@ -1447,6 +1477,8 @@ type DecryptResponse struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// UsedPrimary: Whether the Decryption was performed using the primary key
 	// version.
@@ -1686,6 +1718,8 @@ type EncryptResponse struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// VerifiedAdditionalAuthenticatedDataCrc32c: Integrity verification field. A
 	// flag indicating whether EncryptRequest.additional_authenticated_data_crc32c
@@ -1819,6 +1853,8 @@ type GenerateRandomBytesRequest struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LengthBytes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1954,6 +1990,15 @@ type ImportCryptoKeyVersionRequest struct {
 	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
 	// hash-based digital signature algorithm, at security level 1. Randomized
 	// pre-hash version supporting SHA256 digests.
+	//   "PQ_SIGN_ML_DSA_44_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 1. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_65_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 3. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 5. Randomized version
+	// supporting externally-computed message representatives.
 	Algorithm string `json:"algorithm,omitempty"`
 	// CryptoKeyVersion: Optional. The optional name of an existing
 	// CryptoKeyVersion to target for an import operation. If this field is not
@@ -2035,6 +2080,12 @@ type ImportJob struct {
 	Attestation *KeyOperationAttestation `json:"attestation,omitempty"`
 	// CreateTime: Output only. The time at which this ImportJob was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// CryptoKeyBackend: Immutable. The resource name of the backend environment
+	// where the key material for the wrapping key resides and where all related
+	// cryptographic operations are performed. Currently, this field is only
+	// populated for keys stored in HSM_SINGLE_TENANT. Note, this list is
+	// non-exhaustive and may apply to additional ProtectionLevels in the future.
+	CryptoKeyBackend string `json:"cryptoKeyBackend,omitempty"`
 	// ExpireEventTime: Output only. The time this ImportJob expired. Only present
 	// if state is EXPIRED.
 	ExpireEventTime string `json:"expireEventTime,omitempty"`
@@ -2100,6 +2151,8 @@ type ImportJob struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// PublicKey: Output only. The public key with which to wrap key material prior
 	// to import. Only returned if state is ACTIVE.
@@ -2636,6 +2689,9 @@ type LocationMetadata struct {
 	// HsmAvailable: Indicates whether CryptoKeys with protection_level HSM can be
 	// created in this location.
 	HsmAvailable bool `json:"hsmAvailable,omitempty"`
+	// HsmSingleTenantAvailable: Indicates whether CryptoKeys with protection_level
+	// HSM_SINGLE_TENANT can be created in this location.
+	HsmSingleTenantAvailable bool `json:"hsmSingleTenantAvailable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EkmAvailable") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2717,6 +2773,8 @@ type MacSignResponse struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// VerifiedDataCrc32c: Integrity verification field. A flag indicating whether
 	// MacSignRequest.data_crc32c was received by KeyManagementService and used for
@@ -2812,6 +2870,8 @@ type MacVerifyResponse struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// Success: This field indicates whether or not the verification operation for
 	// MacVerifyRequest.mac over MacVerifyRequest.data was successful.
@@ -3074,6 +3134,15 @@ type PublicKey struct {
 	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
 	// hash-based digital signature algorithm, at security level 1. Randomized
 	// pre-hash version supporting SHA256 digests.
+	//   "PQ_SIGN_ML_DSA_44_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 1. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_65_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 3. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 5. Randomized version
+	// supporting externally-computed message representatives.
 	Algorithm string `json:"algorithm,omitempty"`
 	// Name: The name of the CryptoKeyVersion public key. Provided here for
 	// verification. NOTE: This field is in Beta.
@@ -3104,6 +3173,8 @@ type PublicKey struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// PublicKey: This field contains the public key (with integrity verification),
 	// formatted according to the public_key_format field.
@@ -3251,6 +3322,8 @@ type RawDecryptResponse struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// VerifiedAdditionalAuthenticatedDataCrc32c: Integrity verification field. A
 	// flag indicating whether
@@ -3424,6 +3497,8 @@ type RawEncryptResponse struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// TagLength: The length of the authentication tag that is appended to the end
 	// of the ciphertext.
@@ -4020,8 +4095,7 @@ type FoldersUpdateAutokeyConfigCall struct {
 // this configuration to determine where to create the resulting CryptoKey.
 //
 //   - name: Identifier. Name of the AutokeyConfig resource, e.g.
-//     `folders/{FOLDER_NUMBER}/autokeyConfig`
-//     `projects/{PROJECT_NUMBER}/autokeyConfig`.
+//     `folders/{FOLDER_NUMBER}/autokeyConfig`.
 func (r *FoldersService) UpdateAutokeyConfig(name string, autokeyconfig *AutokeyConfig) *FoldersUpdateAutokeyConfigCall {
 	c := &FoldersUpdateAutokeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

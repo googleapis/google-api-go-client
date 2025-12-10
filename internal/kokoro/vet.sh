@@ -7,25 +7,38 @@
 # Fail on error, and display commands being run.
 set -ex
 
+# Define some utility functions
+logmsg() { echo "[$(date "+%Y-%m-%d %H:%M:%S")] $1"; }
+# quick func to measure duration of a specific command
+logduration() {
+    local start_time=$(date +%s)
+    logmsg "Measuring duration for command: $*"
+    # Execute the command
+    "$@"
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+    logmsg "command completed in ${duration} seconds"
+}
+
 if [[ $KOKORO_JOB_NAME != *"latest-version"* ]]; then
   exit 0
 fi
 
 # Fail if a dependency was added without the necessary go.mod/go.sum change
 # being part of the commit.
-go mod tidy
+logduration go mod tidy
 git diff go.mod | tee /dev/stderr | (! read)
 git diff go.sum | tee /dev/stderr | (! read)
 
 # Easier to debug CI.
 pwd
 
-gofmt -s -d -l . 2>&1 | tee /dev/stderr | (! read)
-goimports -l . 2>&1 | tee /dev/stderr | (! read)
+logduration gofmt -s -d -l . 2>&1 | tee /dev/stderr | (! read)
+logduration goimports -l . 2>&1 | tee /dev/stderr | (! read)
 
 # Runs the linter. Regrettably the linter is very simple and does not provide the ability to exclude rules or files,
 # so we rely on inverse grepping to do this for us.
-golint ./... 2>&1 | (
+logduration golint ./... 2>&1 | (
   grep -v "gen.go" |
     grep -v "disco.go" |
     grep -v "exported const DefaultDelayThreshold should have comment" |
@@ -41,7 +54,7 @@ golint ./... 2>&1 | (
     grep -vE "\.pb\.go:" || true
 ) | tee /dev/stderr | (! read)
 
-staticcheck -go 1.24 ./... 2>&1 | (
+logduration staticcheck -go 1.24 ./... 2>&1 | (
   grep -v "SA1019" |
     grep -v "S1007" |
     grep -v "error var Done should have name of the form ErrFoo" |

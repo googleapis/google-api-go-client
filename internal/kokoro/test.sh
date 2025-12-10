@@ -25,6 +25,20 @@ export GOOGLE_API_GO_EXPERIMENTAL_ENABLE_NEW_AUTH_LIB="true"
 # Display commands being run
 set -x
 
+# Define some utility functions
+logmsg() { echo "[$(date "+%Y-%m-%d %H:%M:%S")] $1" }
+# quick func to measure duration of a specific command
+logduration() {
+    local start_time=$(date +%s)
+    logmsg "Measuring duration for command: $*"
+    # Execute the command
+    "$@"
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+    logmsg "command completed in ${duration} seconds"
+}
+try3() { eval "$*" || eval "$*" || eval "$*"; }
+
 # cd to project dir on Kokoro instance
 cd github/google-api-go-client
 git config --global --add safe.directory "$(pwd)/./.git"
@@ -39,18 +53,16 @@ export GO111MODULE=on
 mkdir -p $GOCLOUD_HOME
 
 # Move code into $GOPATH and get dependencies
-git clone . $GOCLOUD_HOME
+logduration git clone . $GOCLOUD_HOME
 cd $GOCLOUD_HOME
-
-try3() { eval "$*" || eval "$*" || eval "$*"; }
 
 # All packages, including +build tools, are fetched.
 try3 go mod download
-./internal/kokoro/vet.sh
+logduration ./internal/kokoro/vet.sh
 
 # Testing the generator itself depends on a generation step
 cd google-api-go-generator
-go generate
+logduration go generate
 cd ..
 
 set +e # Run all tests, don't stop after the first failure.

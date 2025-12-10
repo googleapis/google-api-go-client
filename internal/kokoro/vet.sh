@@ -39,10 +39,13 @@ logmsg goimports start
 goimports -l . 2>&1 | tee /dev/stderr | (! read)
 logmsg goimports stop
 
+# Experiment: only test the "known" handwritten roots
+export MANUAL_PACKAGES="./google-api-go-generator/... ./googleapi/... ./idtoken/... ./internal/... ../iterator/... ./option/..."
+
 # Runs the linter. Regrettably the linter is very simple and does not provide the ability to exclude rules or files,
 # so we rely on inverse grepping to do this for us.
 logmsg golint start
-golint ./... 2>&1 | (
+golint ${MANUAL_PACKAGES} 2>&1 | (
   grep -v "gen.go" |
     grep -v "disco.go" |
     grep -v "exported const DefaultDelayThreshold should have comment" |
@@ -59,7 +62,7 @@ golint ./... 2>&1 | (
 ) | tee /dev/stderr | (! read)
 
 logmsg staticcheck start
-staticcheck -go 1.24 ./... 2>&1 | (
+staticcheck -go 1.24 ${MANUAL_PACKAGES} 2>&1 | (
   grep -v "SA1019" |
     grep -v "S1007" |
     grep -v "error var Done should have name of the form ErrFoo" |

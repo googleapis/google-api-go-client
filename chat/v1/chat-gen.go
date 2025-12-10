@@ -3431,7 +3431,7 @@ type GoogleAppsCardV1OpenLink struct {
 	// used by the client).
 	//   "OVERLAY" - The link opens as an overlay, such as a pop-up.
 	OpenAs string `json:"openAs,omitempty"`
-	// Url: The URL to open.
+	// Url: The URL to open. HTTP URLs are converted to HTTPS.
 	Url string `json:"url,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "OnClose") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

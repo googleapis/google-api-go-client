@@ -476,8 +476,8 @@ type Attributes struct {
 	// StructuredTitle: Structured title, for algorithmically (AI)-generated
 	// titles.
 	StructuredTitle *ProductStructuredTitle `json:"structuredTitle,omitempty"`
-	// SubscriptionCost: Number of periods (months or years) and amount of payment
-	// per period for an item with an associated subscription contract.
+	// SubscriptionCost: Number of periods (weeks, months or years) and amount of
+	// payment per period for an item with an associated subscription contract.
 	SubscriptionCost *SubscriptionCost `json:"subscriptionCost,omitempty"`
 	// SustainabilityIncentives: The list of sustainability incentive programs.
 	SustainabilityIncentives []*ProductSustainabilityIncentive `json:"sustainabilityIncentives,omitempty"`
@@ -1839,13 +1839,14 @@ type SubscriptionCost struct {
 	// Amount: The amount the buyer has to pay per subscription period.
 	Amount *Price `json:"amount,omitempty"`
 	// Period: The type of subscription period. Supported values are: * "month" *
-	// "year"
+	// "year" * "week"
 	//
 	// Possible values:
 	//   "SUBSCRIPTION_PERIOD_UNSPECIFIED" - Indicates that the subscription period
 	// is unspecified.
 	//   "MONTH" - Indicates that the subscription period is month.
 	//   "YEAR" - Indicates that the subscription period is year.
+	//   "WEEK" - Indicates that the subscription period is week.
 	Period string `json:"period,omitempty"`
 	// PeriodLength: The number of subscription periods the buyer has to pay.
 	PeriodLength int64 `json:"periodLength,omitempty,string"`

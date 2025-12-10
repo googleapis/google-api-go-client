@@ -11413,6 +11413,30 @@ func (c *EditsCommitCall) ChangesNotSentForReview(changesNotSentForReview bool) 
 	return c
 }
 
+// InProgressReviewBehaviour sets the optional parameter
+// "inProgressReviewBehaviour": The behavior of committing a new edit while a
+// submission is already in review.
+//
+// Possible values:
+//
+//	"IN_PROGRESS_REVIEW_BEHAVIOUR_UNSPECIFIED" - The behavior is not
+//
+// specified.
+//
+//	"CANCEL_IN_PROGRESS_AND_SUBMIT" - The changes in review will be canceled,
+//
+// and the new changes will be sent for review. Thus resetting the review
+// process.
+//
+//	"THROW_ERROR_IF_IN_PROGRESS" - The commit will fail with an error if there
+//
+// are changes in review. If the edit doesn't result in a new submission being
+// created then it won't throw an error even if there are changes in review.
+func (c *EditsCommitCall) InProgressReviewBehaviour(inProgressReviewBehaviour string) *EditsCommitCall {
+	c.urlParams_.Set("inProgressReviewBehaviour", inProgressReviewBehaviour)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.

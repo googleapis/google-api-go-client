@@ -1346,6 +1346,11 @@ func (s ChildLink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ClientContext: Container for various pieces of client-owned context attached
+// to a request.
+type ClientContext struct {
+}
+
 // ColumnMetadata: Metadata for a column.
 type ColumnMetadata struct {
 	// IsPrimaryKey: Indicates whether the column is a primary key column.
@@ -5931,6 +5936,9 @@ func (s ReplicaSelection) MarshalJSON() ([]byte, error) {
 
 // RequestOptions: Common request options for various APIs.
 type RequestOptions struct {
+	// ClientContext: Optional. Optional context that may be needed for some
+	// requests.
+	ClientContext *ClientContext `json:"clientContext,omitempty"`
 	// Priority: Priority for the request.
 	//
 	// Possible values:
@@ -5959,13 +5967,13 @@ type RequestOptions struct {
 	// Values that exceed this limit are truncated. Any leading underscore (_)
 	// characters are removed from the string.
 	TransactionTag string `json:"transactionTag,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Priority") to
+	// ForceSendFields is a list of field names (e.g. "ClientContext") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Priority") to include in API
+	// NullFields is a list of field names (e.g. "ClientContext") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -6365,11 +6373,10 @@ type Session struct {
 	// examples of labels.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Multiplexed: Optional. If `true`, specifies a multiplexed session. Use a
-	// multiplexed session for multiple, concurrent read-only operations. Don't use
-	// them for read-write transactions, partitioned reads, or partitioned queries.
-	// Use `sessions.create` to create multiplexed sessions. Don't use
-	// BatchCreateSessions to create a multiplexed session. You can't delete or
-	// list multiplexed sessions.
+	// multiplexed session for multiple, concurrent operations including any
+	// combination of read-only and read-write transactions. Use `sessions.create`
+	// to create multiplexed sessions. Don't use BatchCreateSessions to create a
+	// multiplexed session. You can't delete or list multiplexed sessions.
 	Multiplexed bool `json:"multiplexed,omitempty"`
 	// Name: Output only. The name of the session. This is always system-assigned.
 	Name string `json:"name,omitempty"`
@@ -6729,7 +6736,7 @@ type TransactionOptions struct {
 	// any concurrent updates that have occurred since that snapshot. Consequently,
 	// in contrast to `SERIALIZABLE` transactions, only write-write conflicts are
 	// detected in snapshot transactions. This isolation level does not support
-	// Read-only and Partitioned DML transactions. When `REPEATABLE_READ` is
+	// read-only and partitioned DML transactions. When `REPEATABLE_READ` is
 	// specified on a read-write transaction, the locking semantics default to
 	// `OPTIMISTIC`.
 	IsolationLevel string `json:"isolationLevel,omitempty"`

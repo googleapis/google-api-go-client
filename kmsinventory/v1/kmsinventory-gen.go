@@ -403,8 +403,11 @@ type GoogleCloudKmsV1CryptoKey struct {
 	// CryptoKey reside and where all related cryptographic operations are
 	// performed. Only applicable if CryptoKeyVersions have a ProtectionLevel of
 	// EXTERNAL_VPC, with the resource name in the format
-	// `projects/*/locations/*/ekmConnections/*`. Note, this list is non-exhaustive
-	// and may apply to additional ProtectionLevels in the future.
+	// `projects/*/locations/*/ekmConnections/*`. Only applicable if
+	// CryptoKeyVersions have a ProtectionLevel of HSM_SINGLE_TENANT, with the
+	// resource name in the format
+	// `projects/*/locations/*/singleTenantHsmInstances/*`. Note, this list is
+	// non-exhaustive and may apply to additional ProtectionLevels in the future.
 	CryptoKeyBackend string `json:"cryptoKeyBackend,omitempty"`
 	// DestroyScheduledDuration: Immutable. The period of time that versions of
 	// this key spend in the DESTROY_SCHEDULED state before transitioning to
@@ -570,6 +573,15 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
 	// hash-based digital signature algorithm, at security level 1. Randomized
 	// pre-hash version supporting SHA256 digests.
+	//   "PQ_SIGN_ML_DSA_44_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 1. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_65_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 3. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 5. Randomized version
+	// supporting externally-computed message representatives.
 	Algorithm string `json:"algorithm,omitempty"`
 	// Attestation: Output only. Statement that was generated and signed by the HSM
 	// at key creation time. Use this statement to verify attributes of the key as
@@ -623,6 +635,8 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// ReimportEligible: Output only. Whether or not this key version is eligible
 	// for reimport, by being specified as a target in
@@ -764,6 +778,15 @@ type GoogleCloudKmsV1CryptoKeyVersionTemplate struct {
 	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
 	// hash-based digital signature algorithm, at security level 1. Randomized
 	// pre-hash version supporting SHA256 digests.
+	//   "PQ_SIGN_ML_DSA_44_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 1. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_65_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 3. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 5. Randomized version
+	// supporting externally-computed message representatives.
 	Algorithm string `json:"algorithm,omitempty"`
 	// ProtectionLevel: ProtectionLevel to use when creating a CryptoKeyVersion
 	// based on this template. Immutable. Defaults to SOFTWARE.
@@ -775,6 +798,8 @@ type GoogleCloudKmsV1CryptoKeyVersionTemplate struct {
 	//   "EXTERNAL" - Crypto operations are performed by an external key manager.
 	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
 	// backend.
+	//   "HSM_SINGLE_TENANT" - Crypto operations are performed in a single-tenant
+	// HSM.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Algorithm") to
 	// unconditionally include in API requests. By default, fields with empty or

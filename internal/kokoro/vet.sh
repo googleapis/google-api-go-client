@@ -33,12 +33,16 @@ git diff go.sum | tee /dev/stderr | (! read)
 # Easier to debug CI.
 pwd
 
-logduration gofmt -s -d -l . 2>&1 | tee /dev/stderr | (! read)
-logduration goimports -l . 2>&1 | tee /dev/stderr | (! read)
+logmsg gofmt start
+gofmt -s -d -l . 2>&1 | tee /dev/stderr | (! read)
+logmsg goimports start
+goimports -l . 2>&1 | tee /dev/stderr | (! read)
+logmsg goimports stop
 
 # Runs the linter. Regrettably the linter is very simple and does not provide the ability to exclude rules or files,
 # so we rely on inverse grepping to do this for us.
-logduration golint ./... 2>&1 | (
+logmsg golint start
+golint ./... 2>&1 | (
   grep -v "gen.go" |
     grep -v "disco.go" |
     grep -v "exported const DefaultDelayThreshold should have comment" |
@@ -54,9 +58,11 @@ logduration golint ./... 2>&1 | (
     grep -vE "\.pb\.go:" || true
 ) | tee /dev/stderr | (! read)
 
-logduration staticcheck -go 1.24 ./... 2>&1 | (
+logmsg staticcheck start
+staticcheck -go 1.24 ./... 2>&1 | (
   grep -v "SA1019" |
     grep -v "S1007" |
     grep -v "error var Done should have name of the form ErrFoo" |
     grep -v "examples" || true
 ) | tee /dev/stderr | (! read)
+logmsg done with vet

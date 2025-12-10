@@ -45,7 +45,7 @@ export MANUAL_PACKAGES="./google-api-go-generator/... ./googleapi/... ./idtoken/
 # Runs the linter. Regrettably the linter is very simple and does not provide the ability to exclude rules or files,
 # so we rely on inverse grepping to do this for us.
 logmsg golint start
-golint ${MANUAL_PACKAGES} 2>&1 | (
+golint ./... 2>&1 | (
   grep -v "gen.go" |
     grep -v "disco.go" |
     grep -v "exported const DefaultDelayThreshold should have comment" |

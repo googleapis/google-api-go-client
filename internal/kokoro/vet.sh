@@ -40,7 +40,7 @@ goimports -l . 2>&1 | tee /dev/stderr | (! read)
 logmsg goimports stop
 
 # Experiment: only test the "known" handwritten roots
-export MANUAL_PACKAGES="./google-api-go-generator/... ./googleapi/... ./idtoken/... ./internal/... ../iterator/... ./option/..."
+export MANUAL_PACKAGES="./google-api-go-generator/... ./googleapi/... ./idtoken/... ./internal/... ./iterator/... ./option/..."
 
 # Runs the linter. Regrettably the linter is very simple and does not provide the ability to exclude rules or files,
 # so we rely on inverse grepping to do this for us.

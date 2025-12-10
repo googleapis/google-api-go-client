@@ -26,7 +26,7 @@ export GOOGLE_API_GO_EXPERIMENTAL_ENABLE_NEW_AUTH_LIB="true"
 set -x
 
 # Define some utility functions
-logmsg() { echo "[$(date "+%Y-%m-%d %H:%M:%S")] $1" }
+logmsg() { echo "[$(date "+%Y-%m-%d %H:%M:%S")] $1"; }
 # quick func to measure duration of a specific command
 logduration() {
     local start_time=$(date +%s)

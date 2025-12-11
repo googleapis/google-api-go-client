@@ -1418,6 +1418,7 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// Feature Store.
 	//   "FEATURE_VIEW" - Feature View resource in Vertex AI Feature Store.
 	//   "FEATURE_GROUP" - Feature Group resource in Vertex AI Feature Store.
+	//   "GRAPH" - An entry type for a graph.
 	Type string `json:"type,omitempty"`
 	// UsageSignal: Resource usage statistics.
 	UsageSignal *GoogleCloudDatacatalogV1UsageSignal `json:"usageSignal,omitempty"`
@@ -1638,14 +1639,15 @@ type GoogleCloudDatacatalogV1GraphSpecGraphElementTable struct {
 	// name or a view name that is used for graph element input source. E.g.
 	// `Person` table or `PersonView` view.
 	DataSource string `json:"dataSource,omitempty"`
-	// DestinationNodeReference: Optional. Only applies to `kind = EDGE`.
-	DestinationNodeReference string `json:"destinationNodeReference,omitempty"`
-	// DynamicLabelEnabled: Optional. If true, the graph element has a dynamic
-	// label in schemaless model.
-	DynamicLabelEnabled bool `json:"dynamicLabelEnabled,omitempty"`
-	// DynamicPropertiesEnabled: Optional. If true, the graph element has dynamic
-	// properties in schemaless model.
-	DynamicPropertiesEnabled bool `json:"dynamicPropertiesEnabled,omitempty"`
+	// DestinationNodeReference: Optional. The destination node reference of the
+	// edge.
+	DestinationNodeReference *GoogleCloudDatacatalogV1GraphSpecGraphElementTableGraphNodeReference `json:"destinationNodeReference,omitempty"`
+	// DynamicLabelColumn: Optional. If set, this is the input column for dynamic
+	// label in schemaless data model.
+	DynamicLabelColumn string `json:"dynamicLabelColumn,omitempty"`
+	// DynamicPropertiesColumn: Optional. If set, this is the input column for
+	// dynamic properties in schemaless data model.
+	DynamicPropertiesColumn string `json:"dynamicPropertiesColumn,omitempty"`
 	// ElementKeys: Required. The name of the keys of the elements in the table.
 	ElementKeys []string `json:"elementKeys,omitempty"`
 	// InputSource: Required. The input source of the graph element.
@@ -1665,12 +1667,8 @@ type GoogleCloudDatacatalogV1GraphSpecGraphElementTable struct {
 	// LabelAndProperties: Required. The labels and their properties for the graph
 	// element.
 	LabelAndProperties []*GoogleCloudDatacatalogV1GraphSpecGraphElementTableLabelAndProperties `json:"labelAndProperties,omitempty"`
-	// SourceNodeReference: Optional. Only applies to `kind = EDGE`. The reference
-	// to the source node of the edge. This name must be a valid `alias` of a node
-	// element in the same graph. Example, `Person` node can be a source node of an
-	// edge element `Person_to_Address`. Similar rule applies to
-	// `destination_node_reference`.
-	SourceNodeReference string `json:"sourceNodeReference,omitempty"`
+	// SourceNodeReference: Optional. The source node reference of the edge.
+	SourceNodeReference *GoogleCloudDatacatalogV1GraphSpecGraphElementTableGraphNodeReference `json:"sourceNodeReference,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Alias") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1686,6 +1684,38 @@ type GoogleCloudDatacatalogV1GraphSpecGraphElementTable struct {
 
 func (s GoogleCloudDatacatalogV1GraphSpecGraphElementTable) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1GraphSpecGraphElementTable
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1GraphSpecGraphElementTableGraphNodeReference: A
+// reference to a source or destination node in a graph edge.
+type GoogleCloudDatacatalogV1GraphSpecGraphElementTableGraphNodeReference struct {
+	// EdgeTableColumns: Required. The referencing columns in the edge table. The
+	// size of `edge_table_columns` must be equal to the size of
+	// `node_table_columns`.
+	EdgeTableColumns []string `json:"edgeTableColumns,omitempty"`
+	// NodeAlias: Required. The reference to the source/destination node of the
+	// edge. This name must be a valid `alias` of a node element in the same graph.
+	// Example, `Person` node can be a source node name of an edge element
+	// `Person_to_Address`.
+	NodeAlias string `json:"nodeAlias,omitempty"`
+	// NodeTableColumns: Required. The referenced columns of the source node table.
+	NodeTableColumns []string `json:"nodeTableColumns,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EdgeTableColumns") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EdgeTableColumns") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDatacatalogV1GraphSpecGraphElementTableGraphNodeReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1GraphSpecGraphElementTableGraphNodeReference
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

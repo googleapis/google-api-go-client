@@ -3940,6 +3940,9 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
 	// limit of 1024 characters.
 	Name string `json:"name,omitempty"`
+	// NaturalLanguageQueryUnderstandingConfig: Optional. Configuration for Natural
+	// Language Query Understanding.
+	NaturalLanguageQueryUnderstandingConfig *GoogleCloudDiscoveryengineV1NaturalLanguageQueryUnderstandingConfig `json:"naturalLanguageQueryUnderstandingConfig,omitempty"`
 	// ServingConfigDataStore: Optional. Stores serving config at DataStore level.
 	ServingConfigDataStore *GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore `json:"servingConfigDataStore,omitempty"`
 	// SolutionTypes: The solutions that the data store enrolls. Available
@@ -5592,6 +5595,36 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1LicenseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1LicenseConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1NaturalLanguageQueryUnderstandingConfig:
+// Configuration for Natural Language Query Understanding.
+type GoogleCloudDiscoveryengineV1NaturalLanguageQueryUnderstandingConfig struct {
+	// Mode: Mode of Natural Language Query Understanding. If this field is unset,
+	// the behavior defaults to
+	// NaturalLanguageQueryUnderstandingConfig.Mode.DISABLED.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default value.
+	//   "DISABLED" - Natural Language Query Understanding is disabled.
+	//   "ENABLED" - Natural Language Query Understanding is enabled.
+	Mode string `json:"mode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Mode") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1NaturalLanguageQueryUnderstandingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1NaturalLanguageQueryUnderstandingConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7755,6 +7788,8 @@ type GoogleCloudDiscoveryengineV1alphaAgent struct {
 	// LanguageCode: Optional. The code of the language of the text in the
 	// description, display_name and starter_prompts fields.
 	LanguageCode string `json:"languageCode,omitempty"`
+	// ManagedAgentDefinition: Optional. The behavior of the Google managed agent.
+	ManagedAgentDefinition *GoogleCloudDiscoveryengineV1alphaManagedAgentDefinition `json:"managedAgentDefinition,omitempty"`
 	// Name: Identifier. Resource name of the agent. Format:
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}/assistants/{assistant}/agents/{agent}`
@@ -19345,6 +19380,11 @@ func (s GoogleCloudDiscoveryengineV1alphaListUserLicensesResponse) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaManagedAgentDefinition: Stores the
+// definition of a Google managed agent.
+type GoogleCloudDiscoveryengineV1alphaManagedAgentDefinition struct {
+}
+
 // GoogleCloudDiscoveryengineV1alphaMediaInfo: Media-specific user event
 // information.
 type GoogleCloudDiscoveryengineV1alphaMediaInfo struct {
@@ -22021,11 +22061,13 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// The format should be the same as UserEvent.PageInfo.page_category. This
 	// field is the equivalent of the query for browse (navigation) queries. It's
 	// used by the browse model when the query is empty. If the field is empty, it
-	// will not be used by the browse model. To represent full path of a category,
-	// use '>' character to separate different hierarchies. If '>' is part of the
-	// category name, replace it with other character(s). For example, `Graphics
-	// Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents one
-	// level, can be rewritten as `Graphics Cards > RTX_4090 > Founders Edition`
+	// will not be used by the browse model. If the field contains more than one
+	// element, only the first element will be used. To represent full path of a
+	// category, use '>' character to separate different hierarchies. If '>' is
+	// part of the category name, replace it with other character(s). For example,
+	// `Graphics Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents
+	// one level, can be rewritten as `Graphics Cards > RTX_4090 > Founders
+	// Edition`
 	PageCategories []string `json:"pageCategories,omitempty"`
 	// PageSize: Maximum number of Documents to return. The maximum allowed value
 	// depends on the data type. Values above the maximum value are coerced to the
@@ -26106,7 +26148,7 @@ type GoogleCloudDiscoveryengineV1alphaUserEvent struct {
 	// Finished or stopped midway through a video, song, etc. Custom conversion
 	// value: * `conversion`: Customer defined conversion event.
 	EventType string `json:"eventType,omitempty"`
-	// Filter: The filter syntax consists of an expression language for
+	// Filter: Optional. The filter syntax consists of an expression language for
 	// constructing a predicate from one or more fields of the documents being
 	// filtered. One example is for `search` events, the associated SearchRequest
 	// may contain a filter expression in SearchRequest.filter conforming to
@@ -30691,11 +30733,13 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// The format should be the same as UserEvent.PageInfo.page_category. This
 	// field is the equivalent of the query for browse (navigation) queries. It's
 	// used by the browse model when the query is empty. If the field is empty, it
-	// will not be used by the browse model. To represent full path of a category,
-	// use '>' character to separate different hierarchies. If '>' is part of the
-	// category name, replace it with other character(s). For example, `Graphics
-	// Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents one
-	// level, can be rewritten as `Graphics Cards > RTX_4090 > Founders Edition`
+	// will not be used by the browse model. If the field contains more than one
+	// element, only the first element will be used. To represent full path of a
+	// category, use '>' character to separate different hierarchies. If '>' is
+	// part of the category name, replace it with other character(s). For example,
+	// `Graphics Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents
+	// one level, can be rewritten as `Graphics Cards > RTX_4090 > Founders
+	// Edition`
 	PageCategories []string `json:"pageCategories,omitempty"`
 	// PageSize: Maximum number of Documents to return. The maximum allowed value
 	// depends on the data type. Values above the maximum value are coerced to the
@@ -45826,6 +45870,107 @@ func (c *ProjectsLocationsCollectionsDataStoresServingConfigsAnswerCall) Do(opts
 	return ret, nil
 }
 
+type ProjectsLocationsCollectionsDataStoresServingConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a ServingConfig. Returns a NOT_FOUND error if the
+// ServingConfig does not exist.
+//
+//   - name: The resource name of the ServingConfig to delete. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}/servingConfigs/{serving_config_id}`.
+func (r *ProjectsLocationsCollectionsDataStoresServingConfigsService) Delete(name string) *ProjectsLocationsCollectionsDataStoresServingConfigsDeleteCall {
+	c := &ProjectsLocationsCollectionsDataStoresServingConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresServingConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresServingConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.servingConfigs.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.servingConfigs.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.servingConfigs.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsCollectionsDataStoresServingConfigsGetCall struct {
 	s            *Service
 	name         string
@@ -56803,6 +56948,107 @@ func (c *ProjectsLocationsCollectionsEnginesServingConfigsAnswerCall) Do(opts ..
 	return ret, nil
 }
 
+type ProjectsLocationsCollectionsEnginesServingConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a ServingConfig. Returns a NOT_FOUND error if the
+// ServingConfig does not exist.
+//
+//   - name: The resource name of the ServingConfig to delete. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}/servingConfigs/{serving_config_id}`.
+func (r *ProjectsLocationsCollectionsEnginesServingConfigsService) Delete(name string) *ProjectsLocationsCollectionsEnginesServingConfigsDeleteCall {
+	c := &ProjectsLocationsCollectionsEnginesServingConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesServingConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesServingConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.servingConfigs.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.servingConfigs.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.servingConfigs.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsCollectionsEnginesServingConfigsGetCall struct {
 	s            *Service
 	name         string
@@ -65429,6 +65675,107 @@ func (c *ProjectsLocationsDataStoresServingConfigsAnswerCall) Do(opts ...googlea
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.servingConfigs.answer", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataStoresServingConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a ServingConfig. Returns a NOT_FOUND error if the
+// ServingConfig does not exist.
+//
+//   - name: The resource name of the ServingConfig to delete. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}/servingConfigs/{serving_config_id}`.
+func (r *ProjectsLocationsDataStoresServingConfigsService) Delete(name string) *ProjectsLocationsDataStoresServingConfigsDeleteCall {
+	c := &ProjectsLocationsDataStoresServingConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresServingConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresServingConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresServingConfigsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDataStoresServingConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresServingConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresServingConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.servingConfigs.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.servingConfigs.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDataStoresServingConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.servingConfigs.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

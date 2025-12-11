@@ -1445,6 +1445,37 @@ func (s ErrorHandler) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExportAppImageRequest: Request message for Versions.ExportAppImage.
+type ExportAppImageRequest struct {
+	// DestinationRepository: Optional. The full resource name of the AR repository
+	// to export to. Format:
+	// projects/{project}/locations/{location}/repositories/{repository} If not
+	// specified, defaults to
+	// projects/{project}/locations/{location}/repositories/gae-standard in the
+	// same region as the app. The default repository will be created if it does
+	// not exist.
+	DestinationRepository string `json:"destinationRepository,omitempty"`
+	// ServiceAccount: Optional. Optional: A service account to use for
+	// authenticating to Artifact Registry.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestinationRepository") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestinationRepository") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExportAppImageRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportAppImageRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FeatureSettings: The feature specific settings to be used in the
 // application. These define behaviors that are user configurable.
 type FeatureSettings struct {
@@ -2015,8 +2046,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets ListOperationsRequest.return_partial_success and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -6942,8 +6973,8 @@ func (c *AppsOperationsListCall) PageToken(pageToken string) *AppsOperationsList
 // When set to true, operations that are reachable are returned as normal, and
 // those that are unreachable are returned in the
 // ListOperationsResponse.unreachable field.This can only be true when reading
-// across collections e.g. when parent is set to
-// "projects/example/locations/-".This field is not by default supported and
+// across collections. For example, when parent is set to
+// "projects/example/locations/-".This field is not supported by default and
 // will result in an UNIMPLEMENTED error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *AppsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *AppsOperationsListCall {
@@ -7789,6 +7820,118 @@ func (c *AppsServicesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Oper
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.apps.services.versions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AppsServicesVersionsExportAppImageCall struct {
+	s                     *APIService
+	appsId                string
+	servicesId            string
+	versionsId            string
+	exportappimagerequest *ExportAppImageRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// ExportAppImage: Exports a user image to Artifact Registry.
+//
+//   - appsId: Part of `name`.  Name of the App Engine version resource. Format:
+//     apps/{app}/services/{service}/versions/{version}.
+//   - servicesId: Part of `name`. See documentation of `appsId`.
+//   - versionsId: Part of `name`. See documentation of `appsId`.
+func (r *AppsServicesVersionsService) ExportAppImage(appsId string, servicesId string, versionsId string, exportappimagerequest *ExportAppImageRequest) *AppsServicesVersionsExportAppImageCall {
+	c := &AppsServicesVersionsExportAppImageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	c.servicesId = servicesId
+	c.versionsId = versionsId
+	c.exportappimagerequest = exportappimagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AppsServicesVersionsExportAppImageCall) Fields(s ...googleapi.Field) *AppsServicesVersionsExportAppImageCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AppsServicesVersionsExportAppImageCall) Context(ctx context.Context) *AppsServicesVersionsExportAppImageCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AppsServicesVersionsExportAppImageCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppsServicesVersionsExportAppImageCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.exportappimagerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/apps/{appsId}/services/{servicesId}/versions/{versionsId}:exportAppImage")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId":     c.appsId,
+		"servicesId": c.servicesId,
+		"versionsId": c.versionsId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "appengine.apps.services.versions.exportAppImage", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.apps.services.versions.exportAppImage" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AppsServicesVersionsExportAppImageCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.apps.services.versions.exportAppImage", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -11022,6 +11165,126 @@ func (c *ProjectsLocationsApplicationsServicesVersionsDeleteCall) Do(opts ...goo
 	return ret, nil
 }
 
+type ProjectsLocationsApplicationsServicesVersionsExportAppImageCall struct {
+	s                     *APIService
+	projectsId            string
+	locationsId           string
+	applicationsId        string
+	servicesId            string
+	versionsId            string
+	exportappimagerequest *ExportAppImageRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// ExportAppImage: Exports a user image to Artifact Registry.
+//
+//   - applicationsId: Part of `name`. See documentation of `projectsId`.
+//   - locationsId: Part of `name`. See documentation of `projectsId`.
+//   - projectsId: Part of `name`.  Name of the App Engine version resource.
+//     Format: apps/{app}/services/{service}/versions/{version}.
+//   - servicesId: Part of `name`. See documentation of `projectsId`.
+//   - versionsId: Part of `name`. See documentation of `projectsId`.
+func (r *ProjectsLocationsApplicationsServicesVersionsService) ExportAppImage(projectsId string, locationsId string, applicationsId string, servicesId string, versionsId string, exportappimagerequest *ExportAppImageRequest) *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall {
+	c := &ProjectsLocationsApplicationsServicesVersionsExportAppImageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.applicationsId = applicationsId
+	c.servicesId = servicesId
+	c.versionsId = versionsId
+	c.exportappimagerequest = exportappimagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall) Context(ctx context.Context) *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.exportappimagerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/services/{servicesId}/versions/{versionsId}:exportAppImage")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":     c.projectsId,
+		"locationsId":    c.locationsId,
+		"applicationsId": c.applicationsId,
+		"servicesId":     c.servicesId,
+		"versionsId":     c.versionsId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.services.versions.exportAppImage", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.projects.locations.applications.services.versions.exportAppImage" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.services.versions.exportAppImage", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsApplicationsServicesVersionsPatchCall struct {
 	s              *APIService
 	projectsId     string
@@ -11345,8 +11608,8 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // When set to true, operations that are reachable are returned as normal, and
 // those that are unreachable are returned in the
 // ListOperationsResponse.unreachable field.This can only be true when reading
-// across collections e.g. when parent is set to
-// "projects/example/locations/-".This field is not by default supported and
+// across collections. For example, when parent is set to
+// "projects/example/locations/-".This field is not supported by default and
 // will result in an UNIMPLEMENTED error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

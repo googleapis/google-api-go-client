@@ -2764,18 +2764,18 @@ func (s PermissionList) MarshalJSON() ([]byte, error) {
 // `replies.update`) require a `replyId`. Use the `replies.list` method to
 // retrieve the ID for a reply.
 type Reply struct {
-	// Action: The action the reply performed to the parent comment. Valid values
-	// are: * `resolve` * `reopen`
+	// Action: The action the reply performed to the parent comment. The supported
+	// values are: * `resolve` * `reopen`
 	Action string `json:"action,omitempty"`
 	// AssigneeEmailAddress: Output only. The email address of the user assigned to
 	// this comment. If no user is assigned, the field is unset.
 	AssigneeEmailAddress string `json:"assigneeEmailAddress,omitempty"`
 	// Author: Output only. The author of the reply. The author's email address and
-	// permission ID will not be populated.
+	// permission ID won't be populated.
 	Author *User `json:"author,omitempty"`
 	// Content: The plain text content of the reply. This field is used for setting
-	// the content, while `htmlContent` should be displayed. This is required on
-	// creates if no `action` is specified.
+	// the content, while `htmlContent` should be displayed. This field is required
+	// by the `create` method if no `action` value is specified.
 	Content string `json:"content,omitempty"`
 	// CreatedTime: The time at which the reply was created (RFC 3339 date-time).
 	CreatedTime string `json:"createdTime,omitempty"`
@@ -2827,8 +2827,8 @@ type ReplyList struct {
 	// for several hours. However, if new items are added or removed, your expected
 	// results might differ.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Replies: The list of replies. If nextPageToken is populated, then this list
-	// may be incomplete and an additional page of results should be fetched.
+	// Replies: The list of replies. If `nextPageToken` is populated, then this
+	// list may be incomplete and an additional page of results should be fetched.
 	Replies []*Reply `json:"replies,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -9319,7 +9319,9 @@ type RepliesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a reply to a comment.
+// Create: Creates a reply to a comment. For more information, see Manage
+// comments and replies
+// (https://developers.google.com/workspace/drive/api/guides/manage-comments).
 //
 // - commentId: The ID of the comment.
 // - fileId: The ID of the file.
@@ -9426,7 +9428,9 @@ type RepliesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a reply.
+// Delete: Deletes a reply. For more information, see Manage comments and
+// replies
+// (https://developers.google.com/workspace/drive/api/guides/manage-comments).
 //
 // - commentId: The ID of the comment.
 // - fileId: The ID of the file.
@@ -9508,7 +9512,9 @@ type RepliesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a reply by ID.
+// Get: Gets a reply by ID. For more information, see Manage comments and
+// replies
+// (https://developers.google.com/workspace/drive/api/guides/manage-comments).
 //
 // - commentId: The ID of the comment.
 // - fileId: The ID of the file.
@@ -9522,7 +9528,7 @@ func (r *RepliesService) Get(fileId string, commentId string, replyId string) *R
 }
 
 // IncludeDeleted sets the optional parameter "includeDeleted": Whether to
-// return deleted replies. Deleted replies will not include their original
+// return deleted replies. Deleted replies don't include their original
 // content.
 func (c *RepliesGetCall) IncludeDeleted(includeDeleted bool) *RepliesGetCall {
 	c.urlParams_.Set("includeDeleted", fmt.Sprint(includeDeleted))
@@ -9632,7 +9638,9 @@ type RepliesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists a comment's replies.
+// List: Lists a comment's replies. For more information, see Manage comments
+// and replies
+// (https://developers.google.com/workspace/drive/api/guides/manage-comments).
 //
 // - commentId: The ID of the comment.
 // - fileId: The ID of the file.
@@ -9644,7 +9652,7 @@ func (r *RepliesService) List(fileId string, commentId string) *RepliesListCall 
 }
 
 // IncludeDeleted sets the optional parameter "includeDeleted": Whether to
-// include deleted replies. Deleted replies will not include their original
+// include deleted replies. Deleted replies don't include their original
 // content.
 func (c *RepliesListCall) IncludeDeleted(includeDeleted bool) *RepliesListCall {
 	c.urlParams_.Set("includeDeleted", fmt.Sprint(includeDeleted))
@@ -9660,7 +9668,7 @@ func (c *RepliesListCall) PageSize(pageSize int64) *RepliesListCall {
 
 // PageToken sets the optional parameter "pageToken": The token for continuing
 // a previous list request on the next page. This should be set to the value of
-// 'nextPageToken' from the previous response.
+// `nextPageToken` from the previous response.
 func (c *RepliesListCall) PageToken(pageToken string) *RepliesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -9790,7 +9798,9 @@ type RepliesUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a reply with patch semantics.
+// Update: Updates a reply with patch semantics. For more information, see
+// Manage comments and replies
+// (https://developers.google.com/workspace/drive/api/guides/manage-comments).
 //
 // - commentId: The ID of the comment.
 // - fileId: The ID of the file.

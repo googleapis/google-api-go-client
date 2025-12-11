@@ -1848,7 +1848,7 @@ type GoogleCloudAssetV1CustomConstraint struct {
 	//   "DENY" - Deny action type.
 	ActionType string `json:"actionType,omitempty"`
 	// Condition: Organization Policy condition/expression. For example:
-	// `resource.instanceName.matches("[production|test]_.*_(\d)+")'` or,
+	// `resource.instanceName.matches("(production|test)_(.+_)?[\d]+")'` or,
 	// `resource.management.auto_upgrade == true`
 	Condition string `json:"condition,omitempty"`
 	// Description: Detailed information about this custom policy constraint.

@@ -6,6 +6,7 @@ package gensupport
 
 import (
 	"bytes"
+	"hash/crc32"
 	"io"
 
 	"google.golang.org/api/googleapi"
@@ -21,11 +22,22 @@ type MediaBuffer struct {
 
 	// The absolute position of chunk in the underlying media.
 	off int64
+	// Calculate the checksum of all chunks when chunks are streamed out of media.
+	fullObjectChecksum  uint32
+	disableAutoChecksum bool
 }
 
+var (
+	crc32cTable = crc32.MakeTable(crc32.Castagnoli)
+)
+
 // NewMediaBuffer initializes a MediaBuffer.
-func NewMediaBuffer(media io.Reader, chunkSize int) *MediaBuffer {
-	return &MediaBuffer{media: media, chunk: make([]byte, 0, chunkSize)}
+func NewMediaBuffer(media io.Reader, chunkSize int, disableAutoChecksum bool) *MediaBuffer {
+	return &MediaBuffer{
+		media:               media,
+		chunk:               make([]byte, 0, chunkSize),
+		disableAutoChecksum: disableAutoChecksum,
+	}
 }
 
 // Chunk returns the current buffered chunk, the offset in the underlying media
@@ -52,6 +64,9 @@ func (mb *MediaBuffer) loadChunk() error {
 		read += n
 	}
 	mb.chunk = mb.chunk[:read]
+	if !mb.disableAutoChecksum {
+		mb.fullObjectChecksum = crc32.Update(mb.fullObjectChecksum, crc32cTable, mb.chunk)
+	}
 	return err
 }
 

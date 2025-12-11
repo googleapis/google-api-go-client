@@ -6,6 +6,7 @@ package gensupport
 
 import (
 	"bytes"
+	"hash/crc32"
 	"io"
 	"reflect"
 	"testing"
@@ -81,7 +82,7 @@ func TestChunking(t *testing.T) {
 				r = iotest.OneByteReader(r)
 			}
 
-			mb := NewMediaBuffer(r, tc.chunkSize)
+			mb := NewMediaBuffer(r, tc.chunkSize, false)
 			var gotErr error
 			got := []string{}
 			for {
@@ -113,7 +114,7 @@ func TestChunking(t *testing.T) {
 
 func TestChunkCanBeReused(t *testing.T) {
 	er := &errReader{buf: []byte("abcdefg")}
-	mb := NewMediaBuffer(er, 3)
+	mb := NewMediaBuffer(er, 3, false)
 
 	// expectChunk reads a chunk and checks that it got what was wanted.
 	expectChunk := func(want string, wantErr error) {
@@ -140,7 +141,7 @@ func TestChunkCanBeReused(t *testing.T) {
 
 func TestPos(t *testing.T) {
 	er := &errReader{buf: []byte("abcdefg")}
-	mb := NewMediaBuffer(er, 3)
+	mb := NewMediaBuffer(er, 3, false)
 
 	expectChunkAtOffset := func(want int64, wantErr error) {
 		_, off, _, err := mb.Chunk()
@@ -291,5 +292,26 @@ func TestAdapter(t *testing.T) {
 		// reused and read from the beginning.
 		to = ReaderAtToReader(tc.from, int64(len(data)))
 		checkConversion(to, tc.wantTyper)
+	}
+}
+
+func TestChecksum(t *testing.T) {
+	data := "abcdefg"
+	mb := NewMediaBuffer(bytes.NewReader([]byte(data)), 3, false)
+	for {
+		_, err := getChunkAsString(t, mb)
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			t.Fatalf("getChunkAsString() error: %v", err)
+		}
+		mb.Next()
+	}
+
+	// The CRC32C checksum of "abcdefg" is 0x45a116f3.
+	want := crc32.Checksum([]byte(data), crc32cTable)
+	if got := mb.fullObjectChecksum; got != want {
+		t.Errorf("mb.fullObjectChecksum = %d; want %d", got, want)
 	}
 }

@@ -174,7 +174,7 @@ func TestInterruptedTransferChunks(t *testing.T) {
 			pr := progressRecorder{}
 			rx := &ResumableUpload{
 				Client:    &http.Client{Transport: tr},
-				Media:     NewMediaBuffer(media, tc.chunkSize),
+				Media:     NewMediaBuffer(media, tc.chunkSize, false),
 				MediaType: "text/plain",
 				Callback:  pr.ProgressUpdate,
 			}
@@ -226,7 +226,7 @@ func TestCancelUploadFast(t *testing.T) {
 	pr := progressRecorder{}
 	rx := &ResumableUpload{
 		Client:    &http.Client{Transport: tr},
-		Media:     NewMediaBuffer(media, chunkSize),
+		Media:     NewMediaBuffer(media, chunkSize, false),
 		MediaType: "text/plain",
 		Callback:  pr.ProgressUpdate,
 	}
@@ -279,7 +279,7 @@ func TestCancelUploadBasic(t *testing.T) {
 
 	rx := &ResumableUpload{
 		Client:    &http.Client{Transport: tr},
-		Media:     NewMediaBuffer(media, chunkSize),
+		Media:     NewMediaBuffer(media, chunkSize, false),
 		MediaType: "text/plain",
 		Callback:  pr.ProgressUpdate,
 	}
@@ -344,7 +344,7 @@ func TestRetry_EachChunkHasItsOwnRetryDeadline(t *testing.T) {
 
 	rx := &ResumableUpload{
 		Client:             &http.Client{Transport: tr},
-		Media:              NewMediaBuffer(media, chunkSize),
+		Media:              NewMediaBuffer(media, chunkSize, false),
 		MediaType:          "text/plain",
 		Callback:           func(int64) {},
 		ChunkRetryDeadline: 5 * time.Second,
@@ -443,7 +443,7 @@ func TestChunkTransferTimeout(t *testing.T) {
 
 			rx := &ResumableUpload{
 				Client:               &http.Client{Transport: transport},
-				Media:                NewMediaBuffer(media, len(data)), // Chunk size is the whole payload
+				Media:                NewMediaBuffer(media, len(data), false), // Chunk size is the whole payload
 				MediaType:            "text/plain",
 				ChunkTransferTimeout: tc.chunkTransferTimeout,
 				ChunkRetryDeadline:   100 * time.Millisecond,
@@ -523,7 +523,7 @@ func TestMediaError(t *testing.T) {
 
 	rx := &ResumableUpload{
 		Client:    &http.Client{Transport: tr},
-		Media:     NewMediaBuffer(media, chunkSize),
+		Media:     NewMediaBuffer(media, chunkSize, false),
 		MediaType: "text/plain",
 	}
 
@@ -562,7 +562,7 @@ func TestNonRetryableError(t *testing.T) {
 
 	rx := &ResumableUpload{
 		Client:    &http.Client{Transport: tr},
-		Media:     NewMediaBuffer(media, chunkSize),
+		Media:     NewMediaBuffer(media, chunkSize, false),
 		MediaType: "text/plain",
 	}
 
@@ -610,7 +610,7 @@ func TestOverallUploadTimeout(t *testing.T) {
 
 	rx := &ResumableUpload{
 		Client:    &http.Client{Transport: tr},
-		Media:     NewMediaBuffer(media, chunkSize),
+		Media:     NewMediaBuffer(media, chunkSize, false),
 		MediaType: "text/plain",
 	}
 

@@ -964,10 +964,11 @@ func (s ConnectGcpConfig) MarshalJSON() ([]byte, error) {
 // ConnectNetworkConfig: The configuration of a Virtual Private Cloud (VPC)
 // network that can access the Kafka Connect cluster.
 type ConnectNetworkConfig struct {
-	// AdditionalSubnets: Optional. Additional subnets may be specified. They may
-	// be in another region, but must be in the same VPC network. The Connect
-	// workers can communicate with network endpoints in either the primary or
-	// additional subnets.
+	// AdditionalSubnets: Optional. Deprecated: Managed Kafka Connect clusters can
+	// now reach any endpoint accessible from the primary subnet without the need
+	// to define additional subnets. Please see
+	// https://cloud.google.com/managed-service-for-apache-kafka/docs/connect-cluster/create-connect-cluster#worker-subnet
+	// for more information.
 	AdditionalSubnets []string `json:"additionalSubnets,omitempty"`
 	// DnsDomainNames: Optional. Additional DNS domain names from the subnet's
 	// network to be made visible to the Connect Cluster. When using MirrorMaker2,
@@ -4375,6 +4376,28 @@ func (c *ProjectsLocationsClustersConsumerGroupsListCall) PageSize(pageSize int6
 // `ListConsumerGroups` must match the call that provided the page token.
 func (c *ProjectsLocationsClustersConsumerGroupsListCall) PageToken(pageToken string) *ProjectsLocationsClustersConsumerGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies the view (BASIC or FULL)
+// of the ConsumerGroup resource to be returned in the response. Defaults to
+// FULL view.
+//
+// Possible values:
+//
+//	"CONSUMER_GROUP_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
+// will default to the FULL view.
+//
+//	"CONSUMER_GROUP_VIEW_BASIC" - Include the name of the ConsumerGroup. This
+//
+// hides partition and topic metadata.
+//
+//	"CONSUMER_GROUP_VIEW_FULL" - Include everything, including partition and
+//
+// topic metadata. This is the default value.
+func (c *ProjectsLocationsClustersConsumerGroupsListCall) View(view string) *ProjectsLocationsClustersConsumerGroupsListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 

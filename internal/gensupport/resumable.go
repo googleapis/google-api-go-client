@@ -7,6 +7,7 @@ package gensupport
 import (
 	"context"
 	"encoding/base64"
+	"encoding/binary"
 	"errors"
 	"fmt"
 	"io"
@@ -344,6 +345,7 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (*http.Response, error) {
 
 // Encode a uint32 as Base64 in big-endian byte order.
 func encodeUint32(u uint32) string {
-	b := []byte{byte(u >> 24), byte(u >> 16), byte(u >> 8), byte(u)}
+	b := make([]byte, 4)
+	binary.BigEndian.PutUint32(b, u)
 	return base64.StdEncoding.EncodeToString(b)
 }

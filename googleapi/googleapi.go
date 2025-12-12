@@ -339,9 +339,9 @@ func (d disableAutoChecksumOption) setOptions(o *MediaOptions) {
 	o.DisableAutoChecksum = bool(d)
 }
 
-// By default the media buffer automatically performs checksum calculation
-// for the entire data and sends it on final request. Setting this to true
-// disables disables this automatic calculation and sending of the checksum.
+// DisableAutoChecksum returns a MediaOption which disables automatic checksum calculation.
+// By default, checksum for the entire data is calculated and sent on the final request.
+// Setting this to true disables this behavior.
 func DisableAutoChecksum(disableAutoChecksum bool) MediaOption {
 	return disableAutoChecksumOption(disableAutoChecksum)
 }

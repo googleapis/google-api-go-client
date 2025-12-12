@@ -5,9 +5,11 @@
 package gensupport
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"fmt"
+	"hash/crc32"
 	"io"
 	"net/http"
 	"reflect"
@@ -36,9 +38,10 @@ type event struct {
 // It records the incoming data, unless the corresponding event is configured to return
 // http.StatusServiceUnavailable.
 type interruptibleTransport struct {
-	events []event
-	buf    []byte
-	bodies bodyTracker
+	events      []event
+	buf         []byte
+	bodies      bodyTracker
+	finalHeader http.Header
 }
 
 // bodyTracker keeps track of response bodies that have not been closed.
@@ -81,6 +84,7 @@ func (t *interruptibleTransport) RoundTrip(req *http.Request) (*http.Response, e
 	if got, want := req.Header.Get("Content-Range"), ev.byteRange; got != want {
 		return nil, fmt.Errorf("byte range: got %s; want %s", got, want)
 	}
+	t.finalHeader = req.Header
 
 	if ev.responseStatus != http.StatusServiceUnavailable {
 		buf, err := io.ReadAll(req.Body)
@@ -626,5 +630,39 @@ func TestOverallUploadTimeout(t *testing.T) {
 
 	if !errors.Is(err, context.DeadlineExceeded) {
 		t.Fatalf("Upload err: got: %v; want: context.DeadlineExceeded", err)
+	}
+}
+
+func TestUploadChecksum(t *testing.T) {
+	data := string(bytes.Repeat([]byte("a"), 300))
+	checksum := crc32.Checksum([]byte(data), crc32cTable)
+	chunkSize := 90
+	media := strings.NewReader(data)
+
+	// Simulate multi-chunk resumable requests
+	tr := &interruptibleTransport{
+		events: []event{
+			{byteRange: "bytes 0-89/*", responseStatus: 308},
+			{byteRange: "bytes 90-179/*", responseStatus: 308},
+			{byteRange: "bytes 180-269/*", responseStatus: 308},
+			{byteRange: "bytes 270-299/300", responseStatus: 200},
+		},
+		bodies: bodyTracker{},
+	}
+	rx := &ResumableUpload{
+		Client:    &http.Client{Transport: tr},
+		Media:     NewMediaBuffer(media, chunkSize, false),
+		MediaType: "text/plain",
+	}
+
+	res, err := rx.Upload(context.Background())
+	if err != nil {
+		t.Fatalf("Upload failed: %v", err)
+	}
+	res.Body.Close()
+
+	wantChecksumHeader := "crc32c=" + encodeUint32(checksum)
+	if gotChecksumHeader := tr.finalHeader.Get("X-Goog-Hash"); gotChecksumHeader != wantChecksumHeader {
+		t.Errorf("X-Goog-Hash: got %x, want %x", gotChecksumHeader, wantChecksumHeader)
 	}
 }

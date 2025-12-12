@@ -6,6 +6,8 @@ package gensupport
 
 import (
 	"context"
+	"encoding/base64"
+	"encoding/binary"
 	"errors"
 	"fmt"
 	"io"
@@ -102,6 +104,11 @@ func (rx *ResumableUpload) doUploadRequest(ctx context.Context, data io.Reader, 
 	// and sets the upload-specific "X-HTTP-Status-Code-Override:
 	// 308" response header.
 	req.Header.Set("X-GUploader-No-308", "yes")
+
+	// Server accepts checksum only on final request through header
+	if final && !rx.Media.disableAutoChecksum {
+		req.Header.Set("X-Goog-Hash", "crc32c="+encodeUint32(rx.Media.fullObjectChecksum))
+	}
 
 	return SendRequest(ctx, rx.Client, req)
 }
@@ -334,4 +341,11 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (*http.Response, error) {
 		}
 		return resp, nil
 	}
+}
+
+// Encode a uint32 as Base64 in big-endian byte order.
+func encodeUint32(u uint32) string {
+	b := make([]byte, 4)
+	binary.BigEndian.PutUint32(b, u)
+	return base64.StdEncoding.EncodeToString(b)
 }

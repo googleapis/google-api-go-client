@@ -7460,11 +7460,11 @@ type GoogleCloudDocumentaiV1beta3ImportDocumentsRequestBatchDocumentsImportConfi
 	//   "DATASET_SPLIT_TEST" - Identifies the test documents.
 	//   "DATASET_SPLIT_UNASSIGNED" - Identifies the unassigned documents.
 	DatasetSplit string `json:"datasetSplit,omitempty"`
-	// DocumentType: Optional. The type of the documents to be imported in this
-	// batch. This will be used to auto-label the documents with a single entity of
-	// the provided type. This field can only be used with a classifier or splitter
-	// processor. Providing this field is mutually exclusive with `entities` and
-	// `auto_labeling_config`.
+	// DocumentType: Optional. If set, determines the type of the documents to be
+	// imported in this batch. It can be used to auto-label the documents with a
+	// single entity of the provided type. This field can only be used with a
+	// classifier or splitter processor. Providing this field is mutually exclusive
+	// with `entities` and `auto_labeling_config`.
 	DocumentType string `json:"documentType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoSplitConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7891,7 +7891,7 @@ func (s GoogleCloudDocumentaiV1beta3ListSchemasResponse) MarshalJSON() ([]byte, 
 type GoogleCloudDocumentaiV1beta3NextSchema struct {
 	// CreateTime: Output only. The time when the Schema was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Optional. The user-defined name of the Schema.
+	// DisplayName: Required. The user-defined name of the Schema.
 	DisplayName string `json:"displayName,omitempty"`
 	// Labels: Optional. The GCP labels for the Schema.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -8962,7 +8962,7 @@ func (s GoogleCloudDocumentaiV1beta3SchemaGenerationIteration) MarshalJSON() ([]
 type GoogleCloudDocumentaiV1beta3SchemaVersion struct {
 	// CreateTime: Output only. The time when the SchemaVersion was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Optional. The user-defined name of the SchemaVersion.
+	// DisplayName: Required. The user-defined name of the SchemaVersion.
 	DisplayName string `json:"displayName,omitempty"`
 	// Labels: Optional. The GCP labels for the SchemaVersion.
 	Labels map[string]string `json:"labels,omitempty"`

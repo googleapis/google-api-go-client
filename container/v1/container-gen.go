@@ -1480,6 +1480,9 @@ type Cluster struct {
 	LoggingService string `json:"loggingService,omitempty"`
 	// MaintenancePolicy: Configure the maintenance policy for this cluster.
 	MaintenancePolicy *MaintenancePolicy `json:"maintenancePolicy,omitempty"`
+	// ManagedOpentelemetryConfig: Configuration for Managed OpenTelemetry
+	// pipeline.
+	ManagedOpentelemetryConfig *ManagedOpenTelemetryConfig `json:"managedOpentelemetryConfig,omitempty"`
 	// MasterAuth: The authentication information for accessing the master
 	// endpoint. If unspecified, the defaults are used: For clusters before v1.12,
 	// if master_auth is unspecified, `username` will be set to "admin", a random
@@ -1853,6 +1856,9 @@ type ClusterUpdate struct {
 	// cluster. If left as an empty string,`logging.googleapis.com/kubernetes` will
 	// be used for GKE 1.14+ or `logging.googleapis.com` for earlier versions.
 	DesiredLoggingService string `json:"desiredLoggingService,omitempty"`
+	// DesiredManagedOpentelemetryConfig: The desired managed open telemetry
+	// configuration.
+	DesiredManagedOpentelemetryConfig *ManagedOpenTelemetryConfig `json:"desiredManagedOpentelemetryConfig,omitempty"`
 	// DesiredMasterAuthorizedNetworksConfig: The desired configuration options for
 	// master authorized networks feature. Deprecated: Use
 	// desired_control_plane_endpoints_config.ip_endpoints_config.authorized_network
@@ -4463,6 +4469,36 @@ type MaintenanceWindow struct {
 
 func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ManagedOpenTelemetryConfig: ManagedOpenTelemetryConfig is the configuration
+// for the GKE Managed OpenTelemetry pipeline.
+type ManagedOpenTelemetryConfig struct {
+	// Scope: Scope of the Managed OpenTelemetry pipeline.
+	//
+	// Possible values:
+	//   "SCOPE_UNSPECIFIED" - SCOPE_UNSPECIFIED is when the scope is not set.
+	//   "NONE" - NONE is used to disable the Managed OpenTelemetry pipeline.
+	//   "COLLECTION_AND_INSTRUMENTATION_COMPONENTS" -
+	// COLLECTION_AND_INSTRUMENTATION_COMPONENTS is used to enable the Managed
+	// OpenTelemetry pipeline for collection and instrumentation components.
+	Scope string `json:"scope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Scope") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Scope") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ManagedOpenTelemetryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ManagedOpenTelemetryConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

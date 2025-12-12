@@ -3621,6 +3621,55 @@ func (s ExternalAccountIds) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExternalOfferDetails: Reporting details unique to the external offers
+// program.
+type ExternalOfferDetails struct {
+	// AppDownloadEventExternalTransactionId: Optional. The external transaction id
+	// associated with the app download event through an external link. Required
+	// when reporting transactions made in externally installed apps.
+	AppDownloadEventExternalTransactionId string `json:"appDownloadEventExternalTransactionId,omitempty"`
+	// InstalledAppCategory: Optional. The category of the downloaded app though
+	// this transaction. This must match the category provided in Play Console
+	// during the external app verification process. Only required for app
+	// downloads.
+	//
+	// Possible values:
+	//   "EXTERNAL_OFFER_APP_CATEGORY_UNSPECIFIED" - Unspecified, do not use.
+	//   "APP" - The app is classified under the app category.
+	//   "GAME" - The app is classified under the game category.
+	InstalledAppCategory string `json:"installedAppCategory,omitempty"`
+	// InstalledAppPackage: Optional. The package name of the app downloaded
+	// through this transaction. Required when link_type is LINK_TO_APP_DOWNLOAD.
+	InstalledAppPackage string `json:"installedAppPackage,omitempty"`
+	// LinkType: Optional. The type of content being reported by this transaction.
+	// Required when reporting app downloads or purchased digital content offers
+	// made in app installed through Google Play.
+	//
+	// Possible values:
+	//   "EXTERNAL_OFFER_LINK_TYPE_UNSPECIFIED" - Unspecified, do not use.
+	//   "LINK_TO_DIGITAL_CONTENT_OFFER" - An offer to purchase digital content.
+	//   "LINK_TO_APP_DOWNLOAD" - An app install.
+	LinkType string `json:"linkType,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AppDownloadEventExternalTransactionId") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "AppDownloadEventExternalTransactionId") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExternalOfferDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalOfferDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExternalSubscription: Details of an external subscription.
 type ExternalSubscription struct {
 	// SubscriptionType: Required. The type of the external subscription.
@@ -3662,6 +3711,9 @@ type ExternalTransaction struct {
 	// current tax amount including any refunds that may have been applied to this
 	// transaction.
 	CurrentTaxAmount *Price `json:"currentTaxAmount,omitempty"`
+	// ExternalOfferDetails: Optional. Details necessary to accurately report
+	// external offers transactions.
+	ExternalOfferDetails *ExternalOfferDetails `json:"externalOfferDetails,omitempty"`
 	// ExternalTransactionId: Output only. The id of this transaction. All
 	// transaction ids under the same package name must be unique. Set when
 	// creating the external transaction.

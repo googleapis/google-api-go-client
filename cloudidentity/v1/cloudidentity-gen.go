@@ -950,7 +950,8 @@ type GoogleAppsCloudidentityDevicesV1BrowserInfo struct {
 	// (https://chromeenterprise.google/policies/#OnBulkDataEntryEnterpriseConnector).
 	// Set to true if provider list from Chrome is non-empty.
 	IsBulkDataEntryAnalysisEnabled bool `json:"isBulkDataEntryAnalysisEnabled,omitempty"`
-	// IsChromeCleanupEnabled: Current state of Chrome Cleanup
+	// IsChromeCleanupEnabled: Deprecated: This field is not used for Chrome
+	// version 118 and later. Current state of Chrome Cleanup
 	// (https://chromeenterprise.google/policies/#ChromeCleanupEnabled).
 	IsChromeCleanupEnabled bool `json:"isChromeCleanupEnabled,omitempty"`
 	// IsChromeRemoteDesktopAppBlocked: Current state of Chrome Remote Desktop app

@@ -390,6 +390,9 @@ type Certificate struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// Managed: If set, contains configuration and state of a managed certificate.
 	Managed *ManagedCertificate `json:"managed,omitempty"`
+	// ManagedIdentity: If set, contains configuration and state of a managed
+	// identity certificate.
+	ManagedIdentity *ManagedIdentityCertificate `json:"managedIdentity,omitempty"`
 	// Name: Identifier. A user-defined name of the certificate. Certificate names
 	// must be unique globally and match pattern
 	// `projects/*/locations/*/certificates/*`.
@@ -1058,8 +1061,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1205,6 +1208,47 @@ type ManagedCertificate struct {
 
 func (s ManagedCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedCertificate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ManagedIdentityCertificate: Configuration and state of a Managed Identity
+// Certificate. Certificate Manager provisions and renews Managed Identity
+// Certificates automatically, for as long as it's authorized to do so.
+type ManagedIdentityCertificate struct {
+	// Identity: Required. Immutable. SPIFFE ID of the Managed Identity used for
+	// this certificate.
+	Identity string `json:"identity,omitempty"`
+	// ProvisioningIssue: Output only. Information about issues with provisioning a
+	// managed certificate.
+	ProvisioningIssue *ProvisioningIssue `json:"provisioningIssue,omitempty"`
+	// State: Output only. State of the managed certificate resource.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State is unspecified.
+	//   "PROVISIONING" - Certificate Manager attempts to provision or renew the
+	// certificate. If the process takes longer than expected, consult the
+	// `provisioning_issue` field.
+	//   "FAILED" - Multiple certificate provisioning attempts failed and
+	// Certificate Manager gave up. To try again, delete and create a new managed
+	// Certificate resource. For details see the `provisioning_issue` field.
+	//   "ACTIVE" - The certificate management is working, and a certificate has
+	// been provisioned.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Identity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Identity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ManagedIdentityCertificate) MarshalJSON() ([]byte, error) {
+	type NoMethod ManagedIdentityCertificate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1474,6 +1518,9 @@ type TrustConfig struct {
 	// must be unique globally and match pattern
 	// `projects/*/locations/*/trustConfigs/*`.
 	Name string `json:"name,omitempty"`
+	// SpiffeTrustStores: Optional. Defines a mapping from a trust domain to a
+	// TrustStore. This is used for SPIFFE certificate validation.
+	SpiffeTrustStores map[string]TrustStore `json:"spiffeTrustStores,omitempty"`
 	// TrustStores: Optional. Set of trust stores to perform validation against.
 	// This field is supported when TrustConfig is configured with Load Balancers,
 	// currently not supported for SPIFFE certificate validation. Only one
@@ -5181,9 +5228,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

@@ -681,7 +681,9 @@ type GooglePrivacyDlpV2Action struct {
 	JobNotificationEmails *GooglePrivacyDlpV2JobNotificationEmails `json:"jobNotificationEmails,omitempty"`
 	// PubSub: Publish a notification to a Pub/Sub topic.
 	PubSub *GooglePrivacyDlpV2PublishToPubSub `json:"pubSub,omitempty"`
-	// PublishFindingsToCloudDataCatalog: Publish findings to Cloud Datahub.
+	// PublishFindingsToCloudDataCatalog: Deprecated because Data Catalog is being
+	// turned down. Use publish_findings_to_dataplex_catalog to publish findings to
+	// Dataplex Universal Catalog.
 	PublishFindingsToCloudDataCatalog *GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog `json:"publishFindingsToCloudDataCatalog,omitempty"`
 	// PublishFindingsToDataplexCatalog: Publish findings as an aspect to Dataplex
 	// Universal Catalog.

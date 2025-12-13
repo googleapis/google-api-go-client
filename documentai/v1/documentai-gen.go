@@ -6252,7 +6252,7 @@ func (s GoogleCloudDocumentaiV1ListSchemasResponse) MarshalJSON() ([]byte, error
 type GoogleCloudDocumentaiV1NextSchema struct {
 	// CreateTime: Output only. The time when the Schema was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Optional. The user-defined name of the Schema.
+	// DisplayName: Required. The user-defined name of the Schema.
 	DisplayName string `json:"displayName,omitempty"`
 	// Labels: Optional. The GCP labels for the Schema.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -7220,7 +7220,7 @@ func (s GoogleCloudDocumentaiV1SchemaGenerationIteration) MarshalJSON() ([]byte,
 type GoogleCloudDocumentaiV1SchemaVersion struct {
 	// CreateTime: Output only. The time when the SchemaVersion was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Optional. The user-defined name of the SchemaVersion.
+	// DisplayName: Required. The user-defined name of the SchemaVersion.
 	DisplayName string `json:"displayName,omitempty"`
 	// Labels: Optional. The GCP labels for the SchemaVersion.
 	Labels map[string]string `json:"labels,omitempty"`

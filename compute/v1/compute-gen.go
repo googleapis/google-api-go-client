@@ -62414,6 +62414,9 @@ type StoragePool struct {
 	// when you
 	// create the resource.
 	Description string `json:"description,omitempty"`
+	// ExapoolProvisionedCapacityGb: Output only. [Output Only] Provisioned
+	// capacities for each SKU for this Exapool in GiB
+	ExapoolProvisionedCapacityGb *StoragePoolExapoolProvisionedCapacityGb `json:"exapoolProvisionedCapacityGb,omitempty"`
 	// Id: Output only. [Output Only] The unique identifier for the resource. This
 	// identifier is
 	// defined by the server.
@@ -62769,6 +62772,36 @@ type StoragePoolDisk struct {
 
 func (s StoragePoolDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod StoragePoolDisk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StoragePoolExapoolProvisionedCapacityGb: Exapool provisioned capacities for
+// each SKU type
+type StoragePoolExapoolProvisionedCapacityGb struct {
+	// CapacityOptimized: Output only. Size, in GiB, of provisioned
+	// capacity-optimized capacity for this Exapool
+	CapacityOptimized int64 `json:"capacityOptimized,omitempty,string"`
+	// ReadOptimized: Output only. Size, in GiB, of provisioned read-optimized
+	// capacity for this Exapool
+	ReadOptimized int64 `json:"readOptimized,omitempty,string"`
+	// WriteOptimized: Output only. Size, in GiB, of provisioned write-optimized
+	// capacity for this Exapool
+	WriteOptimized int64 `json:"writeOptimized,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CapacityOptimized") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CapacityOptimized") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StoragePoolExapoolProvisionedCapacityGb) MarshalJSON() ([]byte, error) {
+	type NoMethod StoragePoolExapoolProvisionedCapacityGb
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -63151,6 +63184,20 @@ func (s StoragePoolListDisksWarningData) MarshalJSON() ([]byte, error) {
 type StoragePoolResourceStatus struct {
 	// DiskCount: [Output Only] Number of disks used.
 	DiskCount int64 `json:"diskCount,omitempty,string"`
+	// ExapoolMaxReadIops: Output only. [Output Only] Maximum allowed read IOPS for
+	// this Exapool.
+	ExapoolMaxReadIops int64 `json:"exapoolMaxReadIops,omitempty,string"`
+	// ExapoolMaxReadThroughput: Output only. [Output Only] Maximum allowed read
+	// throughput in MiB/s for
+	// this Exapool.
+	ExapoolMaxReadThroughput int64 `json:"exapoolMaxReadThroughput,omitempty,string"`
+	// ExapoolMaxWriteIops: Output only. [Output Only] Maximum allowed write IOPS
+	// for this Exapool.
+	ExapoolMaxWriteIops int64 `json:"exapoolMaxWriteIops,omitempty,string"`
+	// ExapoolMaxWriteThroughput: Output only. [Output Only] Maximum allowed write
+	// throughput in MiB/s
+	// for this Exapool.
+	ExapoolMaxWriteThroughput int64 `json:"exapoolMaxWriteThroughput,omitempty,string"`
 	// LastResizeTimestamp: Output only. [Output Only] Timestamp of the last
 	// successful resize inRFC3339 text format.
 	LastResizeTimestamp string `json:"lastResizeTimestamp,omitempty"`
@@ -64025,7 +64072,8 @@ type Subnetwork struct {
 	// org
 	// policy specified, then it will default to disabled. This field
 	// isn't
-	// supported if the subnet purpose field is set toREGIONAL_MANAGED_PROXY.
+	// supported if the subnet purpose field is set toREGIONAL_MANAGED_PROXY. It is
+	// recommended to uselogConfig.enable field instead.
 	EnableFlowLogs bool `json:"enableFlowLogs,omitempty"`
 	// ExternalIpv6Prefix: The external IPv6 address range that is owned by
 	// this

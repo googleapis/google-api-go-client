@@ -1350,6 +1350,9 @@ type Config struct {
 	// DefaultSkaffoldVersion: Default Skaffold version that is assigned when a
 	// Release is created without specifying a Skaffold version.
 	DefaultSkaffoldVersion string `json:"defaultSkaffoldVersion,omitempty"`
+	// DefaultToolVersions: Output only. Default tool versions. These tool versions
+	// are assigned when a Release is created without specifying tool versions.
+	DefaultToolVersions *ToolVersions `json:"defaultToolVersions,omitempty"`
 	// Name: Name of the configuration.
 	Name string `json:"name,omitempty"`
 	// SupportedVersions: All supported versions of Skaffold.
@@ -2892,8 +2895,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -12813,9 +12816,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

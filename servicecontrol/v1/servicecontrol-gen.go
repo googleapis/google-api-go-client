@@ -2839,6 +2839,11 @@ type ViolationInfo struct {
 	CheckedValue string `json:"checkedValue,omitempty"`
 	// Constraint: Optional. Constraint name
 	Constraint string `json:"constraint,omitempty"`
+	// ConstraintViolationInfo: Optional. Provides extra information for the
+	// specific violated constraint. See the constraint's documentation to
+	// determine if this field is populated and what the structure of the message
+	// should be.
+	ConstraintViolationInfo googleapi.RawMessage `json:"constraintViolationInfo,omitempty"`
 	// ErrorMessage: Optional. Error message that policy is indicating.
 	ErrorMessage string `json:"errorMessage,omitempty"`
 	// PolicyType: Optional. Indicates the type of the policy.

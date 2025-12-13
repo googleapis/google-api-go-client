@@ -5231,6 +5231,12 @@ type ManagedProductTaxAndComplianceSettings struct {
 	// IsTokenizedDigitalAsset: Whether this in-app product is declared as a
 	// product representing a tokenized digital asset.
 	IsTokenizedDigitalAsset bool `json:"isTokenizedDigitalAsset,omitempty"`
+	// ProductTaxCategoryCode: Product tax category code to assign to the in-app
+	// product. Product tax category determines the transaction tax rates applied
+	// to the product. Refer to the Help Center article
+	// (https://support.google.com/googleplay/android-developer/answer/16408159)
+	// for more information.
+	ProductTaxCategoryCode string `json:"productTaxCategoryCode,omitempty"`
 	// TaxRateInfoByRegionCode: A mapping from region code to tax rate details. The
 	// keys are region codes as defined by Unicode's "CLDR".
 	TaxRateInfoByRegionCode map[string]RegionalTaxRateInfo `json:"taxRateInfoByRegionCode,omitempty"`
@@ -6041,6 +6047,12 @@ type OneTimeProductTaxAndComplianceSettings struct {
 	// IsTokenizedDigitalAsset: Whether this one-time product is declared as a
 	// product representing a tokenized digital asset.
 	IsTokenizedDigitalAsset bool `json:"isTokenizedDigitalAsset,omitempty"`
+	// ProductTaxCategoryCode: Product tax category code to assign to the one-time
+	// product. Product tax category determines the transaction tax rates applied
+	// to the product. Refer to the Help Center article
+	// (https://support.google.com/googleplay/android-developer/answer/16408159)
+	// for more information.
+	ProductTaxCategoryCode string `json:"productTaxCategoryCode,omitempty"`
 	// RegionalTaxConfigs: Regional tax configuration.
 	RegionalTaxConfigs []*RegionalTaxConfig `json:"regionalTaxConfigs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IsTokenizedDigitalAsset") to
@@ -8993,6 +9005,12 @@ type SubscriptionTaxAndComplianceSettings struct {
 	// IsTokenizedDigitalAsset: Whether this subscription is declared as a product
 	// representing a tokenized digital asset.
 	IsTokenizedDigitalAsset bool `json:"isTokenizedDigitalAsset,omitempty"`
+	// ProductTaxCategoryCode: Product tax category code to assign to the
+	// subscription. Product tax category determines the transaction tax rates
+	// applied to the subscription. Refer to the Help Center article
+	// (https://support.google.com/googleplay/android-developer/answer/16408159)
+	// for more information.
+	ProductTaxCategoryCode string `json:"productTaxCategoryCode,omitempty"`
 	// TaxRateInfoByRegionCode: A mapping from region code to tax rate details. The
 	// keys are region codes as defined by Unicode's "CLDR".
 	TaxRateInfoByRegionCode map[string]RegionalTaxRateInfo `json:"taxRateInfoByRegionCode,omitempty"`
@@ -11462,30 +11480,6 @@ func (r *EditsService) Commit(packageName string, editId string) *EditsCommitCal
 // changes will be added to any other changes that are not yet sent for review.
 func (c *EditsCommitCall) ChangesNotSentForReview(changesNotSentForReview bool) *EditsCommitCall {
 	c.urlParams_.Set("changesNotSentForReview", fmt.Sprint(changesNotSentForReview))
-	return c
-}
-
-// InProgressReviewBehaviour sets the optional parameter
-// "inProgressReviewBehaviour": The behavior of committing a new edit while a
-// submission is already in review.
-//
-// Possible values:
-//
-//	"IN_PROGRESS_REVIEW_BEHAVIOUR_UNSPECIFIED" - The behavior is not
-//
-// specified.
-//
-//	"CANCEL_IN_PROGRESS_AND_SUBMIT" - The changes in review will be canceled,
-//
-// and the new changes will be sent for review. Thus resetting the review
-// process.
-//
-//	"THROW_ERROR_IF_IN_PROGRESS" - The commit will fail with an error if there
-//
-// are changes in review. If the edit doesn't result in a new submission being
-// created then it won't throw an error even if there are changes in review.
-func (c *EditsCommitCall) InProgressReviewBehaviour(inProgressReviewBehaviour string) *EditsCommitCall {
-	c.urlParams_.Set("inProgressReviewBehaviour", inProgressReviewBehaviour)
 	return c
 }
 

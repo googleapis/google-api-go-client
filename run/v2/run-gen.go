@@ -533,8 +533,7 @@ type GoogleCloudRunV2Condition struct {
 	//   "CANCELLED" - The execution was cancelled by users.
 	//   "CANCELLING" - The execution is in the process of being cancelled.
 	//   "DELETED" - The execution was deleted.
-	//   "FLEX_START_PENDING" - A Flex priority execution is waiting for a start
-	// time.
+	//   "DELAYED_START_PENDING" - A delayed execution is waiting for a start time.
 	ExecutionReason string `json:"executionReason,omitempty"`
 	// LastTransitionTime: Last time the condition transitioned from one status to
 	// another.

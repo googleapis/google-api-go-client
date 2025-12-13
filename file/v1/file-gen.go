@@ -941,8 +941,8 @@ func (s IOPSPerTB) MarshalJSON() ([]byte, error) {
 
 // Instance: A Filestore instance.
 type Instance struct {
-	// CapacityStepSizeGb: Output only. The increase/decrease capacity step size in
-	// GB.
+	// CapacityStepSizeGb: Output only. The incremental increase or decrease in
+	// capacity, designated in some number of GB.
 	CapacityStepSizeGb int64 `json:"capacityStepSizeGb,omitempty,string"`
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -971,9 +971,9 @@ type Instance struct {
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// Labels: Resource labels to represent user provided metadata.
 	Labels map[string]string `json:"labels,omitempty"`
-	// MaxCapacityGb: Output only. The max capacity of the instance in GB.
+	// MaxCapacityGb: Output only. The maximum capacity of the instance in GB.
 	MaxCapacityGb int64 `json:"maxCapacityGb,omitempty,string"`
-	// MinCapacityGb: Output only. The min capacity of the instance in GB.
+	// MinCapacityGb: Output only. The minimum capacity of the instance in GB.
 	MinCapacityGb int64 `json:"minCapacityGb,omitempty,string"`
 	// Name: Output only. The resource name of the instance, in the format
 	// `projects/{project}/locations/{location}/instances/{instance}`.
@@ -1230,8 +1230,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1605,6 +1605,11 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PauseReplicaRequest: PauseReplicaRequest pauses a Filestore standby instance
+// (replica).
+type PauseReplicaRequest struct {
+}
+
 // PerformanceConfig: Used for setting the performance configuration. If the
 // user doesn't specify PerformanceConfig, automatically provision the default
 // performance settings as described in
@@ -1652,17 +1657,17 @@ func (s PerformanceConfig) MarshalJSON() ([]byte, error) {
 // PerformanceLimits: The enforced performance limits, calculated from the
 // instance's performance configuration.
 type PerformanceLimits struct {
-	// MaxIops: Output only. The max IOPS.
+	// MaxIops: Output only. The maximum IOPS.
 	MaxIops int64 `json:"maxIops,omitempty,string"`
-	// MaxReadIops: Output only. The max read IOPS.
+	// MaxReadIops: Output only. The maximum read IOPS.
 	MaxReadIops int64 `json:"maxReadIops,omitempty,string"`
-	// MaxReadThroughputBps: Output only. The max read throughput in bytes per
+	// MaxReadThroughputBps: Output only. The maximum read throughput in bytes per
 	// second.
 	MaxReadThroughputBps int64 `json:"maxReadThroughputBps,omitempty,string"`
-	// MaxWriteIops: Output only. The max write IOPS.
+	// MaxWriteIops: Output only. The maximum write IOPS.
 	MaxWriteIops int64 `json:"maxWriteIops,omitempty,string"`
-	// MaxWriteThroughputBps: Output only. The max write throughput in bytes per
-	// second.
+	// MaxWriteThroughputBps: Output only. The maximum write throughput in bytes
+	// per second.
 	MaxWriteThroughputBps int64 `json:"maxWriteThroughputBps,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "MaxIops") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1738,7 +1743,9 @@ type ReplicaConfig struct {
 	// LastActiveSyncTime: Output only. The timestamp of the latest replication
 	// snapshot taken on the active instance and is already replicated safely.
 	LastActiveSyncTime string `json:"lastActiveSyncTime,omitempty"`
-	// PeerInstance: Optional. The peer instance.
+	// PeerInstance: Optional. The name of the source instance for the replica, in
+	// the format `projects/{project}/locations/{location}/instances/{instance}`.
+	// This field is required when creating a replica.
 	PeerInstance string `json:"peerInstance,omitempty"`
 	// State: Output only. The replica state.
 	//
@@ -1785,12 +1792,13 @@ func (s ReplicaConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Replication: Replication specifications.
+// Replication: Optional. The configuration used to replicate an instance.
 type Replication struct {
 	// Replicas: Optional. Replication configuration for the replica instance
 	// associated with this instance. Only a single replica is supported.
 	Replicas []*ReplicaConfig `json:"replicas,omitempty"`
-	// Role: Optional. The replication role.
+	// Role: Optional. The replication role. When creating a new replica, this
+	// field must be set to `STANDBY`.
 	//
 	// Possible values:
 	//   "ROLE_UNSPECIFIED" - Role not set.
@@ -1842,6 +1850,11 @@ type RestoreInstanceRequest struct {
 func (s RestoreInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RestoreInstanceRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResumeReplicaRequest: ResumeReplicaRequest resumes a Filestore standby
+// instance (replica).
+type ResumeReplicaRequest struct {
 }
 
 // RevertInstanceRequest: RevertInstanceRequest reverts the given instance's
@@ -2228,9 +2241,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -3578,6 +3591,113 @@ func (c *ProjectsLocationsInstancesPatchCall) Do(opts ...googleapi.CallOption) (
 	return ret, nil
 }
 
+type ProjectsLocationsInstancesPauseReplicaCall struct {
+	s                   *Service
+	name                string
+	pausereplicarequest *PauseReplicaRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// PauseReplica: Pause the standby instance (replica). WARNING: This operation
+// makes the standby instance's NFS filesystem writable. Any data written to
+// the standby instance while paused will be lost when the replica is resumed
+// or promoted.
+//
+//   - name: The resource name of the instance, in the format
+//     `projects/{project_id}/locations/{location_id}/instances/{instance_id}`.
+func (r *ProjectsLocationsInstancesService) PauseReplica(name string, pausereplicarequest *PauseReplicaRequest) *ProjectsLocationsInstancesPauseReplicaCall {
+	c := &ProjectsLocationsInstancesPauseReplicaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.pausereplicarequest = pausereplicarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInstancesPauseReplicaCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesPauseReplicaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInstancesPauseReplicaCall) Context(ctx context.Context) *ProjectsLocationsInstancesPauseReplicaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInstancesPauseReplicaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesPauseReplicaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.pausereplicarequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:pauseReplica")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "file.projects.locations.instances.pauseReplica", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "file.projects.locations.instances.pauseReplica" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesPauseReplicaCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "file.projects.locations.instances.pauseReplica", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsInstancesPromoteReplicaCall struct {
 	s                     *Service
 	name                  string
@@ -3787,6 +3907,112 @@ func (c *ProjectsLocationsInstancesRestoreCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "file.projects.locations.instances.restore", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInstancesResumeReplicaCall struct {
+	s                    *Service
+	name                 string
+	resumereplicarequest *ResumeReplicaRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// ResumeReplica: Resume the standby instance (replica). WARNING: Any data
+// written to the standby instance while paused will be lost when the replica
+// is resumed.
+//
+//   - name: The resource name of the instance, in the format
+//     `projects/{project_id}/locations/{location_id}/instances/{instance_id}`.
+func (r *ProjectsLocationsInstancesService) ResumeReplica(name string, resumereplicarequest *ResumeReplicaRequest) *ProjectsLocationsInstancesResumeReplicaCall {
+	c := &ProjectsLocationsInstancesResumeReplicaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.resumereplicarequest = resumereplicarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInstancesResumeReplicaCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesResumeReplicaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInstancesResumeReplicaCall) Context(ctx context.Context) *ProjectsLocationsInstancesResumeReplicaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInstancesResumeReplicaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesResumeReplicaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.resumereplicarequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:resumeReplica")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "file.projects.locations.instances.resumeReplica", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "file.projects.locations.instances.resumeReplica" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesResumeReplicaCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "file.projects.locations.instances.resumeReplica", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4861,9 +5087,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

@@ -526,6 +526,9 @@ type CalendarListEntry struct {
 	// calendar has a single data owner, but can have multiple users with owner
 	// role.
 	AccessRole string `json:"accessRole,omitempty"`
+	// AutoAcceptInvitations: Whether this calendar automatically accepts
+	// invitations. Only valid for resource calendars. Read-only.
+	AutoAcceptInvitations bool `json:"autoAcceptInvitations,omitempty"`
 	// BackgroundColor: The main color of the calendar in the hexadecimal format
 	// "#0088aa". This property supersedes the index-based colorId property. To set
 	// or change this property, you need to specify colorRgbFormat=true in the

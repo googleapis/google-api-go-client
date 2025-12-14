@@ -20924,19 +20924,23 @@ func (s GlobalVmExtensionPolicyRolloutOperation) MarshalJSON() ([]byte, error) {
 }
 
 type GlobalVmExtensionPolicyRolloutOperationRolloutInput struct {
-	// ConflictBehavior: Optional. [Optional] Specifies the behavior of the Rollout
-	// if a conflict is
-	// detected in a project during a Rollout. It can be one of the
-	// following
-	// values:
-	// 1) empty : don't overwrite the local value if conflict happens. This is
-	// the default behavior.
-	// 2) "overwrite" : Overwrite the local value with the rollout value.
-	// The concept of "conflict" applies to:
-	// 1) Insert action. If the zonal policy already exists when Insert
-	// happens, it's a conflict.
-	// 2) Update action. If the zonal policy was updated out of band by a
-	// zonal API, it's a conflict.
+	// ConflictBehavior: Optional. Specifies the behavior of the rollout if a
+	// conflict is detected in a
+	// project during a rollout. This only applies to `insert` and
+	// `update`
+	// methods.
+	//
+	// A conflict occurs in the following cases:
+	// * `insert` method: If the zonal policy already exists when the insert
+	//   happens.
+	// * `update` method: If the zonal policy was modified by a zonal API call
+	//   outside of this rollout.
+	//
+	// Possible values are the following:
+	// * "" (empty string): If a conflict occurs, the local value is not
+	//   overwritten. This is the default behavior.
+	// * "overwrite": If a conflict occurs, the local value is overwritten
+	//   with the rollout value.
 	ConflictBehavior string `json:"conflictBehavior,omitempty"`
 	// Name: Optional. The name of the rollout
 	// plan.
@@ -20950,12 +20954,18 @@ type GlobalVmExtensionPolicyRolloutOperationRolloutInput struct {
 	//   "ROLLOUT_PLAN_UNSPECIFIED"
 	//   "SLOW_ROLLOUT"
 	PredefinedRolloutPlan string `json:"predefinedRolloutPlan,omitempty"`
-	// RetryUuid: Optional. The UUID of the retry action. Only set it if this is a
-	// retry
-	// for an existing resource. This is for the user re-populate the
-	// resource
-	// without changes. An error will be returned if the retry_uuid is set but
-	// the resource get modified.
+	// RetryUuid: Optional. The UUID that identifies a policy rollout retry attempt
+	// for update and
+	// delete operations. Set this field only when retrying a rollout for
+	// an
+	// existing extension policy.
+	//
+	// * `update` method: Lets you retry policy rollout without changes.
+	// An error occurs if you set retry_uuid but the policy is modified.
+	// * `delete` method: Lets you retry policy deletion rollout if the
+	// previous deletion rollout is not finished and the policy is in the
+	// DELETING state. If you set this field when the policy is not in the
+	// DELETING state, an error occurs.
 	RetryUuid string `json:"retryUuid,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConflictBehavior") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -34237,6 +34247,7 @@ type InterconnectAttachment struct {
 	//   "BPS_20G" - 20 Gbit/s
 	//   "BPS_2G" - 2 Gbit/s
 	//   "BPS_300M" - 300 Mbit/s
+	//   "BPS_400G" - 400 Gbit/s
 	//   "BPS_400M" - 400 Mbit/s
 	//   "BPS_500M" - 500 Mbit/s
 	//   "BPS_50G" - 50 Gbit/s
@@ -70965,6 +70976,9 @@ type StoragePool struct {
 	// when you
 	// create the resource.
 	Description string `json:"description,omitempty"`
+	// ExapoolProvisionedCapacityGb: Output only. [Output Only] Provisioned
+	// capacities for each SKU for this Exapool in GiB
+	ExapoolProvisionedCapacityGb *StoragePoolExapoolProvisionedCapacityGb `json:"exapoolProvisionedCapacityGb,omitempty"`
 	// Id: Output only. [Output Only] The unique identifier for the resource. This
 	// identifier is
 	// defined by the server.
@@ -71320,6 +71334,36 @@ type StoragePoolDisk struct {
 
 func (s StoragePoolDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod StoragePoolDisk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StoragePoolExapoolProvisionedCapacityGb: Exapool provisioned capacities for
+// each SKU type
+type StoragePoolExapoolProvisionedCapacityGb struct {
+	// CapacityOptimized: Output only. Size, in GiB, of provisioned
+	// capacity-optimized capacity for this Exapool
+	CapacityOptimized int64 `json:"capacityOptimized,omitempty,string"`
+	// ReadOptimized: Output only. Size, in GiB, of provisioned read-optimized
+	// capacity for this Exapool
+	ReadOptimized int64 `json:"readOptimized,omitempty,string"`
+	// WriteOptimized: Output only. Size, in GiB, of provisioned write-optimized
+	// capacity for this Exapool
+	WriteOptimized int64 `json:"writeOptimized,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CapacityOptimized") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CapacityOptimized") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StoragePoolExapoolProvisionedCapacityGb) MarshalJSON() ([]byte, error) {
+	type NoMethod StoragePoolExapoolProvisionedCapacityGb
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -71702,6 +71746,20 @@ func (s StoragePoolListDisksWarningData) MarshalJSON() ([]byte, error) {
 type StoragePoolResourceStatus struct {
 	// DiskCount: [Output Only] Number of disks used.
 	DiskCount int64 `json:"diskCount,omitempty,string"`
+	// ExapoolMaxReadIops: Output only. [Output Only] Maximum allowed read IOPS for
+	// this Exapool.
+	ExapoolMaxReadIops int64 `json:"exapoolMaxReadIops,omitempty,string"`
+	// ExapoolMaxReadThroughput: Output only. [Output Only] Maximum allowed read
+	// throughput in MiB/s for
+	// this Exapool.
+	ExapoolMaxReadThroughput int64 `json:"exapoolMaxReadThroughput,omitempty,string"`
+	// ExapoolMaxWriteIops: Output only. [Output Only] Maximum allowed write IOPS
+	// for this Exapool.
+	ExapoolMaxWriteIops int64 `json:"exapoolMaxWriteIops,omitempty,string"`
+	// ExapoolMaxWriteThroughput: Output only. [Output Only] Maximum allowed write
+	// throughput in MiB/s
+	// for this Exapool.
+	ExapoolMaxWriteThroughput int64 `json:"exapoolMaxWriteThroughput,omitempty,string"`
 	// LastResizeTimestamp: Output only. [Output Only] Timestamp of the last
 	// successful resize inRFC3339 text format.
 	LastResizeTimestamp string `json:"lastResizeTimestamp,omitempty"`
@@ -72598,7 +72656,8 @@ type Subnetwork struct {
 	// org
 	// policy specified, then it will default to disabled. This field
 	// isn't
-	// supported if the subnet purpose field is set toREGIONAL_MANAGED_PROXY.
+	// supported if the subnet purpose field is set toREGIONAL_MANAGED_PROXY. It is
+	// recommended to uselogConfig.enable field instead.
 	EnableFlowLogs bool `json:"enableFlowLogs,omitempty"`
 	// ExternalIpv6Prefix: The external IPv6 address range that is owned by
 	// this

@@ -2948,7 +2948,8 @@ func (s GoogleChromeManagementV1RiskAssessmentData) MarshalJSON() ([]byte, error
 
 // GoogleChromeManagementV1RiskAssessmentEntry: One risk assessment entry.
 type GoogleChromeManagementV1RiskAssessmentEntry struct {
-	// Provider: The risk assessment provider from which this entry comes from.
+	// Provider: Output only. The risk assessment provider from which this entry
+	// comes from.
 	//
 	// Possible values:
 	//   "RISK_ASSESSMENT_PROVIDER_UNSPECIFIED" - Default value when no provider is
@@ -2957,9 +2958,9 @@ type GoogleChromeManagementV1RiskAssessmentEntry struct {
 	//   "RISK_ASSESSMENT_PROVIDER_SPIN_AI" - Spin.Ai.
 	//   "RISK_ASSESSMENT_PROVIDER_LAYERX" - LayerX Security.
 	Provider string `json:"provider,omitempty"`
-	// RiskAssessment: The details of the provider's risk assessment.
+	// RiskAssessment: Output only. The details of the provider's risk assessment.
 	RiskAssessment *GoogleChromeManagementV1RiskAssessment `json:"riskAssessment,omitempty"`
-	// RiskLevel: The bucketed risk level for the risk assessment.
+	// RiskLevel: Output only. The bucketed risk level for the risk assessment.
 	//
 	// Possible values:
 	//   "RISK_LEVEL_UNSPECIFIED" - Risk level not specified.

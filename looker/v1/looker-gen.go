@@ -244,6 +244,9 @@ type ControlledEgressConfig struct {
 	EgressFqdns []string `json:"egressFqdns,omitempty"`
 	// MarketplaceEnabled: Optional. Whether marketplace is enabled.
 	MarketplaceEnabled bool `json:"marketplaceEnabled,omitempty"`
+	// WebProxyIps: Output only. The list of IP addresses used by Secure Web Proxy
+	// for outbound traffic.
+	WebProxyIps []string `json:"webProxyIps,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EgressFqdns") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

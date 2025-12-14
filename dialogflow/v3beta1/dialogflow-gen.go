@@ -6368,6 +6368,18 @@ type GoogleCloudDialogflowCxV3beta1DetectIntentRequest struct {
 	QueryInput *GoogleCloudDialogflowCxV3beta1QueryInput `json:"queryInput,omitempty"`
 	// QueryParams: The parameters of this query.
 	QueryParams *GoogleCloudDialogflowCxV3beta1QueryParameters `json:"queryParams,omitempty"`
+	// ResponseView: Optional. Specifies which fields in the QueryResult to return.
+	// If not set, the default is DETECT_INTENT_RESPONSE_VIEW_FULL.
+	//
+	// Possible values:
+	//   "DETECT_INTENT_RESPONSE_VIEW_UNSPECIFIED" - Not specified. `FULL` will be
+	// used.
+	//   "DETECT_INTENT_RESPONSE_VIEW_FULL" - Full response view includes all
+	// fields.
+	//   "DETECT_INTENT_RESPONSE_VIEW_BASIC" - Basic response view omits the
+	// following fields: - QueryResult.diagnostic_info -
+	// QueryResult.generative_info
+	ResponseView string `json:"responseView,omitempty"`
 	// Session: Required. The name of the session this query is sent to. Format:
 	// `projects//locations//agents//sessions/` or
 	// `projects//locations//agents//environments//sessions/`. If `Environment ID`

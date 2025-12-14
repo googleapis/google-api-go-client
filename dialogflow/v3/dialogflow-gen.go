@@ -2297,6 +2297,17 @@ type GoogleCloudDialogflowCxV3DetectIntentRequest struct {
 	QueryInput *GoogleCloudDialogflowCxV3QueryInput `json:"queryInput,omitempty"`
 	// QueryParams: The parameters of this query.
 	QueryParams *GoogleCloudDialogflowCxV3QueryParameters `json:"queryParams,omitempty"`
+	// ResponseView: Optional. Specifies which fields in the QueryResult to return.
+	// If not set, the default is DETECT_INTENT_RESPONSE_VIEW_FULL.
+	//
+	// Possible values:
+	//   "DETECT_INTENT_RESPONSE_VIEW_UNSPECIFIED" - Not specified. `FULL` will be
+	// used.
+	//   "DETECT_INTENT_RESPONSE_VIEW_FULL" - Full response view includes all
+	// fields.
+	//   "DETECT_INTENT_RESPONSE_VIEW_BASIC" - Basic response view omits the
+	// following fields: - QueryResult.diagnostic_info
+	ResponseView string `json:"responseView,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "OutputAudioConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

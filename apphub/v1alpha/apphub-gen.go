@@ -171,6 +171,7 @@ func NewProjectsLocationsService(s *APIService) *ProjectsLocationsService {
 	rs.Applications = NewProjectsLocationsApplicationsService(s)
 	rs.DiscoveredServices = NewProjectsLocationsDiscoveredServicesService(s)
 	rs.DiscoveredWorkloads = NewProjectsLocationsDiscoveredWorkloadsService(s)
+	rs.ExtendedMetadataSchemas = NewProjectsLocationsExtendedMetadataSchemasService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.ServiceProjectAttachments = NewProjectsLocationsServiceProjectAttachmentsService(s)
 	return rs
@@ -184,6 +185,8 @@ type ProjectsLocationsService struct {
 	DiscoveredServices *ProjectsLocationsDiscoveredServicesService
 
 	DiscoveredWorkloads *ProjectsLocationsDiscoveredWorkloadsService
+
+	ExtendedMetadataSchemas *ProjectsLocationsExtendedMetadataSchemasService
 
 	Operations *ProjectsLocationsOperationsService
 
@@ -238,6 +241,15 @@ func NewProjectsLocationsDiscoveredWorkloadsService(s *APIService) *ProjectsLoca
 }
 
 type ProjectsLocationsDiscoveredWorkloadsService struct {
+	s *APIService
+}
+
+func NewProjectsLocationsExtendedMetadataSchemasService(s *APIService) *ProjectsLocationsExtendedMetadataSchemasService {
+	rs := &ProjectsLocationsExtendedMetadataSchemasService{s: s}
+	return rs
+}
+
+type ProjectsLocationsExtendedMetadataSchemasService struct {
 	s *APIService
 }
 
@@ -526,7 +538,7 @@ type Boundary struct {
 	// CreateTime: Output only. Create time.
 	CreateTime string `json:"createTime,omitempty"`
 	// CrmNode: Optional. The resource name of the CRM node being attached to the
-	// boundary. Format: `projects/{project-number}` or `projects/{project-id}`
+	// boundary. Format: `projects/{project-number}`
 	CrmNode string `json:"crmNode,omitempty"`
 	// Name: Identifier. The resource name of the boundary. Format:
 	// "projects/{project}/locations/{location}/boundary"
@@ -849,6 +861,38 @@ func (s ExtendedMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExtendedMetadataSchema: ExtendedMetadataSchema represents a schema for
+// extended metadata of a service or workload.
+type ExtendedMetadataSchema struct {
+	// JsonSchema: Output only. The JSON schema as a string.
+	JsonSchema string `json:"jsonSchema,omitempty"`
+	// Name: Identifier. Resource name of the schema. Format:
+	// projects//locations//extendedMetadataSchemas/
+	Name string `json:"name,omitempty"`
+	// SchemaVersion: Output only. The version of the schema. New versions are
+	// required to be backwards compatible.
+	SchemaVersion int64 `json:"schemaVersion,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "JsonSchema") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "JsonSchema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExtendedMetadataSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtendedMetadataSchema
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FindUnregisteredServicesResponse: Response for FindUnregisteredServices.
 type FindUnregisteredServicesResponse struct {
 	// DiscoveredServices: List of Discovered Services.
@@ -938,8 +982,8 @@ func (s FunctionalType) MarshalJSON() ([]byte, error) {
 
 // Identity: The identity associated with a service or workload.
 type Identity struct {
-	// Principal: Output only. Principal of the identity. Supported formats: *
-	// `sa://my-sa@xxxx.iam.gserviceaccount.com` for GCP Service Account *
+	// Principal: Output only. The principal of the identity. Supported formats: *
+	// `sa://my-sa@PROJECT_ID.iam.gserviceaccount.com` for GCP Service Account *
 	// `principal://POOL_ID.global.PROJECT_NUMBER.workload.id.goog/ns/NAMESPACE_ID/s
 	// a/MANAGED_IDENTITY_ID` for Managed Workload Identity
 	Principal string `json:"principal,omitempty"`
@@ -1048,6 +1092,35 @@ type ListDiscoveredWorkloadsResponse struct {
 
 func (s ListDiscoveredWorkloadsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDiscoveredWorkloadsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListExtendedMetadataSchemasResponse: Response for
+// ListExtendedMetadataSchemas.
+type ListExtendedMetadataSchemasResponse struct {
+	// ExtendedMetadataSchemas: List of Extended Metadata Schemas.
+	ExtendedMetadataSchemas []*ExtendedMetadataSchema `json:"extendedMetadataSchemas,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ExtendedMetadataSchemas") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExtendedMetadataSchemas") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListExtendedMetadataSchemasResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListExtendedMetadataSchemasResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6113,6 +6186,266 @@ func (c *ProjectsLocationsDiscoveredWorkloadsLookupCall) Do(opts ...googleapi.Ca
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apphub.projects.locations.discoveredWorkloads.lookup", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsExtendedMetadataSchemasGetCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an Extended Metadata Schema.
+//
+//   - name: Schema resource name Format:
+//     projects//locations//extendedMetadataSchemas/ could be
+//     "apphub.googleapis.com/Name".
+func (r *ProjectsLocationsExtendedMetadataSchemasService) Get(name string) *ProjectsLocationsExtendedMetadataSchemasGetCall {
+	c := &ProjectsLocationsExtendedMetadataSchemasGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExtendedMetadataSchemasGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsExtendedMetadataSchemasGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsExtendedMetadataSchemasGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsExtendedMetadataSchemasGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExtendedMetadataSchemasGetCall) Context(ctx context.Context) *ProjectsLocationsExtendedMetadataSchemasGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExtendedMetadataSchemasGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExtendedMetadataSchemasGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apphub.projects.locations.extendedMetadataSchemas.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apphub.projects.locations.extendedMetadataSchemas.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ExtendedMetadataSchema.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsExtendedMetadataSchemasGetCall) Do(opts ...googleapi.CallOption) (*ExtendedMetadataSchema, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExtendedMetadataSchema{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apphub.projects.locations.extendedMetadataSchemas.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsExtendedMetadataSchemasListCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Extended Metadata Schemas available in a host project and
+// location.
+//
+//   - parent: Project and location to list Extended Metadata Schemas on.
+//     Expected format: `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsExtendedMetadataSchemasService) List(parent string) *ProjectsLocationsExtendedMetadataSchemasListCall {
+	c := &ProjectsLocationsExtendedMetadataSchemasListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsExtendedMetadataSchemasListCall) PageSize(pageSize int64) *ProjectsLocationsExtendedMetadataSchemasListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsExtendedMetadataSchemasListCall) PageToken(pageToken string) *ProjectsLocationsExtendedMetadataSchemasListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExtendedMetadataSchemasListCall) Fields(s ...googleapi.Field) *ProjectsLocationsExtendedMetadataSchemasListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsExtendedMetadataSchemasListCall) IfNoneMatch(entityTag string) *ProjectsLocationsExtendedMetadataSchemasListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExtendedMetadataSchemasListCall) Context(ctx context.Context) *ProjectsLocationsExtendedMetadataSchemasListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExtendedMetadataSchemasListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExtendedMetadataSchemasListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/extendedMetadataSchemas")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apphub.projects.locations.extendedMetadataSchemas.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apphub.projects.locations.extendedMetadataSchemas.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListExtendedMetadataSchemasResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsExtendedMetadataSchemasListCall) Do(opts ...googleapi.CallOption) (*ListExtendedMetadataSchemasResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListExtendedMetadataSchemasResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apphub.projects.locations.extendedMetadataSchemas.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsExtendedMetadataSchemasListCall) Pages(ctx context.Context, f func(*ListExtendedMetadataSchemasResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsOperationsCancelCall struct {

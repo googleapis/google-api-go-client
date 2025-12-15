@@ -497,6 +497,8 @@ type GoogleCloudApihubV1AdditionalSpecContent struct {
 	//   "SPEC_CONTENT_TYPE_UNSPECIFIED" - Unspecified spec content type. Defaults
 	// to spec content uploaded by the user.
 	//   "BOOSTED_SPEC_CONTENT" - The spec content type for boosted spec.
+	//   "GATEWAY_OPEN_API_SPEC" - The spec content type for OpenAPI spec. This
+	// enum is used for OpenAPI specs ingested via APIGEE X Gateway.
 	SpecContentType string `json:"specContentType,omitempty"`
 	// SpecContents: Optional. The additional spec contents.
 	SpecContents *GoogleCloudApihubV1SpecContents `json:"specContents,omitempty"`
@@ -9422,6 +9424,9 @@ func (r *ProjectsLocationsApisVersionsSpecsService) FetchAdditionalSpecContent(n
 // to spec content uploaded by the user.
 //
 //	"BOOSTED_SPEC_CONTENT" - The spec content type for boosted spec.
+//	"GATEWAY_OPEN_API_SPEC" - The spec content type for OpenAPI spec. This
+//
+// enum is used for OpenAPI specs ingested via APIGEE X Gateway.
 func (c *ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall) SpecContentType(specContentType string) *ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall {
 	c.urlParams_.Set("specContentType", specContentType)
 	return c

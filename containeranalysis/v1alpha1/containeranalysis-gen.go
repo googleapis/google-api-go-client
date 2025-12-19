@@ -4433,6 +4433,7 @@ type Hash struct {
 	//   "SHA256" - A sha256 hash.
 	//   "GO_MODULE_H1" - Dirhash of a Go module's source code which is then
 	// hex-encoded.
+	//   "DIRSUM_SHA256" - Dirsum hash of the downloaded artifact files.
 	Type string `json:"type,omitempty"`
 	// Value: The hash value.
 	Value string `json:"value,omitempty"`

@@ -7023,11 +7023,6 @@ func (s ProductPurchasesAcknowledgeRequest) MarshalJSON() ([]byte, error) {
 // information, see Rules applicable for items in the purchase
 // (https://developer.android.com/google/play/billing/subscription-with-addons#rules-base-addons)).
 type ProrationPeriodDetails struct {
-	// LinkedOrderId: The last order id of the original subscription purchase prior
-	// to the plan change. This is only populated if this proration period is from
-	// an ugrade/downgrade from a previous subscription and carries the remaining
-	// offer phase from the linked order of the previous subscription.
-	LinkedOrderId string `json:"linkedOrderId,omitempty"`
 	// OriginalOfferPhase: Represent the original offer phase from the purchased
 	// the line item if the proration period contains any of them. For example, a
 	// proration period from CHARGE_FULL_PRICE plan change may merge the 1st offer
@@ -7041,15 +7036,15 @@ type ProrationPeriodDetails struct {
 	//   "INTRODUCTORY" - The order funds an introductory pricing period.
 	//   "FREE_TRIAL" - The order funds a free trial period.
 	OriginalOfferPhase string `json:"originalOfferPhase,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LinkedOrderId") to
+	// ForceSendFields is a list of field names (e.g. "OriginalOfferPhase") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LinkedOrderId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "OriginalOfferPhase") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

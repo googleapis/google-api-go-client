@@ -6038,13 +6038,15 @@ type Space struct {
 	//
 	// Possible values:
 	//   "SPACE_THREADING_STATE_UNSPECIFIED" - Reserved.
-	//   "THREADED_MESSAGES" - Named spaces that support message threads. When
-	// users respond to a message, they can reply in-thread, which keeps their
-	// response in the context of the original message.
+	//   "THREADED_MESSAGES" - Spaces that support message threads. When users
+	// respond to a message, they can reply in-thread, which keeps their response
+	// in the context of the original message.
 	//   "GROUPED_MESSAGES" - Named spaces where the conversation is organized by
 	// topic. Topics and their replies are grouped together.
-	//   "UNTHREADED_MESSAGES" - Direct messages (DMs) between two people and group
-	// conversations between 3 or more people.
+	//   "UNTHREADED_MESSAGES" - Spaces that don't support message threading. This
+	// space threading state is only used for special cases including: * Continuous
+	// meeting chat where threading is intentionally turned off. * Legacy group
+	// conversations that were created prior to 2022.
 	SpaceThreadingState string `json:"spaceThreadingState,omitempty"`
 	// SpaceType: Optional. The type of space. Required when creating a space or
 	// updating the space type of a space. Output only for other usage.

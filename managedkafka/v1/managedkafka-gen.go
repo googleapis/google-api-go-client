@@ -673,6 +673,32 @@ func (s AddAclEntryResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BrokerDetails: Details of a broker in the Kafka cluster.
+type BrokerDetails struct {
+	// BrokerIndex: Output only. The index of the broker.
+	BrokerIndex int64 `json:"brokerIndex,omitempty,string"`
+	// NodeId: Output only. The node id of the broker.
+	NodeId int64 `json:"nodeId,omitempty,string"`
+	// Rack: Output only. The rack of the broker.
+	Rack string `json:"rack,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BrokerIndex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BrokerIndex") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BrokerDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod BrokerDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
@@ -795,6 +821,9 @@ func (s CheckCompatibilityResponse) MarshalJSON() ([]byte, error) {
 
 // Cluster: An Apache Kafka cluster deployed in a location.
 type Cluster struct {
+	// BrokerDetails: Output only. Only populated when FULL view is requested.
+	// Details of each broker in the cluster.
+	BrokerDetails []*BrokerDetails `json:"brokerDetails,omitempty"`
 	// CapacityConfig: Required. Capacity configuration for the Kafka cluster.
 	CapacityConfig *CapacityConfig `json:"capacityConfig,omitempty"`
 	// CreateTime: Output only. The time when the cluster was created.
@@ -802,6 +831,9 @@ type Cluster struct {
 	// GcpConfig: Required. Configuration properties for a Kafka cluster deployed
 	// to Google Cloud Platform.
 	GcpConfig *GcpConfig `json:"gcpConfig,omitempty"`
+	// KafkaVersion: Output only. Only populated when FULL view is requested. The
+	// Kafka version of the cluster.
+	KafkaVersion string `json:"kafkaVersion,omitempty"`
 	// Labels: Optional. Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. The name of the cluster. Structured like:
@@ -831,15 +863,15 @@ type Cluster struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CapacityConfig") to
+	// ForceSendFields is a list of field names (e.g. "BrokerDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CapacityConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BrokerDetails") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2920,6 +2952,28 @@ type ProjectsLocationsClustersGetCall struct {
 func (r *ProjectsLocationsClustersService) Get(name string) *ProjectsLocationsClustersGetCall {
 	c := &ProjectsLocationsClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": Specifies the view of the Cluster
+// resource to be returned. Defaults to CLUSTER_VIEW_BASIC. See the ClusterView
+// enum for possible values.
+//
+// Possible values:
+//
+//	"CLUSTER_VIEW_UNSPECIFIED" - The default / unset value. The API will
+//
+// default to the BASIC view.
+//
+//	"CLUSTER_VIEW_BASIC" - Include the basic metadata of the Cluster. This is
+//
+// the default value (for both ListClusters and GetCluster).
+//
+//	"CLUSTER_VIEW_FULL" - Include everything, including data fetched from the
+//
+// Kafka cluster source of truth.
+func (c *ProjectsLocationsClustersGetCall) View(view string) *ProjectsLocationsClustersGetCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 

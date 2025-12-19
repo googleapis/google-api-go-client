@@ -4385,6 +4385,7 @@ type Hash struct {
 	// hex-encoded. See b/244466565 and
 	// https://github.com/in-toto/attestation/pull/108.
 	//   "SHA512" - A SHA-512 hash.
+	//   "DIRSUM_SHA256" - A Dirsum SHA-256 hash.
 	Type string `json:"type,omitempty"`
 	// Value: Required. The hash value.
 	Value string `json:"value,omitempty"`

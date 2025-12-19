@@ -1165,6 +1165,11 @@ type GitProxyConfig struct {
 	// Enabled: Optional. Setting this to true allows the git proxy to be used for
 	// performing git operations on the repositories linked in the connection.
 	Enabled bool `json:"enabled,omitempty"`
+	// HttpProxyBaseUri: Output only. The base URI for the HTTP proxy endpoint. Has
+	// the format `https://{generatedID}-c-h-{shortRegion}.developerconnect.dev`
+	// Populated only when enabled is set to true. This endpoint is used by other
+	// Google services that integrate with Developer Connect.
+	HttpProxyBaseUri string `json:"httpProxyBaseUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2060,15 +2065,20 @@ type ProviderOAuthConfig struct {
 	// https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes
 	//   "GITLAB" - GitLab provider. Scopes can be found at
 	// https://docs.gitlab.com/user/profile/personal_access_tokens/#personal-access-token-scopes
-	//   "GOOGLE" - Google provider. Recommended scopes:
+	//   "GOOGLE" - Deprecated: This provider is no longer supported. Google
+	// provider. Recommended scopes:
 	// "https://www.googleapis.com/auth/drive.readonly",
 	// "https://www.googleapis.com/auth/documents.readonly"
-	//   "SENTRY" - Sentry provider. Scopes can be found at
-	// https://docs.sentry.io/api/permissions/
-	//   "ROVO" - Rovo provider. Must select the "rovo" scope.
-	//   "NEW_RELIC" - New Relic provider. No scopes are allowed.
-	//   "DATASTAX" - Datastax provider. No scopes are allowed.
-	//   "DYNATRACE" - Dynatrace provider.
+	//   "SENTRY" - Deprecated: This provider is no longer supported. Sentry
+	// provider. Scopes can be found at https://docs.sentry.io/api/permissions/
+	//   "ROVO" - Deprecated: This provider is no longer supported. Rovo provider.
+	// Must select the "rovo" scope.
+	//   "NEW_RELIC" - Deprecated: This provider is no longer supported. New Relic
+	// provider. No scopes are allowed.
+	//   "DATASTAX" - Deprecated: This provider is no longer supported. Datastax
+	// provider. No scopes are allowed.
+	//   "DYNATRACE" - Deprecated: This provider is no longer supported. Dynatrace
+	// provider.
 	SystemProviderId string `json:"systemProviderId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Scopes") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2177,15 +2187,20 @@ type StartOAuthResponse struct {
 	// https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes
 	//   "GITLAB" - GitLab provider. Scopes can be found at
 	// https://docs.gitlab.com/user/profile/personal_access_tokens/#personal-access-token-scopes
-	//   "GOOGLE" - Google provider. Recommended scopes:
+	//   "GOOGLE" - Deprecated: This provider is no longer supported. Google
+	// provider. Recommended scopes:
 	// "https://www.googleapis.com/auth/drive.readonly",
 	// "https://www.googleapis.com/auth/documents.readonly"
-	//   "SENTRY" - Sentry provider. Scopes can be found at
-	// https://docs.sentry.io/api/permissions/
-	//   "ROVO" - Rovo provider. Must select the "rovo" scope.
-	//   "NEW_RELIC" - New Relic provider. No scopes are allowed.
-	//   "DATASTAX" - Datastax provider. No scopes are allowed.
-	//   "DYNATRACE" - Dynatrace provider.
+	//   "SENTRY" - Deprecated: This provider is no longer supported. Sentry
+	// provider. Scopes can be found at https://docs.sentry.io/api/permissions/
+	//   "ROVO" - Deprecated: This provider is no longer supported. Rovo provider.
+	// Must select the "rovo" scope.
+	//   "NEW_RELIC" - Deprecated: This provider is no longer supported. New Relic
+	// provider. No scopes are allowed.
+	//   "DATASTAX" - Deprecated: This provider is no longer supported. Datastax
+	// provider. No scopes are allowed.
+	//   "DYNATRACE" - Deprecated: This provider is no longer supported. Dynatrace
+	// provider.
 	SystemProviderId string `json:"systemProviderId,omitempty"`
 	// Ticket: The ticket to be used for post processing the callback from the
 	// service provider.

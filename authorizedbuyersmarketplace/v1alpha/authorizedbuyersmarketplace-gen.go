@@ -120,6 +120,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Bidders = NewBiddersService(s)
 	s.Buyers = NewBuyersService(s)
+	s.Curators = NewCuratorsService(s)
+	s.MediaPlanners = NewMediaPlannersService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -147,6 +149,10 @@ type Service struct {
 	Bidders *BiddersService
 
 	Buyers *BuyersService
+
+	Curators *CuratorsService
+
+	MediaPlanners *MediaPlannersService
 }
 
 func (s *Service) userAgent() string {
@@ -294,6 +300,36 @@ type BuyersPublisherProfilesService struct {
 	s *Service
 }
 
+func NewCuratorsService(s *Service) *CuratorsService {
+	rs := &CuratorsService{s: s}
+	rs.CuratedPackages = NewCuratorsCuratedPackagesService(s)
+	return rs
+}
+
+type CuratorsService struct {
+	s *Service
+
+	CuratedPackages *CuratorsCuratedPackagesService
+}
+
+func NewCuratorsCuratedPackagesService(s *Service) *CuratorsCuratedPackagesService {
+	rs := &CuratorsCuratedPackagesService{s: s}
+	return rs
+}
+
+type CuratorsCuratedPackagesService struct {
+	s *Service
+}
+
+func NewMediaPlannersService(s *Service) *MediaPlannersService {
+	rs := &MediaPlannersService{s: s}
+	return rs
+}
+
+type MediaPlannersService struct {
+	s *Service
+}
+
 // AcceptProposalRequest: Request to accept a proposal. Accepting a proposal
 // implies acceptance of the publisher terms_and_conditions, if any.
 type AcceptProposalRequest struct {
@@ -317,12 +353,42 @@ func (s AcceptProposalRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AccessControlSettings: Settings for controlling access to a curated package.
+type AccessControlSettings struct {
+	// AllowlistedMediaPlanners: Required. Immutable. The list of media planners
+	// that are explicitly granted access to the curated package. Eligible media
+	// planners can be found in the mediaPlanners.list method. Only a single media
+	// planner may be allowlisted at this time. Format:
+	// `mediaPlanners/{mediaPlannerAccountId}`
+	AllowlistedMediaPlanners []string `json:"allowlistedMediaPlanners,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowlistedMediaPlanners")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowlistedMediaPlanners") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AccessControlSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessControlSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ActivateClientRequest: Request message for activating a client.
 type ActivateClientRequest struct {
 }
 
 // ActivateClientUserRequest: Request message for activating a client user.
 type ActivateClientUserRequest struct {
+}
+
+// ActivateCuratedPackageRequest: Request message for ActivateCuratedPackage.
+type ActivateCuratedPackageRequest struct {
 }
 
 // ActivateDataSegmentRequest: Request message for activating a data segment
@@ -778,6 +844,70 @@ func (s CriteriaTargeting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CuratedPackage: Represents a curated package of inventory created and
+// managed by a Curator.
+type CuratedPackage struct {
+	// AccessSettings: Required. Settings for controlling access to the curated
+	// package. Access to this curated package is limited to the allowlisted media
+	// planners and the creator. Buyers and bidders can not be allowlisted for or
+	// have direct access to this resource.
+	AccessSettings *AccessControlSettings `json:"accessSettings,omitempty"`
+	// CreateTime: Output only. The timestamp when the curated package was created.
+	// Can be used to filter the response of the curatedPackages.list method.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. A description of the curated package, provided by the
+	// curator.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Required. The display name assigned to the curated package by
+	// the curator. Can be used to filter the response of the curatedPackages.list
+	// method.
+	DisplayName string `json:"displayName,omitempty"`
+	// FeeCpm: Optional. The CPM fee charged by the curator to buyers using this
+	// curated package. Can be used to filter the response of the
+	// curatedPackages.list method.
+	FeeCpm *Money `json:"feeCpm,omitempty"`
+	// FloorPriceCpm: Optional. The minimum CPM a buyer has to bid to participate
+	// in auctions for inventory in this curated package. Can be used to filter the
+	// response of the curatedPackages.list method.
+	FloorPriceCpm *Money `json:"floorPriceCpm,omitempty"`
+	// Name: Identifier. The unique resource name for the curated package. Format:
+	// `curators/{accountId}/curatedPackages/{curatedPackageId}`
+	Name string `json:"name,omitempty"`
+	// State: Output only. The state of the curated package. Can be used to filter
+	// the response of the curatedPackages.list method.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value.
+	//   "ACTIVE" - The curated package is active.
+	//   "INACTIVE" - The curated package is inactive.
+	State string `json:"state,omitempty"`
+	// Targeting: Optional. Targeting criteria for the curated package.
+	Targeting *PackageTargeting `json:"targeting,omitempty"`
+	// UpdateTime: Output only. The timestamp when the curated package was last
+	// updated. Can be used to filter the response of the curatedPackages.list
+	// method.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AccessSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessSettings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CuratedPackage) MarshalJSON() ([]byte, error) {
+	type NoMethod CuratedPackage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DataSegment: Defines an identifier for a segment of inventory that can be
 // targeted by curators or media planners in the deals or auction packages UI.
 // Curation of inventory is done by curators on external platforms.
@@ -901,6 +1031,11 @@ type DeactivateClientRequest struct {
 
 // DeactivateClientUserRequest: Request message for deactivating a client user.
 type DeactivateClientUserRequest struct {
+}
+
+// DeactivateCuratedPackageRequest: Request message for
+// DeactivateCuratedPackage.
+type DeactivateCuratedPackageRequest struct {
 }
 
 // DeactivateDataSegmentRequest: Request message for deactivating a data
@@ -1416,6 +1551,36 @@ func (s ListClientsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListCuratedPackagesResponse: Response message for ListCuratedPackages.
+type ListCuratedPackagesResponse struct {
+	// CuratedPackages: The list of curated packages.
+	CuratedPackages []*CuratedPackage `json:"curatedPackages,omitempty"`
+	// NextPageToken: A token to retrieve the next page of results. Pass this value
+	// in the ListCuratedPackagesRequest.pageToken field in the subsequent call to
+	// `ListCuratedPackages` method to retrieve the next page of results. If empty,
+	// then there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CuratedPackages") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CuratedPackages") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListCuratedPackagesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCuratedPackagesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListDataSegmentsResponse: Response message for listing data segments.
 type ListDataSegmentsResponse struct {
 	// DataSegments: The list of data segments.
@@ -1497,6 +1662,36 @@ type ListFinalizedDealsResponse struct {
 
 func (s ListFinalizedDealsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFinalizedDealsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListMediaPlannersResponse: A response containing media planner account
+// information.
+type ListMediaPlannersResponse struct {
+	// MediaPlanners: List of media planners.
+	MediaPlanners []*MediaPlanner `json:"mediaPlanners,omitempty"`
+	// NextPageToken: A token which can be passed to a subsequent call to the
+	// `ListMediaPlanners` method to retrieve the next page of results in
+	// ListMediaPlannersRequest.pageToken.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "MediaPlanners") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MediaPlanners") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListMediaPlannersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMediaPlannersResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1612,6 +1807,17 @@ func (s MarketplaceTargeting) MarshalJSON() ([]byte, error) {
 type MediaPlanner struct {
 	// AccountId: Output only. Account ID of the media planner.
 	AccountId string `json:"accountId,omitempty"`
+	// AncestorNames: Output only. The ancestor names of the media planner. Format:
+	// `mediaPlanners/{mediaPlannerAccountId}` Can be used to filter the response
+	// of the mediaPlanners.list method.
+	AncestorNames []string `json:"ancestorNames,omitempty"`
+	// DisplayName: Output only. The display name of the media planner. Can be used
+	// to filter the response of the mediaPlanners.list method.
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Identifier. The unique resource name of the media planner. Format:
+	// `mediaPlanners/{mediaPlannerAccountId}` Can be used to filter the response
+	// of the mediaPlanners.list method.
+	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1740,6 +1946,360 @@ type OperatingSystemTargeting struct {
 
 func (s OperatingSystemTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod OperatingSystemTargeting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PackagePlacementTargeting: Represents targeting about where the ads can
+// appear, for example, certain sites or mobile applications. Different
+// placement targeting types will be logically OR'ed.
+type PackagePlacementTargeting struct {
+	// IncludedMobileAppCategoryTargeting: Optional. The list of targeted mobile
+	// app categories.
+	IncludedMobileAppCategoryTargeting googleapi.Int64s `json:"includedMobileAppCategoryTargeting,omitempty"`
+	// MobileAppTargeting: Optional. The list of targeted or excluded mobile
+	// application IDs that publishers own. Currently, only Android and Apple apps
+	// are supported. Android App ID, for example, com.google.android.apps.maps,
+	// can be found in Google Play Store URL. iOS App ID (which is a number) can be
+	// found at the end of iTunes store URL. First party mobile applications is
+	// either included or excluded.
+	MobileAppTargeting *StringTargetingDimension `json:"mobileAppTargeting,omitempty"`
+	// UriTargeting: Optional. The list of targeted or excluded URLs. The domains
+	// should have the http/https stripped (for example, google.com), and can
+	// contain a max of 5 paths per url.
+	UriTargeting *StringTargetingDimension `json:"uriTargeting,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "IncludedMobileAppCategoryTargeting") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "IncludedMobileAppCategoryTargeting") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PackagePlacementTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod PackagePlacementTargeting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PackagePublisherProvidedSignalsTargeting: Represents targeting about
+// publisher provided signals. Different publisher provided signals types will
+// be logically OR'ed.
+type PackagePublisherProvidedSignalsTargeting struct {
+	// AudienceTargeting: Optional. The list of targeted or excluded audience IDs.
+	// Based off of IAB Audience Taxonomy version 1.1
+	// (https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main/Audience%20Taxonomies/Audience%20Taxonomy%201.1.tsv)
+	AudienceTargeting *TaxonomyTargeting `json:"audienceTargeting,omitempty"`
+	// ContentTargeting: Optional. The list of targeted or excluded content IDs.
+	// Based off of IAB Content Taxonomy version 2.2
+	// (https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main/Content%20Taxonomies/Content%20Taxonomy%202.2.tsv)
+	ContentTargeting *TaxonomyTargeting `json:"contentTargeting,omitempty"`
+	// VideoAndAudioSignalsTargeting: Optional. The list of targeted and excluded
+	// video and audio signals IDs. These are additional signals supported by
+	// publisher provided signals.
+	VideoAndAudioSignalsTargeting *StringTargetingDimension `json:"videoAndAudioSignalsTargeting,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AudienceTargeting") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AudienceTargeting") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PackagePublisherProvidedSignalsTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod PackagePublisherProvidedSignalsTargeting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PackageTargeting: Targeting criteria for curated and auction packages.
+type PackageTargeting struct {
+	// GeoTargeting: Optional. The geo criteria IDs to be included or excluded as
+	// defined in
+	// https://storage.googleapis.com/adx-rtb-dictionaries/geo-table.csv. If unset,
+	// inventory will be targeted regardless of geo.
+	GeoTargeting *CriteriaTargeting `json:"geoTargeting,omitempty"`
+	// IncludedAcceleratedMobilePageType: Optional. The targeted accelerated mobile
+	// page type. If unset, inventory will be targeted regardless of AMP status.
+	//
+	// Possible values:
+	//   "ACCELERATED_MOBILE_PAGE_TYPE_UNSPECIFIED" - Default value. Should not be
+	// used in targeting specifications.
+	//   "ACCELERATED_MOBILE_PAGE_TYPE_NON_AMP" - Targets inventory on standard web
+	// pages not using any AMP framework.
+	//   "ACCELERATED_MOBILE_PAGE_TYPE_AMP" - Targets inventory on pages built
+	// using the core AMP HTML framework.
+	//   "ACCELERATED_MOBILE_PAGE_TYPE_AMP_STORY" - Targets inventory on pages
+	// using the AMP Story (STAMP) format, which is optimized for visual
+	// storytelling (e.g., tappable full-screen experiences).
+	IncludedAcceleratedMobilePageType string `json:"includedAcceleratedMobilePageType,omitempty"`
+	// IncludedAdSizes: Optional. The list of ad sizes to target. If unset,
+	// inventory will be targeted regardless of ad size. Curated packages supports
+	// `PIXEL` and `INTERSTITIAL` ad sizes.
+	IncludedAdSizes []*AdSize `json:"includedAdSizes,omitempty"`
+	// IncludedAuthorizedSellerStatuses: Optional. The included list of targeted
+	// authorized seller statuses. If empty, inventory will be targeted regardless
+	// of seller status.
+	//
+	// Possible values:
+	//   "AUTHORIZED_SELLER_STATUS_UNSPECIFIED" - Default value. Should not be used
+	// in targeting specifications.
+	//   "AUTHORIZED_SELLER_STATUS_DIRECT" - Targets inventory where the seller is
+	// declared as 'DIRECT'. This indicates the publisher (content owner) directly
+	// controls the seller account and has a direct business contract with the
+	// advertising system for this account.
+	//   "AUTHORIZED_SELLER_STATUS_RESELLER" - Targets inventory where the seller
+	// is declared as 'RESELLER'. This indicates the publisher has authorized
+	// another entity to operate the listed seller account and resell their ad
+	// space.
+	IncludedAuthorizedSellerStatuses []string `json:"includedAuthorizedSellerStatuses,omitempty"`
+	// IncludedCreativeFormat: Optional. The creative format to target. If unset,
+	// all creative markup types are targeted.
+	//
+	// Possible values:
+	//   "CREATIVE_FORMAT_UNSPECIFIED" - Default value. Should not be used in
+	// targeting specifications.
+	//   "CREATIVE_FORMAT_DISPLAY" - Targets ad slots intended for HTML display
+	// creatives.
+	//   "CREATIVE_FORMAT_VIDEO" - Targets ad slots intended for video creatives.
+	//   "CREATIVE_FORMAT_AUDIO" - Targets ad slots intended for audio creatives.
+	IncludedCreativeFormat string `json:"includedCreativeFormat,omitempty"`
+	// IncludedDataSegments: Optional. The active data segments to be targeted. If
+	// unset, inventory will be targeted regardless of data segments. Format:
+	// `curators/{account_id}/dataSegments/{data_segment_id}`
+	IncludedDataSegments []string `json:"includedDataSegments,omitempty"`
+	// IncludedDeviceTypes: Optional. The list of included device types to target.
+	// If empty, all device types are targeted.
+	//
+	// Possible values:
+	//   "DEVICE_TYPE_UNSPECIFIED" - Default value. Should not be used in targeting
+	// specifications.
+	//   "DEVICE_TYPE_PERSONAL_COMPUTER" - Targets desktop or laptop computers.
+	//   "DEVICE_TYPE_CONNECTED_TV" - Targets connected TVs: devices that stream TV
+	// content, including smart TVs, gaming consoles, and streaming boxes/sticks.
+	//   "DEVICE_TYPE_PHONE" - Targets high-end mobile devices.
+	//   "DEVICE_TYPE_TABLET" - Targets tablet devices.
+	IncludedDeviceTypes []string `json:"includedDeviceTypes,omitempty"`
+	// IncludedEnvironment: Optional. The environment to target. If unspecified,
+	// all environments are targeted.
+	//
+	// Possible values:
+	//   "ENVIRONMENT_UNSPECIFIED" - Default value. Should not be used in targeting
+	// specifications.
+	//   "ENVIRONMENT_SITE" - Targets inventory rendered within an ad-supported
+	// website.
+	//   "ENVIRONMENT_APP" - Targets inventory within a mobile application.
+	IncludedEnvironment string `json:"includedEnvironment,omitempty"`
+	// IncludedNativeInventoryTypes: Optional. The targeted native inventory types.
+	// If empty, inventory will be targeted regardless of native inventory type.
+	//
+	// Possible values:
+	//   "NATIVE_INVENTORY_TYPE_UNSPECIFIED" - Default value. Should not be used in
+	// targeting specifications.
+	//   "NATIVE_INVENTORY_TYPE_NATIVE_ONLY" - Targets ad slots that *only* accept
+	// and render native ads.
+	//   "NATIVE_INVENTORY_TYPE_NATIVE_OR_BANNER" - Targets ad slots that accept
+	// and render either native or banner ads.
+	IncludedNativeInventoryTypes []string `json:"includedNativeInventoryTypes,omitempty"`
+	// IncludedOpenMeasurementTypes: Optional. The list of targeted open
+	// measurement types. If empty, inventory will be targeted regardless of Open
+	// Measurement support.
+	//
+	// Possible values:
+	//   "OPEN_MEASUREMENT_TYPE_UNSPECIFIED" - Default value. Should not be used in
+	// targeting specifications.
+	//   "OPEN_MEASUREMENT_TYPE_OMID_V1" - Targets inventory that supports the v1
+	// Open Measurement Interface Definition (OMID).
+	IncludedOpenMeasurementTypes []string `json:"includedOpenMeasurementTypes,omitempty"`
+	// IncludedRestrictedCategories: Optional. The list of targeted restricted
+	// categories. If empty, inventory will be targeted regardless of restricted
+	// categories.
+	//
+	// Possible values:
+	//   "RESTRICTED_CATEGORY_UNSPECIFIED" - Default value. Should not be used in
+	// targeting specifications.
+	//   "RESTRICTED_CATEGORY_ALCOHOL" - Targets inventory where alcohol ads are
+	// allowed by the publisher.
+	//   "RESTRICTED_CATEGORY_GAMBLING" - Targets inventory where gambling ads are
+	// allowed by the publisher.
+	IncludedRestrictedCategories []string `json:"includedRestrictedCategories,omitempty"`
+	// IncludedRewardedType: Optional. The targeted rewarded type. If unset,
+	// inventory will be targeted regardless of rewarded type.
+	//
+	// Possible values:
+	//   "REWARDED_TYPE_UNSPECIFIED" - Default value. Should not be used in
+	// targeting specifications.
+	//   "REWARDED_TYPE_NON_REWARDED" - Targets inventory that does NOT offer an
+	// explicit reward to the user for watching or interacting with the ad.
+	//   "REWARDED_TYPE_REWARDED" - Targets inventory that offers a reward to the
+	// user in exchange for watching or engaging with the ad.
+	IncludedRewardedType string `json:"includedRewardedType,omitempty"`
+	// LanguageTargeting: Optional. The languages to target. If unset, inventory
+	// will be targeted regardless of language. See
+	// https://developers.google.com/google-ads/api/data/codes-formats#languages
+	// for the list of supported language codes.
+	LanguageTargeting *StringTargetingDimension `json:"languageTargeting,omitempty"`
+	// MinimumPredictedClickThroughRatePercentageMillis: Optional. The targeted
+	// minimum predicted click through rate, ranging in values [10, 10000] (0.01% -
+	// 10%). A value of 50 means that the configuration will only match adslots for
+	// which we predict at least 0.05% click through rate. An unset value indicates
+	// inventory will be targeted regardless of predicted click through rate.
+	MinimumPredictedClickThroughRatePercentageMillis int64 `json:"minimumPredictedClickThroughRatePercentageMillis,omitempty,string"`
+	// MinimumPredictedViewabilityPercentage: Optional. The targeted minimum
+	// predicted viewability percentage. This value must be a multiple of 10
+	// between 10 and 90 (inclusive). For example, 10 is valid, but 0, 15, and 100
+	// are not. A value of 10 means that the configuration will only match adslots
+	// for which we predict at least 10% viewability. An unset value indicates
+	// inventory will be targeted regardless of predicted viewability.
+	MinimumPredictedViewabilityPercentage int64 `json:"minimumPredictedViewabilityPercentage,omitempty,string"`
+	// PlacementTargeting: Optional. Placement targeting information, for example,
+	// URL, mobile applications.
+	PlacementTargeting *PackagePlacementTargeting `json:"placementTargeting,omitempty"`
+	// PublisherProvidedSignalsTargeting: Optional. The publisher provided signals
+	// to target. If unset, inventory will be targeted regardless of publisher
+	// provided signals.
+	PublisherProvidedSignalsTargeting *PackagePublisherProvidedSignalsTargeting `json:"publisherProvidedSignalsTargeting,omitempty"`
+	// PublisherTargeting: Optional. The targeted publishers. If unset, inventory
+	// will be targeted regardless of publisher. Publishers are identified by their
+	// publisher ID from ads.txt / app-ads.txt. See https://iabtechlab.com/ads-txt/
+	// and https://iabtechlab.com/app-ads-txt/ for more details.
+	PublisherTargeting *StringTargetingDimension `json:"publisherTargeting,omitempty"`
+	// VerticalTargeting: Optional. The verticals included or excluded as defined
+	// in
+	// https://developers.google.com/authorized-buyers/rtb/downloads/publisher-verticals.
+	// If unset, inventory will be targeted regardless of vertical.
+	VerticalTargeting *CriteriaTargeting `json:"verticalTargeting,omitempty"`
+	// VideoTargeting: Optional. Video specific targeting criteria.
+	VideoTargeting *PackageVideoTargeting `json:"videoTargeting,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GeoTargeting") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GeoTargeting") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PackageTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod PackageTargeting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PackageVideoTargeting: Video specific targeting criteria.
+type PackageVideoTargeting struct {
+	// IncludedContentDeliveryMethod: Optional. The targeted video delivery method.
+	// If unset, inventory will be targeted regardless of video delivery method.
+	//
+	// Possible values:
+	//   "CONTENT_DELIVERY_METHOD_UNSPECIFIED" - Default value. Should not be used
+	// in targeting specifications.
+	//   "CONTENT_DELIVERY_METHOD_STREAMING" - Targets video content that is being
+	// broadcast live.
+	//   "CONTENT_DELIVERY_METHOD_PROGRESSIVE" - Targets video content that is
+	// transferred incrementally as client's playback requires.
+	IncludedContentDeliveryMethod string `json:"includedContentDeliveryMethod,omitempty"`
+	// IncludedMaximumAdDurationTargeting: Optional. The targeted maximum video ad
+	// duration. If unset, inventory will be targeted regardless of maximum video
+	// ad duration.
+	//
+	// Possible values:
+	//   "MAXIMUM_VIDEO_AD_DURATION_UNSPECIFIED" - Default value. Should not be
+	// used in targeting specifications.
+	//   "MAXIMUM_VIDEO_AD_DURATION_FIFTEEN_SECONDS" - Applies to video ads with a
+	// duration up to 15 seconds (0 < duration <= 15s).
+	//   "MAXIMUM_VIDEO_AD_DURATION_TWENTY_SECONDS" - Applies to video ads with a
+	// duration up to 20 seconds (0 < duration <= 20s).
+	//   "MAXIMUM_VIDEO_AD_DURATION_THIRTY_SECONDS" - Applies to video ads with a
+	// duration up to 30 seconds (0 < duration <= 30s).
+	//   "MAXIMUM_VIDEO_AD_DURATION_SIXTY_SECONDS" - Applies to video ads with a
+	// duration up to 60 seconds (0 < duration <= 60s).
+	//   "MAXIMUM_VIDEO_AD_DURATION_NINETY_SECONDS" - Applies to video ads with a
+	// duration up to 90 seconds (0 < duration <= 90s).
+	//   "MAXIMUM_VIDEO_AD_DURATION_ONE_HUNDRED_TWENTY_SECONDS" - Applies to video
+	// ads with a duration up to 120 seconds (0 < duration <= 120s).
+	IncludedMaximumAdDurationTargeting string `json:"includedMaximumAdDurationTargeting,omitempty"`
+	// IncludedMimeTypes: Optional. The list of targeted video mime types using the
+	// IANA published MIME type strings
+	// (https://www.iana.org/assignments/media-types/media-types.xhtml). If empty,
+	// inventory will be targeted regardless of video mime type.
+	//
+	// Possible values:
+	//   "VIDEO_MIME_TYPE_UNSPECIFIED" - Default value. Should not be used in
+	// targeting specifications.
+	//   "VIDEO_MIME_TYPE_THREEGPP" - 3GPP container format used on 3G phones.
+	//   "VIDEO_MIME_TYPE_APPLICATION_MPEGURL" - HLS/M3U8
+	//   "VIDEO_MIME_TYPE_MP4" - MPEG-4 container typically with H.264 codec.
+	//   "VIDEO_MIME_TYPE_APPLICATION_MPEGDASH" - DASH.
+	//   "VIDEO_MIME_TYPE_APPLICATION_JAVASCRIPT" - JavaScript (used for VPAID
+	// ads).
+	//   "VIDEO_MIME_TYPE_WEBM" - WebM container assuming VP9 codec.
+	IncludedMimeTypes []string `json:"includedMimeTypes,omitempty"`
+	// IncludedPlaybackMethods: Optional. The list of targeted video playback
+	// methods. If empty, inventory will be targeted regardless of video playback
+	// method.
+	//
+	// Possible values:
+	//   "PLAYBACK_METHOD_UNSPECIFIED" - Unspecified video playback method. Should
+	// not be used.
+	//   "PLAYBACK_METHOD_AUTO_PLAY_SOUND_ON" - Playback starts automatically when
+	// the page/content loads.
+	//   "PLAYBACK_METHOD_AUTO_PLAY_SOUND_OFF" - Playback starts automatically when
+	// the page/content loads, but with sound off.
+	//   "PLAYBACK_METHOD_CLICK_TO_PLAY" - Playback is initiated by a user action
+	// (e.g., clicking a play button).
+	IncludedPlaybackMethods []string `json:"includedPlaybackMethods,omitempty"`
+	// IncludedPlayerSizeTargeting: Optional. The targeted video player size. If
+	// unset, inventory will be targeted regardless of video player size.
+	IncludedPlayerSizeTargeting *VideoPlayerSizeTargeting `json:"includedPlayerSizeTargeting,omitempty"`
+	// IncludedPositionTypes: Optional. The targeted video ad position types. If
+	// empty, inventory will be targeted regardless of video ad position type.
+	//
+	// Possible values:
+	//   "POSITION_TYPE_UNSPECIFIED" - Default value. Should not be used in
+	// targeting specifications.
+	//   "POSITION_TYPE_MIDROLL" - The ad is played in the middle of the video
+	// content.
+	//   "POSITION_TYPE_POSTROLL" - The ad is played after the video content.
+	//   "POSITION_TYPE_PREROLL" - The ad is played before the video content.
+	IncludedPositionTypes []string `json:"includedPositionTypes,omitempty"`
+	// MinimumPredictedCompletionRatePercentage: Optional. The targeted minimum
+	// predicted completion rate percentage. This value must be a multiple of 10
+	// between 10 and 90 (inclusive). For example, 10 is valid, but 0, 15, and 100
+	// are not. A value of 10 means that the configuration will only match adslots
+	// for which we predict at least 10% completion rate. An unset value indicates
+	// inventory will be targeted regardless of predicted completion rate.
+	MinimumPredictedCompletionRatePercentage int64 `json:"minimumPredictedCompletionRatePercentage,omitempty,string"`
+	// PlcmtTargeting: Optional. The targeted video plcmt types. If unset,
+	// inventory will be targeted regardless of video plcmt type.
+	PlcmtTargeting *VideoPlcmtTargeting `json:"plcmtTargeting,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "IncludedContentDeliveryMethod") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IncludedContentDeliveryMethod")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PackageVideoTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod PackageVideoTargeting
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2299,6 +2859,38 @@ func (s SendRfpRequest) MarshalJSON() ([]byte, error) {
 type SetReadyToServeRequest struct {
 }
 
+// StringTargetingDimension: Generic targeting with string values.
+type StringTargetingDimension struct {
+	// SelectionType: Required. How the items in this list should be targeted.
+	//
+	// Possible values:
+	//   "SELECTION_TYPE_UNSPECIFIED" - Unspecified selection type. Should not be
+	// used.
+	//   "SELECTION_TYPE_INCLUDE" - The values in the targeting dimension are
+	// included.
+	//   "SELECTION_TYPE_EXCLUDE" - The values in the targeting dimension are
+	// excluded.
+	SelectionType string `json:"selectionType,omitempty"`
+	// Values: Required. The values specified.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SelectionType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SelectionType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StringTargetingDimension) MarshalJSON() ([]byte, error) {
+	type NoMethod StringTargetingDimension
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SubscribeAuctionPackageRequest: Request message for SubscribeAuctionPackage.
 type SubscribeAuctionPackageRequest struct {
 }
@@ -2326,6 +2918,31 @@ type SubscribeClientsRequest struct {
 
 func (s SubscribeClientsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscribeClientsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TaxonomyTargeting: Defines targeting criteria for handling the IAB audience
+// and content Taxonomy ID space.
+type TaxonomyTargeting struct {
+	// ExcludedTaxonomyIds: Optional. The list of excluded content taxonomy IDs.
+	ExcludedTaxonomyIds []string `json:"excludedTaxonomyIds,omitempty"`
+	// TargetedTaxonomyIds: Optional. The list of targeted content taxonomy IDs.
+	TargetedTaxonomyIds []string `json:"targetedTaxonomyIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExcludedTaxonomyIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExcludedTaxonomyIds") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TaxonomyTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod TaxonomyTargeting
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2507,6 +3124,92 @@ type UriTargeting struct {
 
 func (s UriTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod UriTargeting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VideoPlayerSizeTargeting: Represents the size of the video player that can
+// be targeted. Both width and height are required to be set to non-zero
+// values.
+type VideoPlayerSizeTargeting struct {
+	// MinimumHeight: Required. The minimum height of the video player in pixels.
+	MinimumHeight int64 `json:"minimumHeight,omitempty,string"`
+	// MinimumWidth: Required. The minimum width of the video player in pixels.
+	MinimumWidth int64 `json:"minimumWidth,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "MinimumHeight") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MinimumHeight") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VideoPlayerSizeTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod VideoPlayerSizeTargeting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VideoPlcmtTargeting: Defines targeting criteria based on the video placement
+// type, often corresponding to the IAB OpenRTB 'plcmt' field.
+type VideoPlcmtTargeting struct {
+	// SelectionType: Required. The selection type for the list of video plcmts.
+	//
+	// Possible values:
+	//   "SELECTION_TYPE_UNSPECIFIED" - Unspecified selection type. Should not be
+	// used.
+	//   "SELECTION_TYPE_INCLUDE" - The values in the targeting dimension are
+	// included.
+	//   "SELECTION_TYPE_EXCLUDE" - The values in the targeting dimension are
+	// excluded.
+	SelectionType string `json:"selectionType,omitempty"`
+	// VideoPlcmtTypes: Required. The list of targeted video plcmts types. If
+	// empty, inventory will be targeted regardless of video plcmt type.
+	//
+	// Possible values:
+	//   "VIDEO_PLCMT_TYPE_UNSPECIFIED" - Default value. Should not be used in
+	// targeting specifications.
+	//   "INSTREAM" - Pre-roll, mid-roll, and post-roll ads that are played before,
+	// during or after the streaming video content that the consumer has requested.
+	// Instream video must be set to “sound on” by default at player start, or
+	// have explicitly clear user intent to watch the video content. While there
+	// may be other content surrounding the player, the video content must be the
+	// focus of the user’s visit. It should remain the primary content on the
+	// page and the only video player in-view capable of audio when playing. If the
+	// player converts to floating/sticky, subsequent ad calls should accurately
+	// convey the updated player size.
+	//   "ACCOMPANYING_CONTENT" - Pre-roll, mid-roll, and post-roll ads that are
+	// played before, during, or after streaming video content. The video player
+	// loads and plays before, between, or after paragraphs of text or graphical
+	// content, and starts playing only when it enters the viewport. Accompanying
+	// content should only start playback upon entering the viewport. It may
+	// convert to a floating/sticky player as it scrolls off the page.
+	//   "INTERSTITIAL" - Video ads that are played without video content. During
+	// playback, it must be the primary focus of the page and take up the majority
+	// of the viewport and cannot be scrolled out of view. This can be in
+	// placements like in-app video or slideshows.
+	//   "NO_CONTENT" - Video ads that are played without streaming video content.
+	// This can be in placements like slideshows, native feeds, in-content or
+	// sticky/floating.
+	VideoPlcmtTypes []string `json:"videoPlcmtTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SelectionType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SelectionType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VideoPlcmtTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod VideoPlcmtTargeting
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8110,6 +8813,859 @@ func (c *BuyersPublisherProfilesListCall) Do(opts ...googleapi.CallOption) (*Lis
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *BuyersPublisherProfilesListCall) Pages(ctx context.Context, f func(*ListPublisherProfilesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type CuratorsCuratedPackagesActivateCall struct {
+	s                             *Service
+	name                          string
+	activatecuratedpackagerequest *ActivateCuratedPackageRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Activate: Activates an existing curated package.
+//
+//   - name: The name of the curated package to activate. Format:
+//     `curators/{accountId}/curatedPackages/{curatedPackageId}`.
+func (r *CuratorsCuratedPackagesService) Activate(name string, activatecuratedpackagerequest *ActivateCuratedPackageRequest) *CuratorsCuratedPackagesActivateCall {
+	c := &CuratorsCuratedPackagesActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.activatecuratedpackagerequest = activatecuratedpackagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CuratorsCuratedPackagesActivateCall) Fields(s ...googleapi.Field) *CuratorsCuratedPackagesActivateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CuratorsCuratedPackagesActivateCall) Context(ctx context.Context) *CuratorsCuratedPackagesActivateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CuratorsCuratedPackagesActivateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CuratorsCuratedPackagesActivateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.activatecuratedpackagerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:activate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.curators.curatedPackages.activate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "authorizedbuyersmarketplace.curators.curatedPackages.activate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CuratedPackage.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CuratorsCuratedPackagesActivateCall) Do(opts ...googleapi.CallOption) (*CuratedPackage, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CuratedPackage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.curators.curatedPackages.activate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CuratorsCuratedPackagesCreateCall struct {
+	s              *Service
+	parent         string
+	curatedpackage *CuratedPackage
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Creates a new curated package.
+//
+//   - parent: The parent curator account where this curated package will be
+//     created. Format: `curators/{accountId}`.
+func (r *CuratorsCuratedPackagesService) Create(parent string, curatedpackage *CuratedPackage) *CuratorsCuratedPackagesCreateCall {
+	c := &CuratorsCuratedPackagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.curatedpackage = curatedpackage
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CuratorsCuratedPackagesCreateCall) Fields(s ...googleapi.Field) *CuratorsCuratedPackagesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CuratorsCuratedPackagesCreateCall) Context(ctx context.Context) *CuratorsCuratedPackagesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CuratorsCuratedPackagesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CuratorsCuratedPackagesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.curatedpackage)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/curatedPackages")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.curators.curatedPackages.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "authorizedbuyersmarketplace.curators.curatedPackages.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CuratedPackage.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CuratorsCuratedPackagesCreateCall) Do(opts ...googleapi.CallOption) (*CuratedPackage, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CuratedPackage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.curators.curatedPackages.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CuratorsCuratedPackagesDeactivateCall struct {
+	s                               *Service
+	name                            string
+	deactivatecuratedpackagerequest *DeactivateCuratedPackageRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// Deactivate: Deactivates an existing curated package.
+//
+//   - name: The name of the curated package to deactivate. Format:
+//     `curators/{accountId}/curatedPackages/{curatedPackageId}`.
+func (r *CuratorsCuratedPackagesService) Deactivate(name string, deactivatecuratedpackagerequest *DeactivateCuratedPackageRequest) *CuratorsCuratedPackagesDeactivateCall {
+	c := &CuratorsCuratedPackagesDeactivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.deactivatecuratedpackagerequest = deactivatecuratedpackagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CuratorsCuratedPackagesDeactivateCall) Fields(s ...googleapi.Field) *CuratorsCuratedPackagesDeactivateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CuratorsCuratedPackagesDeactivateCall) Context(ctx context.Context) *CuratorsCuratedPackagesDeactivateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CuratorsCuratedPackagesDeactivateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CuratorsCuratedPackagesDeactivateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.deactivatecuratedpackagerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:deactivate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.curators.curatedPackages.deactivate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "authorizedbuyersmarketplace.curators.curatedPackages.deactivate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CuratedPackage.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CuratorsCuratedPackagesDeactivateCall) Do(opts ...googleapi.CallOption) (*CuratedPackage, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CuratedPackage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.curators.curatedPackages.deactivate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CuratorsCuratedPackagesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a curated package given its resource name.
+//
+//   - name: The name of the curated package to retrieve. Format:
+//     `curators/{accountId}/curatedPackages/{curatedPackageId}`.
+func (r *CuratorsCuratedPackagesService) Get(name string) *CuratorsCuratedPackagesGetCall {
+	c := &CuratorsCuratedPackagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CuratorsCuratedPackagesGetCall) Fields(s ...googleapi.Field) *CuratorsCuratedPackagesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CuratorsCuratedPackagesGetCall) IfNoneMatch(entityTag string) *CuratorsCuratedPackagesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CuratorsCuratedPackagesGetCall) Context(ctx context.Context) *CuratorsCuratedPackagesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CuratorsCuratedPackagesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CuratorsCuratedPackagesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.curators.curatedPackages.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "authorizedbuyersmarketplace.curators.curatedPackages.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CuratedPackage.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CuratorsCuratedPackagesGetCall) Do(opts ...googleapi.CallOption) (*CuratedPackage, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CuratedPackage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.curators.curatedPackages.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CuratorsCuratedPackagesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists curated packages owned by the specified curator.
+//
+//   - parent: The parent curator account which owns this collection of curated
+//     packages. Format: `curators/{accountId}`.
+func (r *CuratorsCuratedPackagesService) List(parent string) *CuratorsCuratedPackagesListCall {
+	c := &CuratorsCuratedPackagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Optional query string using the
+// Cloud API list filtering syntax
+// (/authorized-buyers/apis/guides/list-filters). Supported columns for
+// filtering are: * displayName * createTime * updateTime * state *
+// feeCpm.currencyCode * feeCpm.units * feeCpm.nanos *
+// floorPriceCpm.currencyCode * floorPriceCpm.units * floorPriceCpm.nanos
+func (c *CuratorsCuratedPackagesListCall) Filter(filter string) *CuratorsCuratedPackagesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server may return fewer results than requested. Max allowed page size is
+// 500. If unspecified, the server will default to 500.
+func (c *CuratorsCuratedPackagesListCall) PageSize(pageSize int64) *CuratorsCuratedPackagesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListCuratedPackages` call. Provide this to retrieve the
+// subsequent page.
+func (c *CuratorsCuratedPackagesListCall) PageToken(pageToken string) *CuratorsCuratedPackagesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CuratorsCuratedPackagesListCall) Fields(s ...googleapi.Field) *CuratorsCuratedPackagesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CuratorsCuratedPackagesListCall) IfNoneMatch(entityTag string) *CuratorsCuratedPackagesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CuratorsCuratedPackagesListCall) Context(ctx context.Context) *CuratorsCuratedPackagesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CuratorsCuratedPackagesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CuratorsCuratedPackagesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/curatedPackages")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.curators.curatedPackages.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "authorizedbuyersmarketplace.curators.curatedPackages.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCuratedPackagesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CuratorsCuratedPackagesListCall) Do(opts ...googleapi.CallOption) (*ListCuratedPackagesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListCuratedPackagesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.curators.curatedPackages.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CuratorsCuratedPackagesListCall) Pages(ctx context.Context, f func(*ListCuratedPackagesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type CuratorsCuratedPackagesPatchCall struct {
+	s              *Service
+	name           string
+	curatedpackage *CuratedPackage
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Patch: Updates an existing curated package.
+//
+//   - name: Identifier. The unique resource name for the curated package.
+//     Format: `curators/{accountId}/curatedPackages/{curatedPackageId}`.
+func (r *CuratorsCuratedPackagesService) Patch(name string, curatedpackage *CuratedPackage) *CuratorsCuratedPackagesPatchCall {
+	c := &CuratorsCuratedPackagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.curatedpackage = curatedpackage
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": List of fields to be
+// updated. If empty or unspecified, the service will update all fields
+// populated in the update request excluding the output only fields and
+// primitive fields with default value. Note that explicit field mask is
+// required in order to reset a primitive field back to its default value, for
+// example, false for boolean fields, 0 for integer fields. A special field
+// mask consisting of a single path "*" can be used to indicate full
+// replacement (the equivalent of PUT method), updatable fields unset or
+// unspecified in the input will be cleared or set to default value. Output
+// only fields will be ignored regardless of the value of updateMask.
+func (c *CuratorsCuratedPackagesPatchCall) UpdateMask(updateMask string) *CuratorsCuratedPackagesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CuratorsCuratedPackagesPatchCall) Fields(s ...googleapi.Field) *CuratorsCuratedPackagesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CuratorsCuratedPackagesPatchCall) Context(ctx context.Context) *CuratorsCuratedPackagesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CuratorsCuratedPackagesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CuratorsCuratedPackagesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.curatedpackage)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.curators.curatedPackages.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "authorizedbuyersmarketplace.curators.curatedPackages.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CuratedPackage.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CuratorsCuratedPackagesPatchCall) Do(opts ...googleapi.CallOption) (*CuratedPackage, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CuratedPackage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.curators.curatedPackages.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type MediaPlannersListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all media planner accounts that the caller has access to. For
+// curators, this will return all media planners that have accepted curator
+// terms. For other accounts, attempting to list media planners will return an
+// error.
+func (r *MediaPlannersService) List() *MediaPlannersListCall {
+	c := &MediaPlannersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Filter sets the optional parameter "filter": Optional query string using the
+// Cloud API list filtering syntax
+// (/authorized-buyers/apis/guides/list-filters). Supported columns for
+// filtering are: * `name` * `displayName` * `ancestorNames`
+func (c *MediaPlannersListCall) Filter(filter string) *MediaPlannersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of media
+// planners to return. If unspecified, at most 100 media planners will be
+// returned. The maximum value is 500; values above 500 will be coerced to 500.
+func (c *MediaPlannersListCall) PageSize(pageSize int64) *MediaPlannersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return. This value is received from a
+// previous `ListMediaPlanners` call in
+// ListMediaPlannersResponse.nextPageToken.
+func (c *MediaPlannersListCall) PageToken(pageToken string) *MediaPlannersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *MediaPlannersListCall) Fields(s ...googleapi.Field) *MediaPlannersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MediaPlannersListCall) IfNoneMatch(entityTag string) *MediaPlannersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *MediaPlannersListCall) Context(ctx context.Context) *MediaPlannersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *MediaPlannersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MediaPlannersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/mediaPlanners")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.mediaPlanners.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "authorizedbuyersmarketplace.mediaPlanners.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMediaPlannersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *MediaPlannersListCall) Do(opts ...googleapi.CallOption) (*ListMediaPlannersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMediaPlannersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "authorizedbuyersmarketplace.mediaPlanners.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *MediaPlannersListCall) Pages(ctx context.Context, f func(*ListMediaPlannersResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

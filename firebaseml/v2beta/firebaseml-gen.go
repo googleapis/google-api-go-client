@@ -1845,7 +1845,9 @@ type GoogleCloudAiplatformV1beta1GenerationConfigThinkingConfig struct {
 	// Possible values:
 	//   "THINKING_LEVEL_UNSPECIFIED" - Unspecified thinking level.
 	//   "LOW" - Low thinking level.
+	//   "MEDIUM" - Medium thinking level.
 	//   "HIGH" - High thinking level.
+	//   "MINIMAL" - MINIMAL thinking level.
 	ThinkingLevel string `json:"thinkingLevel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IncludeThoughts") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2579,6 +2581,8 @@ type GoogleCloudAiplatformV1beta1PartMediaResolution struct {
 	//   "MEDIA_RESOLUTION_LOW" - Media resolution set to low.
 	//   "MEDIA_RESOLUTION_MEDIUM" - Media resolution set to medium.
 	//   "MEDIA_RESOLUTION_HIGH" - Media resolution set to high.
+	//   "MEDIA_RESOLUTION_ULTRA_HIGH" - Media resolution set to ultra high. This
+	// is for image only.
 	Level string `json:"level,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Level") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3210,81 +3214,93 @@ func (s GoogleCloudAiplatformV1beta1SafetySetting) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAiplatformV1beta1Schema: Schema is used to define the format of
-// input/output data. Represents a select subset of an OpenAPI 3.0 schema
-// object (https://spec.openapis.org/oas/v3.0.3#schema-object). More fields may
-// be added in the future as needed.
+// GoogleCloudAiplatformV1beta1Schema: Defines the schema of input and output
+// data. This is a subset of the OpenAPI 3.0 Schema Object
+// (https://spec.openapis.org/oas/v3.0.3#schema-object).
 type GoogleCloudAiplatformV1beta1Schema struct {
-	// AdditionalProperties: Optional. Can either be a boolean or an object;
-	// controls the presence of additional properties.
+	// AdditionalProperties: Optional. If `type` is `OBJECT`, specifies how to
+	// handle properties not defined in `properties`. If it is a boolean `false`,
+	// no additional properties are allowed. If it is a schema, additional
+	// properties are allowed if they conform to the schema.
 	AdditionalProperties interface{} `json:"additionalProperties,omitempty"`
-	// AnyOf: Optional. The value should be validated against any (one or more) of
-	// the subschemas in the list.
+	// AnyOf: Optional. The instance must be valid against any (one or more) of the
+	// subschemas listed in `any_of`.
 	AnyOf []*GoogleCloudAiplatformV1beta1Schema `json:"anyOf,omitempty"`
-	// Default: Optional. Default value of the data.
+	// Default: Optional. Default value to use if the field is not specified.
 	Default interface{} `json:"default,omitempty"`
-	// Defs: Optional. A map of definitions for use by `ref` Only allowed at the
-	// root of the schema.
+	// Defs: Optional. `defs` provides a map of schema definitions that can be
+	// reused by `ref` elsewhere in the schema. Only allowed at root level of the
+	// schema.
 	Defs map[string]GoogleCloudAiplatformV1beta1Schema `json:"defs,omitempty"`
-	// Description: Optional. The description of the data.
+	// Description: Optional. Description of the schema.
 	Description string `json:"description,omitempty"`
-	// Enum: Optional. Possible values of the element of primitive type with enum
-	// format. Examples: 1. We can define direction as : {type:STRING, format:enum,
-	// enum:["EAST", NORTH", "SOUTH", "WEST"]} 2. We can define apartment number as
-	// : {type:INTEGER, format:enum, enum:["101", "201", "301"]}
+	// Enum: Optional. Possible values of the field. This field can be used to
+	// restrict a value to a fixed set of values. To mark a field as an enum, set
+	// `format` to `enum` and provide the list of possible values in `enum`. For
+	// example: 1. To define directions: `{type:STRING, format:enum, enum:["EAST",
+	// "NORTH", "SOUTH", "WEST"]}` 2. To define apartment numbers: `{type:INTEGER,
+	// format:enum, enum:["101", "201", "301"]}`
 	Enum []string `json:"enum,omitempty"`
-	// Example: Optional. Example of the object. Will only populated when the
-	// object is the root.
+	// Example: Optional. Example of an instance of this schema.
 	Example interface{} `json:"example,omitempty"`
-	// Format: Optional. The format of the data. Supported formats: for NUMBER
-	// type: "float", "double" for INTEGER type: "int32", "int64" for STRING type:
-	// "email", "byte", etc
+	// Format: Optional. The format of the data. For `NUMBER` type, format can be
+	// `float` or `double`. For `INTEGER` type, format can be `int32` or `int64`.
+	// For `STRING` type, format can be `email`, `byte`, `date`, `date-time`,
+	// `password`, and other formats to further refine the data type.
 	Format string `json:"format,omitempty"`
-	// Items: Optional. SCHEMA FIELDS FOR TYPE ARRAY Schema of the elements of
-	// Type.ARRAY.
+	// Items: Optional. If type is `ARRAY`, `items` specifies the schema of
+	// elements in the array.
 	Items *GoogleCloudAiplatformV1beta1Schema `json:"items,omitempty"`
-	// MaxItems: Optional. Maximum number of the elements for Type.ARRAY.
+	// MaxItems: Optional. If type is `ARRAY`, `max_items` specifies the maximum
+	// number of items in an array.
 	MaxItems int64 `json:"maxItems,omitempty,string"`
-	// MaxLength: Optional. Maximum length of the Type.STRING
+	// MaxLength: Optional. If type is `STRING`, `max_length` specifies the maximum
+	// length of the string.
 	MaxLength int64 `json:"maxLength,omitempty,string"`
-	// MaxProperties: Optional. Maximum number of the properties for Type.OBJECT.
+	// MaxProperties: Optional. If type is `OBJECT`, `max_properties` specifies the
+	// maximum number of properties that can be provided.
 	MaxProperties int64 `json:"maxProperties,omitempty,string"`
-	// Maximum: Optional. Maximum value of the Type.INTEGER and Type.NUMBER
+	// Maximum: Optional. If type is `INTEGER` or `NUMBER`, `maximum` specifies the
+	// maximum allowed value.
 	Maximum float64 `json:"maximum,omitempty"`
-	// MinItems: Optional. Minimum number of the elements for Type.ARRAY.
+	// MinItems: Optional. If type is `ARRAY`, `min_items` specifies the minimum
+	// number of items in an array.
 	MinItems int64 `json:"minItems,omitempty,string"`
-	// MinLength: Optional. SCHEMA FIELDS FOR TYPE STRING Minimum length of the
-	// Type.STRING
+	// MinLength: Optional. If type is `STRING`, `min_length` specifies the minimum
+	// length of the string.
 	MinLength int64 `json:"minLength,omitempty,string"`
-	// MinProperties: Optional. Minimum number of the properties for Type.OBJECT.
+	// MinProperties: Optional. If type is `OBJECT`, `min_properties` specifies the
+	// minimum number of properties that can be provided.
 	MinProperties int64 `json:"minProperties,omitempty,string"`
-	// Minimum: Optional. SCHEMA FIELDS FOR TYPE INTEGER and NUMBER Minimum value
-	// of the Type.INTEGER and Type.NUMBER
+	// Minimum: Optional. If type is `INTEGER` or `NUMBER`, `minimum` specifies the
+	// minimum allowed value.
 	Minimum float64 `json:"minimum,omitempty"`
-	// Nullable: Optional. Indicates if the value may be null.
+	// Nullable: Optional. Indicates if the value of this field can be null.
 	Nullable bool `json:"nullable,omitempty"`
-	// Pattern: Optional. Pattern of the Type.STRING to restrict a string to a
-	// regular expression.
+	// Pattern: Optional. If type is `STRING`, `pattern` specifies a regular
+	// expression that the string must match.
 	Pattern string `json:"pattern,omitempty"`
-	// Properties: Optional. SCHEMA FIELDS FOR TYPE OBJECT Properties of
-	// Type.OBJECT.
+	// Properties: Optional. If type is `OBJECT`, `properties` is a map of property
+	// names to schema definitions for each property of the object.
 	Properties map[string]GoogleCloudAiplatformV1beta1Schema `json:"properties,omitempty"`
-	// PropertyOrdering: Optional. The order of the properties. Not a standard
-	// field in open api spec. Only used to support the order of the properties.
+	// PropertyOrdering: Optional. Order of properties displayed or used where
+	// order matters. This is not a standard field in OpenAPI specification, but
+	// can be used to control the order of properties.
 	PropertyOrdering []string `json:"propertyOrdering,omitempty"`
-	// Ref: Optional. Allows indirect references between schema nodes. The value
-	// should be a valid reference to a child of the root `defs`. For example, the
-	// following schema defines a reference to a schema node named "Pet": type:
-	// object properties: pet: ref: #/defs/Pet defs: Pet: type: object properties:
-	// name: type: string The value of the "pet" property is a reference to the
-	// schema node named "Pet". See details in
+	// Ref: Optional. Allows referencing another schema definition to use in place
+	// of this schema. The value must be a valid reference to a schema in `defs`.
+	// For example, the following schema defines a reference to a schema node named
+	// "Pet": type: object properties: pet: ref: #/defs/Pet defs: Pet: type: object
+	// properties: name: type: string The value of the "pet" property is a
+	// reference to the schema node named "Pet". See details in
 	// https://json-schema.org/understanding-json-schema/structuring
 	Ref string `json:"ref,omitempty"`
-	// Required: Optional. Required properties of Type.OBJECT.
+	// Required: Optional. If type is `OBJECT`, `required` lists the names of
+	// properties that must be present.
 	Required []string `json:"required,omitempty"`
-	// Title: Optional. The title of the Schema.
+	// Title: Optional. Title for the schema.
 	Title string `json:"title,omitempty"`
-	// Type: Optional. The type of the data.
+	// Type: Optional. Data type of the schema field.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Not specified, should not be used.
@@ -3485,6 +3501,10 @@ type GoogleCloudAiplatformV1beta1Tool struct {
 	// GoogleSearchRetrieval: Optional. Specialized retrieval tool that is powered
 	// by Google Search.
 	GoogleSearchRetrieval *GoogleCloudAiplatformV1beta1GoogleSearchRetrieval `json:"googleSearchRetrieval,omitempty"`
+	// ParallelAiSearch: Optional. If specified, Vertex AI will use Parallel.ai to
+	// search for information to answer user queries. The search results will be
+	// grounded on Parallel.ai and presented to the model for response generation
+	ParallelAiSearch *GoogleCloudAiplatformV1beta1ToolParallelAiSearch `json:"parallelAiSearch,omitempty"`
 	// Retrieval: Optional. Retrieval tool type. System will always execute the
 	// provided retrieval tool(s) to get external knowledge to answer the prompt.
 	// Retrieval results are presented to the model for generation.
@@ -3613,6 +3633,41 @@ type GoogleCloudAiplatformV1beta1ToolGoogleSearch struct {
 
 func (s GoogleCloudAiplatformV1beta1ToolGoogleSearch) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1ToolGoogleSearch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1ToolParallelAiSearch: ParallelAiSearch tool
+// type. A tool that uses the Parallel.ai search engine for grounding.
+type GoogleCloudAiplatformV1beta1ToolParallelAiSearch struct {
+	// ApiKey: Optional. The API key for ParallelAiSearch. If an API key is not
+	// provided, the system will attempt to verify access by checking for an active
+	// Parallel.ai subscription through the Google Cloud Marketplace. See
+	// https://docs.parallel.ai/search/search-quickstart for more details.
+	ApiKey string `json:"apiKey,omitempty"`
+	// CustomConfigs: Optional. Custom configs for ParallelAiSearch. This field can
+	// be used to pass any parameter from the Parallel.ai Search API. See the
+	// Parallel.ai documentation for the full list of available parameters and
+	// their usage: https://docs.parallel.ai/api-reference/search-beta/search
+	// Currently only `source_policy`, `excerpts`, `max_results`, `mode`,
+	// `fetch_policy` can be set via this field. For example: { "source_policy": {
+	// "include_domains": ["google.com", "wikipedia.org"], "exclude_domains":
+	// ["example.com"] }, "fetch_policy": { "max_age_seconds": 3600 } }
+	CustomConfigs googleapi.RawMessage `json:"customConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1ToolParallelAiSearch) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1ToolParallelAiSearch
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

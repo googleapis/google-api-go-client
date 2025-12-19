@@ -882,6 +882,48 @@ func (s CropPropertiesSuggestionState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DateElement: A date instance mentioned in a document.
+type DateElement struct {
+	// DateElementProperties: The properties of this DateElement.
+	DateElementProperties *DateElementProperties `json:"dateElementProperties,omitempty"`
+	// DateId: Output only. The unique ID of this date.
+	DateId string `json:"dateId,omitempty"`
+	// SuggestedDateElementPropertiesChanges: The suggested changes to the date
+	// element properties, keyed by suggestion ID.
+	SuggestedDateElementPropertiesChanges map[string]SuggestedDateElementProperties `json:"suggestedDateElementPropertiesChanges,omitempty"`
+	// SuggestedDeletionIds: IDs for suggestions that remove this date from the
+	// document. A DateElement might have multiple deletion IDs if, for example,
+	// multiple users suggest deleting it. If empty, then this date isn't suggested
+	// for deletion.
+	SuggestedDeletionIds []string `json:"suggestedDeletionIds,omitempty"`
+	// SuggestedInsertionIds: IDs for suggestions that insert this date into the
+	// document. A DateElement might have multiple insertion IDs if it's a nested
+	// suggested change (a suggestion within a suggestion made by a different user,
+	// for example). If empty, then this date isn't a suggested insertion.
+	SuggestedInsertionIds []string `json:"suggestedInsertionIds,omitempty"`
+	// SuggestedTextStyleChanges: The suggested text style changes to this
+	// DateElement, keyed by suggestion ID.
+	SuggestedTextStyleChanges map[string]SuggestedTextStyle `json:"suggestedTextStyleChanges,omitempty"`
+	// TextStyle: The text style of this DateElement.
+	TextStyle *TextStyle `json:"textStyle,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateElementProperties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateElementProperties") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DateElement) MarshalJSON() ([]byte, error) {
+	type NoMethod DateElement
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DateElementProperties: Properties of a DateElement.
 type DateElementProperties struct {
 	// DateFormat: Determines how the date part of the DateElement will be
@@ -950,6 +992,41 @@ type DateElementProperties struct {
 
 func (s DateElementProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod DateElementProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DateElementPropertiesSuggestionState: A mask that indicates which of the
+// fields on the base DateElementProperties have been changed in this
+// suggestion. For any field set to true, there's a new suggested value.
+type DateElementPropertiesSuggestionState struct {
+	// DateFormatSuggested: Indicates if there was a suggested change to
+	// date_format.
+	DateFormatSuggested bool `json:"dateFormatSuggested,omitempty"`
+	// LocaleSuggested: Indicates if there was a suggested change to locale.
+	LocaleSuggested bool `json:"localeSuggested,omitempty"`
+	// TimeFormatSuggested: Indicates if there was a suggested change to
+	// time_format.
+	TimeFormatSuggested bool `json:"timeFormatSuggested,omitempty"`
+	// TimeZoneIdSuggested: Indicates if there was a suggested change to
+	// time_zone_id.
+	TimeZoneIdSuggested bool `json:"timeZoneIdSuggested,omitempty"`
+	// TimestampSuggested: Indicates if there was a suggested change to timestamp.
+	TimestampSuggested bool `json:"timestampSuggested,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateFormatSuggested") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateFormatSuggested") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DateElementPropertiesSuggestionState) MarshalJSON() ([]byte, error) {
+	type NoMethod DateElementPropertiesSuggestionState
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3375,6 +3452,8 @@ type ParagraphElement struct {
 	AutoText *AutoText `json:"autoText,omitempty"`
 	// ColumnBreak: A column break paragraph element.
 	ColumnBreak *ColumnBreak `json:"columnBreak,omitempty"`
+	// DateElement: A paragraph element that represents a date.
+	DateElement *DateElement `json:"dateElement,omitempty"`
 	// EndIndex: The zero-base end index of this paragraph element, exclusive, in
 	// UTF-16 code units.
 	EndIndex int64 `json:"endIndex,omitempty"`
@@ -4813,6 +4892,36 @@ type SuggestedBullet struct {
 
 func (s SuggestedBullet) MarshalJSON() ([]byte, error) {
 	type NoMethod SuggestedBullet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SuggestedDateElementProperties: A suggested change to a
+// DateElementProperties.
+type SuggestedDateElementProperties struct {
+	// DateElementProperties: DateElementProperties that only includes the changes
+	// made in this suggestion. This can be used along with the
+	// date_element_properties_suggestion_state to see which fields have changed
+	// and their new values.
+	DateElementProperties *DateElementProperties `json:"dateElementProperties,omitempty"`
+	// DateElementPropertiesSuggestionState: A mask that indicates which of the
+	// fields on the base DateElementProperties have been changed in this
+	// suggestion.
+	DateElementPropertiesSuggestionState *DateElementPropertiesSuggestionState `json:"dateElementPropertiesSuggestionState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateElementProperties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateElementProperties") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SuggestedDateElementProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod SuggestedDateElementProperties
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

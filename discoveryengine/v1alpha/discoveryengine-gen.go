@@ -3498,6 +3498,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	//   "THIRD_PARTY_EUA" - Connector utilized for End User Authentication
 	// features.
 	//   "GCNV" - Google Cloud NetApp Volumes connector.
+	//   "GOOGLE_CHAT" - Google Chat connector.
 	ConnectorType string `json:"connectorType,omitempty"`
 	// CreateEuaSaas: Optional. Whether the END USER AUTHENTICATION connector is
 	// created in SaaS.
@@ -7128,23 +7129,53 @@ func (s GoogleCloudDiscoveryengineV1WorkspaceConfig) MarshalJSON() ([]byte, erro
 // GoogleCloudDiscoveryengineV1alphaA2AAgentDefinition: Stored definition of an
 // agent that uses A2A.
 type GoogleCloudDiscoveryengineV1alphaA2AAgentDefinition struct {
+	// CloudMarketplaceConfig: Optional. Configuration specific to agents that are
+	// deployed from Cloud Marketplace.
+	CloudMarketplaceConfig *GoogleCloudDiscoveryengineV1alphaA2AAgentDefinitionCloudMarketplaceConfig `json:"cloudMarketplaceConfig,omitempty"`
 	// JsonAgentCard: Optional. The agent card is a JSON string.
 	JsonAgentCard string `json:"jsonAgentCard,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "JsonAgentCard") to
+	// ForceSendFields is a list of field names (e.g. "CloudMarketplaceConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "JsonAgentCard") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CloudMarketplaceConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1alphaA2AAgentDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaA2AAgentDefinition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaA2AAgentDefinitionCloudMarketplaceConfig:
+// Configuration specific to agents that are deployed from Cloud Marketplace.
+type GoogleCloudDiscoveryengineV1alphaA2AAgentDefinitionCloudMarketplaceConfig struct {
+	// Entitlement: Required. The Marketplace Entitlement this agent is associated
+	// with. Format: `projects/{project}/entitlements/{entitlement}`.
+	Entitlement string `json:"entitlement,omitempty"`
+	// Order: Output only. The Marketplace Order this agent belongs to. Format:
+	// `billingAccounts/{billing_account}/orders/{order}`
+	Order string `json:"order,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Entitlement") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Entitlement") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaA2AAgentDefinitionCloudMarketplaceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaA2AAgentDefinitionCloudMarketplaceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13943,6 +13974,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	//   "THIRD_PARTY_EUA" - Connector utilized for End User Authentication
 	// features.
 	//   "GCNV" - Google Cloud NetApp Volumes connector.
+	//   "GOOGLE_CHAT" - Google Chat connector.
 	ConnectorType string `json:"connectorType,omitempty"`
 	// CreateEuaSaas: Optional. Whether the END USER AUTHENTICATION connector is
 	// created in SaaS.
@@ -22177,13 +22209,21 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// (https://cloud.google.com/apis/design/standard_fields). If set, then results
 	// will be boosted based on the region_code provided.
 	RegionCode string `json:"regionCode,omitempty"`
+	// RelevanceFilterSpec: Optional. The granular relevance filtering
+	// specification. If not specified, the global `relevance_threshold` will be
+	// used for all sub-searches. If specified, this overrides the global
+	// `relevance_threshold` to use thresholds on a per sub-search basis. This
+	// feature is currently supported only for custom and site search.
+	RelevanceFilterSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpec `json:"relevanceFilterSpec,omitempty"`
 	// RelevanceScoreSpec: Optional. The specification for returning the relevance
 	// score.
 	RelevanceScoreSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceScoreSpec `json:"relevanceScoreSpec,omitempty"`
-	// RelevanceThreshold: The relevance threshold of the search results. Default
-	// to Google defined threshold, leveraging a balance of precision and recall to
-	// deliver both highly accurate results and comprehensive coverage of relevant
-	// information. This feature is not supported for healthcare search.
+	// RelevanceThreshold: The global relevance threshold of the search results.
+	// Defaults to Google defined threshold, leveraging a balance of precision and
+	// recall to deliver both highly accurate results and comprehensive coverage of
+	// relevant information. If more granular relevance filtering is required, use
+	// the `relevance_filter_spec` instead. This feature is not supported for
+	// healthcare search.
 	//
 	// Possible values:
 	//   "RELEVANCE_THRESHOLD_UNSPECIFIED" - Default value. In this case, server
@@ -23264,6 +23304,81 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestQueryExpansionSpec struct {
 func (s GoogleCloudDiscoveryengineV1alphaSearchRequestQueryExpansionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestQueryExpansionSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpec: Relevance
+// filtering specification.
+type GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpec struct {
+	// KeywordSearchThreshold: Optional. Relevance filtering threshold
+	// specification for keyword search.
+	KeywordSearchThreshold *GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec `json:"keywordSearchThreshold,omitempty"`
+	// SemanticSearchThreshold: Optional. Relevance filtering threshold
+	// specification for semantic search.
+	SemanticSearchThreshold *GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec `json:"semanticSearchThreshold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KeywordSearchThreshold") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeywordSearchThreshold") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpecRelevanceThr
+// esholdSpec: Specification for relevance filtering on a specific sub-search.
+type GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec struct {
+	// RelevanceThreshold: Pre-defined relevance threshold for the sub-search.
+	//
+	// Possible values:
+	//   "RELEVANCE_THRESHOLD_UNSPECIFIED" - Default value. In this case, server
+	// behavior defaults to Google defined threshold.
+	//   "LOWEST" - Lowest relevance threshold.
+	//   "LOW" - Low relevance threshold.
+	//   "MEDIUM" - Medium relevance threshold.
+	//   "HIGH" - High relevance threshold.
+	RelevanceThreshold string `json:"relevanceThreshold,omitempty"`
+	// SemanticRelevanceThreshold: Custom relevance threshold for the sub-search.
+	// The value must be in [0.0, 1.0].
+	SemanticRelevanceThreshold float64 `json:"semanticRelevanceThreshold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RelevanceThreshold") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RelevanceThreshold") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec
+	var s1 struct {
+		SemanticRelevanceThreshold gensupport.JSONFloat64 `json:"semanticRelevanceThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SemanticRelevanceThreshold = float64(s1.SemanticRelevanceThreshold)
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceScoreSpec: The
@@ -30849,13 +30964,21 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// (https://cloud.google.com/apis/design/standard_fields). If set, then results
 	// will be boosted based on the region_code provided.
 	RegionCode string `json:"regionCode,omitempty"`
+	// RelevanceFilterSpec: Optional. The granular relevance filtering
+	// specification. If not specified, the global `relevance_threshold` will be
+	// used for all sub-searches. If specified, this overrides the global
+	// `relevance_threshold` to use thresholds on a per sub-search basis. This
+	// feature is currently supported only for custom and site search.
+	RelevanceFilterSpec *GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpec `json:"relevanceFilterSpec,omitempty"`
 	// RelevanceScoreSpec: Optional. The specification for returning the relevance
 	// score.
 	RelevanceScoreSpec *GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceScoreSpec `json:"relevanceScoreSpec,omitempty"`
-	// RelevanceThreshold: The relevance threshold of the search results. Default
-	// to Google defined threshold, leveraging a balance of precision and recall to
-	// deliver both highly accurate results and comprehensive coverage of relevant
-	// information. This feature is not supported for healthcare search.
+	// RelevanceThreshold: The global relevance threshold of the search results.
+	// Defaults to Google defined threshold, leveraging a balance of precision and
+	// recall to deliver both highly accurate results and comprehensive coverage of
+	// relevant information. If more granular relevance filtering is required, use
+	// the `relevance_filter_spec` instead. This feature is not supported for
+	// healthcare search.
 	//
 	// Possible values:
 	//   "RELEVANCE_THRESHOLD_UNSPECIFIED" - Default value. In this case, server
@@ -31931,6 +32054,81 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestQueryExpansionSpec struct {
 func (s GoogleCloudDiscoveryengineV1betaSearchRequestQueryExpansionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestQueryExpansionSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpec: Relevance
+// filtering specification.
+type GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpec struct {
+	// KeywordSearchThreshold: Optional. Relevance filtering threshold
+	// specification for keyword search.
+	KeywordSearchThreshold *GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec `json:"keywordSearchThreshold,omitempty"`
+	// SemanticSearchThreshold: Optional. Relevance filtering threshold
+	// specification for semantic search.
+	SemanticSearchThreshold *GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec `json:"semanticSearchThreshold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KeywordSearchThreshold") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeywordSearchThreshold") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpecRelevanceThre
+// sholdSpec: Specification for relevance filtering on a specific sub-search.
+type GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec struct {
+	// RelevanceThreshold: Pre-defined relevance threshold for the sub-search.
+	//
+	// Possible values:
+	//   "RELEVANCE_THRESHOLD_UNSPECIFIED" - Default value. In this case, server
+	// behavior defaults to Google defined threshold.
+	//   "LOWEST" - Lowest relevance threshold.
+	//   "LOW" - Low relevance threshold.
+	//   "MEDIUM" - Medium relevance threshold.
+	//   "HIGH" - High relevance threshold.
+	RelevanceThreshold string `json:"relevanceThreshold,omitempty"`
+	// SemanticRelevanceThreshold: Custom relevance threshold for the sub-search.
+	// The value must be in [0.0, 1.0].
+	SemanticRelevanceThreshold float64 `json:"semanticRelevanceThreshold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RelevanceThreshold") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RelevanceThreshold") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec
+	var s1 struct {
+		SemanticRelevanceThreshold gensupport.JSONFloat64 `json:"semanticRelevanceThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SemanticRelevanceThreshold = float64(s1.SemanticRelevanceThreshold)
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceScoreSpec: The
@@ -45870,6 +46068,124 @@ func (c *ProjectsLocationsCollectionsDataStoresServingConfigsAnswerCall) Do(opts
 	return ret, nil
 }
 
+type ProjectsLocationsCollectionsDataStoresServingConfigsCreateCall struct {
+	s                                              *Service
+	parent                                         string
+	googleclouddiscoveryenginev1alphaservingconfig *GoogleCloudDiscoveryengineV1alphaServingConfig
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Create: Creates a ServingConfig. Note: The Google Cloud console works only
+// with the default serving config. Additional ServingConfigs can be created
+// and managed only via the API. A maximum of 100 ServingConfigs are allowed in
+// an Engine, otherwise a RESOURCE_EXHAUSTED error is returned.
+//
+//   - parent: Full resource name of parent. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}`.
+func (r *ProjectsLocationsCollectionsDataStoresServingConfigsService) Create(parent string, googleclouddiscoveryenginev1alphaservingconfig *GoogleCloudDiscoveryengineV1alphaServingConfig) *ProjectsLocationsCollectionsDataStoresServingConfigsCreateCall {
+	c := &ProjectsLocationsCollectionsDataStoresServingConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphaservingconfig = googleclouddiscoveryenginev1alphaservingconfig
+	return c
+}
+
+// ServingConfigId sets the optional parameter "servingConfigId": Required. The
+// ID to use for the ServingConfig, which will become the final component of
+// the ServingConfig's resource name. This value should be 4-63 characters, and
+// valid characters are /a-zA-Z0-9+/.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsCreateCall) ServingConfigId(servingConfigId string) *ProjectsLocationsCollectionsDataStoresServingConfigsCreateCall {
+	c.urlParams_.Set("servingConfigId", servingConfigId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresServingConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsCreateCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresServingConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphaservingconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/servingConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.servingConfigs.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.servingConfigs.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaServingConfig.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaServingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaServingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.servingConfigs.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsCollectionsDataStoresServingConfigsDeleteCall struct {
 	s          *Service
 	name       string
@@ -56948,6 +57264,124 @@ func (c *ProjectsLocationsCollectionsEnginesServingConfigsAnswerCall) Do(opts ..
 	return ret, nil
 }
 
+type ProjectsLocationsCollectionsEnginesServingConfigsCreateCall struct {
+	s                                              *Service
+	parent                                         string
+	googleclouddiscoveryenginev1alphaservingconfig *GoogleCloudDiscoveryengineV1alphaServingConfig
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Create: Creates a ServingConfig. Note: The Google Cloud console works only
+// with the default serving config. Additional ServingConfigs can be created
+// and managed only via the API. A maximum of 100 ServingConfigs are allowed in
+// an Engine, otherwise a RESOURCE_EXHAUSTED error is returned.
+//
+//   - parent: Full resource name of parent. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}`.
+func (r *ProjectsLocationsCollectionsEnginesServingConfigsService) Create(parent string, googleclouddiscoveryenginev1alphaservingconfig *GoogleCloudDiscoveryengineV1alphaServingConfig) *ProjectsLocationsCollectionsEnginesServingConfigsCreateCall {
+	c := &ProjectsLocationsCollectionsEnginesServingConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphaservingconfig = googleclouddiscoveryenginev1alphaservingconfig
+	return c
+}
+
+// ServingConfigId sets the optional parameter "servingConfigId": Required. The
+// ID to use for the ServingConfig, which will become the final component of
+// the ServingConfig's resource name. This value should be 4-63 characters, and
+// valid characters are /a-zA-Z0-9+/.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsCreateCall) ServingConfigId(servingConfigId string) *ProjectsLocationsCollectionsEnginesServingConfigsCreateCall {
+	c.urlParams_.Set("servingConfigId", servingConfigId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesServingConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsCreateCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesServingConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphaservingconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/servingConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.servingConfigs.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.servingConfigs.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaServingConfig.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaServingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaServingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.engines.servingConfigs.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsCollectionsEnginesServingConfigsDeleteCall struct {
 	s          *Service
 	name       string
@@ -65675,6 +66109,124 @@ func (c *ProjectsLocationsDataStoresServingConfigsAnswerCall) Do(opts ...googlea
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.servingConfigs.answer", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataStoresServingConfigsCreateCall struct {
+	s                                              *Service
+	parent                                         string
+	googleclouddiscoveryenginev1alphaservingconfig *GoogleCloudDiscoveryengineV1alphaServingConfig
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Create: Creates a ServingConfig. Note: The Google Cloud console works only
+// with the default serving config. Additional ServingConfigs can be created
+// and managed only via the API. A maximum of 100 ServingConfigs are allowed in
+// an Engine, otherwise a RESOURCE_EXHAUSTED error is returned.
+//
+//   - parent: Full resource name of parent. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}`.
+func (r *ProjectsLocationsDataStoresServingConfigsService) Create(parent string, googleclouddiscoveryenginev1alphaservingconfig *GoogleCloudDiscoveryengineV1alphaServingConfig) *ProjectsLocationsDataStoresServingConfigsCreateCall {
+	c := &ProjectsLocationsDataStoresServingConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphaservingconfig = googleclouddiscoveryenginev1alphaservingconfig
+	return c
+}
+
+// ServingConfigId sets the optional parameter "servingConfigId": Required. The
+// ID to use for the ServingConfig, which will become the final component of
+// the ServingConfig's resource name. This value should be 4-63 characters, and
+// valid characters are /a-zA-Z0-9+/.
+func (c *ProjectsLocationsDataStoresServingConfigsCreateCall) ServingConfigId(servingConfigId string) *ProjectsLocationsDataStoresServingConfigsCreateCall {
+	c.urlParams_.Set("servingConfigId", servingConfigId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresServingConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresServingConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresServingConfigsCreateCall) Context(ctx context.Context) *ProjectsLocationsDataStoresServingConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresServingConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresServingConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphaservingconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/servingConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.servingConfigs.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.servingConfigs.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaServingConfig.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresServingConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaServingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaServingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.servingConfigs.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -1140,8 +1140,7 @@ type CertificateAuthorityDomainConfig struct {
 	// supported. Wildcards are NOT supported. Examples: - my.customdomain.com -
 	// 10.0.1.2:5000
 	Fqdns []string `json:"fqdns,omitempty"`
-	// GcpSecretManagerCertificateConfig: Google Secret Manager (GCP) certificate
-	// configuration.
+	// GcpSecretManagerCertificateConfig: Secret Manager certificate configuration.
 	GcpSecretManagerCertificateConfig *GCPSecretManagerCertificateConfig `json:"gcpSecretManagerCertificateConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Fqdns") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

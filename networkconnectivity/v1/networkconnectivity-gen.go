@@ -906,9 +906,9 @@ type ConsumerPscConfig struct {
 	// Project: The consumer project where PSC connections are allowed to be
 	// created in.
 	Project string `json:"project,omitempty"`
-	// ServiceAttachmentIpAddressMap: Output only. A map to store mapping between
-	// customer vip and target service attachment. Only service attachment with
-	// producer specified ip addresses are stored here.
+	// ServiceAttachmentIpAddressMap: Optional. A map to store mapping between
+	// customer vip and target service attachment. This field can be used to
+	// specify a static IP address for a PSC connection.
 	ServiceAttachmentIpAddressMap map[string]string `json:"serviceAttachmentIpAddressMap,omitempty"`
 	// State: Output only. Overall state of PSC Connections management for this
 	// consumer psc config.

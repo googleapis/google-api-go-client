@@ -882,6 +882,9 @@ type Cluster struct {
 	// performs maintenance and upgrades on customer clusters. Updates on the
 	// cluster are not allowed while the cluster is in this state.
 	//   "PROMOTING" - The cluster is being promoted.
+	//   "SWITCHOVER" - The cluster has entered switchover state. All updates on
+	// cluster and its associated instances are restricted while the cluster is in
+	// this state.
 	State string `json:"state,omitempty"`
 	// SubscriptionType: Optional. Subscription type of the cluster.
 	//
@@ -1997,6 +2000,8 @@ type Instance struct {
 	//   "BOOTSTRAPPING" - The instance has been configured to sync data from some
 	// other source.
 	//   "PROMOTING" - The instance is being promoted.
+	//   "SWITCHOVER" - The instance has entered switchover state. All updates on
+	// instance are restricted while the instance is in this state.
 	State string `json:"state,omitempty"`
 	// Uid: Output only. The system-generated UID of the resource. The UID is
 	// assigned when the resource is created, and it is retained until it is

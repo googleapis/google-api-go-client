@@ -5107,8 +5107,7 @@ func (s ManagedPrometheusConfig) MarshalJSON() ([]byte, error) {
 // Master: Master is the configuration for components on master.
 type Master struct {
 	// CompatibilityStatus: Output only. The compatibility status of the control
-	// plane. It should be empty if the cluster does not have emulated version. For
-	// details, see go/user-initiated-rollbackable-upgrade-design.
+	// plane. It should be empty if the cluster does not have emulated version.
 	CompatibilityStatus *CompatibilityStatus `json:"compatibilityStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CompatibilityStatus") to
 	// unconditionally include in API requests. By default, fields with empty or

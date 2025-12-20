@@ -1053,6 +1053,89 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ExecutePipelineRequest: The request for Firestore.ExecutePipeline.
+type ExecutePipelineRequest struct {
+	// NewTransaction: Execute the pipeline in a new transaction. The identifier of
+	// the newly created transaction will be returned in the first response on the
+	// stream. This defaults to a read-only transaction.
+	NewTransaction *TransactionOptions `json:"newTransaction,omitempty"`
+	// ReadTime: Execute the pipeline in a snapshot transaction at the given time.
+	// This must be a microsecond precision timestamp within the past one hour, or
+	// if Point-in-Time Recovery is enabled, can additionally be a whole minute
+	// timestamp within the past 7 days.
+	ReadTime string `json:"readTime,omitempty"`
+	// StructuredPipeline: A pipelined operation.
+	StructuredPipeline *StructuredPipeline `json:"structuredPipeline,omitempty"`
+	// Transaction: Run the query within an already active transaction. The value
+	// here is the opaque transaction ID to execute the query in.
+	Transaction string `json:"transaction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NewTransaction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NewTransaction") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecutePipelineRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecutePipelineRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExecutePipelineResponse: The response for Firestore.Execute.
+type ExecutePipelineResponse struct {
+	// ExecutionTime: The time at which the results are valid. This is a (not
+	// strictly) monotonically increasing value across multiple responses in the
+	// same stream. The API guarantees that all previously returned results are
+	// still valid at the latest `execution_time`. This allows the API consumer to
+	// treat the query if it ran at the latest `execution_time` returned. If the
+	// query returns no results, a response with `execution_time` and no `results`
+	// will be sent, and this represents the time at which the operation was run.
+	ExecutionTime string `json:"executionTime,omitempty"`
+	// ExplainStats: Query explain stats. This is present on the **last** response
+	// if the request configured explain to run in 'analyze' or 'explain' mode in
+	// the pipeline options. If the query does not return any results, a response
+	// with `explain_stats` and no `results` will still be sent.
+	ExplainStats *ExplainStats `json:"explainStats,omitempty"`
+	// Results: An ordered batch of results returned executing a pipeline. The
+	// batch size is variable, and can even be zero for when only a partial
+	// progress message is returned. The fields present in the returned documents
+	// are only those that were explicitly requested in the pipeline, this includes
+	// those like `__name__` and `__update_time__`. This is explicitly a divergence
+	// from `Firestore.RunQuery` / `Firestore.GetDocument` RPCs which always return
+	// such fields even when they are not specified in the `mask`.
+	Results []*Document `json:"results,omitempty"`
+	// Transaction: Newly created transaction identifier. This field is only
+	// specified as part of the first response from the server, alongside the
+	// `results` field when the original request specified
+	// ExecuteRequest.new_transaction.
+	Transaction string `json:"transaction,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ExecutionTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExecutionTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecutePipelineResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecutePipelineResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExecutionStats: Execution statistics for the query.
 type ExecutionStats struct {
 	// DebugStats: Debugging statistics from the execution of the query. Note that
@@ -1173,6 +1256,32 @@ type ExplainOptions struct {
 
 func (s ExplainOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ExplainOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExplainStats: Pipeline explain stats. Depending on the explain options in
+// the original request, this can contain the optimized plan and / or execution
+// stats.
+type ExplainStats struct {
+	// Data: The format depends on the `output_format` options in the request.
+	// Currently there are two supported options: `TEXT` and `JSON`. Both supply a
+	// `google.protobuf.StringValue`.
+	Data googleapi.RawMessage `json:"data,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExplainStats) MarshalJSON() ([]byte, error) {
+	type NoMethod ExplainStats
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1439,6 +1548,36 @@ func (s *FindNearest) UnmarshalJSON(data []byte) error {
 	}
 	s.DistanceThreshold = float64(s1.DistanceThreshold)
 	return nil
+}
+
+// Function: Represents an unevaluated scalar expression. For example, the
+// expression `like(user_name, "%alice%")` is represented as: ``` name: "like"
+// args { field_reference: "user_name" } args { string_value: "%alice%" } ```
+type Function struct {
+	// Args: Optional. Ordered list of arguments the given function expects.
+	Args []*Value `json:"args,omitempty"`
+	// Name: Required. The name of the function to evaluate. **Requires:** * must
+	// be in snake case (lower case with underscore separator).
+	Name string `json:"name,omitempty"`
+	// Options: Optional. Optional named arguments that certain functions may
+	// support.
+	Options map[string]Value `json:"options,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Args") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Function) MarshalJSON() ([]byte, error) {
+	type NoMethod Function
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1Backup: A Backup of a Cloud Firestore Database. The
@@ -1836,19 +1975,24 @@ type GoogleFirestoreAdminV1Database struct {
 	AppEngineIntegrationMode string `json:"appEngineIntegrationMode,omitempty"`
 	// CmekConfig: Optional. Presence indicates CMEK is enabled for this database.
 	CmekConfig *GoogleFirestoreAdminV1CmekConfig `json:"cmekConfig,omitempty"`
-	// ConcurrencyMode: The concurrency control mode to use for this database.
+	// ConcurrencyMode: The concurrency control mode to use for this database. If
+	// unspecified in a CreateDatabase request, this will default based on the
+	// database edition: Optimistic for Enterprise and Pessimistic for all other
+	// databases.
 	//
 	// Possible values:
 	//   "CONCURRENCY_MODE_UNSPECIFIED" - Not used.
 	//   "OPTIMISTIC" - Use optimistic concurrency control by default. This mode is
-	// available for Cloud Firestore databases.
+	// available for Cloud Firestore databases. This is the default setting for
+	// Cloud Firestore Enterprise Edition databases.
 	//   "PESSIMISTIC" - Use pessimistic concurrency control by default. This mode
 	// is available for Cloud Firestore databases. This is the default setting for
-	// Cloud Firestore.
+	// Cloud Firestore Standard Edition databases.
 	//   "OPTIMISTIC_WITH_ENTITY_GROUPS" - Use optimistic concurrency control with
-	// entity groups by default. This is the only available mode for Cloud
-	// Datastore. This mode is also available for Cloud Firestore with Datastore
-	// Mode but is not recommended.
+	// entity groups by default. This mode is enabled for some databases that were
+	// automatically upgraded from Cloud Datastore to Cloud Firestore with
+	// Datastore Mode. It is not recommended for any new databases, and not
+	// supported for Firestore Native databases.
 	ConcurrencyMode string `json:"concurrencyMode,omitempty"`
 	// CreateTime: Output only. The timestamp at which this database was created.
 	// Databases created before 2016 do not populate create_time.
@@ -3753,6 +3897,29 @@ func (s PartitionQueryResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Pipeline: A Firestore query represented as an ordered list of operations /
+// stages.
+type Pipeline struct {
+	// Stages: Required. Ordered list of stages to evaluate.
+	Stages []*Stage `json:"stages,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Stages") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Stages") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Pipeline) MarshalJSON() ([]byte, error) {
+	type NoMethod Pipeline
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PlanSummary: Planning phase information for the query.
 type PlanSummary struct {
 	// IndexesUsed: The indexes selected for the query. For example: [
@@ -4088,6 +4255,39 @@ func (s RunQueryResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Stage: A single operation within a pipeline. A stage is made up of a unique
+// name, and a list of arguments. The exact number of arguments & types is
+// dependent on the stage type. To give an example, the stage `filter(state =
+// "MD")` would be encoded as: ``` name: "filter" args { function_value { name:
+// "eq" args { field_reference_value: "state" } args { string_value: "MD" } } }
+// ``` See public documentation for the full list.
+type Stage struct {
+	// Args: Optional. Ordered list of arguments the given stage expects.
+	Args []*Value `json:"args,omitempty"`
+	// Name: Required. The name of the stage to evaluate. **Requires:** * must be
+	// in snake case (lower case with underscore separator).
+	Name string `json:"name,omitempty"`
+	// Options: Optional. Optional named arguments that certain functions may
+	// support.
+	Options map[string]Value `json:"options,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Args") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Stage) MarshalJSON() ([]byte, error) {
+	type NoMethod Stage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is suitable for
 // different programming environments, including REST APIs and RPC APIs. It is
 // used by gRPC (https://github.com/grpc). Each `Status` message contains three
@@ -4146,6 +4346,33 @@ type StructuredAggregationQuery struct {
 
 func (s StructuredAggregationQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod StructuredAggregationQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StructuredPipeline: A Firestore query represented as an ordered list of
+// operations / stages. This is considered the top-level function which plans
+// and executes a query. It is logically equivalent to `query(stages,
+// options)`, but prevents the client from having to build a function wrapper.
+type StructuredPipeline struct {
+	// Options: Optional. Optional query-level arguments.
+	Options map[string]Value `json:"options,omitempty"`
+	// Pipeline: Required. The pipeline query to execute.
+	Pipeline *Pipeline `json:"pipeline,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Options") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Options") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StructuredPipeline) MarshalJSON() ([]byte, error) {
+	type NoMethod StructuredPipeline
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4440,6 +4667,14 @@ type Value struct {
 	BytesValue string `json:"bytesValue,omitempty"`
 	// DoubleValue: A double value.
 	DoubleValue float64 `json:"doubleValue,omitempty"`
+	// FieldReferenceValue: Value which references a field. This is considered
+	// relative (vs absolute) since it only refers to a field and not a field
+	// within a particular document. **Requires:** * Must follow field reference
+	// limitations. * Not allowed to be used when writing documents.
+	FieldReferenceValue string `json:"fieldReferenceValue,omitempty"`
+	// FunctionValue: A value that represents an unevaluated expression.
+	// **Requires:** * Not allowed to be used when writing documents.
+	FunctionValue *Function `json:"functionValue,omitempty"`
 	// GeoPointValue: A geo point value representing a point on the surface of
 	// Earth.
 	GeoPointValue *LatLng `json:"geoPointValue,omitempty"`
@@ -4452,6 +4687,9 @@ type Value struct {
 	// Possible values:
 	//   "NULL_VALUE" - Null value.
 	NullValue string `json:"nullValue,omitempty"`
+	// PipelineValue: A value that represents an unevaluated pipeline.
+	// **Requires:** * Not allowed to be used when writing documents.
+	PipelineValue *Pipeline `json:"pipelineValue,omitempty"`
 	// ReferenceValue: A reference to a document. For example:
 	// `projects/{project_id}/databases/{database_id}/documents/{document_path}`.
 	ReferenceValue string `json:"referenceValue,omitempty"`
@@ -7854,6 +8092,111 @@ func (c *ProjectsDatabasesDocumentsDeleteCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firestore.projects.databases.documents.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsDatabasesDocumentsExecutePipelineCall struct {
+	s                      *Service
+	databaseid             string
+	executepipelinerequest *ExecutePipelineRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// ExecutePipeline: Executes a pipeline query.
+//
+//   - database: Database identifier, in the form
+//     `projects/{project}/databases/{database}`.
+func (r *ProjectsDatabasesDocumentsService) ExecutePipeline(databaseid string, executepipelinerequest *ExecutePipelineRequest) *ProjectsDatabasesDocumentsExecutePipelineCall {
+	c := &ProjectsDatabasesDocumentsExecutePipelineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.databaseid = databaseid
+	c.executepipelinerequest = executepipelinerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsDatabasesDocumentsExecutePipelineCall) Fields(s ...googleapi.Field) *ProjectsDatabasesDocumentsExecutePipelineCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsDatabasesDocumentsExecutePipelineCall) Context(ctx context.Context) *ProjectsDatabasesDocumentsExecutePipelineCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsDatabasesDocumentsExecutePipelineCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesDocumentsExecutePipelineCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.executepipelinerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+database}/documents:executePipeline")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"database": c.databaseid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firestore.projects.databases.documents.executePipeline", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.documents.executePipeline" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ExecutePipelineResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsDatabasesDocumentsExecutePipelineCall) Do(opts ...googleapi.CallOption) (*ExecutePipelineResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExecutePipelineResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firestore.projects.databases.documents.executePipeline", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

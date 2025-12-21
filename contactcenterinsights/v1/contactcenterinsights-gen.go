@@ -1999,6 +1999,31 @@ func (s GoogleCloudContactcenterinsightsV1ConversationDataSource) MarshalJSON() 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1ConversationDataSourceTurnLevelAudio: A
+// wrapper for holding the audio for any given turn.
+type GoogleCloudContactcenterinsightsV1ConversationDataSourceTurnLevelAudio struct {
+	// AudioDuration: The duration of the audio.
+	AudioDuration string `json:"audioDuration,omitempty"`
+	// AudioGcsUri: The Cloud Storage URI of the audio for any given turn.
+	AudioGcsUri string `json:"audioGcsUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AudioDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AudioDuration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationDataSourceTurnLevelAudio) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationDataSourceTurnLevelAudio
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1ConversationLevelSentiment: One channel of
 // conversation-level sentiment data.
 type GoogleCloudContactcenterinsightsV1ConversationLevelSentiment struct {
@@ -3472,6 +3497,8 @@ type GoogleCloudContactcenterinsightsV1ExportInsightsDataRequest struct {
 	//   "EXPORT_V12" - Export schema version 12.
 	//   "EXPORT_V13" - Export schema version 13.
 	//   "EXPORT_V14" - Export schema version 14.
+	//   "EXPORT_V15" - Export schema version 15.
+	//   "EXPORT_V16" - Export schema version 16.
 	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
 	// available.
 	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`
@@ -3760,6 +3787,32 @@ type GoogleCloudContactcenterinsightsV1GcsSource struct {
 
 func (s GoogleCloudContactcenterinsightsV1GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1GcsSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1GenerateConversationSignedAudioResponse:
+// The response from a GenerateConversationSignedAudio request.
+type GoogleCloudContactcenterinsightsV1GenerateConversationSignedAudioResponse struct {
+	// SignedAudioUris: The signed uris for the audio.
+	SignedAudioUris *GoogleCloudContactcenterinsightsV1SignedAudioUris `json:"signedAudioUris,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "SignedAudioUris") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SignedAudioUris") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1GenerateConversationSignedAudioResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1GenerateConversationSignedAudioResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5351,10 +5404,14 @@ type GoogleCloudContactcenterinsightsV1PublishAssessmentRequest struct {
 
 // GoogleCloudContactcenterinsightsV1QaAnswer: An answer to a QaQuestion.
 type GoogleCloudContactcenterinsightsV1QaAnswer struct {
-	// AnswerSources: List of all individual answers given to the question.
+	// AnswerSources: Lists all answer sources containing one or more answer values
+	// of a specific source type, e.g., all system-generated answer sources, or all
+	// manual edit answer sources.
 	AnswerSources []*GoogleCloudContactcenterinsightsV1QaAnswerAnswerSource `json:"answerSources,omitempty"`
-	// AnswerValue: The main answer value, incorporating any manual edits if they
-	// exist.
+	// AnswerValue: The answer value from this source. This field is populated by
+	// default, unless the question has a selection strategy configured to return
+	// multiple answer values, in which case `answer_values` will be populated
+	// instead.
 	AnswerValue *GoogleCloudContactcenterinsightsV1QaAnswerAnswerValue `json:"answerValue,omitempty"`
 	// Conversation: The conversation the answer applies to.
 	Conversation string `json:"conversation,omitempty"`
@@ -5388,7 +5445,10 @@ func (s GoogleCloudContactcenterinsightsV1QaAnswer) MarshalJSON() ([]byte, error
 // multiple answers from varying sources, one of which becomes the "main"
 // answer above. AnswerSource represents each individual answer.
 type GoogleCloudContactcenterinsightsV1QaAnswerAnswerSource struct {
-	// AnswerValue: The answer value from this source.
+	// AnswerValue: The answer value from this source. This field is populated by
+	// default, unless the question has a selection strategy configured to return
+	// multiple answer values, in which case `answer_values` will be populated
+	// instead.
 	AnswerValue *GoogleCloudContactcenterinsightsV1QaAnswerAnswerValue `json:"answerValue,omitempty"`
 	// SourceType: What created the answer.
 	//
@@ -6977,6 +7037,36 @@ func (s *GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig) UnmarshalJSON
 	return nil
 }
 
+// GoogleCloudContactcenterinsightsV1SignedAudioUris: Signed audio URIs for a
+// conversation.
+type GoogleCloudContactcenterinsightsV1SignedAudioUris struct {
+	// SignedDialogflowAudioUri: The signed URI for the audio from the Dialogflow
+	// conversation source.
+	SignedDialogflowAudioUri string `json:"signedDialogflowAudioUri,omitempty"`
+	// SignedGcsAudioUri: The signed URI for the audio from the Cloud Storage
+	// conversation source.
+	SignedGcsAudioUri string `json:"signedGcsAudioUri,omitempty"`
+	// SignedTurnLevelAudios: The signed URI for the audio corresponding to each
+	// turn in the conversation.
+	SignedTurnLevelAudios []*GoogleCloudContactcenterinsightsV1ConversationDataSourceTurnLevelAudio `json:"signedTurnLevelAudios,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SignedDialogflowAudioUri")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SignedDialogflowAudioUri") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1SignedAudioUris) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1SignedAudioUris
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1SilenceData: The data for a silence
 // annotation.
 type GoogleCloudContactcenterinsightsV1SilenceData struct {
@@ -7082,18 +7172,22 @@ func (s *GoogleCloudContactcenterinsightsV1SmartReplyData) UnmarshalJSON(data []
 // conversation coming from CCAI Platform. They are not applied to
 // conversations ingested from the `CreateConversation` endpoint.
 type GoogleCloudContactcenterinsightsV1SpeechConfig struct {
+	// DisableWordTimeOffsets: Whether to disable word time offsets. If true, the
+	// `enable_word_time_offsets` field in the recognition config will be set to
+	// false.
+	DisableWordTimeOffsets bool `json:"disableWordTimeOffsets,omitempty"`
 	// SpeechRecognizer: The fully-qualified Speech Recognizer resource name.
 	// Format: `projects/{project_id}/locations/{location}/recognizer/{recognizer}`
 	SpeechRecognizer string `json:"speechRecognizer,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SpeechRecognizer") to
+	// ForceSendFields is a list of field names (e.g. "DisableWordTimeOffsets") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SpeechRecognizer") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DisableWordTimeOffsets") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -9595,6 +9689,8 @@ type GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequest struct {
 	//   "EXPORT_V12" - Export schema version 12.
 	//   "EXPORT_V13" - Export schema version 13.
 	//   "EXPORT_V14" - Export schema version 14.
+	//   "EXPORT_V15" - Export schema version 15.
+	//   "EXPORT_V16" - Export schema version 16.
 	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
 	// available.
 	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`
@@ -10710,10 +10806,14 @@ func (s GoogleCloudContactcenterinsightsV1alpha1PhraseMatchData) MarshalJSON() (
 
 // GoogleCloudContactcenterinsightsV1alpha1QaAnswer: An answer to a QaQuestion.
 type GoogleCloudContactcenterinsightsV1alpha1QaAnswer struct {
-	// AnswerSources: List of all individual answers given to the question.
+	// AnswerSources: Lists all answer sources containing one or more answer values
+	// of a specific source type, e.g., all system-generated answer sources, or all
+	// manual edit answer sources.
 	AnswerSources []*GoogleCloudContactcenterinsightsV1alpha1QaAnswerAnswerSource `json:"answerSources,omitempty"`
-	// AnswerValue: The main answer value, incorporating any manual edits if they
-	// exist.
+	// AnswerValue: The answer value from this source. This field is populated by
+	// default, unless the question has a selection strategy configured to return
+	// multiple answer values, in which case `answer_values` will be populated
+	// instead.
 	AnswerValue *GoogleCloudContactcenterinsightsV1alpha1QaAnswerAnswerValue `json:"answerValue,omitempty"`
 	// Conversation: The conversation the answer applies to.
 	Conversation string `json:"conversation,omitempty"`
@@ -10747,7 +10847,10 @@ func (s GoogleCloudContactcenterinsightsV1alpha1QaAnswer) MarshalJSON() ([]byte,
 // have multiple answers from varying sources, one of which becomes the "main"
 // answer above. AnswerSource represents each individual answer.
 type GoogleCloudContactcenterinsightsV1alpha1QaAnswerAnswerSource struct {
-	// AnswerValue: The answer value from this source.
+	// AnswerValue: The answer value from this source. This field is populated by
+	// default, unless the question has a selection strategy configured to return
+	// multiple answer values, in which case `answer_values` will be populated
+	// instead.
 	AnswerValue *GoogleCloudContactcenterinsightsV1alpha1QaAnswerAnswerValue `json:"answerValue,omitempty"`
 	// SourceType: What created the answer.
 	//
@@ -11750,18 +11853,22 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1SmartReplyData) UnmarshalJSON(d
 // conversation coming from CCAI Platform. They are not applied to
 // conversations ingested from the `CreateConversation` endpoint.
 type GoogleCloudContactcenterinsightsV1alpha1SpeechConfig struct {
+	// DisableWordTimeOffsets: Whether to disable word time offsets. If true, the
+	// `enable_word_time_offsets` field in the recognition config will be set to
+	// false.
+	DisableWordTimeOffsets bool `json:"disableWordTimeOffsets,omitempty"`
 	// SpeechRecognizer: The fully-qualified Speech Recognizer resource name.
 	// Format: `projects/{project_id}/locations/{location}/recognizer/{recognizer}`
 	SpeechRecognizer string `json:"speechRecognizer,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SpeechRecognizer") to
+	// ForceSendFields is a list of field names (e.g. "DisableWordTimeOffsets") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SpeechRecognizer") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DisableWordTimeOffsets") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -14370,6 +14477,8 @@ type GoogleCloudContactcenterinsightsV1mainExportInsightsDataRequest struct {
 	//   "EXPORT_V12" - Export schema version 12.
 	//   "EXPORT_V13" - Export schema version 13.
 	//   "EXPORT_V14" - Export schema version 14.
+	//   "EXPORT_V15" - Export schema version 15.
+	//   "EXPORT_V16" - Export schema version 16.
 	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
 	// available.
 	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`
@@ -15484,10 +15593,14 @@ func (s GoogleCloudContactcenterinsightsV1mainPhraseMatchData) MarshalJSON() ([]
 
 // GoogleCloudContactcenterinsightsV1mainQaAnswer: An answer to a QaQuestion.
 type GoogleCloudContactcenterinsightsV1mainQaAnswer struct {
-	// AnswerSources: List of all individual answers given to the question.
+	// AnswerSources: Lists all answer sources containing one or more answer values
+	// of a specific source type, e.g., all system-generated answer sources, or all
+	// manual edit answer sources.
 	AnswerSources []*GoogleCloudContactcenterinsightsV1mainQaAnswerAnswerSource `json:"answerSources,omitempty"`
-	// AnswerValue: The main answer value, incorporating any manual edits if they
-	// exist.
+	// AnswerValue: The answer value from this source. This field is populated by
+	// default, unless the question has a selection strategy configured to return
+	// multiple answer values, in which case `answer_values` will be populated
+	// instead.
 	AnswerValue *GoogleCloudContactcenterinsightsV1mainQaAnswerAnswerValue `json:"answerValue,omitempty"`
 	// Conversation: The conversation the answer applies to.
 	Conversation string `json:"conversation,omitempty"`
@@ -15521,7 +15634,10 @@ func (s GoogleCloudContactcenterinsightsV1mainQaAnswer) MarshalJSON() ([]byte, e
 // have multiple answers from varying sources, one of which becomes the "main"
 // answer above. AnswerSource represents each individual answer.
 type GoogleCloudContactcenterinsightsV1mainQaAnswerAnswerSource struct {
-	// AnswerValue: The answer value from this source.
+	// AnswerValue: The answer value from this source. This field is populated by
+	// default, unless the question has a selection strategy configured to return
+	// multiple answer values, in which case `answer_values` will be populated
+	// instead.
 	AnswerValue *GoogleCloudContactcenterinsightsV1mainQaAnswerAnswerValue `json:"answerValue,omitempty"`
 	// SourceType: What created the answer.
 	//
@@ -16524,18 +16640,22 @@ func (s *GoogleCloudContactcenterinsightsV1mainSmartReplyData) UnmarshalJSON(dat
 // conversation coming from CCAI Platform. They are not applied to
 // conversations ingested from the `CreateConversation` endpoint.
 type GoogleCloudContactcenterinsightsV1mainSpeechConfig struct {
+	// DisableWordTimeOffsets: Whether to disable word time offsets. If true, the
+	// `enable_word_time_offsets` field in the recognition config will be set to
+	// false.
+	DisableWordTimeOffsets bool `json:"disableWordTimeOffsets,omitempty"`
 	// SpeechRecognizer: The fully-qualified Speech Recognizer resource name.
 	// Format: `projects/{project_id}/locations/{location}/recognizer/{recognizer}`
 	SpeechRecognizer string `json:"speechRecognizer,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SpeechRecognizer") to
+	// ForceSendFields is a list of field names (e.g. "DisableWordTimeOffsets") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SpeechRecognizer") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DisableWordTimeOffsets") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -21625,6 +21745,117 @@ func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsDeleteCa
 	return ret, nil
 }
 
+type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGenerateSignedAudioCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GenerateSignedAudio: Gets the signed URI for the audio for the given
+// conversation.
+//
+// - name: The name of the conversation to sign.
+func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsService) GenerateSignedAudio(name string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGenerateSignedAudioCall {
+	c := &ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGenerateSignedAudioCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGenerateSignedAudioCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGenerateSignedAudioCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGenerateSignedAudioCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGenerateSignedAudioCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGenerateSignedAudioCall) Context(ctx context.Context) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGenerateSignedAudioCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGenerateSignedAudioCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGenerateSignedAudioCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:generateSignedAudio")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.generateSignedAudio", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.generateSignedAudio" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1GenerateConversationSignedAudioResponse.Se
+// rverResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGenerateSignedAudioCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1GenerateConversationSignedAudioResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1GenerateConversationSignedAudioResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.authorizedViewSets.authorizedViews.conversations.generateSignedAudio", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall struct {
 	s            *Service
 	name         string
@@ -24717,6 +24948,117 @@ func (c *ProjectsLocationsConversationsDeleteCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.conversations.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConversationsGenerateSignedAudioCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GenerateSignedAudio: Gets the signed URI for the audio for the given
+// conversation.
+//
+// - name: The name of the conversation to sign.
+func (r *ProjectsLocationsConversationsService) GenerateSignedAudio(name string) *ProjectsLocationsConversationsGenerateSignedAudioCall {
+	c := &ProjectsLocationsConversationsGenerateSignedAudioCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConversationsGenerateSignedAudioCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationsGenerateSignedAudioCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConversationsGenerateSignedAudioCall) IfNoneMatch(entityTag string) *ProjectsLocationsConversationsGenerateSignedAudioCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConversationsGenerateSignedAudioCall) Context(ctx context.Context) *ProjectsLocationsConversationsGenerateSignedAudioCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConversationsGenerateSignedAudioCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationsGenerateSignedAudioCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:generateSignedAudio")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.conversations.generateSignedAudio", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.conversations.generateSignedAudio" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1GenerateConversationSignedAudioResponse.Se
+// rverResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversationsGenerateSignedAudioCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1GenerateConversationSignedAudioResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1GenerateConversationSignedAudioResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.conversations.generateSignedAudio", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -29280,6 +29622,117 @@ func (c *ProjectsLocationsDatasetsConversationsDeleteCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.datasets.conversations.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDatasetsConversationsGenerateSignedAudioCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GenerateSignedAudio: Gets the signed URI for the audio for the given
+// conversation.
+//
+// - name: The name of the conversation to sign.
+func (r *ProjectsLocationsDatasetsConversationsService) GenerateSignedAudio(name string) *ProjectsLocationsDatasetsConversationsGenerateSignedAudioCall {
+	c := &ProjectsLocationsDatasetsConversationsGenerateSignedAudioCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsConversationsGenerateSignedAudioCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsConversationsGenerateSignedAudioCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatasetsConversationsGenerateSignedAudioCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsConversationsGenerateSignedAudioCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsConversationsGenerateSignedAudioCall) Context(ctx context.Context) *ProjectsLocationsDatasetsConversationsGenerateSignedAudioCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsConversationsGenerateSignedAudioCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsConversationsGenerateSignedAudioCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:generateSignedAudio")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.datasets.conversations.generateSignedAudio", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.datasets.conversations.generateSignedAudio" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1GenerateConversationSignedAudioResponse.Se
+// rverResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsConversationsGenerateSignedAudioCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1GenerateConversationSignedAudioResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1GenerateConversationSignedAudioResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.datasets.conversations.generateSignedAudio", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

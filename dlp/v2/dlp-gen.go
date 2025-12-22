@@ -2856,8 +2856,7 @@ type GooglePrivacyDlpV2CustomInfoType struct {
 	// CustomInfoType, it will default to HIGH. This only applies to data
 	// profiling.
 	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
-	// StoredType: Load an existing `StoredInfoType` resource for use in
-	// `InspectDataSource`. Not currently supported in `InspectContent`.
+	// StoredType: Loads an existing `StoredInfoType` resource.
 	StoredType *GooglePrivacyDlpV2StoredType `json:"storedType,omitempty"`
 	// SurrogateType: Message for detecting output from deidentification
 	// transformations that support reversing.

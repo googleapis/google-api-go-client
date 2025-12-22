@@ -6485,6 +6485,12 @@ type ValidationConfig struct {
 	// affects resource types that do not have profiles configured for them, any
 	// rules in enabled implementation guides will still be enforced.
 	DisableRequiredFieldValidation bool `json:"disableRequiredFieldValidation,omitempty"`
+	// EnableFhirpathProfileValidation: Optional. Whether to enable FHIRPath
+	// validation for incoming resource types that have profiles configured for
+	// them in the `enabled_implementation_guides` list. Set this to true to enable
+	// checking incoming resources for conformance against FHIRPath requirements
+	// defined in the configured profiles.
+	EnableFhirpathProfileValidation bool `json:"enableFhirpathProfileValidation,omitempty"`
 	// EnabledImplementationGuides: Optional. A list of implementation guide URLs
 	// in this FHIR store that are used to configure the profiles to use for
 	// validation. For example, to use the US Core profiles for validation, set

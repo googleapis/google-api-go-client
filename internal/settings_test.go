@@ -29,7 +29,9 @@ func TestSettingsValidate(t *testing.T) {
 		{Scopes: []string{"s"}},
 		{CredentialsFile: "f"},
 		{TokenSource: dummyTS{}},
-		{CredentialsFile: "f", TokenSource: dummyTS{}}, // keep for backwards compatibility
+		{Credentials: &google.DefaultCredentials{}, AuthCredentials: &auth.Credentials{}}, // Support old auth to new auth automatic conversions
+		{CredentialsFile: "f", AuthCredentials: &auth.Credentials{}},                      // Support old auth to new auth automatic conversions
+		{CredentialsFile: "f", TokenSource: dummyTS{}},                                    // keep for backwards compatibility
 		{CredentialsJSON: []byte("json")},
 		{AuthCredentialsFile: "f"},
 		{AuthCredentialsJSON: []byte("json")},
@@ -56,6 +58,7 @@ func TestSettingsValidate(t *testing.T) {
 		{NoAuth: true, AuthCredentialsFile: "f"},
 		{NoAuth: true, TokenSource: dummyTS{}},
 		{NoAuth: true, Credentials: &google.DefaultCredentials{}},
+		{NoAuth: true, AuthCredentials: &auth.Credentials{}},
 		{NoAuth: true, AuthCredentialsJSON: []byte("json")},
 		{Credentials: &google.DefaultCredentials{}, CredentialsFile: "f"},
 		{Credentials: &google.DefaultCredentials{}, AuthCredentialsFile: "f"},

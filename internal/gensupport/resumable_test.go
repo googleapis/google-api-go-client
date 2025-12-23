@@ -447,7 +447,7 @@ func TestChunkTransferTimeout(t *testing.T) {
 
 			rx := &ResumableUpload{
 				Client:               &http.Client{Transport: transport},
-				Media:                NewMediaBuffer(media, len(data), false), // Chunk size is the whole payload
+				Media:                NewMediaBuffer(media, len(data), false), // Chunk size is the whole payload.
 				MediaType:            "text/plain",
 				ChunkTransferTimeout: tc.chunkTransferTimeout,
 				ChunkRetryDeadline:   100 * time.Millisecond,
@@ -639,7 +639,7 @@ func TestUploadChecksum(t *testing.T) {
 	chunkSize := 90
 	media := strings.NewReader(data)
 
-	// Simulate multi-chunk resumable requests
+	// Simulate multi-chunk resumable requests.
 	tr := &interruptibleTransport{
 		events: []event{
 			{byteRange: "bytes 0-89/*", responseStatus: 308},
@@ -651,7 +651,7 @@ func TestUploadChecksum(t *testing.T) {
 	}
 	rx := &ResumableUpload{
 		Client:    &http.Client{Transport: tr},
-		Media:     NewMediaBuffer(media, chunkSize, false),
+		Media:     NewMediaBuffer(media, chunkSize, true),
 		MediaType: "text/plain",
 	}
 

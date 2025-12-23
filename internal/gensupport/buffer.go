@@ -22,9 +22,11 @@ type MediaBuffer struct {
 
 	// The absolute position of chunk in the underlying media.
 	off int64
-	// Calculate the checksum of all chunks when chunks are streamed out of media.
-	fullObjectChecksum  uint32
-	disableAutoChecksum bool
+
+	// fullObjectChecksum holds the running checksum of streamed media chunks when automatic checksum
+	// calculation is enabled via enableAutoChecksum.
+	fullObjectChecksum uint32
+	enableAutoChecksum bool
 }
 
 var (
@@ -32,11 +34,11 @@ var (
 )
 
 // NewMediaBuffer initializes a MediaBuffer.
-func NewMediaBuffer(media io.Reader, chunkSize int, disableAutoChecksum bool) *MediaBuffer {
+func NewMediaBuffer(media io.Reader, chunkSize int, enableAutoChecksum bool) *MediaBuffer {
 	return &MediaBuffer{
-		media:               media,
-		chunk:               make([]byte, 0, chunkSize),
-		disableAutoChecksum: disableAutoChecksum,
+		media:              media,
+		chunk:              make([]byte, 0, chunkSize),
+		enableAutoChecksum: enableAutoChecksum,
 	}
 }
 
@@ -64,7 +66,7 @@ func (mb *MediaBuffer) loadChunk() error {
 		read += n
 	}
 	mb.chunk = mb.chunk[:read]
-	if !mb.disableAutoChecksum {
+	if mb.enableAutoChecksum {
 		mb.fullObjectChecksum = crc32.Update(mb.fullObjectChecksum, crc32cTable, mb.chunk)
 	}
 	return err

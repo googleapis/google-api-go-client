@@ -297,7 +297,7 @@ func TestAdapter(t *testing.T) {
 
 func TestChecksum(t *testing.T) {
 	data := "abcdefg"
-	mb := NewMediaBuffer(bytes.NewReader([]byte(data)), 3, false)
+	mb := NewMediaBuffer(bytes.NewReader([]byte(data)), 3, true)
 	for {
 		_, err := getChunkAsString(t, mb)
 		if err == io.EOF {
@@ -309,7 +309,6 @@ func TestChecksum(t *testing.T) {
 		mb.Next()
 	}
 
-	// The CRC32C checksum of "abcdefg" is 0x45a116f3.
 	want := crc32.Checksum([]byte(data), crc32cTable)
 	if got := mb.fullObjectChecksum; got != want {
 		t.Errorf("mb.fullObjectChecksum = %d; want %d", got, want)

@@ -333,17 +333,17 @@ func ChunkRetryDeadline(deadline time.Duration) MediaOption {
 	return chunkRetryDeadlineOption(deadline)
 }
 
-type disableAutoChecksumOption bool
+type enableAutoChecksumOption bool
 
-func (d disableAutoChecksumOption) setOptions(o *MediaOptions) {
-	o.DisableAutoChecksum = bool(d)
+func (d enableAutoChecksumOption) setOptions(o *MediaOptions) {
+	o.EnableAutoChecksum = bool(d)
 }
 
-// DisableAutoChecksum returns a MediaOption which disables automatic checksum calculation.
-// By default, checksum for the entire data is calculated and sent on the final request.
-// Setting this to true disables this behavior.
-func DisableAutoChecksum(disableAutoChecksum bool) MediaOption {
-	return disableAutoChecksumOption(disableAutoChecksum)
+// EnableAutoChecksum returns a MediaOption which enables automatic checksum calculation.
+// The computed checksum is sent on the final resumable upload request to the server.
+// Writes are rejected in the event of checksum mismatch.
+func EnableAutoChecksum(enableAutoChecksum bool) MediaOption {
+	return enableAutoChecksumOption(enableAutoChecksum)
 }
 
 // MediaOptions stores options for customizing media upload.  It is not used by developers directly.
@@ -353,7 +353,7 @@ type MediaOptions struct {
 	ChunkSize             int
 	ChunkRetryDeadline    time.Duration
 	ChunkTransferTimeout  time.Duration
-	DisableAutoChecksum   bool
+	EnableAutoChecksum    bool
 }
 
 // ProcessMediaOptions stores options from opts in a MediaOptions.

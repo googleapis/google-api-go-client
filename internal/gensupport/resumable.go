@@ -105,8 +105,8 @@ func (rx *ResumableUpload) doUploadRequest(ctx context.Context, data io.Reader, 
 	// 308" response header.
 	req.Header.Set("X-GUploader-No-308", "yes")
 
-	// Server accepts checksum only on final request through header
-	if final && !rx.Media.disableAutoChecksum {
+	// Server accepts checksum only on final request through header.
+	if final && rx.Media.enableAutoChecksum {
 		req.Header.Set("X-Goog-Hash", "crc32c="+encodeUint32(rx.Media.fullObjectChecksum))
 	}
 

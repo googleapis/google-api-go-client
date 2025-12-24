@@ -58,6 +58,16 @@ func AuthCreds(ctx context.Context, settings *DialSettings) (*auth.Credentials, 
 	if settings.AuthCredentials != nil {
 		return settings.AuthCredentials, nil
 	}
+	// If the user provided credentials via JSON or file options, return nil
+	// to let the transport handle credential detection later. This prevents
+	// client libraries from adding duplicate WithAuthCredentials options.
+	if len(settings.AuthCredentialsJSON) > 0 || settings.AuthCredentialsFile != "" {
+		return nil, nil
+	}
+	// Also check for legacy credential options (CredentialsJSON, CredentialsFile)
+	if len(settings.CredentialsJSON) > 0 || settings.CredentialsFile != "" {
+		return nil, nil
+	}
 	// Support oauth2/google options
 	var oauth2Creds *google.Credentials
 	if settings.InternalCredentials != nil {

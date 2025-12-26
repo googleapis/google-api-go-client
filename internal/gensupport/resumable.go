@@ -20,6 +20,10 @@ import (
 	"google.golang.org/api/internal"
 )
 
+const (
+	crc32cHeaderKey = "crc32c"
+)
+
 // ResumableUpload is used by the generated APIs to provide resumable uploads.
 // It is not used by developers directly.
 type ResumableUpload struct {
@@ -107,7 +111,7 @@ func (rx *ResumableUpload) doUploadRequest(ctx context.Context, data io.Reader, 
 
 	// Server accepts checksum only on final request through header.
 	if final && rx.Media.enableAutoChecksum {
-		req.Header.Set("X-Goog-Hash", "crc32c="+encodeUint32(rx.Media.fullObjectChecksum))
+		req.Header.Set("X-Goog-Hash", fmt.Sprintf("%v=%v", crc32cHeaderKey, encodeUint32(rx.Media.fullObjectChecksum)))
 	}
 
 	return SendRequest(ctx, rx.Client, req)

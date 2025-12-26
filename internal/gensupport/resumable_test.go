@@ -635,34 +635,50 @@ func TestOverallUploadTimeout(t *testing.T) {
 
 func TestUploadChecksum(t *testing.T) {
 	data := string(bytes.Repeat([]byte("a"), 300))
-	checksum := crc32.Checksum([]byte(data), crc32cTable)
 	chunkSize := 90
-	media := strings.NewReader(data)
-
-	// Simulate multi-chunk resumable requests.
-	tr := &interruptibleTransport{
-		events: []event{
-			{byteRange: "bytes 0-89/*", responseStatus: 308},
-			{byteRange: "bytes 90-179/*", responseStatus: 308},
-			{byteRange: "bytes 180-269/*", responseStatus: 308},
-			{byteRange: "bytes 270-299/300", responseStatus: 200},
+	checksum := crc32.Checksum([]byte(data), crc32cTable)
+	tests := []struct {
+		name               string
+		chunkSize          int
+		sendChecksum       bool
+		wantChecksumHeader string
+	}{
+		{
+			name:         "checksum disabled",
+			sendChecksum: false,
 		},
-		bodies: bodyTracker{},
+		{
+			name:               "checksum enabled",
+			sendChecksum:       true,
+			wantChecksumHeader: fmt.Sprintf("%v=%v", crc32cHeaderKey, encodeUint32(checksum)),
+		},
 	}
-	rx := &ResumableUpload{
-		Client:    &http.Client{Transport: tr},
-		Media:     NewMediaBuffer(media, chunkSize, true),
-		MediaType: "text/plain",
-	}
+	for _, tc := range tests {
+		media := strings.NewReader(data)
 
-	res, err := rx.Upload(context.Background())
-	if err != nil {
-		t.Fatalf("Upload failed: %v", err)
-	}
-	res.Body.Close()
+		// Simulate multi-chunk resumable requests.
+		tr := &interruptibleTransport{
+			events: []event{
+				{byteRange: "bytes 0-89/*", responseStatus: 308},
+				{byteRange: "bytes 90-179/*", responseStatus: 308},
+				{byteRange: "bytes 180-269/*", responseStatus: 308},
+				{byteRange: "bytes 270-299/300", responseStatus: 200},
+			},
+			bodies: bodyTracker{},
+		}
+		rx := &ResumableUpload{
+			Client:    &http.Client{Transport: tr},
+			Media:     NewMediaBuffer(media, chunkSize, tc.sendChecksum),
+			MediaType: "text/plain",
+		}
 
-	wantChecksumHeader := "crc32c=" + encodeUint32(checksum)
-	if gotChecksumHeader := tr.finalHeader.Get("X-Goog-Hash"); gotChecksumHeader != wantChecksumHeader {
-		t.Errorf("X-Goog-Hash: got %x, want %x", gotChecksumHeader, wantChecksumHeader)
+		res, err := rx.Upload(context.Background())
+		if err != nil {
+			t.Fatalf("Upload failed: %v", err)
+		}
+		res.Body.Close()
+		if gotChecksumHeader := tr.finalHeader.Get("X-Goog-Hash"); gotChecksumHeader != tc.wantChecksumHeader {
+			t.Errorf("X-Goog-Hash: got %q, want %q", gotChecksumHeader, tc.wantChecksumHeader)
+		}
 	}
 }

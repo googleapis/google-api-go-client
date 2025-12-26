@@ -5,9 +5,11 @@
 package gensupport
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"fmt"
+	"hash/crc32"
 	"io"
 	"net/http"
 	"reflect"
@@ -36,9 +38,10 @@ type event struct {
 // It records the incoming data, unless the corresponding event is configured to return
 // http.StatusServiceUnavailable.
 type interruptibleTransport struct {
-	events []event
-	buf    []byte
-	bodies bodyTracker
+	events      []event
+	buf         []byte
+	bodies      bodyTracker
+	finalHeader http.Header
 }
 
 // bodyTracker keeps track of response bodies that have not been closed.
@@ -81,6 +84,7 @@ func (t *interruptibleTransport) RoundTrip(req *http.Request) (*http.Response, e
 	if got, want := req.Header.Get("Content-Range"), ev.byteRange; got != want {
 		return nil, fmt.Errorf("byte range: got %s; want %s", got, want)
 	}
+	t.finalHeader = req.Header
 
 	if ev.responseStatus != http.StatusServiceUnavailable {
 		buf, err := io.ReadAll(req.Body)
@@ -174,7 +178,7 @@ func TestInterruptedTransferChunks(t *testing.T) {
 			pr := progressRecorder{}
 			rx := &ResumableUpload{
 				Client:    &http.Client{Transport: tr},
-				Media:     NewMediaBuffer(media, tc.chunkSize),
+				Media:     NewMediaBuffer(media, tc.chunkSize, false),
 				MediaType: "text/plain",
 				Callback:  pr.ProgressUpdate,
 			}
@@ -226,7 +230,7 @@ func TestCancelUploadFast(t *testing.T) {
 	pr := progressRecorder{}
 	rx := &ResumableUpload{
 		Client:    &http.Client{Transport: tr},
-		Media:     NewMediaBuffer(media, chunkSize),
+		Media:     NewMediaBuffer(media, chunkSize, false),
 		MediaType: "text/plain",
 		Callback:  pr.ProgressUpdate,
 	}
@@ -279,7 +283,7 @@ func TestCancelUploadBasic(t *testing.T) {
 
 	rx := &ResumableUpload{
 		Client:    &http.Client{Transport: tr},
-		Media:     NewMediaBuffer(media, chunkSize),
+		Media:     NewMediaBuffer(media, chunkSize, false),
 		MediaType: "text/plain",
 		Callback:  pr.ProgressUpdate,
 	}
@@ -344,7 +348,7 @@ func TestRetry_EachChunkHasItsOwnRetryDeadline(t *testing.T) {
 
 	rx := &ResumableUpload{
 		Client:             &http.Client{Transport: tr},
-		Media:              NewMediaBuffer(media, chunkSize),
+		Media:              NewMediaBuffer(media, chunkSize, false),
 		MediaType:          "text/plain",
 		Callback:           func(int64) {},
 		ChunkRetryDeadline: 5 * time.Second,
@@ -443,7 +447,7 @@ func TestChunkTransferTimeout(t *testing.T) {
 
 			rx := &ResumableUpload{
 				Client:               &http.Client{Transport: transport},
-				Media:                NewMediaBuffer(media, len(data)), // Chunk size is the whole payload
+				Media:                NewMediaBuffer(media, len(data), false), // Chunk size is the whole payload.
 				MediaType:            "text/plain",
 				ChunkTransferTimeout: tc.chunkTransferTimeout,
 				ChunkRetryDeadline:   100 * time.Millisecond,
@@ -523,7 +527,7 @@ func TestMediaError(t *testing.T) {
 
 	rx := &ResumableUpload{
 		Client:    &http.Client{Transport: tr},
-		Media:     NewMediaBuffer(media, chunkSize),
+		Media:     NewMediaBuffer(media, chunkSize, false),
 		MediaType: "text/plain",
 	}
 
@@ -562,7 +566,7 @@ func TestNonRetryableError(t *testing.T) {
 
 	rx := &ResumableUpload{
 		Client:    &http.Client{Transport: tr},
-		Media:     NewMediaBuffer(media, chunkSize),
+		Media:     NewMediaBuffer(media, chunkSize, false),
 		MediaType: "text/plain",
 	}
 
@@ -610,7 +614,7 @@ func TestOverallUploadTimeout(t *testing.T) {
 
 	rx := &ResumableUpload{
 		Client:    &http.Client{Transport: tr},
-		Media:     NewMediaBuffer(media, chunkSize),
+		Media:     NewMediaBuffer(media, chunkSize, false),
 		MediaType: "text/plain",
 	}
 
@@ -626,5 +630,55 @@ func TestOverallUploadTimeout(t *testing.T) {
 
 	if !errors.Is(err, context.DeadlineExceeded) {
 		t.Fatalf("Upload err: got: %v; want: context.DeadlineExceeded", err)
+	}
+}
+
+func TestUploadChecksum(t *testing.T) {
+	data := string(bytes.Repeat([]byte("a"), 300))
+	chunkSize := 90
+	checksum := crc32.Checksum([]byte(data), crc32cTable)
+	tests := []struct {
+		name               string
+		chunkSize          int
+		sendChecksum       bool
+		wantChecksumHeader string
+	}{
+		{
+			name:         "checksum disabled",
+			sendChecksum: false,
+		},
+		{
+			name:               "checksum enabled",
+			sendChecksum:       true,
+			wantChecksumHeader: fmt.Sprintf("%v=%v", crc32cHeaderKey, encodeUint32(checksum)),
+		},
+	}
+	for _, tc := range tests {
+		media := strings.NewReader(data)
+
+		// Simulate multi-chunk resumable requests.
+		tr := &interruptibleTransport{
+			events: []event{
+				{byteRange: "bytes 0-89/*", responseStatus: 308},
+				{byteRange: "bytes 90-179/*", responseStatus: 308},
+				{byteRange: "bytes 180-269/*", responseStatus: 308},
+				{byteRange: "bytes 270-299/300", responseStatus: 200},
+			},
+			bodies: bodyTracker{},
+		}
+		rx := &ResumableUpload{
+			Client:    &http.Client{Transport: tr},
+			Media:     NewMediaBuffer(media, chunkSize, tc.sendChecksum),
+			MediaType: "text/plain",
+		}
+
+		res, err := rx.Upload(context.Background())
+		if err != nil {
+			t.Fatalf("Upload failed: %v", err)
+		}
+		res.Body.Close()
+		if gotChecksumHeader := tr.finalHeader.Get("X-Goog-Hash"); gotChecksumHeader != tc.wantChecksumHeader {
+			t.Errorf("X-Goog-Hash: got %q, want %q", gotChecksumHeader, tc.wantChecksumHeader)
+		}
 	}
 }

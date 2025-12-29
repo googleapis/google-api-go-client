@@ -34,11 +34,10 @@ var (
 )
 
 // NewMediaBuffer initializes a MediaBuffer.
-func NewMediaBuffer(media io.Reader, chunkSize int, enableAutoChecksum bool) *MediaBuffer {
+func NewMediaBuffer(media io.Reader, chunkSize int) *MediaBuffer {
 	return &MediaBuffer{
-		media:              media,
-		chunk:              make([]byte, 0, chunkSize),
-		enableAutoChecksum: enableAutoChecksum,
+		media: media,
+		chunk: make([]byte, 0, chunkSize),
 	}
 }
 

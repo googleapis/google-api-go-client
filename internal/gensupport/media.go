@@ -122,7 +122,8 @@ func PrepareUpload(media io.Reader, chunkSize int, enableAutoChecksum bool) (r i
 	if chunkSize == 0 { // do not chunk
 		return media, nil, true
 	}
-	mb = NewMediaBuffer(media, chunkSize, enableAutoChecksum)
+	mb = NewMediaBuffer(media, chunkSize)
+	mb.enableAutoChecksum = enableAutoChecksum
 	_, _, _, err := mb.Chunk()
 	// If err is io.EOF, we can upload this in a single request. Otherwise, err is
 	// either nil or a non-EOF error. If it is the latter, then the next call to
@@ -175,7 +176,7 @@ func NewInfoFromResumableMedia(r io.ReaderAt, size int64, mediaType string) *Med
 	return &MediaInfo{
 		size:        size,
 		mType:       mType,
-		buffer:      NewMediaBuffer(rdr, googleapi.DefaultUploadChunkSize, false),
+		buffer:      NewMediaBuffer(rdr, googleapi.DefaultUploadChunkSize),
 		media:       nil,
 		singleChunk: false,
 	}

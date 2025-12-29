@@ -21,7 +21,8 @@ import (
 )
 
 const (
-	crc32cHeaderKey = "crc32c"
+	crc32cPrefix  = "crc32c"
+	hashHeaderKey = "X-Goog-Hash"
 )
 
 // ResumableUpload is used by the generated APIs to provide resumable uploads.
@@ -111,7 +112,7 @@ func (rx *ResumableUpload) doUploadRequest(ctx context.Context, data io.Reader, 
 
 	// Server accepts checksum only on final request through header.
 	if final && rx.Media.enableAutoChecksum {
-		req.Header.Set("X-Goog-Hash", fmt.Sprintf("%v=%v", crc32cHeaderKey, encodeUint32(rx.Media.fullObjectChecksum)))
+		req.Header.Set(hashHeaderKey, fmt.Sprintf("%v=%v", crc32cPrefix, encodeUint32(rx.Media.fullObjectChecksum)))
 	}
 
 	return SendRequest(ctx, rx.Client, req)

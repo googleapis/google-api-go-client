@@ -650,7 +650,7 @@ func TestUploadChecksum(t *testing.T) {
 		{
 			name:               "checksum enabled",
 			sendChecksum:       true,
-			wantChecksumHeader: fmt.Sprintf("%v=%v", crc32cHeaderKey, encodeUint32(checksum)),
+			wantChecksumHeader: fmt.Sprintf("%v=%v", crc32cPrefix, encodeUint32(checksum)),
 		},
 	}
 	for _, tc := range tests {
@@ -677,8 +677,8 @@ func TestUploadChecksum(t *testing.T) {
 			t.Fatalf("Upload failed: %v", err)
 		}
 		res.Body.Close()
-		if gotChecksumHeader := tr.finalHeader.Get("X-Goog-Hash"); gotChecksumHeader != tc.wantChecksumHeader {
-			t.Errorf("X-Goog-Hash: got %q, want %q", gotChecksumHeader, tc.wantChecksumHeader)
+		if gotChecksumHeader := tr.finalHeader.Get(hashHeaderKey); gotChecksumHeader != tc.wantChecksumHeader {
+			t.Errorf("Hash header: got %q, want %q", gotChecksumHeader, tc.wantChecksumHeader)
 		}
 	}
 }

@@ -35,10 +35,7 @@ var (
 
 // NewMediaBuffer initializes a MediaBuffer.
 func NewMediaBuffer(media io.Reader, chunkSize int) *MediaBuffer {
-	return &MediaBuffer{
-		media: media,
-		chunk: make([]byte, 0, chunkSize),
-	}
+	return &MediaBuffer{media: media, chunk: make([]byte, 0, chunkSize)}
 }
 
 // Chunk returns the current buffered chunk, the offset in the underlying media

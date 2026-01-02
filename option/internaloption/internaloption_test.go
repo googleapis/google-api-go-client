@@ -63,3 +63,13 @@ func TestDefaultApply(t *testing.T) {
 		t.Error(cmp.Diff(got, want, ignore...))
 	}
 }
+
+func TestWithTelemetryAttributes(t *testing.T) {
+	attrs := map[string]string{"foo": "bar"}
+	opt := WithTelemetryAttributes(attrs)
+	var ds internal.DialSettings
+	opt.Apply(&ds)
+	if diff := cmp.Diff(attrs, ds.TelemetryAttributes); diff != "" {
+		t.Errorf("TelemetryAttributes mismatch (-want +got):\n%s", diff)
+	}
+}

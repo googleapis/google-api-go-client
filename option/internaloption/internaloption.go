@@ -153,6 +153,26 @@ func (w withDefaultScopes) Apply(o *internal.DialSettings) {
 	copy(o.DefaultScopes, w)
 }
 
+// WithTelemetryAttributes returns a ClientOption that specifies a map of
+// telemetry attributes to be added to all OpenTelemetry signals (spans and
+// metrics). These attributes represent the static identity of the client
+// (e.g., service name, version) and are expected to be consistent across all
+// signals to enable cross-signal correlation.
+//
+// It should only be used internally by generated clients.
+func WithTelemetryAttributes(attrs map[string]string) option.ClientOption {
+	return withTelemetryAttributes(attrs)
+}
+
+type withTelemetryAttributes map[string]string
+
+func (w withTelemetryAttributes) Apply(o *internal.DialSettings) {
+	o.TelemetryAttributes = make(map[string]string, len(w))
+	for k, v := range w {
+		o.TelemetryAttributes[k] = v
+	}
+}
+
 // WithDefaultUniverseDomain returns a ClientOption that sets the default universe domain.
 //
 // It should only be used internally by generated clients.

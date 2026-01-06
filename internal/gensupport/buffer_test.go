@@ -6,6 +6,7 @@ package gensupport
 
 import (
 	"bytes"
+	"hash/crc32"
 	"io"
 	"reflect"
 	"testing"
@@ -291,5 +292,26 @@ func TestAdapter(t *testing.T) {
 		// reused and read from the beginning.
 		to = ReaderAtToReader(tc.from, int64(len(data)))
 		checkConversion(to, tc.wantTyper)
+	}
+}
+
+func TestChecksum(t *testing.T) {
+	data := "abcdefg"
+	mb := NewMediaBuffer(bytes.NewReader([]byte(data)), 3)
+	mb.enableAutoChecksum = true
+	for {
+		_, err := getChunkAsString(t, mb)
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			t.Fatalf("getChunkAsString() error: %v", err)
+		}
+		mb.Next()
+	}
+
+	want := crc32.Checksum([]byte(data), crc32cTable)
+	if got := mb.fullObjectChecksum; got != want {
+		t.Errorf("mb.fullObjectChecksum = %d; want %d", got, want)
 	}
 }

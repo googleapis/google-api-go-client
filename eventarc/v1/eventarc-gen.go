@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -172,7 +172,6 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Channels = NewProjectsLocationsChannelsService(s)
 	rs.Enrollments = NewProjectsLocationsEnrollmentsService(s)
 	rs.GoogleApiSources = NewProjectsLocationsGoogleApiSourcesService(s)
-	rs.KafkaSources = NewProjectsLocationsKafkaSourcesService(s)
 	rs.MessageBuses = NewProjectsLocationsMessageBusesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Pipelines = NewProjectsLocationsPipelinesService(s)
@@ -191,8 +190,6 @@ type ProjectsLocationsService struct {
 	Enrollments *ProjectsLocationsEnrollmentsService
 
 	GoogleApiSources *ProjectsLocationsGoogleApiSourcesService
-
-	KafkaSources *ProjectsLocationsKafkaSourcesService
 
 	MessageBuses *ProjectsLocationsMessageBusesService
 
@@ -238,15 +235,6 @@ func NewProjectsLocationsGoogleApiSourcesService(s *Service) *ProjectsLocationsG
 }
 
 type ProjectsLocationsGoogleApiSourcesService struct {
-	s *Service
-}
-
-func NewProjectsLocationsKafkaSourcesService(s *Service) *ProjectsLocationsKafkaSourcesService {
-	rs := &ProjectsLocationsKafkaSourcesService{s: s}
-	return rs
-}
-
-type ProjectsLocationsKafkaSourcesService struct {
 	s *Service
 }
 
@@ -1555,8 +1543,8 @@ type GoogleLongrunningListOperationsResponse struct {
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2478,6 +2466,30 @@ func (s Pubsub) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RetryPolicy: The retry policy configuration for the Trigger. Can only be set
+// with Cloud Run destinations.
+type RetryPolicy struct {
+	// MaxAttempts: Optional. The maximum number of delivery attempts for any
+	// message. The only valid value is 1.
+	MaxAttempts int64 `json:"maxAttempts,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxAttempts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxAttempts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RetryPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod RetryPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the `resource`. The
@@ -2719,6 +2731,10 @@ type Trigger struct {
 	// location of the project and must be in
 	// `projects/{project}/locations/{location}/triggers/{trigger}` format.
 	Name string `json:"name,omitempty"`
+	// RetryPolicy: Optional. The retry policy to use in the Trigger. If unset,
+	// event delivery will be retried for up to 24 hours by default:
+	// https://cloud.google.com/eventarc/docs/retry-events
+	RetryPolicy *RetryPolicy `json:"retryPolicy,omitempty"`
 	// SatisfiesPzs: Output only. Whether or not this Trigger satisfies the
 	// requirements of physical zone separation
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
@@ -7011,353 +7027,6 @@ func (c *ProjectsLocationsGoogleApiSourcesTestIamPermissionsCall) Do(opts ...goo
 	return ret, nil
 }
 
-type ProjectsLocationsKafkaSourcesGetIamPolicyCall struct {
-	s            *Service
-	resource     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetIamPolicy: Gets the access control policy for a resource. Returns an
-// empty policy if the resource exists and does not have a policy set.
-//
-//   - resource: REQUIRED: The resource for which the policy is being requested.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
-func (r *ProjectsLocationsKafkaSourcesService) GetIamPolicy(resource string) *ProjectsLocationsKafkaSourcesGetIamPolicyCall {
-	c := &ProjectsLocationsKafkaSourcesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	return c
-}
-
-// OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The maximum policy version that will be
-// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
-// an invalid value will be rejected. Requests for policies with any
-// conditional role bindings must specify version 3. Policies with no
-// conditional role bindings may specify any valid value or leave the field
-// unset. The policy in the response might use the policy version that you
-// specified, or it might use a lower policy version. For example, if you
-// specify version 3, but the policy has no conditional role bindings, the
-// response uses version 1. To learn which resources support conditions in
-// their IAM policies, see the IAM documentation
-// (https://cloud.google.com/iam/help/conditions/resource-policies).
-func (c *ProjectsLocationsKafkaSourcesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsKafkaSourcesGetIamPolicyCall {
-	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsKafkaSourcesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsKafkaSourcesGetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsKafkaSourcesGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsKafkaSourcesGetIamPolicyCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsKafkaSourcesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsKafkaSourcesGetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsKafkaSourcesGetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsKafkaSourcesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "eventarc.projects.locations.kafkaSources.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "eventarc.projects.locations.kafkaSources.getIamPolicy" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsKafkaSourcesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "eventarc.projects.locations.kafkaSources.getIamPolicy", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsKafkaSourcesSetIamPolicyCall struct {
-	s                   *Service
-	resource            string
-	setiampolicyrequest *SetIamPolicyRequest
-	urlParams_          gensupport.URLParams
-	ctx_                context.Context
-	header_             http.Header
-}
-
-// SetIamPolicy: Sets the access control policy on the specified resource.
-// Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`,
-// and `PERMISSION_DENIED` errors.
-//
-//   - resource: REQUIRED: The resource for which the policy is being specified.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
-func (r *ProjectsLocationsKafkaSourcesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsKafkaSourcesSetIamPolicyCall {
-	c := &ProjectsLocationsKafkaSourcesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.setiampolicyrequest = setiampolicyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsKafkaSourcesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsKafkaSourcesSetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsKafkaSourcesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsKafkaSourcesSetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsKafkaSourcesSetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsKafkaSourcesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.setiampolicyrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "eventarc.projects.locations.kafkaSources.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "eventarc.projects.locations.kafkaSources.setIamPolicy" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsKafkaSourcesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "eventarc.projects.locations.kafkaSources.setIamPolicy", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsKafkaSourcesTestIamPermissionsCall struct {
-	s                         *Service
-	resource                  string
-	testiampermissionsrequest *TestIamPermissionsRequest
-	urlParams_                gensupport.URLParams
-	ctx_                      context.Context
-	header_                   http.Header
-}
-
-// TestIamPermissions: Returns permissions that a caller has on the specified
-// resource. If the resource does not exist, this will return an empty set of
-// permissions, not a `NOT_FOUND` error. Note: This operation is designed to be
-// used for building permission-aware UIs and command-line tools, not for
-// authorization checking. This operation may "fail open" without warning.
-//
-//   - resource: REQUIRED: The resource for which the policy detail is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
-//     value for this field.
-func (r *ProjectsLocationsKafkaSourcesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsKafkaSourcesTestIamPermissionsCall {
-	c := &ProjectsLocationsKafkaSourcesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.testiampermissionsrequest = testiampermissionsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsKafkaSourcesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsKafkaSourcesTestIamPermissionsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsKafkaSourcesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsKafkaSourcesTestIamPermissionsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsKafkaSourcesTestIamPermissionsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsKafkaSourcesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.testiampermissionsrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "eventarc.projects.locations.kafkaSources.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "eventarc.projects.locations.kafkaSources.testIamPermissions" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsKafkaSourcesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &TestIamPermissionsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "eventarc.projects.locations.kafkaSources.testIamPermissions", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
 type ProjectsLocationsMessageBusesCreateCall struct {
 	s          *Service
 	parent     string
@@ -8858,9 +8527,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

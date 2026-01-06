@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -352,6 +352,28 @@ type BackfillNoneStrategy struct {
 type BasicEncryption struct {
 }
 
+// BigQueryClustering: BigQuery clustering configuration.
+type BigQueryClustering struct {
+	// Columns: Required. Column names to set as clustering columns.
+	Columns []string `json:"columns,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Columns") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Columns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BigQueryClustering) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryClustering
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BigQueryDestinationConfig: BigQuery destination configuration
 type BigQueryDestinationConfig struct {
 	// AppendOnly: Append only mode
@@ -385,6 +407,35 @@ type BigQueryDestinationConfig struct {
 
 func (s BigQueryDestinationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BigQueryDestinationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BigQueryPartitioning: BigQuery partitioning configuration.
+type BigQueryPartitioning struct {
+	// IngestionTimePartition: Ingestion time partitioning.
+	IngestionTimePartition *IngestionTimePartition `json:"ingestionTimePartition,omitempty"`
+	// IntegerRangePartition: Integer range partitioning.
+	IntegerRangePartition *IntegerRangePartition `json:"integerRangePartition,omitempty"`
+	// RequirePartitionFilter: Optional. If true, queries over the table require a
+	// partition filter.
+	RequirePartitionFilter bool `json:"requirePartitionFilter,omitempty"`
+	// TimeUnitPartition: Time unit column partitioning.
+	TimeUnitPartition *TimeUnitPartition `json:"timeUnitPartition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IngestionTimePartition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IngestionTimePartition") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BigQueryPartitioning) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryPartitioning
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -549,6 +600,30 @@ type ConnectionProfile struct {
 
 func (s ConnectionProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectionProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomizationRule: A customization rule to apply to a set of objects.
+type CustomizationRule struct {
+	// BigqueryClustering: BigQuery clustering rule.
+	BigqueryClustering *BigQueryClustering `json:"bigqueryClustering,omitempty"`
+	// BigqueryPartitioning: BigQuery partitioning rule.
+	BigqueryPartitioning *BigQueryPartitioning `json:"bigqueryPartitioning,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BigqueryClustering") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BigqueryClustering") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomizationRule) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomizationRule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -949,6 +1024,66 @@ func (s HostAddress) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// IngestionTimePartition: Ingestion time partitioning. see
+// https://cloud.google.com/bigquery/docs/partitioned-tables#ingestion_time
+type IngestionTimePartition struct {
+	// PartitioningTimeGranularity: Optional. Partition granularity
+	//
+	// Possible values:
+	//   "PARTITIONING_TIME_GRANULARITY_UNSPECIFIED" - Unspecified partitioing
+	// interval.
+	//   "PARTITIONING_TIME_GRANULARITY_HOUR" - Hourly partitioning.
+	//   "PARTITIONING_TIME_GRANULARITY_DAY" - Daily partitioning.
+	//   "PARTITIONING_TIME_GRANULARITY_MONTH" - Monthly partitioning.
+	//   "PARTITIONING_TIME_GRANULARITY_YEAR" - Yearly partitioning.
+	PartitioningTimeGranularity string `json:"partitioningTimeGranularity,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "PartitioningTimeGranularity") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PartitioningTimeGranularity") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngestionTimePartition) MarshalJSON() ([]byte, error) {
+	type NoMethod IngestionTimePartition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IntegerRangePartition: Integer range partitioning. see
+// https://cloud.google.com/bigquery/docs/partitioned-tables#integer_range
+type IntegerRangePartition struct {
+	// Column: Required. The partitioning column.
+	Column string `json:"column,omitempty"`
+	// End: Required. The ending value for range partitioning (exclusive).
+	End int64 `json:"end,omitempty,string"`
+	// Interval: Required. The interval of each range within the partition.
+	Interval int64 `json:"interval,omitempty,string"`
+	// Start: Required. The starting value for range partitioning (inclusive).
+	Start int64 `json:"start,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IntegerRangePartition) MarshalJSON() ([]byte, error) {
+	type NoMethod IntegerRangePartition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // JsonFileFormat: JSON file format configuration.
 type JsonFileFormat struct {
 	// Compression: Compression of the loaded JSON file.
@@ -1051,8 +1186,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1430,6 +1565,14 @@ func (s MongodbObjectIdentifier) MarshalJSON() ([]byte, error) {
 
 // MongodbProfile: MongoDB profile.
 type MongodbProfile struct {
+	// AdditionalOptions: Optional. Specifies additional options for the MongoDB
+	// connection. The options should be sent as key-value pairs, for example:
+	// `additional_options = {"serverSelectionTimeoutMS": "10000",
+	// "directConnection": "true"}`. Keys are case-sensitive and should match the
+	// official MongoDB connection string options:
+	// https://www.mongodb.com/docs/manual/reference/connection-string-options/ The
+	// server will not modify the values provided by the user.
+	AdditionalOptions map[string]string `json:"additionalOptions,omitempty"`
 	// HostAddresses: Required. List of host addresses for a MongoDB cluster. For
 	// SRV connection format, this list must contain exactly one DNS host without a
 	// port. For Standard connection format, this list must contain all the
@@ -1454,15 +1597,15 @@ type MongodbProfile struct {
 	StandardConnectionFormat *StandardConnectionFormat `json:"standardConnectionFormat,omitempty"`
 	// Username: Required. Username for the MongoDB connection.
 	Username string `json:"username,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "HostAddresses") to
+	// ForceSendFields is a list of field names (e.g. "AdditionalOptions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "HostAddresses") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdditionalOptions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1882,6 +2025,28 @@ type Oauth2ClientCredentials struct {
 
 func (s Oauth2ClientCredentials) MarshalJSON() ([]byte, error) {
 	type NoMethod Oauth2ClientCredentials
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ObjectFilter: Object filter to apply the rules to.
+type ObjectFilter struct {
+	// SourceObjectIdentifier: Specific source object identifier.
+	SourceObjectIdentifier *SourceObjectIdentifier `json:"sourceObjectIdentifier,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceObjectIdentifier") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceObjectIdentifier") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ObjectFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod ObjectFilter
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2662,6 +2827,30 @@ func (s Route) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RuleSet: A set of rules to apply to a set of objects.
+type RuleSet struct {
+	// CustomizationRules: Required. List of customization rules to apply.
+	CustomizationRules []*CustomizationRule `json:"customizationRules,omitempty"`
+	// ObjectFilter: Required. Object filter to apply the customization rules to.
+	ObjectFilter *ObjectFilter `json:"objectFilter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomizationRules") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomizationRules") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RuleSet) MarshalJSON() ([]byte, error) {
+	type NoMethod RuleSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RunStreamRequest: Request message for running a stream.
 type RunStreamRequest struct {
 	// CdcStrategy: Optional. The CDC strategy of the stream. If not set, the
@@ -3325,8 +3514,10 @@ type SrvConnectionFormat struct {
 
 // StandardConnectionFormat: Standard connection format.
 type StandardConnectionFormat struct {
-	// DirectConnection: Optional. Specifies whether the client connects directly
-	// to the host[:port] in the connection URI.
+	// DirectConnection: Optional. Deprecated: Use the `additional_options` map to
+	// specify the `directConnection` parameter instead. For example:
+	// `additional_options = {"directConnection": "true"}`. Specifies whether the
+	// client connects directly to the host[:port] in the connection URI.
 	DirectConnection bool `json:"directConnection,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DirectConnection") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3497,6 +3688,8 @@ type Stream struct {
 	LastRecoveryTime string `json:"lastRecoveryTime,omitempty"`
 	// Name: Output only. Identifier. The stream's name.
 	Name string `json:"name,omitempty"`
+	// RuleSets: Optional. Rule sets to apply to the stream.
+	RuleSets []*RuleSet `json:"ruleSets,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
@@ -3554,6 +3747,10 @@ type StreamObject struct {
 	BackfillJob *BackfillJob `json:"backfillJob,omitempty"`
 	// CreateTime: Output only. The creation time of the object.
 	CreateTime string `json:"createTime,omitempty"`
+	// CustomizationRules: Output only. The customization rules for the object.
+	// These rules are derived from the parent Stream's `rule_sets` and represent
+	// the intended configuration for the object.
+	CustomizationRules []*CustomizationRule `json:"customizationRules,omitempty"`
 	// DisplayName: Required. Display name.
 	DisplayName string `json:"displayName,omitempty"`
 	// Errors: Output only. Active errors on the object.
@@ -3582,6 +3779,39 @@ type StreamObject struct {
 
 func (s StreamObject) MarshalJSON() ([]byte, error) {
 	type NoMethod StreamObject
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TimeUnitPartition: Time unit column partitioning. see
+// https://cloud.google.com/bigquery/docs/partitioned-tables#date_timestamp_partitioned_tables
+type TimeUnitPartition struct {
+	// Column: Required. The partitioning column.
+	Column string `json:"column,omitempty"`
+	// PartitioningTimeGranularity: Optional. Partition granularity.
+	//
+	// Possible values:
+	//   "PARTITIONING_TIME_GRANULARITY_UNSPECIFIED" - Unspecified partitioing
+	// interval.
+	//   "PARTITIONING_TIME_GRANULARITY_HOUR" - Hourly partitioning.
+	//   "PARTITIONING_TIME_GRANULARITY_DAY" - Daily partitioning.
+	//   "PARTITIONING_TIME_GRANULARITY_MONTH" - Monthly partitioning.
+	//   "PARTITIONING_TIME_GRANULARITY_YEAR" - Yearly partitioning.
+	PartitioningTimeGranularity string `json:"partitioningTimeGranularity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TimeUnitPartition) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeUnitPartition
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5300,9 +5530,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

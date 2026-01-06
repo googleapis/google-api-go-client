@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -2246,10 +2246,8 @@ type GoogleAppsCardV1Card struct {
 	// top card in the card stack.
 	DisplayStyle string `json:"displayStyle,omitempty"`
 	// ExpressionData: The expression data for the card. Available for Google
-	// Workspace add-ons that extend Google Workspace flows, which is available as
-	// part of the Gemini Alpha program
-	// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
-	// apps.
+	// Workspace add-ons that extend Google Workspace Studio. Unavailable for
+	// Google Chat apps.
 	ExpressionData []*GoogleAppsCardV1ExpressionData `json:"expressionData,omitempty"`
 	// FixedFooter: The fixed footer shown at the bottom of this card. Setting
 	// `fixedFooter` without specifying a `primaryButton` or a `secondaryButton`
@@ -2690,9 +2688,7 @@ func (s GoogleAppsCardV1Columns) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1CommonWidgetAction: Represents an action that is not
 // specific to a widget. Available for Google Workspace add-ons that extend
-// Google Workspace flows, which is available as part of the Gemini Alpha
-// program (https://support.google.com/a/answer/14170809). Unavailable for
-// Google Chat apps.
+// Google Workspace Studio. Unavailable for Google Chat apps.
 type GoogleAppsCardV1CommonWidgetAction struct {
 	// UpdateVisibilityAction: The action to update the visibility of a widget.
 	UpdateVisibilityAction *GoogleAppsCardV1UpdateVisibilityAction `json:"updateVisibilityAction,omitempty"`
@@ -2716,9 +2712,7 @@ func (s GoogleAppsCardV1CommonWidgetAction) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1Condition: Represents a condition that can be used to
 // trigger an action. Available for Google Workspace add-ons that extend Google
-// Workspace flows, which is available as part of the Gemini Alpha program
-// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
-// apps.
+// Workspace Studio. Unavailable for Google Chat apps.
 type GoogleAppsCardV1Condition struct {
 	// ActionRuleId: The unique identifier of the ActionRule.
 	ActionRuleId string `json:"actionRuleId,omitempty"`
@@ -2745,9 +2739,8 @@ func (s GoogleAppsCardV1Condition) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1DataSourceConfig: A configuration object that helps
 // configure the data sources for a widget. Available for Google Workspace
-// add-ons that extend Google Workspace flows, which is available as part of
-// the Gemini Alpha program (https://support.google.com/a/answer/14170809).
-// Unavailable for Google Chat apps.
+// add-ons that extend Google Workspace Studio. Unavailable for Google Chat
+// apps.
 type GoogleAppsCardV1DataSourceConfig struct {
 	// PlatformDataSource: The data is from a Google Workspace application.
 	PlatformDataSource *GoogleAppsCardV1PlatformDataSource `json:"platformDataSource,omitempty"`
@@ -2786,9 +2779,7 @@ type GoogleAppsCardV1DateTimePicker struct {
 	// HostAppDataSource: A data source that's unique to a Google Workspace host
 	// application, such as Gmail emails, Google Calendar events, or Google Chat
 	// messages. Available for Google Workspace add-ons that extend Google
-	// Workspace flows, which is available as part of the Gemini Alpha program
-	// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
-	// apps.
+	// Workspace Studio. Unavailable for Google Chat apps.
 	HostAppDataSource *HostAppDataSourceMarkup `json:"hostAppDataSource,omitempty"`
 	// Label: The text that prompts users to input a date, a time, or a date and
 	// time. For example, if users are scheduling an appointment, use a label such
@@ -2932,9 +2923,7 @@ type GoogleAppsCardV1Divider struct {
 
 // GoogleAppsCardV1EventAction: Represents an actionthat can be performed on an
 // ui element. Available for Google Workspace add-ons that extend Google
-// Workspace flows, which is available as part of the Gemini Alpha program
-// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
-// apps.
+// Workspace Studio. Unavailable for Google Chat apps.
 type GoogleAppsCardV1EventAction struct {
 	// ActionRuleId: The unique identifier of the ActionRule.
 	ActionRuleId string `json:"actionRuleId,omitempty"`
@@ -2963,9 +2952,7 @@ func (s GoogleAppsCardV1EventAction) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1ExpressionData: Represents the data that is used to evaluate
 // an expression. Available for Google Workspace add-ons that extend Google
-// Workspace flows, which is available as part of the Gemini Alpha program
-// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
-// apps.
+// Workspace Studio. Unavailable for Google Chat apps.
 type GoogleAppsCardV1ExpressionData struct {
 	// Conditions: The list of conditions that are determined by the expression
 	// evaluation result.
@@ -2996,9 +2983,7 @@ func (s GoogleAppsCardV1ExpressionData) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1ExpressionDataCondition: Represents a condition that is
 // evaluated using CEL. Available for Google Workspace add-ons that extend
-// Google Workspace flows, which is available as part of the Gemini Alpha
-// program (https://support.google.com/a/answer/14170809). Unavailable for
-// Google Chat apps.
+// Google Workspace Studio. Unavailable for Google Chat apps.
 type GoogleAppsCardV1ExpressionDataCondition struct {
 	// ConditionType: The type of the condition.
 	//
@@ -3431,7 +3416,7 @@ type GoogleAppsCardV1OpenLink struct {
 	// used by the client).
 	//   "OVERLAY" - The link opens as an overlay, such as a pop-up.
 	OpenAs string `json:"openAs,omitempty"`
-	// Url: The URL to open.
+	// Url: The URL to open. HTTP URLs are converted to HTTPS.
 	Url string `json:"url,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "OnClose") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3571,9 +3556,7 @@ type GoogleAppsCardV1Section struct {
 	// Id: A unique ID assigned to the section that's used to identify the section
 	// to be mutated. The ID has a character limit of 64 characters and should be
 	// in the format of `[a-zA-Z0-9-]+`. Available for Google Workspace add-ons
-	// that extend Google Workspace flows, which is available as part of the Gemini
-	// Alpha program (https://support.google.com/a/answer/14170809). Unavailable
-	// for Google Chat apps.
+	// that extend Google Workspace Studio. Unavailable for Google Chat apps.
 	Id string `json:"id,omitempty"`
 	// UncollapsibleWidgetsCount: The number of uncollapsible widgets which remain
 	// visible even when a section is collapsed. For example, when a section
@@ -3623,18 +3606,18 @@ type GoogleAppsCardV1SelectionInput struct {
 	// If specified, the `multi_select_max_selected_items` field,
 	// `multi_select_min_query_length` field, `external_data_source` field and
 	// `platform_data_source` field are ignored. Available for Google Workspace
-	// add-ons that extend Google Workspace flows, which is available as part of
-	// the Gemini Alpha program (https://support.google.com/a/answer/14170809).
-	// Unavailable for Google Chat apps.
+	// add-ons that extend Google Workspace Studio. Available for the `Dropdown
+	// widget` widget in Google Chat apps as part of the Developer Preview Program
+	// (https://developers.google.com/workspace/preview). For the `Dropdown` widget
+	// in Google Chat apps, only one `DataSourceConfig` is supported. If multiple
+	// `DataSourceConfig`s are set, only the first one is used.
 	DataSourceConfigs []*GoogleAppsCardV1DataSourceConfig `json:"dataSourceConfigs,omitempty"`
 	// ExternalDataSource: An external data source, such as a relational database.
 	ExternalDataSource *GoogleAppsCardV1Action `json:"externalDataSource,omitempty"`
 	// HintText: Optional. Text that appears below the selection input field meant
 	// to assist users by prompting them to enter a certain value. This text is
 	// always visible. Available for Google Workspace add-ons that extend Google
-	// Workspace flows, which is available as part of the Gemini Alpha program
-	// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
-	// apps.
+	// Workspace Studio. Unavailable for Google Chat apps.
 	HintText string `json:"hintText,omitempty"`
 	// Items: An array of selectable items. For example, an array of radio buttons
 	// or checkboxes. Supports up to 100 items.
@@ -3678,7 +3661,23 @@ type GoogleAppsCardV1SelectionInput struct {
 	//   "RADIO_BUTTON" - A set of radio buttons. Users can select one radio
 	// button.
 	//   "SWITCH" - A set of switches. Users can turn on one or more switches.
-	//   "DROPDOWN" - A dropdown menu. Users can select one item from the menu.
+	//   "DROPDOWN" - A dropdown menu. Users can select one item from the menu. For
+	// Google Chat apps, as part of the [Developer Preview
+	// Program](https://developers.google.com/workspace/preview), you can populate
+	// items using a dynamic data source and autosuggest items as users type in the
+	// menu. For example, users can start typing the name of a Google Chat space
+	// and the widget autosuggests the space. To dynamically populate items for a
+	// dropdown menu, use one of the following types of data sources: * Google
+	// Workspace data: Items are populated using data from Google Workspace, such
+	// as Google Workspace users or Google Chat spaces. * External data: Items are
+	// populated from an external data source outside of Google Workspace. For
+	// examples of how to implement dropdown menus for Chat apps, see [Add a
+	// dropdown
+	// menu](https://developers.google.com/workspace/chat/design-interactive-card-di
+	// alog#dropdown-menu) and [Dynamically populate drop-down
+	// menus](https://developers.google.com/workspace/chat/design-interactive-card-d
+	// ialog#dynamic-dropdown-menu). [Google Workspace add-ons and Chat
+	// apps](https://developers.google.com/workspace/extend):
 	//   "MULTI_SELECT" - A menu with a text box. Users can type and select one or
 	// more items. For Google Workspace add-ons, you must populate items using a
 	// static array of `SelectionItem` objects. For Google Chat apps, you can also
@@ -3882,9 +3881,7 @@ type GoogleAppsCardV1TextInput struct {
 	// HostAppDataSource: A data source that's unique to a Google Workspace host
 	// application, such as Gmail emails, Google Calendar events, or Google Chat
 	// messages. Available for Google Workspace add-ons that extend Google
-	// Workspace flows, which is available as part of the Gemini Alpha program
-	// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
-	// apps.
+	// Workspace Studio. Unavailable for Google Chat apps.
 	HostAppDataSource *HostAppDataSourceMarkup `json:"hostAppDataSource,omitempty"`
 	// InitialSuggestions: Suggested values that users can enter. These values
 	// appear when users click inside the text input field. As users type, the
@@ -4000,10 +3997,8 @@ func (s GoogleAppsCardV1TextParagraph) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Trigger: Represents a trigger. Available for Google
-// Workspace add-ons that extend Google Workspace flows, which is available as
-// part of the Gemini Alpha program
-// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
-// apps.
+// Workspace add-ons that extend Google Workspace Studio. Unavailable for
+// Google Chat apps.
 type GoogleAppsCardV1Trigger struct {
 	// ActionRuleId: The unique identifier of the ActionRule.
 	ActionRuleId string `json:"actionRuleId,omitempty"`
@@ -4027,9 +4022,7 @@ func (s GoogleAppsCardV1Trigger) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1UpdateVisibilityAction: Represents an action that updates
 // the visibility of a widget. Available for Google Workspace add-ons that
-// extend Google Workspace flows, which is available as part of the Gemini
-// Alpha program (https://support.google.com/a/answer/14170809). Unavailable
-// for Google Chat apps.
+// extend Google Workspace Studio. Unavailable for Google Chat apps.
 type GoogleAppsCardV1UpdateVisibilityAction struct {
 	// Visibility: The new visibility.
 	//
@@ -4145,9 +4138,7 @@ type GoogleAppsCardV1Widget struct {
 	Divider *GoogleAppsCardV1Divider `json:"divider,omitempty"`
 	// EventActions: Specifies the event actions that can be performed on the
 	// widget. Available for Google Workspace add-ons that extend Google Workspace
-	// flows, which is available as part of the Gemini Alpha program
-	// (https://support.google.com/a/answer/14170809). Unavailable for Google Chat
-	// apps.
+	// Studio. Unavailable for Google Chat apps.
 	EventActions []*GoogleAppsCardV1EventAction `json:"eventActions,omitempty"`
 	// Grid: Displays a grid with a collection of items. A grid supports any number
 	// of columns and items. The number of rows is determined by the upper bounds
@@ -4178,10 +4169,8 @@ type GoogleAppsCardV1Widget struct {
 	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
 	// Id: A unique ID assigned to the widget that's used to identify the widget to
 	// be mutated. The ID has a character limit of 64 characters and should be in
-	// the format of `[a-zA-Z0-9-]+` and. Available for Google Workspace add-ons
-	// that extend Google Workspace flows, which is available as part of the Gemini
-	// Alpha program (https://support.google.com/a/answer/14170809). Unavailable
-	// for Google Chat apps.
+	// the format of `[a-zA-Z0-9-]+`. Available for Google Workspace add-ons that
+	// extend Google Workspace Studio. Unavailable for Google Chat apps.
 	Id string `json:"id,omitempty"`
 	// Image: Displays an image. For example, the following JSON creates an image
 	// with alternative text: ``` "image": { "imageUrl":
@@ -4217,9 +4206,7 @@ type GoogleAppsCardV1Widget struct {
 	TextParagraph *GoogleAppsCardV1TextParagraph `json:"textParagraph,omitempty"`
 	// Visibility: Specifies whether the widget is visible or hidden. The default
 	// value is `VISIBLE`. Available for Google Workspace add-ons that extend
-	// Google Workspace flows, which is available as part of the Gemini Alpha
-	// program (https://support.google.com/a/answer/14170809). Unavailable for
-	// Google Chat apps.
+	// Google Workspace Studio. Unavailable for Google Chat apps.
 	//
 	// Possible values:
 	//   "VISIBILITY_UNSPECIFIED" - Unspecified visibility. Do not use.
@@ -5696,6 +5683,9 @@ type RichLinkMetadata struct {
 	//   "DRIVE_FILE" - A Google Drive rich link type.
 	//   "CHAT_SPACE" - A Chat space rich link type. For example, a space smart
 	// chip.
+	//   "GMAIL_MESSAGE" - A Gmail message rich link type. Specifically, a Gmail
+	// chip from [Share to Chat](https://support.google.com/chat?p=chat_gmail). The
+	// API only supports reading messages with GMAIL_MESSAGE rich links.
 	//   "MEET_SPACE" - A Meet message rich link type. For example, a Meet chip.
 	//   "CALENDAR_EVENT" - A Calendar message rich link type. For example, a
 	// Calendar chip.
@@ -6048,13 +6038,15 @@ type Space struct {
 	//
 	// Possible values:
 	//   "SPACE_THREADING_STATE_UNSPECIFIED" - Reserved.
-	//   "THREADED_MESSAGES" - Named spaces that support message threads. When
-	// users respond to a message, they can reply in-thread, which keeps their
-	// response in the context of the original message.
+	//   "THREADED_MESSAGES" - Spaces that support message threads. When users
+	// respond to a message, they can reply in-thread, which keeps their response
+	// in the context of the original message.
 	//   "GROUPED_MESSAGES" - Named spaces where the conversation is organized by
 	// topic. Topics and their replies are grouped together.
-	//   "UNTHREADED_MESSAGES" - Direct messages (DMs) between two people and group
-	// conversations between 3 or more people.
+	//   "UNTHREADED_MESSAGES" - Spaces that don't support message threading. This
+	// space threading state is only used for special cases including: * Continuous
+	// meeting chat where threading is intentionally turned off. * Legacy group
+	// conversations that were created prior to 2022.
 	SpaceThreadingState string `json:"spaceThreadingState,omitempty"`
 	// SpaceType: Optional. The type of space. Required when creating a space or
 	// updating the space type of a space. Output only for other usage.
@@ -8577,9 +8569,8 @@ func (r *SpacesService) Patch(name string, space *Space) *SpacesPatchCall {
 // `permission_settings`: Supports changing the permission settings
 // (https://support.google.com/chat/answer/13340792) of a space. When updating
 // permission settings, you can only specify `permissionSettings` field masks;
-// you cannot update other field masks at the same time. `permissionSettings`
-// is not supported with `useAdminAccess`. The supported field masks include: -
-// `permission_settings.manageMembersAndGroups` -
+// you cannot update other field masks at the same time. The supported field
+// masks include: - `permission_settings.manageMembersAndGroups` -
 // `permission_settings.modifySpaceDetails` -
 // `permission_settings.toggleHistory` - `permission_settings.useAtMentionAll`
 // - `permission_settings.manageApps` - `permission_settings.manageWebhooks` -

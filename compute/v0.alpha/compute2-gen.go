@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -49501,7 +49501,7 @@ func (c *InstancesUpdateCall) ClearSecureTag(clearSecureTag bool) *InstancesUpda
 //	"INVALID"
 //	"NO_EFFECT" - No changes can be made to the instance.
 //	"REFRESH" - The instance will not restart.
-//	"RESTART" - The instance will restart.
+//	"RESTART" - The instance will restart, potentially on a different host.
 func (c *InstancesUpdateCall) MinimalAction(minimalAction string) *InstancesUpdateCall {
 	c.urlParams_.Set("minimalAction", minimalAction)
 	return c
@@ -49520,7 +49520,7 @@ func (c *InstancesUpdateCall) MinimalAction(minimalAction string) *InstancesUpda
 //	"INVALID"
 //	"NO_EFFECT" - No changes can be made to the instance.
 //	"REFRESH" - The instance will not restart.
-//	"RESTART" - The instance will restart.
+//	"RESTART" - The instance will restart, potentially on a different host.
 func (c *InstancesUpdateCall) MostDisruptiveAllowedAction(mostDisruptiveAllowedAction string) *InstancesUpdateCall {
 	c.urlParams_.Set("mostDisruptiveAllowedAction", mostDisruptiveAllowedAction)
 	return c

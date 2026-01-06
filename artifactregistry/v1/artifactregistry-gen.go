@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -803,11 +803,20 @@ func (s CommonRemoteRepository) MarshalJSON() ([]byte, error) {
 // keys (i.e. metadata.imageSizeBytes): * imageSizeBytes * mediaType *
 // buildTime
 type DockerImage struct {
+	// ArtifactType: ArtifactType of this image, e.g.
+	// "application/vnd.example+type". If the `subject_digest` is set and no
+	// `artifact_type` is given, the `media_type` will be considered as the
+	// `artifact_type`. This field is returned as the `metadata.artifactType` field
+	// in the Version resource.
+	ArtifactType string `json:"artifactType,omitempty"`
 	// BuildTime: The time this image was built. This field is returned as the
 	// 'metadata.buildTime' field in the Version resource. The build time is
 	// returned to the client as an RFC 3339 string, which can be easily used with
 	// the JavaScript Date constructor.
 	BuildTime string `json:"buildTime,omitempty"`
+	// ImageManifests: Optional. For multi-arch images (manifest lists), this field
+	// contains the list of image manifests.
+	ImageManifests []*ImageManifest `json:"imageManifests,omitempty"`
 	// ImageSizeBytes: Calculated size of the image. This field is returned as the
 	// 'metadata.imageSizeBytes' field in the Version resource.
 	ImageSizeBytes int64 `json:"imageSizeBytes,omitempty,string"`
@@ -839,13 +848,13 @@ type DockerImage struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "BuildTime") to
+	// ForceSendFields is a list of field names (e.g. "ArtifactType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BuildTime") to include in API
+	// NullFields is a list of field names (e.g. "ArtifactType") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1497,6 +1506,49 @@ type Hash struct {
 
 func (s Hash) MarshalJSON() ([]byte, error) {
 	type NoMethod Hash
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ImageManifest: Details of a single image manifest within a multi-arch image.
+type ImageManifest struct {
+	// Architecture: Optional. The CPU architecture of the image. Values are
+	// provided by the Docker client and are not validated by Artifact Registry.
+	// Example values include "amd64", "arm64", "ppc64le", "s390x", "riscv64",
+	// "mips64le", etc.
+	Architecture string `json:"architecture,omitempty"`
+	// Digest: Optional. The manifest digest, in the format "sha256:".
+	Digest string `json:"digest,omitempty"`
+	// MediaType: Optional. The media type of the manifest, e.g.,
+	// "application/vnd.docker.distribution.manifest.v2+json"
+	MediaType string `json:"mediaType,omitempty"`
+	// Os: Optional. The operating system of the image. Values are provided by the
+	// Docker client and are not validated by Artifact Registry. Example values
+	// include "linux", "windows", "darwin", "aix", etc.
+	Os string `json:"os,omitempty"`
+	// OsFeatures: Optional. The required OS features for the image, for example on
+	// Windows `win32k`.
+	OsFeatures []string `json:"osFeatures,omitempty"`
+	// OsVersion: Optional. The OS version of the image, for example on Windows
+	// `10.0.14393.1066`.
+	OsVersion string `json:"osVersion,omitempty"`
+	// Variant: Optional. The variant of the CPU in the image, for example `v7` to
+	// specify ARMv7 when architecture is `arm`.
+	Variant string `json:"variant,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Architecture") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ImageManifest) MarshalJSON() ([]byte, error) {
+	type NoMethod ImageManifest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4694,7 +4746,7 @@ type ProjectsLocationsRepositoriesExportArtifactCall struct {
 	header_               http.Header
 }
 
-// ExportArtifact: Exports an artifact.
+// ExportArtifact: Exports an artifact to a Cloud Storage bucket.
 //
 //   - repository: The repository of the artifact to export. Format:
 //     projects/{project}/locations/{location}/repositories/{repository}.

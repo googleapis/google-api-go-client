@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -485,6 +485,11 @@ func (s BuildConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CommitFunctionUpgradeAsGen2Request: Request for the
+// `CommitFunctionUpgradeAsGen2` method.
+type CommitFunctionUpgradeAsGen2Request struct {
+}
+
 // CommitFunctionUpgradeRequest: Request for the `CommitFunctionUpgrade`
 // method.
 type CommitFunctionUpgradeRequest struct {
@@ -958,6 +963,7 @@ type GoogleCloudFunctionsV2alphaOperationMetadata struct {
 	//   "ABORT_FUNCTION_UPGRADE" - AbortFunctionUpgrade
 	//   "COMMIT_FUNCTION_UPGRADE" - CommitFunctionUpgrade
 	//   "DETACH_FUNCTION" - DetachFunction
+	//   "COMMIT_FUNCTION_UPGRADE_AS_GEN2" - CommitFunctionUpgradeAsGen2
 	OperationType string `json:"operationType,omitempty"`
 	// RequestResource: The original request that started the operation.
 	RequestResource googleapi.RawMessage `json:"requestResource,omitempty"`
@@ -1138,8 +1144,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2436,6 +2442,112 @@ func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeCall) Do(opts ...googlea
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudfunctions.projects.locations.functions.commitFunctionUpgrade", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFunctionsCommitFunctionUpgradeAsGen2Call struct {
+	s                                  *Service
+	name                               string
+	commitfunctionupgradeasgen2request *CommitFunctionUpgradeAsGen2Request
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// CommitFunctionUpgradeAsGen2: Commits a function upgrade from GCF Gen1 to GCF
+// Gen2. This action deletes the Gen1 function, leaving the Gen2 function
+// active and manageable by the GCFv2 API.
+//
+//   - name: The name of the function for which upgrade should be committed to
+//     Gen2.
+func (r *ProjectsLocationsFunctionsService) CommitFunctionUpgradeAsGen2(name string, commitfunctionupgradeasgen2request *CommitFunctionUpgradeAsGen2Request) *ProjectsLocationsFunctionsCommitFunctionUpgradeAsGen2Call {
+	c := &ProjectsLocationsFunctionsCommitFunctionUpgradeAsGen2Call{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.commitfunctionupgradeasgen2request = commitfunctionupgradeasgen2request
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeAsGen2Call) Fields(s ...googleapi.Field) *ProjectsLocationsFunctionsCommitFunctionUpgradeAsGen2Call {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeAsGen2Call) Context(ctx context.Context) *ProjectsLocationsFunctionsCommitFunctionUpgradeAsGen2Call {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeAsGen2Call) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeAsGen2Call) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.commitfunctionupgradeasgen2request)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}:commitFunctionUpgradeAsGen2")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudfunctions.projects.locations.functions.commitFunctionUpgradeAsGen2", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudfunctions.projects.locations.functions.commitFunctionUpgradeAsGen2" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeAsGen2Call) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudfunctions.projects.locations.functions.commitFunctionUpgradeAsGen2", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4203,9 +4315,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

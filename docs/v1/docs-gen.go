@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -879,6 +879,154 @@ type CropPropertiesSuggestionState struct {
 
 func (s CropPropertiesSuggestionState) MarshalJSON() ([]byte, error) {
 	type NoMethod CropPropertiesSuggestionState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DateElement: A date instance mentioned in a document.
+type DateElement struct {
+	// DateElementProperties: The properties of this DateElement.
+	DateElementProperties *DateElementProperties `json:"dateElementProperties,omitempty"`
+	// DateId: Output only. The unique ID of this date.
+	DateId string `json:"dateId,omitempty"`
+	// SuggestedDateElementPropertiesChanges: The suggested changes to the date
+	// element properties, keyed by suggestion ID.
+	SuggestedDateElementPropertiesChanges map[string]SuggestedDateElementProperties `json:"suggestedDateElementPropertiesChanges,omitempty"`
+	// SuggestedDeletionIds: IDs for suggestions that remove this date from the
+	// document. A DateElement might have multiple deletion IDs if, for example,
+	// multiple users suggest deleting it. If empty, then this date isn't suggested
+	// for deletion.
+	SuggestedDeletionIds []string `json:"suggestedDeletionIds,omitempty"`
+	// SuggestedInsertionIds: IDs for suggestions that insert this date into the
+	// document. A DateElement might have multiple insertion IDs if it's a nested
+	// suggested change (a suggestion within a suggestion made by a different user,
+	// for example). If empty, then this date isn't a suggested insertion.
+	SuggestedInsertionIds []string `json:"suggestedInsertionIds,omitempty"`
+	// SuggestedTextStyleChanges: The suggested text style changes to this
+	// DateElement, keyed by suggestion ID.
+	SuggestedTextStyleChanges map[string]SuggestedTextStyle `json:"suggestedTextStyleChanges,omitempty"`
+	// TextStyle: The text style of this DateElement.
+	TextStyle *TextStyle `json:"textStyle,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateElementProperties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateElementProperties") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DateElement) MarshalJSON() ([]byte, error) {
+	type NoMethod DateElement
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DateElementProperties: Properties of a DateElement.
+type DateElementProperties struct {
+	// DateFormat: Determines how the date part of the DateElement will be
+	// displayed in the document. If unset, the default value is
+	// DATE_FORMAT_MONTH_DAY_YEAR_ABBREVIATED, indicating the DateElement will be
+	// formatted as `MMM d, y` in `en_US`, or locale specific equivalent.
+	//
+	// Possible values:
+	//   "DATE_FORMAT_UNSPECIFIED" - The date format is unspecified.
+	//   "DATE_FORMAT_CUSTOM" - Output only. The date format is imported from an
+	// external source.
+	//   "DATE_FORMAT_MONTH_DAY_ABBREVIATED" - The date format is an abbreviated
+	// month followed by the day. For example, "Jan 1".
+	//   "DATE_FORMAT_MONTH_DAY_FULL" - The date format is a month followed by the
+	// day. For example, "January 01".
+	//   "DATE_FORMAT_MONTH_DAY_YEAR_ABBREVIATED" - The date format is an
+	// abbreviated month followed by the day and the year. For example, "Jan 1,
+	// 1970".
+	//   "DATE_FORMAT_ISO8601" - The date format is in ISO 8601 format. For
+	// example, "1970-01-01".
+	DateFormat string `json:"dateFormat,omitempty"`
+	// DisplayText: Output only. Indicates how the DateElement is displayed in the
+	// document.
+	DisplayText string `json:"displayText,omitempty"`
+	// Locale: The locale of the document, as defined by the Unicode Common Locale
+	// Data Repository (CLDR) project. For example, `en_US`. If unset, the default
+	// locale is `en_US`.
+	Locale string `json:"locale,omitempty"`
+	// TimeFormat: Determines how the time part of the DateElement will be
+	// displayed in the document. If unset, the default value is
+	// TIME_FORMAT_DISABLED, indicating no time should be shown.
+	//
+	// Possible values:
+	//   "TIME_FORMAT_UNSPECIFIED" - The time format is unspecified.
+	//   "TIME_FORMAT_DISABLED" - Indicates that the date does not have a time.
+	//   "TIME_FORMAT_HOUR_MINUTE" - The time format shows the hour and minute. For
+	// example, "Jan 1, 1970 12:00 PM".
+	//   "TIME_FORMAT_HOUR_MINUTE_TIMEZONE" - The time format shows the hour,
+	// minute, and timezone. For example, "Jan 1, 1970 12:00 PM UTC".
+	TimeFormat string `json:"timeFormat,omitempty"`
+	// TimeZoneId: The time zone of the DateElement, as defined by the Unicode
+	// Common Locale Data Repository (CLDR) project. For example, `America/New
+	// York`. If unset, the default time zone is `etc/UTC`.
+	TimeZoneId string `json:"timeZoneId,omitempty"`
+	// Timestamp: The point in time to represent, in seconds and nanoseconds since
+	// Unix epoch: January 1, 1970 at midnight UTC. Timestamp is expected to be in
+	// UTC. If time_zone_id is set, the timestamp is adjusted according to the time
+	// zone. For example, a timestamp of `18000` with a date format of
+	// `DATE_FORMAT_ISO8601` and time format of `TIME_FORMAT_HOUR_MINUTE` would be
+	// displayed as `1970-01-01 5:00 AM`. A timestamp of `18000` with date format
+	// of `DATE_FORMAT_8SO8601`, time format of `TIME_FORMAT_HOUR_MINUTE`, and time
+	// zone set to `America/New_York` will instead be `1970-01-01 12:00 AM`.
+	Timestamp string `json:"timestamp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateFormat") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateFormat") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DateElementProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DateElementProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DateElementPropertiesSuggestionState: A mask that indicates which of the
+// fields on the base DateElementProperties have been changed in this
+// suggestion. For any field set to true, there's a new suggested value.
+type DateElementPropertiesSuggestionState struct {
+	// DateFormatSuggested: Indicates if there was a suggested change to
+	// date_format.
+	DateFormatSuggested bool `json:"dateFormatSuggested,omitempty"`
+	// LocaleSuggested: Indicates if there was a suggested change to locale.
+	LocaleSuggested bool `json:"localeSuggested,omitempty"`
+	// TimeFormatSuggested: Indicates if there was a suggested change to
+	// time_format.
+	TimeFormatSuggested bool `json:"timeFormatSuggested,omitempty"`
+	// TimeZoneIdSuggested: Indicates if there was a suggested change to
+	// time_zone_id.
+	TimeZoneIdSuggested bool `json:"timeZoneIdSuggested,omitempty"`
+	// TimestampSuggested: Indicates if there was a suggested change to timestamp.
+	TimestampSuggested bool `json:"timestampSuggested,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateFormatSuggested") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateFormatSuggested") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DateElementPropertiesSuggestionState) MarshalJSON() ([]byte, error) {
+	type NoMethod DateElementPropertiesSuggestionState
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2203,6 +2351,36 @@ func (s InlineObjectPropertiesSuggestionState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InsertDateRequest: Inserts a date at the specified location.
+type InsertDateRequest struct {
+	// DateElementProperties: The properties of the date to insert.
+	DateElementProperties *DateElementProperties `json:"dateElementProperties,omitempty"`
+	// EndOfSegmentLocation: Inserts the date at the end of the given header,
+	// footer or document body.
+	EndOfSegmentLocation *EndOfSegmentLocation `json:"endOfSegmentLocation,omitempty"`
+	// Location: Inserts the date at a specific index in the document. The date
+	// must be inserted inside the bounds of an existing Paragraph. For instance,
+	// it cannot be inserted at a table's start index (i.e. between an existing
+	// table and its preceding paragraph).
+	Location *Location `json:"location,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateElementProperties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateElementProperties") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InsertDateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertDateRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InsertInlineImageRequest: Inserts an InlineObject containing an image at the
 // given location.
 type InsertInlineImageRequest struct {
@@ -3274,6 +3452,8 @@ type ParagraphElement struct {
 	AutoText *AutoText `json:"autoText,omitempty"`
 	// ColumnBreak: A column break paragraph element.
 	ColumnBreak *ColumnBreak `json:"columnBreak,omitempty"`
+	// DateElement: A paragraph element that represents a date.
+	DateElement *DateElement `json:"dateElement,omitempty"`
 	// EndIndex: The zero-base end index of this paragraph element, exclusive, in
 	// UTF-16 code units.
 	EndIndex int64 `json:"endIndex,omitempty"`
@@ -4029,6 +4209,8 @@ type Request struct {
 	DeleteTableColumn *DeleteTableColumnRequest `json:"deleteTableColumn,omitempty"`
 	// DeleteTableRow: Deletes a row from a table.
 	DeleteTableRow *DeleteTableRowRequest `json:"deleteTableRow,omitempty"`
+	// InsertDate: Inserts a date.
+	InsertDate *InsertDateRequest `json:"insertDate,omitempty"`
 	// InsertInlineImage: Inserts an inline image at the specified location.
 	InsertInlineImage *InsertInlineImageRequest `json:"insertInlineImage,omitempty"`
 	// InsertPageBreak: Inserts a page break at the specified location.
@@ -4710,6 +4892,36 @@ type SuggestedBullet struct {
 
 func (s SuggestedBullet) MarshalJSON() ([]byte, error) {
 	type NoMethod SuggestedBullet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SuggestedDateElementProperties: A suggested change to a
+// DateElementProperties.
+type SuggestedDateElementProperties struct {
+	// DateElementProperties: DateElementProperties that only includes the changes
+	// made in this suggestion. This can be used along with the
+	// date_element_properties_suggestion_state to see which fields have changed
+	// and their new values.
+	DateElementProperties *DateElementProperties `json:"dateElementProperties,omitempty"`
+	// DateElementPropertiesSuggestionState: A mask that indicates which of the
+	// fields on the base DateElementProperties have been changed in this
+	// suggestion.
+	DateElementPropertiesSuggestionState *DateElementPropertiesSuggestionState `json:"dateElementPropertiesSuggestionState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateElementProperties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateElementProperties") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SuggestedDateElementProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod SuggestedDateElementProperties
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

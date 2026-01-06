@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -914,8 +914,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1762,13 +1762,10 @@ type TransferJob struct {
 	// ServiceAccount: Optional. The user-managed service account to which to
 	// delegate service agent permissions. You can grant Cloud Storage bucket
 	// permissions to this service account instead of to the Transfer Service
-	// service agent. Format is
-	// `projects/-/serviceAccounts/ACCOUNT_EMAIL_OR_UNIQUEID` Either the service
-	// account email (`SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com`) or
-	// the unique ID (`123456789012345678901`) are accepted in the string. The `-`
-	// wildcard character is required; replacing it with a project ID is invalid.
-	// See
-	// https://cloud.google.com//storage-transfer/docs/delegate-service-agent-permissions
+	// service agent. Either the service account email
+	// (`SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com`) or the unique ID
+	// (`123456789012345678901`) are accepted. See
+	// https://docs.cloud.google.com/storage-transfer/docs/delegate-service-agent-permissions
 	// for required permissions.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// Status: Status of the job. This value MUST be specified for
@@ -3704,9 +3701,9 @@ func (c *TransferOperationsListCall) PageToken(pageToken string) *TransferOperat
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *TransferOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *TransferOperationsListCall {

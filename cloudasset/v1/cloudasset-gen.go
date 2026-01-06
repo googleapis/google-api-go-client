@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1848,7 +1848,7 @@ type GoogleCloudAssetV1CustomConstraint struct {
 	//   "DENY" - Deny action type.
 	ActionType string `json:"actionType,omitempty"`
 	// Condition: Organization Policy condition/expression. For example:
-	// `resource.instanceName.matches("[production|test]_.*_(\d)+")'` or,
+	// `resource.instanceName.matches("(production|test)_(.+_)?[\d]+")'` or,
 	// `resource.management.auto_upgrade == true`
 	Condition string `json:"condition,omitempty"`
 	// Description: Detailed information about this custom policy constraint.

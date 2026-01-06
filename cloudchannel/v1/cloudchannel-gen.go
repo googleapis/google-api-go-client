@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -106,7 +106,7 @@ const (
 	// Manage users on your domain
 	AppsOrderScope = "https://www.googleapis.com/auth/apps.order"
 
-	// View usage reports for your G Suite domain
+	// View usage reports for your Google Workspace domain
 	AppsReportsUsageReadonlyScope = "https://www.googleapis.com/auth/apps.reports.usage.readonly"
 )
 

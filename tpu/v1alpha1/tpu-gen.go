@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -223,7 +223,8 @@ type ProjectsLocationsTensorflowVersionsService struct {
 	s *Service
 }
 
-// AcceleratorType: A accelerator type that a Node can be configured with.
+// AcceleratorType: DEPRECATED: Please use TPU API v2alpha1 instead. A
+// accelerator type that a Node can be configured with.
 type AcceleratorType struct {
 	// Name: The resource name.
 	Name string `json:"name,omitempty"`
@@ -259,7 +260,8 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// ListAcceleratorTypesResponse: Response for ListAcceleratorTypes.
+// ListAcceleratorTypesResponse: DEPRECATED: Please use TPU API v2alpha1
+// instead. Response for ListAcceleratorTypes.
 type ListAcceleratorTypesResponse struct {
 	// AcceleratorTypes: The listed nodes.
 	AcceleratorTypes []*AcceleratorType `json:"acceleratorTypes,omitempty"`
@@ -316,7 +318,8 @@ func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListNodesResponse: Response for ListNodes.
+// ListNodesResponse: DEPRECATED: Please use TPU API v2alpha1 instead. Response
+// for ListNodes.
 type ListNodesResponse struct {
 	// NextPageToken: The next page token or empty if none.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -354,8 +357,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -378,7 +381,8 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListTensorFlowVersionsResponse: Response for ListTensorFlowVersions.
+// ListTensorFlowVersionsResponse: DEPRECATED: Please use TPU API v2alpha1
+// instead. Response for ListTensorFlowVersions.
 type ListTensorFlowVersionsResponse struct {
 	// NextPageToken: The next page token or empty if none.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -445,7 +449,8 @@ func (s Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// NetworkEndpoint: A network endpoint over which a TPU worker can be reached.
+// NetworkEndpoint: DEPRECATED: Please use TPU API v2alpha1 instead. A network
+// endpoint over which a TPU worker can be reached.
 type NetworkEndpoint struct {
 	// IpAddress: The IP address of this network endpoint.
 	IpAddress string `json:"ipAddress,omitempty"`
@@ -469,7 +474,7 @@ func (s NetworkEndpoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Node: A TPU instance.
+// Node: DEPRECATED: Please use TPU API v2alpha1 instead. A TPU instance.
 type Node struct {
 	// AcceleratorType: Required. The type of hardware accelerators associated with
 	// this node.
@@ -637,7 +642,8 @@ func (s Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// OperationMetadata: Metadata describing an Operation
+// OperationMetadata: DEPRECATED: Please use TPU API v2alpha1 instead. Metadata
+// describing an Operation
 type OperationMetadata struct {
 	// ApiVersion: API version.
 	ApiVersion string `json:"apiVersion,omitempty"`
@@ -672,7 +678,8 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ReimageNodeRequest: Request for ReimageNode.
+// ReimageNodeRequest: DEPRECATED: Please use TPU API v2alpha1 instead. Request
+// for ReimageNode.
 type ReimageNodeRequest struct {
 	// TensorflowVersion: The version for reimage to create.
 	TensorflowVersion string `json:"tensorflowVersion,omitempty"`
@@ -694,7 +701,8 @@ func (s ReimageNodeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SchedulingConfig: Sets the scheduling options for this node.
+// SchedulingConfig: DEPRECATED: Please use TPU API v2alpha1 instead. Sets the
+// scheduling options for this node.
 type SchedulingConfig struct {
 	// Preemptible: Defines whether the node is preemptible.
 	Preemptible bool `json:"preemptible,omitempty"`
@@ -718,7 +726,8 @@ func (s SchedulingConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StartNodeRequest: Request for StartNode.
+// StartNodeRequest: DEPRECATED: Please use TPU API v2alpha1 instead. Request
+// for StartNode.
 type StartNodeRequest struct {
 }
 
@@ -756,11 +765,13 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StopNodeRequest: Request for StopNode.
+// StopNodeRequest: DEPRECATED: Please use TPU API v2alpha1 instead. Request
+// for StopNode.
 type StopNodeRequest struct {
 }
 
-// Symptom: A Symptom instance.
+// Symptom: DEPRECATED: Please use TPU API v2alpha1 instead. A Symptom
+// instance.
 type Symptom struct {
 	// CreateTime: Timestamp when the Symptom is created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -799,7 +810,8 @@ func (s Symptom) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TensorFlowVersion: A tensorflow version that a Node can be configured with.
+// TensorFlowVersion: DEPRECATED: Please use TPU API v2alpha1 instead. A
+// tensorflow version that a Node can be configured with.
 type TensorFlowVersion struct {
 	// Name: The resource name.
 	Name string `json:"name,omitempty"`
@@ -953,9 +965,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -2504,9 +2516,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

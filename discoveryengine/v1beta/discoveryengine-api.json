@@ -2164,6 +2164,66 @@
                             "https://www.googleapis.com/auth/discoveryengine.readwrite"
                           ]
                         },
+                        "create": {
+                          "description": "Creates a ServingConfig. Note: The Google Cloud console works only with the default serving config. Additional ServingConfigs can be created and managed only via the API. A maximum of 100 ServingConfigs are allowed in an Engine, otherwise a RESOURCE_EXHAUSTED error is returned.",
+                          "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/servingConfigs",
+                          "httpMethod": "POST",
+                          "id": "discoveryengine.projects.locations.collections.dataStores.servingConfigs.create",
+                          "parameterOrder": [
+                            "parent"
+                          ],
+                          "parameters": {
+                            "parent": {
+                              "description": "Required. Full resource name of parent. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}`",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            },
+                            "servingConfigId": {
+                              "description": "Required. The ID to use for the ServingConfig, which will become the final component of the ServingConfig's resource name. This value should be 4-63 characters, and valid characters are /a-zA-Z0-9+/.",
+                              "location": "query",
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1beta/{+parent}/servingConfigs",
+                          "request": {
+                            "$ref": "GoogleCloudDiscoveryengineV1betaServingConfig"
+                          },
+                          "response": {
+                            "$ref": "GoogleCloudDiscoveryengineV1betaServingConfig"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/discoveryengine.readwrite"
+                          ]
+                        },
+                        "delete": {
+                          "description": "Deletes a ServingConfig. Returns a NOT_FOUND error if the ServingConfig does not exist.",
+                          "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/servingConfigs/{servingConfigsId}",
+                          "httpMethod": "DELETE",
+                          "id": "discoveryengine.projects.locations.collections.dataStores.servingConfigs.delete",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. The resource name of the ServingConfig to delete. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/servingConfigs/{serving_config_id}`",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/servingConfigs/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1beta/{+name}",
+                          "response": {
+                            "$ref": "GoogleProtobufEmpty"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/discoveryengine.readwrite"
+                          ]
+                        },
                         "get": {
                           "description": "Gets a ServingConfig. Returns a NotFound error if the ServingConfig does not exist.",
                           "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/servingConfigs/{servingConfigsId}",
@@ -4408,6 +4468,66 @@
                             "https://www.googleapis.com/auth/discoveryengine.readwrite"
                           ]
                         },
+                        "create": {
+                          "description": "Creates a ServingConfig. Note: The Google Cloud console works only with the default serving config. Additional ServingConfigs can be created and managed only via the API. A maximum of 100 ServingConfigs are allowed in an Engine, otherwise a RESOURCE_EXHAUSTED error is returned.",
+                          "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/servingConfigs",
+                          "httpMethod": "POST",
+                          "id": "discoveryengine.projects.locations.collections.engines.servingConfigs.create",
+                          "parameterOrder": [
+                            "parent"
+                          ],
+                          "parameters": {
+                            "parent": {
+                              "description": "Required. Full resource name of parent. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}`",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            },
+                            "servingConfigId": {
+                              "description": "Required. The ID to use for the ServingConfig, which will become the final component of the ServingConfig's resource name. This value should be 4-63 characters, and valid characters are /a-zA-Z0-9+/.",
+                              "location": "query",
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1beta/{+parent}/servingConfigs",
+                          "request": {
+                            "$ref": "GoogleCloudDiscoveryengineV1betaServingConfig"
+                          },
+                          "response": {
+                            "$ref": "GoogleCloudDiscoveryengineV1betaServingConfig"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/discoveryengine.readwrite"
+                          ]
+                        },
+                        "delete": {
+                          "description": "Deletes a ServingConfig. Returns a NOT_FOUND error if the ServingConfig does not exist.",
+                          "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/servingConfigs/{servingConfigsId}",
+                          "httpMethod": "DELETE",
+                          "id": "discoveryengine.projects.locations.collections.engines.servingConfigs.delete",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. The resource name of the ServingConfig to delete. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/servingConfigs/{serving_config_id}`",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/servingConfigs/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1beta/{+name}",
+                          "response": {
+                            "$ref": "GoogleProtobufEmpty"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/discoveryengine.readwrite"
+                          ]
+                        },
                         "get": {
                           "description": "Gets a ServingConfig. Returns a NotFound error if the ServingConfig does not exist.",
                           "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/servingConfigs/{servingConfigsId}",
@@ -6363,6 +6483,66 @@
                         "https://www.googleapis.com/auth/discoveryengine.readwrite"
                       ]
                     },
+                    "create": {
+                      "description": "Creates a ServingConfig. Note: The Google Cloud console works only with the default serving config. Additional ServingConfigs can be created and managed only via the API. A maximum of 100 ServingConfigs are allowed in an Engine, otherwise a RESOURCE_EXHAUSTED error is returned.",
+                      "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/servingConfigs",
+                      "httpMethod": "POST",
+                      "id": "discoveryengine.projects.locations.dataStores.servingConfigs.create",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. Full resource name of parent. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "servingConfigId": {
+                          "description": "Required. The ID to use for the ServingConfig, which will become the final component of the ServingConfig's resource name. This value should be 4-63 characters, and valid characters are /a-zA-Z0-9+/.",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta/{+parent}/servingConfigs",
+                      "request": {
+                        "$ref": "GoogleCloudDiscoveryengineV1betaServingConfig"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDiscoveryengineV1betaServingConfig"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/discoveryengine.readwrite"
+                      ]
+                    },
+                    "delete": {
+                      "description": "Deletes a ServingConfig. Returns a NOT_FOUND error if the ServingConfig does not exist.",
+                      "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/servingConfigs/{servingConfigsId}",
+                      "httpMethod": "DELETE",
+                      "id": "discoveryengine.projects.locations.dataStores.servingConfigs.delete",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The resource name of the ServingConfig to delete. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/servingConfigs/{serving_config_id}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/servingConfigs/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta/{+name}",
+                      "response": {
+                        "$ref": "GoogleProtobufEmpty"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/discoveryengine.readwrite"
+                      ]
+                    },
                     "get": {
                       "description": "Gets a ServingConfig. Returns a NotFound error if the ServingConfig does not exist.",
                       "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/servingConfigs/{servingConfigsId}",
@@ -7390,6 +7570,7 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
                     "https://www.googleapis.com/auth/discoveryengine.readwrite"
                   ]
                 },
@@ -8925,7 +9106,7 @@
       }
     }
   },
-  "revision": "20251116",
+  "revision": "20251217",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -10390,7 +10571,8 @@
             "NATIVE_CLOUD_IDENTITY",
             "THIRD_PARTY_FEDERATED",
             "THIRD_PARTY_EUA",
-            "GCNV"
+            "GCNV",
+            "GOOGLE_CHAT"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -10404,7 +10586,8 @@
             "Native Cloud Identity connector for people search powered by People API.",
             "Federated connector, it is a third party connector that doesn't ingestion data, and search is powered by third party application's API.",
             "Connector utilized for End User Authentication features.",
-            "Google Cloud NetApp Volumes connector."
+            "Google Cloud NetApp Volumes connector.",
+            "Google Chat connector."
           ],
           "readOnly": true,
           "type": "string"
@@ -10880,6 +11063,10 @@
         "name": {
           "description": "Immutable. Identifier. The full resource name of the data store. Format: `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
           "type": "string"
+        },
+        "naturalLanguageQueryUnderstandingConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1NaturalLanguageQueryUnderstandingConfig",
+          "description": "Optional. Configuration for Natural Language Query Understanding."
         },
         "servingConfigDataStore": {
           "$ref": "GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore",
@@ -11656,6 +11843,40 @@
       "description": "Configurations for a Search Engine.",
       "id": "GoogleCloudDiscoveryengineV1EngineSearchEngineConfig",
       "properties": {
+        "requiredSubscriptionTier": {
+          "description": "Optional. The required subscription tier of this engine. They cannot be modified after engine creation. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine.",
+          "enum": [
+            "SUBSCRIPTION_TIER_UNSPECIFIED",
+            "SUBSCRIPTION_TIER_SEARCH",
+            "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT",
+            "SUBSCRIPTION_TIER_NOTEBOOK_LM",
+            "SUBSCRIPTION_TIER_FRONTLINE_WORKER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_STARTER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS",
+            "SUBSCRIPTION_TIER_ENTERPRISE",
+            "SUBSCRIPTION_TIER_EDU",
+            "SUBSCRIPTION_TIER_EDU_PRO",
+            "SUBSCRIPTION_TIER_EDU_EMERGING",
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "Search tier. Search tier can access VAIS search features and NotebookLM features.",
+            "Search + assistant tier. Search + assistant tier can access VAIS search features, NotebookLM features and assistant features.",
+            "NotebookLM tier. NotebookLM is a subscription tier can only access NotebookLM features.",
+            "Frontline worker tier.",
+            "Agentspace Starter tier.",
+            "Agentspace Business tier.",
+            "Enterprise tier.",
+            "EDU tier.",
+            "EDU Pro tier.",
+            "EDU emerging market tier.",
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
+          ],
+          "type": "string"
+        },
         "searchAddOns": {
           "description": "The add-on that this search engine enables.",
           "items": {
@@ -12074,7 +12295,8 @@
             "SUBSCRIPTION_TIER_EDU",
             "SUBSCRIPTION_TIER_EDU_PRO",
             "SUBSCRIPTION_TIER_EDU_EMERGING",
-            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING"
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -12088,7 +12310,29 @@
             "EDU tier.",
             "EDU Pro tier.",
             "EDU emerging market tier.",
-            "EDU Pro emerging market tier."
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1NaturalLanguageQueryUnderstandingConfig": {
+      "description": "Configuration for Natural Language Query Understanding.",
+      "id": "GoogleCloudDiscoveryengineV1NaturalLanguageQueryUnderstandingConfig",
+      "properties": {
+        "mode": {
+          "description": "Mode of Natural Language Query Understanding. If this field is unset, the behavior defaults to NaturalLanguageQueryUnderstandingConfig.Mode.DISABLED.",
+          "enum": [
+            "MODE_UNSPECIFIED",
+            "DISABLED",
+            "ENABLED"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "Natural Language Query Understanding is disabled.",
+            "Natural Language Query Understanding is enabled."
           ],
           "type": "string"
         }
@@ -15376,7 +15620,8 @@
             "NATIVE_CLOUD_IDENTITY",
             "THIRD_PARTY_FEDERATED",
             "THIRD_PARTY_EUA",
-            "GCNV"
+            "GCNV",
+            "GOOGLE_CHAT"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -15390,7 +15635,8 @@
             "Native Cloud Identity connector for people search powered by People API.",
             "Federated connector, it is a third party connector that doesn't ingestion data, and search is powered by third party application's API.",
             "Connector utilized for End User Authentication features.",
-            "Google Cloud NetApp Volumes connector."
+            "Google Cloud NetApp Volumes connector.",
+            "Google Chat connector."
           ],
           "readOnly": true,
           "type": "string"
@@ -16788,6 +17034,40 @@
       "description": "Configurations for a Search Engine.",
       "id": "GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig",
       "properties": {
+        "requiredSubscriptionTier": {
+          "description": "Optional. The required subscription tier of this engine. They cannot be modified after engine creation. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine.",
+          "enum": [
+            "SUBSCRIPTION_TIER_UNSPECIFIED",
+            "SUBSCRIPTION_TIER_SEARCH",
+            "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT",
+            "SUBSCRIPTION_TIER_NOTEBOOK_LM",
+            "SUBSCRIPTION_TIER_FRONTLINE_WORKER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_STARTER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS",
+            "SUBSCRIPTION_TIER_ENTERPRISE",
+            "SUBSCRIPTION_TIER_EDU",
+            "SUBSCRIPTION_TIER_EDU_PRO",
+            "SUBSCRIPTION_TIER_EDU_EMERGING",
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "Search tier. Search tier can access VAIS search features and NotebookLM features.",
+            "Search + assistant tier. Search + assistant tier can access VAIS search features, NotebookLM features and assistant features.",
+            "NotebookLM tier. NotebookLM is a subscription tier can only access NotebookLM features.",
+            "Frontline worker tier.",
+            "Agentspace Starter tier.",
+            "Agentspace Business tier.",
+            "Enterprise tier.",
+            "EDU tier.",
+            "EDU Pro tier.",
+            "EDU emerging market tier.",
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
+          ],
+          "type": "string"
+        },
         "searchAddOns": {
           "description": "The add-on that this search engine enables.",
           "items": {
@@ -17651,7 +17931,8 @@
             "SUBSCRIPTION_TIER_EDU",
             "SUBSCRIPTION_TIER_EDU_PRO",
             "SUBSCRIPTION_TIER_EDU_EMERGING",
-            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING"
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -17665,7 +17946,8 @@
             "EDU tier.",
             "EDU Pro tier.",
             "EDU emerging market tier.",
-            "EDU Pro emerging market tier."
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
           ],
           "type": "string"
         }
@@ -18579,7 +18861,7 @@
           "type": "string"
         },
         "pageCategories": {
-          "description": "Optional. The categories associated with a category page. Must be set for category navigation queries to achieve good search quality. The format should be the same as UserEvent.PageInfo.page_category. This field is the equivalent of the query for browse (navigation) queries. It's used by the browse model when the query is empty. If the field is empty, it will not be used by the browse model. To represent full path of a category, use '\u003e' character to separate different hierarchies. If '\u003e' is part of the category name, replace it with other character(s). For example, `Graphics Cards \u003e RTX\u003e4090 \u003e Founders Edition` where \"RTX \u003e 4090\" represents one level, can be rewritten as `Graphics Cards \u003e RTX_4090 \u003e Founders Edition`",
+          "description": "Optional. The categories associated with a category page. Must be set for category navigation queries to achieve good search quality. The format should be the same as UserEvent.PageInfo.page_category. This field is the equivalent of the query for browse (navigation) queries. It's used by the browse model when the query is empty. If the field is empty, it will not be used by the browse model. If the field contains more than one element, only the first element will be used. To represent full path of a category, use '\u003e' character to separate different hierarchies. If '\u003e' is part of the category name, replace it with other character(s). For example, `Graphics Cards \u003e RTX\u003e4090 \u003e Founders Edition` where \"RTX \u003e 4090\" represents one level, can be rewritten as `Graphics Cards \u003e RTX_4090 \u003e Founders Edition`",
           "items": {
             "type": "string"
           },
@@ -18646,12 +18928,16 @@
           "description": "The Unicode country/region code (CLDR) of a location, such as \"US\" and \"419\". For more information, see [Standard fields](https://cloud.google.com/apis/design/standard_fields). If set, then results will be boosted based on the region_code provided.",
           "type": "string"
         },
+        "relevanceFilterSpec": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpec",
+          "description": "Optional. The granular relevance filtering specification. If not specified, the global `relevance_threshold` will be used for all sub-searches. If specified, this overrides the global `relevance_threshold` to use thresholds on a per sub-search basis. This feature is currently supported only for custom and site search."
+        },
         "relevanceScoreSpec": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceScoreSpec",
           "description": "Optional. The specification for returning the relevance score."
         },
         "relevanceThreshold": {
-          "description": "The relevance threshold of the search results. Default to Google defined threshold, leveraging a balance of precision and recall to deliver both highly accurate results and comprehensive coverage of relevant information. This feature is not supported for healthcare search.",
+          "description": "The global relevance threshold of the search results. Defaults to Google defined threshold, leveraging a balance of precision and recall to deliver both highly accurate results and comprehensive coverage of relevant information. If more granular relevance filtering is required, use the `relevance_filter_spec` instead. This feature is not supported for healthcare search.",
           "enum": [
             "RELEVANCE_THRESHOLD_UNSPECIFIED",
             "LOWEST",
@@ -19299,6 +19585,51 @@
         "pinUnexpandedResults": {
           "description": "Whether to pin unexpanded results. If this field is set to true, unexpanded products are always at the top of the search results, followed by the expanded results.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpec": {
+      "description": "Relevance filtering specification.",
+      "id": "GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpec",
+      "properties": {
+        "keywordSearchThreshold": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec",
+          "description": "Optional. Relevance filtering threshold specification for keyword search."
+        },
+        "semanticSearchThreshold": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec",
+          "description": "Optional. Relevance filtering threshold specification for semantic search."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec": {
+      "description": "Specification for relevance filtering on a specific sub-search.",
+      "id": "GoogleCloudDiscoveryengineV1alphaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec",
+      "properties": {
+        "relevanceThreshold": {
+          "description": "Pre-defined relevance threshold for the sub-search.",
+          "enum": [
+            "RELEVANCE_THRESHOLD_UNSPECIFIED",
+            "LOWEST",
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ],
+          "enumDescriptions": [
+            "Default value. In this case, server behavior defaults to Google defined threshold.",
+            "Lowest relevance threshold.",
+            "Low relevance threshold.",
+            "Medium relevance threshold.",
+            "High relevance threshold."
+          ],
+          "type": "string"
+        },
+        "semanticRelevanceThreshold": {
+          "description": "Custom relevance threshold for the sub-search. The value must be in [0.0, 1.0].",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"
@@ -24921,6 +25252,40 @@
       "description": "Configurations for a Search Engine.",
       "id": "GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig",
       "properties": {
+        "requiredSubscriptionTier": {
+          "description": "Optional. The required subscription tier of this engine. They cannot be modified after engine creation. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine.",
+          "enum": [
+            "SUBSCRIPTION_TIER_UNSPECIFIED",
+            "SUBSCRIPTION_TIER_SEARCH",
+            "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT",
+            "SUBSCRIPTION_TIER_NOTEBOOK_LM",
+            "SUBSCRIPTION_TIER_FRONTLINE_WORKER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_STARTER",
+            "SUBSCRIPTION_TIER_AGENTSPACE_BUSINESS",
+            "SUBSCRIPTION_TIER_ENTERPRISE",
+            "SUBSCRIPTION_TIER_EDU",
+            "SUBSCRIPTION_TIER_EDU_PRO",
+            "SUBSCRIPTION_TIER_EDU_EMERGING",
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "Search tier. Search tier can access VAIS search features and NotebookLM features.",
+            "Search + assistant tier. Search + assistant tier can access VAIS search features, NotebookLM features and assistant features.",
+            "NotebookLM tier. NotebookLM is a subscription tier can only access NotebookLM features.",
+            "Frontline worker tier.",
+            "Agentspace Starter tier.",
+            "Agentspace Business tier.",
+            "Enterprise tier.",
+            "EDU tier.",
+            "EDU Pro tier.",
+            "EDU emerging market tier.",
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
+          ],
+          "type": "string"
+        },
         "searchAddOns": {
           "description": "The add-on that this search engine enables.",
           "items": {
@@ -25236,6 +25601,10 @@
       "properties": {
         "externalIdentity": {
           "description": "Required. Identity outside the customer identity provider. The length limit of external identity will be of 100 characters.",
+          "type": "string"
+        },
+        "externalIdentityName": {
+          "description": "Optional. The name of the external identity.",
           "type": "string"
         },
         "groupId": {
@@ -25984,7 +26353,8 @@
             "SUBSCRIPTION_TIER_EDU",
             "SUBSCRIPTION_TIER_EDU_PRO",
             "SUBSCRIPTION_TIER_EDU_EMERGING",
-            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING"
+            "SUBSCRIPTION_TIER_EDU_PRO_EMERGING",
+            "SUBSCRIPTION_TIER_FRONTLINE_STARTER"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -25998,7 +26368,8 @@
             "EDU tier.",
             "EDU Pro tier.",
             "EDU emerging market tier.",
-            "EDU Pro emerging market tier."
+            "EDU Pro emerging market tier.",
+            "Frontline starter tier."
           ],
           "type": "string"
         }
@@ -27675,7 +28046,7 @@
           "type": "string"
         },
         "pageCategories": {
-          "description": "Optional. The categories associated with a category page. Must be set for category navigation queries to achieve good search quality. The format should be the same as UserEvent.PageInfo.page_category. This field is the equivalent of the query for browse (navigation) queries. It's used by the browse model when the query is empty. If the field is empty, it will not be used by the browse model. To represent full path of a category, use '\u003e' character to separate different hierarchies. If '\u003e' is part of the category name, replace it with other character(s). For example, `Graphics Cards \u003e RTX\u003e4090 \u003e Founders Edition` where \"RTX \u003e 4090\" represents one level, can be rewritten as `Graphics Cards \u003e RTX_4090 \u003e Founders Edition`",
+          "description": "Optional. The categories associated with a category page. Must be set for category navigation queries to achieve good search quality. The format should be the same as UserEvent.PageInfo.page_category. This field is the equivalent of the query for browse (navigation) queries. It's used by the browse model when the query is empty. If the field is empty, it will not be used by the browse model. If the field contains more than one element, only the first element will be used. To represent full path of a category, use '\u003e' character to separate different hierarchies. If '\u003e' is part of the category name, replace it with other character(s). For example, `Graphics Cards \u003e RTX\u003e4090 \u003e Founders Edition` where \"RTX \u003e 4090\" represents one level, can be rewritten as `Graphics Cards \u003e RTX_4090 \u003e Founders Edition`",
           "items": {
             "type": "string"
           },
@@ -27742,12 +28113,16 @@
           "description": "The Unicode country/region code (CLDR) of a location, such as \"US\" and \"419\". For more information, see [Standard fields](https://cloud.google.com/apis/design/standard_fields). If set, then results will be boosted based on the region_code provided.",
           "type": "string"
         },
+        "relevanceFilterSpec": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpec",
+          "description": "Optional. The granular relevance filtering specification. If not specified, the global `relevance_threshold` will be used for all sub-searches. If specified, this overrides the global `relevance_threshold` to use thresholds on a per sub-search basis. This feature is currently supported only for custom and site search."
+        },
         "relevanceScoreSpec": {
           "$ref": "GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceScoreSpec",
           "description": "Optional. The specification for returning the relevance score."
         },
         "relevanceThreshold": {
-          "description": "The relevance threshold of the search results. Default to Google defined threshold, leveraging a balance of precision and recall to deliver both highly accurate results and comprehensive coverage of relevant information. This feature is not supported for healthcare search.",
+          "description": "The global relevance threshold of the search results. Defaults to Google defined threshold, leveraging a balance of precision and recall to deliver both highly accurate results and comprehensive coverage of relevant information. If more granular relevance filtering is required, use the `relevance_filter_spec` instead. This feature is not supported for healthcare search.",
           "enum": [
             "RELEVANCE_THRESHOLD_UNSPECIFIED",
             "LOWEST",
@@ -28395,6 +28770,51 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpec": {
+      "description": "Relevance filtering specification.",
+      "id": "GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpec",
+      "properties": {
+        "keywordSearchThreshold": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec",
+          "description": "Optional. Relevance filtering threshold specification for keyword search."
+        },
+        "semanticSearchThreshold": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec",
+          "description": "Optional. Relevance filtering threshold specification for semantic search."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec": {
+      "description": "Specification for relevance filtering on a specific sub-search.",
+      "id": "GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceFilterSpecRelevanceThresholdSpec",
+      "properties": {
+        "relevanceThreshold": {
+          "description": "Pre-defined relevance threshold for the sub-search.",
+          "enum": [
+            "RELEVANCE_THRESHOLD_UNSPECIFIED",
+            "LOWEST",
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ],
+          "enumDescriptions": [
+            "Default value. In this case, server behavior defaults to Google defined threshold.",
+            "Lowest relevance threshold.",
+            "Low relevance threshold.",
+            "Medium relevance threshold.",
+            "High relevance threshold."
+          ],
+          "type": "string"
+        },
+        "semanticRelevanceThreshold": {
+          "description": "Custom relevance threshold for the sub-search. The value must be in [0.0, 1.0].",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceScoreSpec": {
       "description": "The specification for returning the document relevance score.",
       "id": "GoogleCloudDiscoveryengineV1betaSearchRequestRelevanceScoreSpec",
@@ -28557,6 +28977,21 @@
             "$ref": "GoogleCloudDiscoveryengineV1betaSearchLinkPromotion"
           },
           "type": "array"
+        },
+        "semanticState": {
+          "description": "Output only. Indicates the semantic state of the search response.",
+          "enum": [
+            "SEMANTIC_STATE_UNSPECIFIED",
+            "DISABLED",
+            "ENABLED"
+          ],
+          "enumDescriptions": [
+            "Default value. Should not be used.",
+            "Semantic search was disabled for this search response.",
+            "Semantic search was enabled for this search response."
+          ],
+          "readOnly": true,
+          "type": "string"
         },
         "sessionInfo": {
           "$ref": "GoogleCloudDiscoveryengineV1betaSearchResponseSessionInfo",
@@ -30250,7 +30685,7 @@
           "type": "string"
         },
         "filter": {
-          "description": "The filter syntax consists of an expression language for constructing a predicate from one or more fields of the documents being filtered. One example is for `search` events, the associated SearchRequest may contain a filter expression in SearchRequest.filter conforming to https://google.aip.dev/160#filtering. Similarly, for `view-item-list` events that are generated from a RecommendRequest, this field may be populated directly from RecommendRequest.filter conforming to https://google.aip.dev/160#filtering. The value must be a UTF-8 encoded string with a length limit of 1,000 characters. Otherwise, an `INVALID_ARGUMENT` error is returned.",
+          "description": "Optional. The filter syntax consists of an expression language for constructing a predicate from one or more fields of the documents being filtered. One example is for `search` events, the associated SearchRequest may contain a filter expression in SearchRequest.filter conforming to https://google.aip.dev/160#filtering. Similarly, for `view-item-list` events that are generated from a RecommendRequest, this field may be populated directly from RecommendRequest.filter conforming to https://google.aip.dev/160#filtering. The value must be a UTF-8 encoded string with a length limit of 1,000 characters. Otherwise, an `INVALID_ARGUMENT` error is returned.",
           "type": "string"
         },
         "mediaInfo": {

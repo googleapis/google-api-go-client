@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8412,21 +8412,17 @@ type VideoStat struct {
 	ContentDetails *VideoStatsContentDetails `json:"contentDetails,omitempty"`
 	// Etag: Output only. Etag of this resource.
 	Etag string `json:"etag,omitempty"`
+	// Id: Output only. The ID that YouTube uses to uniquely identify the video.
+	Id string `json:"id,omitempty"`
 	// Kind: Output only. Identifies what kind of resource this is. Value: the
 	// fixed string "youtube#videoStats".
 	Kind string `json:"kind,omitempty"`
-	// Name: Output only. Identifier. The resource name for the `VideoStats`
-	// resource, in the format `videoStats/{video_stat}`.
-	Name string `json:"name,omitempty"`
 	// Snippet: Output only. The VideoStatsSnippet object contains basic details
 	// about the video, such publish time.
 	Snippet *VideoStatsSnippet `json:"snippet,omitempty"`
 	// Statistics: Output only. The VideoStatsStatistics object contains statistics
 	// about the video.
 	Statistics *VideoStatsStatistics `json:"statistics,omitempty"`
-	// VideoId: Output only. The ID that YouTube uses to uniquely identify the
-	// video.
-	VideoId string `json:"videoId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContentDetails") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -20346,6 +20342,13 @@ func (r *YoutubeV3VideosService) BatchGetStats() *YoutubeV3VideosBatchGetStatsCa
 	return c
 }
 
+// Id sets the optional parameter "id": Required. Return videos with the given
+// ids.
+func (c *YoutubeV3VideosBatchGetStatsCall) Id(id ...string) *YoutubeV3VideosBatchGetStatsCall {
+	c.urlParams_.SetMulti("id", append([]string{}, id...))
+	return c
+}
+
 // OnBehalfOfContentOwner sets the optional parameter "onBehalfOfContentOwner":
 // **Note:** This parameter is intended exclusively for YouTube content
 // partners. The `onBehalfOfContentOwner` parameter indicates that the
@@ -20372,13 +20375,6 @@ func (c *YoutubeV3VideosBatchGetStatsCall) OnBehalfOfContentOwner(onBehalfOfCont
 // properties.
 func (c *YoutubeV3VideosBatchGetStatsCall) Part(part ...string) *YoutubeV3VideosBatchGetStatsCall {
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
-	return c
-}
-
-// VideoIds sets the optional parameter "videoIds": Required. Return videos
-// with the given ids.
-func (c *YoutubeV3VideosBatchGetStatsCall) VideoIds(videoIds ...string) *YoutubeV3VideosBatchGetStatsCall {
-	c.urlParams_.SetMulti("videoIds", append([]string{}, videoIds...))
 	return c
 }
 

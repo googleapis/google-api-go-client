@@ -5555,7 +5555,7 @@
       }
     }
   },
-  "revision": "20251124",
+  "revision": "20251215",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -6142,7 +6142,7 @@
       "id": "AutoRenewingBasePlanType",
       "properties": {
         "accountHoldDuration": {
-          "description": "Optional. Account hold period of the subscription, specified in ISO 8601 format. Acceptable values must be in days and between P0D and P60D. If not specified, the default value is P30D. The sum of gracePeriodDuration and accountHoldDuration must be between P30D and P60D days, inclusive.",
+          "description": "Optional. Custom account hold period of the subscription, specified in ISO 8601 format. Acceptable values must be in days and between P0D and P60D. An empty field represents a recommended account hold, calculated as 60 days minus grace period. The sum of gracePeriodDuration and accountHoldDuration must be between P30D and P60D days, inclusive.",
           "type": "string"
         },
         "billingPeriodDuration": {
@@ -7655,6 +7655,49 @@
       },
       "type": "object"
     },
+    "ExternalOfferDetails": {
+      "description": "Reporting details unique to the external offers program.",
+      "id": "ExternalOfferDetails",
+      "properties": {
+        "appDownloadEventExternalTransactionId": {
+          "description": "Optional. The external transaction id associated with the app download event through an external link. Required when reporting transactions made in externally installed apps.",
+          "type": "string"
+        },
+        "installedAppCategory": {
+          "description": "Optional. The category of the downloaded app though this transaction. This must match the category provided in Play Console during the external app verification process. Only required for app downloads.",
+          "enum": [
+            "EXTERNAL_OFFER_APP_CATEGORY_UNSPECIFIED",
+            "APP",
+            "GAME"
+          ],
+          "enumDescriptions": [
+            "Unspecified, do not use.",
+            "The app is classified under the app category.",
+            "The app is classified under the game category."
+          ],
+          "type": "string"
+        },
+        "installedAppPackage": {
+          "description": "Optional. The package name of the app downloaded through this transaction. Required when link_type is LINK_TO_APP_DOWNLOAD.",
+          "type": "string"
+        },
+        "linkType": {
+          "description": "Optional. The type of content being reported by this transaction. Required when reporting app downloads or purchased digital content offers made in app installed through Google Play.",
+          "enum": [
+            "EXTERNAL_OFFER_LINK_TYPE_UNSPECIFIED",
+            "LINK_TO_DIGITAL_CONTENT_OFFER",
+            "LINK_TO_APP_DOWNLOAD"
+          ],
+          "enumDescriptions": [
+            "Unspecified, do not use.",
+            "An offer to purchase digital content.",
+            "An app install."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ExternalSubscription": {
       "description": "Details of an external subscription.",
       "id": "ExternalSubscription",
@@ -7695,6 +7738,10 @@
           "$ref": "Price",
           "description": "Output only. The current tax amount. This represents the current tax amount including any refunds that may have been applied to this transaction.",
           "readOnly": true
+        },
+        "externalOfferDetails": {
+          "$ref": "ExternalOfferDetails",
+          "description": "Optional. Details necessary to accurately report external offers transactions."
         },
         "externalTransactionId": {
           "description": "Output only. The id of this transaction. All transaction ids under the same package name must be unique. Set when creating the external transaction.",
@@ -8523,7 +8570,7 @@
       "id": "InstallmentsBasePlanType",
       "properties": {
         "accountHoldDuration": {
-          "description": "Optional. Account hold period of the subscription, specified in ISO 8601 format. Acceptable values must be in days and between P0D and P60D. If not specified, the default value is P30D. The sum of gracePeriodDuration and accountHoldDuration must be between P30D and P60D days, inclusive.",
+          "description": "Optional. Custom account hold period of the subscription, specified in ISO 8601 format. Acceptable values must be in days and between P0D and P60D. An empty field represents a recommended account hold, calculated as 60 days minus grace period. The sum of gracePeriodDuration and accountHoldDuration must be between P30D and P60D days, inclusive.",
           "type": "string"
         },
         "billingPeriodDuration": {
@@ -8938,6 +8985,10 @@
         "isTokenizedDigitalAsset": {
           "description": "Whether this in-app product is declared as a product representing a tokenized digital asset.",
           "type": "boolean"
+        },
+        "productTaxCategoryCode": {
+          "description": "Product tax category code to assign to the in-app product. Product tax category determines the transaction tax rates applied to the product. Refer to the [Help Center article](https://support.google.com/googleplay/android-developer/answer/16408159) for more information.",
+          "type": "string"
         },
         "taxRateInfoByRegionCode": {
           "additionalProperties": {
@@ -9598,6 +9649,10 @@
         "isTokenizedDigitalAsset": {
           "description": "Whether this one-time product is declared as a product representing a tokenized digital asset.",
           "type": "boolean"
+        },
+        "productTaxCategoryCode": {
+          "description": "Product tax category code to assign to the one-time product. Product tax category determines the transaction tax rates applied to the product. Refer to the [Help Center article](https://support.google.com/googleplay/android-developer/answer/16408159) for more information.",
+          "type": "string"
         },
         "regionalTaxConfigs": {
           "description": "Regional tax configuration.",
@@ -10333,10 +10388,6 @@
       "description": "Details of a proration period. A proration period can be a period calculated during a plan change to cover existing entitlements (For more information, see [Allow users to upgrade, downgrade, or change their subscription](https://developer.android.com/google/play/billing/subscriptions#allow-users-change), or a prorated period to align add-on renewal dates with the base (For more information, see [Rules applicable for items in the purchase](https://developer.android.com/google/play/billing/subscription-with-addons#rules-base-addons)).",
       "id": "ProrationPeriodDetails",
       "properties": {
-        "linkedOrderId": {
-          "description": "The last order id of the original subscription purchase prior to the plan change. This is only populated if this proration period is from an ugrade/downgrade from a previous subscription and carries the remaining offer phase from the linked order of the previous subscription.",
-          "type": "string"
-        },
         "originalOfferPhase": {
           "description": "Represent the original offer phase from the purchased the line item if the proration period contains any of them. For example, a proration period from CHARGE_FULL_PRICE plan change may merge the 1st offer phase of the subscription offer of the new product user purchased. In this case, the original offer phase will be set here.",
           "enum": [
@@ -11822,6 +11873,10 @@
         "isTokenizedDigitalAsset": {
           "description": "Whether this subscription is declared as a product representing a tokenized digital asset.",
           "type": "boolean"
+        },
+        "productTaxCategoryCode": {
+          "description": "Product tax category code to assign to the subscription. Product tax category determines the transaction tax rates applied to the subscription. Refer to the [Help Center article](https://support.google.com/googleplay/android-developer/answer/16408159) for more information.",
+          "type": "string"
         },
         "taxRateInfoByRegionCode": {
           "additionalProperties": {

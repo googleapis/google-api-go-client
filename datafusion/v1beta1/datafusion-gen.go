@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -692,6 +692,8 @@ type Instance struct {
 	// MaintenancePolicy: Optional. Configure the maintenance policy for this
 	// instance.
 	MaintenancePolicy *MaintenancePolicy `json:"maintenancePolicy,omitempty"`
+	// MonitoringConfig: Optional. The monitoring configuration for this instance.
+	MonitoringConfig *MonitoringConfig `json:"monitoringConfig,omitempty"`
 	// Name: Output only. The name of this instance is in the form of
 	// projects/{project}/locations/{location}/instances/{instance}.
 	Name string `json:"name,omitempty"`
@@ -1114,6 +1116,30 @@ type MaintenanceWindow struct {
 
 func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MonitoringConfig: Monitoring configuration for a Data Fusion instance.
+type MonitoringConfig struct {
+	// EnableInstanceV2Metrics: Optional. Option to enable the instance v2 metrics
+	// for this instance. This field is supported only in CDF versions 6.11.1.1 and
+	// above.
+	EnableInstanceV2Metrics bool `json:"enableInstanceV2Metrics,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableInstanceV2Metrics") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableInstanceV2Metrics") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MonitoringConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MonitoringConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

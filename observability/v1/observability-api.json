@@ -12,7 +12,7 @@
   "baseUrl": "https://observability.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Cloud Observability",
-  "description": "",
+  "description": "Provides functionality for configuring the observability scope, which controls the log, metric, and trace data that you can view.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/stackdriver/docs/",
   "fullyEncodeReservedExpansion": true,
@@ -536,7 +536,7 @@
       }
     }
   },
-  "revision": "20251113",
+  "revision": "20251211",
   "rootUrl": "https://observability.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {

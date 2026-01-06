@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -2297,6 +2297,17 @@ type GoogleCloudDialogflowCxV3DetectIntentRequest struct {
 	QueryInput *GoogleCloudDialogflowCxV3QueryInput `json:"queryInput,omitempty"`
 	// QueryParams: The parameters of this query.
 	QueryParams *GoogleCloudDialogflowCxV3QueryParameters `json:"queryParams,omitempty"`
+	// ResponseView: Optional. Specifies which fields in the QueryResult to return.
+	// If not set, the default is DETECT_INTENT_RESPONSE_VIEW_FULL.
+	//
+	// Possible values:
+	//   "DETECT_INTENT_RESPONSE_VIEW_UNSPECIFIED" - Not specified. `FULL` will be
+	// used.
+	//   "DETECT_INTENT_RESPONSE_VIEW_FULL" - Full response view includes all
+	// fields.
+	//   "DETECT_INTENT_RESPONSE_VIEW_BASIC" - Basic response view omits the
+	// following fields: - QueryResult.diagnostic_info
+	ResponseView string `json:"responseView,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "OutputAudioConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8074,8 +8085,15 @@ type GoogleCloudDialogflowCxV3SafetySettings struct {
 	// be matched, e.g. "foo" will match "a foo bar" and "foo bar", but not
 	// "foobar".
 	DefaultBannedPhraseMatchStrategy string `json:"defaultBannedPhraseMatchStrategy,omitempty"`
+	// DefaultRaiSettings: Optional. Immutable. Default RAI settings to be
+	// annotated on the agent, so that users will be able to restore their RAI
+	// configurations to the default settings. Read-only field for the API proto
+	// only.
+	DefaultRaiSettings *GoogleCloudDialogflowCxV3SafetySettingsRaiSettings `json:"defaultRaiSettings,omitempty"`
 	// PromptSecuritySettings: Optional. Settings for prompt security checks.
 	PromptSecuritySettings *GoogleCloudDialogflowCxV3SafetySettingsPromptSecuritySettings `json:"promptSecuritySettings,omitempty"`
+	// RaiSettings: Optional. Settings for Responsible AI checks.
+	RaiSettings *GoogleCloudDialogflowCxV3SafetySettingsRaiSettings `json:"raiSettings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BannedPhrases") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8139,6 +8157,69 @@ type GoogleCloudDialogflowCxV3SafetySettingsPromptSecuritySettings struct {
 
 func (s GoogleCloudDialogflowCxV3SafetySettingsPromptSecuritySettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3SafetySettingsPromptSecuritySettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3SafetySettingsRaiSettings: Settings for Responsible
+// AI.
+type GoogleCloudDialogflowCxV3SafetySettingsRaiSettings struct {
+	// CategoryFilters: Optional. RAI blocking configurations.
+	CategoryFilters []*GoogleCloudDialogflowCxV3SafetySettingsRaiSettingsCategoryFilter `json:"categoryFilters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CategoryFilters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CategoryFilters") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3SafetySettingsRaiSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3SafetySettingsRaiSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3SafetySettingsRaiSettingsCategoryFilter:
+// Configuration of the sensitivity level for blocking an RAI category.
+type GoogleCloudDialogflowCxV3SafetySettingsRaiSettingsCategoryFilter struct {
+	// Category: RAI category to configure.
+	//
+	// Possible values:
+	//   "SAFETY_CATEGORY_UNSPECIFIED" - Unspecified.
+	//   "DANGEROUS_CONTENT" - Dangerous content.
+	//   "HATE_SPEECH" - Hate speech.
+	//   "HARASSMENT" - Harassment.
+	//   "SEXUALLY_EXPLICIT_CONTENT" - Sexually explicit content.
+	Category string `json:"category,omitempty"`
+	// FilterLevel: Blocking sensitivity level to configure for the RAI category.
+	//
+	// Possible values:
+	//   "SAFETY_FILTER_LEVEL_UNSPECIFIED" - Unspecified -- uses default
+	// sensitivity levels.
+	//   "BLOCK_NONE" - Block no text -- effectively disables the category.
+	//   "BLOCK_FEW" - Block a few suspicious texts.
+	//   "BLOCK_SOME" - Block some suspicious texts.
+	//   "BLOCK_MOST" - Block most suspicious texts.
+	FilterLevel string `json:"filterLevel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3SafetySettingsRaiSettingsCategoryFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3SafetySettingsRaiSettingsCategoryFilter
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -22581,8 +22662,8 @@ type GoogleLongrunningListOperationsResponse struct {
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -40587,9 +40668,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
@@ -41547,9 +41628,9 @@ func (c *ProjectsOperationsListCall) PageToken(pageToken string) *ProjectsOperat
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsOperationsListCall {

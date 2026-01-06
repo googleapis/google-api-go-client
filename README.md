@@ -60,12 +60,21 @@ client, err := sheets.NewService(ctx)
 ```
 
 To authorize using a [JSON key file](https://cloud.google.com/iam/docs/managing-service-account-keys), pass
-[`option.WithCredentialsFile`](https://pkg.go.dev/google.golang.org/api/option#WithCredentialsFile) to the `NewService`
-function of the desired package. For example:
+[`option.WithAuthCredentialsFile`](https://pkg.go.dev/google.golang.org/api/option#WithAuthCredentialsFile) to the `NewService`
+function of the desired package. You must also specify the credential type. For example, to use a service account key file:
 
 ```go
-client, err := sheets.NewService(ctx, option.WithCredentialsFile("path/to/keyfile.json"))
+client, err := sheets.NewService(ctx, option.WithAuthCredentialsFile(option.ServiceAccount, "path/to/keyfile.json"))
 ```
+
+Similarly, you can use JSON credentials directly with [`option.WithAuthCredentialsJSON`](https://pkg.go.dev/google.golang.org/api/option#WithAuthCredentialsJSON):
+
+```go
+// where jsonKey is a []byte containing the JSON key
+client, err := sheets.NewService(ctx, option.WithAuthCredentialsJSON(option.ServiceAccount, jsonKey))
+```
+
+The older `option.WithCredentialsFile` and `option.WithCredentialsJSON` functions are deprecated due to a potential security risk.
 
 You can exert more control over authorization by using the [`golang.org/x/oauth2`](https://pkg.go.dev/golang.org/x/oauth2)
 package to create an `oauth2.TokenSource`. Then pass [`option.WithTokenSource`](https://pkg.go.dev/google.golang.org/api/option#WithTokenSource)

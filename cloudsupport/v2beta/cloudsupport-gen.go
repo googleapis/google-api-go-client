@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -299,6 +299,9 @@ type Blobstore2Info struct {
 	BlobGeneration int64 `json:"blobGeneration,omitempty,string"`
 	// BlobId: # gdata.* are outside protos with mising documentation
 	BlobId string `json:"blobId,omitempty"`
+	// DownloadExternalReadToken: # gdata.* are outside protos with mising
+	// documentation
+	DownloadExternalReadToken string `json:"downloadExternalReadToken,omitempty"`
 	// DownloadReadHandle: # gdata.* are outside protos with mising documentation
 	DownloadReadHandle string `json:"downloadReadHandle,omitempty"`
 	// ReadToken: # gdata.* are outside protos with mising documentation

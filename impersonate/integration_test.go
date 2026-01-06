@@ -87,7 +87,7 @@ func TestCredentialsTokenSourceIntegration(t *testing.T) {
 					Scopes:          []string{"https://www.googleapis.com/auth/devstorage.full_control"},
 					Delegates:       tt.delegates,
 				},
-				option.WithCredentialsFile(tt.baseKeyFile),
+				option.WithAuthCredentialsFile(option.ServiceAccount, tt.baseKeyFile),
 			)
 			if err != nil {
 				t.Fatalf("failed to create ts: %v", err)
@@ -143,7 +143,7 @@ func TestIDTokenSourceIntegration(t *testing.T) {
 					Delegates:       tt.delegates,
 					IncludeEmail:    true,
 				},
-				option.WithCredentialsFile(tt.baseKeyFile),
+				option.WithAuthCredentialsFile(option.ServiceAccount, tt.baseKeyFile),
 			)
 			if err != nil {
 				t.Fatalf("failed to create ts: %v", err)
@@ -198,7 +198,7 @@ func TestTokenSourceIntegration_user(t *testing.T) {
 					Scopes:          []string{"https://www.googleapis.com/auth/admin.directory.user", "https://www.googleapis.com/auth/admin.directory.group"},
 					Subject:         domainAdmin,
 				},
-				option.WithCredentialsFile(baseKeyFile),
+				option.WithAuthCredentialsFile(option.ServiceAccount, baseKeyFile),
 			)
 			if err != nil {
 				t.Fatalf("failed to create ts: %v", err)

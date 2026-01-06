@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1540,6 +1540,11 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact struct {
 	// ArtifactId: Maven `artifactId` value used when uploading the artifact to
 	// Artifact Registry.
 	ArtifactId string `json:"artifactId,omitempty"`
+	// DeployFolder: Optional. Path to a folder containing the files to upload to
+	// Artifact Registry. This can be either an absolute path, e.g.
+	// `/workspace/my-app/target/`, or a relative path from /workspace, e.g.
+	// `my-app/target/`. This field is mutually exclusive with the `path` field.
+	DeployFolder string `json:"deployFolder,omitempty"`
 	// GroupId: Maven `groupId` value used when uploading the artifact to Artifact
 	// Registry.
 	GroupId string `json:"groupId,omitempty"`
@@ -4380,6 +4385,7 @@ type Hash struct {
 	// hex-encoded. See b/244466565 and
 	// https://github.com/in-toto/attestation/pull/108.
 	//   "SHA512" - A SHA-512 hash.
+	//   "DIRSUM_SHA256" - A Dirsum SHA-256 hash.
 	Type string `json:"type,omitempty"`
 	// Value: Required. The hash value.
 	Value string `json:"value,omitempty"`

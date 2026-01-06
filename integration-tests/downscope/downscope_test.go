@@ -46,7 +46,7 @@ func TestMain(m *testing.M) {
 	credentialFileName := os.Getenv(envServiceAccountFile)
 
 	var err error
-	rootCredential, err = transport.Creds(ctx, option.WithCredentialsFile(credentialFileName), option.WithScopes(rootTokenScope))
+	rootCredential, err = transport.Creds(ctx, option.WithAuthCredentialsFile(option.ServiceAccount, credentialFileName), option.WithScopes(rootTokenScope))
 
 	if err != nil {
 		log.Fatalf("failed to construct root credential: %v", err)

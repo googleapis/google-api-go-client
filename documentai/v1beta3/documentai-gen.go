@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1132,6 +1132,10 @@ type GoogleCloudDocumentaiUiv1beta3DocumentSchema struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: Display name to show to users.
 	DisplayName string `json:"displayName,omitempty"`
+	// DocumentPrompt: Optional. Document level prompt provided by the user. This
+	// custom text is injected into the AI model's prompt to provide extra,
+	// document-wide guidance for processing.
+	DocumentPrompt string `json:"documentPrompt,omitempty"`
 	// EntityTypes: Entity types of the schema.
 	EntityTypes []*GoogleCloudDocumentaiUiv1beta3DocumentSchemaEntityType `json:"entityTypes,omitempty"`
 	// Metadata: Metadata of the schema.
@@ -7188,7 +7192,8 @@ type GoogleCloudDocumentaiV1beta3GenerateSchemaVersionRequest struct {
 	// GenerateSchemaVersionParams: Optional. User specified parameters for the
 	// schema generation.
 	GenerateSchemaVersionParams *GoogleCloudDocumentaiV1beta3GenerateSchemaVersionRequestGenerateSchemaVersionParams `json:"generateSchemaVersionParams,omitempty"`
-	// InlineDocuments: The set of documents specified inline.
+	// InlineDocuments: The set of documents specified inline. For each document,
+	// its `uri` or `content` field must be set.
 	InlineDocuments *GoogleCloudDocumentaiV1beta3Documents `json:"inlineDocuments,omitempty"`
 	// RawDocuments: The set of raw documents.
 	RawDocuments *GoogleCloudDocumentaiV1beta3RawDocuments `json:"rawDocuments,omitempty"`
@@ -7455,6 +7460,12 @@ type GoogleCloudDocumentaiV1beta3ImportDocumentsRequestBatchDocumentsImportConfi
 	//   "DATASET_SPLIT_TEST" - Identifies the test documents.
 	//   "DATASET_SPLIT_UNASSIGNED" - Identifies the unassigned documents.
 	DatasetSplit string `json:"datasetSplit,omitempty"`
+	// DocumentType: Optional. If set, determines the type of the documents to be
+	// imported in this batch. It can be used to auto-label the documents with a
+	// single entity of the provided type. This field can only be used with a
+	// classifier or splitter processor. Providing this field is mutually exclusive
+	// with `entities` and `auto_labeling_config`.
+	DocumentType string `json:"documentType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoSplitConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7880,7 +7891,7 @@ func (s GoogleCloudDocumentaiV1beta3ListSchemasResponse) MarshalJSON() ([]byte, 
 type GoogleCloudDocumentaiV1beta3NextSchema struct {
 	// CreateTime: Output only. The time when the Schema was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Optional. The user-defined name of the Schema.
+	// DisplayName: Required. The user-defined name of the Schema.
 	DisplayName string `json:"displayName,omitempty"`
 	// Labels: Optional. The GCP labels for the Schema.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -8131,6 +8142,8 @@ type GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfig struct {
 	// EnableTableAnnotation: Optional. Whether to include table annotations in
 	// layout parser response.
 	EnableTableAnnotation bool `json:"enableTableAnnotation,omitempty"`
+	// EnableTableSplit: Optional. Whether to split table.
+	EnableTableSplit bool `json:"enableTableSplit,omitempty"`
 	// ReturnBoundingBoxes: Optional. Whether to include bounding boxes in layout
 	// parser processor response.
 	ReturnBoundingBoxes bool `json:"returnBoundingBoxes,omitempty"`
@@ -8949,7 +8962,7 @@ func (s GoogleCloudDocumentaiV1beta3SchemaGenerationIteration) MarshalJSON() ([]
 type GoogleCloudDocumentaiV1beta3SchemaVersion struct {
 	// CreateTime: Output only. The time when the SchemaVersion was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Optional. The user-defined name of the SchemaVersion.
+	// DisplayName: Required. The user-defined name of the SchemaVersion.
 	DisplayName string `json:"displayName,omitempty"`
 	// Labels: Optional. The GCP labels for the SchemaVersion.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -9472,8 +9485,8 @@ type GoogleLongrunningListOperationsResponse struct {
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -10593,9 +10606,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

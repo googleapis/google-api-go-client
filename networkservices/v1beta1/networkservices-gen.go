@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -472,7 +472,9 @@ type AuthzExtension struct {
 	// UpdateTime: Output only. The timestamp when the resource was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// WireFormat: Optional. The format of communication supported by the callout
-	// extension. If not specified, the default value `EXT_PROC_GRPC` is used.
+	// extension. This field is supported only for regional `AuthzExtension`
+	// resources. If not specified, the default value `EXT_PROC_GRPC` is used.
+	// Global `AuthzExtension` resources use the `EXT_PROC_GRPC` wire format.
 	//
 	// Possible values:
 	//   "WIRE_FORMAT_UNSPECIFIED" - Not specified.
@@ -482,7 +484,7 @@ type AuthzExtension struct {
 	// `supported_events` for a client request are sent as part of the same gRPC
 	// stream.
 	//   "EXT_AUTHZ_GRPC" - The extension service uses Envoy's `ext_authz` gRPC
-	// API. The backend service for the extension must use HTTP2, or H2C as the
+	// API. The backend service for the extension must use HTTP2 or H2C as the
 	// protocol. `EXT_AUTHZ_GRPC` is only supported for regional `AuthzExtension`
 	// resources.
 	WireFormat string `json:"wireFormat,omitempty"`
@@ -890,8 +892,8 @@ type Gateway struct {
 	//   "ENVOY_HEADERS_UNSPECIFIED" - Defaults to NONE.
 	//   "NONE" - Suppress envoy debug headers.
 	//   "DEBUG_HEADERS" - Envoy will insert default internal debug headers into
-	// upstream requests: x-envoy-attempt-count x-envoy-is-timeout-retry
-	// x-envoy-expected-rq-timeout-ms x-envoy-original-path
+	// upstream requests: x-envoy-attempt-count, x-envoy-is-timeout-retry,
+	// x-envoy-expected-rq-timeout-ms, x-envoy-original-path,
 	// x-envoy-upstream-stream-duration-ms
 	EnvoyHeaders string `json:"envoyHeaders,omitempty"`
 	// GatewaySecurityPolicy: Optional. A fully-qualified GatewaySecurityPolicy URL
@@ -2925,8 +2927,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3252,8 +3254,8 @@ type Mesh struct {
 	//   "ENVOY_HEADERS_UNSPECIFIED" - Defaults to NONE.
 	//   "NONE" - Suppress envoy debug headers.
 	//   "DEBUG_HEADERS" - Envoy will insert default internal debug headers into
-	// upstream requests: x-envoy-attempt-count x-envoy-is-timeout-retry
-	// x-envoy-expected-rq-timeout-ms x-envoy-original-path
+	// upstream requests: x-envoy-attempt-count, x-envoy-is-timeout-retry,
+	// x-envoy-expected-rq-timeout-ms, x-envoy-original-path,
 	// x-envoy-upstream-stream-duration-ms
 	EnvoyHeaders string `json:"envoyHeaders,omitempty"`
 	// InterceptionPort: Optional. If set to a valid TCP port (1-65535), instructs
@@ -4133,6 +4135,26 @@ type WasmPlugin struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. A human-readable description of the resource.
 	Description string `json:"description,omitempty"`
+	// KmsKeyName: Optional. The name of the customer managed Cloud KMS key to be
+	// used to encrypt the `WasmPlugin` image (provided by image_uri) and
+	// configuration (provided by plugin_config_data or plugin_config_uri) that are
+	// stored by the `Service Extensions` product at rest. Format:
+	// "projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{key}"
+	//  By default, Google Cloud automatically encrypts all data at rest using
+	// Google-owned and Google-managed encryption keys. If you need ownership and
+	// control of the keys that protect your data at rest, you can specify a
+	// customer-managed encryption key (CMEK) to encrypt your `WasmPlugin` data.
+	// For more information, see Using customer-managed encryption keys
+	// (https://cloud.google.com/kms/docs/cmek).
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// KmsKeyVersion: Output only. The name of the specific CryptoKeyVersion used
+	// to encrypt the `WasmPlugin` data, if the kms_key_name field is set. Format:
+	// "projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{key}/
+	// cryptoKeyVersions/{version}" This is a read-only field. `WasmPlugin` data is
+	// automatically encrypted using the most recent `CryptoKeyVersion` of the
+	// `CryptoKey` provided in the `kms_key_name` field. See Cloud KMS resources
+	// (https://cloud.google.com/kms/docs/resource-hierarchy) for more information.
+	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
 	// Labels: Optional. Set of labels associated with the `WasmPlugin` resource.
 	// The format must comply with the following requirements
 	// (/compute/docs/labeling-resources#requirements).
@@ -11769,9 +11791,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

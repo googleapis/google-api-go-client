@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1525,6 +1525,11 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact struct {
 	// ArtifactId: Maven `artifactId` value used when uploading the artifact to
 	// Artifact Registry.
 	ArtifactId string `json:"artifactId,omitempty"`
+	// DeployFolder: Optional. Path to a folder containing the files to upload to
+	// Artifact Registry. This can be either an absolute path, e.g.
+	// `/workspace/my-app/target/`, or a relative path from /workspace, e.g.
+	// `my-app/target/`. This field is mutually exclusive with the `path` field.
+	DeployFolder string `json:"deployFolder,omitempty"`
 	// GroupId: Maven `groupId` value used when uploading the artifact to Artifact
 	// Registry.
 	GroupId string `json:"groupId,omitempty"`
@@ -4428,6 +4433,7 @@ type Hash struct {
 	//   "SHA256" - A sha256 hash.
 	//   "GO_MODULE_H1" - Dirhash of a Go module's source code which is then
 	// hex-encoded.
+	//   "DIRSUM_SHA256" - Dirsum hash of the downloaded artifact files.
 	Type string `json:"type,omitempty"`
 	// Value: The hash value.
 	Value string `json:"value,omitempty"`

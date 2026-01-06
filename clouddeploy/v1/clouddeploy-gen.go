@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1350,6 +1350,9 @@ type Config struct {
 	// DefaultSkaffoldVersion: Default Skaffold version that is assigned when a
 	// Release is created without specifying a Skaffold version.
 	DefaultSkaffoldVersion string `json:"defaultSkaffoldVersion,omitempty"`
+	// DefaultToolVersions: Output only. Default tool versions. These tool versions
+	// are assigned when a Release is created without specifying tool versions.
+	DefaultToolVersions *ToolVersions `json:"defaultToolVersions,omitempty"`
 	// Name: Name of the configuration.
 	Name string `json:"name,omitempty"`
 	// SupportedVersions: All supported versions of Skaffold.
@@ -2892,8 +2895,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3915,8 +3918,8 @@ type Release struct {
 	// creation time.
 	TargetSnapshots []*Target `json:"targetSnapshots,omitempty"`
 	// ToolVersions: Optional. The tool versions to use for this release and all
-	// subsequent operations involving this release. If unset, then it will freeze
-	// the tool versions at the time of release creation.
+	// subsequent operations involving this release. If unset, tool versions are
+	// frozen when the release is created.
 	ToolVersions *ToolVersions `json:"toolVersions,omitempty"`
 	// Uid: Output only. Unique identifier of the `Release`.
 	Uid string `json:"uid,omitempty"`
@@ -3951,7 +3954,7 @@ type ReleaseCondition struct {
 	// of the release's Helm version.
 	HelmVersionSupportedCondition *ToolVersionSupportedCondition `json:"helmVersionSupportedCondition,omitempty"`
 	// KptVersionSupportedCondition: Output only. Details around the support state
-	// of the release's Kpt version.
+	// of the release's kpt version.
 	KptVersionSupportedCondition *ToolVersionSupportedCondition `json:"kptVersionSupportedCondition,omitempty"`
 	// KubectlVersionSupportedCondition: Output only. Details around the support
 	// state of the release's Kubectl version.
@@ -5913,28 +5916,28 @@ func (s TimedPromoteReleaseRule) MarshalJSON() ([]byte, error) {
 }
 
 // ToolVersionSupportedCondition: ToolVersionSupportedCondition contains
-// information about when support for the release's version of a Tool ends.
+// information about when support for the release's version of a tool ends.
 type ToolVersionSupportedCondition struct {
 	// MaintenanceModeTime: Output only. The time at which this release's version
-	// of the Tool will enter maintenance mode.
+	// of the tool will enter maintenance mode.
 	MaintenanceModeTime string `json:"maintenanceModeTime,omitempty"`
 	// Status: Output only. True if the version of Tool used by this release is
 	// supported.
 	Status bool `json:"status,omitempty"`
 	// SupportExpirationTime: Output only. The time at which this release's version
-	// of the Tool will no longer be supported.
+	// of the tool will no longer be supported.
 	SupportExpirationTime string `json:"supportExpirationTime,omitempty"`
-	// ToolVersionSupportState: Output only. The Tool support state for this
-	// release's version of the Tool.
+	// ToolVersionSupportState: Output only. The tool support state for this
+	// release's version of the tool.
 	//
 	// Possible values:
 	//   "TOOL_VERSION_SUPPORT_STATE_UNSPECIFIED" - Default value. This value is
 	// unused.
-	//   "TOOL_VERSION_SUPPORT_STATE_SUPPORTED" - This Tool version is currently
+	//   "TOOL_VERSION_SUPPORT_STATE_SUPPORTED" - This tool version is currently
 	// supported.
-	//   "TOOL_VERSION_SUPPORT_STATE_MAINTENANCE_MODE" - This Tool version is in
+	//   "TOOL_VERSION_SUPPORT_STATE_MAINTENANCE_MODE" - This tool version is in
 	// maintenance mode.
-	//   "TOOL_VERSION_SUPPORT_STATE_UNSUPPORTED" - This Tool version is no longer
+	//   "TOOL_VERSION_SUPPORT_STATE_UNSUPPORTED" - This tool version is no longer
 	// supported.
 	ToolVersionSupportState string `json:"toolVersionSupportState,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MaintenanceModeTime") to
@@ -5957,18 +5960,18 @@ func (s ToolVersionSupportedCondition) MarshalJSON() ([]byte, error) {
 
 // ToolVersions: Details of ToolVersions for the release.
 type ToolVersions struct {
-	// Docker: Optional. The docker version to use for Cloud Deploy operations.
+	// Docker: Optional. The Docker version to use for Cloud Deploy operations.
 	Docker string `json:"docker,omitempty"`
-	// Helm: Optional. The helm version to use for Cloud Deploy operations.
+	// Helm: Optional. The Helm version to use for Cloud Deploy operations.
 	Helm string `json:"helm,omitempty"`
 	// Kpt: Optional. The kpt version to use for Cloud Deploy operations.
 	Kpt string `json:"kpt,omitempty"`
-	// Kubectl: Optional. The kubectl version to use for Cloud Deploy operations.
+	// Kubectl: Optional. The Kubectl version to use for Cloud Deploy operations.
 	Kubectl string `json:"kubectl,omitempty"`
-	// Kustomize: Optional. The kustomize version to use for Cloud Deploy
+	// Kustomize: Optional. The Kustomize version to use for Cloud Deploy
 	// operations.
 	Kustomize string `json:"kustomize,omitempty"`
-	// Skaffold: Optional. The skaffold version to use for Cloud Deploy operations.
+	// Skaffold: Optional. The Skaffold version to use for Cloud Deploy operations.
 	Skaffold string `json:"skaffold,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Docker") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -12813,9 +12816,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

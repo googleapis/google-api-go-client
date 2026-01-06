@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1324,6 +1324,8 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// GcsFilesetSpec: Specification that applies to a Cloud Storage fileset. Valid
 	// only for entries with the `FILESET` type.
 	GcsFilesetSpec *GoogleCloudDatacatalogV1GcsFilesetSpec `json:"gcsFilesetSpec,omitempty"`
+	// GraphSpec: Spec for graph.
+	GraphSpec *GoogleCloudDatacatalogV1GraphSpec `json:"graphSpec,omitempty"`
 	// IntegratedSystem: Output only. Indicates the entry's source system that Data
 	// Catalog integrates with, such as BigQuery, Pub/Sub, or Dataproc Metastore.
 	//
@@ -1416,6 +1418,7 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// Feature Store.
 	//   "FEATURE_VIEW" - Feature View resource in Vertex AI Feature Store.
 	//   "FEATURE_GROUP" - Feature Group resource in Vertex AI Feature Store.
+	//   "GRAPH" - An entry type for a graph.
 	Type string `json:"type,omitempty"`
 	// UsageSignal: Resource usage statistics.
 	UsageSignal *GoogleCloudDatacatalogV1UsageSignal `json:"usageSignal,omitempty"`
@@ -1598,6 +1601,171 @@ type GoogleCloudDatacatalogV1GcsFilesetSpec struct {
 
 func (s GoogleCloudDatacatalogV1GcsFilesetSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1GcsFilesetSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1GraphSpec: Specification that applies to a graph.
+type GoogleCloudDatacatalogV1GraphSpec struct {
+	// EdgeTables: Optional. Edge tables of the graph.
+	EdgeTables []*GoogleCloudDatacatalogV1GraphSpecGraphElementTable `json:"edgeTables,omitempty"`
+	// Name: Output only. Fully qualified graph name. e.g. `named_catalog.MyGraph`
+	Name string `json:"name,omitempty"`
+	// NodeTables: Required. Node tables of the graph.
+	NodeTables []*GoogleCloudDatacatalogV1GraphSpecGraphElementTable `json:"nodeTables,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EdgeTables") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EdgeTables") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDatacatalogV1GraphSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1GraphSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1GraphSpecGraphElementTable: Element table
+// definition.
+type GoogleCloudDatacatalogV1GraphSpecGraphElementTable struct {
+	// Alias: Required. The alias name of the graph element.
+	Alias string `json:"alias,omitempty"`
+	// DataSource: Required. The name of the data source. This is either a table
+	// name or a view name that is used for graph element input source. E.g.
+	// `Person` table or `PersonView` view.
+	DataSource string `json:"dataSource,omitempty"`
+	// DestinationNodeReference: Optional. The destination node reference of the
+	// edge.
+	DestinationNodeReference *GoogleCloudDatacatalogV1GraphSpecGraphElementTableGraphNodeReference `json:"destinationNodeReference,omitempty"`
+	// DynamicLabelColumn: Optional. If set, this is the input column for dynamic
+	// label in schemaless data model.
+	DynamicLabelColumn string `json:"dynamicLabelColumn,omitempty"`
+	// DynamicPropertiesColumn: Optional. If set, this is the input column for
+	// dynamic properties in schemaless data model.
+	DynamicPropertiesColumn string `json:"dynamicPropertiesColumn,omitempty"`
+	// ElementKeys: Required. The name of the keys of the elements in the table.
+	ElementKeys []string `json:"elementKeys,omitempty"`
+	// InputSource: Required. The input source of the graph element.
+	//
+	// Possible values:
+	//   "INPUT_SOURCE_UNSPECIFIED" - Default unknown input source.
+	//   "TABLE" - Table input source.
+	//   "VIEW" - View input source.
+	InputSource string `json:"inputSource,omitempty"`
+	// Kind: Required. The kind of the graph element.
+	//
+	// Possible values:
+	//   "KIND_UNSPECIFIED" - Default unknown kind.
+	//   "NODE" - Node kind.
+	//   "EDGE" - Edge kind.
+	Kind string `json:"kind,omitempty"`
+	// LabelAndProperties: Required. The labels and their properties for the graph
+	// element.
+	LabelAndProperties []*GoogleCloudDatacatalogV1GraphSpecGraphElementTableLabelAndProperties `json:"labelAndProperties,omitempty"`
+	// SourceNodeReference: Optional. The source node reference of the edge.
+	SourceNodeReference *GoogleCloudDatacatalogV1GraphSpecGraphElementTableGraphNodeReference `json:"sourceNodeReference,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Alias") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Alias") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDatacatalogV1GraphSpecGraphElementTable) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1GraphSpecGraphElementTable
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1GraphSpecGraphElementTableGraphNodeReference: A
+// reference to a source or destination node in a graph edge.
+type GoogleCloudDatacatalogV1GraphSpecGraphElementTableGraphNodeReference struct {
+	// EdgeTableColumns: Required. The referencing columns in the edge table. The
+	// size of `edge_table_columns` must be equal to the size of
+	// `node_table_columns`.
+	EdgeTableColumns []string `json:"edgeTableColumns,omitempty"`
+	// NodeAlias: Required. The reference to the source/destination node of the
+	// edge. This name must be a valid `alias` of a node element in the same graph.
+	// Example, `Person` node can be a source node name of an edge element
+	// `Person_to_Address`.
+	NodeAlias string `json:"nodeAlias,omitempty"`
+	// NodeTableColumns: Required. The referenced columns of the source node table.
+	NodeTableColumns []string `json:"nodeTableColumns,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EdgeTableColumns") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EdgeTableColumns") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDatacatalogV1GraphSpecGraphElementTableGraphNodeReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1GraphSpecGraphElementTableGraphNodeReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1GraphSpecGraphElementTableLabelAndProperties: The
+// label and its properties. Each label is associated with a set of properties.
+type GoogleCloudDatacatalogV1GraphSpecGraphElementTableLabelAndProperties struct {
+	// Label: Required. The name of the label.
+	Label string `json:"label,omitempty"`
+	// Properties: Optional. The properties associated with the label.
+	Properties []*GoogleCloudDatacatalogV1GraphSpecGraphElementTableProperty `json:"properties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Label") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Label") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDatacatalogV1GraphSpecGraphElementTableLabelAndProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1GraphSpecGraphElementTableLabelAndProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1GraphSpecGraphElementTableProperty: A property
+// declaration.
+type GoogleCloudDatacatalogV1GraphSpecGraphElementTableProperty struct {
+	// Name: Required. Property name.
+	Name string `json:"name,omitempty"`
+	// Type: Required. Property data type.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDatacatalogV1GraphSpecGraphElementTableProperty) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1GraphSpecGraphElementTableProperty
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

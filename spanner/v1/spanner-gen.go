@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -112,7 +112,8 @@ const (
 	// Administer your Spanner databases
 	SpannerAdminScope = "https://www.googleapis.com/auth/spanner.admin"
 
-	// View and manage the contents of your Spanner databases
+	// See, edit, configure, and delete your Google Cloud Spanner data and see the
+	// email address for your Google Account
 	SpannerDataScope = "https://www.googleapis.com/auth/spanner.data"
 )
 
@@ -416,6 +417,36 @@ func NewScansService(s *Service) *ScansService {
 
 type ScansService struct {
 	s *Service
+}
+
+// Ack: Arguments to ack operations.
+type Ack struct {
+	// IgnoreNotFound: By default, an attempt to ack a message that does not exist
+	// will fail with a `NOT_FOUND` error. With `ignore_not_found` set to true, the
+	// ack will succeed even if the message does not exist. This is useful for
+	// unconditionally acking a message, even if it is missing or has already been
+	// acked.
+	IgnoreNotFound bool `json:"ignoreNotFound,omitempty"`
+	// Key: Required. The primary key of the message to be acked.
+	Key []interface{} `json:"key,omitempty"`
+	// Queue: Required. The queue where the message to be acked is stored.
+	Queue string `json:"queue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IgnoreNotFound") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IgnoreNotFound") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Ack) MarshalJSON() ([]byte, error) {
+	type NoMethod Ack
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdaptMessageRequest: Message sent by the client to the adapter.
@@ -1487,6 +1518,42 @@ type CommitStats struct {
 
 func (s CommitStats) MarshalJSON() ([]byte, error) {
 	type NoMethod CommitStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CompactDatabaseMetadata: Metadata type for the long-running operation
+// returned by `CALL compact_all()`, which can be executed using ExecuteSql or
+// ExecuteStreamingSql APIs.
+type CompactDatabaseMetadata struct {
+	// CancelTime: Output only. The time at which cancellation of this operation
+	// was received. Operations.CancelOperation starts asynchronous cancellation on
+	// a long-running operation. The server makes a best effort to cancel the
+	// operation, but success is not guaranteed. Clients can use
+	// Operations.GetOperation or other methods to check whether the cancellation
+	// succeeded or whether the operation completed despite cancellation. On
+	// successful cancellation, the operation is not deleted; instead, it becomes
+	// an operation with an Operation.error value with a google.rpc.Status.code of
+	// 1, corresponding to `Code.CANCELLED`.
+	CancelTime string `json:"cancelTime,omitempty"`
+	// Database: Output only. The database being compacted.
+	Database string `json:"database,omitempty"`
+	// Progress: Output only. The progress of the compaction operation.
+	Progress *OperationProgress `json:"progress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CancelTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CancelTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CompactDatabaseMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CompactDatabaseMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4230,8 +4297,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4647,6 +4714,8 @@ func (s MultiplexedSessionPrecommitToken) MarshalJSON() ([]byte, error) {
 // Mutation: A modification to one or more Cloud Spanner rows. Mutations can be
 // applied to a Cloud Spanner database by sending them in a Commit call.
 type Mutation struct {
+	// Ack: Ack a message from a queue.
+	Ack *Ack `json:"ack,omitempty"`
 	// Delete: Delete rows from a table. Succeeds whether or not the named rows
 	// were present.
 	Delete *Delete `json:"delete,omitempty"`
@@ -4668,18 +4737,20 @@ type Mutation struct {
 	// child rows. Otherwise, you must delete the child rows before you replace the
 	// parent row.
 	Replace *Write `json:"replace,omitempty"`
+	// Send: Send a message to a queue.
+	Send *Send `json:"send,omitempty"`
 	// Update: Update existing rows in a table. If any of the rows does not already
 	// exist, the transaction fails with error `NOT_FOUND`.
 	Update *Write `json:"update,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Delete") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Ack") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Delete") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Ack") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -6347,6 +6418,37 @@ func (s ScanData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Send: Arguments to send operations.
+type Send struct {
+	// DeliverTime: The time at which Spanner will begin attempting to deliver the
+	// message. If `deliver_time` is not set, Spanner will deliver the message
+	// immediately. If `deliver_time` is in the past, Spanner will replace it with
+	// a value closer to the current time.
+	DeliverTime string `json:"deliverTime,omitempty"`
+	// Key: Required. The primary key of the message to be sent.
+	Key []interface{} `json:"key,omitempty"`
+	// Payload: The payload of the message.
+	Payload interface{} `json:"payload,omitempty"`
+	// Queue: Required. The queue to which the message will be sent.
+	Queue string `json:"queue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeliverTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeliverTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Send) MarshalJSON() ([]byte, error) {
+	type NoMethod Send
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Session: A session in the Cloud Spanner API.
 type Session struct {
 	// ApproximateLastUseTime: Output only. The approximate timestamp when the
@@ -6365,11 +6467,10 @@ type Session struct {
 	// examples of labels.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Multiplexed: Optional. If `true`, specifies a multiplexed session. Use a
-	// multiplexed session for multiple, concurrent read-only operations. Don't use
-	// them for read-write transactions, partitioned reads, or partitioned queries.
-	// Use `sessions.create` to create multiplexed sessions. Don't use
-	// BatchCreateSessions to create a multiplexed session. You can't delete or
-	// list multiplexed sessions.
+	// multiplexed session for multiple, concurrent operations including any
+	// combination of read-only and read-write transactions. Use `sessions.create`
+	// to create multiplexed sessions. Don't use BatchCreateSessions to create a
+	// multiplexed session. You can't delete or list multiplexed sessions.
 	Multiplexed bool `json:"multiplexed,omitempty"`
 	// Name: Output only. The name of the session. This is always system-assigned.
 	Name string `json:"name,omitempty"`
@@ -6729,7 +6830,7 @@ type TransactionOptions struct {
 	// any concurrent updates that have occurred since that snapshot. Consequently,
 	// in contrast to `SERIALIZABLE` transactions, only write-write conflicts are
 	// detected in snapshot transactions. This isolation level does not support
-	// Read-only and Partitioned DML transactions. When `REPEATABLE_READ` is
+	// read-only and partitioned DML transactions. When `REPEATABLE_READ` is
 	// specified on a read-write transaction, the locking semantics default to
 	// `OPTIMISTIC`.
 	IsolationLevel string `json:"isolationLevel,omitempty"`
@@ -8497,9 +8598,9 @@ func (c *ProjectsInstanceConfigsOperationsListCall) PageToken(pageToken string) 
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsInstanceConfigsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsInstanceConfigsOperationsListCall {
@@ -8978,9 +9079,9 @@ func (c *ProjectsInstanceConfigsSsdCachesOperationsListCall) PageToken(pageToken
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsInstanceConfigsSsdCachesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsInstanceConfigsSsdCachesOperationsListCall {
@@ -11893,9 +11994,9 @@ func (c *ProjectsInstancesBackupsOperationsListCall) PageToken(pageToken string)
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsInstancesBackupsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsInstancesBackupsOperationsListCall {
@@ -15379,9 +15480,9 @@ func (c *ProjectsInstancesDatabasesOperationsListCall) PageToken(pageToken strin
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsInstancesDatabasesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsInstancesDatabasesOperationsListCall {
@@ -18709,9 +18810,9 @@ func (c *ProjectsInstancesInstancePartitionsOperationsListCall) PageToken(pageTo
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsInstancesInstancePartitionsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsInstancesInstancePartitionsOperationsListCall {
@@ -19190,9 +19291,9 @@ func (c *ProjectsInstancesOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsInstancesOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsInstancesOperationsListCall {

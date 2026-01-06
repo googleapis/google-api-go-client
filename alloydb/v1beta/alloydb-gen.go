@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -374,6 +374,7 @@ type Backup struct {
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
 	//   "POSTGRES_17" - The database version is Postgres 17.
+	//   "POSTGRES_18" - The database version is Postgres 18.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// DeleteTime: Output only. Delete time stamp
 	DeleteTime string `json:"deleteTime,omitempty"`
@@ -769,6 +770,7 @@ type Cluster struct {
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
 	//   "POSTGRES_17" - The database version is Postgres 17.
+	//   "POSTGRES_18" - The database version is Postgres 18.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// DataplexConfig: Optional. Configuration for Dataplex integration.
 	DataplexConfig *DataplexConfig `json:"dataplexConfig,omitempty"`
@@ -872,6 +874,9 @@ type Cluster struct {
 	// performs maintenance and upgrades on customer clusters. Updates on the
 	// cluster are not allowed while the cluster is in this state.
 	//   "PROMOTING" - The cluster is being promoted.
+	//   "SWITCHOVER" - The cluster has entered switchover state. All updates on
+	// cluster and its associated instances are restricted while the cluster is in
+	// this state.
 	State string `json:"state,omitempty"`
 	// SubscriptionType: Optional. Subscription type of the cluster.
 	//
@@ -936,6 +941,7 @@ type ClusterUpgradeDetails struct {
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
 	//   "POSTGRES_17" - The database version is Postgres 17.
+	//   "POSTGRES_18" - The database version is Postgres 18.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// InstanceUpgradeDetails: Upgrade details of the instances directly associated
 	// with this cluster.
@@ -1984,6 +1990,8 @@ type Instance struct {
 	//   "BOOTSTRAPPING" - The instance has been configured to sync data from some
 	// other source.
 	//   "PROMOTING" - The instance is being promoted.
+	//   "SWITCHOVER" - The instance has entered switchover state. All updates on
+	// instance are restricted while the instance is in this state.
 	State string `json:"state,omitempty"`
 	// Uid: Output only. The system-generated UID of the resource. The UID is
 	// assigned when the resource is created, and it is retained until it is
@@ -2234,8 +2242,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3633,6 +3641,49 @@ func (s StorageDatabasecenterPartnerapiV1mainBackupRun) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// StorageDatabasecenterPartnerapiV1mainBigQueryResourceMetadata:
+// BigQueryResourceMetadata contains information about the BigQuery resource.
+// Next ID: 9
+type StorageDatabasecenterPartnerapiV1mainBigQueryResourceMetadata struct {
+	// CreateTime: The creation time of the resource, i.e. the time when resource
+	// is created and recorded in partner service.
+	CreateTime string `json:"createTime,omitempty"`
+	// FullResourceName: Required. Full resource name of this instance.
+	FullResourceName string `json:"fullResourceName,omitempty"`
+	// Location: Required. location of the resource
+	Location string `json:"location,omitempty"`
+	// Product: The product this resource represents.
+	Product *StorageDatabasecenterProtoCommonProduct `json:"product,omitempty"`
+	// ResourceContainer: Closest parent Cloud Resource Manager container of this
+	// resource. It must be resource name of a Cloud Resource Manager project with
+	// the format of "/", such as "projects/123". For GCP provided resources,
+	// number should be project number.
+	ResourceContainer string `json:"resourceContainer,omitempty"`
+	// ResourceId: Required. Database resource id.
+	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
+	// UpdateTime: The time at which the resource was updated and recorded at
+	// partner service.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// UserLabelSet: User-provided labels associated with the resource
+	UserLabelSet *StorageDatabasecenterPartnerapiV1mainUserLabels `json:"userLabelSet,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StorageDatabasecenterPartnerapiV1mainBigQueryResourceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainBigQueryResourceMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // StorageDatabasecenterPartnerapiV1mainCompliance: Contains compliance
 // information about a security standard indicating unmet recommendations.
 type StorageDatabasecenterPartnerapiV1mainCompliance struct {
@@ -3687,6 +3738,8 @@ type StorageDatabasecenterPartnerapiV1mainConfigBasedSignalData struct {
 	// all incoming connections to use SSL or not.
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Represents if a resource version is in
 	// extended support.
+	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource has no
+	// automated backup policy.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3740,6 +3793,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	// BackupdrMetadata: BackupDR metadata is used to ingest metadata from
 	// BackupDR.
 	BackupdrMetadata *StorageDatabasecenterPartnerapiV1mainBackupDRMetadata `json:"backupdrMetadata,omitempty"`
+	// BigqueryResourceMetadata: For BigQuery resource metadata.
+	BigqueryResourceMetadata *StorageDatabasecenterPartnerapiV1mainBigQueryResourceMetadata `json:"bigqueryResourceMetadata,omitempty"`
 	// ConfigBasedSignalData: Config based signal data is used to ingest signals
 	// that are generated based on the configuration of the database resource.
 	ConfigBasedSignalData *StorageDatabasecenterPartnerapiV1mainConfigBasedSignalData `json:"configBasedSignalData,omitempty"`
@@ -3760,6 +3815,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	//   "CONFIG_BASED_SIGNAL_DATA" - Database config based signal data
 	//   "BACKUPDR_METADATA" - Database resource metadata from BackupDR
 	//   "DATABASE_RESOURCE_SIGNAL_DATA" - Database resource signal data
+	//   "BIGQUERY_RESOURCE_METADATA" - BigQuery resource metadata
 	FeedType                 string                                                                         `json:"feedType,omitempty"`
 	ObservabilityMetricData  *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData                  `json:"observabilityMetricData,omitempty"`
 	RecommendationSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData `json:"recommendationSignalData,omitempty"`
@@ -4158,10 +4214,10 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceId struct {
 	ProviderDescription string `json:"providerDescription,omitempty"`
 	// ResourceType: Required. The type of resource this ID is identifying. Ex
 	// go/keep-sorted start alloydb.googleapis.com/Cluster,
-	// alloydb.googleapis.com/Instance, bigtableadmin.googleapis.com/Cluster,
-	// bigtableadmin.googleapis.com/Instance compute.googleapis.com/Instance
-	// firestore.googleapis.com/Database, redis.googleapis.com/Instance,
-	// redis.googleapis.com/Cluster,
+	// alloydb.googleapis.com/Instance, bigquery.googleapis.com/Dataset,
+	// bigtableadmin.googleapis.com/Cluster, bigtableadmin.googleapis.com/Instance
+	// compute.googleapis.com/Instance firestore.googleapis.com/Database,
+	// redis.googleapis.com/Instance, redis.googleapis.com/Cluster,
 	// oracledatabase.googleapis.com/CloudExadataInfrastructure
 	// oracledatabase.googleapis.com/CloudVmCluster
 	// oracledatabase.googleapis.com/AutonomousDatabase
@@ -4668,6 +4724,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData struct {
 	// all incoming connections to use SSL or not.
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Represents if a resource version is in
 	// extended support.
+	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource has no
+	// automated backup policy.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5322,6 +5380,7 @@ type SupportedDatabaseFlag struct {
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
 	//   "POSTGRES_17" - The database version is Postgres 17.
+	//   "POSTGRES_18" - The database version is Postgres 18.
 	SupportedDbVersions []string `json:"supportedDbVersions,omitempty"`
 	// Possible values:
 	//   "VALUE_TYPE_UNSPECIFIED" - This is an unknown flag type.
@@ -5495,6 +5554,7 @@ type UpgradeClusterRequest struct {
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
 	//   "POSTGRES_17" - The database version is Postgres 17.
+	//   "POSTGRES_18" - The database version is Postgres 18.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5567,6 +5627,7 @@ type UpgradeClusterStatus struct {
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
 	//   "POSTGRES_17" - The database version is Postgres 17.
+	//   "POSTGRES_18" - The database version is Postgres 18.
 	SourceVersion string `json:"sourceVersion,omitempty"`
 	// Stages: Status of all upgrade stages.
 	Stages []*StageStatus `json:"stages,omitempty"`
@@ -5591,6 +5652,7 @@ type UpgradeClusterStatus struct {
 	//   "POSTGRES_15" - The database version is Postgres 15.
 	//   "POSTGRES_16" - The database version is Postgres 16.
 	//   "POSTGRES_17" - The database version is Postgres 17.
+	//   "POSTGRES_18" - The database version is Postgres 18.
 	TargetVersion string `json:"targetVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cancellable") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10609,9 +10671,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

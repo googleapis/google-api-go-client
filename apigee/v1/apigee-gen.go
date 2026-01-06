@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -184,6 +184,7 @@ type HybridIssuersService struct {
 func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs := &OrganizationsService{s: s}
 	rs.Analytics = NewOrganizationsAnalyticsService(s)
+	rs.ApimServiceExtensions = NewOrganizationsApimServiceExtensionsService(s)
 	rs.Apiproducts = NewOrganizationsApiproductsService(s)
 	rs.Apis = NewOrganizationsApisService(s)
 	rs.Appgroups = NewOrganizationsAppgroupsService(s)
@@ -218,6 +219,8 @@ type OrganizationsService struct {
 	s *Service
 
 	Analytics *OrganizationsAnalyticsService
+
+	ApimServiceExtensions *OrganizationsApimServiceExtensionsService
 
 	Apiproducts *OrganizationsApiproductsService
 
@@ -292,6 +295,15 @@ func NewOrganizationsAnalyticsDatastoresService(s *Service) *OrganizationsAnalyt
 }
 
 type OrganizationsAnalyticsDatastoresService struct {
+	s *Service
+}
+
+func NewOrganizationsApimServiceExtensionsService(s *Service) *OrganizationsApimServiceExtensionsService {
+	rs := &OrganizationsApimServiceExtensionsService{s: s}
+	return rs
+}
+
+type OrganizationsApimServiceExtensionsService struct {
 	s *Service
 }
 
@@ -412,6 +424,8 @@ type OrganizationsApisRevisionsDeploymentsService struct {
 func NewOrganizationsAppgroupsService(s *Service) *OrganizationsAppgroupsService {
 	rs := &OrganizationsAppgroupsService{s: s}
 	rs.Apps = NewOrganizationsAppgroupsAppsService(s)
+	rs.Balance = NewOrganizationsAppgroupsBalanceService(s)
+	rs.Subscriptions = NewOrganizationsAppgroupsSubscriptionsService(s)
 	return rs
 }
 
@@ -419,6 +433,10 @@ type OrganizationsAppgroupsService struct {
 	s *Service
 
 	Apps *OrganizationsAppgroupsAppsService
+
+	Balance *OrganizationsAppgroupsBalanceService
+
+	Subscriptions *OrganizationsAppgroupsSubscriptionsService
 }
 
 func NewOrganizationsAppgroupsAppsService(s *Service) *OrganizationsAppgroupsAppsService {
@@ -451,6 +469,24 @@ func NewOrganizationsAppgroupsAppsKeysApiproductsService(s *Service) *Organizati
 }
 
 type OrganizationsAppgroupsAppsKeysApiproductsService struct {
+	s *Service
+}
+
+func NewOrganizationsAppgroupsBalanceService(s *Service) *OrganizationsAppgroupsBalanceService {
+	rs := &OrganizationsAppgroupsBalanceService{s: s}
+	return rs
+}
+
+type OrganizationsAppgroupsBalanceService struct {
+	s *Service
+}
+
+func NewOrganizationsAppgroupsSubscriptionsService(s *Service) *OrganizationsAppgroupsSubscriptionsService {
+	rs := &OrganizationsAppgroupsSubscriptionsService{s: s}
+	return rs
+}
+
+type OrganizationsAppgroupsSubscriptionsService struct {
 	s *Service
 }
 
@@ -1591,6 +1627,32 @@ func (s GoogleCloudApigeeV1AddonsConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1AdjustAppGroupBalanceRequest: Request for
+// AdjustAppGroupBalance.
+type GoogleCloudApigeeV1AdjustAppGroupBalanceRequest struct {
+	// Adjustment: Required. * A positive value of `adjustment` means that that the
+	// API provider wants to adjust the balance for an under-charged AppGroup i.e.
+	// the balance of the AppGroup will decrease. * A negative value of
+	// `adjustment` is not supported. Use credit balance API instead.
+	Adjustment *GoogleTypeMoney `json:"adjustment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Adjustment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Adjustment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1AdjustAppGroupBalanceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1AdjustAppGroupBalanceRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1AdjustDeveloperBalanceRequest: Request for
 // AdjustDeveloperBalance.
 type GoogleCloudApigeeV1AdjustDeveloperBalanceRequest struct {
@@ -1951,19 +2013,21 @@ func (s GoogleCloudApigeeV1ApiDoc) MarshalJSON() ([]byte, error) {
 // GoogleCloudApigeeV1ApiDocDocumentation: The documentation for a catalog
 // item.
 type GoogleCloudApigeeV1ApiDocDocumentation struct {
+	// AsyncApiDocumentation: Optional. AsyncAPI Specification documentation.
+	AsyncApiDocumentation *GoogleCloudApigeeV1AsyncApiDocumentation `json:"asyncApiDocumentation,omitempty"`
 	// GraphqlDocumentation: Optional. GraphQL documentation.
 	GraphqlDocumentation *GoogleCloudApigeeV1GraphqlDocumentation `json:"graphqlDocumentation,omitempty"`
 	// OasDocumentation: Optional. OpenAPI Specification documentation.
 	OasDocumentation *GoogleCloudApigeeV1OASDocumentation `json:"oasDocumentation,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GraphqlDocumentation") to
+	// ForceSendFields is a list of field names (e.g. "AsyncApiDocumentation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GraphqlDocumentation") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AsyncApiDocumentation") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2110,6 +2174,27 @@ type GoogleCloudApigeeV1ApiProduct struct {
 	// LastModifiedAt: Response only. Modified time of this environment as
 	// milliseconds since epoch.
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
+	// LlmOperationGroup: Optional. Configuration used to group Apigee proxies with
+	// resources, method types, LLM model and quotas. The resource refers to the
+	// resource URI (excluding the base path). With this grouping, the API product
+	// creator is able to fine-tune and give precise control over which REST
+	// methods have access to specific resources, specific LLM model and how many
+	// calls can be made (using the `quota` setting). **Note:** The `api_resources`
+	// setting cannot be specified for both the API product and llm operation
+	// group; otherwise the call will fail.
+	LlmOperationGroup *GoogleCloudApigeeV1LlmOperationGroup `json:"llmOperationGroup,omitempty"`
+	// LlmQuota: Optional. Number of LLM tokens permitted per app by this API
+	// product for the specified `llm_quota_interval` and `llm_quota_time_unit`.
+	// For example, an `llm_quota` of 50,000, for an `llm_quota_interval` of 12 and
+	// an `llm_quota_time_unit` of hours means 50,000 llm tokens are allowed to be
+	// used every 12 hours.
+	LlmQuota string `json:"llmQuota,omitempty"`
+	// LlmQuotaInterval: Optional. Time interval over which the number of tokens
+	// from LLM responses is calculated.
+	LlmQuotaInterval string `json:"llmQuotaInterval,omitempty"`
+	// LlmQuotaTimeUnit: Optional. Time unit defined for the `llm_quota_interval`.
+	// Valid values include `minute`, `hour`, `day`, or `month`.
+	LlmQuotaTimeUnit string `json:"llmQuotaTimeUnit,omitempty"`
 	// Name: Internal name of the API product. Characters you can use in the name
 	// are restricted to: `A-Z0-9._\-$ %`. **Note:** The internal name cannot be
 	// edited when updating the API product.
@@ -2439,6 +2524,147 @@ func (s GoogleCloudApigeeV1ApiSecurityRuntimeConfig) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ApimServiceExtension: APIM Service Extension is a
+// resource under an Apigee Organization that is used to create APIM Service
+// Extension to route traffic to existing X instances.
+type GoogleCloudApigeeV1ApimServiceExtension struct {
+	// CreateTime: Output only. The time that this resource was created on the
+	// server.
+	CreateTime string `json:"createTime,omitempty"`
+	// ExtensionProcessor: Required. Name of the proxy deployed in the Apigee X
+	// instance.
+	ExtensionProcessor string `json:"extensionProcessor,omitempty"`
+	// Extensions: Optional. List of extensions that are part of the service
+	// extension. Refer to
+	// https://cloud.google.com/service-extensions/docs/quotas#limits for any
+	// limits.
+	Extensions []*GoogleCloudApigeeV1ApimServiceExtensionExtension `json:"extensions,omitempty"`
+	// LbForwardingRule: Required. Name of the Google Cloud LB forwarding rule.
+	// Format:
+	// projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}
+	// projects/{project}/global/forwardingRules/{forwarding_rule}
+	LbForwardingRule string `json:"lbForwardingRule,omitempty"`
+	// Name: Identifier. unique name of the APIM service extension. The name must
+	// conform with RFC-1034, is restricted to lower-cased letters, numbers and
+	// hyphens, and can have a maximum length of 63 characters. Additionally, the
+	// first character must be a letter and the last a letter or a number.
+	Name string `json:"name,omitempty"`
+	// Network: Required. The network where the forwarding rule is created. Format:
+	// projects/{project}/global/networks/{network}
+	Network string `json:"network,omitempty"`
+	// NetworkConfigs: Required. List of network configurations for the APIM
+	// service extension.
+	NetworkConfigs []*GoogleCloudApigeeV1ApimServiceExtensionNetworkConfig `json:"networkConfigs,omitempty"`
+	// State: Output only. State of the APIM service extension. Values other than
+	// `ACTIVE` mean the resource is not ready to use.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Resource is in an unspecified state.
+	//   "CREATING" - Resource is being created.
+	//   "ACTIVE" - Resource is provisioned and ready to use.
+	//   "DELETING" - The resource is being deleted.
+	//   "UPDATING" - The resource is being updated.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The time that this resource was updated on the
+	// server.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1ApimServiceExtension) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ApimServiceExtension
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ApimServiceExtensionExtension: Extension configuration
+// for Apigee extension processor service extension.
+type GoogleCloudApigeeV1ApimServiceExtensionExtension struct {
+	// FailOpen: Optional. Whether this request should fail open.
+	FailOpen bool `json:"failOpen,omitempty"`
+	// Hostname: Required. One of the hostnames of Apigee EnvGroup where the proxy
+	// is deployed. This hostname (i.e FDQN) will be used to route traffic from the
+	// specified forwarding rule to the environment in Apigee X instance where the
+	// proxy is deployed for handling extension traffic. Format: ^([a-zA-Z0-9.
+	// _-])+$
+	Hostname string `json:"hostname,omitempty"`
+	// MatchCondition: Optional. Match Condition for CEL expression. Refer to
+	// https://cloud.google.com/service-extensions/docs/cel-matcher-language-reference
+	// for more details.
+	MatchCondition string `json:"matchCondition,omitempty"`
+	// Name: Required. Name of the `LbTrafficExtension` resource. The name must
+	// conform with RFC-1034, is restricted to lower-cased letters, numbers and
+	// hyphens, and can have a maximum length of 63 characters. Additionally, the
+	// first character must be a letter and the last a letter or a number.
+	Name string `json:"name,omitempty"`
+	// SupportedEvents: Optional. Supported events for the Service Extension. If
+	// not specified, all events are supported.
+	//
+	// Possible values:
+	//   "SUPPORTED_EVENT_UNSPECIFIED" - Unspecified event.
+	//   "REQUEST_HEADERS" - Request headers event.
+	//   "REQUEST_BODY" - Request body event.
+	//   "RESPONSE_HEADERS" - Response headers event.
+	//   "RESPONSE_BODY" - Response body event.
+	//   "REQUEST_TRAILERS" - Request trailers event.
+	//   "RESPONSE_TRAILERS" - Response trailers event.
+	SupportedEvents []string `json:"supportedEvents,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FailOpen") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailOpen") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1ApimServiceExtensionExtension) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ApimServiceExtensionExtension
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ApimServiceExtensionNetworkConfig: Network configuration
+// for the APIM service extension.
+type GoogleCloudApigeeV1ApimServiceExtensionNetworkConfig struct {
+	// Region: Required. The region for the PSC NEG.
+	Region string `json:"region,omitempty"`
+	// Subnet: Required. The subnet for the PSC NEG. Format:
+	// projects/{project}/regions/{region}/subnetworks/{subnet}
+	Subnet string `json:"subnet,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Region") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Region") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1ApimServiceExtensionNetworkConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ApimServiceExtensionNetworkConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudApigeeV1App struct {
 	// ApiProducts: List of API products associated with the app.
 	ApiProducts []*GoogleCloudApigeeV1ApiProductRef `json:"apiProducts,omitempty"`
@@ -2514,6 +2740,8 @@ type GoogleCloudApigeeV1AppGroup struct {
 	CreatedAt int64 `json:"createdAt,omitempty,string"`
 	// DisplayName: app group name displayed in the UI
 	DisplayName string `json:"displayName,omitempty"`
+	// Email: Optional. Email of the AppGroup.
+	Email string `json:"email,omitempty"`
 	// LastModifiedAt: Output only. Modified time as milliseconds since epoch.
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
 	// Name: Immutable. Name of the AppGroup. Characters you can use in the name
@@ -2656,6 +2884,132 @@ func (s GoogleCloudApigeeV1AppGroupAppKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1AppGroupBalance: AppGroupBalance for the AppGroup.
+type GoogleCloudApigeeV1AppGroupBalance struct {
+	// Wallets: Output only. List of all wallets. Each individual wallet stores the
+	// account balance for a particular currency.
+	Wallets []*GoogleCloudApigeeV1AppGroupBalanceWallet `json:"wallets,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Wallets") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Wallets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1AppGroupBalance) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1AppGroupBalance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1AppGroupBalanceWallet: Wallet used to manage an account
+// balance for a particular currency.
+type GoogleCloudApigeeV1AppGroupBalanceWallet struct {
+	// Balance: Current remaining balance of the AppGroup for a particular
+	// currency.
+	Balance *GoogleTypeMoney `json:"balance,omitempty"`
+	// LastCreditTime: Output only. Time at which the AppGroup last added credit to
+	// the account in milliseconds since epoch.
+	LastCreditTime int64 `json:"lastCreditTime,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Balance") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Balance") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1AppGroupBalanceWallet) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1AppGroupBalanceWallet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1AppGroupMonetizationConfig: Monetization configuration
+// for the AppGroup.
+type GoogleCloudApigeeV1AppGroupMonetizationConfig struct {
+	// BillingType: Required. Billing type.
+	//
+	// Possible values:
+	//   "BILLING_TYPE_UNSPECIFIED" - The default/unset value.
+	//   "PREPAID" - AppGroup pays in advance for the use of APIs and the charged
+	// amount is deducted from their account balance.
+	//   "POSTPAID" - AppGroup does not maintain an account balance. The API
+	// provider bills the AppGroup for API usage.
+	BillingType string `json:"billingType,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BillingType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BillingType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1AppGroupMonetizationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1AppGroupMonetizationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1AppGroupSubscription: AppGroup Subscription details.
+type GoogleCloudApigeeV1AppGroupSubscription struct {
+	// Apiproduct: Required. Name of the API product for which the appgroup is
+	// purchasing a subscription.
+	Apiproduct string `json:"apiproduct,omitempty"`
+	// CreatedAt: Output only. Time when the API product subscription was created
+	// in milliseconds since epoch.
+	CreatedAt int64 `json:"createdAt,omitempty,string"`
+	// EndTime: Output only. Time when the API product subscription ends in
+	// milliseconds since epoch.
+	EndTime int64 `json:"endTime,omitempty,string"`
+	// LastModifiedAt: Output only. Time when the API product subscription was last
+	// modified in milliseconds since epoch.
+	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
+	// Name: Output only. Name of the API product subscription.
+	Name string `json:"name,omitempty"`
+	// StartTime: Output only. Time when the API product subscription starts in
+	// milliseconds since epoch.
+	StartTime int64 `json:"startTime,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Apiproduct") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Apiproduct") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1AppGroupSubscription) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1AppGroupSubscription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1ArchiveDeployment: Archive Deployment information.
 type GoogleCloudApigeeV1ArchiveDeployment struct {
 	// CreatedAt: Output only. The time at which the Archive Deployment was created
@@ -2700,6 +3054,30 @@ type GoogleCloudApigeeV1ArchiveDeployment struct {
 
 func (s GoogleCloudApigeeV1ArchiveDeployment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ArchiveDeployment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1AsyncApiDocumentation: AsyncAPI Specification
+// documentation for a catalog item.
+type GoogleCloudApigeeV1AsyncApiDocumentation struct {
+	// Spec: Required. The documentation file contents for the AsyncAPI
+	// Specification. JSON and YAML file formats are supported.
+	Spec *GoogleCloudApigeeV1DocumentationFile `json:"spec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Spec") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Spec") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1AsyncApiDocumentation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1AsyncApiDocumentation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3503,6 +3881,38 @@ type GoogleCloudApigeeV1Credential struct {
 
 func (s GoogleCloudApigeeV1Credential) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Credential
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1CreditAppGroupBalanceRequest: Request for
+// CreditAppGroupBalance.
+type GoogleCloudApigeeV1CreditAppGroupBalanceRequest struct {
+	// TransactionAmount: Required. The amount of money to be credited. The wallet
+	// corresponding to the currency specified within `transaction_amount` will be
+	// updated. For example, if you specified `currency_code` within
+	// `transaction_amount` as "USD", then the amount would be added to the wallet
+	// which has the "USD" currency or if no such wallet exists, a new wallet will
+	// be created with the "USD" currency.
+	TransactionAmount *GoogleTypeMoney `json:"transactionAmount,omitempty"`
+	// TransactionId: Required. Each transaction_id uniquely identifies a credit
+	// balance request. If multiple requests are received with the same
+	// transaction_id, only one of them will be considered.
+	TransactionId string `json:"transactionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TransactionAmount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TransactionAmount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1CreditAppGroupBalanceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1CreditAppGroupBalanceRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4750,6 +5160,9 @@ type GoogleCloudApigeeV1EndpointAttachment struct {
 	// serve traffic.
 	//   "NEEDS_ATTENTION" - The connection has been accepted by the PSC producer,
 	// but it is not ready to serve the traffic due to producer side issues.
+	//   "ACCEPTED_LIMITED_CAPACITY" - The connection has been accepted by the PSC
+	// producer, but it will only serve capacity limited traffic. The producer
+	// needs to take further actions to increase capacity for this connection.
 	ConnectionState string `json:"connectionState,omitempty"`
 	// Host: Output only. Host that can be used in either the HTTP target endpoint
 	// directly or as the host in target server.
@@ -5272,6 +5685,11 @@ type GoogleCloudApigeeV1EnvironmentGroupConfig struct {
 func (s GoogleCloudApigeeV1EnvironmentGroupConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1EnvironmentGroupConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ExpireAppGroupSubscriptionRequest: Request for
+// ExpireAppGroupSubscription.
+type GoogleCloudApigeeV1ExpireAppGroupSubscriptionRequest struct {
 }
 
 // GoogleCloudApigeeV1ExpireDeveloperSubscriptionRequest: Request for
@@ -6109,6 +6527,9 @@ type GoogleCloudApigeeV1KeyValueMap struct {
 	// of encrypted will always be `true`. Apigee X and hybrid do not support
 	// unencrypted key value maps.
 	Encrypted bool `json:"encrypted,omitempty"`
+	// MaskedValues: Optional. Flag that specifies whether entry values will be
+	// masked when returned.
+	MaskedValues bool `json:"maskedValues,omitempty"`
 	// Name: Required. ID of the key value map.
 	Name string `json:"name,omitempty"`
 
@@ -6331,6 +6752,36 @@ func (s GoogleCloudApigeeV1ListApiProxiesResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ListApimServiceExtensionsResponse: Response for list
+// service extensions.
+type GoogleCloudApigeeV1ListApimServiceExtensionsResponse struct {
+	// ApimServiceExtensions: service extension in a given organization.
+	ApimServiceExtensions []*GoogleCloudApigeeV1ApimServiceExtension `json:"apimServiceExtensions,omitempty"`
+	// NextPageToken: Page token that you can include in an
+	// `ListApimServiceExtensions` request to retrieve the next page. If omitted,
+	// no subsequent pages exist.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ApimServiceExtensions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApimServiceExtensions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1ListApimServiceExtensionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListApimServiceExtensionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1ListAppGroupAppsResponse: Response for ListAppGroupApps
 type GoogleCloudApigeeV1ListAppGroupAppsResponse struct {
 	// AppGroupApps: List of AppGroup apps and their credentials.
@@ -6356,6 +6807,35 @@ type GoogleCloudApigeeV1ListAppGroupAppsResponse struct {
 
 func (s GoogleCloudApigeeV1ListAppGroupAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListAppGroupAppsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ListAppGroupSubscriptionsResponse: Response for
+// ListAppGroupSubscriptions.
+type GoogleCloudApigeeV1ListAppGroupSubscriptionsResponse struct {
+	// AppGroupSubscriptions: The list of subscriptions for an AppGroup.
+	AppGroupSubscriptions []*GoogleCloudApigeeV1AppGroupSubscription `json:"appGroupSubscriptions,omitempty"`
+	// NextPageToken: Value that can be sent as `pageToken` to retrieve the next
+	// page of content. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AppGroupSubscriptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppGroupSubscriptions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1ListAppGroupSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListAppGroupSubscriptionsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7362,6 +7842,131 @@ type GoogleCloudApigeeV1ListTraceConfigOverridesResponse struct {
 
 func (s GoogleCloudApigeeV1ListTraceConfigOverridesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListTraceConfigOverridesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1LlmOperation: Represents the pairing of REST resource
+// path, model and the actions (verbs) allowed on the resource path.
+type GoogleCloudApigeeV1LlmOperation struct {
+	// Methods: Optional. methods refers to the REST verbs as in
+	// https://httpwg.org/specs/rfc9110.html For example: GET, POST, PUT, DELETE,
+	// etc. They need to be in uppercase. When none specified, all verb types are
+	// allowed.
+	Methods []string `json:"methods,omitempty"`
+	// Model: Required. LLM model name associated with the API proxy
+	Model string `json:"model,omitempty"`
+	// Resource: Required. REST resource path associated with the API proxy or
+	// remote service.
+	Resource string `json:"resource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Methods") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Methods") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1LlmOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1LlmOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1LlmOperationConfig: Binds the resources in an API proxy
+// or remote service with the allowed REST methods and associated quota
+// enforcement.
+type GoogleCloudApigeeV1LlmOperationConfig struct {
+	// ApiSource: Required. Name of the API proxy or remote service with which the
+	// resources, methods, and quota are associated.
+	ApiSource string `json:"apiSource,omitempty"`
+	// Attributes: Optional. Custom attributes associated with the operation.
+	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
+	// LlmOperations: Required. List of resource/method/model for the API proxy to
+	// which quota will applied. **Note**: Currently, you can specify only a single
+	// resource/method/model mapping. The call will fail if more than one
+	// resource/method/model mappings are provided.
+	LlmOperations []*GoogleCloudApigeeV1LlmOperation `json:"llmOperations,omitempty"`
+	// LlmTokenQuota: Required. LLM token Quota parameters to be enforced for the
+	// resources, methods, and API source & LLM model combination. If none are
+	// specified, quota enforcement will not be done.
+	LlmTokenQuota *GoogleCloudApigeeV1LlmTokenQuota `json:"llmTokenQuota,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiSource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1LlmOperationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1LlmOperationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1LlmOperationGroup: List of LLM operation configuration
+// details associated with Apigee API proxies.
+type GoogleCloudApigeeV1LlmOperationGroup struct {
+	// OperationConfigs: Required. List of LLM operation configurations for either
+	// Apigee API proxies that are associated with this API product.
+	OperationConfigs []*GoogleCloudApigeeV1LlmOperationConfig `json:"operationConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OperationConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OperationConfigs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1LlmOperationGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1LlmOperationGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1LlmTokenQuota: LLM Token Quota contains the essential
+// parameters needed that can be applied on the resources, methods, models, API
+// source combination associated with this API product. While LLM Token Quota
+// is optional, setting it prevents requests from exceeding the provisioned
+// parameters.
+type GoogleCloudApigeeV1LlmTokenQuota struct {
+	// Interval: Required. Time interval over which the number of request messages
+	// is calculated.
+	Interval string `json:"interval,omitempty"`
+	// Limit: Required. Upper limit of LLM tokens allowed for the time interval and
+	// time unit specified. Requests exceeding this limit will be rejected.
+	Limit string `json:"limit,omitempty"`
+	// TimeUnit: Optional. Time unit defined for the `interval`. Valid values
+	// include `minute`, `hour`, `day`, or `month`. If `limit` and `interval` are
+	// valid, the default value is `hour`; otherwise, the default is null.
+	TimeUnit string `json:"timeUnit,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Interval") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Interval") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1LlmTokenQuota) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1LlmTokenQuota
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12448,8 +13053,8 @@ type GoogleLongrunningListOperationsResponse struct {
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -15240,6 +15845,602 @@ func (c *OrganizationsAnalyticsDatastoresUpdateCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.analytics.datastores.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsApimServiceExtensionsCreateCall struct {
+	s                                       *Service
+	parent                                  string
+	googlecloudapigeev1apimserviceextension *GoogleCloudApigeeV1ApimServiceExtension
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// Create: Creates an APIM ServiceExtension in an organization.
+//
+//   - parent: Name of the organization in which the service extension will be
+//     created. Use the following structure in your request:
+//     `organizations/{org}`.
+func (r *OrganizationsApimServiceExtensionsService) Create(parent string, googlecloudapigeev1apimserviceextension *GoogleCloudApigeeV1ApimServiceExtension) *OrganizationsApimServiceExtensionsCreateCall {
+	c := &OrganizationsApimServiceExtensionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1apimserviceextension = googlecloudapigeev1apimserviceextension
+	return c
+}
+
+// ApimServiceExtensionId sets the optional parameter "apimServiceExtensionId":
+// ID used to uniquely identify of the service extension. It must conform with
+// RFC-1034, is restricted to lower-cased letters, numbers and hyphens, and can
+// have a maximum length of 63 characters. Additionally, the first character
+// must be a letter and the last a letter or a number.
+func (c *OrganizationsApimServiceExtensionsCreateCall) ApimServiceExtensionId(apimServiceExtensionId string) *OrganizationsApimServiceExtensionsCreateCall {
+	c.urlParams_.Set("apimServiceExtensionId", apimServiceExtensionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsApimServiceExtensionsCreateCall) Fields(s ...googleapi.Field) *OrganizationsApimServiceExtensionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsApimServiceExtensionsCreateCall) Context(ctx context.Context) *OrganizationsApimServiceExtensionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsApimServiceExtensionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsApimServiceExtensionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1apimserviceextension)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apimServiceExtensions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.apimServiceExtensions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.apimServiceExtensions.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsApimServiceExtensionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.apimServiceExtensions.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsApimServiceExtensionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes APIM service extension from an organization.
+//
+//   - name: Name of the service extension. Use the following structure in your
+//     request: `organizations/{org}/apimServiceExtensions/{extension_id}`.
+func (r *OrganizationsApimServiceExtensionsService) Delete(name string) *OrganizationsApimServiceExtensionsDeleteCall {
+	c := &OrganizationsApimServiceExtensionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsApimServiceExtensionsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsApimServiceExtensionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsApimServiceExtensionsDeleteCall) Context(ctx context.Context) *OrganizationsApimServiceExtensionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsApimServiceExtensionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsApimServiceExtensionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.apimServiceExtensions.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.apimServiceExtensions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsApimServiceExtensionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.apimServiceExtensions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsApimServiceExtensionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets APIM service extension details.
+//
+//   - name: Name of the service extension. Use the following structure in your
+//     request: `organizations/{org}/apimServiceExtensions/{extension_id}`.
+func (r *OrganizationsApimServiceExtensionsService) Get(name string) *OrganizationsApimServiceExtensionsGetCall {
+	c := &OrganizationsApimServiceExtensionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsApimServiceExtensionsGetCall) Fields(s ...googleapi.Field) *OrganizationsApimServiceExtensionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsApimServiceExtensionsGetCall) IfNoneMatch(entityTag string) *OrganizationsApimServiceExtensionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsApimServiceExtensionsGetCall) Context(ctx context.Context) *OrganizationsApimServiceExtensionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsApimServiceExtensionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsApimServiceExtensionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.apimServiceExtensions.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.apimServiceExtensions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1ApimServiceExtension.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsApimServiceExtensionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApimServiceExtension, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ApimServiceExtension{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.apimServiceExtensions.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsApimServiceExtensionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all APIM service extensions in an organization.
+//
+//   - parent: Name of the organization for which to list the service extension.
+//     Use the following structure in your request:
+//     `organizations/{org}/apimServiceExtensions`.
+func (r *OrganizationsApimServiceExtensionsService) List(parent string) *OrganizationsApimServiceExtensionsListCall {
+	c := &OrganizationsApimServiceExtensionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return. If unspecified, at most 25 service extension will be returned.
+func (c *OrganizationsApimServiceExtensionsListCall) PageSize(pageSize int64) *OrganizationsApimServiceExtensionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token, returned from
+// a previous `ListApimServiceExtensions` call, that you can use to retrieve
+// the next page.
+func (c *OrganizationsApimServiceExtensionsListCall) PageToken(pageToken string) *OrganizationsApimServiceExtensionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsApimServiceExtensionsListCall) Fields(s ...googleapi.Field) *OrganizationsApimServiceExtensionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsApimServiceExtensionsListCall) IfNoneMatch(entityTag string) *OrganizationsApimServiceExtensionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsApimServiceExtensionsListCall) Context(ctx context.Context) *OrganizationsApimServiceExtensionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsApimServiceExtensionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsApimServiceExtensionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apimServiceExtensions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.apimServiceExtensions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.apimServiceExtensions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1ListApimServiceExtensionsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsApimServiceExtensionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListApimServiceExtensionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ListApimServiceExtensionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.apimServiceExtensions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsApimServiceExtensionsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListApimServiceExtensionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsApimServiceExtensionsPatchCall struct {
+	s                                       *Service
+	name                                    string
+	googlecloudapigeev1apimserviceextension *GoogleCloudApigeeV1ApimServiceExtension
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// Patch: Updates an APIM service extension in an organization.
+//
+//   - name: Identifier. unique name of the APIM service extension. The name must
+//     conform with RFC-1034, is restricted to lower-cased letters, numbers and
+//     hyphens, and can have a maximum length of 63 characters. Additionally, the
+//     first character must be a letter and the last a letter or a number.
+func (r *OrganizationsApimServiceExtensionsService) Patch(name string, googlecloudapigeev1apimserviceextension *GoogleCloudApigeeV1ApimServiceExtension) *OrganizationsApimServiceExtensionsPatchCall {
+	c := &OrganizationsApimServiceExtensionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1apimserviceextension = googlecloudapigeev1apimserviceextension
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to true, and
+// the service extension is not found, a new service extension will be created.
+// In this situation, `update_mask` is ignored.
+func (c *OrganizationsApimServiceExtensionsPatchCall) AllowMissing(allowMissing bool) *OrganizationsApimServiceExtensionsPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *OrganizationsApimServiceExtensionsPatchCall) UpdateMask(updateMask string) *OrganizationsApimServiceExtensionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsApimServiceExtensionsPatchCall) Fields(s ...googleapi.Field) *OrganizationsApimServiceExtensionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsApimServiceExtensionsPatchCall) Context(ctx context.Context) *OrganizationsApimServiceExtensionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsApimServiceExtensionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsApimServiceExtensionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1apimserviceextension)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.apimServiceExtensions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.apimServiceExtensions.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsApimServiceExtensionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.apimServiceExtensions.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20008,6 +21209,229 @@ func (c *OrganizationsAppgroupsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	return ret, nil
 }
 
+type OrganizationsAppgroupsGetBalanceCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetBalance: Gets the account balance for the AppGroup.
+//
+//   - name: Account balance for the AppGroup. Use the following structure in
+//     your request: `organizations/{org}/appgroups/{app_group}/balance`.
+func (r *OrganizationsAppgroupsService) GetBalance(name string) *OrganizationsAppgroupsGetBalanceCall {
+	c := &OrganizationsAppgroupsGetBalanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsAppgroupsGetBalanceCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsGetBalanceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsAppgroupsGetBalanceCall) IfNoneMatch(entityTag string) *OrganizationsAppgroupsGetBalanceCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsAppgroupsGetBalanceCall) Context(ctx context.Context) *OrganizationsAppgroupsGetBalanceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsAppgroupsGetBalanceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsGetBalanceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.getBalance", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.getBalance" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroupBalance.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsGetBalanceCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupBalance, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupBalance{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.getBalance", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsAppgroupsGetMonetizationConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetMonetizationConfig: Gets the monetization configuration for the AppGroup.
+//
+//   - name: Monetization configuration for the AppGroup. Use the following
+//     structure in your request:
+//     `organizations/{org}/appgroups/{app_group}/monetizationConfig`.
+func (r *OrganizationsAppgroupsService) GetMonetizationConfig(name string) *OrganizationsAppgroupsGetMonetizationConfigCall {
+	c := &OrganizationsAppgroupsGetMonetizationConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsAppgroupsGetMonetizationConfigCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsGetMonetizationConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsAppgroupsGetMonetizationConfigCall) IfNoneMatch(entityTag string) *OrganizationsAppgroupsGetMonetizationConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsAppgroupsGetMonetizationConfigCall) Context(ctx context.Context) *OrganizationsAppgroupsGetMonetizationConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsAppgroupsGetMonetizationConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsGetMonetizationConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.getMonetizationConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.getMonetizationConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroupMonetizationConfig.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsGetMonetizationConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupMonetizationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupMonetizationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.getMonetizationConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type OrganizationsAppgroupsListCall struct {
 	s            *Service
 	parent       string
@@ -20280,6 +21704,113 @@ func (c *OrganizationsAppgroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsAppgroupsUpdateMonetizationConfigCall struct {
+	s                                             *Service
+	name                                          string
+	googlecloudapigeev1appgroupmonetizationconfig *GoogleCloudApigeeV1AppGroupMonetizationConfig
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// UpdateMonetizationConfig: Updates the monetization configuration for the
+// AppGroup.
+//
+//   - name: Monetization configuration for the AppGroup. Use the following
+//     structure in your request:
+//     `organizations/{org}/appgroups/{app_group}/monetizationConfig`.
+func (r *OrganizationsAppgroupsService) UpdateMonetizationConfig(name string, googlecloudapigeev1appgroupmonetizationconfig *GoogleCloudApigeeV1AppGroupMonetizationConfig) *OrganizationsAppgroupsUpdateMonetizationConfigCall {
+	c := &OrganizationsAppgroupsUpdateMonetizationConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1appgroupmonetizationconfig = googlecloudapigeev1appgroupmonetizationconfig
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsAppgroupsUpdateMonetizationConfigCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsUpdateMonetizationConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsAppgroupsUpdateMonetizationConfigCall) Context(ctx context.Context) *OrganizationsAppgroupsUpdateMonetizationConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsAppgroupsUpdateMonetizationConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsUpdateMonetizationConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1appgroupmonetizationconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.updateMonetizationConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.updateMonetizationConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroupMonetizationConfig.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsUpdateMonetizationConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupMonetizationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupMonetizationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.updateMonetizationConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21537,6 +23068,691 @@ func (c *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProduct
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.apps.keys.apiproducts.updateAppGroupAppKeyApiProduct", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type OrganizationsAppgroupsBalanceAdjustCall struct {
+	s                                               *Service
+	name                                            string
+	googlecloudapigeev1adjustappgroupbalancerequest *GoogleCloudApigeeV1AdjustAppGroupBalanceRequest
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+	header_                                         http.Header
+}
+
+// Adjust: Adjust the prepaid balance for the AppGroup. This API will be used
+// in scenarios where the AppGroup has been under-charged or over-charged.
+//
+//   - name: Account balance for the AppGroup. Use the following structure in
+//     your request: `organizations/{org}/appgroups/{app_group}/balance`.
+func (r *OrganizationsAppgroupsBalanceService) Adjust(name string, googlecloudapigeev1adjustappgroupbalancerequest *GoogleCloudApigeeV1AdjustAppGroupBalanceRequest) *OrganizationsAppgroupsBalanceAdjustCall {
+	c := &OrganizationsAppgroupsBalanceAdjustCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1adjustappgroupbalancerequest = googlecloudapigeev1adjustappgroupbalancerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsAppgroupsBalanceAdjustCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsBalanceAdjustCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsAppgroupsBalanceAdjustCall) Context(ctx context.Context) *OrganizationsAppgroupsBalanceAdjustCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsAppgroupsBalanceAdjustCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsBalanceAdjustCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1adjustappgroupbalancerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:adjust")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.balance.adjust", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.balance.adjust" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroupBalance.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsBalanceAdjustCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupBalance, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupBalance{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.balance.adjust", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsAppgroupsBalanceCreditCall struct {
+	s                                               *Service
+	name                                            string
+	googlecloudapigeev1creditappgroupbalancerequest *GoogleCloudApigeeV1CreditAppGroupBalanceRequest
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+	header_                                         http.Header
+}
+
+// Credit: Credits the account balance for the AppGroup.
+//
+//   - name: Account balance for the AppGroup. Use the following structure in
+//     your request: `organizations/{org}/appgroups/{app_group}/balance`.
+func (r *OrganizationsAppgroupsBalanceService) Credit(name string, googlecloudapigeev1creditappgroupbalancerequest *GoogleCloudApigeeV1CreditAppGroupBalanceRequest) *OrganizationsAppgroupsBalanceCreditCall {
+	c := &OrganizationsAppgroupsBalanceCreditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1creditappgroupbalancerequest = googlecloudapigeev1creditappgroupbalancerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsAppgroupsBalanceCreditCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsBalanceCreditCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsAppgroupsBalanceCreditCall) Context(ctx context.Context) *OrganizationsAppgroupsBalanceCreditCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsAppgroupsBalanceCreditCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsBalanceCreditCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1creditappgroupbalancerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:credit")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.balance.credit", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.balance.credit" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroupBalance.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsBalanceCreditCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupBalance, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupBalance{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.balance.credit", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsAppgroupsSubscriptionsCreateCall struct {
+	s                                       *Service
+	parent                                  string
+	googlecloudapigeev1appgroupsubscription *GoogleCloudApigeeV1AppGroupSubscription
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// Create: Creates a subscription to an API product.
+//
+//   - parent: Name of the appgroup that is purchasing a subscription to the API
+//     product. Use the following structure in your request:
+//     `organizations/{org}/appgroups/{appgroup}`.
+func (r *OrganizationsAppgroupsSubscriptionsService) Create(parent string, googlecloudapigeev1appgroupsubscription *GoogleCloudApigeeV1AppGroupSubscription) *OrganizationsAppgroupsSubscriptionsCreateCall {
+	c := &OrganizationsAppgroupsSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1appgroupsubscription = googlecloudapigeev1appgroupsubscription
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsAppgroupsSubscriptionsCreateCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsSubscriptionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsAppgroupsSubscriptionsCreateCall) Context(ctx context.Context) *OrganizationsAppgroupsSubscriptionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsAppgroupsSubscriptionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1appgroupsubscription)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/subscriptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.subscriptions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.subscriptions.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroupSubscription.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupSubscription, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupSubscription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.subscriptions.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsAppgroupsSubscriptionsExpireCall struct {
+	s                                                    *Service
+	name                                                 string
+	googlecloudapigeev1expireappgroupsubscriptionrequest *GoogleCloudApigeeV1ExpireAppGroupSubscriptionRequest
+	urlParams_                                           gensupport.URLParams
+	ctx_                                                 context.Context
+	header_                                              http.Header
+}
+
+// Expire: Expires an API product subscription immediately.
+//
+//   - name: Name of the API product subscription. Use the following structure in
+//     your request:
+//     `organizations/{org}/appgroups/{appgroup}/subscriptions/{subscription}`.
+func (r *OrganizationsAppgroupsSubscriptionsService) Expire(name string, googlecloudapigeev1expireappgroupsubscriptionrequest *GoogleCloudApigeeV1ExpireAppGroupSubscriptionRequest) *OrganizationsAppgroupsSubscriptionsExpireCall {
+	c := &OrganizationsAppgroupsSubscriptionsExpireCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1expireappgroupsubscriptionrequest = googlecloudapigeev1expireappgroupsubscriptionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsAppgroupsSubscriptionsExpireCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsSubscriptionsExpireCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsAppgroupsSubscriptionsExpireCall) Context(ctx context.Context) *OrganizationsAppgroupsSubscriptionsExpireCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsAppgroupsSubscriptionsExpireCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsSubscriptionsExpireCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapigeev1expireappgroupsubscriptionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:expire")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.subscriptions.expire", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.subscriptions.expire" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroupSubscription.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsSubscriptionsExpireCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupSubscription, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupSubscription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.subscriptions.expire", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsAppgroupsSubscriptionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get an api product subscription for an appgroup.
+//
+//   - name: The name of the AppGroupSubscription to retrieve. Format:
+//     `organizations/{org}/appgroups/{appgroup}/subscriptions/{subscription}`.
+func (r *OrganizationsAppgroupsSubscriptionsService) Get(name string) *OrganizationsAppgroupsSubscriptionsGetCall {
+	c := &OrganizationsAppgroupsSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsAppgroupsSubscriptionsGetCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsSubscriptionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsAppgroupsSubscriptionsGetCall) IfNoneMatch(entityTag string) *OrganizationsAppgroupsSubscriptionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsAppgroupsSubscriptionsGetCall) Context(ctx context.Context) *OrganizationsAppgroupsSubscriptionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsAppgroupsSubscriptionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.subscriptions.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.subscriptions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroupSubscription.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupSubscription, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupSubscription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.subscriptions.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsAppgroupsSubscriptionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List all api product subscriptions for an appgroup.
+//
+//   - parent: Name of the appgroup. Use the following structure in your request:
+//     `organizations/{org}/appgroups/{appgroup}`.
+func (r *OrganizationsAppgroupsSubscriptionsService) List(parent string) *OrganizationsAppgroupsSubscriptionsListCall {
+	c := &OrganizationsAppgroupsSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// subscriptions to return. The service may return fewer than this value. If
+// unspecified, at most 100 subscriptions will be returned. The maximum value
+// is 1000; values above 1000 will be coerced to 1000.
+func (c *OrganizationsAppgroupsSubscriptionsListCall) PageSize(pageSize int64) *OrganizationsAppgroupsSubscriptionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAppGroupSubscriptions` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListAppGroupSubscriptions` must match the call that provided the page
+// token.
+func (c *OrganizationsAppgroupsSubscriptionsListCall) PageToken(pageToken string) *OrganizationsAppgroupsSubscriptionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsAppgroupsSubscriptionsListCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsSubscriptionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsAppgroupsSubscriptionsListCall) IfNoneMatch(entityTag string) *OrganizationsAppgroupsSubscriptionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsAppgroupsSubscriptionsListCall) Context(ctx context.Context) *OrganizationsAppgroupsSubscriptionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsAppgroupsSubscriptionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/subscriptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.subscriptions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.subscriptions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1ListAppGroupSubscriptionsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsSubscriptionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListAppGroupSubscriptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ListAppGroupSubscriptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.appgroups.subscriptions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsAppgroupsSubscriptionsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListAppGroupSubscriptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type OrganizationsAppsGetCall struct {
@@ -39312,7 +41528,7 @@ type OrganizationsEnvironmentsSecurityActionsDeleteCall struct {
 
 // Delete: Delete a SecurityAction.
 //
-//   - name: The name of the security monitoring condition to delete. Format:
+//   - name: The name of the security action to delete. Format:
 //     `organizations/{org}/environment/{env}/securityActions/{security_action}`.
 func (r *OrganizationsEnvironmentsSecurityActionsService) Delete(name string) *OrganizationsEnvironmentsSecurityActionsDeleteCall {
 	c := &OrganizationsEnvironmentsSecurityActionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -47731,9 +49947,9 @@ func (c *OrganizationsOperationsListCall) PageToken(pageToken string) *Organizat
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *OrganizationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OrganizationsOperationsListCall {

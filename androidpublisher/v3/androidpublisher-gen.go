@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1376,9 +1376,10 @@ func (s AssetSliceSet) MarshalJSON() ([]byte, error) {
 // AutoRenewingBasePlanType: Represents a base plan that automatically renews
 // at the end of its subscription period.
 type AutoRenewingBasePlanType struct {
-	// AccountHoldDuration: Optional. Account hold period of the subscription,
-	// specified in ISO 8601 format. Acceptable values must be in days and between
-	// P0D and P60D. If not specified, the default value is P30D. The sum of
+	// AccountHoldDuration: Optional. Custom account hold period of the
+	// subscription, specified in ISO 8601 format. Acceptable values must be in
+	// days and between P0D and P60D. An empty field represents a recommended
+	// account hold, calculated as 60 days minus grace period. The sum of
 	// gracePeriodDuration and accountHoldDuration must be between P30D and P60D
 	// days, inclusive.
 	AccountHoldDuration string `json:"accountHoldDuration,omitempty"`
@@ -3620,6 +3621,55 @@ func (s ExternalAccountIds) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExternalOfferDetails: Reporting details unique to the external offers
+// program.
+type ExternalOfferDetails struct {
+	// AppDownloadEventExternalTransactionId: Optional. The external transaction id
+	// associated with the app download event through an external link. Required
+	// when reporting transactions made in externally installed apps.
+	AppDownloadEventExternalTransactionId string `json:"appDownloadEventExternalTransactionId,omitempty"`
+	// InstalledAppCategory: Optional. The category of the downloaded app though
+	// this transaction. This must match the category provided in Play Console
+	// during the external app verification process. Only required for app
+	// downloads.
+	//
+	// Possible values:
+	//   "EXTERNAL_OFFER_APP_CATEGORY_UNSPECIFIED" - Unspecified, do not use.
+	//   "APP" - The app is classified under the app category.
+	//   "GAME" - The app is classified under the game category.
+	InstalledAppCategory string `json:"installedAppCategory,omitempty"`
+	// InstalledAppPackage: Optional. The package name of the app downloaded
+	// through this transaction. Required when link_type is LINK_TO_APP_DOWNLOAD.
+	InstalledAppPackage string `json:"installedAppPackage,omitempty"`
+	// LinkType: Optional. The type of content being reported by this transaction.
+	// Required when reporting app downloads or purchased digital content offers
+	// made in app installed through Google Play.
+	//
+	// Possible values:
+	//   "EXTERNAL_OFFER_LINK_TYPE_UNSPECIFIED" - Unspecified, do not use.
+	//   "LINK_TO_DIGITAL_CONTENT_OFFER" - An offer to purchase digital content.
+	//   "LINK_TO_APP_DOWNLOAD" - An app install.
+	LinkType string `json:"linkType,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AppDownloadEventExternalTransactionId") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "AppDownloadEventExternalTransactionId") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExternalOfferDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalOfferDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExternalSubscription: Details of an external subscription.
 type ExternalSubscription struct {
 	// SubscriptionType: Required. The type of the external subscription.
@@ -3661,6 +3711,9 @@ type ExternalTransaction struct {
 	// current tax amount including any refunds that may have been applied to this
 	// transaction.
 	CurrentTaxAmount *Price `json:"currentTaxAmount,omitempty"`
+	// ExternalOfferDetails: Optional. Details necessary to accurately report
+	// external offers transactions.
+	ExternalOfferDetails *ExternalOfferDetails `json:"externalOfferDetails,omitempty"`
 	// ExternalTransactionId: Output only. The id of this transaction. All
 	// transaction ids under the same package name must be unique. Set when
 	// creating the external transaction.
@@ -4619,9 +4672,10 @@ func (s InstallmentPlan) MarshalJSON() ([]byte, error) {
 // InstallmentsBasePlanType: Represents an installments base plan where a user
 // commits to a specified number of payments.
 type InstallmentsBasePlanType struct {
-	// AccountHoldDuration: Optional. Account hold period of the subscription,
-	// specified in ISO 8601 format. Acceptable values must be in days and between
-	// P0D and P60D. If not specified, the default value is P30D. The sum of
+	// AccountHoldDuration: Optional. Custom account hold period of the
+	// subscription, specified in ISO 8601 format. Acceptable values must be in
+	// days and between P0D and P60D. An empty field represents a recommended
+	// account hold, calculated as 60 days minus grace period. The sum of
 	// gracePeriodDuration and accountHoldDuration must be between P30D and P60D
 	// days, inclusive.
 	AccountHoldDuration string `json:"accountHoldDuration,omitempty"`
@@ -5177,6 +5231,12 @@ type ManagedProductTaxAndComplianceSettings struct {
 	// IsTokenizedDigitalAsset: Whether this in-app product is declared as a
 	// product representing a tokenized digital asset.
 	IsTokenizedDigitalAsset bool `json:"isTokenizedDigitalAsset,omitempty"`
+	// ProductTaxCategoryCode: Product tax category code to assign to the in-app
+	// product. Product tax category determines the transaction tax rates applied
+	// to the product. Refer to the Help Center article
+	// (https://support.google.com/googleplay/android-developer/answer/16408159)
+	// for more information.
+	ProductTaxCategoryCode string `json:"productTaxCategoryCode,omitempty"`
 	// TaxRateInfoByRegionCode: A mapping from region code to tax rate details. The
 	// keys are region codes as defined by Unicode's "CLDR".
 	TaxRateInfoByRegionCode map[string]RegionalTaxRateInfo `json:"taxRateInfoByRegionCode,omitempty"`
@@ -5987,6 +6047,12 @@ type OneTimeProductTaxAndComplianceSettings struct {
 	// IsTokenizedDigitalAsset: Whether this one-time product is declared as a
 	// product representing a tokenized digital asset.
 	IsTokenizedDigitalAsset bool `json:"isTokenizedDigitalAsset,omitempty"`
+	// ProductTaxCategoryCode: Product tax category code to assign to the one-time
+	// product. Product tax category determines the transaction tax rates applied
+	// to the product. Refer to the Help Center article
+	// (https://support.google.com/googleplay/android-developer/answer/16408159)
+	// for more information.
+	ProductTaxCategoryCode string `json:"productTaxCategoryCode,omitempty"`
 	// RegionalTaxConfigs: Regional tax configuration.
 	RegionalTaxConfigs []*RegionalTaxConfig `json:"regionalTaxConfigs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IsTokenizedDigitalAsset") to
@@ -6957,11 +7023,6 @@ func (s ProductPurchasesAcknowledgeRequest) MarshalJSON() ([]byte, error) {
 // information, see Rules applicable for items in the purchase
 // (https://developer.android.com/google/play/billing/subscription-with-addons#rules-base-addons)).
 type ProrationPeriodDetails struct {
-	// LinkedOrderId: The last order id of the original subscription purchase prior
-	// to the plan change. This is only populated if this proration period is from
-	// an ugrade/downgrade from a previous subscription and carries the remaining
-	// offer phase from the linked order of the previous subscription.
-	LinkedOrderId string `json:"linkedOrderId,omitempty"`
 	// OriginalOfferPhase: Represent the original offer phase from the purchased
 	// the line item if the proration period contains any of them. For example, a
 	// proration period from CHARGE_FULL_PRICE plan change may merge the 1st offer
@@ -6975,15 +7036,15 @@ type ProrationPeriodDetails struct {
 	//   "INTRODUCTORY" - The order funds an introductory pricing period.
 	//   "FREE_TRIAL" - The order funds a free trial period.
 	OriginalOfferPhase string `json:"originalOfferPhase,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LinkedOrderId") to
+	// ForceSendFields is a list of field names (e.g. "OriginalOfferPhase") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LinkedOrderId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "OriginalOfferPhase") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -8939,6 +9000,12 @@ type SubscriptionTaxAndComplianceSettings struct {
 	// IsTokenizedDigitalAsset: Whether this subscription is declared as a product
 	// representing a tokenized digital asset.
 	IsTokenizedDigitalAsset bool `json:"isTokenizedDigitalAsset,omitempty"`
+	// ProductTaxCategoryCode: Product tax category code to assign to the
+	// subscription. Product tax category determines the transaction tax rates
+	// applied to the subscription. Refer to the Help Center article
+	// (https://support.google.com/googleplay/android-developer/answer/16408159)
+	// for more information.
+	ProductTaxCategoryCode string `json:"productTaxCategoryCode,omitempty"`
 	// TaxRateInfoByRegionCode: A mapping from region code to tax rate details. The
 	// keys are region codes as defined by Unicode's "CLDR".
 	TaxRateInfoByRegionCode map[string]RegionalTaxRateInfo `json:"taxRateInfoByRegionCode,omitempty"`

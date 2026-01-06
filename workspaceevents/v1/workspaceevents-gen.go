@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -359,6 +359,25 @@ func (s AuthenticationInfo) MarshalJSON() ([]byte, error) {
 }
 
 type CancelTaskRequest struct {
+	// Tenant: Optional tenant, provided as a path parameter. Experimental, might
+	// still change for 1.0 release.
+	Tenant string `json:"tenant,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Tenant") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Tenant") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CancelTaskRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelTaskRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DataPart: DataPart represents a structured blob. This is most commonly a
@@ -746,6 +765,9 @@ type SendMessageRequest struct {
 	Message *Message `json:"message,omitempty"`
 	// Metadata: Optional metadata for the request.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+	// Tenant: Optional tenant, provided as a path parameter. Experimental, might
+	// still change for 1.0 release.
+	Tenant string `json:"tenant,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Configuration") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2240,6 +2262,13 @@ func (c *TasksGetCall) HistoryLength(historyLength int64) *TasksGetCall {
 	return c
 }
 
+// Tenant sets the optional parameter "tenant": Optional tenant, provided as a
+// path parameter. Experimental, might still change for 1.0 release.
+func (c *TasksGetCall) Tenant(tenant string) *TasksGetCall {
+	c.urlParams_.Set("tenant", tenant)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -2350,6 +2379,13 @@ type TasksSubscribeCall struct {
 func (r *TasksService) Subscribe(name string) *TasksSubscribeCall {
 	c := &TasksSubscribeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// Tenant sets the optional parameter "tenant": Optional tenant, provided as a
+// path parameter. Experimental, might still change for 1.0 release.
+func (c *TasksSubscribeCall) Tenant(tenant string) *TasksSubscribeCall {
+	c.urlParams_.Set("tenant", tenant)
 	return c
 }
 
@@ -2470,6 +2506,13 @@ func (c *TasksPushNotificationConfigsCreateCall) ConfigId(configId string) *Task
 	return c
 }
 
+// Tenant sets the optional parameter "tenant": Optional tenant, provided as a
+// path parameter. Experimental, might still change for 1.0 release.
+func (c *TasksPushNotificationConfigsCreateCall) Tenant(tenant string) *TasksPushNotificationConfigsCreateCall {
+	c.urlParams_.Set("tenant", tenant)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -2573,6 +2616,13 @@ func (r *TasksPushNotificationConfigsService) Delete(name string) *TasksPushNoti
 	return c
 }
 
+// Tenant sets the optional parameter "tenant": Optional tenant, provided as a
+// path parameter. Experimental, might still change for 1.0 release.
+func (c *TasksPushNotificationConfigsDeleteCall) Tenant(tenant string) *TasksPushNotificationConfigsDeleteCall {
+	c.urlParams_.Set("tenant", tenant)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -2669,6 +2719,13 @@ type TasksPushNotificationConfigsGetCall struct {
 func (r *TasksPushNotificationConfigsService) Get(name string) *TasksPushNotificationConfigsGetCall {
 	c := &TasksPushNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// Tenant sets the optional parameter "tenant": Optional tenant, provided as a
+// path parameter. Experimental, might still change for 1.0 release.
+func (c *TasksPushNotificationConfigsGetCall) Tenant(tenant string) *TasksPushNotificationConfigsGetCall {
+	c.urlParams_.Set("tenant", tenant)
 	return c
 }
 
@@ -2797,6 +2854,13 @@ func (c *TasksPushNotificationConfigsListCall) PageSize(pageSize int64) *TasksPu
 // the page token.
 func (c *TasksPushNotificationConfigsListCall) PageToken(pageToken string) *TasksPushNotificationConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Tenant sets the optional parameter "tenant": Optional tenant, provided as a
+// path parameter. Experimental, might still change for 1.0 release.
+func (c *TasksPushNotificationConfigsListCall) Tenant(tenant string) *TasksPushNotificationConfigsListCall {
+	c.urlParams_.Set("tenant", tenant)
 	return c
 }
 

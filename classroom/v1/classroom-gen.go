@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -4026,8 +4026,8 @@ func (r *CoursesService) Patch(id string, course *Course) *CoursesPatchCall {
 // UpdateMask sets the optional parameter "updateMask": Mask that identifies
 // which fields on the course to update. This field is required to do an
 // update. The update will fail if invalid fields are specified. The following
-// fields are valid: * `name` * `section` * `descriptionHeading` *
-// `description` * `room` * `courseState` * `ownerId` Note: patches to ownerId
+// fields are valid: * `courseState` * `description` * `descriptionHeading` *
+// `name` * `ownerId` * `room` * `section` * `subject` Note: patches to ownerId
 // are treated as being effective immediately, but in practice it may take some
 // time for the ownership transfer of all affected resources to complete. When
 // set in a query parameter, this field should be specified as

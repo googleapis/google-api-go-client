@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -633,7 +633,8 @@ type BrowserInfo struct {
 	// (https://chromeenterprise.google/policies/#OnBulkDataEntryEnterpriseConnector).
 	// Set to true if provider list from Chrome is non-empty.
 	IsBulkDataEntryAnalysisEnabled bool `json:"isBulkDataEntryAnalysisEnabled,omitempty"`
-	// IsChromeCleanupEnabled: Current state of Chrome Cleanup
+	// IsChromeCleanupEnabled: Deprecated: This field is not used for Chrome
+	// version 118 and later. Current state of Chrome Cleanup
 	// (https://chromeenterprise.google/policies/#ChromeCleanupEnabled).
 	IsChromeCleanupEnabled bool `json:"isChromeCleanupEnabled,omitempty"`
 	// IsChromeRemoteDesktopAppBlocked: Current state of Chrome Remote Desktop app
@@ -1783,7 +1784,8 @@ type GoogleAppsCloudidentityDevicesV1BrowserInfo struct {
 	// (https://chromeenterprise.google/policies/#OnBulkDataEntryEnterpriseConnector).
 	// Set to true if provider list from Chrome is non-empty.
 	IsBulkDataEntryAnalysisEnabled bool `json:"isBulkDataEntryAnalysisEnabled,omitempty"`
-	// IsChromeCleanupEnabled: Current state of Chrome Cleanup
+	// IsChromeCleanupEnabled: Deprecated: This field is not used for Chrome
+	// version 118 and later. Current state of Chrome Cleanup
 	// (https://chromeenterprise.google/policies/#ChromeCleanupEnabled).
 	IsChromeCleanupEnabled bool `json:"isChromeCleanupEnabled,omitempty"`
 	// IsChromeRemoteDesktopAppBlocked: Current state of Chrome Remote Desktop app

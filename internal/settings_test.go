@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"testing"
 
+	"cloud.google.com/go/auth"
 	"google.golang.org/api/internal/impersonate"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -28,8 +29,12 @@ func TestSettingsValidate(t *testing.T) {
 		{Scopes: []string{"s"}},
 		{CredentialsFile: "f"},
 		{TokenSource: dummyTS{}},
-		{CredentialsFile: "f", TokenSource: dummyTS{}}, // keep for backwards compatibility
+		{Credentials: &google.DefaultCredentials{}, AuthCredentials: &auth.Credentials{}}, // Support old auth to new auth automatic conversions
+		{CredentialsFile: "f", AuthCredentials: &auth.Credentials{}},                      // Support old auth to new auth automatic conversions
+		{CredentialsFile: "f", TokenSource: dummyTS{}},                                    // keep for backwards compatibility
 		{CredentialsJSON: []byte("json")},
+		{AuthCredentialsFile: "f"},
+		{AuthCredentialsJSON: []byte("json")},
 		{HTTPClient: &http.Client{}},
 		{GRPCConn: &grpc.ClientConn{}},
 		// Although NoAuth and Scopes are technically incompatible, too many
@@ -50,13 +55,20 @@ func TestSettingsValidate(t *testing.T) {
 	for _, ds := range []DialSettings{
 		{NoAuth: true, APIKey: "x"},
 		{NoAuth: true, CredentialsFile: "f"},
+		{NoAuth: true, AuthCredentialsFile: "f"},
 		{NoAuth: true, TokenSource: dummyTS{}},
 		{NoAuth: true, Credentials: &google.DefaultCredentials{}},
+		{NoAuth: true, AuthCredentials: &auth.Credentials{}},
+		{NoAuth: true, AuthCredentialsJSON: []byte("json")},
 		{Credentials: &google.DefaultCredentials{}, CredentialsFile: "f"},
+		{Credentials: &google.DefaultCredentials{}, AuthCredentialsFile: "f"},
 		{Credentials: &google.DefaultCredentials{}, TokenSource: dummyTS{}},
 		{Credentials: &google.DefaultCredentials{}, CredentialsJSON: []byte("json")},
+		{Credentials: &google.DefaultCredentials{}, AuthCredentialsJSON: []byte("json")},
 		{CredentialsFile: "f", CredentialsJSON: []byte("json")},
+		{AuthCredentialsFile: "f", AuthCredentialsJSON: []byte("json")},
 		{CredentialsJSON: []byte("json"), TokenSource: dummyTS{}},
+		{AuthCredentialsJSON: []byte("json"), TokenSource: dummyTS{}},
 		{HTTPClient: &http.Client{}, GRPCConn: &grpc.ClientConn{}},
 		{HTTPClient: &http.Client{}, GRPCDialOpts: []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}},
 		{Audiences: []string{"foo"}, Scopes: []string{"foo"}},
@@ -80,6 +92,19 @@ func TestSettingsValidate(t *testing.T) {
 type dummyTS struct{}
 
 func (dummyTS) Token() (*oauth2.Token, error) { return nil, nil }
+
+func TestIsNewAuthLibraryEnabled(t *testing.T) {
+	for _, ds := range []DialSettings{
+		{EnableNewAuthLibrary: true},
+		{AuthCredentials: &auth.Credentials{}},
+		{AuthCredentialsJSON: []byte("json")},
+		{AuthCredentialsFile: "f"},
+	} {
+		if !ds.IsNewAuthLibraryEnabled() {
+			t.Errorf("%+v: got false, want true", ds)
+		}
+	}
+}
 
 func TestGetUniverseDomain(t *testing.T) {
 	testCases := []struct {

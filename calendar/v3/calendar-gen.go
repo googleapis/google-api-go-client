@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -429,6 +429,9 @@ func (s AclRuleScope) MarshalJSON() ([]byte, error) {
 }
 
 type Calendar struct {
+	// AutoAcceptInvitations: Whether this calendar automatically accepts
+	// invitations. Only valid for resource calendars.
+	AutoAcceptInvitations bool `json:"autoAcceptInvitations,omitempty"`
 	// ConferenceProperties: Conferencing properties for this calendar, for example
 	// what types of conferences are allowed.
 	ConferenceProperties *ConferenceProperties `json:"conferenceProperties,omitempty"`
@@ -454,15 +457,15 @@ type Calendar struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ConferenceProperties") to
+	// ForceSendFields is a list of field names (e.g. "AutoAcceptInvitations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ConferenceProperties") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutoAcceptInvitations") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -523,6 +526,9 @@ type CalendarListEntry struct {
 	// calendar has a single data owner, but can have multiple users with owner
 	// role.
 	AccessRole string `json:"accessRole,omitempty"`
+	// AutoAcceptInvitations: Whether this calendar automatically accepts
+	// invitations. Only valid for resource calendars. Read-only.
+	AutoAcceptInvitations bool `json:"autoAcceptInvitations,omitempty"`
 	// BackgroundColor: The main color of the calendar in the hexadecimal format
 	// "#0088aa". This property supersedes the index-based colorId property. To set
 	// or change this property, you need to specify colorRgbFormat=true in the

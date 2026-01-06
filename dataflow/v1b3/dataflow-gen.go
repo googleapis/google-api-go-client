@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -4821,6 +4821,9 @@ func (s RuntimeMetadata) MarshalJSON() ([]byte, error) {
 // during runtime using the projects.jobs.update method. These fields have no
 // effect when specified during job creation.
 type RuntimeUpdatableParams struct {
+	// AcceptableBacklogDuration: Optional. The backlog threshold duration in
+	// seconds for autoscaling. Value must be non-negative.
+	AcceptableBacklogDuration string `json:"acceptableBacklogDuration,omitempty"`
 	// MaxNumWorkers: The maximum number of workers to cap autoscaling at. This
 	// field is currently only supported for Streaming Engine jobs.
 	MaxNumWorkers int64 `json:"maxNumWorkers,omitempty"`
@@ -4833,15 +4836,15 @@ type RuntimeUpdatableParams struct {
 	// more information, see Update an existing pipeline
 	// (https://cloud.google.com/dataflow/docs/guides/updating-a-pipeline).
 	WorkerUtilizationHint float64 `json:"workerUtilizationHint,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MaxNumWorkers") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AcceptableBacklogDuration")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MaxNumWorkers") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AcceptableBacklogDuration") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

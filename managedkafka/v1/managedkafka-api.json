@@ -480,6 +480,21 @@
                       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                       "required": true,
                       "type": "string"
+                    },
+                    "view": {
+                      "description": "Optional. Specifies the view of the Cluster resource to be returned. Defaults to CLUSTER_VIEW_BASIC. See the ClusterView enum for possible values.",
+                      "enum": [
+                        "CLUSTER_VIEW_UNSPECIFIED",
+                        "CLUSTER_VIEW_BASIC",
+                        "CLUSTER_VIEW_FULL"
+                      ],
+                      "enumDescriptions": [
+                        "The default / unset value. The API will default to the BASIC view.",
+                        "Include the basic metadata of the Cluster. This is the default value (for both ListClusters and GetCluster).",
+                        "Include everything, including data fetched from the Kafka cluster source of truth."
+                      ],
+                      "location": "query",
+                      "type": "string"
                     }
                   },
                   "path": "v1/{+name}",
@@ -867,6 +882,21 @@
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                           "required": true,
+                          "type": "string"
+                        },
+                        "view": {
+                          "description": "Optional. Specifies the view (BASIC or FULL) of the ConsumerGroup resource to be returned in the response. Defaults to FULL view.",
+                          "enum": [
+                            "CONSUMER_GROUP_VIEW_UNSPECIFIED",
+                            "CONSUMER_GROUP_VIEW_BASIC",
+                            "CONSUMER_GROUP_VIEW_FULL"
+                          ],
+                          "enumDescriptions": [
+                            "The default / unset value. The API will default to the FULL view.",
+                            "Include the name of the ConsumerGroup. This hides partition and topic metadata.",
+                            "Include everything, including partition and topic metadata. This is the default value."
+                          ],
+                          "location": "query",
                           "type": "string"
                         }
                       },
@@ -3151,7 +3181,7 @@
       }
     }
   },
-  "revision": "20251114",
+  "revision": "20251212",
   "rootUrl": "https://managedkafka.googleapis.com/",
   "schemas": {
     "AccessConfig": {
@@ -3239,6 +3269,30 @@
         "aclCreated": {
           "description": "Whether the acl was created as a result of adding the acl entry.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "BrokerDetails": {
+      "description": "Details of a broker in the Kafka cluster.",
+      "id": "BrokerDetails",
+      "properties": {
+        "brokerIndex": {
+          "description": "Output only. The index of the broker.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
+        "nodeId": {
+          "description": "Output only. The node id of the broker.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
+        "rack": {
+          "description": "Output only. The rack of the broker.",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -3337,6 +3391,14 @@
       "description": "An Apache Kafka cluster deployed in a location.",
       "id": "Cluster",
       "properties": {
+        "brokerDetails": {
+          "description": "Output only. Only populated when FULL view is requested. Details of each broker in the cluster.",
+          "items": {
+            "$ref": "BrokerDetails"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "capacityConfig": {
           "$ref": "CapacityConfig",
           "description": "Required. Capacity configuration for the Kafka cluster."
@@ -3350,6 +3412,11 @@
         "gcpConfig": {
           "$ref": "GcpConfig",
           "description": "Required. Configuration properties for a Kafka cluster deployed to Google Cloud Platform."
+        },
+        "kafkaVersion": {
+          "description": "Output only. Only populated when FULL view is requested. The Kafka version of the cluster.",
+          "readOnly": true,
+          "type": "string"
         },
         "labels": {
           "additionalProperties": {
@@ -3525,7 +3592,8 @@
       "id": "ConnectNetworkConfig",
       "properties": {
         "additionalSubnets": {
-          "description": "Optional. Additional subnets may be specified. They may be in another region, but must be in the same VPC network. The Connect workers can communicate with network endpoints in either the primary or additional subnets.",
+          "deprecated": true,
+          "description": "Optional. Deprecated: Managed Kafka Connect clusters can now reach any endpoint accessible from the primary subnet without the need to define additional subnets. Please see https://cloud.google.com/managed-service-for-apache-kafka/docs/connect-cluster/create-connect-cluster#worker-subnet for more information.",
           "items": {
             "type": "string"
           },

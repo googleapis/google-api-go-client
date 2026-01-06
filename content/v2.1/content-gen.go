@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8884,6 +8884,8 @@ type ProductStatusDestinationStatus struct {
 	// ApprovedCountries: List of country codes (ISO 3166-1 alpha-2) where the
 	// offer is approved.
 	ApprovedCountries []string `json:"approvedCountries,omitempty"`
+	// Channel: The channel of the destination.
+	Channel string `json:"channel,omitempty"`
 	// Destination: The name of the destination
 	Destination string `json:"destination,omitempty"`
 	// DisapprovedCountries: List of country codes (ISO 3166-1 alpha-2) where the

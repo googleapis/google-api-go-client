@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -244,6 +244,9 @@ type ControlledEgressConfig struct {
 	EgressFqdns []string `json:"egressFqdns,omitempty"`
 	// MarketplaceEnabled: Optional. Whether marketplace is enabled.
 	MarketplaceEnabled bool `json:"marketplaceEnabled,omitempty"`
+	// WebProxyIps: Output only. The list of IP addresses used by Secure Web Proxy
+	// for outbound traffic.
+	WebProxyIps []string `json:"webProxyIps,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EgressFqdns") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

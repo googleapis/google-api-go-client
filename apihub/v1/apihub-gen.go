@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -479,6 +479,47 @@ type GoogleCloudApihubV1ActionExecutionDetail struct {
 
 func (s GoogleCloudApihubV1ActionExecutionDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApihubV1ActionExecutionDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1AdditionalSpecContent: The additional spec content for
+// the spec. This contains the metadata and the last update time for the
+// additional spec content.
+type GoogleCloudApihubV1AdditionalSpecContent struct {
+	// CreateTime: Output only. The time at which the spec content was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Labels: Optional. The labels of the spec content e.g. specboost addon
+	// version.
+	Labels map[string]string `json:"labels,omitempty"`
+	// SpecContentType: Required. The type of the spec content.
+	//
+	// Possible values:
+	//   "SPEC_CONTENT_TYPE_UNSPECIFIED" - Unspecified spec content type. Defaults
+	// to spec content uploaded by the user.
+	//   "BOOSTED_SPEC_CONTENT" - The spec content type for boosted spec.
+	//   "GATEWAY_OPEN_API_SPEC" - The spec content type for OpenAPI spec. This
+	// enum is used for OpenAPI specs ingested via APIGEE X Gateway.
+	SpecContentType string `json:"specContentType,omitempty"`
+	// SpecContents: Optional. The additional spec contents.
+	SpecContents *GoogleCloudApihubV1SpecContents `json:"specContents,omitempty"`
+	// UpdateTime: Output only. The time at which the spec content was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1AdditionalSpecContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1AdditionalSpecContent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -982,6 +1023,30 @@ type GoogleCloudApihubV1ApiOperation struct {
 
 func (s GoogleCloudApihubV1ApiOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApihubV1ApiOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1ApiView: The view of an API.
+type GoogleCloudApihubV1ApiView struct {
+	// McpServerView: Output only. MCP server view.
+	McpServerView *GoogleCloudApihubV1FlattenedApiVersionDeploymentView `json:"mcpServerView,omitempty"`
+	// McpToolView: Output only. MCP tools view.
+	McpToolView *GoogleCloudApihubV1FlattenedApiVersionOperationDeploymentView `json:"mcpToolView,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "McpServerView") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "McpServerView") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1ApiView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1ApiView
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2367,6 +2432,90 @@ func (s GoogleCloudApihubV1ExternalApi) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApihubV1FetchAdditionalSpecContentResponse: The
+// FetchAdditionalSpecContent method's response.
+type GoogleCloudApihubV1FetchAdditionalSpecContentResponse struct {
+	// AdditionalSpecContent: The additional spec content.
+	AdditionalSpecContent *GoogleCloudApihubV1AdditionalSpecContent `json:"additionalSpecContent,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalSpecContent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalSpecContent") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1FetchAdditionalSpecContentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1FetchAdditionalSpecContentResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1FlattenedApiVersionDeploymentView: A flattened view of an
+// API, its version and one of the linked deployments.
+type GoogleCloudApihubV1FlattenedApiVersionDeploymentView struct {
+	// Api: The API.
+	Api *GoogleCloudApihubV1Api `json:"api,omitempty"`
+	// Deployment: The deployment.
+	Deployment *GoogleCloudApihubV1Deployment `json:"deployment,omitempty"`
+	// Version: The version.
+	Version *GoogleCloudApihubV1Version `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Api") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Api") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1FlattenedApiVersionDeploymentView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1FlattenedApiVersionDeploymentView
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1FlattenedApiVersionOperationDeploymentView: A flattened
+// view of an API, its version, one of its operations and one of the linked
+// deployments. If there are no deployments linked to the operation then the
+// result will be empty.
+type GoogleCloudApihubV1FlattenedApiVersionOperationDeploymentView struct {
+	// Api: The API.
+	Api *GoogleCloudApihubV1Api `json:"api,omitempty"`
+	// ApiOperation: The API operation.
+	ApiOperation *GoogleCloudApihubV1ApiOperation `json:"apiOperation,omitempty"`
+	// Deployment: The deployment.
+	Deployment *GoogleCloudApihubV1Deployment `json:"deployment,omitempty"`
+	// Version: The version.
+	Version *GoogleCloudApihubV1Version `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Api") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Api") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1FlattenedApiVersionOperationDeploymentView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1FlattenedApiVersionOperationDeploymentView
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApihubV1GatewayPluginAddonConfig: Configuration for gateway
 // plugin addons. This is used to specify the list of gateway plugin configs
 // for which the addon is enabled.
@@ -2722,6 +2871,10 @@ type GoogleCloudApihubV1LastExecution struct {
 	//   "SUCCEEDED" - The plugin instance executed successfully.
 	//   "FAILED" - The plugin instance execution failed.
 	Result string `json:"result,omitempty"`
+	// ResultMetadata: Output only. The result metadata of the last execution of
+	// the plugin instance. This will be a string representation of a JSON object
+	// and will be available on successful execution.
+	ResultMetadata string `json:"resultMetadata,omitempty"`
 	// StartTime: Output only. The last execution start time of the plugin
 	// instance.
 	StartTime string `json:"startTime,omitempty"`
@@ -3405,6 +3558,41 @@ func (s GoogleCloudApihubV1MatchResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApihubV1McpTool: Details describing an MCP Tool.
+type GoogleCloudApihubV1McpTool struct {
+	// Annotations: Optional. Optional annotations for the tool.
+	Annotations *GoogleCloudApihubV1ToolAnnotations `json:"annotations,omitempty"`
+	// Description: Optional. Description of what the tool does.
+	Description string `json:"description,omitempty"`
+	// InputSchema: Optional. Input schema for the operation. This can be parsed
+	// only from MCP schema type.
+	InputSchema *GoogleCloudApihubV1OperationSchema `json:"inputSchema,omitempty"`
+	// Name: Required. The name of the tool, unique within its parent scope
+	// (version).
+	Name string `json:"name,omitempty"`
+	// OutputSchema: Optional. Output schema for the operation. This can be parsed
+	// only from MCP schema type.
+	OutputSchema *GoogleCloudApihubV1OperationSchema `json:"outputSchema,omitempty"`
+	// Title: Optional. Optional title for the tool.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1McpTool) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1McpTool
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApihubV1MultiIntValues: The config variable value of data type
 // multi int.
 type GoogleCloudApihubV1MultiIntValues struct {
@@ -3554,6 +3742,8 @@ type GoogleCloudApihubV1OperationDetails struct {
 	Documentation *GoogleCloudApihubV1Documentation `json:"documentation,omitempty"`
 	// HttpOperation: The HTTP Operation.
 	HttpOperation *GoogleCloudApihubV1HttpOperation `json:"httpOperation,omitempty"`
+	// McpTool: The MCP Tool Operation.
+	McpTool *GoogleCloudApihubV1McpTool `json:"mcpTool,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Deprecated") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3608,6 +3798,30 @@ type GoogleCloudApihubV1OperationMetadata struct {
 
 func (s GoogleCloudApihubV1OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApihubV1OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1OperationSchema: The operation schema needed for an
+// operation.
+type GoogleCloudApihubV1OperationSchema struct {
+	// JsonSchema: The JSON schema. Only valid JSON is accepted but semantic
+	// validation of schema is not supported right now.
+	JsonSchema googleapi.RawMessage `json:"jsonSchema,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "JsonSchema") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "JsonSchema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1OperationSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1OperationSchema
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4173,6 +4387,34 @@ func (s GoogleCloudApihubV1ResourceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApihubV1RetrieveApiViewsResponse: The RetrieveApiViews method's
+// response.
+type GoogleCloudApihubV1RetrieveApiViewsResponse struct {
+	// ApiViews: The list of API views.
+	ApiViews []*GoogleCloudApihubV1ApiView `json:"apiViews,omitempty"`
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ApiViews") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiViews") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1RetrieveApiViewsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1RetrieveApiViewsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApihubV1RuntimeProjectAttachment: Runtime project attachment
 // represents an attachment from the runtime project to the host project. Api
 // Hub looks for deployments in the attached runtime projects and creates
@@ -4443,6 +4685,9 @@ func (s GoogleCloudApihubV1SourceMetadata) MarshalJSON() ([]byte, error) {
 // the API Hub. Note that specs of various types can be uploaded, however
 // parsing of details is supported for OpenAPI spec currently.
 type GoogleCloudApihubV1Spec struct {
+	// AdditionalSpecContents: Output only. The additional spec contents for the
+	// spec.
+	AdditionalSpecContents []*GoogleCloudApihubV1AdditionalSpecContent `json:"additionalSpecContents,omitempty"`
 	// Attributes: Optional. The list of user defined attributes associated with
 	// the spec. The key is the attribute name. It will be of the format:
 	// `projects/{project}/locations/{location}/attributes/{attribute}`. The value
@@ -4494,15 +4739,15 @@ type GoogleCloudApihubV1Spec struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// ForceSendFields is a list of field names (e.g. "AdditionalSpecContents") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Attributes") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdditionalSpecContents") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4715,6 +4960,42 @@ type GoogleCloudApihubV1SummaryEntry struct {
 
 func (s GoogleCloudApihubV1SummaryEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApihubV1SummaryEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1ToolAnnotations: Annotations for a Tool.
+type GoogleCloudApihubV1ToolAnnotations struct {
+	// AdditionalHints: Optional. Additional hints which may help tools and not
+	// covered in defaults.
+	AdditionalHints map[string]string `json:"additionalHints,omitempty"`
+	// DestructiveHint: Optional. Hint indicating if the tool may have destructive
+	// side effects.
+	DestructiveHint bool `json:"destructiveHint,omitempty"`
+	// IdempotentHint: Optional. Hint indicating if the tool is idempotent.
+	IdempotentHint bool `json:"idempotentHint,omitempty"`
+	// OpenWorldHint: Optional. Hint indicating if the tool interacts with the open
+	// world (e.g., internet).
+	OpenWorldHint bool `json:"openWorldHint,omitempty"`
+	// ReadOnlyHint: Optional. Hint indicating if the tool is read-only.
+	ReadOnlyHint bool `json:"readOnlyHint,omitempty"`
+	// Title: Optional. A human-readable title for the tool (if different from
+	// Tool.title).
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalHints") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalHints") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1ToolAnnotations) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1ToolAnnotations
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5003,8 +5284,8 @@ type GoogleLongrunningListOperationsResponse struct {
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5598,6 +5879,171 @@ func (c *ProjectsLocationsLookupRuntimeProjectAttachmentCall) Do(opts ...googlea
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.lookupRuntimeProjectAttachment", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsRetrieveApiViewsCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrieveApiViews: Retrieve API views.
+//
+//   - parent: The parent resource name. Format:
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsService) RetrieveApiViews(parent string) *ProjectsLocationsRetrieveApiViewsCall {
+	c := &ProjectsLocationsRetrieveApiViewsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression.
+func (c *ProjectsLocationsRetrieveApiViewsCall) Filter(filter string) *ProjectsLocationsRetrieveApiViewsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return. Default to 100.
+func (c *ProjectsLocationsRetrieveApiViewsCall) PageSize(pageSize int64) *ProjectsLocationsRetrieveApiViewsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `RetrieveApiViews` call. Provide this to retrieve the
+// subsequent page.
+func (c *ProjectsLocationsRetrieveApiViewsCall) PageToken(pageToken string) *ProjectsLocationsRetrieveApiViewsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Required. The view type to return.
+//
+// Possible values:
+//
+//	"API_VIEW_TYPE_UNSPECIFIED" - The default view type.
+//	"MCP_SERVER" - The MCP server view in API hub.
+//	"MCP_TOOL" - The MCP tool view in API hub.
+func (c *ProjectsLocationsRetrieveApiViewsCall) View(view string) *ProjectsLocationsRetrieveApiViewsCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRetrieveApiViewsCall) Fields(s ...googleapi.Field) *ProjectsLocationsRetrieveApiViewsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRetrieveApiViewsCall) IfNoneMatch(entityTag string) *ProjectsLocationsRetrieveApiViewsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRetrieveApiViewsCall) Context(ctx context.Context) *ProjectsLocationsRetrieveApiViewsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRetrieveApiViewsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRetrieveApiViewsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:retrieveApiViews")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apihub.projects.locations.retrieveApiViews", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apihub.projects.locations.retrieveApiViews" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApihubV1RetrieveApiViewsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRetrieveApiViewsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApihubV1RetrieveApiViewsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApihubV1RetrieveApiViewsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.retrieveApiViews", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRetrieveApiViewsCall) Pages(ctx context.Context, f func(*GoogleCloudApihubV1RetrieveApiViewsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsSearchResourcesCall struct {
@@ -6961,28 +7407,34 @@ func (r *ProjectsLocationsApisService) List(parent string) *ProjectsLocationsApi
 // function is `id(name)`. The `id(name)` function returns the id of the
 // resource name. For example, `id(name) = \"api-1\" is equivalent to `name =
 // \"projects/test-project-id/locations/test-location-id/apis/api-1\" provided
-// the parent is `projects/test-project-id/locations/test-location-id`.
-// Expressions are combined with either `AND` logic operator or `OR` logical
-// operator but not both of them together i.e. only one of the `AND` or `OR`
-// operator can be used throughout the filter string and both the operators
-// cannot be used together. No other logical operators are supported. At most
-// three filter fields are allowed in the filter string and if provided more
-// than that then `INVALID_ARGUMENT` error is returned by the API. Here are a
-// few examples: * `owner.email = \"apihub@google.com\" - - The owner team
-// email is _apihub@google.com_. * `owner.email = \"apihub@google.com\" AND
-// create_time < \"2021-08-15T14:50:00Z\" AND create_time >
-// \"2021-08-10T12:00:00Z\" - The owner team email is _apihub@google.com_ and
-// the api was created before _2021-08-15 14:50:00 UTC_ and after _2021-08-10
-// 12:00:00 UTC_. * `owner.email = \"apihub@google.com\" OR
-// team.enum_values.values.id: apihub-team-id` - The filter string specifies
-// the APIs where the owner team email is _apihub@google.com_ or the id of the
-// allowed value associated with the team attribute is _apihub-team-id_. *
-// `owner.email = \"apihub@google.com\" OR
-// team.enum_values.values.display_name: ApiHub Team` - The filter string
-// specifies the APIs where the owner team email is _apihub@google.com_ or the
-// display name of the allowed value associated with the team attribute is
-// `ApiHub Team`. * `owner.email = \"apihub@google.com\" AND
-// attributes.projects/test-project-id/locations/test-location-id/
+// the parent is `projects/test-project-id/locations/test-location-id`. Another
+// supported filter function is `plugins(source_metadata)`. This function
+// filters for resources that are associated with a specific plugin. For
+// example, `plugins(source_metadata) :
+// "projects/test-project-id/locations/test-location-id/plugins/test-plugin-id"
+//
+//	will return resources sourced from the given plugin. Expressions are
+//
+// combined with either `AND` logic operator or `OR` logical operator but not
+// both of them together i.e. only one of the `AND` or `OR` operator can be
+// used throughout the filter string and both the operators cannot be used
+// together. No other logical operators are supported. At most three filter
+// fields are allowed in the filter string and if provided more than that then
+// `INVALID_ARGUMENT` error is returned by the API. Here are a few examples: *
+// `owner.email = \"apihub@google.com\" - - The owner team email is
+// _apihub@google.com_. * `owner.email = \"apihub@google.com\" AND create_time
+// < \"2021-08-15T14:50:00Z\" AND create_time > \"2021-08-10T12:00:00Z\" - The
+// owner team email is _apihub@google.com_ and the api was created before
+// _2021-08-15 14:50:00 UTC_ and after _2021-08-10 12:00:00 UTC_. *
+// `owner.email = \"apihub@google.com\" OR team.enum_values.values.id:
+// apihub-team-id` - The filter string specifies the APIs where the owner team
+// email is _apihub@google.com_ or the id of the allowed value associated with
+// the team attribute is _apihub-team-id_. * `owner.email =
+// \"apihub@google.com\" OR team.enum_values.values.display_name: ApiHub Team`
+// - The filter string specifies the APIs where the owner team email is
+// _apihub@google.com_ or the display name of the allowed value associated with
+// the team attribute is `ApiHub Team`. * `owner.email = \"apihub@google.com\"
+// AND attributes.projects/test-project-id/locations/test-location-id/
 // attributes/17650f90-4a29-4971-b3c0-d5532da3764b.enum_values.values.id:
 // test_enum_id AND
 // attributes.projects/test-project-id/locations/test-location-id/
@@ -8595,8 +9047,10 @@ type ProjectsLocationsApisVersionsOperationsPatchCall struct {
 // ApiOperation resource can be updated: * details.description *
 // details.documentation * details.http_operation.path *
 // details.http_operation.method * details.deprecated * attributes *
-// details.mcp_tool.title * details.mcp_tool.description * details.input_schema
-// * details.output_schema * details.mcp_tool.annotations.title *
+// details.mcp_tool.title * details.mcp_tool.description *
+// details.mcp_tool.input_schema * details.mcp_tool.output_schema *
+// details.input_schema * details.output_schema *
+// details.mcp_tool.annotations.title *
 // details.mcp_tool.annotations.read_only_hint *
 // details.mcp_tool.annotations.destructive_hint *
 // details.mcp_tool.annotations.idempotent_hint *
@@ -8937,6 +9391,136 @@ func (c *ProjectsLocationsApisVersionsSpecsDeleteCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.apis.versions.specs.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchAdditionalSpecContent: Fetch additional spec content.
+//
+//   - name: The name of the spec whose contents need to be retrieved. Format:
+//     `projects/{project}/locations/{location}/apis/{api}/versions/{version}/spec
+//     s/{spec}`.
+func (r *ProjectsLocationsApisVersionsSpecsService) FetchAdditionalSpecContent(name string) *ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall {
+	c := &ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// SpecContentType sets the optional parameter "specContentType": The type of
+// the spec contents to be retrieved.
+//
+// Possible values:
+//
+//	"SPEC_CONTENT_TYPE_UNSPECIFIED" - Unspecified spec content type. Defaults
+//
+// to spec content uploaded by the user.
+//
+//	"BOOSTED_SPEC_CONTENT" - The spec content type for boosted spec.
+//	"GATEWAY_OPEN_API_SPEC" - The spec content type for OpenAPI spec. This
+//
+// enum is used for OpenAPI specs ingested via APIGEE X Gateway.
+func (c *ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall) SpecContentType(specContentType string) *ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall {
+	c.urlParams_.Set("specContentType", specContentType)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall) Fields(s ...googleapi.Field) *ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall) IfNoneMatch(entityTag string) *ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall) Context(ctx context.Context) *ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetchAdditionalSpecContent")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apihub.projects.locations.apis.versions.specs.fetchAdditionalSpecContent", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apihub.projects.locations.apis.versions.specs.fetchAdditionalSpecContent" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApihubV1FetchAdditionalSpecContentResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsApisVersionsSpecsFetchAdditionalSpecContentCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApihubV1FetchAdditionalSpecContentResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApihubV1FetchAdditionalSpecContentResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.apis.versions.specs.fetchAdditionalSpecContent", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14059,9 +14643,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
@@ -15793,10 +16377,11 @@ func (r *ProjectsLocationsPluginsInstancesService) List(parent string) *Projects
 // The comparison operator must be one of: `<`, `>` or `=`. Filters are not
 // case sensitive. The following fields in the `PluginInstances` are eligible
 // for filtering: * `state` - The state of the Plugin Instance. Allowed
-// comparison operators: `=`. A filter function is also supported in the filter
-// string. The filter function is `id(name)`. The `id(name)` function returns
-// the id of the resource name. For example, `id(name) = \"plugin-instance-1\"
-// is equivalent to `name =
+// comparison operators: `=`. * `source_project_id` - The source project id of
+// the Plugin Instance. Allowed comparison operators: `=`. A filter function is
+// also supported in the filter string. The filter function is `id(name)`. The
+// `id(name)` function returns the id of the resource name. For example,
+// `id(name) = \"plugin-instance-1\" is equivalent to `name =
 // \"projects/test-project-id/locations/test-location-id/plugins/plugin-1/instan
 // ces/plugin-instance-1\" provided the parent is
 // `projects/test-project-id/locations/test-location-id/plugins/plugin-1`.

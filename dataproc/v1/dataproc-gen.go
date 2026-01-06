@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -2764,6 +2764,17 @@ func (s FlinkJob) MarshalJSON() ([]byte, error) {
 // GceClusterConfig: Common config settings for resources of Compute Engine
 // cluster instances, applicable to all instances in the cluster.
 type GceClusterConfig struct {
+	// AutoZoneExcludeZoneUris: Optional. An optional list of Compute Engine zones
+	// where the Dataproc cluster will not be located when Auto Zone is enabled.
+	// Only one of zone_uri or auto_zone_exclude_zone_uris can be set. If both are
+	// omitted, the service will pick a zone in the cluster Compute Engine region.
+	// If auto_zone_exclude_zone_uris is set and there is more than one
+	// non-excluded zone, the service will pick one of the non-excluded zones.
+	// Otherwise, cluster creation will fail with INVALID_ARGUMENT error.A full
+	// URL, partial URI, or short name are valid. Examples:
+	// https://www.googleapis.com/compute/v1/projects/[project_id]/zones/[zone]
+	// projects/[project_id]/zones/[zone] [zone]
+	AutoZoneExcludeZoneUris []string `json:"autoZoneExcludeZoneUris,omitempty"`
 	// ConfidentialInstanceConfig: Optional. Confidential Instance Config for
 	// clusters using Confidential VMs
 	// (https://cloud.google.com/compute/confidential-vm/docs).
@@ -2855,13 +2866,13 @@ type GceClusterConfig struct {
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/zones/[zone]
 	// projects/[project_id]/zones/[zone] [zone]
 	ZoneUri string `json:"zoneUri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ConfidentialInstanceConfig")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AutoZoneExcludeZoneUris") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ConfidentialInstanceConfig") to
+	// NullFields is a list of field names (e.g. "AutoZoneExcludeZoneUris") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

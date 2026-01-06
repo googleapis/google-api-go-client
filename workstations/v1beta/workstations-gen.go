@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -730,9 +730,10 @@ func (s GceConfidentialInstanceConfig) MarshalJSON() ([]byte, error) {
 }
 
 // GceHyperdiskBalancedHighAvailability: A Persistent Directory backed by a
-// Compute Engine Hyperdisk Balanced High Availability Disk. This is a
-// high-availability block storage solution that offers a balance between
-// performance and cost for most general-purpose workloads.
+// Compute Engine Hyperdisk Balanced High Availability Disk
+// (https://cloud.google.com/compute/docs/disks/hd-types/hyperdisk-balanced-ha).
+// This is a high-availability block storage solution that offers a balance
+// between performance and cost for most general-purpose workloads.
 type GceHyperdiskBalancedHighAvailability struct {
 	// ArchiveTimeout: Optional. Number of seconds to wait after initially creating
 	// or subsequently shutting down the workstation before converting its disk
@@ -824,6 +825,9 @@ type GceInstance struct {
 	// nested virtualization can only be enabled on workstation configurations that
 	// specify a machine_type in the N1 or N2 machine series.
 	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
+	// InstanceMetadata: Optional. Custom metadata to apply to Compute Engine
+	// instances.
+	InstanceMetadata map[string]string `json:"instanceMetadata,omitempty"`
 	// MachineType: Optional. The type of machine to use for VM instances—for
 	// example, "e2-standard-4". For more information about machine types that
 	// Cloud Workstations supports, see the list of available machine types
@@ -874,11 +878,13 @@ type GceInstance struct {
 	ShieldedInstanceConfig *GceShieldedInstanceConfig `json:"shieldedInstanceConfig,omitempty"`
 	// StartupScriptUri: Optional. Link to the startup script stored in Cloud
 	// Storage. This script will be run on the host workstation VM when the VM is
-	// created. The uri must be of the form gs://{bucket-name}/{object-name}. If
+	// created. The URI must be of the form gs://{bucket-name}/{object-name}. If
 	// specifying a startup script, the service account must have Permission to
 	// access the bucket and script file in Cloud Storage
 	// (https://cloud.google.com/storage/docs/access-control/iam-permissions).
-	// Otherwise, the script must be publicly accessible.
+	// Otherwise, the script must be publicly accessible. Note that the service
+	// regularly updates the OS version used, and it is the responsibility of the
+	// user to ensure the script stays compatible with the OS version.
 	StartupScriptUri string `json:"startupScriptUri,omitempty"`
 	// Tags: Optional. Network tags to add to the Compute Engine VMs backing the
 	// workstations. This option applies network tags
@@ -1205,8 +1211,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2656,9 +2662,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

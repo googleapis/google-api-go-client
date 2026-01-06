@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -169,6 +169,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Announcements = NewProjectsLocationsAnnouncementsService(s)
+	rs.Datastores = NewProjectsLocationsDatastoresService(s)
 	rs.DnsBindPermission = NewProjectsLocationsDnsBindPermissionService(s)
 	rs.NetworkPeerings = NewProjectsLocationsNetworkPeeringsService(s)
 	rs.NetworkPolicies = NewProjectsLocationsNetworkPoliciesService(s)
@@ -184,6 +185,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Announcements *ProjectsLocationsAnnouncementsService
+
+	Datastores *ProjectsLocationsDatastoresService
 
 	DnsBindPermission *ProjectsLocationsDnsBindPermissionService
 
@@ -208,6 +211,15 @@ func NewProjectsLocationsAnnouncementsService(s *Service) *ProjectsLocationsAnno
 }
 
 type ProjectsLocationsAnnouncementsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDatastoresService(s *Service) *ProjectsLocationsDatastoresService {
+	rs := &ProjectsLocationsDatastoresService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatastoresService struct {
 	s *Service
 }
 
@@ -774,6 +786,8 @@ type Cluster struct {
 	AutoscalingSettings *AutoscalingSettings `json:"autoscalingSettings,omitempty"`
 	// CreateTime: Output only. Creation time of this resource.
 	CreateTime string `json:"createTime,omitempty"`
+	// DatastoreMountConfig: Output only. Configuration of a mounted datastore.
+	DatastoreMountConfig []*DatastoreMountConfig `json:"datastoreMountConfig,omitempty"`
 	// Management: Output only. True if the cluster is a management cluster; false
 	// otherwise. There can only be one management cluster in a private cloud and
 	// it has to be the first one.
@@ -888,6 +902,155 @@ type Credentials struct {
 
 func (s Credentials) MarshalJSON() ([]byte, error) {
 	type NoMethod Credentials
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Datastore: Represents a datastore resource.
+type Datastore struct {
+	// Clusters: Output only. Clusters to which the datastore is attached.
+	Clusters []string `json:"clusters,omitempty"`
+	// CreateTime: Output only. Creation time of this resource.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. User-provided description for this datastore
+	Description string `json:"description,omitempty"`
+	// Etag: Optional. Checksum that may be sent on update and delete requests to
+	// ensure that the user-provided value is up to date before the server
+	// processes a request. The server computes checksums based on the value of
+	// other fields in the request.
+	Etag string `json:"etag,omitempty"`
+	// Name: Output only. Identifier. The resource name of this datastore. Resource
+	// names are schemeless URIs that follow the conventions in
+	// https://cloud.google.com/apis/design/resource_names. For example:
+	// `projects/my-project/locations/us-central1/datastores/datastore`
+	Name string `json:"name,omitempty"`
+	// NfsDatastore: Required. Settings for the NFS datastore.
+	NfsDatastore *NfsDatastore `json:"nfsDatastore,omitempty"`
+	// State: Output only. The state of the Datastore.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. This value should never be used.
+	//   "CREATING" - The NFS volume is being created.
+	//   "ACTIVE" - The NFS volume is active.
+	//   "UPDATING" - The NFS volume is being updated.
+	//   "DELETING" - The NFS volume is being deleted.
+	State string `json:"state,omitempty"`
+	// Uid: Output only. System-generated unique identifier for the resource.
+	Uid string `json:"uid,omitempty"`
+	// UpdateTime: Output only. Last update time of this resource.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Clusters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Clusters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Datastore) MarshalJSON() ([]byte, error) {
+	type NoMethod Datastore
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatastoreMountConfig: The Datastore Mount configuration
+type DatastoreMountConfig struct {
+	// AccessMode: Optional. NFS is accessed by hosts in read mode Optional.
+	// Default value used will be READ_WRITE
+	//
+	// Possible values:
+	//   "ACCESS_MODE_UNSPECIFIED" - The default value. This value should never be
+	// used.
+	//   "READ_ONLY" - NFS is accessed by hosts in read mode
+	//   "READ_WRITE" - NFS is accessed by hosts in read and write mode
+	AccessMode string `json:"accessMode,omitempty"`
+	// Datastore: Required. The resource name of the datastore to unmount. The
+	// datastore requested to be mounted should be in same region/zone as the
+	// cluster. Resource names are schemeless URIs that follow the conventions in
+	// https://cloud.google.com/apis/design/resource_names. For example:
+	// `projects/my-project/locations/us-central1/datastores/my-datastore`
+	Datastore string `json:"datastore,omitempty"`
+	// DatastoreNetwork: Required. The network configuration for the datastore.
+	DatastoreNetwork *DatastoreNetwork `json:"datastoreNetwork,omitempty"`
+	// FileShare: Output only. File share name.
+	FileShare string `json:"fileShare,omitempty"`
+	// NfsVersion: Optional. The NFS protocol supported by the NFS volume. Default
+	// value used will be NFS_V3
+	//
+	// Possible values:
+	//   "NFS_VERSION_UNSPECIFIED" - The default value. This value should never be
+	// used.
+	//   "NFS_V3" - NFS 3
+	NfsVersion string `json:"nfsVersion,omitempty"`
+	// SecurityType: Optional. ONLY required when NFS 4.1 version is used
+	//
+	// Possible values:
+	//   "SECURITY_TYPE_UNSPECIFIED" - The default value. This value should never
+	// be used.
+	SecurityType string `json:"securityType,omitempty"`
+	// Servers: Output only. Server IP addresses of the NFS volume. For NFS 3, you
+	// can only provide a single server IP address or DNS names.
+	Servers []string `json:"servers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatastoreMountConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DatastoreMountConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatastoreNetwork: The network configuration for the datastore.
+type DatastoreNetwork struct {
+	// ConnectionCount: Optional. The number of connections of the NFS volume.
+	// Spported from vsphere 8.0u1
+	ConnectionCount int64 `json:"connectionCount,omitempty"`
+	// Mtu: Optional. The Maximal Transmission Unit (MTU) of the datastore. System
+	// sets default MTU size. It prefers the VPC peering MTU, falling back to the
+	// VEN MTU if no peering MTU is found. when detected, and falling back to the
+	// VEN MTU otherwise.
+	Mtu int64 `json:"mtu,omitempty"`
+	// NetworkPeering: Output only. The resource name of the network peering, used
+	// to access the file share by clients on private cloud. Resource names are
+	// schemeless URIs that follow the conventions in
+	// https://cloud.google.com/apis/design/resource_names. e.g.
+	// projects/my-project/locations/us-central1/networkPeerings/my-network-peering
+	NetworkPeering string `json:"networkPeering,omitempty"`
+	// Subnet: Required. The resource name of the subnet Resource names are
+	// schemeless URIs that follow the conventions in
+	// https://cloud.google.com/apis/design/resource_names. e.g.
+	// projects/my-project/locations/us-central1/subnets/my-subnet
+	Subnet string `json:"subnet,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConnectionCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectionCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatastoreNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod DatastoreNetwork
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1223,6 +1386,37 @@ func (s ForwardingRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFileService: Google service file service configuration
+type GoogleFileService struct {
+	// FilestoreInstance: Google filestore instance resource name e.g.
+	// projects/my-project/locations/me-west1-b/instances/my-instance
+	FilestoreInstance string `json:"filestoreInstance,omitempty"`
+	// NetappVolume: Google netapp volume resource name e.g.
+	// projects/my-project/locations/me-west1-b/volumes/my-volume
+	NetappVolume string `json:"netappVolume,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FilestoreInstance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FilestoreInstance") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFileService) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFileService
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleVmwareFileService: Volume message captures user inputs for creation of
+// file services managed by GCVE
+type GoogleVmwareFileService struct {
+}
+
 // GrantDnsBindPermissionRequest: Request message for
 // VmwareEngine.GrantDnsBindPermission
 type GrantDnsBindPermissionRequest struct {
@@ -1465,6 +1659,36 @@ type ListClustersResponse struct {
 
 func (s ListClustersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListClustersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListDatastoresResponse: Response message for VmwareEngine.ListDatastores
+type ListDatastoresResponse struct {
+	// Datastores: A list of Datastores.
+	Datastores []*Datastore `json:"datastores,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable resources.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Datastores") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Datastores") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListDatastoresResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDatastoresResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1787,8 +2011,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2246,6 +2470,37 @@ func (s ManagementDnsZoneBinding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MountDatastoreRequest: Mount Datastore Request message
+type MountDatastoreRequest struct {
+	// DatastoreMountConfig: Required. The datastore mount configuration.
+	DatastoreMountConfig *DatastoreMountConfig `json:"datastoreMountConfig,omitempty"`
+	// IgnoreColocation: Optional. If set to true, the colocation requirement will
+	// be ignored. If set to false, the colocation requirement will be enforced. If
+	// not set, the colocation requirement will be enforced. Colocation requirement
+	// is the requirement that the cluster must be in the same region/zone of
+	// datastore(regional/zonal datastore).
+	IgnoreColocation bool `json:"ignoreColocation,omitempty"`
+	// RequestId: Optional. The request ID must be a valid UUID with the exception
+	// that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatastoreMountConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatastoreMountConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MountDatastoreRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod MountDatastoreRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // NetworkConfig: Network configuration in the consumer project with which the
 // peering has to be done.
 type NetworkConfig struct {
@@ -2514,6 +2769,32 @@ type NetworkService struct {
 
 func (s NetworkService) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkService
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NfsDatastore: The NFS datastore configuration.
+type NfsDatastore struct {
+	// GoogleFileService: Google service file service configuration
+	GoogleFileService *GoogleFileService `json:"googleFileService,omitempty"`
+	// GoogleVmwareFileService: GCVE file service configuration
+	GoogleVmwareFileService *GoogleVmwareFileService `json:"googleVmwareFileService,omitempty"`
+	// ThirdPartyFileService: Third party file service configuration
+	ThirdPartyFileService *ThirdPartyFileService `json:"thirdPartyFileService,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GoogleFileService") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoogleFileService") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NfsDatastore) MarshalJSON() ([]byte, error) {
+	type NoMethod NfsDatastore
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3533,6 +3814,36 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ThirdPartyFileService: Third party file service configuration
+type ThirdPartyFileService struct {
+	// FileShare: Required. Required Mount Folder name
+	FileShare string `json:"fileShare,omitempty"`
+	// Network: Required. Required to identify vpc peering used for NFS access
+	// network name of NFS's vpc e.g.
+	// projects/project-id/global/networks/my-network_id
+	Network string `json:"network,omitempty"`
+	// Servers: Required. Server IP addresses of the NFS file service. NFS v3,
+	// provide a single IP address or DNS name. Multiple servers can be supported
+	// in future when NFS 4.1 protocol support is enabled.
+	Servers []string `json:"servers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileShare") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileShare") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ThirdPartyFileService) MarshalJSON() ([]byte, error) {
+	type NoMethod ThirdPartyFileService
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Thresholds: Thresholds define the utilization of resources triggering
 // scale-out and scale-in operations.
 type Thresholds struct {
@@ -3654,6 +3965,34 @@ type UndeletePrivateCloudRequest struct {
 
 func (s UndeletePrivateCloudRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UndeletePrivateCloudRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UnmountDatastoreRequest: Unmount Datastore Request messag
+type UnmountDatastoreRequest struct {
+	// Datastore: Required. The resource name of the datastore to unmount. Resource
+	// names are schemeless URIs that follow the conventions in
+	// https://cloud.google.com/apis/design/resource_names. For example:
+	// `projects/my-project/locations/us-central1/datastores/my-datastore`
+	Datastore string `json:"datastore,omitempty"`
+	// RequestId: Optional. The request ID must be a valid UUID with the exception
+	// that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Datastore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Datastore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UnmountDatastoreRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UnmountDatastoreRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4233,9 +4572,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -4669,6 +5008,682 @@ func (c *ProjectsLocationsAnnouncementsListCall) Pages(ctx context.Context, f fu
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsDatastoresCreateCall struct {
+	s          *Service
+	parent     string
+	datastore  *Datastore
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new `Datastore` resource in a given project and location.
+// Datastores are regional resources
+//
+//   - parent: The resource name of the location to create the new datastore in.
+//     Resource names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1`.
+func (r *ProjectsLocationsDatastoresService) Create(parent string, datastore *Datastore) *ProjectsLocationsDatastoresCreateCall {
+	c := &ProjectsLocationsDatastoresCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.datastore = datastore
+	return c
+}
+
+// DatastoreId sets the optional parameter "datastoreId": Required. The
+// user-provided identifier of the datastore to be created. This identifier
+// must be unique among each `Datastore` within the parent and becomes the
+// final token in the name URI. The identifier must meet the following
+// requirements: * Only contains 1-63 alphanumeric characters and hyphens *
+// Begins with an alphabetical character * Ends with a non-hyphen character *
+// Not formatted as a UUID * Complies with RFC 1034
+// (https://datatracker.ietf.org/doc/html/rfc1034) (section 3.5)
+func (c *ProjectsLocationsDatastoresCreateCall) DatastoreId(datastoreId string) *ProjectsLocationsDatastoresCreateCall {
+	c.urlParams_.Set("datastoreId", datastoreId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDatastoresCreateCall) RequestId(requestId string) *ProjectsLocationsDatastoresCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatastoresCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatastoresCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatastoresCreateCall) Context(ctx context.Context) *ProjectsLocationsDatastoresCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatastoresCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatastoresCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.datastore)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/datastores")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.datastores.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.datastores.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatastoresCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.datastores.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDatastoresDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a `Datastore` resource. You can only delete a Datastore
+// after all resources that refer to it are deleted. For example, multiple
+// clusters of the same private cloud or different private clouds can refer to
+// the same datastore.
+//
+//   - name: The resource name of the Datastore to be deleted. Resource names are
+//     schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1/datastore/my-datastore`.
+func (r *ProjectsLocationsDatastoresService) Delete(name string) *ProjectsLocationsDatastoresDeleteCall {
+	c := &ProjectsLocationsDatastoresDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": Checksum used to ensure that the
+// user-provided value is up to date before the server processes the request.
+// The server compares provided checksum with the current checksum of the
+// resource. If the user-provided value is out of date, this request returns an
+// `ABORTED` error.
+func (c *ProjectsLocationsDatastoresDeleteCall) Etag(etag string) *ProjectsLocationsDatastoresDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDatastoresDeleteCall) RequestId(requestId string) *ProjectsLocationsDatastoresDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatastoresDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatastoresDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatastoresDeleteCall) Context(ctx context.Context) *ProjectsLocationsDatastoresDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatastoresDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatastoresDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.datastores.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.datastores.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatastoresDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.datastores.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDatastoresGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a `Datastore` resource by its resource name. The resource
+// contains details of the Datastore, such as its description, subnets, type,
+// and more.
+//
+//   - name: The resource name of the Datastore to retrieve. Resource names are
+//     schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1/datastores/my-datastore`.
+func (r *ProjectsLocationsDatastoresService) Get(name string) *ProjectsLocationsDatastoresGetCall {
+	c := &ProjectsLocationsDatastoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatastoresGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatastoresGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatastoresGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatastoresGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatastoresGetCall) Context(ctx context.Context) *ProjectsLocationsDatastoresGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatastoresGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatastoresGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.datastores.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.datastores.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Datastore.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatastoresGetCall) Do(opts ...googleapi.CallOption) (*Datastore, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Datastore{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.datastores.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDatastoresListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists `Datastore` resources in a given project and location.
+//
+//   - parent: The resource name of the location to query for Datastores.
+//     Resource names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1`.
+func (r *ProjectsLocationsDatastoresService) List(parent string) *ProjectsLocationsDatastoresListCall {
+	c := &ProjectsLocationsDatastoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// matches resources returned in the response. The expression must specify the
+// field name, a comparison operator, and the value that you want to use for
+// filtering. The value must be a string, a number, or a boolean. The
+// comparison operator must be `=`, `!=`, `>`, or `<`. For example, if you are
+// filtering a list of datastores, you can exclude the ones named
+// `example-datastore` by specifying `name != "example-datastore". To filter
+// on multiple expressions, provide each separate expression within
+// parentheses. For example: ``` (name = "example-datastore") (createTime >
+// "2021-04-12T08:15:10.40Z") ``` By default, each expression is an `AND`
+// expression. However, you can include `AND` and `OR` expressions explicitly.
+// For example: ``` (name = "example-datastore-1") AND (createTime >
+// "2021-04-12T08:15:10.40Z") OR (name = "example-datastore-2") ```
+func (c *ProjectsLocationsDatastoresListCall) Filter(filter string) *ProjectsLocationsDatastoresListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, returned results are ordered by `name` in
+// ascending order. You can also sort results in descending order based on the
+// `name` value using `orderBy="name desc". Currently, only ordering by `name`
+// is supported.
+func (c *ProjectsLocationsDatastoresListCall) OrderBy(orderBy string) *ProjectsLocationsDatastoresListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return in one page. The maximum value is coerced to 1000. The
+// default value of this field is 500.
+func (c *ProjectsLocationsDatastoresListCall) PageSize(pageSize int64) *ProjectsLocationsDatastoresListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListDatastores` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListDatastores` must match the call that provided the page token.
+func (c *ProjectsLocationsDatastoresListCall) PageToken(pageToken string) *ProjectsLocationsDatastoresListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDatastoresListCall) RequestId(requestId string) *ProjectsLocationsDatastoresListCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatastoresListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatastoresListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatastoresListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatastoresListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatastoresListCall) Context(ctx context.Context) *ProjectsLocationsDatastoresListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatastoresListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatastoresListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/datastores")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.datastores.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.datastores.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDatastoresResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDatastoresListCall) Do(opts ...googleapi.CallOption) (*ListDatastoresResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDatastoresResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.datastores.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDatastoresListCall) Pages(ctx context.Context, f func(*ListDatastoresResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsDatastoresPatchCall struct {
+	s          *Service
+	name       string
+	datastore  *Datastore
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Modifies a Datastore resource. Only the following fields can be
+// updated: `description`. Only fields specified in `updateMask` are applied.
+//
+//   - name: Output only. Identifier. The resource name of this datastore.
+//     Resource names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1/datastores/datastore`.
+func (r *ProjectsLocationsDatastoresService) Patch(name string, datastore *Datastore) *ProjectsLocationsDatastoresPatchCall {
+	c := &ProjectsLocationsDatastoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.datastore = datastore
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDatastoresPatchCall) RequestId(requestId string) *ProjectsLocationsDatastoresPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the Datastore resource by the
+// update. The fields specified in the `update_mask` are relative to the
+// resource, not the full request. A field will be overwritten if it is in the
+// mask. If the user does not provide a mask then all fields will be
+// overwritten. Only the following fields can be updated: `description`.
+func (c *ProjectsLocationsDatastoresPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatastoresPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatastoresPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatastoresPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatastoresPatchCall) Context(ctx context.Context) *ProjectsLocationsDatastoresPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatastoresPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatastoresPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.datastore)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.datastores.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.datastores.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatastoresPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.datastores.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsDnsBindPermissionGrantCall struct {
@@ -7820,9 +8835,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
@@ -10580,6 +11595,114 @@ func (c *ProjectsLocationsPrivateCloudsClustersListCall) Pages(ctx context.Conte
 	}
 }
 
+type ProjectsLocationsPrivateCloudsClustersMountDatastoreCall struct {
+	s                     *Service
+	name                  string
+	mountdatastorerequest *MountDatastoreRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// MountDatastore: Mounts a `Datastore` on a cluster resource Datastores are
+// zonal resources
+//
+//   - name: The resource name of the cluster to mount the datastore. Resource
+//     names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/cluster
+//     s/my-cluster`.
+func (r *ProjectsLocationsPrivateCloudsClustersService) MountDatastore(name string, mountdatastorerequest *MountDatastoreRequest) *ProjectsLocationsPrivateCloudsClustersMountDatastoreCall {
+	c := &ProjectsLocationsPrivateCloudsClustersMountDatastoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.mountdatastorerequest = mountdatastorerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPrivateCloudsClustersMountDatastoreCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsClustersMountDatastoreCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPrivateCloudsClustersMountDatastoreCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsClustersMountDatastoreCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPrivateCloudsClustersMountDatastoreCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsClustersMountDatastoreCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.mountdatastorerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:mountDatastore")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.clusters.mountDatastore", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.clusters.mountDatastore" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsClustersMountDatastoreCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.clusters.mountDatastore", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsPrivateCloudsClustersPatchCall struct {
 	s          *Service
 	name       string
@@ -10932,6 +12055,114 @@ func (c *ProjectsLocationsPrivateCloudsClustersTestIamPermissionsCall) Do(opts .
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.clusters.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPrivateCloudsClustersUnmountDatastoreCall struct {
+	s                       *Service
+	name                    string
+	unmountdatastorerequest *UnmountDatastoreRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// UnmountDatastore: Mounts a `Datastore` on a cluster resource Datastores are
+// zonal resources
+//
+//   - name: The resource name of the cluster to unmount the datastore. Resource
+//     names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/cluster
+//     s/my-cluster`.
+func (r *ProjectsLocationsPrivateCloudsClustersService) UnmountDatastore(name string, unmountdatastorerequest *UnmountDatastoreRequest) *ProjectsLocationsPrivateCloudsClustersUnmountDatastoreCall {
+	c := &ProjectsLocationsPrivateCloudsClustersUnmountDatastoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.unmountdatastorerequest = unmountdatastorerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPrivateCloudsClustersUnmountDatastoreCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsClustersUnmountDatastoreCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPrivateCloudsClustersUnmountDatastoreCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsClustersUnmountDatastoreCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPrivateCloudsClustersUnmountDatastoreCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsClustersUnmountDatastoreCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.unmountdatastorerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:unmountDatastore")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.clusters.unmountDatastore", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.clusters.unmountDatastore" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsClustersUnmountDatastoreCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.privateClouds.clusters.unmountDatastore", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

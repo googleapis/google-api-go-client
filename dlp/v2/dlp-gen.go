@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -681,7 +681,9 @@ type GooglePrivacyDlpV2Action struct {
 	JobNotificationEmails *GooglePrivacyDlpV2JobNotificationEmails `json:"jobNotificationEmails,omitempty"`
 	// PubSub: Publish a notification to a Pub/Sub topic.
 	PubSub *GooglePrivacyDlpV2PublishToPubSub `json:"pubSub,omitempty"`
-	// PublishFindingsToCloudDataCatalog: Publish findings to Cloud Datahub.
+	// PublishFindingsToCloudDataCatalog: Deprecated because Data Catalog is being
+	// turned down. Use publish_findings_to_dataplex_catalog to publish findings to
+	// Dataplex Universal Catalog.
 	PublishFindingsToCloudDataCatalog *GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog `json:"publishFindingsToCloudDataCatalog,omitempty"`
 	// PublishFindingsToDataplexCatalog: Publish findings as an aspect to Dataplex
 	// Universal Catalog.
@@ -2854,8 +2856,7 @@ type GooglePrivacyDlpV2CustomInfoType struct {
 	// CustomInfoType, it will default to HIGH. This only applies to data
 	// profiling.
 	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
-	// StoredType: Load an existing `StoredInfoType` resource for use in
-	// `InspectDataSource`. Not currently supported in `InspectContent`.
+	// StoredType: Loads an existing `StoredInfoType` resource.
 	StoredType *GooglePrivacyDlpV2StoredType `json:"storedType,omitempty"`
 	// SurrogateType: Message for detecting output from deidentification
 	// transformations that support reversing.

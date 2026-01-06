@@ -81,8 +81,6 @@ var skipAPIGeneration = map[string]bool{
 	"datalineage:v1":       true,
 	// Restore aiplatform:v1beta1 after b/446965637 is resolved.
 	"aiplatform:v1beta1": true,
-	// Restore composer:v1beta1 after b/461581309 is resolved.
-	"composer:v1beta1": true,
 }
 
 var apisToSplit = map[string]bool{

@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -3156,33 +3156,6 @@ func (s ExecutionReport) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExportReportRequest: Request to export a detailed pricing report.
-type ExportReportRequest struct {
-}
-
-// ExportReportResponse: Response message for exporting report.
-type ExportReportResponse struct {
-	// ReportArtifactLinks: For large generated report, we may return multiple
-	// links
-	ReportArtifactLinks []*ReportArtifactLink `json:"reportArtifactLinks,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ReportArtifactLinks") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ReportArtifactLinks") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ExportReportResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ExportReportResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // FileValidationReport: A resource that aggregates the validation errors found
 // in an import job file.
 type FileValidationReport struct {
@@ -3383,35 +3356,6 @@ type GCSPayloadInfo struct {
 
 func (s GCSPayloadInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GCSPayloadInfo
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GenerateReportArtifactLinkRequest: A request to generate a link to an
-// artifact for a Report.
-type GenerateReportArtifactLinkRequest struct {
-	// ArtifactType: Required. Type of the artifact requested.
-	//
-	// Possible values:
-	//   "ARTIFACT_TYPE_UNSPECIFIED" - Unspecified (default value).
-	//   "PRESENTATION" - Google Slides presentation.
-	//   "SPREADSHEET" - Google Sheets document.
-	//   "CSV" - Comma Separated Value Text File.
-	ArtifactType string `json:"artifactType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ArtifactType") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ArtifactType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GenerateReportArtifactLinkRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GenerateReportArtifactLinkRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4464,8 +4408,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -6136,8 +6080,6 @@ type Report struct {
 	State string `json:"state,omitempty"`
 	// Summary: Output only. Summary view of the Report.
 	Summary *ReportSummary `json:"summary,omitempty"`
-	// TcoDetails: Output only. Detailed data related to TCO reports.
-	TcoDetails *ReportTotalCostOfOwnershipDetails `json:"tcoDetails,omitempty"`
 	// Type: Report type.
 	//
 	// Possible values:
@@ -6164,35 +6106,6 @@ type Report struct {
 
 func (s Report) MarshalJSON() ([]byte, error) {
 	type NoMethod Report
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ReportArtifactLink: Describes a link to a generated artifact of the report.
-type ReportArtifactLink struct {
-	// DisplayName: Output only. Human friendly display name of the artifact.
-	DisplayName string `json:"displayName,omitempty"`
-	// Uri: Output only. URI of the artifact.
-	Uri string `json:"uri,omitempty"`
-	// UriExpirationTime: Output only. Expiration time of the URI.
-	UriExpirationTime string `json:"uriExpirationTime,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisplayName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ReportArtifactLink) MarshalJSON() ([]byte, error) {
-	type NoMethod ReportArtifactLink
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6407,6 +6320,9 @@ type ReportSummaryAssetAggregateStats struct {
 	// OperatingSystem: Count of assets grouped by Operating System families. Only
 	// present for virtual machines.
 	OperatingSystem *ReportSummaryChartData `json:"operatingSystem,omitempty"`
+	// SoftwareInstances: Output only. Count of assets grouped by software name.
+	// Only present for virtual machines.
+	SoftwareInstances *ReportSummaryChartData `json:"softwareInstances,omitempty"`
 	// StorageBytesHistogram: Histogram showing a distribution of storage sizes.
 	StorageBytesHistogram *ReportSummaryHistogramChartData `json:"storageBytesHistogram,omitempty"`
 	// StorageUtilization: Total storage split into Used/Free buckets.
@@ -6935,29 +6851,6 @@ type ReportSummaryVMWareNodeAllocation struct {
 
 func (s ReportSummaryVMWareNodeAllocation) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportSummaryVMWareNodeAllocation
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ReportTotalCostOfOwnershipDetails: Detailed data related to Total Cost of
-// Ownership (TCO) pricing.
-type ReportTotalCostOfOwnershipDetails struct {
-	// HasPricingData: Output only. Whether the report has detailed pricing data.
-	HasPricingData bool `json:"hasPricingData,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "HasPricingData") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "HasPricingData") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ReportTotalCostOfOwnershipDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod ReportTotalCostOfOwnershipDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13918,9 +13811,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
@@ -15458,111 +15351,6 @@ func (c *ProjectsLocationsReportConfigsListCall) Pages(ctx context.Context, f fu
 	}
 }
 
-type ProjectsLocationsReportConfigsReportsArtifactLinkCall struct {
-	s                                 *Service
-	name                              string
-	generatereportartifactlinkrequest *GenerateReportArtifactLinkRequest
-	urlParams_                        gensupport.URLParams
-	ctx_                              context.Context
-	header_                           http.Header
-}
-
-// ArtifactLink: Gets the link to the generated artifact of a given type for a
-// Report.
-//
-// - name: Name of the resource.
-func (r *ProjectsLocationsReportConfigsReportsService) ArtifactLink(name string, generatereportartifactlinkrequest *GenerateReportArtifactLinkRequest) *ProjectsLocationsReportConfigsReportsArtifactLinkCall {
-	c := &ProjectsLocationsReportConfigsReportsArtifactLinkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.generatereportartifactlinkrequest = generatereportartifactlinkrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsReportConfigsReportsArtifactLinkCall) Fields(s ...googleapi.Field) *ProjectsLocationsReportConfigsReportsArtifactLinkCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsReportConfigsReportsArtifactLinkCall) Context(ctx context.Context) *ProjectsLocationsReportConfigsReportsArtifactLinkCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsReportConfigsReportsArtifactLinkCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsReportConfigsReportsArtifactLinkCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.generatereportartifactlinkrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}:artifactLink")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.reportConfigs.reports.artifactLink", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "migrationcenter.projects.locations.reportConfigs.reports.artifactLink" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *ReportArtifactLink.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsReportConfigsReportsArtifactLinkCall) Do(opts ...googleapi.CallOption) (*ReportArtifactLink, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ReportArtifactLink{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.reportConfigs.reports.artifactLink", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
 type ProjectsLocationsReportConfigsReportsCreateCall struct {
 	s          *Service
 	parent     string
@@ -15802,109 +15590,6 @@ func (c *ProjectsLocationsReportConfigsReportsDeleteCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.reportConfigs.reports.delete", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsReportConfigsReportsExportCall struct {
-	s                   *Service
-	name                string
-	exportreportrequest *ExportReportRequest
-	urlParams_          gensupport.URLParams
-	ctx_                context.Context
-	header_             http.Header
-}
-
-// Export: Export a Report into a supported format.
-//
-// - name: Name of the resource.
-func (r *ProjectsLocationsReportConfigsReportsService) Export(name string, exportreportrequest *ExportReportRequest) *ProjectsLocationsReportConfigsReportsExportCall {
-	c := &ProjectsLocationsReportConfigsReportsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.exportreportrequest = exportreportrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsReportConfigsReportsExportCall) Fields(s ...googleapi.Field) *ProjectsLocationsReportConfigsReportsExportCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsReportConfigsReportsExportCall) Context(ctx context.Context) *ProjectsLocationsReportConfigsReportsExportCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsReportConfigsReportsExportCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsReportConfigsReportsExportCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.exportreportrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}:export")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.reportConfigs.reports.export", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "migrationcenter.projects.locations.reportConfigs.reports.export" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsReportConfigsReportsExportCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "migrationcenter.projects.locations.reportConfigs.reports.export", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

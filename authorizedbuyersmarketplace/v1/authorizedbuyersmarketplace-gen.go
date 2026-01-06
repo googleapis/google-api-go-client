@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1517,6 +1517,17 @@ func (s MarketplaceTargeting) MarshalJSON() ([]byte, error) {
 type MediaPlanner struct {
 	// AccountId: Output only. Account ID of the media planner.
 	AccountId string `json:"accountId,omitempty"`
+	// AncestorNames: Output only. The ancestor names of the media planner. Format:
+	// `mediaPlanners/{mediaPlannerAccountId}` Can be used to filter the response
+	// of the mediaPlanners.list method.
+	AncestorNames []string `json:"ancestorNames,omitempty"`
+	// DisplayName: Output only. The display name of the media planner. Can be used
+	// to filter the response of the mediaPlanners.list method.
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Identifier. The unique resource name of the media planner. Format:
+	// `mediaPlanners/{mediaPlannerAccountId}` Can be used to filter the response
+	// of the mediaPlanners.list method.
+	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

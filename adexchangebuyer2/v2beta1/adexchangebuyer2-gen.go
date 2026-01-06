@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -3862,7 +3862,7 @@ type Price struct {
 	//
 	// Possible values:
 	//   "PRICING_TYPE_UNSPECIFIED" - A placeholder for an undefined pricing type.
-	// If the pricing type is unpsecified, `COST_PER_MILLE` will be used instead.
+	// If the pricing type is unspecified, `COST_PER_MILLE` will be used instead.
 	//   "COST_PER_MILLE" - Cost per thousand impressions.
 	//   "COST_PER_DAY" - Cost per day
 	PricingType string `json:"pricingType,omitempty"`

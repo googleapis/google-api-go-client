@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -259,6 +259,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.ClientTlsPolicies = NewProjectsLocationsClientTlsPoliciesService(s)
 	rs.DnsThreatDetectors = NewProjectsLocationsDnsThreatDetectorsService(s)
 	rs.FirewallEndpointAssociations = NewProjectsLocationsFirewallEndpointAssociationsService(s)
+	rs.FirewallEndpoints = NewProjectsLocationsFirewallEndpointsService(s)
 	rs.GatewaySecurityPolicies = NewProjectsLocationsGatewaySecurityPoliciesService(s)
 	rs.InterceptDeploymentGroups = NewProjectsLocationsInterceptDeploymentGroupsService(s)
 	rs.InterceptDeployments = NewProjectsLocationsInterceptDeploymentsService(s)
@@ -293,6 +294,8 @@ type ProjectsLocationsService struct {
 	DnsThreatDetectors *ProjectsLocationsDnsThreatDetectorsService
 
 	FirewallEndpointAssociations *ProjectsLocationsFirewallEndpointAssociationsService
+
+	FirewallEndpoints *ProjectsLocationsFirewallEndpointsService
 
 	GatewaySecurityPolicies *ProjectsLocationsGatewaySecurityPoliciesService
 
@@ -385,6 +388,15 @@ func NewProjectsLocationsFirewallEndpointAssociationsService(s *Service) *Projec
 }
 
 type ProjectsLocationsFirewallEndpointAssociationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsFirewallEndpointsService(s *Service) *ProjectsLocationsFirewallEndpointsService {
+	rs := &ProjectsLocationsFirewallEndpointsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsFirewallEndpointsService struct {
 	s *Service
 }
 
@@ -1523,9 +1535,10 @@ func (s CustomInterceptProfile) MarshalJSON() ([]byte, error) {
 // integration behavior (mirroring). It is used by mirroring rules with a
 // MIRROR action.
 type CustomMirroringProfile struct {
-	// MirroringEndpointGroup: Required. The target MirroringEndpointGroup. When a
-	// mirroring rule with this security profile attached matches a packet, a
-	// replica will be mirrored to the location-local target in this group.
+	// MirroringEndpointGroup: Required. Immutable. The target
+	// MirroringEndpointGroup. When a mirroring rule with this security profile
+	// attached matches a packet, a replica will be mirrored to the location-local
+	// target in this group.
 	MirroringEndpointGroup string `json:"mirroringEndpointGroup,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MirroringEndpointGroup") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1583,9 +1596,9 @@ func (s Destination) MarshalJSON() ([]byte, error) {
 }
 
 // DnsThreatDetector: A DNS threat detector sends DNS query logs to a
-// _provider_ that then analyzes the logs to identify malicious activity in the
-// DNS queries. By default, all VPC networks in your projects are included. You
-// can exclude specific networks by supplying `excluded_networks`.
+// _provider_ that then analyzes the logs to identify threat events in the DNS
+// queries. By default, all VPC networks in your projects are included. You can
+// exclude specific networks by supplying `excluded_networks`.
 type DnsThreatDetector struct {
 	// CreateTime: Output only. Create time stamp.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3566,8 +3579,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -7504,9 +7517,9 @@ func (c *OrganizationsLocationsOperationsListCall) PageToken(pageToken string) *
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *OrganizationsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OrganizationsLocationsOperationsListCall {
@@ -8948,9 +8961,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -15225,6 +15238,646 @@ func (c *ProjectsLocationsFirewallEndpointAssociationsPatchCall) Do(opts ...goog
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpointAssociations.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFirewallEndpointsCreateCall struct {
+	s                *Service
+	parent           string
+	firewallendpoint *FirewallEndpoint
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Create: Creates a new FirewallEndpoint in a given project and location.
+//
+// - parent: Value for parent.
+func (r *ProjectsLocationsFirewallEndpointsService) Create(parent string, firewallendpoint *FirewallEndpoint) *ProjectsLocationsFirewallEndpointsCreateCall {
+	c := &ProjectsLocationsFirewallEndpointsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.firewallendpoint = firewallendpoint
+	return c
+}
+
+// FirewallEndpointId sets the optional parameter "firewallEndpointId":
+// Required. Id of the requesting object. If auto-generating Id server-side,
+// remove this field and firewall_endpoint_id from the method_signature of
+// Create RPC.
+func (c *ProjectsLocationsFirewallEndpointsCreateCall) FirewallEndpointId(firewallEndpointId string) *ProjectsLocationsFirewallEndpointsCreateCall {
+	c.urlParams_.Set("firewallEndpointId", firewallEndpointId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsFirewallEndpointsCreateCall) RequestId(requestId string) *ProjectsLocationsFirewallEndpointsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFirewallEndpointsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsFirewallEndpointsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFirewallEndpointsCreateCall) Context(ctx context.Context) *ProjectsLocationsFirewallEndpointsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFirewallEndpointsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFirewallEndpointsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.firewallendpoint)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/firewallEndpoints")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.firewallEndpoints.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsFirewallEndpointsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFirewallEndpointsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single Endpoint.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsFirewallEndpointsService) Delete(name string) *ProjectsLocationsFirewallEndpointsDeleteCall {
+	c := &ProjectsLocationsFirewallEndpointsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsFirewallEndpointsDeleteCall) RequestId(requestId string) *ProjectsLocationsFirewallEndpointsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFirewallEndpointsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsFirewallEndpointsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFirewallEndpointsDeleteCall) Context(ctx context.Context) *ProjectsLocationsFirewallEndpointsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFirewallEndpointsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFirewallEndpointsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.firewallEndpoints.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsFirewallEndpointsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFirewallEndpointsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single Endpoint.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsFirewallEndpointsService) Get(name string) *ProjectsLocationsFirewallEndpointsGetCall {
+	c := &ProjectsLocationsFirewallEndpointsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFirewallEndpointsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsFirewallEndpointsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsFirewallEndpointsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsFirewallEndpointsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFirewallEndpointsGetCall) Context(ctx context.Context) *ProjectsLocationsFirewallEndpointsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFirewallEndpointsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFirewallEndpointsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.firewallEndpoints.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FirewallEndpoint.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsFirewallEndpointsGetCall) Do(opts ...googleapi.CallOption) (*FirewallEndpoint, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FirewallEndpoint{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFirewallEndpointsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists FirewallEndpoints in a given project and location.
+//
+// - parent: Parent value for ListEndpointsRequest.
+func (r *ProjectsLocationsFirewallEndpointsService) List(parent string) *ProjectsLocationsFirewallEndpointsListCall {
+	c := &ProjectsLocationsFirewallEndpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results
+func (c *ProjectsLocationsFirewallEndpointsListCall) Filter(filter string) *ProjectsLocationsFirewallEndpointsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results
+func (c *ProjectsLocationsFirewallEndpointsListCall) OrderBy(orderBy string) *ProjectsLocationsFirewallEndpointsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsFirewallEndpointsListCall) PageSize(pageSize int64) *ProjectsLocationsFirewallEndpointsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsFirewallEndpointsListCall) PageToken(pageToken string) *ProjectsLocationsFirewallEndpointsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFirewallEndpointsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsFirewallEndpointsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsFirewallEndpointsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsFirewallEndpointsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFirewallEndpointsListCall) Context(ctx context.Context) *ProjectsLocationsFirewallEndpointsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFirewallEndpointsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFirewallEndpointsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/firewallEndpoints")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.firewallEndpoints.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListFirewallEndpointsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFirewallEndpointsListCall) Do(opts ...googleapi.CallOption) (*ListFirewallEndpointsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListFirewallEndpointsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsFirewallEndpointsListCall) Pages(ctx context.Context, f func(*ListFirewallEndpointsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsFirewallEndpointsPatchCall struct {
+	s                *Service
+	name             string
+	firewallendpoint *FirewallEndpoint
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Patch: Update a single Endpoint.
+//
+// - name: Immutable. Identifier. Name of resource.
+func (r *ProjectsLocationsFirewallEndpointsService) Patch(name string, firewallendpoint *FirewallEndpoint) *ProjectsLocationsFirewallEndpointsPatchCall {
+	c := &ProjectsLocationsFirewallEndpointsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.firewallendpoint = firewallendpoint
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsFirewallEndpointsPatchCall) RequestId(requestId string) *ProjectsLocationsFirewallEndpointsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
+// used to specify the fields to be overwritten in the Endpoint resource by the
+// update. The fields specified in the update_mask are relative to the
+// resource, not the full request. A field will be overwritten if it is in the
+// mask. If the user does not provide a mask then all fields will be
+// overwritten.
+func (c *ProjectsLocationsFirewallEndpointsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsFirewallEndpointsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFirewallEndpointsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsFirewallEndpointsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFirewallEndpointsPatchCall) Context(ctx context.Context) *ProjectsLocationsFirewallEndpointsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFirewallEndpointsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFirewallEndpointsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.firewallendpoint)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.firewallEndpoints.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsFirewallEndpointsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -21792,9 +22445,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

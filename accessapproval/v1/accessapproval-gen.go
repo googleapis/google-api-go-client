@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -882,6 +882,15 @@ type SignatureInfo struct {
 	//   "PQ_SIGN_HASH_SLH_DSA_SHA2_128S_SHA256" - The post-quantum stateless
 	// hash-based digital signature algorithm, at security level 1. Randomized
 	// pre-hash version supporting SHA256 digests.
+	//   "PQ_SIGN_ML_DSA_44_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 1. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_65_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 3. Randomized version
+	// supporting externally-computed message representatives.
+	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
+	// Digital Signature Algorithm, at security level 5. Randomized version
+	// supporting externally-computed message representatives.
 	GoogleKeyAlgorithm string `json:"googleKeyAlgorithm,omitempty"`
 	// GooglePublicKeyPem: The public key for the Google default signing, encoded
 	// in PEM format. The signature was created using a private key which may be

@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -231,10 +231,22 @@ type ProjectsLocationsConnectionsGitRepositoryLinksService struct {
 
 func NewProjectsLocationsInsightsConfigsService(s *Service) *ProjectsLocationsInsightsConfigsService {
 	rs := &ProjectsLocationsInsightsConfigsService{s: s}
+	rs.DeploymentEvents = NewProjectsLocationsInsightsConfigsDeploymentEventsService(s)
 	return rs
 }
 
 type ProjectsLocationsInsightsConfigsService struct {
+	s *Service
+
+	DeploymentEvents *ProjectsLocationsInsightsConfigsDeploymentEventsService
+}
+
+func NewProjectsLocationsInsightsConfigsDeploymentEventsService(s *Service) *ProjectsLocationsInsightsConfigsDeploymentEventsService {
+	rs := &ProjectsLocationsInsightsConfigsDeploymentEventsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsInsightsConfigsDeploymentEventsService struct {
 	s *Service
 }
 
@@ -384,6 +396,46 @@ func (s ArtifactConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ArtifactDeployment: The ArtifactDeployment resource represents the
+// deployment of the artifact within the InsightsConfig resource.
+type ArtifactDeployment struct {
+	// ArtifactAlias: Output only. The artifact alias in the deployment spec, with
+	// Tag/SHA. e.g. us-docker.pkg.dev/my-project/my-repo/image:1.0.0
+	ArtifactAlias string `json:"artifactAlias,omitempty"`
+	// ArtifactReference: Output only. The artifact that is deployed.
+	ArtifactReference string `json:"artifactReference,omitempty"`
+	// ContainerStatusSummary: Output only. The summary of container status of the
+	// artifact deployment. Format as `ContainerStatusState-Reason : restartCount`
+	// e.g. "Waiting-ImagePullBackOff : 3"
+	ContainerStatusSummary string `json:"containerStatusSummary,omitempty"`
+	// DeployTime: Output only. The time at which the deployment was deployed.
+	DeployTime string `json:"deployTime,omitempty"`
+	// Id: Output only. Unique identifier of `ArtifactDeployment`.
+	Id string `json:"id,omitempty"`
+	// SourceCommitUris: Output only. The source commits at which this artifact was
+	// built. Extracted from provenance.
+	SourceCommitUris []string `json:"sourceCommitUris,omitempty"`
+	// UndeployTime: Output only. The time at which the deployment was undeployed,
+	// all artifacts are considered undeployed once this time is set.
+	UndeployTime string `json:"undeployTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArtifactAlias") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArtifactAlias") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ArtifactDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod ArtifactDeployment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BitbucketCloudConfig: Configuration for connections to an instance of
 // Bitbucket Cloud.
 type BitbucketCloudConfig struct {
@@ -400,8 +452,9 @@ type BitbucketCloudConfig struct {
 	ReadAuthorizerCredential *UserCredential `json:"readAuthorizerCredential,omitempty"`
 	// WebhookSecretSecretVersion: Required. Immutable. SecretManager resource
 	// containing the webhook secret used to verify webhook events, formatted as
-	// `projects/*/secrets/*/versions/*`. This is used to validate and create
-	// webhooks.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location). This is used to validate and create webhooks.
 	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
 	// Workspace: Required. The Bitbucket Cloud Workspace ID to be connected to
 	// Google Cloud Platform.
@@ -452,7 +505,9 @@ type BitbucketDataCenterConfig struct {
 	SslCaCertificate string `json:"sslCaCertificate,omitempty"`
 	// WebhookSecretSecretVersion: Required. Immutable. SecretManager resource
 	// containing the webhook secret used to verify webhook events, formatted as
-	// `projects/*/secrets/*/versions/*`. This is used to validate webhooks.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location). This is used to validate webhooks.
 	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthorizerCredential") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -573,6 +628,69 @@ type CryptoKeyConfig struct {
 
 func (s CryptoKeyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CryptoKeyConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeploymentEvent: The DeploymentEvent resource represents the deployment of
+// the artifact within the InsightsConfig resource.
+type DeploymentEvent struct {
+	// ArtifactDeployments: Output only. The artifact deployments of the
+	// DeploymentEvent. Each artifact deployment contains the artifact uri and the
+	// runtime configuration uri. For GKE, this would be all the containers images
+	// that are deployed in the pod.
+	ArtifactDeployments []*ArtifactDeployment `json:"artifactDeployments,omitempty"`
+	// CreateTime: Output only. The create time of the DeploymentEvent.
+	CreateTime string `json:"createTime,omitempty"`
+	// DeployTime: Output only. The time at which the DeploymentEvent was deployed.
+	// This would be the min of all ArtifactDeployment deploy_times.
+	DeployTime string `json:"deployTime,omitempty"`
+	// Name: Identifier. The name of the DeploymentEvent. This name is provided by
+	// DCI. Format:
+	// projects/{project}/locations/{location}/insightsConfigs/{insights_config}/dep
+	// loymentEvents/{uuid}
+	Name string `json:"name,omitempty"`
+	// RuntimeConfig: Output only. The runtime configurations where the
+	// DeploymentEvent happened.
+	RuntimeConfig *RuntimeConfig `json:"runtimeConfig,omitempty"`
+	// RuntimeDeploymentUri: Output only. The runtime assigned URI of the
+	// DeploymentEvent. For GKE, this is the fully qualified replica set uri. e.g.
+	// container.googleapis.com/projects/{project}/locations/{location}/clusters/{cl
+	// uster}/k8s/namespaces/{namespace}/apps/replicasets/{replica-set-id} For
+	// Cloud Run, this is the revision name.
+	RuntimeDeploymentUri string `json:"runtimeDeploymentUri,omitempty"`
+	// State: Output only. The state of the DeploymentEvent.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - No state specified.
+	//   "STATE_ACTIVE" - The deployment is active in the runtime.
+	//   "STATE_INACTIVE" - The deployment is not in the runtime.
+	State string `json:"state,omitempty"`
+	// UndeployTime: Output only. The time at which the DeploymentEvent was
+	// undeployed, all artifacts are considered undeployed once this time is set.
+	// This would be the max of all ArtifactDeployment undeploy_times. If any
+	// ArtifactDeployment is still active (i.e. does not have an undeploy_time),
+	// this field will be empty.
+	UndeployTime string `json:"undeployTime,omitempty"`
+	// UpdateTime: Output only. The update time of the DeploymentEvent.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ArtifactDeployments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArtifactDeployments") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeploymentEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod DeploymentEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -805,6 +923,32 @@ func (s FetchReadWriteTokenResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FinishOAuthResponse: Message for responding to finishing an OAuth flow.
+type FinishOAuthResponse struct {
+	// ExchangeError: The error resulted from exchanging OAuth tokens from the
+	// service provider.
+	ExchangeError *ExchangeError `json:"exchangeError,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ExchangeError") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExchangeError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FinishOAuthResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FinishOAuthResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GKEWorkload: GKEWorkload represents the Google Kubernetes Engine runtime.
 type GKEWorkload struct {
 	// Cluster: Required. Immutable. The name of the GKE cluster. Format:
@@ -888,7 +1032,9 @@ type GitHubEnterpriseConfig struct {
 	InstallationUri string `json:"installationUri,omitempty"`
 	// PrivateKeySecretVersion: Optional. SecretManager resource containing the
 	// private key of the GitHub App, formatted as
-	// `projects/*/secrets/*/versions/*`.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location).
 	PrivateKeySecretVersion string `json:"privateKeySecretVersion,omitempty"`
 	// ServerVersion: Output only. GitHub Enterprise version installed at the
 	// host_uri.
@@ -904,7 +1050,9 @@ type GitHubEnterpriseConfig struct {
 	SslCaCertificate string `json:"sslCaCertificate,omitempty"`
 	// WebhookSecretSecretVersion: Optional. SecretManager resource containing the
 	// webhook secret of the GitHub App, formatted as
-	// `projects/*/secrets/*/versions/*`.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location).
 	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -938,7 +1086,9 @@ type GitLabConfig struct {
 	ReadAuthorizerCredential *UserCredential `json:"readAuthorizerCredential,omitempty"`
 	// WebhookSecretSecretVersion: Required. Immutable. SecretManager resource
 	// containing the webhook secret of a GitLab project, formatted as
-	// `projects/*/secrets/*/versions/*`. This is used to validate webhooks.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location). This is used to validate webhooks.
 	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthorizerCredential") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -988,7 +1138,9 @@ type GitLabEnterpriseConfig struct {
 	SslCaCertificate string `json:"sslCaCertificate,omitempty"`
 	// WebhookSecretSecretVersion: Required. Immutable. SecretManager resource
 	// containing the webhook secret of a GitLab project, formatted as
-	// `projects/*/secrets/*/versions/*`. This is used to validate webhooks.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location). This is used to validate webhooks.
 	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthorizerCredential") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1013,6 +1165,11 @@ type GitProxyConfig struct {
 	// Enabled: Optional. Setting this to true allows the git proxy to be used for
 	// performing git operations on the repositories linked in the connection.
 	Enabled bool `json:"enabled,omitempty"`
+	// HttpProxyBaseUri: Output only. The base URI for the HTTP proxy endpoint. Has
+	// the format `https://{generatedID}-c-h-{shortRegion}.developerconnect.dev`
+	// Populated only when enabled is set to true. This endpoint is used by other
+	// Google services that integrate with Developer Connect.
+	HttpProxyBaseUri string `json:"httpProxyBaseUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1229,6 +1386,8 @@ type InsightsConfig struct {
 	// Name: Identifier. The name of the InsightsConfig. Format:
 	// projects/{project}/locations/{location}/insightsConfigs/{insightsConfig}
 	Name string `json:"name,omitempty"`
+	// Projects: Optional. The GCP projects to track with the InsightsConfig.
+	Projects *Projects `json:"projects,omitempty"`
 	// Reconciling: Output only. Reconciling
 	// (https://google.aip.dev/128#reconciliation). Set to true if the current
 	// state of InsightsConfig does not match the user's intended state, and the
@@ -1419,6 +1578,34 @@ type ListConnectionsResponse struct {
 
 func (s ListConnectionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListConnectionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListDeploymentEventsResponse: Response to listing DeploymentEvents.
+type ListDeploymentEventsResponse struct {
+	// DeploymentEvents: The list of DeploymentEvents.
+	DeploymentEvents []*DeploymentEvent `json:"deploymentEvents,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DeploymentEvents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeploymentEvents") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListDeploymentEventsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDeploymentEventsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1618,7 +1805,9 @@ func (s Location) MarshalJSON() ([]byte, error) {
 type OAuthCredential struct {
 	// OauthTokenSecretVersion: Required. A SecretManager resource containing the
 	// OAuth token that authorizes the connection. Format:
-	// `projects/*/secrets/*/versions/*`.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location).
 	OauthTokenSecretVersion string `json:"oauthTokenSecretVersion,omitempty"`
 	// Username: Output only. The username associated with this token.
 	Username string `json:"username,omitempty"`
@@ -1840,6 +2029,28 @@ func (s ProcessGitLabWebhookRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Projects: Projects represents the projects to track with the InsightsConfig.
+type Projects struct {
+	// ProjectIds: Optional. The GCP Project IDs. Format: projects/{project}
+	ProjectIds []string `json:"projectIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProjectIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProjectIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Projects) MarshalJSON() ([]byte, error) {
+	type NoMethod Projects
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ProviderOAuthConfig: ProviderOAuthConfig is the OAuth config for a provider.
 type ProviderOAuthConfig struct {
 	// Scopes: Required. User selected scopes to apply to the Oauth config In the
@@ -1854,15 +2065,20 @@ type ProviderOAuthConfig struct {
 	// https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes
 	//   "GITLAB" - GitLab provider. Scopes can be found at
 	// https://docs.gitlab.com/user/profile/personal_access_tokens/#personal-access-token-scopes
-	//   "GOOGLE" - Google provider. Recommended scopes:
+	//   "GOOGLE" - Deprecated: This provider is no longer supported. Google
+	// provider. Recommended scopes:
 	// "https://www.googleapis.com/auth/drive.readonly",
 	// "https://www.googleapis.com/auth/documents.readonly"
-	//   "SENTRY" - Sentry provider. Scopes can be found at
-	// https://docs.sentry.io/api/permissions/
-	//   "ROVO" - Rovo provider. Must select the "rovo" scope.
-	//   "NEW_RELIC" - New Relic provider. No scopes are allowed.
-	//   "DATASTAX" - Datastax provider. No scopes are allowed.
-	//   "DYNATRACE" - Dynatrace provider.
+	//   "SENTRY" - Deprecated: This provider is no longer supported. Sentry
+	// provider. Scopes can be found at https://docs.sentry.io/api/permissions/
+	//   "ROVO" - Deprecated: This provider is no longer supported. Rovo provider.
+	// Must select the "rovo" scope.
+	//   "NEW_RELIC" - Deprecated: This provider is no longer supported. New Relic
+	// provider. No scopes are allowed.
+	//   "DATASTAX" - Deprecated: This provider is no longer supported. Datastax
+	// provider. No scopes are allowed.
+	//   "DYNATRACE" - Deprecated: This provider is no longer supported. Dynatrace
+	// provider.
 	SystemProviderId string `json:"systemProviderId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Scopes") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1948,6 +2164,68 @@ func (s ServiceDirectoryConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// StartOAuthResponse: Message for responding to starting an OAuth flow.
+type StartOAuthResponse struct {
+	// AuthUri: The authorization server URL to the OAuth flow of the service
+	// provider.
+	AuthUri string `json:"authUri,omitempty"`
+	// ClientId: The client ID to the OAuth App of the service provider.
+	ClientId string `json:"clientId,omitempty"`
+	// CodeChallenge: https://datatracker.ietf.org/doc/html/rfc7636#section-4.1
+	// Follow http://shortn/_WFYl6U0NyC to include it in the AutoCodeURL.
+	CodeChallenge string `json:"codeChallenge,omitempty"`
+	// CodeChallengeMethod:
+	// https://datatracker.ietf.org/doc/html/rfc7636#section-4.2
+	CodeChallengeMethod string `json:"codeChallengeMethod,omitempty"`
+	// Scopes: The list of scopes requested by the application.
+	Scopes []string `json:"scopes,omitempty"`
+	// SystemProviderId: The ID of the system provider.
+	//
+	// Possible values:
+	//   "SYSTEM_PROVIDER_UNSPECIFIED" - No system provider specified.
+	//   "GITHUB" - GitHub provider. Scopes can be found at
+	// https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes
+	//   "GITLAB" - GitLab provider. Scopes can be found at
+	// https://docs.gitlab.com/user/profile/personal_access_tokens/#personal-access-token-scopes
+	//   "GOOGLE" - Deprecated: This provider is no longer supported. Google
+	// provider. Recommended scopes:
+	// "https://www.googleapis.com/auth/drive.readonly",
+	// "https://www.googleapis.com/auth/documents.readonly"
+	//   "SENTRY" - Deprecated: This provider is no longer supported. Sentry
+	// provider. Scopes can be found at https://docs.sentry.io/api/permissions/
+	//   "ROVO" - Deprecated: This provider is no longer supported. Rovo provider.
+	// Must select the "rovo" scope.
+	//   "NEW_RELIC" - Deprecated: This provider is no longer supported. New Relic
+	// provider. No scopes are allowed.
+	//   "DATASTAX" - Deprecated: This provider is no longer supported. Datastax
+	// provider. No scopes are allowed.
+	//   "DYNATRACE" - Deprecated: This provider is no longer supported. Dynatrace
+	// provider.
+	SystemProviderId string `json:"systemProviderId,omitempty"`
+	// Ticket: The ticket to be used for post processing the callback from the
+	// service provider.
+	Ticket string `json:"ticket,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AuthUri") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StartOAuthResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod StartOAuthResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is suitable for
 // different programming environments, including REST APIs and RPC APIs. It is
 // used by gRPC (https://github.com/grpc). Each `Status` message contains three
@@ -2022,7 +2300,9 @@ func (s User) MarshalJSON() ([]byte, error) {
 type UserCredential struct {
 	// UserTokenSecretVersion: Required. A SecretManager resource containing the
 	// user token that authorizes the Developer Connect connection. Format:
-	// `projects/*/secrets/*/versions/*`.
+	// `projects/*/secrets/*/versions/*` or
+	// `projects/*/locations/*/secrets/*/versions/*` (if regional secrets are
+	// supported in that location).
 	UserTokenSecretVersion string `json:"userTokenSecretVersion,omitempty"`
 	// Username: Output only. The username associated with this token.
 	Username string `json:"username,omitempty"`
@@ -3442,6 +3722,156 @@ func (c *ProjectsLocationsAccountConnectorsUsersFetchSelfCall) Do(opts ...google
 	return ret, nil
 }
 
+type ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall struct {
+	s                *Service
+	accountConnector string
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// FinishOAuthFlow: Finishes OAuth flow for an account connector.
+//
+//   - accountConnector: The resource name of the AccountConnector in the format
+//     `projects/*/locations/*/accountConnectors/*`.
+func (r *ProjectsLocationsAccountConnectorsUsersService) FinishOAuthFlow(accountConnector string) *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall {
+	c := &ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountConnector = accountConnector
+	return c
+}
+
+// GoogleOauthParamsScopes sets the optional parameter
+// "googleOauthParams.scopes": Required. The scopes returned by Google OAuth
+// flow.
+func (c *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall) GoogleOauthParamsScopes(googleOauthParamsScopes ...string) *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall {
+	c.urlParams_.SetMulti("googleOauthParams.scopes", append([]string{}, googleOauthParamsScopes...))
+	return c
+}
+
+// GoogleOauthParamsTicket sets the optional parameter
+// "googleOauthParams.ticket": Required. The ticket to be used for post
+// processing the callback from Google OAuth flow.
+func (c *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall) GoogleOauthParamsTicket(googleOauthParamsTicket string) *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall {
+	c.urlParams_.Set("googleOauthParams.ticket", googleOauthParamsTicket)
+	return c
+}
+
+// GoogleOauthParamsVersionInfo sets the optional parameter
+// "googleOauthParams.versionInfo": The version info returned by Google OAuth
+// flow.
+func (c *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall) GoogleOauthParamsVersionInfo(googleOauthParamsVersionInfo string) *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall {
+	c.urlParams_.Set("googleOauthParams.versionInfo", googleOauthParamsVersionInfo)
+	return c
+}
+
+// OauthParamsCode sets the optional parameter "oauthParams.code": Required.
+// The code to be used for getting the token from SCM provider.
+func (c *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall) OauthParamsCode(oauthParamsCode string) *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall {
+	c.urlParams_.Set("oauthParams.code", oauthParamsCode)
+	return c
+}
+
+// OauthParamsTicket sets the optional parameter "oauthParams.ticket":
+// Required. The ticket to be used for post processing the callback from SCM
+// provider.
+func (c *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall) OauthParamsTicket(oauthParamsTicket string) *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall {
+	c.urlParams_.Set("oauthParams.ticket", oauthParamsTicket)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall) Fields(s ...googleapi.Field) *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall) IfNoneMatch(entityTag string) *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall) Context(ctx context.Context) *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+accountConnector}/users:finishOAuthFlow")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountConnector": c.accountConnector,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.accountConnectors.users.finishOAuthFlow", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.accountConnectors.users.finishOAuthFlow" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FinishOAuthResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAccountConnectorsUsersFinishOAuthFlowCall) Do(opts ...googleapi.CallOption) (*FinishOAuthResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FinishOAuthResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.accountConnectors.users.finishOAuthFlow", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsAccountConnectorsUsersListCall struct {
 	s            *Service
 	parent       string
@@ -3599,6 +4029,117 @@ func (c *ProjectsLocationsAccountConnectorsUsersListCall) Pages(ctx context.Cont
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsAccountConnectorsUsersStartOAuthFlowCall struct {
+	s                *Service
+	accountConnector string
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// StartOAuthFlow: Starts OAuth flow for an account connector.
+//
+//   - accountConnector: The resource name of the AccountConnector in the format
+//     `projects/*/locations/*/accountConnectors/*`.
+func (r *ProjectsLocationsAccountConnectorsUsersService) StartOAuthFlow(accountConnector string) *ProjectsLocationsAccountConnectorsUsersStartOAuthFlowCall {
+	c := &ProjectsLocationsAccountConnectorsUsersStartOAuthFlowCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountConnector = accountConnector
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAccountConnectorsUsersStartOAuthFlowCall) Fields(s ...googleapi.Field) *ProjectsLocationsAccountConnectorsUsersStartOAuthFlowCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAccountConnectorsUsersStartOAuthFlowCall) IfNoneMatch(entityTag string) *ProjectsLocationsAccountConnectorsUsersStartOAuthFlowCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAccountConnectorsUsersStartOAuthFlowCall) Context(ctx context.Context) *ProjectsLocationsAccountConnectorsUsersStartOAuthFlowCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAccountConnectorsUsersStartOAuthFlowCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAccountConnectorsUsersStartOAuthFlowCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+accountConnector}/users:startOAuthFlow")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountConnector": c.accountConnector,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.accountConnectors.users.startOAuthFlow", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.accountConnectors.users.startOAuthFlow" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *StartOAuthResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAccountConnectorsUsersStartOAuthFlowCall) Do(opts ...googleapi.CallOption) (*StartOAuthResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &StartOAuthResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.accountConnectors.users.startOAuthFlow", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsConnectionsCreateCall struct {
@@ -6622,6 +7163,276 @@ func (c *ProjectsLocationsInsightsConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.insightsConfigs.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsInsightsConfigsDeploymentEventsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a single Deployment Event.
+//
+//   - name: The name of the deployment event to retrieve. Format:
+//     projects/{project}/locations/{location}/insightsConfigs/{insights_config}/d
+//     eploymentEvents/{uuid}.
+func (r *ProjectsLocationsInsightsConfigsDeploymentEventsService) Get(name string) *ProjectsLocationsInsightsConfigsDeploymentEventsGetCall {
+	c := &ProjectsLocationsInsightsConfigsDeploymentEventsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsInsightsConfigsDeploymentEventsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsInsightsConfigsDeploymentEventsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsGetCall) Context(ctx context.Context) *ProjectsLocationsInsightsConfigsDeploymentEventsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.insightsConfigs.deploymentEvents.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.insightsConfigs.deploymentEvents.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DeploymentEvent.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsGetCall) Do(opts ...googleapi.CallOption) (*DeploymentEvent, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DeploymentEvent{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.insightsConfigs.deploymentEvents.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInsightsConfigsDeploymentEventsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Deployment Events in a given insights config.
+//
+//   - parent: The parent insights config that owns this collection of deployment
+//     events. Format:
+//     projects/{project}/locations/{location}/insightsConfigs/{insights_config}.
+func (r *ProjectsLocationsInsightsConfigsDeploymentEventsService) List(parent string) *ProjectsLocationsInsightsConfigsDeploymentEventsListCall {
+	c := &ProjectsLocationsInsightsConfigsDeploymentEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression that matches
+// a subset of the DeploymentEvents. https://google.aip.dev/160.
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsListCall) Filter(filter string) *ProjectsLocationsInsightsConfigsDeploymentEventsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// deployment events to return. The service may return fewer than this value.
+// If unspecified, at most 50 deployment events will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsListCall) PageSize(pageSize int64) *ProjectsLocationsInsightsConfigsDeploymentEventsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListDeploymentEvents` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListDeploymentEvents` must match the call that provided the page token.
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsListCall) PageToken(pageToken string) *ProjectsLocationsInsightsConfigsDeploymentEventsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsInsightsConfigsDeploymentEventsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsInsightsConfigsDeploymentEventsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsListCall) Context(ctx context.Context) *ProjectsLocationsInsightsConfigsDeploymentEventsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/deploymentEvents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.insightsConfigs.deploymentEvents.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.insightsConfigs.deploymentEvents.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDeploymentEventsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsListCall) Do(opts ...googleapi.CallOption) (*ListDeploymentEventsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDeploymentEventsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.insightsConfigs.deploymentEvents.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsInsightsConfigsDeploymentEventsListCall) Pages(ctx context.Context, f func(*ListDeploymentEventsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsOperationsCancelCall struct {

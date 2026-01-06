@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -878,6 +878,10 @@ type CompilationResult struct {
 	InternalMetadata string `json:"internalMetadata,omitempty"`
 	// Name: Output only. The compilation result's name.
 	Name string `json:"name,omitempty"`
+	// PrivateResourceMetadata: Output only. Metadata indicating whether this
+	// resource is user-scoped. `CompilationResult` resource is `user_scoped` only
+	// if it is sourced from a workspace.
+	PrivateResourceMetadata *PrivateResourceMetadata `json:"privateResourceMetadata,omitempty"`
 	// ReleaseConfig: Immutable. The name of the release config to compile. Must be
 	// in the format `projects/*/locations/*/repositories/*/releaseConfigs/*`.
 	ReleaseConfig string `json:"releaseConfig,omitempty"`
@@ -1745,8 +1749,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2409,6 +2413,30 @@ type PolicyName struct {
 
 func (s PolicyName) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyName
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PrivateResourceMetadata: Metadata used to identify if a resource is user
+// scoped.
+type PrivateResourceMetadata struct {
+	// UserScoped: Output only. If true, this resource is user-scoped, meaning it
+	// is either a workspace or sourced from a workspace.
+	UserScoped bool `json:"userScoped,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UserScoped") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UserScoped") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PrivateResourceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivateResourceMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3387,6 +3415,11 @@ type WorkflowInvocation struct {
 	InvocationTiming *Interval `json:"invocationTiming,omitempty"`
 	// Name: Output only. The workflow invocation's name.
 	Name string `json:"name,omitempty"`
+	// PrivateResourceMetadata: Output only. Metadata indicating whether this
+	// resource is user-scoped. `WorkflowInvocation` resource is `user_scoped` only
+	// if it is sourced from a compilation result and the compilation result is
+	// user-scoped.
+	PrivateResourceMetadata *PrivateResourceMetadata `json:"privateResourceMetadata,omitempty"`
 	// ResolvedCompilationResult: Output only. The resolved compilation result that
 	// was used to create this invocation. Will be in the format
 	// `projects/*/locations/*/repositories/*/compilationResults/*`.
@@ -3499,6 +3532,10 @@ type Workspace struct {
 	InternalMetadata string `json:"internalMetadata,omitempty"`
 	// Name: Identifier. The workspace's name.
 	Name string `json:"name,omitempty"`
+	// PrivateResourceMetadata: Output only. Metadata indicating whether this
+	// resource is user-scoped. For `Workspace` resources, the `user_scoped` field
+	// is always `true`.
+	PrivateResourceMetadata *PrivateResourceMetadata `json:"privateResourceMetadata,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4808,9 +4845,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

@@ -12,6 +12,7 @@ import (
 	"cloud.google.com/go/auth"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
+	"google.golang.org/api/internal/credentialstype"
 )
 
 func TestCreds_DefaultServiceAccount(t *testing.T) {
@@ -363,7 +364,8 @@ func TestGetQuotaProject(t *testing.T) {
 		&DialSettings{
 			Endpoint:      "foo.googleapis.com",
 			DefaultScopes: []string{"foo"},
-		})
+		},
+		credentialstype.ServiceAccount)
 	if err != nil {
 		t.Fatalf("got %v, wanted no error", err)
 	}
@@ -379,7 +381,8 @@ func TestGetQuotaProject(t *testing.T) {
 		&DialSettings{
 			Endpoint:      "foo.googleapis.com",
 			DefaultScopes: []string{"foo"},
-		})
+		},
+		credentialstype.AuthorizedUser)
 	if err != nil {
 		t.Fatalf("got %v, wanted no error", err)
 	}
@@ -593,38 +596,38 @@ func TestIsSelfSignedJWTFlow(t *testing.T) {
 		{
 			name: "EnableJwtWithScope true",
 			ds: &DialSettings{
-				CredentialsFile:    "testdata/service-account.json",
-				Scopes:             []string{"foo"},
-				EnableJwtWithScope: true,
+				AuthCredentialsFile: "testdata/service-account.json",
+				Scopes:              []string{"foo"},
+				EnableJwtWithScope:  true,
 			},
 			want: true,
 		},
 		{
 			name: "EnableJwtWithScope false",
 			ds: &DialSettings{
-				CredentialsFile:    "testdata/service-account.json",
-				Scopes:             []string{"foo"},
-				EnableJwtWithScope: false,
+				AuthCredentialsFile: "testdata/service-account.json",
+				Scopes:              []string{"foo"},
+				EnableJwtWithScope:  false,
 			},
 			want: false,
 		},
 		{
 			name: "UniverseDomain",
 			ds: &DialSettings{
-				CredentialsFile:    "testdata/service-account.json",
-				Scopes:             []string{"foo"},
-				EnableJwtWithScope: false,
-				UniverseDomain:     "example.com",
+				AuthCredentialsFile: "testdata/service-account.json",
+				Scopes:              []string{"foo"},
+				EnableJwtWithScope:  false,
+				UniverseDomain:      "example.com",
 			},
 			want: true,
 		},
 		{
 			name: "UniverseDomainUserAccount",
 			ds: &DialSettings{
-				CredentialsFile:    "testdata/user-account.json",
-				Scopes:             []string{"foo"},
-				EnableJwtWithScope: false,
-				UniverseDomain:     "example.com",
+				AuthCredentialsFile: "testdata/user-account.json",
+				Scopes:              []string{"foo"},
+				EnableJwtWithScope:  false,
+				UniverseDomain:      "example.com",
 			},
 			want: false,
 		},
@@ -632,7 +635,7 @@ func TestIsSelfSignedJWTFlow(t *testing.T) {
 
 	for _, tc := range tests {
 
-		bytes, err := os.ReadFile(tc.ds.CredentialsFile)
+		bytes, err := os.ReadFile(tc.ds.AuthCredentialsFile)
 		if err != nil {
 			t.Fatal(err)
 		}

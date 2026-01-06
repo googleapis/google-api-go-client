@@ -1,5 +1,34 @@
 # Changes
 
+## [0.259.0](https://github.com/googleapis/google-api-go-client/compare/v0.258.0...v0.259.0) (2026-01-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove firebaseremoteconfig from package list ([#3422](https://github.com/googleapis/google-api-go-client/issues/3422))
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#3412](https://github.com/googleapis/google-api-go-client/issues/3412)) ([c7d21a4](https://github.com/googleapis/google-api-go-client/commit/c7d21a4d7b388f98004cdef7eb1da28afda20e3c))
+* **all:** Auto-regenerate discovery clients ([#3415](https://github.com/googleapis/google-api-go-client/issues/3415)) ([6860a5e](https://github.com/googleapis/google-api-go-client/commit/6860a5e602d186c2b09c124bf66eed5ff9a4417c))
+* **all:** Auto-regenerate discovery clients ([#3417](https://github.com/googleapis/google-api-go-client/issues/3417)) ([0a99634](https://github.com/googleapis/google-api-go-client/commit/0a99634bc071a7c86eef4397bc7f236f7e691453))
+* **all:** Auto-regenerate discovery clients ([#3419](https://github.com/googleapis/google-api-go-client/issues/3419)) ([03d987b](https://github.com/googleapis/google-api-go-client/commit/03d987b2b4bed89a1d97eae8fd1c1390b03aa5ed))
+* **all:** Auto-regenerate discovery clients ([#3421](https://github.com/googleapis/google-api-go-client/issues/3421)) ([632ee92](https://github.com/googleapis/google-api-go-client/commit/632ee92f17be886948004adc2096825fb259d5e3))
+* **all:** Auto-regenerate discovery clients ([#3425](https://github.com/googleapis/google-api-go-client/issues/3425)) ([b599823](https://github.com/googleapis/google-api-go-client/commit/b5998236840eb877911befa581668ad47ea5dc02))
+* Support write checksums in json resumable uploads ([#3405](https://github.com/googleapis/google-api-go-client/issues/3405)) ([6e57e38](https://github.com/googleapis/google-api-go-client/commit/6e57e384f3af2773be6ec086c7cca6a500a9c9f5))
+
+
+### Bug Fixes
+
+* **option:** Remove option.WithAuthCredentials from validation ([#3420](https://github.com/googleapis/google-api-go-client/issues/3420)) ([2c33732](https://github.com/googleapis/google-api-go-client/commit/2c337321d374c3e9f02c09c75cb94b73eaf23fd2))
+* Remove firebaseremoteconfig from package list ([#3422](https://github.com/googleapis/google-api-go-client/issues/3422)) ([fd0ce7c](https://github.com/googleapis/google-api-go-client/commit/fd0ce7cd83e33d83e3040e4cc3c8f39fc4aed6dd))
+* **transport:** Remove singleton and restore normal usage of otelgrpc.clientHandler ([#3424](https://github.com/googleapis/google-api-go-client/issues/3424)) ([24fbfcb](https://github.com/googleapis/google-api-go-client/commit/24fbfcbae5daea4fd67445129091522c6fad5200)), refs [#2321](https://github.com/googleapis/google-api-go-client/issues/2321) [#2329](https://github.com/googleapis/google-api-go-client/issues/2329)
+
+
+### Miscellaneous Chores
+
+* Correct release version ([#3426](https://github.com/googleapis/google-api-go-client/issues/3426)) ([a783dbb](https://github.com/googleapis/google-api-go-client/commit/a783dbb2bb83627f299916fb808756cc64038fdd))
+
 ## [0.258.0](https://github.com/googleapis/google-api-go-client/compare/v0.257.0...v0.258.0) (2025-12-18)
 
 

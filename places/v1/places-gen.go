@@ -878,9 +878,9 @@ type GoogleMapsPlacesV1ContextualContent struct {
 	// for more details. Justifications for the place.
 	Justifications []*GoogleMapsPlacesV1ContextualContentJustification `json:"justifications,omitempty"`
 	// Photos: Information (including references) about photos of this place,
-	// contexual to the place query.
+	// contextual to the place query.
 	Photos []*GoogleMapsPlacesV1Photo `json:"photos,omitempty"`
-	// Reviews: List of reviews about this place, contexual to the place query.
+	// Reviews: List of reviews about this place, contextual to the place query.
 	Reviews []*GoogleMapsPlacesV1Review `json:"reviews,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Justifications") to
 	// unconditionally include in API requests. By default, fields with empty or

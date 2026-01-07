@@ -1614,8 +1614,8 @@ type BackupServiceToggledEvent struct {
 	//
 	// Possible values:
 	//   "BACKUP_SERVICE_STATE_UNSPECIFIED" - No value is set
-	//   "BACKUP_SERVICE_DISABLED" - Backup service is enabled
-	//   "BACKUP_SERVICE_ENABLED" - Backup service is disabled
+	//   "BACKUP_SERVICE_DISABLED" - Backup service is disabled
+	//   "BACKUP_SERVICE_ENABLED" - Backup service is enabled
 	BackupServiceState string `json:"backupServiceState,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminPackageName") to
 	// unconditionally include in API requests. By default, fields with empty or

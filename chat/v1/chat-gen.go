@@ -5184,8 +5184,6 @@ type Message struct {
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 	// and omit the following: * Attachments
 	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages.attachments)
-	// * Accessory widgets
-	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages#Message.AccessoryWidget)
 	// For details, see Send a message privately
 	// (https://developers.google.com/workspace/chat/create-messages#private).
 	PrivateMessageViewer *User `json:"privateMessageViewer,omitempty"`

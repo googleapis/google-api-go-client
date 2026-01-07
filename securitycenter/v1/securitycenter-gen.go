@@ -1167,6 +1167,64 @@ func (s Application) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ArtifactGuardPolicies: Represents the result of evaluating artifact guard
+// policies.
+type ArtifactGuardPolicies struct {
+	// FailingPolicies: A list of failing policies.
+	FailingPolicies []*ArtifactGuardPolicy `json:"failingPolicies,omitempty"`
+	// ResourceId: The ID of the resource that has policies configured for it.
+	ResourceId string `json:"resourceId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FailingPolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailingPolicies") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ArtifactGuardPolicies) MarshalJSON() ([]byte, error) {
+	type NoMethod ArtifactGuardPolicies
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ArtifactGuardPolicy: Represents an artifact guard policy.
+type ArtifactGuardPolicy struct {
+	// FailureReason: The reason for the policy failure, for example,
+	// "severity=HIGH AND max_vuln_count=2".
+	FailureReason string `json:"failureReason,omitempty"`
+	// PolicyId: The ID of the failing policy, for example,
+	// "organizations/3392779/locations/global/policies/prod-policy".
+	PolicyId string `json:"policyId,omitempty"`
+	// Type: The type of the policy evaluation.
+	//
+	// Possible values:
+	//   "ARTIFACT_GUARD_POLICY_TYPE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "VULNERABILITY" - Vulnerability type.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FailureReason") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailureReason") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ArtifactGuardPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod ArtifactGuardPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Asset: Security Command Center representation of a Google Cloud resource.
 // The Asset is a Security Command Center resource that captures information
 // about a single Google Cloud resource. All modifications to an Asset are only
@@ -3471,6 +3529,15 @@ type File struct {
 	// DiskPath: Path of the file in terms of underlying disk/partition
 	// identifiers.
 	DiskPath *DiskPath `json:"diskPath,omitempty"`
+	// FileLoadState: The load state of the file.
+	//
+	// Possible values:
+	//   "FILE_LOAD_STATE_UNSPECIFIED" - The file state is unspecified.
+	//   "LOADED_BY_PROCESS" - The file is being used by an active process at the
+	// time of scanning.
+	//   "NOT_LOADED_BY_PROCESS" - The file is not being used by any active process
+	// at the time of scanning.
+	FileLoadState string `json:"fileLoadState,omitempty"`
 	// HashedSize: The length in bytes of the file prefix that was hashed. If
 	// hashed_size == size, any hashes reported represent the entire file.
 	HashedSize int64 `json:"hashedSize,omitempty,string"`
@@ -3549,6 +3616,8 @@ type Finding struct {
 	AiModel *AiModel `json:"aiModel,omitempty"`
 	// Application: Represents an application associated with the finding.
 	Application *Application `json:"application,omitempty"`
+	// ArtifactGuardPolicies: ArtifactGuardPolicies associated with the finding.
+	ArtifactGuardPolicies *ArtifactGuardPolicies `json:"artifactGuardPolicies,omitempty"`
 	// AttackExposure: The results of an attack path simulation relevant to this
 	// finding.
 	AttackExposure *AttackExposure `json:"attackExposure,omitempty"`
@@ -3741,6 +3810,8 @@ type Finding struct {
 	// customer or partner defined string. This field is immutable after creation
 	// time.
 	ResourceName string `json:"resourceName,omitempty"`
+	// Secret: Secret associated with the finding.
+	Secret *Secret `json:"secret,omitempty"`
 	// SecurityMarks: Output only. User specified security marks. These marks are
 	// entirely managed by the user and come from the SecurityMarks resource that
 	// belongs to the finding.
@@ -5491,6 +5562,65 @@ func (s GoogleCloudSecuritycenterV2Application) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV2ArtifactGuardPolicies: Represents the result of
+// evaluating artifact guard policies.
+type GoogleCloudSecuritycenterV2ArtifactGuardPolicies struct {
+	// FailingPolicies: A list of failing policies.
+	FailingPolicies []*GoogleCloudSecuritycenterV2ArtifactGuardPolicy `json:"failingPolicies,omitempty"`
+	// ResourceId: The ID of the resource that has policies configured for it.
+	ResourceId string `json:"resourceId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FailingPolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailingPolicies") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2ArtifactGuardPolicies) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2ArtifactGuardPolicies
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2ArtifactGuardPolicy: Represents an artifact guard
+// policy.
+type GoogleCloudSecuritycenterV2ArtifactGuardPolicy struct {
+	// FailureReason: The reason for the policy failure, for example,
+	// "severity=HIGH AND max_vuln_count=2".
+	FailureReason string `json:"failureReason,omitempty"`
+	// PolicyId: The ID of the failing policy, for example,
+	// "organizations/3392779/locations/global/policies/prod-policy".
+	PolicyId string `json:"policyId,omitempty"`
+	// Type: The type of the policy evaluation.
+	//
+	// Possible values:
+	//   "ARTIFACT_GUARD_POLICY_TYPE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "VULNERABILITY" - Vulnerability type.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FailureReason") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailureReason") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2ArtifactGuardPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2ArtifactGuardPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2Attack: Information about DDoS attack volume and
 // classification.
 type GoogleCloudSecuritycenterV2Attack struct {
@@ -7163,6 +7293,15 @@ type GoogleCloudSecuritycenterV2File struct {
 	// DiskPath: Path of the file in terms of underlying disk/partition
 	// identifiers.
 	DiskPath *GoogleCloudSecuritycenterV2DiskPath `json:"diskPath,omitempty"`
+	// FileLoadState: The load state of the file.
+	//
+	// Possible values:
+	//   "FILE_LOAD_STATE_UNSPECIFIED" - The file state is unspecified.
+	//   "LOADED_BY_PROCESS" - The file is being used by an active process at the
+	// time of scanning.
+	//   "NOT_LOADED_BY_PROCESS" - The file is not being used by any active process
+	// at the time of scanning.
+	FileLoadState string `json:"fileLoadState,omitempty"`
 	// HashedSize: The length in bytes of the file prefix that was hashed. If
 	// hashed_size == size, any hashes reported represent the entire file.
 	HashedSize int64 `json:"hashedSize,omitempty,string"`
@@ -7242,6 +7381,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	AiModel *GoogleCloudSecuritycenterV2AiModel `json:"aiModel,omitempty"`
 	// Application: Represents an application associated with the finding.
 	Application *GoogleCloudSecuritycenterV2Application `json:"application,omitempty"`
+	// ArtifactGuardPolicies: ArtifactGuardPolicies associated with the finding.
+	ArtifactGuardPolicies *GoogleCloudSecuritycenterV2ArtifactGuardPolicies `json:"artifactGuardPolicies,omitempty"`
 	// AttackExposure: The results of an attack path simulation relevant to this
 	// finding.
 	AttackExposure *GoogleCloudSecuritycenterV2AttackExposure `json:"attackExposure,omitempty"`
@@ -7450,6 +7591,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// the finding is for a non-Google Cloud resource, the resourceName can be a
 	// customer or partner defined string.
 	ResourceName string `json:"resourceName,omitempty"`
+	// Secret: Secret associated with the finding.
+	Secret *GoogleCloudSecuritycenterV2Secret `json:"secret,omitempty"`
 	// SecurityMarks: Output only. User specified security marks. These marks are
 	// entirely managed by the user and come from the SecurityMarks resource that
 	// belongs to the finding.
@@ -10001,6 +10144,116 @@ type GoogleCloudSecuritycenterV2Role struct {
 
 func (s GoogleCloudSecuritycenterV2Role) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2Role
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2Secret: Details about a secret or credential
+// associated with the finding.
+type GoogleCloudSecuritycenterV2Secret struct {
+	// EnvironmentVariable: The environment variable containing the secret.
+	EnvironmentVariable *GoogleCloudSecuritycenterV2SecretEnvironmentVariable `json:"environmentVariable,omitempty"`
+	// FilePath: The file containing the secret.
+	FilePath *GoogleCloudSecuritycenterV2SecretFilePath `json:"filePath,omitempty"`
+	// Status: The status of the secret.
+	Status *GoogleCloudSecuritycenterV2SecretStatus `json:"status,omitempty"`
+	// Type: The type of secret, for example, GCP_API_KEY.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnvironmentVariable") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnvironmentVariable") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2Secret) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2Secret
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2SecretEnvironmentVariable: Environment variable
+// containing the secret.
+type GoogleCloudSecuritycenterV2SecretEnvironmentVariable struct {
+	// Key: Environment variable name as a JSON encoded string. Note that value is
+	// not included since the value contains the secret data, which is sensitive
+	// core content.
+	Key string `json:"key,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2SecretEnvironmentVariable) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2SecretEnvironmentVariable
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2SecretFilePath: File path containing the secret.
+type GoogleCloudSecuritycenterV2SecretFilePath struct {
+	// Path: Path to the file.
+	Path string `json:"path,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Path") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2SecretFilePath) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2SecretFilePath
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2SecretStatus: The status of the secret.
+type GoogleCloudSecuritycenterV2SecretStatus struct {
+	// LastUpdatedTime: Time that the secret was found.
+	LastUpdatedTime string `json:"lastUpdatedTime,omitempty"`
+	// Validity: The validity of the secret.
+	//
+	// Possible values:
+	//   "SECRET_VALIDITY_UNSPECIFIED" - Default value; no validation was
+	// attempted.
+	//   "SECRET_VALIDITY_UNSUPPORTED" - There is no mechanism to validate the
+	// secret.
+	//   "SECRET_VALIDITY_FAILED" - Validation is supported but the validation
+	// failed.
+	//   "SECRET_VALIDITY_INVALID" - The secret is confirmed to be invalid.
+	//   "SECRET_VALIDITY_VALID" - The secret is confirmed to be valid.
+	Validity string `json:"validity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LastUpdatedTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LastUpdatedTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2SecretStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2SecretStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13107,6 +13360,114 @@ func (s Role) MarshalJSON() ([]byte, error) {
 // RunAssetDiscoveryRequest: Request message for running asset discovery for an
 // organization.
 type RunAssetDiscoveryRequest struct {
+}
+
+// Secret: Details about a secret or credential associated with the finding.
+type Secret struct {
+	// EnvironmentVariable: The environment variable containing the secret.
+	EnvironmentVariable *SecretEnvironmentVariable `json:"environmentVariable,omitempty"`
+	// FilePath: The file containing the secret.
+	FilePath *SecretFilePath `json:"filePath,omitempty"`
+	// Status: The status of the secret.
+	Status *SecretStatus `json:"status,omitempty"`
+	// Type: The type of secret, for example, GCP_API_KEY.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnvironmentVariable") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnvironmentVariable") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Secret) MarshalJSON() ([]byte, error) {
+	type NoMethod Secret
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SecretEnvironmentVariable: Environment variable containing the secret.
+type SecretEnvironmentVariable struct {
+	// Key: Environment variable name as a JSON encoded string. Note that value is
+	// not included since the value contains the secret data, which is sensitive
+	// core content.
+	Key string `json:"key,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SecretEnvironmentVariable) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretEnvironmentVariable
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SecretFilePath: File path containing the secret.
+type SecretFilePath struct {
+	// Path: Path to the file.
+	Path string `json:"path,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Path") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SecretFilePath) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretFilePath
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SecretStatus: The status of the secret.
+type SecretStatus struct {
+	// LastUpdatedTime: Time that the secret was found.
+	LastUpdatedTime string `json:"lastUpdatedTime,omitempty"`
+	// Validity: The validity of the secret.
+	//
+	// Possible values:
+	//   "SECRET_VALIDITY_UNSPECIFIED" - Default value; no validation was
+	// attempted.
+	//   "SECRET_VALIDITY_UNSUPPORTED" - There is no mechanism to validate the
+	// secret.
+	//   "SECRET_VALIDITY_FAILED" - Validation is supported but the validation
+	// failed.
+	//   "SECRET_VALIDITY_INVALID" - The secret is confirmed to be invalid.
+	//   "SECRET_VALIDITY_VALID" - The secret is confirmed to be valid.
+	Validity string `json:"validity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LastUpdatedTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LastUpdatedTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SecretStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SecurityBulletin: SecurityBulletin are notifications of vulnerabilities of

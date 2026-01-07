@@ -20343,7 +20343,7 @@ func (r *YoutubeV3VideosService) BatchGetStats() *YoutubeV3VideosBatchGetStatsCa
 }
 
 // Id sets the optional parameter "id": Required. Return videos with the given
-// ids.
+// ids. The number of IDs specified cannot exceed 50.
 func (c *YoutubeV3VideosBatchGetStatsCall) Id(id ...string) *YoutubeV3VideosBatchGetStatsCall {
 	c.urlParams_.SetMulti("id", append([]string{}, id...))
 	return c

@@ -184,6 +184,52 @@ type DocumentsService struct {
 	s *Service
 }
 
+// AddDocumentTabRequest: Adds a document tab. When a tab is added at a given
+// index, all subsequent tabs' indexes are incremented.
+type AddDocumentTabRequest struct {
+	// TabProperties: The properties of the tab to add. All properties are
+	// optional.
+	TabProperties *TabProperties `json:"tabProperties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TabProperties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TabProperties") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddDocumentTabRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddDocumentTabRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AddDocumentTabResponse: The result of adding a document tab.
+type AddDocumentTabResponse struct {
+	// TabProperties: The properties of the newly added tab.
+	TabProperties *TabProperties `json:"tabProperties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TabProperties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TabProperties") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddDocumentTabResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AddDocumentTabResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AutoText: A ParagraphElement representing a spot in the text that's
 // dynamically replaced with content that can change over time, like a page
 // number.
@@ -1213,6 +1259,29 @@ type DeletePositionedObjectRequest struct {
 
 func (s DeletePositionedObjectRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeletePositionedObjectRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeleteTabRequest: Deletes a tab. If the tab has child tabs, they are deleted
+// as well.
+type DeleteTabRequest struct {
+	// TabId: The ID of the tab to delete.
+	TabId string `json:"tabId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TabId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TabId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteTabRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteTabRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4183,6 +4252,8 @@ func (s ReplaceNamedRangeContentRequest) MarshalJSON() ([]byte, error) {
 
 // Request: A single update to apply to a document.
 type Request struct {
+	// AddDocumentTab: Adds a document tab.
+	AddDocumentTab *AddDocumentTabRequest `json:"addDocumentTab,omitempty"`
 	// CreateFooter: Creates a footer.
 	CreateFooter *CreateFooterRequest `json:"createFooter,omitempty"`
 	// CreateFootnote: Creates a footnote.
@@ -4205,6 +4276,8 @@ type Request struct {
 	DeleteParagraphBullets *DeleteParagraphBulletsRequest `json:"deleteParagraphBullets,omitempty"`
 	// DeletePositionedObject: Deletes a positioned object from the document.
 	DeletePositionedObject *DeletePositionedObjectRequest `json:"deletePositionedObject,omitempty"`
+	// DeleteTab: Deletes a document tab.
+	DeleteTab *DeleteTabRequest `json:"deleteTab,omitempty"`
 	// DeleteTableColumn: Deletes a column from a table.
 	DeleteTableColumn *DeleteTableColumnRequest `json:"deleteTableColumn,omitempty"`
 	// DeleteTableRow: Deletes a row from a table.
@@ -4241,6 +4314,8 @@ type Request struct {
 	UnmergeTableCells *UnmergeTableCellsRequest `json:"unmergeTableCells,omitempty"`
 	// UpdateDocumentStyle: Updates the style of the document.
 	UpdateDocumentStyle *UpdateDocumentStyleRequest `json:"updateDocumentStyle,omitempty"`
+	// UpdateDocumentTabProperties: Updates the properties of a document tab.
+	UpdateDocumentTabProperties *UpdateDocumentTabPropertiesRequest `json:"updateDocumentTabProperties,omitempty"`
 	// UpdateParagraphStyle: Updates the paragraph style at the specified range.
 	UpdateParagraphStyle *UpdateParagraphStyleRequest `json:"updateParagraphStyle,omitempty"`
 	// UpdateSectionStyle: Updates the section style of the specified range.
@@ -4253,15 +4328,15 @@ type Request struct {
 	UpdateTableRowStyle *UpdateTableRowStyleRequest `json:"updateTableRowStyle,omitempty"`
 	// UpdateTextStyle: Updates the text style at the specified range.
 	UpdateTextStyle *UpdateTextStyleRequest `json:"updateTextStyle,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateFooter") to
+	// ForceSendFields is a list of field names (e.g. "AddDocumentTab") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateFooter") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AddDocumentTab") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4273,6 +4348,8 @@ func (s Request) MarshalJSON() ([]byte, error) {
 
 // Response: A single response from an update.
 type Response struct {
+	// AddDocumentTab: The result of adding a document tab.
+	AddDocumentTab *AddDocumentTabResponse `json:"addDocumentTab,omitempty"`
 	// CreateFooter: The result of creating a footer.
 	CreateFooter *CreateFooterResponse `json:"createFooter,omitempty"`
 	// CreateFootnote: The result of creating a footnote.
@@ -4288,15 +4365,15 @@ type Response struct {
 	InsertInlineSheetsChart *InsertInlineSheetsChartResponse `json:"insertInlineSheetsChart,omitempty"`
 	// ReplaceAllText: The result of replacing text.
 	ReplaceAllText *ReplaceAllTextResponse `json:"replaceAllText,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateFooter") to
+	// ForceSendFields is a list of field names (e.g. "AddDocumentTab") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateFooter") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AddDocumentTab") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5217,7 +5294,7 @@ type TabProperties struct {
 	// ParentTabId: Optional. The ID of the parent tab. Empty when the current tab
 	// is a root-level tab, which means it doesn't have any parents.
 	ParentTabId string `json:"parentTabId,omitempty"`
-	// TabId: Output only. The ID of the tab. This field can't be changed.
+	// TabId: The immutable ID of the tab.
 	TabId string `json:"tabId,omitempty"`
 	// Title: The user-visible name of the tab.
 	Title string `json:"title,omitempty"`
@@ -5990,6 +6067,32 @@ type UpdateDocumentStyleRequest struct {
 
 func (s UpdateDocumentStyleRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDocumentStyleRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateDocumentTabPropertiesRequest: Update the properties of a document tab.
+type UpdateDocumentTabPropertiesRequest struct {
+	// Fields: The fields that should be updated. At least one field must be
+	// specified. The root `tab_properties` is implied and should not be specified.
+	// A single "*" can be used as short-hand for listing every field.
+	Fields string `json:"fields,omitempty"`
+	// TabProperties: The tab properties to update.
+	TabProperties *TabProperties `json:"tabProperties,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateDocumentTabPropertiesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateDocumentTabPropertiesRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

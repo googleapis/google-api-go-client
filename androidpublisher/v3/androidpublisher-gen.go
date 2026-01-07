@@ -5237,6 +5237,9 @@ type ManagedProductTaxAndComplianceSettings struct {
 	// (https://support.google.com/googleplay/android-developer/answer/16408159)
 	// for more information.
 	ProductTaxCategoryCode string `json:"productTaxCategoryCode,omitempty"`
+	// RegionalProductAgeRatingInfos: Regional age rating information. Currently
+	// this field is only supported for region code `US`.
+	RegionalProductAgeRatingInfos []*RegionalProductAgeRatingInfo `json:"regionalProductAgeRatingInfos,omitempty"`
 	// TaxRateInfoByRegionCode: A mapping from region code to tax rate details. The
 	// keys are region codes as defined by Unicode's "CLDR".
 	TaxRateInfoByRegionCode map[string]RegionalTaxRateInfo `json:"taxRateInfoByRegionCode,omitempty"`
@@ -6053,6 +6056,9 @@ type OneTimeProductTaxAndComplianceSettings struct {
 	// (https://support.google.com/googleplay/android-developer/answer/16408159)
 	// for more information.
 	ProductTaxCategoryCode string `json:"productTaxCategoryCode,omitempty"`
+	// RegionalProductAgeRatingInfos: Regional age rating information. Currently
+	// this field is only supported for region code `US`.
+	RegionalProductAgeRatingInfos []*RegionalProductAgeRatingInfo `json:"regionalProductAgeRatingInfos,omitempty"`
 	// RegionalTaxConfigs: Regional tax configuration.
 	RegionalTaxConfigs []*RegionalTaxConfig `json:"regionalTaxConfigs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IsTokenizedDigitalAsset") to
@@ -7322,6 +7328,43 @@ type RegionalPriceMigrationConfig struct {
 
 func (s RegionalPriceMigrationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalPriceMigrationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RegionalProductAgeRatingInfo: Details about the age rating for a specific
+// geographic region.
+type RegionalProductAgeRatingInfo struct {
+	// ProductAgeRatingTier: The age rating tier of a product for the given region.
+	//
+	// Possible values:
+	//   "PRODUCT_AGE_RATING_TIER_UNKNOWN" - Unknown age rating tier.
+	//   "PRODUCT_AGE_RATING_TIER_EVERYONE" - Age rating tier for products that are
+	// appropriate for all ages.
+	//   "PRODUCT_AGE_RATING_TIER_THIRTEEN_AND_ABOVE" - Age rating tier for
+	// products that are appropriate for 13 years and above.
+	//   "PRODUCT_AGE_RATING_TIER_SIXTEEN_AND_ABOVE" - Age rating tier for products
+	// that are appropriate for 16 years and above.
+	//   "PRODUCT_AGE_RATING_TIER_EIGHTEEN_AND_ABOVE" - Age rating tier for
+	// products that are appropriate for 18 years and above.
+	ProductAgeRatingTier string `json:"productAgeRatingTier,omitempty"`
+	// RegionCode: Region code this configuration applies to, as defined by ISO
+	// 3166-2, e.g. "US".
+	RegionCode string `json:"regionCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductAgeRatingTier") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductAgeRatingTier") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RegionalProductAgeRatingInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod RegionalProductAgeRatingInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9006,6 +9049,9 @@ type SubscriptionTaxAndComplianceSettings struct {
 	// (https://support.google.com/googleplay/android-developer/answer/16408159)
 	// for more information.
 	ProductTaxCategoryCode string `json:"productTaxCategoryCode,omitempty"`
+	// RegionalProductAgeRatingInfos: Regional age rating information. Currently
+	// this field is only supported for region code `US`.
+	RegionalProductAgeRatingInfos []*RegionalProductAgeRatingInfo `json:"regionalProductAgeRatingInfos,omitempty"`
 	// TaxRateInfoByRegionCode: A mapping from region code to tax rate details. The
 	// keys are region codes as defined by Unicode's "CLDR".
 	TaxRateInfoByRegionCode map[string]RegionalTaxRateInfo `json:"taxRateInfoByRegionCode,omitempty"`

@@ -485,6 +485,35 @@ func (s BuildConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BuildConfigOverrides: Contains overrides related to the function's build
+// configuration.
+type BuildConfigOverrides struct {
+	// Runtime: Optional. Specifies the desired runtime for the new Cloud Run
+	// function. (e.g., "nodejs20", "python312"). Constraints: 1. This field
+	// CANNOT be used to change the runtime language (e.g., from `NODEJS` to
+	// `PYTHON`). The backend will enforce this. 2. This field can ONLY be used to
+	// upgrade the runtime version (e.g., `nodejs18` to `nodejs20`). Downgrading
+	// the version is not permitted. The backend will validate the version change.
+	// If provided and valid, this overrides the runtime of the Gen1 function.
+	Runtime string `json:"runtime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Runtime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Runtime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BuildConfigOverrides) MarshalJSON() ([]byte, error) {
+	type NoMethod BuildConfigOverrides
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CommitFunctionUpgradeAsGen2Request: Request for the
 // `CommitFunctionUpgradeAsGen2` method.
 type CommitFunctionUpgradeAsGen2Request struct {
@@ -1775,6 +1804,31 @@ func (s ServiceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ServiceConfigOverrides: Contains overrides related to the function's service
+// configuration.
+type ServiceConfigOverrides struct {
+	// MaxInstanceCount: Optional. Specifies the maximum number of instances for
+	// the new Cloud Run function. If provided, this overrides the
+	// max_instance_count setting of the Gen1 function.
+	MaxInstanceCount int64 `json:"maxInstanceCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxInstanceCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxInstanceCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceConfigOverrides) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceConfigOverrides
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the `resource`. The
@@ -1807,20 +1861,25 @@ func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // SetupFunctionUpgradeConfigRequest: Request for the
 // `SetupFunctionUpgradeConfig` method.
 type SetupFunctionUpgradeConfigRequest struct {
+	// BuildConfigOverrides: Optional. Specifies overrides for the build process.
+	BuildConfigOverrides *BuildConfigOverrides `json:"buildConfigOverrides,omitempty"`
+	// ServiceConfigOverrides: Optional. Specifies overrides for the service
+	// configuration.
+	ServiceConfigOverrides *ServiceConfigOverrides `json:"serviceConfigOverrides,omitempty"`
 	// TriggerServiceAccount: Optional. The trigger's service account. The service
 	// account must have permission to invoke Cloud Run services, the permission is
 	// `run.routes.invoke`. If empty, defaults to the Compute Engine default
 	// service account: `{project_number}-compute@developer.gserviceaccount.com`.
 	TriggerServiceAccount string `json:"triggerServiceAccount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "TriggerServiceAccount") to
+	// ForceSendFields is a list of field names (e.g. "BuildConfigOverrides") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "TriggerServiceAccount") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BuildConfigOverrides") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2052,6 +2111,11 @@ type UpgradeInfo struct {
 	// un-successful and 1st gen function might have broken.
 	//   "COMMIT_FUNCTION_UPGRADE_ERROR_ROLLBACK_SAFE" - CommitFunctionUpgrade API
 	// was un-successful but safe to rollback traffic or abort.
+	//   "COMMIT_FUNCTION_UPGRADE_AS_GEN2_SUCCESSFUL" - Indicates that the
+	// `CommitFunctionUpgradeAsGen2` API call succeeded and the function was
+	// successfully migrated to the 2nd Gen stack.
+	//   "COMMIT_FUNCTION_UPGRADE_AS_GEN2_ERROR" - CommitFunctionUpgradeAsGen2 API
+	// was un-successful and 1st gen function might have broken.
 	UpgradeState string `json:"upgradeState,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BuildConfig") to
 	// unconditionally include in API requests. By default, fields with empty or

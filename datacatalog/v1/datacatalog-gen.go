@@ -1444,6 +1444,8 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// the `IntegratedSystem` enum. For entries with `user_specified_system`, this
 	// field is optional and defaults to an empty timestamp.
 	SourceSystemTimestamps *GoogleCloudDatacatalogV1SystemTimestamps `json:"sourceSystemTimestamps,omitempty"`
+	// SpannerTableSpec: Specification of a Spanner table.
+	SpannerTableSpec *GoogleCloudDatacatalogV1SpannerTableSpec `json:"spannerTableSpec,omitempty"`
 	// SqlDatabaseSystemSpec: Specification that applies to a relational database
 	// system. Only settable when `user_specified_system` is equal to
 	// `SQL_DATABASE`
@@ -3306,6 +3308,111 @@ type GoogleCloudDatacatalogV1SetConfigRequest struct {
 
 func (s GoogleCloudDatacatalogV1SetConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1SetConfigRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1SpannerTableSpec: Specification of a Spanner table.
+type GoogleCloudDatacatalogV1SpannerTableSpec struct {
+	// ForeignKeys: Output only. The foreign keys of the table.
+	ForeignKeys []*GoogleCloudDatacatalogV1SpannerTableSpecSpannerForeignKey `json:"foreignKeys,omitempty"`
+	// PrimaryKey: Output only. The primary key of the table.
+	PrimaryKey *GoogleCloudDatacatalogV1SpannerTableSpecSpannerPrimaryKey `json:"primaryKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ForeignKeys") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ForeignKeys") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDatacatalogV1SpannerTableSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1SpannerTableSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1SpannerTableSpecSpannerForeignKey: Specification of
+// a Spanner foreign key.
+type GoogleCloudDatacatalogV1SpannerTableSpecSpannerForeignKey struct {
+	// ColumnMappings: Output only. The ordered list of column mappings for this
+	// foreign key.
+	ColumnMappings []*GoogleCloudDatacatalogV1SpannerTableSpecSpannerForeignKeyForeignKeyColumnMapping `json:"columnMappings,omitempty"`
+	// Entry: Output only. The table name this foreign key referenced to. Format:
+	// `projects/{PROJECT_ID}/locations/{LOCATION}/entryGroups/{ENTRY_GROUP_ID}/entr
+	// ies/{ENTRY_ID}`
+	Entry string `json:"entry,omitempty"`
+	// Name: Output only. The constraint_name of the foreign key, for example,
+	// FK_CustomerOrder.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ColumnMappings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ColumnMappings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDatacatalogV1SpannerTableSpecSpannerForeignKey) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1SpannerTableSpecSpannerForeignKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1SpannerTableSpecSpannerForeignKeyForeignKeyColumnMapp
+// ing: Column mapping for a Spanner foreign key.
+type GoogleCloudDatacatalogV1SpannerTableSpecSpannerForeignKeyForeignKeyColumnMapping struct {
+	// Column: Output only. The column in the current table that is part of the
+	// foreign key.
+	Column string `json:"column,omitempty"`
+	// ReferenceColumn: Output only. The column in the referenced table that is
+	// part of the foreign key.
+	ReferenceColumn string `json:"referenceColumn,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDatacatalogV1SpannerTableSpecSpannerForeignKeyForeignKeyColumnMapping) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1SpannerTableSpecSpannerForeignKeyForeignKeyColumnMapping
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1SpannerTableSpecSpannerPrimaryKey: Specification of
+// a Spanner primary key.
+type GoogleCloudDatacatalogV1SpannerTableSpecSpannerPrimaryKey struct {
+	// Columns: Output only. Column names of the primary key.
+	Columns []string `json:"columns,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Columns") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Columns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDatacatalogV1SpannerTableSpecSpannerPrimaryKey) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1SpannerTableSpecSpannerPrimaryKey
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -1051,9 +1051,11 @@ type BigtableColumn struct {
 	// Encoding: Optional. The encoding of the values when the type is not STRING.
 	// Acceptable encoding values are: TEXT - indicates values are alphanumeric
 	// text strings. BINARY - indicates values are encoded using HBase
-	// Bytes.toBytes family of functions. 'encoding' can also be set at the column
-	// family level. However, the setting at this level takes precedence if
-	// 'encoding' is set at both levels.
+	// Bytes.toBytes family of functions. PROTO_BINARY - indicates values are
+	// encoded using serialized proto messages. This can only be used in
+	// combination with JSON type. 'encoding' can also be set at the column family
+	// level. However, the setting at this level takes precedence if 'encoding' is
+	// set at both levels.
 	Encoding string `json:"encoding,omitempty"`
 	// FieldName: Optional. If the qualifier is not a valid BigQuery field
 	// identifier i.e. does not match a-zA-Z*, a valid identifier must be provided
@@ -1064,6 +1066,9 @@ type BigtableColumn struct {
 	// family level. However, the setting at this level takes precedence if
 	// 'onlyReadLatest' is set at both levels.
 	OnlyReadLatest bool `json:"onlyReadLatest,omitempty"`
+	// ProtoConfig: Optional. Protobuf-specific configurations, only takes effect
+	// when the encoding is PROTO_BINARY.
+	ProtoConfig *BigtableProtoConfig `json:"protoConfig,omitempty"`
 	// QualifierEncoded: [Required] Qualifier of the column. Columns in the parent
 	// column family that has this exact qualifier are exposed as `.` field. If the
 	// qualifier is valid UTF-8 string, it can be specified in the qualifier_string
@@ -1110,9 +1115,10 @@ type BigtableColumnFamily struct {
 	// Encoding: Optional. The encoding of the values when the type is not STRING.
 	// Acceptable encoding values are: TEXT - indicates values are alphanumeric
 	// text strings. BINARY - indicates values are encoded using HBase
-	// Bytes.toBytes family of functions. This can be overridden for a specific
-	// column by listing that column in 'columns' and specifying an encoding for
-	// it.
+	// Bytes.toBytes family of functions. PROTO_BINARY - indicates values are
+	// encoded using serialized proto messages. This can only be used in
+	// combination with JSON type. This can be overridden for a specific column by
+	// listing that column in 'columns' and specifying an encoding for it.
 	Encoding string `json:"encoding,omitempty"`
 	// FamilyId: Identifier of the column family.
 	FamilyId string `json:"familyId,omitempty"`
@@ -1121,6 +1127,9 @@ type BigtableColumnFamily struct {
 	// for a specific column by listing that column in 'columns' and specifying a
 	// different setting for that column.
 	OnlyReadLatest bool `json:"onlyReadLatest,omitempty"`
+	// ProtoConfig: Optional. Protobuf-specific configurations, only takes effect
+	// when the encoding is PROTO_BINARY.
+	ProtoConfig *BigtableProtoConfig `json:"protoConfig,omitempty"`
 	// Type: Optional. The type to convert the value in cells of this column
 	// family. The values are expected to be encoded using HBase Bytes.toBytes
 	// function when using the BINARY encoding value. Following BigQuery types are
@@ -1186,6 +1195,36 @@ type BigtableOptions struct {
 
 func (s BigtableOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod BigtableOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BigtableProtoConfig: Information related to a Bigtable protobuf column.
+type BigtableProtoConfig struct {
+	// ProtoMessageName: Optional. The fully qualified proto message name of the
+	// protobuf. In the format of "foo.bar.Message".
+	ProtoMessageName string `json:"protoMessageName,omitempty"`
+	// SchemaBundleId: Optional. The ID of the Bigtable SchemaBundle resource
+	// associated with this protobuf. The ID should be referred to within the
+	// parent table, e.g., `foo` rather than
+	// `projects/{project}/instances/{instance}/tables/{table}/schemaBundles/foo`.
+	// See more details on Bigtable SchemaBundles
+	// (https://docs.cloud.google.com/bigtable/docs/create-manage-protobuf-schemas).
+	SchemaBundleId string `json:"schemaBundleId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProtoMessageName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProtoMessageName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BigtableProtoConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BigtableProtoConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

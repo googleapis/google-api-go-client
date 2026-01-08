@@ -1754,43 +1754,44 @@ func (s GoogleCloudDataplexV1DataAccessSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1DataAsset: Represents a Data Asset resource that can be
-// packaged and shared via a Data Product.
+// GoogleCloudDataplexV1DataAsset: Represents a data asset resource that can be
+// packaged and shared via a data product.
 type GoogleCloudDataplexV1DataAsset struct {
-	// AccessGroupConfigs: Optional. Access groups configurations for this Data
-	// Asset. The key is DataProduct.AccessGroup.id and the value is
-	// AccessGroupConfig. Example: key: "analyst" value: { AccessGroupConfig : {
-	// iam_roles : "roles/bigquery.dataViewer" } } Currently, at most one IAM role
-	// is allowed per access group. For providing multiple predefined IAM roles,
-	// wrap them in a custom IAM role as per
+	// AccessGroupConfigs: Optional. Access groups configurations for this data
+	// asset.The key is DataProduct.AccessGroup.id and the value is
+	// AccessGroupConfig.Example: { "analyst": { "iamRoles":
+	// ["roles/bigquery.dataViewer"] } } Currently, at most one IAM role is allowed
+	// per access group. For providing multiple predefined IAM roles, wrap them in
+	// a custom IAM role as per
 	// https://cloud.google.com/iam/docs/creating-custom-roles.
 	AccessGroupConfigs map[string]GoogleCloudDataplexV1DataAssetAccessGroupConfig `json:"accessGroupConfigs,omitempty"`
-	// CreateTime: Output only. The time at which the Data Asset was created.
+	// CreateTime: Output only. The time at which the data asset was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Etag: This checksum is computed by the server based on the value of other
-	// fields, and may be sent on update and delete requests to ensure the client
-	// has an up-to-date value before proceeding.
+	// Etag: Optional. This checksum is computed by the server based on the value
+	// of other fields, and may be sent on update and delete requests to ensure the
+	// client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-	// Labels: Optional. User-defined labels for the Data Asset.
+	// Labels: Optional. User-defined labels for the data asset.Example: {
+	// "environment": "production", "billing": "marketing-department" }
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Identifier. Resource name of the Data Asset. Format:
+	// Name: Identifier. Resource name of the data asset. Format:
 	// projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_pr
 	// oduct_id}/dataAssets/{data_asset_id}
 	Name string `json:"name,omitempty"`
 	// Resource: Required. Immutable. Full resource name of the cloud resource
-	// represented by the Data Asset. This must follow
+	// represented by the data asset. This must follow
 	// https://cloud.google.com/iam/docs/full-resource-names. Example:
 	// //bigquery.googleapis.com/projects/my_project_123/datasets/dataset_456/tables
 	// /table_789 Only BigQuery tables and datasets are currently supported. Data
-	// Asset creator must have getIamPolicy and setIamPolicy permissions on the
-	// resource. Data Asset creator must also have resource specific get
+	// asset creator must have getIamPolicy and setIamPolicy permissions on the
+	// resource. Data asset creator must also have resource specific get
 	// permission, for instance, bigquery.tables.get for BigQuery tables.
 	Resource string `json:"resource,omitempty"`
-	// Uid: Output only. System generated globally unique ID for the Data Asset.
-	// This ID will be different if the Data Asset is deleted and re-created with
+	// Uid: Output only. System generated globally unique ID for the data asset.
+	// This ID will be different if the data asset is deleted and re-created with
 	// the same name.
 	Uid string `json:"uid,omitempty"`
-	// UpdateTime: Output only. The time at which the Data Asset was last updated.
+	// UpdateTime: Output only. The time at which the data asset was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1814,11 +1815,12 @@ func (s GoogleCloudDataplexV1DataAsset) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDataplexV1DataAssetAccessGroupConfig: Configuration for access
-// group inherited from the parent Data Product.
+// group inherited from the parent data product.
 type GoogleCloudDataplexV1DataAssetAccessGroupConfig struct {
 	// IamRoles: Optional. IAM roles granted on the resource to this access group.
-	// Role name follows https://cloud.google.com/iam/docs/reference/rest/v1/roles.
-	// Example: "roles/bigquery.dataViewer"
+	// Role name follows
+	// https://cloud.google.com/iam/docs/reference/rest/v1/roles.Example: [
+	// "roles/bigquery.dataViewer" ]
 	IamRoles []string `json:"iamRoles,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IamRoles") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2429,47 +2431,51 @@ func (s GoogleCloudDataplexV1DataDocumentationSpec) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1DataProduct: A Data Product is a curated collection of
-// Data Assets, packaged to address specific use cases. It's a way to manage
+// GoogleCloudDataplexV1DataProduct: A data product is a curated collection of
+// data assets, packaged to address specific use cases. It's a way to manage
 // and share data in a more organized, product-like manner.
 type GoogleCloudDataplexV1DataProduct struct {
-	// AccessGroups: Optional. Data Product access groups by access group id as
-	// key. If Data Product is used only for packaging Data Assets, then access
-	// groups may be empty. However, if a Data Product is used for sharing Data
-	// Assets, then at least one access group must be specified.
+	// AccessGroups: Optional. Data product access groups by access group id as
+	// key. If data product is used only for packaging data assets, then access
+	// groups may be empty. However, if a data product is used for sharing data
+	// assets, then at least one access group must be specified.Example: {
+	// "analyst": { "id": "analyst", "displayName": "Analyst", "description":
+	// "Access group for analysts", "principal": { "googleGroup":
+	// "analysts@example.com" } } }
 	AccessGroups map[string]GoogleCloudDataplexV1DataProductAccessGroup `json:"accessGroups,omitempty"`
-	// AssetCount: Output only. Number of Data Assets associated with this Data
-	// Product.
+	// AssetCount: Output only. Number of data assets associated with this data
+	// product.
 	AssetCount int64 `json:"assetCount,omitempty"`
-	// CreateTime: Output only. The time at which the Data Product was created.
+	// CreateTime: Output only. The time at which the data product was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: Optional. Description of the Data Product.
+	// Description: Optional. Description of the data product.
 	Description string `json:"description,omitempty"`
-	// DisplayName: Required. User-friendly display name of the Data Product.
+	// DisplayName: Required. User-friendly display name of the data product.
 	DisplayName string `json:"displayName,omitempty"`
-	// Etag: This checksum is computed by the server based on the value of other
-	// fields, and may be sent on update and delete requests to ensure the client
-	// has an up-to-date value before proceeding.
+	// Etag: Optional. This checksum is computed by the server based on the value
+	// of other fields, and may be sent on update and delete requests to ensure the
+	// client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-	// Icon: Optional. Base64 encoded image representing the Data Product. Max
+	// Icon: Optional. Base64 encoded image representing the data product. Max
 	// Size: 3.0MiB Expected image dimensions are 512x512 pixels, however the API
 	// only performs validation on size of the encoded data. Note: For byte fields,
 	// the content of the fields are base64-encoded (which increases the size of
 	// the data by 33-36%) when using JSON on the wire.
 	Icon string `json:"icon,omitempty"`
-	// Labels: Optional. User-defined labels for the Data Product.
+	// Labels: Optional. User-defined labels for the data product.Example: {
+	// "environment": "production", "billing": "marketing-department" }
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Identifier. Resource name of the Data Product. Format:
+	// Name: Identifier. Resource name of the data product. Format:
 	// projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_pr
 	// oduct_id}.
 	Name string `json:"name,omitempty"`
-	// OwnerEmails: Required. Emails of the Data Product owners.
+	// OwnerEmails: Required. Emails of the data product owners.
 	OwnerEmails []string `json:"ownerEmails,omitempty"`
-	// Uid: Output only. System generated unique ID for the Data Product. This ID
-	// will be different if the Data Product is deleted and re-created with the
+	// Uid: Output only. System generated unique ID for the data product. This ID
+	// will be different if the data product is deleted and re-created with the
 	// same name.
 	Uid string `json:"uid,omitempty"`
-	// UpdateTime: Output only. The time at which the Data Product was last
+	// UpdateTime: Output only. The time at which the data product was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -2494,15 +2500,15 @@ func (s GoogleCloudDataplexV1DataProduct) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDataplexV1DataProductAccessGroup: Custom user defined access
-// groups at the Data Product level. These are used for granting different
-// levels of access (IAM roles) on the individual Data Product's Data Assets.
+// groups at the data product level. These are used for granting different
+// levels of access (IAM roles) on the individual data product's data assets.
 type GoogleCloudDataplexV1DataProductAccessGroup struct {
 	// Description: Optional. Description of the access group.
 	Description string `json:"description,omitempty"`
 	// DisplayName: Required. User friendly display name of the access group. Eg.
 	// "Analyst", "Developer", etc.
 	DisplayName string `json:"displayName,omitempty"`
-	// Id: Required. Unique identifier of the access group within the Data Product.
+	// Id: Required. Unique identifier of the access group within the data product.
 	// User defined. Eg. "analyst", "developer", etc.
 	Id string `json:"id,omitempty"`
 	// Principal: Required. The principal entity associated with this access group.
@@ -2529,7 +2535,7 @@ func (s GoogleCloudDataplexV1DataProductAccessGroup) MarshalJSON() ([]byte, erro
 // associated with an access group, as per
 // https://cloud.google.com/iam/docs/principals-overview.
 type GoogleCloudDataplexV1DataProductPrincipal struct {
-	// GoogleGroup: Email of the Google Group, as per
+	// GoogleGroup: Optional. Email of the Google Group, as per
 	// https://cloud.google.com/iam/docs/principals-overview#google-group.
 	GoogleGroup string `json:"googleGroup,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GoogleGroup") to
@@ -6511,9 +6517,9 @@ func (s GoogleCloudDataplexV1ListContentResponse) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudDataplexV1ListDataAssetsResponse: Response message for listing
-// Data Assets.
+// data assets.
 type GoogleCloudDataplexV1ListDataAssetsResponse struct {
-	// DataAssets: The Data Assets for the requested filter criteria.
+	// DataAssets: The data assets for the requested filter criteria.
 	DataAssets []*GoogleCloudDataplexV1DataAsset `json:"dataAssets,omitempty"`
 	// NextPageToken: A token, which can be sent as page_token to retrieve the next
 	// page. If this field is empty, then there are no subsequent pages.
@@ -6603,9 +6609,9 @@ func (s GoogleCloudDataplexV1ListDataAttributesResponse) MarshalJSON() ([]byte, 
 }
 
 // GoogleCloudDataplexV1ListDataProductsResponse: Response message for listing
-// Data Products.
+// data products.
 type GoogleCloudDataplexV1ListDataProductsResponse struct {
-	// DataProducts: The Data Products for the requested filter criteria.
+	// DataProducts: The data products for the requested filter criteria.
 	DataProducts []*GoogleCloudDataplexV1DataProduct `json:"dataProducts,omitempty"`
 	// NextPageToken: A token, which can be sent as page_token to retrieve the next
 	// page. If this field is empty, then there are no subsequent pages.
@@ -14033,9 +14039,9 @@ type ProjectsLocationsDataProductsCreateCall struct {
 	header_                          http.Header
 }
 
-// Create: Creates a Data Product.
+// Create: Creates a data product.
 //
-//   - parent: The parent resource where this Data Product will be created.
+//   - parent: The parent resource where this data product will be created.
 //     Format: projects/{project_id_or_number}/locations/{location_id}.
 func (r *ProjectsLocationsDataProductsService) Create(parent string, googleclouddataplexv1dataproduct *GoogleCloudDataplexV1DataProduct) *ProjectsLocationsDataProductsCreateCall {
 	c := &ProjectsLocationsDataProductsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14045,18 +14051,19 @@ func (r *ProjectsLocationsDataProductsService) Create(parent string, googlecloud
 }
 
 // DataProductId sets the optional parameter "dataProductId": The ID of the
-// Data Product to create.The ID must conform to RFC-1034 and contain only
+// data product to create.The ID must conform to RFC-1034 and contain only
 // lower-case letters (a-z), numbers (0-9), or hyphens, with the first
 // character a letter, the last a letter or a number, and a 63 character
 // maximum. Characters outside of ASCII are not permitted. Valid format regex:
-// (^a-z?$) If not provided, a system generated ID will be used.
+// ^a-z ([a-z0-9-]{0,61}[a-z0-9])?$ If not provided, a system generated ID will
+// be used.
 func (c *ProjectsLocationsDataProductsCreateCall) DataProductId(dataProductId string) *ProjectsLocationsDataProductsCreateCall {
 	c.urlParams_.Set("dataProductId", dataProductId)
 	return c
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": Validates the
-// request without actually creating the Data Product. Default: false.
+// request without actually creating the data product. Default: false.
 func (c *ProjectsLocationsDataProductsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsDataProductsCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -14155,10 +14162,10 @@ type ProjectsLocationsDataProductsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a Data Product. The deletion will fail if the Data Product
-// is not empty (i.e. contains at least one Data Asset).
+// Delete: Deletes a data product. The deletion will fail if the data product
+// is not empty (i.e. contains at least one data asset).
 //
-//   - name: The name of the Data Product to delete. Format:
+//   - name: The name of the data product to delete. Format:
 //     projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_
 //     product_id}.
 func (r *ProjectsLocationsDataProductsService) Delete(name string) *ProjectsLocationsDataProductsDeleteCall {
@@ -14167,8 +14174,8 @@ func (r *ProjectsLocationsDataProductsService) Delete(name string) *ProjectsLoca
 	return c
 }
 
-// Etag sets the optional parameter "etag": The etag of the Data Product.If an
-// etag is provided and does not match the current etag of the Data Product,
+// Etag sets the optional parameter "etag": The etag of the data product.If an
+// etag is provided and does not match the current etag of the data product,
 // then the deletion will be blocked and an ABORTED error will be returned.
 func (c *ProjectsLocationsDataProductsDeleteCall) Etag(etag string) *ProjectsLocationsDataProductsDeleteCall {
 	c.urlParams_.Set("etag", etag)
@@ -14176,7 +14183,7 @@ func (c *ProjectsLocationsDataProductsDeleteCall) Etag(etag string) *ProjectsLoc
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": Validates the
-// request without actually deleting the Data Product. Default: false.
+// request without actually deleting the data product. Default: false.
 func (c *ProjectsLocationsDataProductsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsDataProductsDeleteCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -14272,9 +14279,9 @@ type ProjectsLocationsDataProductsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a Data Product.
+// Get: Gets a data product.
 //
-//   - name: The name of the Data Product to retrieve. Format:
+//   - name: The name of the data product to retrieve. Format:
 //     projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_
 //     product_id}.
 func (r *ProjectsLocationsDataProductsService) Get(name string) *ProjectsLocationsDataProductsGetCall {
@@ -14514,9 +14521,9 @@ type ProjectsLocationsDataProductsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Data Products for a given project.
+// List: Lists data products for a given project.
 //
-//   - parent: The parent, which has this collection of Data Products.Format:
+//   - parent: The parent, which has this collection of data products.Format:
 //     projects/{project_id_or_number}/locations/{location_id}.Supports listing
 //     across all locations with the wildcard - (hyphen) character. Example:
 //     projects/{project_id_or_number}/locations/-.
@@ -14527,7 +14534,7 @@ func (r *ProjectsLocationsDataProductsService) List(parent string) *ProjectsLoca
 }
 
 // Filter sets the optional parameter "filter": Filter expression that filters
-// Data Products listed in the response.Example of using this filter is:
+// data products listed in the response.Example of using this filter is:
 // display_name="my-data-product"
 func (c *ProjectsLocationsDataProductsListCall) Filter(filter string) *ProjectsLocationsDataProductsListCall {
 	c.urlParams_.Set("filter", filter)
@@ -14535,7 +14542,7 @@ func (c *ProjectsLocationsDataProductsListCall) Filter(filter string) *ProjectsL
 }
 
 // OrderBy sets the optional parameter "orderBy": Order by expression that
-// orders Data Products listed in the response.Supported Order by fields are:
+// orders data products listed in the response.Supported Order by fields are:
 // name or create_time.If not specified, the ordering is undefined.Ordering by
 // create_time is not supported when listing resources across locations (i.e.
 // when request contains /locations/-).
@@ -14544,9 +14551,9 @@ func (c *ProjectsLocationsDataProductsListCall) OrderBy(orderBy string) *Project
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number of Data
-// Products to return. The service may return fewer than this value. If
-// unspecified, at most 50 Data Products will be returned. The maximum value is
+// PageSize sets the optional parameter "pageSize": The maximum number of data
+// products to return. The service may return fewer than this value. If
+// unspecified, at most 50 data products will be returned. The maximum value is
 // 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsDataProductsListCall) PageSize(pageSize int64) *ProjectsLocationsDataProductsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -14684,9 +14691,9 @@ type ProjectsLocationsDataProductsPatchCall struct {
 	header_                          http.Header
 }
 
-// Patch: Updates a Data Product.
+// Patch: Updates a data product.
 //
-//   - name: Identifier. Resource name of the Data Product. Format:
+//   - name: Identifier. Resource name of the data product. Format:
 //     projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_
 //     product_id}.
 func (r *ProjectsLocationsDataProductsService) Patch(name string, googleclouddataplexv1dataproduct *GoogleCloudDataplexV1DataProduct) *ProjectsLocationsDataProductsPatchCall {
@@ -14704,7 +14711,7 @@ func (c *ProjectsLocationsDataProductsPatchCall) UpdateMask(updateMask string) *
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": Validates the
-// request without actually updating the Data Product. Default: false.
+// request without actually updating the data product. Default: false.
 func (c *ProjectsLocationsDataProductsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsDataProductsPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -15023,9 +15030,9 @@ type ProjectsLocationsDataProductsDataAssetsCreateCall struct {
 	header_                        http.Header
 }
 
-// Create: Creates a Data Asset.
+// Create: Creates a data asset.
 //
-//   - parent: The parent resource where this Data Asset will be created. Format:
+//   - parent: The parent resource where this data asset will be created. Format:
 //     projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_
 //     product_id}.
 func (r *ProjectsLocationsDataProductsDataAssetsService) Create(parent string, googleclouddataplexv1dataasset *GoogleCloudDataplexV1DataAsset) *ProjectsLocationsDataProductsDataAssetsCreateCall {
@@ -15035,19 +15042,20 @@ func (r *ProjectsLocationsDataProductsDataAssetsService) Create(parent string, g
 	return c
 }
 
-// DataAssetId sets the optional parameter "dataAssetId": The ID of the Data
-// Asset to create.The ID must conform to RFC-1034 and contain only lower-case
+// DataAssetId sets the optional parameter "dataAssetId": The ID of the data
+// asset to create.The ID must conform to RFC-1034 and contain only lower-case
 // letters (a-z), numbers (0-9), or hyphens, with the first character a letter,
 // the last a letter or a number, and a 63 character maximum. Characters
-// outside of ASCII are not permitted. Valid format regex: (^a-z?$) If not
-// provided, a system generated ID will be used.
+// outside of ASCII are not permitted. Valid format regex: ^a-z
+// ([a-z0-9-]{0,61}[a-z0-9])?$ If not provided, a system generated ID will be
+// used.
 func (c *ProjectsLocationsDataProductsDataAssetsCreateCall) DataAssetId(dataAssetId string) *ProjectsLocationsDataProductsDataAssetsCreateCall {
 	c.urlParams_.Set("dataAssetId", dataAssetId)
 	return c
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": Validates the
-// request without actually creating the Data Asset. Defaults to false.
+// request without actually creating the data asset. Defaults to false.
 func (c *ProjectsLocationsDataProductsDataAssetsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsDataProductsDataAssetsCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -15146,9 +15154,9 @@ type ProjectsLocationsDataProductsDataAssetsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a Data Asset.
+// Delete: Deletes a data asset.
 //
-//   - name: The name of the Data Asset to delete. Format:
+//   - name: The name of the data asset to delete. Format:
 //     projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_
 //     product_id}/dataAssets/{data_asset_id}.
 func (r *ProjectsLocationsDataProductsDataAssetsService) Delete(name string) *ProjectsLocationsDataProductsDataAssetsDeleteCall {
@@ -15157,7 +15165,7 @@ func (r *ProjectsLocationsDataProductsDataAssetsService) Delete(name string) *Pr
 	return c
 }
 
-// Etag sets the optional parameter "etag": The etag of the Data Asset. If this
+// Etag sets the optional parameter "etag": The etag of the data asset. If this
 // is provided, it must match the server's etag. If the etag is provided and
 // does not match the server-computed etag, the request must fail with a
 // ABORTED error code.
@@ -15167,7 +15175,7 @@ func (c *ProjectsLocationsDataProductsDataAssetsDeleteCall) Etag(etag string) *P
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": Validates the
-// request without actually deleting the Data Asset. Defaults to false.
+// request without actually deleting the data asset. Defaults to false.
 func (c *ProjectsLocationsDataProductsDataAssetsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsDataProductsDataAssetsDeleteCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -15263,9 +15271,9 @@ type ProjectsLocationsDataProductsDataAssetsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a Data Asset.
+// Get: Gets a data asset.
 //
-//   - name: The name of the Data Asset to retrieve. Format:
+//   - name: The name of the data asset to retrieve. Format:
 //     projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_
 //     product_id}/dataAssets/{data_asset_id}.
 func (r *ProjectsLocationsDataProductsDataAssetsService) Get(name string) *ProjectsLocationsDataProductsDataAssetsGetCall {
@@ -15375,9 +15383,9 @@ type ProjectsLocationsDataProductsDataAssetsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Data Assets for a given Data Product.
+// List: Lists data assets for a given data product.
 //
-//   - parent: The parent, which has this collection of Data Assets. Format:
+//   - parent: The parent, which has this collection of data assets. Format:
 //     projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_
 //     product_id}.
 func (r *ProjectsLocationsDataProductsDataAssetsService) List(parent string) *ProjectsLocationsDataProductsDataAssetsListCall {
@@ -15387,23 +15395,23 @@ func (r *ProjectsLocationsDataProductsDataAssetsService) List(parent string) *Pr
 }
 
 // Filter sets the optional parameter "filter": Filter expression that filters
-// DataAssets listed in the response.
+// data assets listed in the response.
 func (c *ProjectsLocationsDataProductsDataAssetsListCall) Filter(filter string) *ProjectsLocationsDataProductsDataAssetsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Order by expression that
-// orders DataAssets listed in the response.Supported Order by fields are: name
-// or create_time.If not specified, the ordering is undefined.
+// orders data assets listed in the response.Supported order_by fields are:
+// name or create_time.If not specified, the ordering is undefined.
 func (c *ProjectsLocationsDataProductsDataAssetsListCall) OrderBy(orderBy string) *ProjectsLocationsDataProductsDataAssetsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number of Data
-// Assets to return. The service may return fewer than this value. If
-// unspecified, at most 50 Data Assets will be returned. The maximum value is
+// PageSize sets the optional parameter "pageSize": The maximum number of data
+// assets to return. The service may return fewer than this value. If
+// unspecified, at most 50 data assets will be returned. The maximum value is
 // 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsDataProductsDataAssetsListCall) PageSize(pageSize int64) *ProjectsLocationsDataProductsDataAssetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -15541,9 +15549,9 @@ type ProjectsLocationsDataProductsDataAssetsPatchCall struct {
 	header_                        http.Header
 }
 
-// Patch: Updates a Data Asset.
+// Patch: Updates a data asset.
 //
-//   - name: Identifier. Resource name of the Data Asset. Format:
+//   - name: Identifier. Resource name of the data asset. Format:
 //     projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_
 //     product_id}/dataAssets/{data_asset_id}.
 func (r *ProjectsLocationsDataProductsDataAssetsService) Patch(name string, googleclouddataplexv1dataasset *GoogleCloudDataplexV1DataAsset) *ProjectsLocationsDataProductsDataAssetsPatchCall {
@@ -15554,15 +15562,14 @@ func (r *ProjectsLocationsDataProductsDataAssetsService) Patch(name string, goog
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of fields to
-// update. If this is empty or not set, then all fields that are populated
-// (have a non-empty value) in data_asset above will be updated.
+// update. If this is empty or not set, then all the fields will be updated.
 func (c *ProjectsLocationsDataProductsDataAssetsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDataProductsDataAssetsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": Validates the
-// request without actually updating the Data Asset. Defaults to false.
+// request without actually updating the data asset. Defaults to false.
 func (c *ProjectsLocationsDataProductsDataAssetsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsDataProductsDataAssetsPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c

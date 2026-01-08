@@ -9249,9 +9249,9 @@ type ProductView struct {
 	//   "HIGH" - Potential to receive a similar number of clicks as the highest
 	// performing products of the merchant.
 	ClickPotential string `json:"clickPotential,omitempty"`
-	// ClickPotentialRank: Rank of the product based on its click potential. A
-	// product with `click_potential_rank` 1 has the highest click potential among
-	// the merchant's products that fulfill the search query conditions.
+	// ClickPotentialRank: Normalized click potential of the product. Values range
+	// from 1 to 1000, where 1 is the highest click potential and 1000 is the
+	// theoretical lowest.
 	ClickPotentialRank int64 `json:"clickPotentialRank,omitempty,string"`
 	// Condition: Condition of the product.
 	Condition string `json:"condition,omitempty"`

@@ -351,8 +351,8 @@ type ApplyConversionWorkspaceRequest struct {
 	// destination database. Only works for PostgreSQL destination connection
 	// profile.
 	DryRun bool `json:"dryRun,omitempty"`
-	// Filter: Filter which entities to apply. Leaving this field empty will apply
-	// all of the entities. Supports Google AIP 160 based filtering.
+	// Filter: Optional. Filter which entities to apply. Leaving this field empty
+	// will apply all of the entities. Supports Google AIP 160 based filtering.
 	Filter string `json:"filter,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoCommit") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3087,6 +3087,9 @@ type MigrationJob struct {
 	// OracleToPostgresConfig: Configuration for heterogeneous **Oracle to Cloud
 	// SQL for PostgreSQL** and **Oracle to AlloyDB for PostgreSQL** migrations.
 	OracleToPostgresConfig *OracleToPostgresConfig `json:"oracleToPostgresConfig,omitempty"`
+	// OriginalMigrationName: Optional. A failback replication pointer to the
+	// resource name (URI) of the original migration job.
+	OriginalMigrationName string `json:"originalMigrationName,omitempty"`
 	// PerformanceConfig: Optional. Data dump parallelism settings used by the
 	// migration.
 	PerformanceConfig *PerformanceConfig `json:"performanceConfig,omitempty"`
@@ -3103,6 +3106,17 @@ type MigrationJob struct {
 	// for dump to begin
 	//   "READY_FOR_PROMOTE" - The migration job is ready to be promoted.
 	Phase string `json:"phase,omitempty"`
+	// PostgresToSqlserverConfig: Configuration for heterogeneous failback
+	// migrations from **PostgreSQL to SQL Server**.
+	PostgresToSqlserverConfig *PostgresToSqlServerConfig `json:"postgresToSqlserverConfig,omitempty"`
+	// Purpose: Output only. Migration job mode. Migration jobs can be standard
+	// forward jobs or failback migration jobs.
+	//
+	// Possible values:
+	//   "PURPOSE_UNSPECIFIED" - Unknown purpose. Will be defaulted to MIGRATE.
+	//   "MIGRATE" - Standard migration job.
+	//   "FAILBACK" - Failback replication job.
+	Purpose string `json:"purpose,omitempty"`
 	// ReverseSshConnectivity: The details needed to communicate to the source over
 	// Reverse SSH tunnel connectivity.
 	ReverseSshConnectivity *ReverseSshConnectivity `json:"reverseSshConnectivity,omitempty"`
@@ -3878,6 +3892,8 @@ type PostgreSqlConnectionProfile struct {
 	CloudSqlId string `json:"cloudSqlId,omitempty"`
 	// Database: Optional. The name of the specific database within the host.
 	Database string `json:"database,omitempty"`
+	// ForwardSshConnectivity: Forward SSH tunnel connectivity.
+	ForwardSshConnectivity *ForwardSshTunnelConnectivity `json:"forwardSshConnectivity,omitempty"`
 	// Host: Required. The IP or hostname of the source PostgreSQL database.
 	Host string `json:"host,omitempty"`
 	// NetworkArchitecture: Output only. If the source is a Cloud SQL database,
@@ -3900,6 +3916,8 @@ type PostgreSqlConnectionProfile struct {
 	PasswordSet bool `json:"passwordSet,omitempty"`
 	// Port: Required. The network port of the source PostgreSQL database.
 	Port int64 `json:"port,omitempty"`
+	// PrivateConnectivity: Private connectivity.
+	PrivateConnectivity *PrivateConnectivity `json:"privateConnectivity,omitempty"`
 	// PrivateServiceConnectConnectivity: Private service connect connectivity.
 	PrivateServiceConnectConnectivity *PrivateServiceConnectConnectivity `json:"privateServiceConnectConnectivity,omitempty"`
 	// Ssl: SSL configuration for the destination to connect to the source
@@ -3953,6 +3971,54 @@ type PostgresDestinationConfig struct {
 
 func (s PostgresDestinationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PostgresDestinationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PostgresSourceConfig: Configuration for Postgres as a source in a migration.
+type PostgresSourceConfig struct {
+	// SkipFullDump: Optional. Whether to skip full dump or not.
+	SkipFullDump bool `json:"skipFullDump,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SkipFullDump") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SkipFullDump") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PostgresSourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgresSourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PostgresToSqlServerConfig: Configuration for heterogeneous failback
+// migrations from **PostgreSQL to SQL Server**.
+type PostgresToSqlServerConfig struct {
+	// PostgresSourceConfig: Optional. Configuration for PostgreSQL source.
+	PostgresSourceConfig *PostgresSourceConfig `json:"postgresSourceConfig,omitempty"`
+	// SqlserverDestinationConfig: Optional. Configuration for SQL Server
+	// destination.
+	SqlserverDestinationConfig *SqlServerDestinationConfig `json:"sqlserverDestinationConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PostgresSourceConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PostgresSourceConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PostgresToSqlServerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgresToSqlServerConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5012,6 +5078,32 @@ type SqlServerDatabaseBackup struct {
 
 func (s SqlServerDatabaseBackup) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlServerDatabaseBackup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerDestinationConfig: Configuration for SQL Server as a destination in
+// a migration.
+type SqlServerDestinationConfig struct {
+	// MaxConcurrentConnections: Optional. Maximum number of connections Database
+	// Migration Service will open to the destination for data migration.
+	MaxConcurrentConnections int64 `json:"maxConcurrentConnections,omitempty"`
+	// TransactionTimeout: Optional. Timeout for data migration transactions.
+	TransactionTimeout string `json:"transactionTimeout,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxConcurrentConnections")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxConcurrentConnections") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlServerDestinationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerDestinationConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

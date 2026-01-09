@@ -1842,7 +1842,7 @@ func (s CreateWorkerPoolOperationMetadata) MarshalJSON() ([]byte, error) {
 // DefaultServiceAccount: The default service account used for `Builds`.
 type DefaultServiceAccount struct {
 	// Name: Identifier. Format:
-	// `projects/{project}/locations/{location}/defaultServiceAccount
+	// `projects/{project}/locations/{location}/defaultServiceAccount`.
 	Name string `json:"name,omitempty"`
 	// ServiceAccountEmail: Output only. The email address of the service account
 	// identity that will be used for a build by default. This is returned in the

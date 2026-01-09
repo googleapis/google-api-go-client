@@ -6702,6 +6702,12 @@ type BackendService struct {
 	// toINTERNAL, or when the load balancing scheme is set toEXTERNAL and haPolicy
 	// fastIpMove is enabled.
 	Network string `json:"network,omitempty"`
+	// NetworkPassThroughLbTrafficPolicy: Configures traffic steering properties of
+	// internal passthrough Network
+	// Load Balancers.
+	//
+	// networkPassThroughLbTrafficPolicy cannot be specified with haPolicy.
+	NetworkPassThroughLbTrafficPolicy *BackendServiceNetworkPassThroughLbTrafficPolicy `json:"networkPassThroughLbTrafficPolicy,omitempty"`
 	// OutlierDetection: Settings controlling the ejection of unhealthy backend
 	// endpoints from the
 	// load balancing pool of each individual proxy instance that processes
@@ -8475,6 +8481,98 @@ func (s *BackendServiceLogConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+type BackendServiceNetworkPassThroughLbTrafficPolicy struct {
+	// ZonalAffinity: When configured, new connections are load balanced across
+	// healthy backend
+	// endpoints in the local zone.
+	ZonalAffinity *BackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinity `json:"zonalAffinity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ZonalAffinity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ZonalAffinity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackendServiceNetworkPassThroughLbTrafficPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod BackendServiceNetworkPassThroughLbTrafficPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type BackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinity struct {
+	// Spillover: This field indicates whether zonal affinity is enabled or not.
+	// The
+	// possible values are:
+	//
+	//    - ZONAL_AFFINITY_DISABLED: Default Value. Zonal Affinity
+	//    is disabled. The load balancer distributes new connections to all
+	//    healthy backend endpoints across all zones.
+	//    - ZONAL_AFFINITY_STAY_WITHIN_ZONE: Zonal Affinity is
+	//    enabled. The load balancer distributes new connections to all healthy
+	//    backend endpoints in the local zone only. If there are no healthy
+	//    backend endpoints in the local zone, the load balancer distributes
+	//    new connections to all backend endpoints in the local zone.
+	//    - ZONAL_AFFINITY_SPILL_CROSS_ZONE: Zonal Affinity is
+	//    enabled. The load balancer distributes new connections to all healthy
+	//    backend endpoints in the local zone only. If there aren't enough
+	//    healthy backend endpoints in the local zone, the load balancer
+	//    distributes new connections to all healthy backend endpoints across all
+	//    zones.
+	//
+	// Possible values:
+	//   "ZONAL_AFFINITY_DISABLED"
+	//   "ZONAL_AFFINITY_SPILL_CROSS_ZONE"
+	//   "ZONAL_AFFINITY_STAY_WITHIN_ZONE"
+	Spillover string `json:"spillover,omitempty"`
+	// SpilloverRatio: The value of the field must be in [0, 1]. When the ratio of
+	// the count
+	// of healthy backend endpoints in a zone to the count of backend
+	// endpoints in that same zone is equal to or above this threshold, the
+	// load balancer distributes new connections to all healthy endpoints in
+	// the local zone only. When the ratio of the count of healthy
+	// backend
+	// endpoints in a zone to the count of backend endpoints in that same
+	// zone is below this threshold, the load balancer distributes all
+	// new
+	// connections to all healthy endpoints across all zones.
+	SpilloverRatio float64 `json:"spilloverRatio,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Spillover") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Spillover") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinity) MarshalJSON() ([]byte, error) {
+	type NoMethod BackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *BackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinity) UnmarshalJSON(data []byte) error {
+	type NoMethod BackendServiceNetworkPassThroughLbTrafficPolicyZonalAffinity
+	var s1 struct {
+		SpilloverRatio gensupport.JSONFloat64 `json:"spilloverRatio"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SpilloverRatio = float64(s1.SpilloverRatio)
+	return nil
+}
+
 // BackendServiceParams: Additional Backend Service parameters.
 type BackendServiceParams struct {
 	// ResourceManagerTags: Tag keys/values directly bound to this resource.
@@ -9950,9 +10048,21 @@ type Commitment struct {
 	//   "MEMORY_OPTIMIZED_M3"
 	//   "MEMORY_OPTIMIZED_M4"
 	//   "MEMORY_OPTIMIZED_M4_6TB"
+	//   "MEMORY_OPTIMIZED_X4_1440_24T" - CUD bucket for X4 machine with 1440 vCPUs
+	// and 24TB of memory.
 	//   "MEMORY_OPTIMIZED_X4_16TB"
+	//   "MEMORY_OPTIMIZED_X4_1920_32T" - CUD bucket for X4 machine with 1920 vCPUs
+	// and 32TB of memory.
 	//   "MEMORY_OPTIMIZED_X4_24TB"
 	//   "MEMORY_OPTIMIZED_X4_32TB"
+	//   "MEMORY_OPTIMIZED_X4_480_6T" - CUD bucket for X4 machine with 480 vCPUs
+	// and 6TB of memory.
+	//   "MEMORY_OPTIMIZED_X4_480_8T" - CUD bucket for X4 machine with 480 vCPUs
+	// and 8TB of memory.
+	//   "MEMORY_OPTIMIZED_X4_960_12T" - CUD bucket for X4 machine with 960 vCPUs
+	// and 12TB of memory.
+	//   "MEMORY_OPTIMIZED_X4_960_16T" - CUD bucket for X4 machine with 960 vCPUs
+	// and 16TB of memory.
 	//   "STORAGE_OPTIMIZED_Z3"
 	//   "TYPE_UNSPECIFIED" - Note for internal users: When adding a new enum Type
 	// for v1, make sure
@@ -15402,6 +15512,21 @@ type FirewallPolicyRuleMatcher struct {
 	// DestIpRanges: CIDR IP address range.
 	// Maximum number of destination CIDR IP ranges allowed is 5000.
 	DestIpRanges []string `json:"destIpRanges,omitempty"`
+	// DestNetworkContext: Network context of the traffic destination. Allowed
+	// values are:
+	//
+	//
+	//      - UNSPECIFIED
+	//      - INTERNET
+	//      - NON_INTERNET
+	//
+	// Possible values:
+	//   "INTERNET"
+	//   "INTRA_VPC"
+	//   "NON_INTERNET"
+	//   "UNSPECIFIED"
+	//   "VPC_NETWORKS"
+	DestNetworkContext string `json:"destNetworkContext,omitempty"`
 	// DestNetworkType: Network type of the traffic destination. Allowed values
 	// are:
 	//
@@ -15440,6 +15565,23 @@ type FirewallPolicyRuleMatcher struct {
 	// SrcIpRanges: CIDR IP address range.
 	// Maximum number of source CIDR IP ranges allowed is 5000.
 	SrcIpRanges []string `json:"srcIpRanges,omitempty"`
+	// SrcNetworkContext: Network context of the traffic source. Allowed values
+	// are:
+	//
+	//
+	//      - UNSPECIFIED
+	//      - INTERNET
+	//      - INTRA_VPC
+	//      - NON_INTERNET
+	//      - VPC_NETWORKS
+	//
+	// Possible values:
+	//   "INTERNET"
+	//   "INTRA_VPC"
+	//   "NON_INTERNET"
+	//   "UNSPECIFIED"
+	//   "VPC_NETWORKS"
+	SrcNetworkContext string `json:"srcNetworkContext,omitempty"`
 	// SrcNetworkType: Network type of the traffic source. Allowed values are:
 	//
 	//
@@ -34181,6 +34323,10 @@ type License struct {
 	// be
 	// attached to a disk or image at a time.
 	OsLicense bool `json:"osLicense,omitempty"`
+	// Params: Input only. Additional params passed with the request, but not
+	// persisted
+	// as part of resource payload.
+	Params *LicenseParams `json:"params,omitempty"`
 	// RemovableFromDisk: If true, this license can be removed from a disk's set of
 	// licenses, with no
 	// replacement license needed.
@@ -34322,6 +34468,36 @@ type LicenseCodeLicenseAlias struct {
 
 func (s LicenseCodeLicenseAlias) MarshalJSON() ([]byte, error) {
 	type NoMethod LicenseCodeLicenseAlias
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LicenseParams: Additional license params.
+type LicenseParams struct {
+	// ResourceManagerTags: Input only. Resource manager tags to be bound to the
+	// license. Tag keys and values
+	// have the same definition as resource
+	// manager tags. Keys and values can be either in numeric format,
+	// such as `tagKeys/{tag_key_id}` and `tagValues/456` or in namespaced
+	// format such as `{org_id|project_id}/{tag_key_short_name}`
+	// and
+	// `{tag_value_short_name}`. The field is ignored (both PUT &
+	// PATCH) when empty.
+	ResourceManagerTags map[string]string `json:"resourceManagerTags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceManagerTags") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceManagerTags") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LicenseParams) MarshalJSON() ([]byte, error) {
+	type NoMethod LicenseParams
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -39789,6 +39965,12 @@ type NetworkProfileNetworkFeatures struct {
 	// Load Balancer forwarding rules.
 	//   "VPC_PEERING" - IP range for peer networks.
 	AddressPurposes []string `json:"addressPurposes,omitempty"`
+	// AllowAddressCreation: Specifies whether address creation is allowed.
+	//
+	// Possible values:
+	//   "ADDRESS_CREATION_ALLOWED"
+	//   "ADDRESS_CREATION_BLOCKED"
+	AllowAddressCreation string `json:"allowAddressCreation,omitempty"`
 	// AllowAliasIpRanges: Specifies whether alias IP ranges (and secondary address
 	// ranges) are
 	// allowed.
@@ -39837,6 +40019,13 @@ type NetworkProfileNetworkFeatures struct {
 	//   "EXTERNAL_IP_ACCESS_ALLOWED"
 	//   "EXTERNAL_IP_ACCESS_BLOCKED"
 	AllowExternalIpAccess string `json:"allowExternalIpAccess,omitempty"`
+	// AllowFirewallPolicy: Specifies whether firewall policy can be attached to
+	// the network.
+	//
+	// Possible values:
+	//   "FIREWALL_POLICY_ALLOWED"
+	//   "FIREWALL_POLICY_BLOCKED"
+	AllowFirewallPolicy string `json:"allowFirewallPolicy,omitempty"`
 	// AllowInterconnect: Specifies whether Cloud Interconnect creation is allowed.
 	//
 	// Possible values:
@@ -39862,6 +40051,13 @@ type NetworkProfileNetworkFeatures struct {
 	//   "MULTI_NIC_IN_SAME_NETWORK_ALLOWED"
 	//   "MULTI_NIC_IN_SAME_NETWORK_BLOCKED"
 	AllowMultiNicInSameNetwork string `json:"allowMultiNicInSameNetwork,omitempty"`
+	// AllowMultiNicInSameSubnetwork: Specifies whether multi-nic in the same
+	// subnetwork is allowed.
+	//
+	// Possible values:
+	//   "MULTI_NIC_IN_SAME_SUBNETWORK_ALLOWED"
+	//   "MULTI_NIC_IN_SAME_SUBNETWORK_BLOCKED"
+	AllowMultiNicInSameSubnetwork string `json:"allowMultiNicInSameSubnetwork,omitempty"`
 	// AllowMulticast: Specifies whether multicast is allowed.
 	//
 	// Possible values:
@@ -39918,6 +40114,19 @@ type NetworkProfileNetworkFeatures struct {
 	//   "SUBINTERFACES_ALLOWED"
 	//   "SUBINTERFACES_BLOCKED"
 	AllowSubInterfaces string `json:"allowSubInterfaces,omitempty"`
+	// AllowSubnetworkCreation: Specifies whether subnetwork creation is allowed.
+	//
+	// Possible values:
+	//   "SUBNETWORK_CREATION_ALLOWED"
+	//   "SUBNETWORK_CREATION_BLOCKED"
+	AllowSubnetworkCreation string `json:"allowSubnetworkCreation,omitempty"`
+	// AllowVpcFirewallRules: Specifies whether VPC firewall rules can be created
+	// under the network.
+	//
+	// Possible values:
+	//   "VPC_FIREWALL_RULES_ALLOWED"
+	//   "VPC_FIREWALL_RULES_BLOCKED"
+	AllowVpcFirewallRules string `json:"allowVpcFirewallRules,omitempty"`
 	// AllowVpcPeering: Specifies whether VPC peering is allowed.
 	//
 	// Possible values:
@@ -39930,6 +40139,10 @@ type NetworkProfileNetworkFeatures struct {
 	//   "VPN_ALLOWED"
 	//   "VPN_BLOCKED"
 	AllowVpn string `json:"allowVpn,omitempty"`
+	// Possible values:
+	//   "RDMA_ROCE_POLICY"
+	//   "VPC_POLICY"
+	FirewallPolicyTypes []string `json:"firewallPolicyTypes,omitempty"`
 	// InterfaceTypes: If set, limits the interface types that the network
 	// supports. If
 	// empty, all interface types are supported.
@@ -39948,6 +40161,11 @@ type NetworkProfileNetworkFeatures struct {
 	//   "MULTICAST_SDN"
 	//   "MULTICAST_ULL"
 	Multicast string `json:"multicast,omitempty"`
+	// PredefinedNetworkInternalIpv6Range: Specifies a predefined internal IPv6
+	// range for the network.
+	PredefinedNetworkInternalIpv6Range string `json:"predefinedNetworkInternalIpv6Range,omitempty"`
+	// PredefinedSubnetworkRanges: Predefined subnetwork ranges for the network.
+	PredefinedSubnetworkRanges []*NetworkProfileNetworkFeaturesPredefinedSubnetworkRange `json:"predefinedSubnetworkRanges,omitempty"`
 	// SubnetPurposes: Specifies which subnetwork purposes are supported.
 	//
 	// Possible values:
@@ -40016,6 +40234,29 @@ func (s NetworkProfileNetworkFeatures) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type NetworkProfileNetworkFeaturesPredefinedSubnetworkRange struct {
+	// Ipv6Range: The IPv6 range of the predefined subnetwork.
+	Ipv6Range string `json:"ipv6Range,omitempty"`
+	// NamePrefix: The naming prefix of the predefined subnetwork.
+	NamePrefix string `json:"namePrefix,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Ipv6Range") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Ipv6Range") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NetworkProfileNetworkFeaturesPredefinedSubnetworkRange) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkProfileNetworkFeaturesPredefinedSubnetworkRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type NetworkProfileProfileType struct {
 	// Possible values:
 	//   "RDMA" - RDMA network.
@@ -40025,6 +40266,7 @@ type NetworkProfileProfileType struct {
 	// Possible values:
 	//   "FALCON" - RDMA over Falcon.
 	//   "ROCE" - RDMA over Converged Ethernet (RoCE).
+	//   "ROCE_METAL" - RDMA over Converged Ethernet (RoCE) for Bare Metal.
 	RdmaSubtype string `json:"rdmaSubtype,omitempty"`
 	// Possible values:
 	//   "OPERATOR" - Exchange operator.
@@ -50781,6 +51023,10 @@ type ReservationBlock struct {
 	// currently in use on this
 	// reservation block.
 	InUseCount int64 `json:"inUseCount,omitempty"`
+	// InUseHostCount: Output only. Number of hosts currently in use. If there is
+	// one or more Instances running
+	// on the host, it is considered in use.
+	InUseHostCount int64 `json:"inUseHostCount,omitempty"`
 	// Kind: Output only. [Output Only] Type of the resource.
 	// Alwayscompute#reservationBlock for reservation blocks.
 	Kind string `json:"kind,omitempty"`
@@ -51362,6 +51608,10 @@ type ReservationSubBlock struct {
 	// currently in use on this
 	// reservation subBlock.
 	InUseCount int64 `json:"inUseCount,omitempty"`
+	// InUseHostCount: Output only. Number of hosts currently in use. If there is
+	// one or more Instances running
+	// on the host, it is considered in use.
+	InUseHostCount int64 `json:"inUseHostCount,omitempty"`
 	// Kind: Output only. [Output Only] Type of the resource.
 	// Alwayscompute#reservationSubBlock for reservation subBlocks.
 	Kind string `json:"kind,omitempty"`
@@ -60632,6 +60882,15 @@ type SourceInstanceProperties struct {
 	// NetworkInterfaces: An array of network access configurations for this
 	// interface.
 	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty"`
+	// PostKeyRevocationActionType: PostKeyRevocationActionType of the instance.
+	//
+	// Possible values:
+	//   "NOOP" - Indicates user chose no operation.
+	//   "POST_KEY_REVOCATION_ACTION_TYPE_UNSPECIFIED" - Default value. This value
+	// is unused.
+	//   "SHUTDOWN" - Indicates user chose to opt for VM shutdown on key
+	// revocation.
+	PostKeyRevocationActionType string `json:"postKeyRevocationActionType,omitempty"`
 	// Scheduling: Specifies the scheduling options for the instances that are
 	// created from
 	// this machine image.
@@ -62453,6 +62712,10 @@ type StoragePool struct {
 	// following characters must be a dash, lowercase letter, or digit, except
 	// the last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
+	// Params: Input only. Additional params passed with the request, but not
+	// persisted
+	// as part of resource payload.
+	Params *StoragePoolParams `json:"params,omitempty"`
 	// PerformanceProvisioningType: Provisioning type of the performance-related
 	// parameters of the pool,
 	// such as throughput and IOPS.
@@ -63177,6 +63440,36 @@ type StoragePoolListDisksWarningData struct {
 
 func (s StoragePoolListDisksWarningData) MarshalJSON() ([]byte, error) {
 	type NoMethod StoragePoolListDisksWarningData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StoragePoolParams: Additional storage pool params.
+type StoragePoolParams struct {
+	// ResourceManagerTags: Input only. Resource manager tags to be bound to the
+	// storage pool. Tag keys and values
+	// have the same definition as resource
+	// manager tags. Keys and values can be either in numeric format,
+	// such as `tagKeys/{tag_key_id}` and `tagValues/456` or in namespaced
+	// format such as `{org_id|project_id}/{tag_key_short_name}`
+	// and
+	// `{tag_value_short_name}`. The field is ignored (both PUT &
+	// PATCH) when empty.
+	ResourceManagerTags map[string]string `json:"resourceManagerTags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceManagerTags") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceManagerTags") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StoragePoolParams) MarshalJSON() ([]byte, error) {
+	type NoMethod StoragePoolParams
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

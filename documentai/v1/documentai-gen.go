@@ -3735,6 +3735,8 @@ type GoogleCloudDocumentaiV1DocumentEntitiesRevision struct {
 	Entities []*GoogleCloudDocumentaiV1DocumentEntity `json:"entities,omitempty"`
 	// EntityValidationOutput: The entity validation output for this revision.
 	EntityValidationOutput *GoogleCloudDocumentaiV1DocumentEntityValidationOutput `json:"entityValidationOutput,omitempty"`
+	// Provenance: Optional. The history of this revision.
+	Provenance *GoogleCloudDocumentaiV1DocumentProvenance `json:"provenance,omitempty"`
 	// RevisionId: The revision id.
 	RevisionId string `json:"revisionId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Entities") to

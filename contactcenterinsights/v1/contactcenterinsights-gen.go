@@ -3499,6 +3499,7 @@ type GoogleCloudContactcenterinsightsV1ExportInsightsDataRequest struct {
 	//   "EXPORT_V14" - Export schema version 14.
 	//   "EXPORT_V15" - Export schema version 15.
 	//   "EXPORT_V16" - Export schema version 16.
+	//   "EXPORT_V17" - Export schema version 17.
 	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
 	// available.
 	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`
@@ -9691,6 +9692,7 @@ type GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequest struct {
 	//   "EXPORT_V14" - Export schema version 14.
 	//   "EXPORT_V15" - Export schema version 15.
 	//   "EXPORT_V16" - Export schema version 16.
+	//   "EXPORT_V17" - Export schema version 17.
 	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
 	// available.
 	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`
@@ -14479,6 +14481,7 @@ type GoogleCloudContactcenterinsightsV1mainExportInsightsDataRequest struct {
 	//   "EXPORT_V14" - Export schema version 14.
 	//   "EXPORT_V15" - Export schema version 15.
 	//   "EXPORT_V16" - Export schema version 16.
+	//   "EXPORT_V17" - Export schema version 17.
 	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
 	// available.
 	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`

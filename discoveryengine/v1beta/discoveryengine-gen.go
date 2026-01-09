@@ -2088,6 +2088,16 @@ func (s *GoogleCloudDiscoveryengineV1AnswerGenerationSpecUserDefinedClassifierSp
 type GoogleCloudDiscoveryengineV1Assistant struct {
 	// CustomerPolicy: Optional. Customer policy for the assistant.
 	CustomerPolicy *GoogleCloudDiscoveryengineV1AssistantCustomerPolicy `json:"customerPolicy,omitempty"`
+	// DefaultWebGroundingToggleOff: Optional. This field controls the default web
+	// grounding toggle for end users if `web_grounding_type` is set to
+	// `WEB_GROUNDING_TYPE_GOOGLE_SEARCH` or
+	// `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`. By default, this field is set to
+	// false. If `web_grounding_type` is `WEB_GROUNDING_TYPE_GOOGLE_SEARCH` or
+	// `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`, end users will have web
+	// grounding enabled by default on UI. If true, grounding toggle will be
+	// disabled by default on UI. End users can still enable web grounding in the
+	// UI if web grounding is enabled.
+	DefaultWebGroundingToggleOff bool `json:"defaultWebGroundingToggleOff,omitempty"`
 	// Description: Optional. Description for additional information. Expected to
 	// be shown on the configuration UI, not to the users of the assistant.
 	Description string `json:"description,omitempty"`
@@ -18329,6 +18339,16 @@ func (s GoogleCloudDiscoveryengineV1betaAssistUserMetadata) MarshalJSON() ([]byt
 type GoogleCloudDiscoveryengineV1betaAssistant struct {
 	// CustomerPolicy: Optional. Customer policy for the assistant.
 	CustomerPolicy *GoogleCloudDiscoveryengineV1betaAssistantCustomerPolicy `json:"customerPolicy,omitempty"`
+	// DefaultWebGroundingToggleOff: Optional. This field controls the default web
+	// grounding toggle for end users if `web_grounding_type` is set to
+	// `WEB_GROUNDING_TYPE_GOOGLE_SEARCH` or
+	// `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`. By default, this field is set to
+	// false. If `web_grounding_type` is `WEB_GROUNDING_TYPE_GOOGLE_SEARCH` or
+	// `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`, end users will have web
+	// grounding enabled by default on UI. If true, grounding toggle will be
+	// disabled by default on UI. End users can still enable web grounding in the
+	// UI if web grounding is enabled.
+	DefaultWebGroundingToggleOff bool `json:"defaultWebGroundingToggleOff,omitempty"`
 	// Description: Optional. Description for additional information. Expected to
 	// be shown on the configuration UI, not to the users of the assistant.
 	Description string `json:"description,omitempty"`

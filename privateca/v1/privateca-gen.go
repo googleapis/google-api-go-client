@@ -1963,8 +1963,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -6616,8 +6616,14 @@ type ProjectsLocationsCaPoolsCertificatesListCall struct {
 
 // List: Lists Certificates.
 //
-//   - parent: The resource name of the location associated with the
-//     Certificates, in the format `projects/*/locations/*/caPools/*`.
+//   - parent: The resource name of the parent associated with the Certificates,
+//     in the format `projects/*/locations/*/caPools/*`. The parent resource name
+//     can be in one of two forms: 1. **Specific CA Pool:** To list certificates
+//     within a single CA Pool: `projects/*/locations/*/caPools/*` 2. **All CA
+//     Pools in a Location:** To list certificates across *all* CA Pools in a
+//     given project and location, use the wildcard character (`-`) in place of
+//     the CA Pool ID. Example: `projects/*/locations/*/caPools/-` See
+//     go/ccfe-nested-collections#aggregate-listing for more details.
 func (r *ProjectsLocationsCaPoolsCertificatesService) List(parent string) *ProjectsLocationsCaPoolsCertificatesListCall {
 	c := &ProjectsLocationsCaPoolsCertificatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8357,9 +8363,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

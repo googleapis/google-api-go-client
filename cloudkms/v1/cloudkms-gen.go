@@ -208,6 +208,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.KeyHandles = NewProjectsLocationsKeyHandlesService(s)
 	rs.KeyRings = NewProjectsLocationsKeyRingsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.SingleTenantHsmInstances = NewProjectsLocationsSingleTenantHsmInstancesService(s)
 	return rs
 }
 
@@ -223,6 +224,8 @@ type ProjectsLocationsService struct {
 	KeyRings *ProjectsLocationsKeyRingsService
 
 	Operations *ProjectsLocationsOperationsService
+
+	SingleTenantHsmInstances *ProjectsLocationsSingleTenantHsmInstancesService
 }
 
 func NewProjectsLocationsEkmConfigService(s *Service) *ProjectsLocationsEkmConfigService {
@@ -304,6 +307,87 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 
 type ProjectsLocationsOperationsService struct {
 	s *Service
+}
+
+func NewProjectsLocationsSingleTenantHsmInstancesService(s *Service) *ProjectsLocationsSingleTenantHsmInstancesService {
+	rs := &ProjectsLocationsSingleTenantHsmInstancesService{s: s}
+	rs.Proposals = NewProjectsLocationsSingleTenantHsmInstancesProposalsService(s)
+	return rs
+}
+
+type ProjectsLocationsSingleTenantHsmInstancesService struct {
+	s *Service
+
+	Proposals *ProjectsLocationsSingleTenantHsmInstancesProposalsService
+}
+
+func NewProjectsLocationsSingleTenantHsmInstancesProposalsService(s *Service) *ProjectsLocationsSingleTenantHsmInstancesProposalsService {
+	rs := &ProjectsLocationsSingleTenantHsmInstancesProposalsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSingleTenantHsmInstancesProposalsService struct {
+	s *Service
+}
+
+// AddQuorumMember: Add a quorum member to the SingleTenantHsmInstance. This
+// will increase the total_approver_count by 1. The SingleTenantHsmInstance
+// must be in the ACTIVE state to perform this operation.
+type AddQuorumMember struct {
+	// TwoFactorPublicKeyPem: Required. The public key associated with the 2FA key
+	// for the new quorum member to add. Public keys must be associated with RSA
+	// 2048 keys.
+	TwoFactorPublicKeyPem string `json:"twoFactorPublicKeyPem,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TwoFactorPublicKeyPem") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TwoFactorPublicKeyPem") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddQuorumMember) MarshalJSON() ([]byte, error) {
+	type NoMethod AddQuorumMember
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ApproveSingleTenantHsmInstanceProposalRequest: Request message for
+// HsmManagement.ApproveSingleTenantHsmInstanceProposal.
+type ApproveSingleTenantHsmInstanceProposalRequest struct {
+	// QuorumReply: Required. The reply to QuorumParameters for approving the
+	// proposal.
+	QuorumReply *QuorumReply `json:"quorumReply,omitempty"`
+	// RequiredActionQuorumReply: Required. The reply to
+	// RequiredActionQuorumParameters for approving the proposal.
+	RequiredActionQuorumReply *RequiredActionQuorumReply `json:"requiredActionQuorumReply,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "QuorumReply") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "QuorumReply") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApproveSingleTenantHsmInstanceProposalRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ApproveSingleTenantHsmInstanceProposalRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ApproveSingleTenantHsmInstanceProposalResponse: Response message for
+// HsmManagement.ApproveSingleTenantHsmInstanceProposal.
+type ApproveSingleTenantHsmInstanceProposalResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // AsymmetricDecryptRequest: Request message for
@@ -827,6 +911,57 @@ type CertificateChains struct {
 
 func (s CertificateChains) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateChains
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Challenge: A challenge to be signed by a 2FA key.
+type Challenge struct {
+	// Challenge: Output only. The challenge to be signed by the 2FA key indicated
+	// by the public key.
+	Challenge string `json:"challenge,omitempty"`
+	// PublicKeyPem: Output only. The public key associated with the 2FA key that
+	// should sign the challenge.
+	PublicKeyPem string `json:"publicKeyPem,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Challenge") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Challenge") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Challenge) MarshalJSON() ([]byte, error) {
+	type NoMethod Challenge
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ChallengeReply: A reply to a challenge signed by a 2FA key.
+type ChallengeReply struct {
+	// PublicKeyPem: Required. The public key associated with the 2FA key.
+	PublicKeyPem string `json:"publicKeyPem,omitempty"`
+	// SignedChallenge: Required. The signed challenge associated with the 2FA key.
+	// The signature must be RSASSA-PKCS1 v1.5 with a SHA256 digest.
+	SignedChallenge string `json:"signedChallenge,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PublicKeyPem") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PublicKeyPem") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ChallengeReply) MarshalJSON() ([]byte, error) {
+	type NoMethod ChallengeReply
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1504,6 +1639,13 @@ func (s DecryptResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeleteSingleTenantHsmInstance: Delete the SingleTenantHsmInstance. Deleting
+// a SingleTenantHsmInstance will make all CryptoKeys attached to the
+// SingleTenantHsmInstance unusable. The SingleTenantHsmInstance must not be in
+// the DELETING or DELETED state to perform this operation.
+type DeleteSingleTenantHsmInstance struct {
+}
+
 // DestroyCryptoKeyVersionRequest: Request message for
 // KeyManagementService.DestroyCryptoKeyVersion.
 type DestroyCryptoKeyVersionRequest struct {
@@ -1533,6 +1675,12 @@ type Digest struct {
 func (s Digest) MarshalJSON() ([]byte, error) {
 	type NoMethod Digest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DisableSingleTenantHsmInstance: Disable the SingleTenantHsmInstance. The
+// SingleTenantHsmInstance must be in the ACTIVE state to perform this
+// operation.
+type DisableSingleTenantHsmInstance struct {
 }
 
 // EkmConfig: An EkmConfig is a singleton resource that represents
@@ -1627,6 +1775,21 @@ type EkmConnection struct {
 func (s EkmConnection) MarshalJSON() ([]byte, error) {
 	type NoMethod EkmConnection
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// EnableSingleTenantHsmInstance: Enable the SingleTenantHsmInstance. The
+// SingleTenantHsmInstance must be in the DISABLED state to perform this
+// operation.
+type EnableSingleTenantHsmInstance struct {
 }
 
 // EncryptRequest: Request message for KeyManagementService.Encrypt.
@@ -1757,6 +1920,11 @@ type EncryptResponse struct {
 func (s EncryptResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExecuteSingleTenantHsmInstanceProposalRequest: Request message for
+// HsmManagement.ExecuteSingleTenantHsmInstanceProposal.
+type ExecuteSingleTenantHsmInstanceProposalRequest struct {
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -2642,6 +2810,75 @@ func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListSingleTenantHsmInstanceProposalsResponse: Response message for
+// HsmManagement.ListSingleTenantHsmInstanceProposals.
+type ListSingleTenantHsmInstanceProposalsResponse struct {
+	// NextPageToken: A token to retrieve next page of results. Pass this value in
+	// ListSingleTenantHsmInstanceProposalsRequest.page_token to retrieve the next
+	// page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SingleTenantHsmInstanceProposals: The list of
+	// SingleTenantHsmInstanceProposals.
+	SingleTenantHsmInstanceProposals []*SingleTenantHsmInstanceProposal `json:"singleTenantHsmInstanceProposals,omitempty"`
+	// TotalSize: The total number of SingleTenantHsmInstanceProposals that matched
+	// the query. This field is not populated if
+	// ListSingleTenantHsmInstanceProposalsRequest.filter is applied.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListSingleTenantHsmInstanceProposalsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSingleTenantHsmInstanceProposalsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListSingleTenantHsmInstancesResponse: Response message for
+// HsmManagement.ListSingleTenantHsmInstances.
+type ListSingleTenantHsmInstancesResponse struct {
+	// NextPageToken: A token to retrieve next page of results. Pass this value in
+	// ListSingleTenantHsmInstancesRequest.page_token to retrieve the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SingleTenantHsmInstances: The list of SingleTenantHsmInstances.
+	SingleTenantHsmInstances []*SingleTenantHsmInstance `json:"singleTenantHsmInstances,omitempty"`
+	// TotalSize: The total number of SingleTenantHsmInstances that matched the
+	// query. This field is not populated if
+	// ListSingleTenantHsmInstancesRequest.filter is applied.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListSingleTenantHsmInstancesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSingleTenantHsmInstancesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby city
@@ -3223,6 +3460,95 @@ func (s PublicKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// QuorumAuth: Configuration for M of N quorum auth.
+type QuorumAuth struct {
+	// RequiredApproverCount: Output only. The required numbers of approvers. The M
+	// value used for M of N quorum auth. Must be greater than or equal to 2 and
+	// less than or equal to total_approver_count - 1.
+	RequiredApproverCount int64 `json:"requiredApproverCount,omitempty"`
+	// TotalApproverCount: Required. The total number of approvers. This is the N
+	// value used for M of N quorum auth. Must be greater than or equal to 3 and
+	// less than or equal to 16.
+	TotalApproverCount int64 `json:"totalApproverCount,omitempty"`
+	// TwoFactorPublicKeyPems: Output only. The public keys associated with the 2FA
+	// keys for M of N quorum auth.
+	TwoFactorPublicKeyPems []string `json:"twoFactorPublicKeyPems,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequiredApproverCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequiredApproverCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QuorumAuth) MarshalJSON() ([]byte, error) {
+	type NoMethod QuorumAuth
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// QuorumParameters: Parameters of quorum approval for the
+// SingleTenantHsmInstanceProposal.
+type QuorumParameters struct {
+	// ApprovedTwoFactorPublicKeyPems: Output only. The public keys associated with
+	// the 2FA keys that have already approved the SingleTenantHsmInstanceProposal
+	// by signing the challenge.
+	ApprovedTwoFactorPublicKeyPems []string `json:"approvedTwoFactorPublicKeyPems,omitempty"`
+	// Challenges: Output only. The challenges to be signed by 2FA keys for quorum
+	// auth. M of N of these challenges are required to be signed to approve the
+	// operation.
+	Challenges []*Challenge `json:"challenges,omitempty"`
+	// RequiredApproverCount: Output only. The required numbers of approvers. This
+	// is the M value used for M of N quorum auth. It is less than the number of
+	// public keys.
+	RequiredApproverCount int64 `json:"requiredApproverCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ApprovedTwoFactorPublicKeyPems") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApprovedTwoFactorPublicKeyPems")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QuorumParameters) MarshalJSON() ([]byte, error) {
+	type NoMethod QuorumParameters
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// QuorumReply: The reply to QuorumParameters for approving the proposal.
+type QuorumReply struct {
+	// ChallengeReplies: Required. The challenge replies to approve the proposal.
+	// Challenge replies can be sent across multiple requests. The proposal will be
+	// approved when required_approver_count challenge replies are provided.
+	ChallengeReplies []*ChallengeReply `json:"challengeReplies,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChallengeReplies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChallengeReplies") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QuorumReply) MarshalJSON() ([]byte, error) {
+	type NoMethod QuorumReply
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RawDecryptRequest: Request message for KeyManagementService.RawDecrypt.
 type RawDecryptRequest struct {
 	// AdditionalAuthenticatedData: Optional. Optional data that must match the
@@ -3552,6 +3878,138 @@ func (s RawEncryptResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RefreshSingleTenantHsmInstance: Refreshes the SingleTenantHsmInstance. This
+// operation must be performed periodically to keep the SingleTenantHsmInstance
+// active. This operation must be performed before
+// unrefreshed_duration_until_disable has passed. The SingleTenantHsmInstance
+// must be in the ACTIVE state to perform this operation.
+type RefreshSingleTenantHsmInstance struct {
+}
+
+// RegisterTwoFactorAuthKeys: Register 2FA keys for the
+// SingleTenantHsmInstance. This operation requires all Challenges to be signed
+// by 2FA keys. The SingleTenantHsmInstance must be in the
+// PENDING_TWO_FACTOR_AUTH_REGISTRATION state to perform this operation.
+type RegisterTwoFactorAuthKeys struct {
+	// RequiredApproverCount: Required. The required numbers of approvers to set
+	// for the SingleTenantHsmInstance. This is the M value used for M of N quorum
+	// auth. Must be greater than or equal to 2 and less than or equal to
+	// total_approver_count - 1.
+	RequiredApproverCount int64 `json:"requiredApproverCount,omitempty"`
+	// TwoFactorPublicKeyPems: Required. The public keys associated with the 2FA
+	// keys for M of N quorum auth. Public keys must be associated with RSA 2048
+	// keys.
+	TwoFactorPublicKeyPems []string `json:"twoFactorPublicKeyPems,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequiredApproverCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequiredApproverCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RegisterTwoFactorAuthKeys) MarshalJSON() ([]byte, error) {
+	type NoMethod RegisterTwoFactorAuthKeys
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemoveQuorumMember: Remove a quorum member from the SingleTenantHsmInstance.
+// This will reduce total_approver_count by 1. The SingleTenantHsmInstance must
+// be in the ACTIVE state to perform this operation.
+type RemoveQuorumMember struct {
+	// TwoFactorPublicKeyPem: Required. The public key associated with the 2FA key
+	// for the quorum member to remove. Public keys must be associated with RSA
+	// 2048 keys.
+	TwoFactorPublicKeyPem string `json:"twoFactorPublicKeyPem,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TwoFactorPublicKeyPem") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TwoFactorPublicKeyPem") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoveQuorumMember) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveQuorumMember
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RequiredActionQuorumParameters: Parameters for an approval that has both
+// required challenges and a quorum.
+type RequiredActionQuorumParameters struct {
+	// ApprovedTwoFactorPublicKeyPems: Output only. The public keys associated with
+	// the 2FA keys that have already approved the SingleTenantHsmInstanceProposal
+	// by signing the challenge.
+	ApprovedTwoFactorPublicKeyPems []string `json:"approvedTwoFactorPublicKeyPems,omitempty"`
+	// QuorumChallenges: Output only. The challenges to be signed by 2FA keys for
+	// quorum auth. M of N of these challenges are required to be signed to approve
+	// the operation.
+	QuorumChallenges []*Challenge `json:"quorumChallenges,omitempty"`
+	// RequiredApproverCount: Output only. The required number of quorum approvers.
+	// This is the M value used for M of N quorum auth. It is less than the number
+	// of public keys.
+	RequiredApproverCount int64 `json:"requiredApproverCount,omitempty"`
+	// RequiredChallenges: Output only. A list of specific challenges that must be
+	// signed. For some operations, this will contain a single challenge.
+	RequiredChallenges []*Challenge `json:"requiredChallenges,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ApprovedTwoFactorPublicKeyPems") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApprovedTwoFactorPublicKeyPems")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RequiredActionQuorumParameters) MarshalJSON() ([]byte, error) {
+	type NoMethod RequiredActionQuorumParameters
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RequiredActionQuorumReply: The reply to RequiredActionQuorumParameters for
+// approving the proposal.
+type RequiredActionQuorumReply struct {
+	// QuorumChallengeReplies: Required. Quorum members' signed challenge replies.
+	// These can be provided across multiple requests. The proposal will be
+	// approved when required_approver_count quorum_challenge_replies are provided
+	// and when all required_challenge_replies are provided.
+	QuorumChallengeReplies []*ChallengeReply `json:"quorumChallengeReplies,omitempty"`
+	// RequiredChallengeReplies: Required. All required challenges must be signed
+	// for the proposal to be approved. These can be sent across multiple requests.
+	RequiredChallengeReplies []*ChallengeReply `json:"requiredChallengeReplies,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "QuorumChallengeReplies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "QuorumChallengeReplies") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RequiredActionQuorumReply) MarshalJSON() ([]byte, error) {
+	type NoMethod RequiredActionQuorumReply
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RestoreCryptoKeyVersionRequest: Request message for
 // KeyManagementService.RestoreCryptoKeyVersion.
 type RestoreCryptoKeyVersionRequest struct {
@@ -3711,6 +4169,176 @@ type ShowEffectiveKeyAccessJustificationsPolicyConfigResponse struct {
 
 func (s ShowEffectiveKeyAccessJustificationsPolicyConfigResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ShowEffectiveKeyAccessJustificationsPolicyConfigResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SingleTenantHsmInstance: A SingleTenantHsmInstance represents a
+// single-tenant HSM instance. It can be used for creating CryptoKeys with a
+// ProtectionLevel of HSM_SINGLE_TENANT, as well as performing cryptographic
+// operations using keys created within the SingleTenantHsmInstance.
+type SingleTenantHsmInstance struct {
+	// CreateTime: Output only. The time at which the SingleTenantHsmInstance was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DeleteTime: Output only. The time at which the SingleTenantHsmInstance was
+	// deleted.
+	DeleteTime string `json:"deleteTime,omitempty"`
+	// DisableTime: Output only. The time at which the instance will be
+	// automatically disabled if not refreshed. This field is updated upon creation
+	// and after each successful refresh operation and enable. A
+	// RefreshSingleTenantHsmInstance operation must be made via a
+	// SingleTenantHsmInstanceProposal before this time otherwise the
+	// SingleTenantHsmInstance will become disabled.
+	DisableTime string `json:"disableTime,omitempty"`
+	// Name: Identifier. The resource name for this SingleTenantHsmInstance in the
+	// format `projects/*/locations/*/singleTenantHsmInstances/*`.
+	Name string `json:"name,omitempty"`
+	// QuorumAuth: Required. The quorum auth configuration for the
+	// SingleTenantHsmInstance.
+	QuorumAuth *QuorumAuth `json:"quorumAuth,omitempty"`
+	// State: Output only. The state of the SingleTenantHsmInstance.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not specified.
+	//   "CREATING" - The SingleTenantHsmInstance is being created.
+	//   "PENDING_TWO_FACTOR_AUTH_REGISTRATION" - The SingleTenantHsmInstance is
+	// waiting for 2FA keys to be registered. This can be done by calling
+	// CreateSingleTenantHsmInstanceProposal with the RegisterTwoFactorAuthKeys
+	// operation.
+	//   "ACTIVE" - The SingleTenantHsmInstance is ready to use. A
+	// SingleTenantHsmInstance must be in the ACTIVE state for all CryptoKeys
+	// created within the SingleTenantHsmInstance to be usable.
+	//   "DISABLING" - The SingleTenantHsmInstance is being disabled.
+	//   "DISABLED" - The SingleTenantHsmInstance is disabled.
+	//   "DELETING" - The SingleTenantHsmInstance is being deleted. Requests to the
+	// instance will be rejected in this state.
+	//   "DELETED" - The SingleTenantHsmInstance has been deleted.
+	//   "FAILED" - The SingleTenantHsmInstance has failed and can not be recovered
+	// or used.
+	State string `json:"state,omitempty"`
+	// UnrefreshedDurationUntilDisable: Output only. The system-defined duration
+	// that an instance can remain unrefreshed until it is automatically disabled.
+	// This will have a value of 120 days.
+	UnrefreshedDurationUntilDisable string `json:"unrefreshedDurationUntilDisable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SingleTenantHsmInstance) MarshalJSON() ([]byte, error) {
+	type NoMethod SingleTenantHsmInstance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SingleTenantHsmInstanceProposal: A SingleTenantHsmInstanceProposal
+// represents a proposal to perform an operation on a SingleTenantHsmInstance.
+type SingleTenantHsmInstanceProposal struct {
+	// AddQuorumMember: Add a quorum member to the SingleTenantHsmInstance. This
+	// will increase the total_approver_count by 1. The SingleTenantHsmInstance
+	// must be in the ACTIVE state to perform this operation.
+	AddQuorumMember *AddQuorumMember `json:"addQuorumMember,omitempty"`
+	// CreateTime: Output only. The time at which the
+	// SingleTenantHsmInstanceProposal was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DeleteSingleTenantHsmInstance: Delete the SingleTenantHsmInstance. Deleting
+	// a SingleTenantHsmInstance will make all CryptoKeys attached to the
+	// SingleTenantHsmInstance unusable. The SingleTenantHsmInstance must be in the
+	// DISABLED or PENDING_TWO_FACTOR_AUTH_REGISTRATION state to perform this
+	// operation.
+	DeleteSingleTenantHsmInstance *DeleteSingleTenantHsmInstance `json:"deleteSingleTenantHsmInstance,omitempty"`
+	// DeleteTime: Output only. The time at which the
+	// SingleTenantHsmInstanceProposal was deleted.
+	DeleteTime string `json:"deleteTime,omitempty"`
+	// DisableSingleTenantHsmInstance: Disable the SingleTenantHsmInstance. The
+	// SingleTenantHsmInstance must be in the ACTIVE state to perform this
+	// operation.
+	DisableSingleTenantHsmInstance *DisableSingleTenantHsmInstance `json:"disableSingleTenantHsmInstance,omitempty"`
+	// EnableSingleTenantHsmInstance: Enable the SingleTenantHsmInstance. The
+	// SingleTenantHsmInstance must be in the DISABLED state to perform this
+	// operation.
+	EnableSingleTenantHsmInstance *EnableSingleTenantHsmInstance `json:"enableSingleTenantHsmInstance,omitempty"`
+	// ExpireTime: The time at which the SingleTenantHsmInstanceProposal will
+	// expire if not approved and executed.
+	ExpireTime string `json:"expireTime,omitempty"`
+	// FailureReason: Output only. The root cause of the most recent failure. Only
+	// present if state is FAILED.
+	FailureReason string `json:"failureReason,omitempty"`
+	// Name: Identifier. The resource name for this SingleTenantHsmInstance in the
+	// format `projects/*/locations/*/singleTenantHsmInstances/*/proposals/*`.
+	Name string `json:"name,omitempty"`
+	// PurgeTime: Output only. The time at which the soft-deleted
+	// SingleTenantHsmInstanceProposal will be permanently purged. This field is
+	// only populated when the state is DELETED and will be set a time after
+	// expiration of the proposal, i.e. >= expire_time or (create_time + ttl).
+	PurgeTime string `json:"purgeTime,omitempty"`
+	// QuorumParameters: Output only. The quorum approval parameters for the
+	// SingleTenantHsmInstanceProposal.
+	QuorumParameters *QuorumParameters `json:"quorumParameters,omitempty"`
+	// RefreshSingleTenantHsmInstance: Refreshes the SingleTenantHsmInstance. This
+	// operation must be performed periodically to keep the SingleTenantHsmInstance
+	// active. This operation must be performed before
+	// unrefreshed_duration_until_disable has passed. The SingleTenantHsmInstance
+	// must be in the ACTIVE state to perform this operation.
+	RefreshSingleTenantHsmInstance *RefreshSingleTenantHsmInstance `json:"refreshSingleTenantHsmInstance,omitempty"`
+	// RegisterTwoFactorAuthKeys: Register 2FA keys for the
+	// SingleTenantHsmInstance. This operation requires all N Challenges to be
+	// signed by 2FA keys. The SingleTenantHsmInstance must be in the
+	// PENDING_TWO_FACTOR_AUTH_REGISTRATION state to perform this operation.
+	RegisterTwoFactorAuthKeys *RegisterTwoFactorAuthKeys `json:"registerTwoFactorAuthKeys,omitempty"`
+	// RemoveQuorumMember: Remove a quorum member from the SingleTenantHsmInstance.
+	// This will reduce total_approver_count by 1. The SingleTenantHsmInstance must
+	// be in the ACTIVE state to perform this operation.
+	RemoveQuorumMember *RemoveQuorumMember `json:"removeQuorumMember,omitempty"`
+	// RequiredActionQuorumParameters: Output only. Parameters for an approval of a
+	// SingleTenantHsmInstanceProposal that has both required challenges and a
+	// quorum.
+	RequiredActionQuorumParameters *RequiredActionQuorumParameters `json:"requiredActionQuorumParameters,omitempty"`
+	// State: Output only. The state of the SingleTenantHsmInstanceProposal.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not specified.
+	//   "CREATING" - The SingleTenantHsmInstanceProposal is being created.
+	//   "PENDING" - The SingleTenantHsmInstanceProposal is pending approval.
+	//   "APPROVED" - The SingleTenantHsmInstanceProposal has been approved.
+	//   "RUNNING" - The SingleTenantHsmInstanceProposal is being executed.
+	//   "SUCCEEDED" - The SingleTenantHsmInstanceProposal has been executed
+	// successfully.
+	//   "FAILED" - The SingleTenantHsmInstanceProposal has failed.
+	//   "DELETED" - The SingleTenantHsmInstanceProposal has been deleted and will
+	// be purged after the purge_time.
+	State string `json:"state,omitempty"`
+	// Ttl: Input only. The TTL for the SingleTenantHsmInstanceProposal. Proposals
+	// will expire after this duration.
+	Ttl string `json:"ttl,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AddQuorumMember") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AddQuorumMember") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SingleTenantHsmInstanceProposal) MarshalJSON() ([]byte, error) {
+	type NoMethod SingleTenantHsmInstanceProposal
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11886,4 +12514,1111 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsSingleTenantHsmInstancesCreateCall struct {
+	s                       *Service
+	parent                  string
+	singletenanthsminstance *SingleTenantHsmInstance
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Create: Creates a new SingleTenantHsmInstance in a given Project and
+// Location. User must create a RegisterTwoFactorAuthKeys proposal with this
+// single-tenant HSM instance to finish setup of the instance.
+//
+//   - parent: The resource name of the location associated with the
+//     SingleTenantHsmInstance, in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsSingleTenantHsmInstancesService) Create(parent string, singletenanthsminstance *SingleTenantHsmInstance) *ProjectsLocationsSingleTenantHsmInstancesCreateCall {
+	c := &ProjectsLocationsSingleTenantHsmInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.singletenanthsminstance = singletenanthsminstance
+	return c
+}
+
+// SingleTenantHsmInstanceId sets the optional parameter
+// "singleTenantHsmInstanceId": It must be unique within a location and match
+// the regular expression `[a-zA-Z0-9_-]{1,63}`.
+func (c *ProjectsLocationsSingleTenantHsmInstancesCreateCall) SingleTenantHsmInstanceId(singleTenantHsmInstanceId string) *ProjectsLocationsSingleTenantHsmInstancesCreateCall {
+	c.urlParams_.Set("singleTenantHsmInstanceId", singleTenantHsmInstanceId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSingleTenantHsmInstancesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSingleTenantHsmInstancesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSingleTenantHsmInstancesCreateCall) Context(ctx context.Context) *ProjectsLocationsSingleTenantHsmInstancesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSingleTenantHsmInstancesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSingleTenantHsmInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.singletenanthsminstance)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/singleTenantHsmInstances")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.singleTenantHsmInstances.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSingleTenantHsmInstancesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSingleTenantHsmInstancesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns metadata for a given SingleTenantHsmInstance.
+//
+// - name: The name of the SingleTenantHsmInstance to get.
+func (r *ProjectsLocationsSingleTenantHsmInstancesService) Get(name string) *ProjectsLocationsSingleTenantHsmInstancesGetCall {
+	c := &ProjectsLocationsSingleTenantHsmInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSingleTenantHsmInstancesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSingleTenantHsmInstancesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSingleTenantHsmInstancesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSingleTenantHsmInstancesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSingleTenantHsmInstancesGetCall) Context(ctx context.Context) *ProjectsLocationsSingleTenantHsmInstancesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSingleTenantHsmInstancesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSingleTenantHsmInstancesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.singleTenantHsmInstances.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SingleTenantHsmInstance.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSingleTenantHsmInstancesGetCall) Do(opts ...googleapi.CallOption) (*SingleTenantHsmInstance, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SingleTenantHsmInstance{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSingleTenantHsmInstancesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists SingleTenantHsmInstances.
+//
+//   - parent: The resource name of the location associated with the
+//     SingleTenantHsmInstances to list, in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsSingleTenantHsmInstancesService) List(parent string) *ProjectsLocationsSingleTenantHsmInstancesListCall {
+	c := &ProjectsLocationsSingleTenantHsmInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Only include resources that
+// match the filter in the response. For more information, see Sorting and
+// filtering list results
+// (https://cloud.google.com/kms/docs/sorting-and-filtering).
+func (c *ProjectsLocationsSingleTenantHsmInstancesListCall) Filter(filter string) *ProjectsLocationsSingleTenantHsmInstancesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Specify how the results
+// should be sorted. If not specified, the results will be sorted in the
+// default order. For more information, see Sorting and filtering list results
+// (https://cloud.google.com/kms/docs/sorting-and-filtering).
+func (c *ProjectsLocationsSingleTenantHsmInstancesListCall) OrderBy(orderBy string) *ProjectsLocationsSingleTenantHsmInstancesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Optional limit on the
+// number of SingleTenantHsmInstances to include in the response. Further
+// SingleTenantHsmInstances can subsequently be obtained by including the
+// ListSingleTenantHsmInstancesResponse.next_page_token in a subsequent
+// request. If unspecified, the server will pick an appropriate default.
+func (c *ProjectsLocationsSingleTenantHsmInstancesListCall) PageSize(pageSize int64) *ProjectsLocationsSingleTenantHsmInstancesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Optional pagination
+// token, returned earlier via
+// ListSingleTenantHsmInstancesResponse.next_page_token.
+func (c *ProjectsLocationsSingleTenantHsmInstancesListCall) PageToken(pageToken string) *ProjectsLocationsSingleTenantHsmInstancesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": If set to true,
+// HsmManagement.ListSingleTenantHsmInstances will also return
+// SingleTenantHsmInstances in DELETED state.
+func (c *ProjectsLocationsSingleTenantHsmInstancesListCall) ShowDeleted(showDeleted bool) *ProjectsLocationsSingleTenantHsmInstancesListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSingleTenantHsmInstancesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSingleTenantHsmInstancesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSingleTenantHsmInstancesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSingleTenantHsmInstancesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSingleTenantHsmInstancesListCall) Context(ctx context.Context) *ProjectsLocationsSingleTenantHsmInstancesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSingleTenantHsmInstancesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSingleTenantHsmInstancesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/singleTenantHsmInstances")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.singleTenantHsmInstances.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListSingleTenantHsmInstancesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSingleTenantHsmInstancesListCall) Do(opts ...googleapi.CallOption) (*ListSingleTenantHsmInstancesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSingleTenantHsmInstancesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSingleTenantHsmInstancesListCall) Pages(ctx context.Context, f func(*ListSingleTenantHsmInstancesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsSingleTenantHsmInstancesProposalsApproveCall struct {
+	s                                             *Service
+	name                                          string
+	approvesingletenanthsminstanceproposalrequest *ApproveSingleTenantHsmInstanceProposalRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Approve: Approves a SingleTenantHsmInstanceProposal for a given
+// SingleTenantHsmInstance. The proposal must be in the PENDING state.
+//
+// - name: The name of the SingleTenantHsmInstanceProposal to approve.
+func (r *ProjectsLocationsSingleTenantHsmInstancesProposalsService) Approve(name string, approvesingletenanthsminstanceproposalrequest *ApproveSingleTenantHsmInstanceProposalRequest) *ProjectsLocationsSingleTenantHsmInstancesProposalsApproveCall {
+	c := &ProjectsLocationsSingleTenantHsmInstancesProposalsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.approvesingletenanthsminstanceproposalrequest = approvesingletenanthsminstanceproposalrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsApproveCall) Fields(s ...googleapi.Field) *ProjectsLocationsSingleTenantHsmInstancesProposalsApproveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsApproveCall) Context(ctx context.Context) *ProjectsLocationsSingleTenantHsmInstancesProposalsApproveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsApproveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsApproveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.approvesingletenanthsminstanceproposalrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:approve")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.proposals.approve", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.singleTenantHsmInstances.proposals.approve" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ApproveSingleTenantHsmInstanceProposalResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsApproveCall) Do(opts ...googleapi.CallOption) (*ApproveSingleTenantHsmInstanceProposalResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ApproveSingleTenantHsmInstanceProposalResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.proposals.approve", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSingleTenantHsmInstancesProposalsCreateCall struct {
+	s                               *Service
+	parent                          string
+	singletenanthsminstanceproposal *SingleTenantHsmInstanceProposal
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// Create: Creates a new SingleTenantHsmInstanceProposal for a given
+// SingleTenantHsmInstance.
+//
+//   - parent: The name of the SingleTenantHsmInstance associated with the
+//     SingleTenantHsmInstanceProposals.
+func (r *ProjectsLocationsSingleTenantHsmInstancesProposalsService) Create(parent string, singletenanthsminstanceproposal *SingleTenantHsmInstanceProposal) *ProjectsLocationsSingleTenantHsmInstancesProposalsCreateCall {
+	c := &ProjectsLocationsSingleTenantHsmInstancesProposalsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.singletenanthsminstanceproposal = singletenanthsminstanceproposal
+	return c
+}
+
+// SingleTenantHsmInstanceProposalId sets the optional parameter
+// "singleTenantHsmInstanceProposalId": It must be unique within a location and
+// match the regular expression `[a-zA-Z0-9_-]{1,63}`.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsCreateCall) SingleTenantHsmInstanceProposalId(singleTenantHsmInstanceProposalId string) *ProjectsLocationsSingleTenantHsmInstancesProposalsCreateCall {
+	c.urlParams_.Set("singleTenantHsmInstanceProposalId", singleTenantHsmInstanceProposalId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSingleTenantHsmInstancesProposalsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsCreateCall) Context(ctx context.Context) *ProjectsLocationsSingleTenantHsmInstancesProposalsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.singletenanthsminstanceproposal)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/proposals")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.proposals.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.singleTenantHsmInstances.proposals.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.proposals.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSingleTenantHsmInstancesProposalsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a SingleTenantHsmInstanceProposal.
+//
+// - name: The name of the SingleTenantHsmInstanceProposal to delete.
+func (r *ProjectsLocationsSingleTenantHsmInstancesProposalsService) Delete(name string) *ProjectsLocationsSingleTenantHsmInstancesProposalsDeleteCall {
+	c := &ProjectsLocationsSingleTenantHsmInstancesProposalsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSingleTenantHsmInstancesProposalsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsDeleteCall) Context(ctx context.Context) *ProjectsLocationsSingleTenantHsmInstancesProposalsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.proposals.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.singleTenantHsmInstances.proposals.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.proposals.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSingleTenantHsmInstancesProposalsExecuteCall struct {
+	s                                             *Service
+	name                                          string
+	executesingletenanthsminstanceproposalrequest *ExecuteSingleTenantHsmInstanceProposalRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Execute: Executes a SingleTenantHsmInstanceProposal for a given
+// SingleTenantHsmInstance. The proposal must be in the APPROVED state.
+//
+// - name: The name of the SingleTenantHsmInstanceProposal to execute.
+func (r *ProjectsLocationsSingleTenantHsmInstancesProposalsService) Execute(name string, executesingletenanthsminstanceproposalrequest *ExecuteSingleTenantHsmInstanceProposalRequest) *ProjectsLocationsSingleTenantHsmInstancesProposalsExecuteCall {
+	c := &ProjectsLocationsSingleTenantHsmInstancesProposalsExecuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.executesingletenanthsminstanceproposalrequest = executesingletenanthsminstanceproposalrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsExecuteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSingleTenantHsmInstancesProposalsExecuteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsExecuteCall) Context(ctx context.Context) *ProjectsLocationsSingleTenantHsmInstancesProposalsExecuteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsExecuteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsExecuteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.executesingletenanthsminstanceproposalrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:execute")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.proposals.execute", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.singleTenantHsmInstances.proposals.execute" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsExecuteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.proposals.execute", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSingleTenantHsmInstancesProposalsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns metadata for a given SingleTenantHsmInstanceProposal.
+//
+// - name: The name of the SingleTenantHsmInstanceProposal to get.
+func (r *ProjectsLocationsSingleTenantHsmInstancesProposalsService) Get(name string) *ProjectsLocationsSingleTenantHsmInstancesProposalsGetCall {
+	c := &ProjectsLocationsSingleTenantHsmInstancesProposalsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSingleTenantHsmInstancesProposalsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSingleTenantHsmInstancesProposalsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsGetCall) Context(ctx context.Context) *ProjectsLocationsSingleTenantHsmInstancesProposalsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.proposals.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.singleTenantHsmInstances.proposals.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SingleTenantHsmInstanceProposal.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsGetCall) Do(opts ...googleapi.CallOption) (*SingleTenantHsmInstanceProposal, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SingleTenantHsmInstanceProposal{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.proposals.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSingleTenantHsmInstancesProposalsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists SingleTenantHsmInstanceProposals.
+//
+//   - parent: The resource name of the location associated with the
+//     SingleTenantHsmInstanceProposals to list, in the format
+//     `projects/*/locations/*/singleTenantHsmInstances/*`.
+func (r *ProjectsLocationsSingleTenantHsmInstancesProposalsService) List(parent string) *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall {
+	c := &ProjectsLocationsSingleTenantHsmInstancesProposalsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Only include resources that
+// match the filter in the response. For more information, see Sorting and
+// filtering list results
+// (https://cloud.google.com/kms/docs/sorting-and-filtering).
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall) Filter(filter string) *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Specify how the results
+// should be sorted. If not specified, the results will be sorted in the
+// default order. For more information, see Sorting and filtering list results
+// (https://cloud.google.com/kms/docs/sorting-and-filtering).
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall) OrderBy(orderBy string) *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Optional limit on the
+// number of SingleTenantHsmInstanceProposals to include in the response.
+// Further SingleTenantHsmInstanceProposals can subsequently be obtained by
+// including the ListSingleTenantHsmInstanceProposalsResponse.next_page_token
+// in a subsequent request. If unspecified, the server will pick an appropriate
+// default.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall) PageSize(pageSize int64) *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Optional pagination
+// token, returned earlier via
+// ListSingleTenantHsmInstanceProposalsResponse.next_page_token.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall) PageToken(pageToken string) *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": If set to true,
+// HsmManagement.ListSingleTenantHsmInstanceProposals will also return
+// SingleTenantHsmInstanceProposals in DELETED state.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall) ShowDeleted(showDeleted bool) *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall) Context(ctx context.Context) *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/proposals")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.proposals.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.singleTenantHsmInstances.proposals.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListSingleTenantHsmInstanceProposalsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall) Do(opts ...googleapi.CallOption) (*ListSingleTenantHsmInstanceProposalsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSingleTenantHsmInstanceProposalsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudkms.projects.locations.singleTenantHsmInstances.proposals.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSingleTenantHsmInstancesProposalsListCall) Pages(ctx context.Context, f func(*ListSingleTenantHsmInstanceProposalsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

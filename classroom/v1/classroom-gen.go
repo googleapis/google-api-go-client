@@ -992,6 +992,8 @@ type Course struct {
 	// Section: Section of the course. For example, "Period 2". If set, this field
 	// must be a valid UTF-8 string and no longer than 2800 characters.
 	Section string `json:"section,omitempty"`
+	// Subject: Optional. The subject of the course.
+	Subject string `json:"subject,omitempty"`
 	// TeacherFolder: Information about a Drive Folder that is shared with all
 	// teachers of the course. This field will only be set for teachers of the
 	// course and domain administrators. Read-only.

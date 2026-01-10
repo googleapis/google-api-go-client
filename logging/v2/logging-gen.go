@@ -2210,14 +2210,14 @@ func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 type ListLogEntriesRequest struct {
 	// Filter: Optional. A filter that chooses which log entries to return. For
 	// more information, see Logging query language
-	// (https://cloud.google.com/logging/docs/view/logging-query-language).Only log
-	// entries that match the filter are returned. An empty filter matches all log
-	// entries in the resources listed in resource_names. Referencing a parent
+	// (https://{$universe.dns_names.final_documentation_domain}/logging/docs/view/logging-query-language).Only
+	// log entries that match the filter are returned. An empty filter matches all
+	// log entries in the resources listed in resource_names. Referencing a parent
 	// resource that is not listed in resource_names will cause the filter to
 	// return no results. The maximum length of a filter is 20,000 characters.To
 	// make queries faster, you can make the filter more selective by using
 	// restrictions on indexed fields
-	// (https://cloud.google.com/logging/docs/view/logging-query-language#indexed-fields)
+	// (https://{$universe.dns_names.final_documentation_domain}/logging/docs/view/logging-query-language#indexed-fields)
 	// as well as limit the time range of the query by adding range restrictions on
 	// the timestamp field.
 	Filter string `json:"filter,omitempty"`
@@ -2755,8 +2755,12 @@ type LogEntry struct {
 	Apphub *AppHub `json:"apphub,omitempty"`
 	// ApphubDestination: Output only. AppHub application metadata associated with
 	// the destination application. This is only populated if the log represented
-	// "edge"-like data (such as for VPC flow logs) with a source and destination.
+	// "edge"-like data (such as for VPC flow logs) with a destination.
 	ApphubDestination *AppHub `json:"apphubDestination,omitempty"`
+	// ApphubSource: Output only. AppHub application metadata associated with the
+	// source application. This is only populated if the log represented
+	// "edge"-like data (such as for VPC flow logs) with a source.
+	ApphubSource *AppHub `json:"apphubSource,omitempty"`
 	// ErrorGroups: Output only. The Error Reporting
 	// (https://cloud.google.com/error-reporting) error groups associated with this
 	// LogEntry. Error Reporting sets the values for this field during error group
@@ -4511,11 +4515,13 @@ type TailLogEntriesRequest struct {
 	// arriving log entries. Valid values are between 0-60000 milliseconds.
 	// Defaults to 2000 milliseconds.
 	BufferWindow string `json:"bufferWindow,omitempty"`
-	// Filter: Optional. Only log entries that match the filter are returned. An
-	// empty filter matches all log entries in the resources listed in
-	// resource_names. Referencing a parent resource that is not listed in
-	// resource_names will cause the filter to return no results. The maximum
-	// length of a filter is 20,000 characters.
+	// Filter: Optional. A filter that chooses which log entries to return. For
+	// more information, see Logging query language
+	// (https://{$universe.dns_names.final_documentation_domain}/logging/docs/view/logging-query-language).Only
+	// log entries that match the filter are returned. An empty filter matches all
+	// log entries in the resources listed in resource_names. Referencing a parent
+	// resource that is not listed in resource_names will cause the filter to
+	// return no results. The maximum length of a filter is 20,000 characters.
 	Filter string `json:"filter,omitempty"`
 	// ResourceNames: Required. Name of a parent resource from which to retrieve
 	// log entries: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]

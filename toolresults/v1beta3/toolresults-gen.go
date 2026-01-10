@@ -3239,9 +3239,9 @@ type TestIssue struct {
 	// (vs. Android OS splash screen).
 	//   "assetIssue" - There was an issue with the assets in this test.
 	Type string `json:"type,omitempty"`
-	// Warning: Warning message with additional details of the issue. Should always
-	// be a message from com.google.devtools.toolresults.v1.warnings
-	Warning *Any `json:"warning,omitempty"`
+	// WarningMigration: Warning message with additional details of the issue.
+	// Should always be a message from com.google.devtools.toolresults.v1.warnings
+	WarningMigration *Any `json:"warning_migration,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

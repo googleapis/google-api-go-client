@@ -316,7 +316,7 @@ type AdaptiveMtDataset struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// ExampleCount: The number of examples in the dataset.
 	ExampleCount int64 `json:"exampleCount,omitempty"`
-	// Name: Required. The resource name of the dataset, in form of
+	// Name: Identifier. The resource name of the dataset, in form of
 	// `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{
 	// dataset_id}`
 	Name string `json:"name,omitempty"`
@@ -355,7 +355,7 @@ type AdaptiveMtFile struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// EntryCount: The number of entries that the file contains.
 	EntryCount int64 `json:"entryCount,omitempty"`
-	// Name: Required. The resource name of the file, in form of
+	// Name: Identifier. The resource name of the file, in form of
 	// `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{
 	// dataset}/adaptiveMtFiles/{file}`
 	Name string `json:"name,omitempty"`
@@ -386,7 +386,7 @@ func (s AdaptiveMtFile) MarshalJSON() ([]byte, error) {
 type AdaptiveMtSentence struct {
 	// CreateTime: Output only. Timestamp when this sentence was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Name: Required. The resource name of the file, in form of
+	// Name: Identifier. The resource name of the file, in form of
 	// `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{
 	// dataset}/adaptiveMtFiles/{file}/adaptiveMtSentences/{sentence}`
 	Name string `json:"name,omitempty"`
@@ -635,6 +635,8 @@ type BatchTranslateDocumentRequest struct {
 	// the same file (that is, same input path), we don't generate output for
 	// duplicate inputs.
 	OutputConfig *BatchDocumentOutputConfig `json:"outputConfig,omitempty"`
+	// PdfNativeOnly: Optional. If true, only native pdf pages will be translated.
+	PdfNativeOnly bool `json:"pdfNativeOnly,omitempty"`
 	// SourceLanguageCode: Required. The ISO-639 language code of the input
 	// document if known, for example, "en-US" or "sr-Latn". Supported language
 	// codes are listed in Language Support
@@ -642,6 +644,8 @@ type BatchTranslateDocumentRequest struct {
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
 	// TargetLanguageCodes: Required. The ISO-639 language code to use for
 	// translation of the input document. Specify up to 10 language codes here.
+	// Supported language codes are listed in Language Support
+	// (https://cloud.google.com/translate/docs/languages).
 	TargetLanguageCodes []string `json:"targetLanguageCodes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomizedAttribution") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -692,9 +696,13 @@ type BatchTranslateTextRequest struct {
 	// the same file (that is, same input path), we don't generate output for
 	// duplicate inputs.
 	OutputConfig *OutputConfig `json:"outputConfig,omitempty"`
-	// SourceLanguageCode: Required. Source language code.
+	// SourceLanguageCode: Required. Source language code. Supported language codes
+	// are listed in Language Support
+	// (https://cloud.google.com/translate/docs/languages).
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
 	// TargetLanguageCodes: Required. Specify up to 10 language codes here.
+	// Supported language codes are listed in Language Support
+	// (https://cloud.google.com/translate/docs/languages).
 	TargetLanguageCodes []string `json:"targetLanguageCodes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Glossaries") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -817,6 +825,8 @@ func (s DatasetOutputConfig) MarshalJSON() ([]byte, error) {
 type DetectLanguageRequest struct {
 	// Content: The content of the input stored as a string.
 	Content string `json:"content,omitempty"`
+	// DocumentInputConfig: Optional. The document configuration of the input.
+	DocumentInputConfig *DocumentInputConfig `json:"documentInputConfig,omitempty"`
 	// Labels: Optional. The labels with user-defined metadata for the request.
 	// Label keys and values can be no longer than 63 characters (Unicode
 	// codepoints), can only contain lowercase letters, numeric characters,
@@ -1239,7 +1249,7 @@ type Glossary struct {
 	LanguageCodesSet *LanguageCodesSet `json:"languageCodesSet,omitempty"`
 	// LanguagePair: Used with unidirectional glossaries.
 	LanguagePair *LanguageCodePair `json:"languagePair,omitempty"`
-	// Name: Required. The resource name of the glossary. Glossary names have the
+	// Name: Identifier. The resource name of the glossary. Glossary names have the
 	// form
 	// `projects/{project-number-or-id}/locations/{location-id}/glossaries/{glossary
 	// -id}`.
@@ -1602,9 +1612,9 @@ func (s LanguageCodePair) MarshalJSON() ([]byte, error) {
 
 // LanguageCodesSet: Used with equivalent term set glossaries.
 type LanguageCodesSet struct {
-	// LanguageCodes: The ISO-639 language code(s) for terms defined in the
-	// glossary. All entries are unique. The list contains at least two entries.
-	// Expected to be an exact match for GlossaryTerm.language_code.
+	// LanguageCodes: Optional. The ISO-639 language code(s) for terms defined in
+	// the glossary. All entries are unique. The list contains at least two
+	// entries. Expected to be an exact match for GlossaryTerm.language_code.
 	LanguageCodes []string `json:"languageCodes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LanguageCodes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1891,6 +1901,11 @@ type ListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*Operation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1955,7 +1970,7 @@ type Model struct {
 	// CreateTime: Output only. Timestamp when the model resource was created,
 	// which is also when the training started.
 	CreateTime string `json:"createTime,omitempty"`
-	// Dataset: The dataset from which the model is trained, in form of
+	// Dataset: Required. The dataset from which the model is trained, in form of
 	// `projects/{project-number-or-id}/locations/{location_id}/datasets/{dataset_id
 	// }`
 	Dataset string `json:"dataset,omitempty"`
@@ -2195,6 +2210,85 @@ func (s ReferenceSentencePairList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RefineTextRequest: Request message for RefineText.
+type RefineTextRequest struct {
+	// RefinementEntries: Required. The source texts and original translations in
+	// the source and target languages.
+	RefinementEntries []*RefinementEntry `json:"refinementEntries,omitempty"`
+	// SourceLanguageCode: Required. The BCP-47 language code of the source text in
+	// the request, for example, "en-US".
+	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
+	// TargetLanguageCode: Required. The BCP-47 language code for translation
+	// output, for example, "zh-CN".
+	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RefinementEntries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RefinementEntries") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RefineTextRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RefineTextRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RefineTextResponse: Response message for RefineText.
+type RefineTextResponse struct {
+	// RefinedTranslations: The refined translations obtained from the original
+	// translations.
+	RefinedTranslations []string `json:"refinedTranslations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "RefinedTranslations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RefinedTranslations") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RefineTextResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RefineTextResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RefinementEntry: A single refinement entry for RefineTextRequest.
+type RefinementEntry struct {
+	// OriginalTranslation: Required. The original translation of the source text.
+	OriginalTranslation string `json:"originalTranslation,omitempty"`
+	// SourceText: Required. The source text to be refined.
+	SourceText string `json:"sourceText,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OriginalTranslation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OriginalTranslation") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RefinementEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod RefinementEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Romanization: A single romanization response.
 type Romanization struct {
 	// DetectedLanguageCode: The ISO-639 language code of source text in the
@@ -2228,9 +2322,11 @@ type RomanizeTextRequest struct {
 	// Contents: Required. The content of the input in string format.
 	Contents []string `json:"contents,omitempty"`
 	// SourceLanguageCode: Optional. The ISO-639 language code of the input text if
-	// known, for example, "hi" or "zh". If the source language isn't specified,
-	// the API attempts to identify the source language automatically and returns
-	// the source language for each content in the response.
+	// known, for example, "hi" or "zh". Supported language codes are listed in
+	// Language Support (https://cloud.google.com/translate/docs/languages#roman).
+	// If the source language isn't specified, the API attempts to identify the
+	// source language automatically and returns the source language for each
+	// content in the response.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Contents") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2419,14 +2515,16 @@ type TranslateDocumentRequest struct {
 	Model string `json:"model,omitempty"`
 	// SourceLanguageCode: Optional. The ISO-639 language code of the input
 	// document if known, for example, "en-US" or "sr-Latn". Supported language
-	// codes are listed in Language Support. If the source language isn't
-	// specified, the API attempts to identify the source language automatically
-	// and returns the source language within the response. Source language must be
-	// specified if the request contains a glossary or a custom model.
+	// codes are listed in Language Support
+	// (https://cloud.google.com/translate/docs/languages). If the source language
+	// isn't specified, the API attempts to identify the source language
+	// automatically and returns the source language within the response. Source
+	// language must be specified if the request contains a glossary or a custom
+	// model.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
 	// TargetLanguageCode: Required. The ISO-639 language code to use for
 	// translation of the input document, set to one of the language codes listed
-	// in Language Support.
+	// in Language Support (https://cloud.google.com/translate/docs/languages).
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomizedAttribution") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2551,13 +2649,14 @@ type TranslateTextRequest struct {
 	Model string `json:"model,omitempty"`
 	// SourceLanguageCode: Optional. The ISO-639 language code of the input text if
 	// known, for example, "en-US" or "sr-Latn". Supported language codes are
-	// listed in Language Support. If the source language isn't specified, the API
-	// attempts to identify the source language automatically and returns the
-	// source language within the response.
+	// listed in Language Support
+	// (https://cloud.google.com/translate/docs/languages). If the source language
+	// isn't specified, the API attempts to identify the source language
+	// automatically and returns the source language within the response.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
 	// TargetLanguageCode: Required. The ISO-639 language code to use for
 	// translation of the input text, set to one of the language codes listed in
-	// Language Support.
+	// Language Support (https://cloud.google.com/translate/docs/languages).
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
 	// TransliterationConfig: Optional. Transliteration to be applied.
 	TransliterationConfig *TransliterationConfig `json:"transliterationConfig,omitempty"`
@@ -3867,9 +3966,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": A list
-// of extra location types that should be used as conditions for controlling
-// the visibility of the locations.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -4010,6 +4109,114 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsRefineTextCall struct {
+	s                 *Service
+	parent            string
+	refinetextrequest *RefineTextRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// RefineText: Refines the input translated text to improve the quality.
+//
+//   - parent: Project or location to make a call. Must refer to a caller's
+//     project. Format:
+//     `projects/{project-number-or-id}/locations/{location-id}`. For global
+//     calls, use `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`.
+func (r *ProjectsLocationsService) RefineText(parent string, refinetextrequest *RefineTextRequest) *ProjectsLocationsRefineTextCall {
+	c := &ProjectsLocationsRefineTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.refinetextrequest = refinetextrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRefineTextCall) Fields(s ...googleapi.Field) *ProjectsLocationsRefineTextCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRefineTextCall) Context(ctx context.Context) *ProjectsLocationsRefineTextCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRefineTextCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRefineTextCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.refinetextrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:refineText")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "translate.projects.locations.refineText", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.refineText" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RefineTextResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRefineTextCall) Do(opts ...googleapi.CallOption) (*RefineTextResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RefineTextResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "translate.projects.locations.refineText", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsRomanizeTextCall struct {
@@ -6901,7 +7108,8 @@ type ProjectsLocationsGlossariesPatchCall struct {
 // Patch: Updates a glossary. A LRO is used since the update can be async if
 // the glossary's entry file is updated.
 //
-//   - name: The resource name of the glossary. Glossary names have the form
+//   - name: Identifier. The resource name of the glossary. Glossary names have
+//     the form
 //     `projects/{project-number-or-id}/locations/{location-id}/glossaries/{glossa
 //     ry-id}`.
 func (r *ProjectsLocationsGlossariesService) Patch(name string, glossary *Glossary) *ProjectsLocationsGlossariesPatchCall {
@@ -6912,7 +7120,7 @@ func (r *ProjectsLocationsGlossariesService) Patch(name string, glossary *Glossa
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of fields to
-// be updated. Currently only `display_name` and 'input_config'
+// be updated. Currently, only `display_name` and `input_config` are supported.
 func (c *ProjectsLocationsGlossariesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlossariesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -8386,6 +8594,19 @@ func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Projects
 // token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 

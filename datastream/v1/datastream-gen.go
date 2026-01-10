@@ -695,31 +695,34 @@ func (s DestinationConfig) MarshalJSON() ([]byte, error) {
 // DiscoverConnectionProfileRequest: Request message for 'discover'
 // ConnectionProfile request.
 type DiscoverConnectionProfileRequest struct {
-	// ConnectionProfile: An ad-hoc connection profile configuration.
+	// ConnectionProfile: Optional. An ad-hoc connection profile configuration.
 	ConnectionProfile *ConnectionProfile `json:"connectionProfile,omitempty"`
-	// ConnectionProfileName: A reference to an existing connection profile.
+	// ConnectionProfileName: Optional. A reference to an existing connection
+	// profile.
 	ConnectionProfileName string `json:"connectionProfileName,omitempty"`
-	// FullHierarchy: Whether to retrieve the full hierarchy of data objects (TRUE)
-	// or only the current level (FALSE).
+	// FullHierarchy: Optional. Whether to retrieve the full hierarchy of data
+	// objects (TRUE) or only the current level (FALSE).
 	FullHierarchy bool `json:"fullHierarchy,omitempty"`
-	// HierarchyDepth: The number of hierarchy levels below the current level to be
-	// retrieved.
+	// HierarchyDepth: Optional. The number of hierarchy levels below the current
+	// level to be retrieved.
 	HierarchyDepth int64 `json:"hierarchyDepth,omitempty"`
-	// MongodbCluster: MongoDB cluster to enrich with child data objects and
-	// metadata.
+	// MongodbCluster: Optional. MongoDB cluster to enrich with child data objects
+	// and metadata.
 	MongodbCluster *MongodbCluster `json:"mongodbCluster,omitempty"`
-	// MysqlRdbms: MySQL RDBMS to enrich with child data objects and metadata.
+	// MysqlRdbms: Optional. MySQL RDBMS to enrich with child data objects and
+	// metadata.
 	MysqlRdbms *MysqlRdbms `json:"mysqlRdbms,omitempty"`
-	// OracleRdbms: Oracle RDBMS to enrich with child data objects and metadata.
+	// OracleRdbms: Optional. Oracle RDBMS to enrich with child data objects and
+	// metadata.
 	OracleRdbms *OracleRdbms `json:"oracleRdbms,omitempty"`
-	// PostgresqlRdbms: PostgreSQL RDBMS to enrich with child data objects and
-	// metadata.
+	// PostgresqlRdbms: Optional. PostgreSQL RDBMS to enrich with child data
+	// objects and metadata.
 	PostgresqlRdbms *PostgresqlRdbms `json:"postgresqlRdbms,omitempty"`
-	// SalesforceOrg: Salesforce organization to enrich with child data objects and
-	// metadata.
+	// SalesforceOrg: Optional. Salesforce organization to enrich with child data
+	// objects and metadata.
 	SalesforceOrg *SalesforceOrg `json:"salesforceOrg,omitempty"`
-	// SqlServerRdbms: SQLServer RDBMS to enrich with child data objects and
-	// metadata.
+	// SqlServerRdbms: Optional. SQLServer RDBMS to enrich with child data objects
+	// and metadata.
 	SqlServerRdbms *SqlServerRdbms `json:"sqlServerRdbms,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConnectionProfile") to
 	// unconditionally include in API requests. By default, fields with empty or

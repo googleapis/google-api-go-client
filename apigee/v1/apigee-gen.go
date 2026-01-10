@@ -8662,10 +8662,14 @@ type GoogleCloudApigeeV1Organization struct {
 	// only.
 	//   "PAYG" - Access to Apigee using a Pay-As-You-Go plan.
 	BillingType string `json:"billingType,omitempty"`
-	// CaCertificate: Output only. Base64-encoded public certificate for the root
-	// CA of the Apigee organization. Valid only when RuntimeType (#RuntimeType) is
-	// `CLOUD`.
+	// CaCertificate: Output only. Deprecated: Use `ca_certificates` instead.
+	// Base64-encoded public certificate for the root CA of the Apigee
+	// organization. Valid only when RuntimeType (#RuntimeType) is `CLOUD`.
 	CaCertificate string `json:"caCertificate,omitempty"`
+	// CaCertificates: Output only. Base64-encoded public certificates for the root
+	// CA of the Apigee organization. Valid only when RuntimeType (#RuntimeType) is
+	// `CLOUD`. Multiple certificates are used to support certificate rotation.
+	CaCertificates []string `json:"caCertificates,omitempty"`
 	// ControlPlaneEncryptionKeyName: Optional. Cloud KMS key name used for
 	// encrypting control plane data that is stored in a multi region. Only used
 	// for the data residency region "US" or "EU". If not specified or BillingType

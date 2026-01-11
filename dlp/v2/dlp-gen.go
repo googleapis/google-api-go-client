@@ -6512,6 +6512,14 @@ type GooglePrivacyDlpV2InfoTypeDescription struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Example: A sample that is a true positive for this infoType.
 	Example string `json:"example,omitempty"`
+	// LaunchStatus: The launch status of the infoType.
+	//
+	// Possible values:
+	//   "INFO_TYPE_LAUNCH_STATUS_UNSPECIFIED" - Unspecified.
+	//   "GENERAL_AVAILABILITY" - InfoType is generally available.
+	//   "PUBLIC_PREVIEW" - InfoType is in public preview.
+	//   "PRIVATE_PREVIEW" - InfoType is in private preview.
+	LaunchStatus string `json:"launchStatus,omitempty"`
 	// LocationSupport: Locations at which this feature can be used. May change
 	// over time.
 	LocationSupport *GooglePrivacyDlpV2LocationSupport `json:"locationSupport,omitempty"`

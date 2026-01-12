@@ -59,18 +59,20 @@ exit_code=0
 export TESTSUITE="google-api-go-client"
 mkdir $KOKORO_ARTIFACTS_DIR/$TESTSUITE
 
+
+go_test_args=("-race")
 # Run tests and tee output to log file, to be pushed to GCS as artifact.
 if [[ $KOKORO_JOB_NAME == *"continuous"* ]]; then
-    go test -race -v -timeout 45m ./... 2>&1 | tee $KOKORO_ARTIFACTS_DIR/$TESTSUITE/sponge_log.log
-    # Takes the kokoro output log (raw stdout) and creates a machine-parseable
-    # xUnit XML file.
-    cat $KOKORO_ARTIFACTS_DIR/$TESTSUITE/sponge_log.log | go-junit-report -set-exit-code > $KOKORO_ARTIFACTS_DIR/$TESTSUITE/sponge_log.xml
-    exit_code=$(($exit_code + $?))
+    go_test_args+=("--timeout" "45m")
 else
-    go test -race -v -short ./... 2>&1 | tee $KOKORO_ARTIFACTS_DIR/$TESTSUITE/sponge_log.log
-    cat $KOKORO_ARTIFACTS_DIR/$TESTSUITE/sponge_log.log | go-junit-report -set-exit-code > $KOKORO_ARTIFACTS_DIR/$TESTSUITE/sponge_log.xml
-    exit_code=$(($exit_code + $?))
+    go_test_args+=("--short" "--timeout" "15m")
 fi
+ gotestsum --packages="./..." \
+    --junitfile $KOKORO_ARTIFACTS_DIR/$TESTSUITE/sponge_log.xml \
+    --format standard-verbose \
+    -- "${go_test_args[@]}" 2>&1 | tee $KOKORO_ARTIFACTS_DIR/$TESTSUITE/sponge_log.log
+exit_code=$(($exit_code + $?))
+
 
 if [[ $KOKORO_BUILD_ARTIFACTS_SUBDIR = *"continuous"* ]]; then
     chmod +x $KOKORO_GFILE_DIR/linux_amd64/flakybot

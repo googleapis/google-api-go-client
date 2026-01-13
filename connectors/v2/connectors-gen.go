@@ -183,7 +183,7 @@ func NewProjectsLocationsConnectionsService(s *Service) *ProjectsLocationsConnec
 	rs.Actions = NewProjectsLocationsConnectionsActionsService(s)
 	rs.EntityTypes = NewProjectsLocationsConnectionsEntityTypesService(s)
 	rs.Resources = NewProjectsLocationsConnectionsResourcesService(s)
-	rs.Tools = NewProjectsLocationsConnectionsToolsService(s)
+	rs.Tools_ = NewProjectsLocationsConnectionsToolsService(s)
 	return rs
 }
 
@@ -196,7 +196,7 @@ type ProjectsLocationsConnectionsService struct {
 
 	Resources *ProjectsLocationsConnectionsResourcesService
 
-	Tools *ProjectsLocationsConnectionsToolsService
+	Tools_ *ProjectsLocationsConnectionsToolsService
 }
 
 func NewProjectsLocationsConnectionsActionsService(s *Service) *ProjectsLocationsConnectionsActionsService {
@@ -601,6 +601,11 @@ type ExchangeAuthCodeRequest struct {
 	// to exchange for access and refresh tokens. If the data is not provided, the
 	// runtime will read the data from the secret manager.
 	AuthCodeData *AuthCodeData `json:"authCodeData,omitempty"`
+	// ExecutionConfig: ExecutionConfig contains the configuration for the
+	// execution of the request.
+	ExecutionConfig *ExecutionConfig `json:"executionConfig,omitempty"`
+	// Oauth2Config: OAuth2Config contains the OAuth2 config for the connection.
+	Oauth2Config *OAuth2Config `json:"oauth2Config,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthCodeData") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -648,18 +653,20 @@ func (s ExchangeAuthCodeResponse) MarshalJSON() ([]byte, error) {
 
 // ExecuteActionRequest: Request message for ActionService.ExecuteAction
 type ExecuteActionRequest struct {
+	// ExecutionConfig: Execution config for the request.
+	ExecutionConfig *ExecutionConfig `json:"executionConfig,omitempty"`
 	// Parameters: Parameters for executing the action. The parameters can be
 	// key/value pairs or nested structs.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Parameters") to
+	// ForceSendFields is a list of field names (e.g. "ExecutionConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Parameters") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ExecutionConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -758,17 +765,21 @@ func (s ExecuteSqlQueryResponse) MarshalJSON() ([]byte, error) {
 
 // ExecuteToolRequest: Request message for ConnectorAgentService.ExecuteTool
 type ExecuteToolRequest struct {
+	// ExecutionConfig: execution config for the request.
+	ExecutionConfig *ExecutionConfig `json:"executionConfig,omitempty"`
 	// Parameters: Input parameters for the tool.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Parameters") to
+	// ToolDefinition: Tool definition for the tool to be executed.
+	ToolDefinition googleapi.RawMessage `json:"toolDefinition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExecutionConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Parameters") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ExecutionConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -802,6 +813,29 @@ type ExecuteToolResponse struct {
 
 func (s ExecuteToolResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecuteToolResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ExecutionConfig struct {
+	// Headers: headers to be used for the request. For example:
+	// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+	// ration-connectors-runtime-config":"runtime-cfg"}'
+	Headers string `json:"headers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Headers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecutionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecutionConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -893,6 +927,31 @@ type Field struct {
 
 func (s Field) MarshalJSON() ([]byte, error) {
 	type NoMethod Field
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GetResourcePostRequest: Request message for
+// ConnectorAgentService.GetResourcePost
+type GetResourcePostRequest struct {
+	// ExecutionConfig: execution config for the request.
+	ExecutionConfig *ExecutionConfig `json:"executionConfig,omitempty"`
+	// ToolSpec: List of tool specifications.
+	ToolSpec *ToolSpec `json:"toolSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExecutionConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExecutionConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetResourcePostRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GetResourcePostRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1353,6 +1412,35 @@ func (s ListResourcesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListToolsPostRequest: Request message for
+// ConnectorAgentService.ListToolsPost
+type ListToolsPostRequest struct {
+	// ExecutionConfig: execution config for the request.
+	ExecutionConfig *ExecutionConfig `json:"executionConfig,omitempty"`
+	// PageSize: Page size.
+	PageSize int64 `json:"pageSize,omitempty"`
+	// PageToken: Page token.
+	PageToken string `json:"pageToken,omitempty"`
+	// ToolSpec: List of tool specifications.
+	ToolSpec *ToolSpec `json:"toolSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExecutionConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExecutionConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListToolsPostRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ListToolsPostRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListToolsResponse: Response message for ConnectorAgentService.ListTools
 type ListToolsResponse struct {
 	// Metadata: Metadata like service latency, etc.
@@ -1583,6 +1671,31 @@ func (s NotificationParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type OAuth2Config struct {
+	// AuthUri: Authorization Server URL/Token Endpoint for Authorization Code Flow
+	AuthUri string `json:"authUri,omitempty"`
+	// ClientId: Client ID for the OAuth2 flow.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Client secret for the OAuth2 flow.
+	ClientSecret string `json:"clientSecret,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthUri") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OAuth2Config) MarshalJSON() ([]byte, error) {
+	type NoMethod OAuth2Config
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PerSliSloEligibility: PerSliSloEligibility is a mapping from an SLI name to
 // eligibility.
 type PerSliSloEligibility struct {
@@ -1774,18 +1887,23 @@ func (s Reference) MarshalJSON() ([]byte, error) {
 // RefreshAccessTokenRequest: RefreshAccessTokenRequest includes the refresh
 // token.
 type RefreshAccessTokenRequest struct {
+	// ExecutionConfig: ExecutionConfig contains the configuration for the
+	// execution of the request.
+	ExecutionConfig *ExecutionConfig `json:"executionConfig,omitempty"`
+	// Oauth2Config: OAuth2Config contains the OAuth2 config for the connection.
+	Oauth2Config *OAuth2Config `json:"oauth2Config,omitempty"`
 	// RefreshToken: Optional. Refresh Token String. If the Refresh Token is not
 	// provided, the runtime will read the data from the secret manager.
 	RefreshToken string `json:"refreshToken,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RefreshToken") to
+	// ForceSendFields is a list of field names (e.g. "ExecutionConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RefreshToken") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ExecutionConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2135,6 +2253,30 @@ func (s ToolAnnotations) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type ToolSpec struct {
+	// ToolDefinitions: List of tool definitions.
+	ToolDefinitions []googleapi.RawMessage `json:"toolDefinitions,omitempty"`
+	// ToolSpecVersion: Version of the tool spec. Format:
+	// providerId/connectorId/versionId/toolSpecId
+	ToolSpecVersion string `json:"toolSpecVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ToolDefinitions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ToolDefinitions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ToolSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod ToolSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UpdateEntitiesWithConditionsResponse: Response message for
 // EntityService.UpdateEntitiesWithConditions
 type UpdateEntitiesWithConditionsResponse struct {
@@ -2363,6 +2505,15 @@ type ProjectsLocationsConnectionsCheckStatusCall struct {
 func (r *ProjectsLocationsConnectionsService) CheckStatus(name string) *ProjectsLocationsConnectionsCheckStatusCall {
 	c := &ProjectsLocationsConnectionsCheckStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExecutionConfigHeaders sets the optional parameter
+// "executionConfig.headers": headers to be used for the request. For example:
+// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+// ration-connectors-runtime-config":"runtime-cfg"}'
+func (c *ProjectsLocationsConnectionsCheckStatusCall) ExecutionConfigHeaders(executionConfigHeaders string) *ProjectsLocationsConnectionsCheckStatusCall {
+	c.urlParams_.Set("executionConfig.headers", executionConfigHeaders)
 	return c
 }
 
@@ -2777,6 +2928,132 @@ func (c *ProjectsLocationsConnectionsRefreshAccessTokenCall) Do(opts ...googleap
 	return ret, nil
 }
 
+type ProjectsLocationsConnectionsToolsCall struct {
+	s                    *Service
+	parent               string
+	listtoolspostrequest *ListToolsPostRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Tools: Lists all available tools with POST.
+//
+//   - parent: Resource name of the Connection. Format:
+//     projects/{project}/locations/{location}/connections/{connection}.
+func (r *ProjectsLocationsConnectionsService) Tools(parent string, listtoolspostrequest *ListToolsPostRequest) *ProjectsLocationsConnectionsToolsCall {
+	c := &ProjectsLocationsConnectionsToolsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.listtoolspostrequest = listtoolspostrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsToolsCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsToolsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsToolsCall) Context(ctx context.Context) *ProjectsLocationsConnectionsToolsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsToolsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsToolsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.listtoolspostrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/tools")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.tools", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.tools" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListToolsResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConnectionsToolsCall) Do(opts ...googleapi.CallOption) (*ListToolsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListToolsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.tools", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConnectionsToolsCall) Pages(ctx context.Context, f func(*ListToolsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.listtoolspostrequest.PageToken = pt }(c.listtoolspostrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.listtoolspostrequest.PageToken = x.NextPageToken
+	}
+}
+
 type ProjectsLocationsConnectionsActionsExecuteCall struct {
 	s                    *Service
 	name                 string
@@ -2905,6 +3182,15 @@ func (r *ProjectsLocationsConnectionsActionsService) Get(name string) *ProjectsL
 	return c
 }
 
+// ExecutionConfigHeaders sets the optional parameter
+// "executionConfig.headers": headers to be used for the request. For example:
+// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+// ration-connectors-runtime-config":"runtime-cfg"}'
+func (c *ProjectsLocationsConnectionsActionsGetCall) ExecutionConfigHeaders(executionConfigHeaders string) *ProjectsLocationsConnectionsActionsGetCall {
+	c.urlParams_.Set("executionConfig.headers", executionConfigHeaders)
+	return c
+}
+
 // View sets the optional parameter "view": Specified view of the action
 // schema.
 //
@@ -3028,6 +3314,15 @@ type ProjectsLocationsConnectionsActionsListCall struct {
 func (r *ProjectsLocationsConnectionsActionsService) List(parent string) *ProjectsLocationsConnectionsActionsListCall {
 	c := &ProjectsLocationsConnectionsActionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// ExecutionConfigHeaders sets the optional parameter
+// "executionConfig.headers": headers to be used for the request. For example:
+// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+// ration-connectors-runtime-config":"runtime-cfg"}'
+func (c *ProjectsLocationsConnectionsActionsListCall) ExecutionConfigHeaders(executionConfigHeaders string) *ProjectsLocationsConnectionsActionsListCall {
+	c.urlParams_.Set("executionConfig.headers", executionConfigHeaders)
 	return c
 }
 
@@ -3203,6 +3498,15 @@ func (c *ProjectsLocationsConnectionsEntityTypesGetCall) ContextMetadata(context
 	return c
 }
 
+// ExecutionConfigHeaders sets the optional parameter
+// "executionConfig.headers": headers to be used for the request. For example:
+// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+// ration-connectors-runtime-config":"runtime-cfg"}'
+func (c *ProjectsLocationsConnectionsEntityTypesGetCall) ExecutionConfigHeaders(executionConfigHeaders string) *ProjectsLocationsConnectionsEntityTypesGetCall {
+	c.urlParams_.Set("executionConfig.headers", executionConfigHeaders)
+	return c
+}
+
 // View sets the optional parameter "view": Specifies view for entity type
 // schema.
 //
@@ -3327,6 +3631,15 @@ type ProjectsLocationsConnectionsEntityTypesListCall struct {
 func (r *ProjectsLocationsConnectionsEntityTypesService) List(parent string) *ProjectsLocationsConnectionsEntityTypesListCall {
 	c := &ProjectsLocationsConnectionsEntityTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// ExecutionConfigHeaders sets the optional parameter
+// "executionConfig.headers": headers to be used for the request. For example:
+// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+// ration-connectors-runtime-config":"runtime-cfg"}'
+func (c *ProjectsLocationsConnectionsEntityTypesListCall) ExecutionConfigHeaders(executionConfigHeaders string) *ProjectsLocationsConnectionsEntityTypesListCall {
+	c.urlParams_.Set("executionConfig.headers", executionConfigHeaders)
 	return c
 }
 
@@ -3498,6 +3811,15 @@ func (r *ProjectsLocationsConnectionsEntityTypesEntitiesService) Create(parent s
 	return c
 }
 
+// ExecutionConfigHeaders sets the optional parameter
+// "executionConfig.headers": headers to be used for the request. For example:
+// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+// ration-connectors-runtime-config":"runtime-cfg"}'
+func (c *ProjectsLocationsConnectionsEntityTypesEntitiesCreateCall) ExecutionConfigHeaders(executionConfigHeaders string) *ProjectsLocationsConnectionsEntityTypesEntitiesCreateCall {
+	c.urlParams_.Set("executionConfig.headers", executionConfigHeaders)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -3599,6 +3921,15 @@ type ProjectsLocationsConnectionsEntityTypesEntitiesDeleteCall struct {
 func (r *ProjectsLocationsConnectionsEntityTypesEntitiesService) Delete(name string) *ProjectsLocationsConnectionsEntityTypesEntitiesDeleteCall {
 	c := &ProjectsLocationsConnectionsEntityTypesEntitiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExecutionConfigHeaders sets the optional parameter
+// "executionConfig.headers": headers to be used for the request. For example:
+// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+// ration-connectors-runtime-config":"runtime-cfg"}'
+func (c *ProjectsLocationsConnectionsEntityTypesEntitiesDeleteCall) ExecutionConfigHeaders(executionConfigHeaders string) *ProjectsLocationsConnectionsEntityTypesEntitiesDeleteCall {
+	c.urlParams_.Set("executionConfig.headers", executionConfigHeaders)
 	return c
 }
 
@@ -3715,6 +4046,15 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesDeleteEntitiesWithCondit
 	return c
 }
 
+// ExecutionConfigHeaders sets the optional parameter
+// "executionConfig.headers": headers to be used for the request. For example:
+// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+// ration-connectors-runtime-config":"runtime-cfg"}'
+func (c *ProjectsLocationsConnectionsEntityTypesEntitiesDeleteEntitiesWithConditionsCall) ExecutionConfigHeaders(executionConfigHeaders string) *ProjectsLocationsConnectionsEntityTypesEntitiesDeleteEntitiesWithConditionsCall {
+	c.urlParams_.Set("executionConfig.headers", executionConfigHeaders)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -3813,6 +4153,15 @@ type ProjectsLocationsConnectionsEntityTypesEntitiesGetCall struct {
 func (r *ProjectsLocationsConnectionsEntityTypesEntitiesService) Get(name string) *ProjectsLocationsConnectionsEntityTypesEntitiesGetCall {
 	c := &ProjectsLocationsConnectionsEntityTypesEntitiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ExecutionConfigHeaders sets the optional parameter
+// "executionConfig.headers": headers to be used for the request. For example:
+// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+// ration-connectors-runtime-config":"runtime-cfg"}'
+func (c *ProjectsLocationsConnectionsEntityTypesEntitiesGetCall) ExecutionConfigHeaders(executionConfigHeaders string) *ProjectsLocationsConnectionsEntityTypesEntitiesGetCall {
+	c.urlParams_.Set("executionConfig.headers", executionConfigHeaders)
 	return c
 }
 
@@ -3942,6 +4291,15 @@ func (r *ProjectsLocationsConnectionsEntityTypesEntitiesService) List(parent str
 // information about what format of filters/conditions are supported.
 func (c *ProjectsLocationsConnectionsEntityTypesEntitiesListCall) Conditions(conditions string) *ProjectsLocationsConnectionsEntityTypesEntitiesListCall {
 	c.urlParams_.Set("conditions", conditions)
+	return c
+}
+
+// ExecutionConfigHeaders sets the optional parameter
+// "executionConfig.headers": headers to be used for the request. For example:
+// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+// ration-connectors-runtime-config":"runtime-cfg"}'
+func (c *ProjectsLocationsConnectionsEntityTypesEntitiesListCall) ExecutionConfigHeaders(executionConfigHeaders string) *ProjectsLocationsConnectionsEntityTypesEntitiesListCall {
+	c.urlParams_.Set("executionConfig.headers", executionConfigHeaders)
 	return c
 }
 
@@ -4111,6 +4469,15 @@ func (r *ProjectsLocationsConnectionsEntityTypesEntitiesService) Patch(name stri
 	return c
 }
 
+// ExecutionConfigHeaders sets the optional parameter
+// "executionConfig.headers": headers to be used for the request. For example:
+// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+// ration-connectors-runtime-config":"runtime-cfg"}'
+func (c *ProjectsLocationsConnectionsEntityTypesEntitiesPatchCall) ExecutionConfigHeaders(executionConfigHeaders string) *ProjectsLocationsConnectionsEntityTypesEntitiesPatchCall {
+	c.urlParams_.Set("executionConfig.headers", executionConfigHeaders)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -4230,6 +4597,15 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesUpdateEntitiesWithCondit
 	return c
 }
 
+// ExecutionConfigHeaders sets the optional parameter
+// "executionConfig.headers": headers to be used for the request. For example:
+// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+// ration-connectors-runtime-config":"runtime-cfg"}'
+func (c *ProjectsLocationsConnectionsEntityTypesEntitiesUpdateEntitiesWithConditionsCall) ExecutionConfigHeaders(executionConfigHeaders string) *ProjectsLocationsConnectionsEntityTypesEntitiesUpdateEntitiesWithConditionsCall {
+	c.urlParams_.Set("executionConfig.headers", executionConfigHeaders)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -4335,6 +4711,15 @@ func (r *ProjectsLocationsConnectionsResourcesService) Get(name string) *Project
 	return c
 }
 
+// ExecutionConfigHeaders sets the optional parameter
+// "executionConfig.headers": headers to be used for the request. For example:
+// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+// ration-connectors-runtime-config":"runtime-cfg"}'
+func (c *ProjectsLocationsConnectionsResourcesGetCall) ExecutionConfigHeaders(executionConfigHeaders string) *ProjectsLocationsConnectionsResourcesGetCall {
+	c.urlParams_.Set("executionConfig.headers", executionConfigHeaders)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -4427,6 +4812,112 @@ func (c *ProjectsLocationsConnectionsResourcesGetCall) Do(opts ...googleapi.Call
 	return ret, nil
 }
 
+type ProjectsLocationsConnectionsResourcesGetResourcePostCall struct {
+	s                      *Service
+	name                   string
+	getresourcepostrequest *GetResourcePostRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// GetResourcePost: Gets a specific resource with POST.
+//
+//   - name: Resource name of the Resource. Format:
+//     projects/{project}/locations/{location}/connections/{connection}/resources/
+//     {resource}.
+func (r *ProjectsLocationsConnectionsResourcesService) GetResourcePost(name string, getresourcepostrequest *GetResourcePostRequest) *ProjectsLocationsConnectionsResourcesGetResourcePostCall {
+	c := &ProjectsLocationsConnectionsResourcesGetResourcePostCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.getresourcepostrequest = getresourcepostrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsResourcesGetResourcePostCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsResourcesGetResourcePostCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsResourcesGetResourcePostCall) Context(ctx context.Context) *ProjectsLocationsConnectionsResourcesGetResourcePostCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsResourcesGetResourcePostCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsResourcesGetResourcePostCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.getresourcepostrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.resources.getResourcePost", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.resources.getResourcePost" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GetResourceResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConnectionsResourcesGetResourcePostCall) Do(opts ...googleapi.CallOption) (*GetResourceResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GetResourceResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "connectors.projects.locations.connections.resources.getResourcePost", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsConnectionsResourcesListCall struct {
 	s            *Service
 	parent       string
@@ -4443,6 +4934,15 @@ type ProjectsLocationsConnectionsResourcesListCall struct {
 func (r *ProjectsLocationsConnectionsResourcesService) List(parent string) *ProjectsLocationsConnectionsResourcesListCall {
 	c := &ProjectsLocationsConnectionsResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// ExecutionConfigHeaders sets the optional parameter
+// "executionConfig.headers": headers to be used for the request. For example:
+// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+// ration-connectors-runtime-config":"runtime-cfg"}'
+func (c *ProjectsLocationsConnectionsResourcesListCall) ExecutionConfigHeaders(executionConfigHeaders string) *ProjectsLocationsConnectionsResourcesListCall {
+	c.urlParams_.Set("executionConfig.headers", executionConfigHeaders)
 	return c
 }
 
@@ -4694,6 +5194,15 @@ type ProjectsLocationsConnectionsToolsListCall struct {
 func (r *ProjectsLocationsConnectionsToolsService) List(parent string) *ProjectsLocationsConnectionsToolsListCall {
 	c := &ProjectsLocationsConnectionsToolsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// ExecutionConfigHeaders sets the optional parameter
+// "executionConfig.headers": headers to be used for the request. For example:
+// headers:'{"x-integration-connectors-managed-connection-id":"conn-id","x-integ
+// ration-connectors-runtime-config":"runtime-cfg"}'
+func (c *ProjectsLocationsConnectionsToolsListCall) ExecutionConfigHeaders(executionConfigHeaders string) *ProjectsLocationsConnectionsToolsListCall {
+	c.urlParams_.Set("executionConfig.headers", executionConfigHeaders)
 	return c
 }
 

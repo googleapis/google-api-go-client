@@ -1452,6 +1452,80 @@ func (s FileSearchResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Folder: Represents a Dataform Folder. This is a resource that is used to
+// organize Files and other Folders and provide hierarchical access controls.
+type Folder struct {
+	// ContainingFolder: Optional. The containing Folder resource name. This should
+	// take the format: projects/{project}/locations/{location}/folders/{folder},
+	// projects/{project}/locations/{location}/teamFolders/{teamFolder}, or just
+	// projects/{project}/locations/{location} if this is a root Folder. This field
+	// can only be updated through MoveFolder.
+	ContainingFolder string `json:"containingFolder,omitempty"`
+	// CreateTime: Output only. The timestamp of when the Folder was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// CreatorIamPrincipal: Output only. The IAM principal identifier of the
+	// creator of the Folder.
+	CreatorIamPrincipal string `json:"creatorIamPrincipal,omitempty"`
+	// DisplayName: Required. The Folder's user-friendly name.
+	DisplayName string `json:"displayName,omitempty"`
+	// InternalMetadata: Output only. All the metadata information that is used
+	// internally to serve the resource. For example: timestamps, flags, status
+	// fields, etc. The format of this field is a JSON string.
+	InternalMetadata string `json:"internalMetadata,omitempty"`
+	// Name: Identifier. The Folder's name.
+	Name string `json:"name,omitempty"`
+	// TeamFolderName: Output only. The resource name of the TeamFolder that this
+	// Folder is associated with. This should take the format:
+	// projects/{project}/locations/{location}/teamFolders/{teamFolder}. If this is
+	// not set, the Folder is not associated with a TeamFolder and is a UserFolder.
+	TeamFolderName string `json:"teamFolderName,omitempty"`
+	// UpdateTime: Output only. The timestamp of when the Folder was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ContainingFolder") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContainingFolder") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Folder) MarshalJSON() ([]byte, error) {
+	type NoMethod Folder
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FolderContentsEntry: Represents a single content entry.
+type FolderContentsEntry struct {
+	// Folder: A subfolder.
+	Folder *Folder `json:"folder,omitempty"`
+	// Repository: A repository.
+	Repository *Repository `json:"repository,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Folder") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Folder") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FolderContentsEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod FolderContentsEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GitRemoteSettings: Controls Git remote configuration for a repository.
 type GitRemoteSettings struct {
 	// AuthenticationTokenSecretVersion: Optional. The name of the Secret Manager
@@ -2085,6 +2159,56 @@ type MoveFileResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// MoveFolderRequest: `MoveFolder` request message.
+type MoveFolderRequest struct {
+	// DestinationContainingFolder: Required. The name of the Folder, TeamFolder,
+	// or root location to move the Folder to. Can be in the format of: - "" to
+	// move into the root User folder - `projects/*/locations/*/folders/*` -
+	// `projects/*/locations/*/teamFolders/*`
+	DestinationContainingFolder string `json:"destinationContainingFolder,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DestinationContainingFolder") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestinationContainingFolder") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MoveFolderRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod MoveFolderRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MoveRepositoryRequest: `MoveRepository` request message.
+type MoveRepositoryRequest struct {
+	// DestinationContainingFolder: Required. The name of the Folder, TeamFolder,
+	// or root location to move the repository to. Can be in the format of: - "" to
+	// move into the root User folder - `projects/*/locations/*/folders/*` -
+	// `projects/*/locations/*/teamFolders/*`
+	DestinationContainingFolder string `json:"destinationContainingFolder,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DestinationContainingFolder") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestinationContainingFolder") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MoveRepositoryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod MoveRepositoryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Notebook: Represents a notebook.
 type Notebook struct {
 	// Contents: The contents of the notebook.
@@ -2561,6 +2685,34 @@ func (s QueryDirectoryContentsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// QueryFolderContentsResponse: `QueryFolderContents` response message.
+type QueryFolderContentsResponse struct {
+	// Entries: List of entries in the folder.
+	Entries []*FolderContentsEntry `json:"entries,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Entries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Entries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QueryFolderContentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryFolderContentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // QueryRepositoryDirectoryContentsResponse: `QueryRepositoryDirectoryContents`
 // response message.
 type QueryRepositoryDirectoryContentsResponse struct {
@@ -2587,6 +2739,62 @@ type QueryRepositoryDirectoryContentsResponse struct {
 
 func (s QueryRepositoryDirectoryContentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryRepositoryDirectoryContentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// QueryTeamFolderContentsResponse: `QueryTeamFolderContents` response message.
+type QueryTeamFolderContentsResponse struct {
+	// Entries: List of entries in the TeamFolder.
+	Entries []*TeamFolderContentsEntry `json:"entries,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Entries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Entries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QueryTeamFolderContentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryTeamFolderContentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// QueryUserRootContentsResponse: `QueryUserRootContents` response message.
+type QueryUserRootContentsResponse struct {
+	// Entries: List of entries in the folder.
+	Entries []*RootContentsEntry `json:"entries,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Entries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Entries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QueryUserRootContentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryUserRootContentsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2900,6 +3108,11 @@ type RemoveFileResponse struct {
 
 // Repository: Represents a Dataform Git repository.
 type Repository struct {
+	// ContainingFolder: Optional. The name of the containing folder of the
+	// repository. The field is immutable and it can be modified via a
+	// MoveRepository operation. Format: `projects/*/locations/*/folders/*`. or
+	// `projects/*/locations/*/teamFolders/*`.
+	ContainingFolder string `json:"containingFolder,omitempty"`
 	// CreateTime: Output only. The timestamp of when the repository was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DataEncryptionState: Output only. A data encryption state of a Git
@@ -2939,6 +3152,11 @@ type Repository struct {
 	// setIamPolicy from
 	// https://cloud.google.com/dataform/reference/rest#rest-resource:-v1beta1.projects.locations.repositories
 	SetAuthenticatedUserAdmin bool `json:"setAuthenticatedUserAdmin,omitempty"`
+	// TeamFolderName: Output only. The resource name of the TeamFolder that this
+	// Repository is associated with. This should take the format:
+	// projects/{project}/locations/{location}/teamFolders/{teamFolder}. If this is
+	// not set, the Repository is not associated with a TeamFolder.
+	TeamFolderName string `json:"teamFolderName,omitempty"`
 	// WorkspaceCompilationOverrides: Optional. If set, fields of
 	// `workspace_compilation_overrides` override the default compilation settings
 	// that are specified in dataform.json when creating workspace-scoped
@@ -2948,15 +3166,15 @@ type Repository struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "ContainingFolder") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ContainingFolder") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2996,6 +3214,30 @@ func (s ResetWorkspaceChangesRequest) MarshalJSON() ([]byte, error) {
 type ResetWorkspaceChangesResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// RootContentsEntry: Represents a single content entry.
+type RootContentsEntry struct {
+	// Folder: A subfolder.
+	Folder *Folder `json:"folder,omitempty"`
+	// Repository: A repository.
+	Repository *Repository `json:"repository,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Folder") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Folder") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RootContentsEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod RootContentsEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScheduledExecutionRecord: A record of an attempt to create a workflow
@@ -3108,6 +3350,34 @@ type SearchResult struct {
 
 func (s SearchResult) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SearchTeamFoldersResponse: `SearchTeamFolders` response message.
+type SearchTeamFoldersResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Results: List of TeamFolders that match the search query.
+	Results []*TeamFolderSearchResult `json:"results,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchTeamFoldersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchTeamFoldersResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3254,6 +3524,94 @@ type Target struct {
 
 func (s Target) MarshalJSON() ([]byte, error) {
 	type NoMethod Target
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TeamFolder: Represents a Dataform TeamFolder. This is a resource that sits
+// at the project level and is used to organize Repositories and Folders with
+// hierarchical access controls. They provide a team context and stricter
+// access controls.
+type TeamFolder struct {
+	// CreateTime: Output only. The timestamp of when the TeamFolder was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// CreatorIamPrincipal: Output only. The IAM principal identifier of the
+	// creator of the TeamFolder.
+	CreatorIamPrincipal string `json:"creatorIamPrincipal,omitempty"`
+	// DisplayName: Required. The TeamFolder's user-friendly name.
+	DisplayName string `json:"displayName,omitempty"`
+	// InternalMetadata: Output only. All the metadata information that is used
+	// internally to serve the resource. For example: timestamps, flags, status
+	// fields, etc. The format of this field is a JSON string.
+	InternalMetadata string `json:"internalMetadata,omitempty"`
+	// Name: Identifier. The TeamFolder's name.
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. The timestamp of when the TeamFolder was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TeamFolder) MarshalJSON() ([]byte, error) {
+	type NoMethod TeamFolder
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TeamFolderContentsEntry: Represents a single content entry.
+type TeamFolderContentsEntry struct {
+	// Folder: A subfolder.
+	Folder *Folder `json:"folder,omitempty"`
+	// Repository: A repository.
+	Repository *Repository `json:"repository,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Folder") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Folder") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TeamFolderContentsEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod TeamFolderContentsEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TeamFolderSearchResult: Represents a single content entry.
+type TeamFolderSearchResult struct {
+	// TeamFolder: A TeamFolder resource that is in the project / location.
+	TeamFolder *TeamFolder `json:"teamFolder,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TeamFolder") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TeamFolder") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TeamFolderSearchResult) MarshalJSON() ([]byte, error) {
+	type NoMethod TeamFolderSearchResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3529,6 +3887,9 @@ type Workspace struct {
 	// DataEncryptionState: Output only. A data encryption state of a Git
 	// repository if this Workspace is protected by a KMS key.
 	DataEncryptionState *DataEncryptionState `json:"dataEncryptionState,omitempty"`
+	// DisableMoves: Optional. If set to true, workspaces will not be moved if its
+	// linked Repository is moved. Instead, it will be deleted.
+	DisableMoves bool `json:"disableMoves,omitempty"`
 	// InternalMetadata: Output only. All the metadata information that is used
 	// internally to serve the resource. For example: timestamps, flags, status
 	// fields, etc. The format of this field is a JSON string.
@@ -4030,6 +4391,176 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
+type ProjectsLocationsQueryUserRootContentsCall struct {
+	s            *Service
+	location     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// QueryUserRootContents: Returns the contents of a caller's root folder in a
+// given location. The root folder contains all resources that are created by
+// the user and not contained in any other folder.
+//
+//   - location: Location of the user root folder whose contents to list. Format:
+//     projects/*/locations/*.
+func (r *ProjectsLocationsService) QueryUserRootContents(location string) *ProjectsLocationsQueryUserRootContentsCall {
+	c := &ProjectsLocationsQueryUserRootContentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.location = location
+	return c
+}
+
+// Filter sets the optional parameter "filter": Optional filtering for the
+// returned list. Filtering is currently only supported on the `display_name`
+// field. Example: - `filter="display_name="MyFolder""
+func (c *ProjectsLocationsQueryUserRootContentsCall) Filter(filter string) *ProjectsLocationsQueryUserRootContentsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to additionally sort
+// results by. Will order Folders before Repositories, and then by `order_by`
+// in ascending order. Supported keywords: display_name (default), created_at,
+// last_modified_at. Examples: - `orderBy="display_name" -
+// `orderBy="display_name desc"
+func (c *ProjectsLocationsQueryUserRootContentsCall) OrderBy(orderBy string) *ProjectsLocationsQueryUserRootContentsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of paths to
+// return. The server may return fewer items than requested. If unspecified,
+// the server will pick an appropriate default.
+func (c *ProjectsLocationsQueryUserRootContentsCall) PageSize(pageSize int64) *ProjectsLocationsQueryUserRootContentsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous `QueryUserRootContents` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `QueryUserRootFolderContents`, with the exception of `page_size`, must match
+// the call that provided the page token.
+func (c *ProjectsLocationsQueryUserRootContentsCall) PageToken(pageToken string) *ProjectsLocationsQueryUserRootContentsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsQueryUserRootContentsCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueryUserRootContentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsQueryUserRootContentsCall) IfNoneMatch(entityTag string) *ProjectsLocationsQueryUserRootContentsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsQueryUserRootContentsCall) Context(ctx context.Context) *ProjectsLocationsQueryUserRootContentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsQueryUserRootContentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsQueryUserRootContentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+location}:queryUserRootContents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"location": c.location,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.queryUserRootContents", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.queryUserRootContents" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *QueryUserRootContentsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsQueryUserRootContentsCall) Do(opts ...googleapi.CallOption) (*QueryUserRootContentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueryUserRootContentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.queryUserRootContents", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsQueryUserRootContentsCall) Pages(ctx context.Context, f func(*QueryUserRootContentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type ProjectsLocationsUpdateConfigCall struct {
 	s          *Service
 	name       string
@@ -4141,6 +4672,323 @@ func (c *ProjectsLocationsUpdateConfigCall) Do(opts ...googleapi.CallOption) (*C
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.updateConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFoldersCreateCall struct {
+	s          *Service
+	parent     string
+	folder     *Folder
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new Folder in a given project and location.
+//
+//   - parent: The location in which to create the Folder. Must be in the format
+//     `projects/*/locations/*`.
+func (r *ProjectsLocationsFoldersService) Create(parent string, folder *Folder) *ProjectsLocationsFoldersCreateCall {
+	c := &ProjectsLocationsFoldersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.folder = folder
+	return c
+}
+
+// FolderId sets the optional parameter "folderId": The ID to use for the
+// Folder, which will become the final component of the Folder's resource name.
+func (c *ProjectsLocationsFoldersCreateCall) FolderId(folderId string) *ProjectsLocationsFoldersCreateCall {
+	c.urlParams_.Set("folderId", folderId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFoldersCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsFoldersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFoldersCreateCall) Context(ctx context.Context) *ProjectsLocationsFoldersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFoldersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFoldersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.folder)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/folders")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.folders.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Folder.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsFoldersCreateCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Folder{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFoldersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single Folder.
+//
+// - name: The Folder's name.
+func (r *ProjectsLocationsFoldersService) Delete(name string) *ProjectsLocationsFoldersDeleteCall {
+	c := &ProjectsLocationsFoldersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFoldersDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsFoldersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFoldersDeleteCall) Context(ctx context.Context) *ProjectsLocationsFoldersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFoldersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.folders.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsFoldersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFoldersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Fetches a single Folder.
+//
+// - name: The Folder's name.
+func (r *ProjectsLocationsFoldersService) Get(name string) *ProjectsLocationsFoldersGetCall {
+	c := &ProjectsLocationsFoldersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFoldersGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsFoldersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsFoldersGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsFoldersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFoldersGetCall) Context(ctx context.Context) *ProjectsLocationsFoldersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFoldersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFoldersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.folders.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Folder.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsFoldersGetCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Folder{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -4271,6 +5119,389 @@ func (c *ProjectsLocationsFoldersGetIamPolicyCall) Do(opts ...googleapi.CallOpti
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsFoldersMoveCall struct {
+	s                 *Service
+	name              string
+	movefolderrequest *MoveFolderRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Move: Moves a Folder to a new Folder, TeamFolder, or the root location.
+//
+// - name: The full resource name of the Folder to move.
+func (r *ProjectsLocationsFoldersService) Move(name string, movefolderrequest *MoveFolderRequest) *ProjectsLocationsFoldersMoveCall {
+	c := &ProjectsLocationsFoldersMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.movefolderrequest = movefolderrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFoldersMoveCall) Fields(s ...googleapi.Field) *ProjectsLocationsFoldersMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFoldersMoveCall) Context(ctx context.Context) *ProjectsLocationsFoldersMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFoldersMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFoldersMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.movefolderrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:move")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.move", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.folders.move" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsFoldersMoveCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.move", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFoldersPatchCall struct {
+	s          *Service
+	name       string
+	folder     *Folder
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a single Folder.
+//
+// - name: Identifier. The Folder's name.
+func (r *ProjectsLocationsFoldersService) Patch(name string, folder *Folder) *ProjectsLocationsFoldersPatchCall {
+	c := &ProjectsLocationsFoldersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.folder = folder
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Specifies the fields to
+// be updated in the Folder. If left unset, all fields that can be updated,
+// will be updated. A few fields cannot be updated and will be ignored if
+// specified in the update_mask (e.g. parent_name, team_folder_name).
+func (c *ProjectsLocationsFoldersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsFoldersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFoldersPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsFoldersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFoldersPatchCall) Context(ctx context.Context) *ProjectsLocationsFoldersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFoldersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFoldersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.folder)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.folders.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Folder.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsFoldersPatchCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Folder{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFoldersQueryFolderContentsCall struct {
+	s            *Service
+	folder       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// QueryFolderContents: Returns the contents of a given Folder.
+//
+//   - folder: Name of the folder whose contents to list. Format:
+//     projects/*/locations/*/folders/*.
+func (r *ProjectsLocationsFoldersService) QueryFolderContents(folder string) *ProjectsLocationsFoldersQueryFolderContentsCall {
+	c := &ProjectsLocationsFoldersQueryFolderContentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	return c
+}
+
+// Filter sets the optional parameter "filter": Optional filtering for the
+// returned list. Filtering is currently only supported on the `display_name`
+// field. Example: - `filter="display_name="MyFolder""
+func (c *ProjectsLocationsFoldersQueryFolderContentsCall) Filter(filter string) *ProjectsLocationsFoldersQueryFolderContentsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to additionally sort
+// results by. Will order Folders before Repositories, and then by `order_by`
+// in ascending order. Supported keywords: display_name (default), create_time,
+// last_modified_time. Examples: - `orderBy="display_name" -
+// `orderBy="display_name desc"
+func (c *ProjectsLocationsFoldersQueryFolderContentsCall) OrderBy(orderBy string) *ProjectsLocationsFoldersQueryFolderContentsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of paths to
+// return. The server may return fewer items than requested. If unspecified,
+// the server will pick an appropriate default.
+func (c *ProjectsLocationsFoldersQueryFolderContentsCall) PageSize(pageSize int64) *ProjectsLocationsFoldersQueryFolderContentsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous `QueryFolderContents` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `QueryFolderContents`, with the exception of `page_size`, must match the
+// call that provided the page token.
+func (c *ProjectsLocationsFoldersQueryFolderContentsCall) PageToken(pageToken string) *ProjectsLocationsFoldersQueryFolderContentsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFoldersQueryFolderContentsCall) Fields(s ...googleapi.Field) *ProjectsLocationsFoldersQueryFolderContentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsFoldersQueryFolderContentsCall) IfNoneMatch(entityTag string) *ProjectsLocationsFoldersQueryFolderContentsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFoldersQueryFolderContentsCall) Context(ctx context.Context) *ProjectsLocationsFoldersQueryFolderContentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFoldersQueryFolderContentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFoldersQueryFolderContentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+folder}:queryFolderContents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder": c.folder,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.queryFolderContents", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.folders.queryFolderContents" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *QueryFolderContentsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFoldersQueryFolderContentsCall) Do(opts ...googleapi.CallOption) (*QueryFolderContentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueryFolderContentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.folders.queryFolderContents", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsFoldersQueryFolderContentsCall) Pages(ctx context.Context, f func(*QueryFolderContentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsFoldersSetIamPolicyCall struct {
@@ -6075,6 +7306,109 @@ func (c *ProjectsLocationsRepositoriesListCall) Pages(ctx context.Context, f fun
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsRepositoriesMoveCall struct {
+	s                     *Service
+	name                  string
+	moverepositoryrequest *MoveRepositoryRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Move: Moves a Repository to a new location.
+//
+// - name: The full resource name of the repository to move.
+func (r *ProjectsLocationsRepositoriesService) Move(name string, moverepositoryrequest *MoveRepositoryRequest) *ProjectsLocationsRepositoriesMoveCall {
+	c := &ProjectsLocationsRepositoriesMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.moverepositoryrequest = moverepositoryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesMoveCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesMoveCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.moverepositoryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:move")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.move", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.move" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesMoveCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.move", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsRepositoriesPatchCall struct {
@@ -11886,6 +13220,324 @@ func (c *ProjectsLocationsRepositoriesWorkspacesWriteFileCall) Do(opts ...google
 	return ret, nil
 }
 
+type ProjectsLocationsTeamFoldersCreateCall struct {
+	s          *Service
+	parent     string
+	teamfolder *TeamFolder
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new TeamFolder in a given project and location.
+//
+//   - parent: The location in which to create the TeamFolder. Must be in the
+//     format `projects/*/locations/*`.
+func (r *ProjectsLocationsTeamFoldersService) Create(parent string, teamfolder *TeamFolder) *ProjectsLocationsTeamFoldersCreateCall {
+	c := &ProjectsLocationsTeamFoldersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.teamfolder = teamfolder
+	return c
+}
+
+// TeamFolderId sets the optional parameter "teamFolderId": The ID to use for
+// the TeamFolder, which will become the final component of the TeamFolder's
+// resource name.
+func (c *ProjectsLocationsTeamFoldersCreateCall) TeamFolderId(teamFolderId string) *ProjectsLocationsTeamFoldersCreateCall {
+	c.urlParams_.Set("teamFolderId", teamFolderId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsTeamFoldersCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsTeamFoldersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsTeamFoldersCreateCall) Context(ctx context.Context) *ProjectsLocationsTeamFoldersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsTeamFoldersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTeamFoldersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.teamfolder)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/teamFolders")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.teamFolders.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TeamFolder.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsTeamFoldersCreateCall) Do(opts ...googleapi.CallOption) (*TeamFolder, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TeamFolder{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsTeamFoldersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single TeamFolder.
+//
+// - name: The TeamFolder's name.
+func (r *ProjectsLocationsTeamFoldersService) Delete(name string) *ProjectsLocationsTeamFoldersDeleteCall {
+	c := &ProjectsLocationsTeamFoldersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsTeamFoldersDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsTeamFoldersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsTeamFoldersDeleteCall) Context(ctx context.Context) *ProjectsLocationsTeamFoldersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsTeamFoldersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTeamFoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.teamFolders.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsTeamFoldersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsTeamFoldersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Fetches a single TeamFolder.
+//
+// - name: The TeamFolder's name.
+func (r *ProjectsLocationsTeamFoldersService) Get(name string) *ProjectsLocationsTeamFoldersGetCall {
+	c := &ProjectsLocationsTeamFoldersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsTeamFoldersGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsTeamFoldersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsTeamFoldersGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsTeamFoldersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsTeamFoldersGetCall) Context(ctx context.Context) *ProjectsLocationsTeamFoldersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsTeamFoldersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTeamFoldersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.teamFolders.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TeamFolder.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsTeamFoldersGetCall) Do(opts ...googleapi.CallOption) (*TeamFolder, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TeamFolder{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsTeamFoldersGetIamPolicyCall struct {
 	s            *Service
 	resource     string
@@ -12013,6 +13665,452 @@ func (c *ProjectsLocationsTeamFoldersGetIamPolicyCall) Do(opts ...googleapi.Call
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.getIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsTeamFoldersPatchCall struct {
+	s          *Service
+	name       string
+	teamfolder *TeamFolder
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a single TeamFolder.
+//
+// - name: Identifier. The TeamFolder's name.
+func (r *ProjectsLocationsTeamFoldersService) Patch(name string, teamfolder *TeamFolder) *ProjectsLocationsTeamFoldersPatchCall {
+	c := &ProjectsLocationsTeamFoldersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.teamfolder = teamfolder
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Specifies the fields to
+// be updated in the Folder. If left unset, all fields will be updated.
+func (c *ProjectsLocationsTeamFoldersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTeamFoldersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsTeamFoldersPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsTeamFoldersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsTeamFoldersPatchCall) Context(ctx context.Context) *ProjectsLocationsTeamFoldersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsTeamFoldersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTeamFoldersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.teamfolder)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.teamFolders.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TeamFolder.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsTeamFoldersPatchCall) Do(opts ...googleapi.CallOption) (*TeamFolder, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TeamFolder{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsTeamFoldersQueryContentsCall struct {
+	s            *Service
+	teamFolder   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// QueryContents: Returns the contents of a given TeamFolder.
+//
+//   - teamFolder: Name of the team_folder whose contents to list. Format:
+//     `projects/*/locations/*/teamFolders/*`.
+func (r *ProjectsLocationsTeamFoldersService) QueryContents(teamFolder string) *ProjectsLocationsTeamFoldersQueryContentsCall {
+	c := &ProjectsLocationsTeamFoldersQueryContentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.teamFolder = teamFolder
+	return c
+}
+
+// Filter sets the optional parameter "filter": Optional filtering for the
+// returned list. Filtering is currently only supported on the `display_name`
+// field. Example: - `filter="display_name="MyFolder""
+func (c *ProjectsLocationsTeamFoldersQueryContentsCall) Filter(filter string) *ProjectsLocationsTeamFoldersQueryContentsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to additionally sort
+// results by. Will order Folders before Repositories, and then by `order_by`
+// in ascending order. Supported keywords: `display_name` (default),
+// `create_time`, last_modified_time. Examples: - `orderBy="display_name" -
+// `orderBy="display_name desc"
+func (c *ProjectsLocationsTeamFoldersQueryContentsCall) OrderBy(orderBy string) *ProjectsLocationsTeamFoldersQueryContentsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of paths to
+// return. The server may return fewer items than requested. If unspecified,
+// the server will pick an appropriate default.
+func (c *ProjectsLocationsTeamFoldersQueryContentsCall) PageSize(pageSize int64) *ProjectsLocationsTeamFoldersQueryContentsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous `QueryTeamFolderContents` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `QueryTeamFolderContents`, with the exception of `page_size`, must match the
+// call that provided the page token.
+func (c *ProjectsLocationsTeamFoldersQueryContentsCall) PageToken(pageToken string) *ProjectsLocationsTeamFoldersQueryContentsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsTeamFoldersQueryContentsCall) Fields(s ...googleapi.Field) *ProjectsLocationsTeamFoldersQueryContentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsTeamFoldersQueryContentsCall) IfNoneMatch(entityTag string) *ProjectsLocationsTeamFoldersQueryContentsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsTeamFoldersQueryContentsCall) Context(ctx context.Context) *ProjectsLocationsTeamFoldersQueryContentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsTeamFoldersQueryContentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTeamFoldersQueryContentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+teamFolder}:queryContents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"teamFolder": c.teamFolder,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.queryContents", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.teamFolders.queryContents" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *QueryTeamFolderContentsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsTeamFoldersQueryContentsCall) Do(opts ...googleapi.CallOption) (*QueryTeamFolderContentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueryTeamFolderContentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.queryContents", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsTeamFoldersQueryContentsCall) Pages(ctx context.Context, f func(*QueryTeamFolderContentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsTeamFoldersSearchCall struct {
+	s            *Service
+	location     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Search: Returns all TeamFolders in a given location that the caller has
+// access to and match the provided filter.
+//
+//   - location: Location in which to query TeamFolders. Format:
+//     `projects/*/locations/*`.
+func (r *ProjectsLocationsTeamFoldersService) Search(location string) *ProjectsLocationsTeamFoldersSearchCall {
+	c := &ProjectsLocationsTeamFoldersSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.location = location
+	return c
+}
+
+// Filter sets the optional parameter "filter": Optional filtering for the
+// returned list. Filtering is currently only supported on the `display_name`
+// field. Example: - `filter="display_name="MyFolder""
+func (c *ProjectsLocationsTeamFoldersSearchCall) Filter(filter string) *ProjectsLocationsTeamFoldersSearchCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to additionally sort
+// results by. Supported keywords: `display_name` (default), `create_time`,
+// `last_modified_time`. Examples: - `orderBy="display_name" -
+// `orderBy="display_name desc"
+func (c *ProjectsLocationsTeamFoldersSearchCall) OrderBy(orderBy string) *ProjectsLocationsTeamFoldersSearchCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// TeamFolders to return. The server may return fewer items than requested. If
+// unspecified, the server will pick an appropriate default.
+func (c *ProjectsLocationsTeamFoldersSearchCall) PageSize(pageSize int64) *ProjectsLocationsTeamFoldersSearchCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous `SearchTeamFolders` call. Provide this to retrieve the subsequent
+// page. When paginating, all other parameters provided to `SearchTeamFolders`,
+// with the exception of `page_size`, must match the call that provided the
+// page token.
+func (c *ProjectsLocationsTeamFoldersSearchCall) PageToken(pageToken string) *ProjectsLocationsTeamFoldersSearchCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsTeamFoldersSearchCall) Fields(s ...googleapi.Field) *ProjectsLocationsTeamFoldersSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsTeamFoldersSearchCall) IfNoneMatch(entityTag string) *ProjectsLocationsTeamFoldersSearchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsTeamFoldersSearchCall) Context(ctx context.Context) *ProjectsLocationsTeamFoldersSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsTeamFoldersSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTeamFoldersSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+location}/teamFolders:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"location": c.location,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.search", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.teamFolders.search" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchTeamFoldersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsTeamFoldersSearchCall) Do(opts ...googleapi.CallOption) (*SearchTeamFoldersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SearchTeamFoldersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.teamFolders.search", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsTeamFoldersSearchCall) Pages(ctx context.Context, f func(*SearchTeamFoldersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsTeamFoldersSetIamPolicyCall struct {

@@ -201,6 +201,8 @@ type EnterprisesStructuresRoomsService struct {
 // GoogleHomeEnterpriseSdmV1Device: Device resource represents an instance of
 // enterprise managed device in the property.
 type GoogleHomeEnterpriseSdmV1Device struct {
+	// GhpName: Output only. The GHP device ID of the device.
+	GhpName string `json:"ghpName,omitempty"`
 	// Name: Required. The resource name of the device. For example:
 	// "enterprises/XYZ/devices/123".
 	Name string `json:"name,omitempty"`
@@ -216,15 +218,15 @@ type GoogleHomeEnterpriseSdmV1Device struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "GhpName") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "GhpName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -370,6 +372,11 @@ type GoogleHomeEnterpriseSdmV1ParentRelation struct {
 	// DisplayName: Output only. The custom name of the relation -- e.g.,
 	// structure/room where the device is assigned to.
 	DisplayName string `json:"displayName,omitempty"`
+	// GhpParent: Output only. The GHP name of the relation -- e.g., structure/room
+	// where the device is assigned to. For example:
+	// "homegraph.googleapis.com/Structure/ABC" or
+	// "homegraph.googleapis.com/Room/ABC"
+	GhpParent string `json:"ghpParent,omitempty"`
 	// Parent: Output only. The name of the relation -- e.g., structure/room where
 	// the device is assigned to. For example: "enterprises/XYZ/structures/ABC" or
 	// "enterprises/XYZ/structures/ABC/rooms/123"
@@ -425,6 +432,9 @@ func (s GoogleHomeEnterpriseSdmV1Room) MarshalJSON() ([]byte, error) {
 // GoogleHomeEnterpriseSdmV1Structure: Structure resource represents an
 // instance of enterprise managed home or hotel room.
 type GoogleHomeEnterpriseSdmV1Structure struct {
+	// GhpName: Output only. The unique identifier for the structure in Google Home
+	// Platform. Format: homegraph.googleapis.com/Structure/{structure_id}
+	GhpName string `json:"ghpName,omitempty"`
 	// Name: Output only. The resource name of the structure. For example:
 	// "enterprises/XYZ/structures/ABC".
 	Name string `json:"name,omitempty"`
@@ -433,15 +443,15 @@ type GoogleHomeEnterpriseSdmV1Structure struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "GhpName") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "GhpName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

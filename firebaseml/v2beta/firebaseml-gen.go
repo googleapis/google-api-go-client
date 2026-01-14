@@ -2542,7 +2542,10 @@ type GoogleCloudAiplatformV1beta1Part struct {
 	// MediaResolution: per part media resolution. Media resolution for the input
 	// media.
 	MediaResolution *GoogleCloudAiplatformV1beta1PartMediaResolution `json:"mediaResolution,omitempty"`
-	// Text: Optional. The text content of the part.
+	// Text: Optional. The text content of the part. When sent from the VSCode
+	// Gemini Code Assist extension, references to @mentioned items will be
+	// converted to markdown boldface text. For example `@my-repo` will be
+	// converted to and sent as `**my-repo**` by the IDE agent.
 	Text string `json:"text,omitempty"`
 	// Thought: Optional. Indicates whether the `part` represents the model's
 	// thought process or reasoning.

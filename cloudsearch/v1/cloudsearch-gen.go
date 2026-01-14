@@ -6,7 +6,7 @@
 
 // Package cloudsearch provides access to the Cloud Search API.
 //
-// For product documentation, see: https://developers.google.com/cloud-search/docs/guides/
+// For product documentation, see: https://developers.google.com/workspace/cloud-search/docs/guides/
 //
 // # Library status
 //
@@ -4375,7 +4375,7 @@ type Item struct {
 	// or equal to the version of the currently indexed item. The maximum length
 	// for this field is 1024 bytes. For information on how item version affects
 	// the deletion process, refer to Handle revisions after manual deletes
-	// (https://developers.google.com/cloud-search/docs/guides/operations).
+	// (https://developers.google.com/workspace/cloud-search/docs/guides/operations).
 	Version string `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4399,7 +4399,8 @@ func (s Item) MarshalJSON() ([]byte, error) {
 }
 
 // ItemAcl: Access control list information for the item. For more information
-// see Map ACLs (https://developers.google.com/cloud-search/docs/guides/acls).
+// see Map ACLs
+// (https://developers.google.com/workspace/cloud-search/docs/guides/acls).
 type ItemAcl struct {
 	// AclInheritanceType: Sets the type of access rules to apply when an item
 	// inherits its ACL from a parent. This should always be set in tandem with the
@@ -4759,6 +4760,11 @@ type ListOperationsResponse struct {
 	// Operations: A list of operations that matches the specified filter in the
 	// request.
 	Operations []*Operation `json:"operations,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request sets `ListOperationsRequest.return_partial_success` and reads across
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -5754,7 +5760,7 @@ type PropertyDefinition struct {
 	// to set this option. In a given datasource maximum of 5 properties can be
 	// marked as is_wildcard_searchable. For more details, see Define object
 	// properties
-	// (https://developers.google.com/cloud-search/docs/guides/schema-guide#properties)
+	// (https://developers.google.com/workspace/cloud-search/docs/guides/schema-guide#properties)
 	IsWildcardSearchable bool `json:"isWildcardSearchable,omitempty"`
 	// Name: The name of the property. Item indexing requests sent to the Indexing
 	// API should set the property name equal to this value. For example, if name
@@ -5966,6 +5972,12 @@ type QueryInterpretation struct {
 	// interpreted as "from:john source:mail". This field will not be filled when
 	// the reason is NOT_ENOUGH_RESULTS_FOUND_FOR_USER_QUERY.
 	InterpretedQuery string `json:"interpretedQuery,omitempty"`
+	// InterpretedQueryActualResultCount: The actual number of results returned by
+	// the interpreted query.
+	InterpretedQueryActualResultCount int64 `json:"interpretedQueryActualResultCount,omitempty"`
+	// InterpretedQueryEstimatedResultCount: The estimated number of results
+	// returned by the interpreted query.
+	InterpretedQueryEstimatedResultCount int64 `json:"interpretedQueryEstimatedResultCount,omitempty,string"`
 	// Reason: The reason for interpretation of the query. This field will not be
 	// UNSPECIFIED if the interpretation type is not NONE.
 	//
@@ -6861,7 +6873,7 @@ func (s *SearchQualityMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// SearchRequest: The search API request. NEXT ID: 17
+// SearchRequest: The search API request. NEXT ID: 24
 type SearchRequest struct {
 	// ContextAttributes: Context attributes for the request which will be used to
 	// adjust ranking of search results. The maximum number of elements is 10.
@@ -6905,7 +6917,7 @@ func (s SearchRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SearchResponse: The search API response. NEXT ID: 17
+// SearchResponse: The search API response. NEXT ID: 19
 type SearchResponse struct {
 	// DebugInfo: Debugging information about the response.
 	DebugInfo *ResponseDebugInfo `json:"debugInfo,omitempty"`
@@ -6952,7 +6964,8 @@ func (s SearchResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SearchResult: Results containing indexed information for a document.
+// SearchResult: Results containing indexed information for a document. Next
+// ID: 16
 type SearchResult struct {
 	// ClusteredResults: If source is clustered, provide list of clustered results.
 	// There will only be one level of clustered results. If current source is not
@@ -7706,7 +7719,7 @@ type UpdateDataSourceRequest struct {
 	DebugOptions *DebugOptions `json:"debugOptions,omitempty"`
 	Source       *DataSource   `json:"source,omitempty"`
 	// UpdateMask: Only applies to `settings.datasources.patch`
-	// (https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.datasources/patch).
+	// (https://developers.google.com/workspace/cloud-search/docs/reference/rest/v1/settings.datasources/patch).
 	// Update mask to control which fields to update. Example field paths: `name`,
 	// `displayName`. * If `update_mask` is non-empty, then only the fields
 	// specified in the `update_mask` are updated. * If you specify a field in the
@@ -9046,7 +9059,7 @@ func (c *IndexingDatasourcesItemsDeleteCall) Mode(mode string) *IndexingDatasour
 // less than or equal to the version of the currently indexed item. The maximum
 // length for this field is 1024 bytes. For information on how item version
 // affects the deletion process, refer to Handle revisions after manual deletes
-// (https://developers.google.com/cloud-search/docs/guides/operations).
+// (https://developers.google.com/workspace/cloud-search/docs/guides/operations).
 func (c *IndexingDatasourcesItemsDeleteCall) Version(version string) *IndexingDatasourcesItemsDeleteCall {
 	c.urlParams_.Set("version", version)
 	return c
@@ -10103,7 +10116,7 @@ type MediaUploadCall struct {
 // Upload: Uploads media for indexing. The upload endpoint supports direct and
 // resumable upload protocols and is intended for large items that can not be
 // inlined during index requests
-// (https://developers.google.com/cloud-search/docs/reference/rest/v1/indexing.datasources.items#itemcontent).
+// (https://developers.google.com/workspace/cloud-search/docs/reference/rest/v1/indexing.datasources.items#itemcontent).
 // To index large content: 1. Call indexing.datasources.items.upload with the
 // item name to begin an upload session and retrieve the UploadItemRef. 1. Call
 // media.upload to upload the content, as a streaming request, using the same
@@ -10114,7 +10127,7 @@ type MediaUploadCall struct {
 //	with the UploadItemRef from step 1. For additional information, see Create
 //
 // a content connector using the REST API
-// (https://developers.google.com/cloud-search/docs/guides/content-connector#rest).
+// (https://developers.google.com/workspace/cloud-search/docs/guides/content-connector#rest).
 // **Note:** This API requires a service account to execute.
 //
 //   - resourceName: Name of the media that is being downloaded. See
@@ -10422,6 +10435,19 @@ func (c *OperationsLroListCall) PageToken(pageToken string) *OperationsLroListCa
 	return c
 }
 
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *OperationsLroListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OperationsLroListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -10548,7 +10574,7 @@ type QueryDebugSearchCall struct {
 // to execute. A service account can't perform Query API requests directly; to
 // use a service account to perform queries, set up Google Workspace
 // domain-wide delegation of authority
-// (https://developers.google.com/cloud-search/docs/guides/delegation/).
+// (https://developers.google.com/workspace/cloud-search/docs/guides/delegation/).
 func (r *QueryService) DebugSearch(searchrequest *SearchRequest) *QueryDebugSearchCall {
 	c := &QueryDebugSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.searchrequest = searchrequest
@@ -10649,7 +10675,7 @@ type QueryRemoveActivityCall struct {
 // standard end user account to execute. A service account can't perform Remove
 // Activity requests directly; to use a service account to perform queries, set
 // up Google Workspace domain-wide delegation of authority
-// (https://developers.google.com/cloud-search/docs/guides/delegation/).
+// (https://developers.google.com/workspace/cloud-search/docs/guides/delegation/).
 func (r *QueryService) RemoveActivity(removeactivityrequest *RemoveActivityRequest) *QueryRemoveActivityCall {
 	c := &QueryRemoveActivityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.removeactivityrequest = removeactivityrequest
@@ -10753,7 +10779,7 @@ type QuerySearchCall struct {
 // standard end user account to execute. A service account can't perform Query
 // API requests directly; to use a service account to perform queries, set up
 // Google Workspace domain-wide delegation of authority
-// (https://developers.google.com/cloud-search/docs/guides/delegation/).
+// (https://developers.google.com/workspace/cloud-search/docs/guides/delegation/).
 func (r *QueryService) Search(searchrequest *SearchRequest) *QuerySearchCall {
 	c := &QuerySearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.searchrequest = searchrequest
@@ -10853,7 +10879,7 @@ type QuerySuggestCall struct {
 // API requires a standard end user account to execute. A service account can't
 // perform Query API requests directly; to use a service account to perform
 // queries, set up Google Workspace domain-wide delegation of authority
-// (https://developers.google.com/cloud-search/docs/guides/delegation/).
+// (https://developers.google.com/workspace/cloud-search/docs/guides/delegation/).
 func (r *QueryService) Suggest(suggestrequest *SuggestRequest) *QuerySuggestCall {
 	c := &QuerySuggestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.suggestrequest = suggestrequest
@@ -10955,7 +10981,7 @@ type QuerySourcesListCall struct {
 // service account can't perform Query API requests directly; to use a service
 // account to perform queries, set up Google Workspace domain-wide delegation
 // of authority
-// (https://developers.google.com/cloud-search/docs/guides/delegation/).
+// (https://developers.google.com/workspace/cloud-search/docs/guides/delegation/).
 func (r *QuerySourcesService) List() *QuerySourcesListCall {
 	c := &QuerySourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -11834,7 +11860,7 @@ func (c *SettingsDatasourcesPatchCall) DebugOptionsEnableDebugging(debugOptionsE
 
 // UpdateMask sets the optional parameter "updateMask": Only applies to
 // `settings.datasources.patch`
-// (https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.datasources/patch).
+// (https://developers.google.com/workspace/cloud-search/docs/reference/rest/v1/settings.datasources/patch).
 // Update mask to control which fields to update. Example field paths: `name`,
 // `displayName`. * If `update_mask` is non-empty, then only the fields
 // specified in the `update_mask` are updated. * If you specify a field in the
@@ -12529,7 +12555,7 @@ func (r *SettingsSearchapplicationsService) Patch(name string, searchapplication
 
 // UpdateMask sets the optional parameter "updateMask": Only applies to
 // `settings.searchapplications.patch`
-// (https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.searchapplications/patch).
+// (https://developers.google.com/workspace/cloud-search/docs/reference/rest/v1/settings.searchapplications/patch).
 // Update mask to control which fields to update. Example field paths:
 // `search_application.name`, `search_application.displayName`. * If
 // `update_mask` is non-empty, then only the fields specified in the
@@ -12754,7 +12780,7 @@ func (r *SettingsSearchapplicationsService) Update(name string, searchapplicatio
 
 // UpdateMask sets the optional parameter "updateMask": Only applies to
 // `settings.searchapplications.patch`
-// (https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.searchapplications/patch).
+// (https://developers.google.com/workspace/cloud-search/docs/reference/rest/v1/settings.searchapplications/patch).
 // Update mask to control which fields to update. Example field paths:
 // `search_application.name`, `search_application.displayName`. * If
 // `update_mask` is non-empty, then only the fields specified in the

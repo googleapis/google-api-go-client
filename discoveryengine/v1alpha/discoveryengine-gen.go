@@ -4669,6 +4669,9 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// KnowledgeGraphConfig: Optional. Configurations for the Knowledge Graph. Only
+	// applicable if solution_type is SOLUTION_TYPE_SEARCH.
+	KnowledgeGraphConfig *GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfig `json:"knowledgeGraphConfig,omitempty"`
 	// MediaRecommendationEngineConfig: Configurations for the Media Engine. Only
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
@@ -4854,6 +4857,72 @@ type GoogleCloudDiscoveryengineV1EngineCommonConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1EngineCommonConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1EngineCommonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfig: Configuration
+// message for the Knowledge Graph.
+type GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfig struct {
+	// CloudKnowledgeGraphTypes: Specify entity types to support.
+	CloudKnowledgeGraphTypes []string `json:"cloudKnowledgeGraphTypes,omitempty"`
+	// EnableCloudKnowledgeGraph: Whether to enable the Cloud Knowledge Graph for
+	// the engine. Defaults to false if not specified.
+	EnableCloudKnowledgeGraph bool `json:"enableCloudKnowledgeGraph,omitempty"`
+	// EnablePrivateKnowledgeGraph: Whether to enable the Private Knowledge Graph
+	// for the engine. Defaults to false if not specified.
+	EnablePrivateKnowledgeGraph bool `json:"enablePrivateKnowledgeGraph,omitempty"`
+	// FeatureConfig: Optional. Feature config for the Knowledge Graph.
+	FeatureConfig *GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfigFeatureConfig `json:"featureConfig,omitempty"`
+	// PrivateKnowledgeGraphTypes: Specify entity types to support.
+	PrivateKnowledgeGraphTypes []string `json:"privateKnowledgeGraphTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudKnowledgeGraphTypes")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudKnowledgeGraphTypes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfigFeatureConfig: Feature
+// config for the Knowledge Graph.
+type GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfigFeatureConfig struct {
+	// DisablePrivateKgAutoComplete: Whether to disable the private KG auto
+	// complete for the engine. Defaults to false if not specified.
+	DisablePrivateKgAutoComplete bool `json:"disablePrivateKgAutoComplete,omitempty"`
+	// DisablePrivateKgEnrichment: Whether to disable the private KG enrichment for
+	// the engine. Defaults to false if not specified.
+	DisablePrivateKgEnrichment bool `json:"disablePrivateKgEnrichment,omitempty"`
+	// DisablePrivateKgQueryUiChips: Whether to disable the private KG for query UI
+	// chips. Defaults to false if not specified.
+	DisablePrivateKgQueryUiChips bool `json:"disablePrivateKgQueryUiChips,omitempty"`
+	// DisablePrivateKgQueryUnderstanding: Whether to disable the private KG query
+	// understanding for the engine. Defaults to false if not specified.
+	DisablePrivateKgQueryUnderstanding bool `json:"disablePrivateKgQueryUnderstanding,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DisablePrivateKgAutoComplete") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisablePrivateKgAutoComplete") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfigFeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfigFeatureConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5109,6 +5178,13 @@ type GoogleCloudDiscoveryengineV1HealthcareFhirConfig struct {
 	// will be processed in a static indexing mode which is slower but more capable
 	// of handling larger volume.
 	EnableStaticIndexingForBatchIngestion bool `json:"enableStaticIndexingForBatchIngestion,omitempty"`
+	// InitialFilterGroups: Optional. Names of the Group resources to use as a
+	// basis for the initial patient filter, in format
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
+	// es/{fhir_store_id}/fhir/Group/{group_id}`. The filter group must be a FHIR
+	// resource name of type Group, and the filter will be constructed from the
+	// direct members of the group which are Patient resources.
+	InitialFilterGroups []string `json:"initialFilterGroups,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableConfigurableSchema")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7285,6 +7361,48 @@ type GoogleCloudDiscoveryengineV1alphaActionConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaActionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaActionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAddPatientFilterRequest: Request for
+// DataStoreService.AddPatientFilter method.
+type GoogleCloudDiscoveryengineV1alphaAddPatientFilterRequest struct {
+	// DataStore: Required. Full resource name of DataStore, such as
+	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
+	// es/{data_store_id}`. If the caller does not have permission to access the
+	// DataStore, regardless of whether or not it exists, a PERMISSION_DENIED error
+	// is returned. If the requested DataStore does not exist, a NOT_FOUND error is
+	// returned. If the requested DataStore already has a patient filter, an
+	// ALREADY_EXISTS error will be returned.
+	DataStore string `json:"dataStore,omitempty"`
+	// FilterGroups: Required. Names of the Group resources to use as a basis for
+	// the patient filter, in format
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
+	// es/{fhir_store_id}/fhir/Group/{group_id}`. if the caller does not have
+	// permission to access the FHIR store, regardless of whether it exists,
+	// PERMISSION_DENIED error is returned. If the discovery engine service account
+	// does not have permission to access the FHIR store, regardless of whether or
+	// not it exists, a PERMISSION_DENIED error is returned. If the group is not
+	// found at the location, a RESOURCE_NOT_FOUND error will be returned. The
+	// filter group must be a FHIR resource name of type Group, and the filter will
+	// be constructed from the direct members of the group which are Patient
+	// resources.
+	FilterGroups []string `json:"filterGroups,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAddPatientFilterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAddPatientFilterRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10952,8 +11070,11 @@ type GoogleCloudDiscoveryengineV1alphaAuthorizationServerSideOAuth2 struct {
 	// PkceVerificationEnabled: Optional. Whether to enable PKCE verification.
 	// https://datatracker.ietf.org/doc/html/rfc7636#section-3.1/
 	PkceVerificationEnabled bool `json:"pkceVerificationEnabled,omitempty"`
-	// Scopes: Required. The scopes to request. Example:
-	// `https://www.googleapis.com/auth/calendar.events`
+	// Scopes: Optional. The scopes to request. Example:
+	// `https://www.googleapis.com/auth/calendar.events` If omitted, no additional
+	// scopes are requested beyond those required by the authorization uri. If set,
+	// it will overwrite the scopes in the authorization uri when acquiring user
+	// authorization.
 	Scopes []string `json:"scopes,omitempty"`
 	// TokenUri: Required. The HTTP endpoint that exchanges a client authorization
 	// for an access token.
@@ -14761,6 +14882,35 @@ func (s GoogleCloudDiscoveryengineV1alphaDeleteIdentityMappingStoreMetadata) Mar
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaDeletePatientFiltersRequest: Request for
+// DataStoreService.DeletePatientFilters method.
+type GoogleCloudDiscoveryengineV1alphaDeletePatientFiltersRequest struct {
+	// DataStore: Required. Full resource name of DataStore, such as
+	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
+	// es/{data_store_id}`. If the caller does not have permission to access the
+	// DataStore, regardless of whether or not it exists, a PERMISSION_DENIED error
+	// is returned. If the requested DataStore does not exist, a NOT_FOUND error is
+	// returned. If the requested DataStore does not have a patient filter, a
+	// NOT_FOUND error will be returned.
+	DataStore string `json:"dataStore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDeletePatientFiltersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDeletePatientFiltersRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaDeleteSchemaMetadata: Metadata for
 // DeleteSchema LRO.
 type GoogleCloudDiscoveryengineV1alphaDeleteSchemaMetadata struct {
@@ -15706,6 +15856,9 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// KnowledgeGraphConfig: Optional. Configurations for the Knowledge Graph. Only
+	// applicable if solution_type is SOLUTION_TYPE_SEARCH.
+	KnowledgeGraphConfig *GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfig `json:"knowledgeGraphConfig,omitempty"`
 	// MediaRecommendationEngineConfig: Configurations for the Media Engine. Only
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
@@ -15901,6 +16054,72 @@ type GoogleCloudDiscoveryengineV1alphaEngineCommonConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaEngineCommonConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineCommonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfig: Configuration
+// message for the Knowledge Graph.
+type GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfig struct {
+	// CloudKnowledgeGraphTypes: Specify entity types to support.
+	CloudKnowledgeGraphTypes []string `json:"cloudKnowledgeGraphTypes,omitempty"`
+	// EnableCloudKnowledgeGraph: Whether to enable the Cloud Knowledge Graph for
+	// the engine. Defaults to false if not specified.
+	EnableCloudKnowledgeGraph bool `json:"enableCloudKnowledgeGraph,omitempty"`
+	// EnablePrivateKnowledgeGraph: Whether to enable the Private Knowledge Graph
+	// for the engine. Defaults to false if not specified.
+	EnablePrivateKnowledgeGraph bool `json:"enablePrivateKnowledgeGraph,omitempty"`
+	// FeatureConfig: Optional. Feature config for the Knowledge Graph.
+	FeatureConfig *GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfigFeatureConfig `json:"featureConfig,omitempty"`
+	// PrivateKnowledgeGraphTypes: Specify entity types to support.
+	PrivateKnowledgeGraphTypes []string `json:"privateKnowledgeGraphTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudKnowledgeGraphTypes")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudKnowledgeGraphTypes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfigFeatureConfig:
+// Feature config for the Knowledge Graph.
+type GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfigFeatureConfig struct {
+	// DisablePrivateKgAutoComplete: Whether to disable the private KG auto
+	// complete for the engine. Defaults to false if not specified.
+	DisablePrivateKgAutoComplete bool `json:"disablePrivateKgAutoComplete,omitempty"`
+	// DisablePrivateKgEnrichment: Whether to disable the private KG enrichment for
+	// the engine. Defaults to false if not specified.
+	DisablePrivateKgEnrichment bool `json:"disablePrivateKgEnrichment,omitempty"`
+	// DisablePrivateKgQueryUiChips: Whether to disable the private KG for query UI
+	// chips. Defaults to false if not specified.
+	DisablePrivateKgQueryUiChips bool `json:"disablePrivateKgQueryUiChips,omitempty"`
+	// DisablePrivateKgQueryUnderstanding: Whether to disable the private KG query
+	// understanding for the engine. Defaults to false if not specified.
+	DisablePrivateKgQueryUnderstanding bool `json:"disablePrivateKgQueryUnderstanding,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DisablePrivateKgAutoComplete") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisablePrivateKgAutoComplete") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfigFeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfigFeatureConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17272,6 +17491,13 @@ type GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig struct {
 	// will be processed in a static indexing mode which is slower but more capable
 	// of handling larger volume.
 	EnableStaticIndexingForBatchIngestion bool `json:"enableStaticIndexingForBatchIngestion,omitempty"`
+	// InitialFilterGroups: Optional. Names of the Group resources to use as a
+	// basis for the initial patient filter, in format
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
+	// es/{fhir_store_id}/fhir/Group/{group_id}`. The filter group must be a FHIR
+	// resource name of type Group, and the filter will be constructed from the
+	// direct members of the group which are Patient resources.
+	InitialFilterGroups []string `json:"initialFilterGroups,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableConfigurableSchema")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -19720,6 +19946,38 @@ func (s GoogleCloudDiscoveryengineV1alphaPanelInfo) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaPatientFilterOperationMetadata: Metadata
+// related to the progress of the various patient filter operations. This will
+// be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaPatientFilterOperationMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// FiltersAddedCount: The number of patient IDs added to the patient filter.
+	FiltersAddedCount int64 `json:"filtersAddedCount,omitempty,string"`
+	// FiltersRemovedCount: The number of patient IDs removed from the patient
+	// filter.
+	FiltersRemovedCount int64 `json:"filtersRemovedCount,omitempty,string"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaPatientFilterOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaPatientFilterOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaPauseEngineRequest: Request for pausing
 // training of an engine.
 type GoogleCloudDiscoveryengineV1alphaPauseEngineRequest struct {
@@ -21292,6 +21550,48 @@ func (s GoogleCloudDiscoveryengineV1alphaRemoveDedicatedCrawlRateResponse) Marsh
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaRemovePatientFilterRequest: Request for
+// DataStoreService.RemovePatientFilter method.
+type GoogleCloudDiscoveryengineV1alphaRemovePatientFilterRequest struct {
+	// DataStore: Required. Full resource name of DataStore, such as
+	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
+	// es/{data_store_id}`. If the caller does not have permission to access the
+	// DataStore, regardless of whether or not it exists, a PERMISSION_DENIED error
+	// is returned. If the requested DataStore does not exist, a NOT_FOUND error is
+	// returned. If the requested DataStore does not have a patient filter, a
+	// NOT_FOUND error will be returned
+	DataStore string `json:"dataStore,omitempty"`
+	// FilterGroups: Required. Names of the Group resources to use as a basis for
+	// the list of patients to remove from the patient filter, in format
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
+	// es/{fhir_store_id}/fhir/Group/{group_id}`. if the caller does not have
+	// permission to access the FHIR store, regardless of whether it exists,
+	// PERMISSION_DENIED error is returned. If the discovery engine service account
+	// does not have permission to access the FHIR store, regardless of whether or
+	// not it exists, a PERMISSION_DENIED error is returned. If the group is not
+	// found at the location, a RESOURCE_NOT_FOUND error will be returned. The
+	// filter group must be a FHIR resource name of type Group, and the list of IDs
+	// to remove will be constructed from the direct members of the group which are
+	// Patient resources.
+	FilterGroups []string `json:"filterGroups,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaRemovePatientFilterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRemovePatientFilterRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaRemoveSuggestionRequest: Request message
 // for CompletionService.RemoveSuggestion method.
 type GoogleCloudDiscoveryengineV1alphaRemoveSuggestionRequest struct {
@@ -21340,6 +21640,48 @@ func (s GoogleCloudDiscoveryengineV1alphaRemoveSuggestionRequest) MarshalJSON() 
 type GoogleCloudDiscoveryengineV1alphaRemoveSuggestionResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleCloudDiscoveryengineV1alphaReplacePatientFilterRequest: Request for
+// DataStoreService.ReplacePatientFilter method.
+type GoogleCloudDiscoveryengineV1alphaReplacePatientFilterRequest struct {
+	// DataStore: Required. Full resource name of DataStore, such as
+	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
+	// es/{data_store_id}`. If the caller does not have permission to access the
+	// DataStore, regardless of whether or not it exists, a PERMISSION_DENIED error
+	// is returned. If the requested DataStore does not exist, a NOT_FOUND error is
+	// returned. If the requested DataStore already has a patient filter, an
+	// ALREADY_EXISTS error will be returned.
+	DataStore string `json:"dataStore,omitempty"`
+	// FilterGroups: Required. Names of the Group resources to use as a basis for
+	// the list of patients for the new patient filter, in format
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
+	// es/{fhir_store_id}/fhir/Group/{group_id}`. if the caller does not have
+	// permission to access the FHIR store, regardless of whether it exists,
+	// PERMISSION_DENIED error is returned. If the discovery engine service account
+	// does not have permission to access the FHIR store, regardless of whether or
+	// not it exists, a PERMISSION_DENIED error is returned. If the group is not
+	// found at the location, a RESOURCE_NOT_FOUND error will be returned. The
+	// filter group must be a FHIR resource name of type Group, and the new filter
+	// will be constructed from the direct members of the group which are Patient
+	// resources.
+	FilterGroups []string `json:"filterGroups,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaReplacePatientFilterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaReplacePatientFilterRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1alphaReply: Defines a reply message to user.
@@ -28949,6 +29291,9 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// KnowledgeGraphConfig: Optional. Configurations for the Knowledge Graph. Only
+	// applicable if solution_type is SOLUTION_TYPE_SEARCH.
+	KnowledgeGraphConfig *GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfig `json:"knowledgeGraphConfig,omitempty"`
 	// MediaRecommendationEngineConfig: Configurations for the Media Engine. Only
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
@@ -29134,6 +29479,72 @@ type GoogleCloudDiscoveryengineV1betaEngineCommonConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1betaEngineCommonConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaEngineCommonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfig: Configuration
+// message for the Knowledge Graph.
+type GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfig struct {
+	// CloudKnowledgeGraphTypes: Specify entity types to support.
+	CloudKnowledgeGraphTypes []string `json:"cloudKnowledgeGraphTypes,omitempty"`
+	// EnableCloudKnowledgeGraph: Whether to enable the Cloud Knowledge Graph for
+	// the engine. Defaults to false if not specified.
+	EnableCloudKnowledgeGraph bool `json:"enableCloudKnowledgeGraph,omitempty"`
+	// EnablePrivateKnowledgeGraph: Whether to enable the Private Knowledge Graph
+	// for the engine. Defaults to false if not specified.
+	EnablePrivateKnowledgeGraph bool `json:"enablePrivateKnowledgeGraph,omitempty"`
+	// FeatureConfig: Optional. Feature config for the Knowledge Graph.
+	FeatureConfig *GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfigFeatureConfig `json:"featureConfig,omitempty"`
+	// PrivateKnowledgeGraphTypes: Specify entity types to support.
+	PrivateKnowledgeGraphTypes []string `json:"privateKnowledgeGraphTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudKnowledgeGraphTypes")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudKnowledgeGraphTypes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfigFeatureConfig:
+// Feature config for the Knowledge Graph.
+type GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfigFeatureConfig struct {
+	// DisablePrivateKgAutoComplete: Whether to disable the private KG auto
+	// complete for the engine. Defaults to false if not specified.
+	DisablePrivateKgAutoComplete bool `json:"disablePrivateKgAutoComplete,omitempty"`
+	// DisablePrivateKgEnrichment: Whether to disable the private KG enrichment for
+	// the engine. Defaults to false if not specified.
+	DisablePrivateKgEnrichment bool `json:"disablePrivateKgEnrichment,omitempty"`
+	// DisablePrivateKgQueryUiChips: Whether to disable the private KG for query UI
+	// chips. Defaults to false if not specified.
+	DisablePrivateKgQueryUiChips bool `json:"disablePrivateKgQueryUiChips,omitempty"`
+	// DisablePrivateKgQueryUnderstanding: Whether to disable the private KG query
+	// understanding for the engine. Defaults to false if not specified.
+	DisablePrivateKgQueryUnderstanding bool `json:"disablePrivateKgQueryUnderstanding,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DisablePrivateKgAutoComplete") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisablePrivateKgAutoComplete") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfigFeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfigFeatureConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -29496,6 +29907,13 @@ type GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig struct {
 	// will be processed in a static indexing mode which is slower but more capable
 	// of handling larger volume.
 	EnableStaticIndexingForBatchIngestion bool `json:"enableStaticIndexingForBatchIngestion,omitempty"`
+	// InitialFilterGroups: Optional. Names of the Group resources to use as a
+	// basis for the initial patient filter, in format
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
+	// es/{fhir_store_id}/fhir/Group/{group_id}`. The filter group must be a FHIR
+	// resource name of type Group, and the filter will be constructed from the
+	// direct members of the group which are Patient resources.
+	InitialFilterGroups []string `json:"initialFilterGroups,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableConfigurableSchema")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -39494,6 +39912,121 @@ func (c *ProjectsLocationsCollectionsDataConnectorOperationsListCall) Pages(ctx 
 	}
 }
 
+type ProjectsLocationsCollectionsDataStoresAddPatientFilterCall struct {
+	s                                                        *Service
+	dataStore                                                string
+	googleclouddiscoveryenginev1alphaaddpatientfilterrequest *GoogleCloudDiscoveryengineV1alphaAddPatientFilterRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// AddPatientFilter: Adds a group of patient IDs as a patient filter for the
+// data store. Patient filters are empty by default when a data store is
+// created, and are stored in a separate table. The data store must first be
+// created, and must be a healthcare data store. The filter group must be a
+// FHIR resource name of type Group, and the filter will be constructed from
+// the direct members of the group which are Patient resources.
+//
+//   - dataStore: Full resource name of DataStore, such as
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}`. If the caller does not have permission to access
+//     the DataStore, regardless of whether or not it exists, a PERMISSION_DENIED
+//     error is returned. If the requested DataStore does not exist, a NOT_FOUND
+//     error is returned. If the requested DataStore already has a patient
+//     filter, an ALREADY_EXISTS error will be returned.
+func (r *ProjectsLocationsCollectionsDataStoresService) AddPatientFilter(dataStore string, googleclouddiscoveryenginev1alphaaddpatientfilterrequest *GoogleCloudDiscoveryengineV1alphaAddPatientFilterRequest) *ProjectsLocationsCollectionsDataStoresAddPatientFilterCall {
+	c := &ProjectsLocationsCollectionsDataStoresAddPatientFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dataStore = dataStore
+	c.googleclouddiscoveryenginev1alphaaddpatientfilterrequest = googleclouddiscoveryenginev1alphaaddpatientfilterrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresAddPatientFilterCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresAddPatientFilterCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresAddPatientFilterCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresAddPatientFilterCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresAddPatientFilterCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresAddPatientFilterCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphaaddpatientfilterrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+dataStore}:addPatientFilter")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dataStore": c.dataStore,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.addPatientFilter", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.addPatientFilter" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresAddPatientFilterCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.addPatientFilter", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsCollectionsDataStoresCompleteQueryCall struct {
 	s            *Service
 	dataStore    string
@@ -39911,6 +40444,120 @@ func (c *ProjectsLocationsCollectionsDataStoresDeleteCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsDataStoresDeletePatientFilterCall struct {
+	s                                                            *Service
+	dataStore                                                    string
+	googleclouddiscoveryenginev1alphadeletepatientfiltersrequest *GoogleCloudDiscoveryengineV1alphaDeletePatientFiltersRequest
+	urlParams_                                                   gensupport.URLParams
+	ctx_                                                         context.Context
+	header_                                                      http.Header
+}
+
+// DeletePatientFilter: Deletes the entire patient filter for the data store.
+// Patient filters are empty by default when a data store is created, and are
+// stored in a separate table. The data store must first be created, and must
+// be a healthcare data store. This method will fail if the data store does not
+// have a patient filter.
+//
+//   - dataStore: Full resource name of DataStore, such as
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}`. If the caller does not have permission to access
+//     the DataStore, regardless of whether or not it exists, a PERMISSION_DENIED
+//     error is returned. If the requested DataStore does not exist, a NOT_FOUND
+//     error is returned. If the requested DataStore does not have a patient
+//     filter, a NOT_FOUND error will be returned.
+func (r *ProjectsLocationsCollectionsDataStoresService) DeletePatientFilter(dataStore string, googleclouddiscoveryenginev1alphadeletepatientfiltersrequest *GoogleCloudDiscoveryengineV1alphaDeletePatientFiltersRequest) *ProjectsLocationsCollectionsDataStoresDeletePatientFilterCall {
+	c := &ProjectsLocationsCollectionsDataStoresDeletePatientFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dataStore = dataStore
+	c.googleclouddiscoveryenginev1alphadeletepatientfiltersrequest = googleclouddiscoveryenginev1alphadeletepatientfiltersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresDeletePatientFilterCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresDeletePatientFilterCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresDeletePatientFilterCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresDeletePatientFilterCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresDeletePatientFilterCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresDeletePatientFilterCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphadeletepatientfiltersrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+dataStore}:deletePatientFilter")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dataStore": c.dataStore,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.deletePatientFilter", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.deletePatientFilter" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresDeletePatientFilterCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.deletePatientFilter", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -40530,6 +41177,240 @@ func (c *ProjectsLocationsCollectionsDataStoresPatchCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsDataStoresRemovePatientFilterCall struct {
+	s                                                           *Service
+	dataStore                                                   string
+	googleclouddiscoveryenginev1alpharemovepatientfilterrequest *GoogleCloudDiscoveryengineV1alphaRemovePatientFilterRequest
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// RemovePatientFilter: Removes a group of patient IDs from the patient filter
+// for the data store. Patient filters are empty by default when a data store
+// is created, and are stored in a separate table. The data store must first be
+// created, and must be a healthcare data store. This method will fail if the
+// data store does not have a patient filter. The filter group must be a FHIR
+// resource name of type Group, and the list of patient IDs to remove will be
+// constructed from the direct members of the group which are Patient
+// resources.
+//
+//   - dataStore: Full resource name of DataStore, such as
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}`. If the caller does not have permission to access
+//     the DataStore, regardless of whether or not it exists, a PERMISSION_DENIED
+//     error is returned. If the requested DataStore does not exist, a NOT_FOUND
+//     error is returned. If the requested DataStore does not have a patient
+//     filter, a NOT_FOUND error will be returned.
+func (r *ProjectsLocationsCollectionsDataStoresService) RemovePatientFilter(dataStore string, googleclouddiscoveryenginev1alpharemovepatientfilterrequest *GoogleCloudDiscoveryengineV1alphaRemovePatientFilterRequest) *ProjectsLocationsCollectionsDataStoresRemovePatientFilterCall {
+	c := &ProjectsLocationsCollectionsDataStoresRemovePatientFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dataStore = dataStore
+	c.googleclouddiscoveryenginev1alpharemovepatientfilterrequest = googleclouddiscoveryenginev1alpharemovepatientfilterrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresRemovePatientFilterCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresRemovePatientFilterCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresRemovePatientFilterCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresRemovePatientFilterCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresRemovePatientFilterCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresRemovePatientFilterCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alpharemovepatientfilterrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+dataStore}:removePatientFilter")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dataStore": c.dataStore,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.removePatientFilter", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.removePatientFilter" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresRemovePatientFilterCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.removePatientFilter", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsDataStoresReplacePatientFilterCall struct {
+	s                                                            *Service
+	dataStore                                                    string
+	googleclouddiscoveryenginev1alphareplacepatientfilterrequest *GoogleCloudDiscoveryengineV1alphaReplacePatientFilterRequest
+	urlParams_                                                   gensupport.URLParams
+	ctx_                                                         context.Context
+	header_                                                      http.Header
+}
+
+// ReplacePatientFilter: Replaces the patient filter for the data store. This
+// method is essentially a combination of DeletePatientFilters and
+// AddPatientFilter. Patient filters are empty by default when a data store is
+// created, and are stored in a separate table. The data store must first be
+// created, and must be a healthcare data store. This method will fail if the
+// data store does not have a patient filter. The filter group must be a FHIR
+// resource name of type Group, and the new filter will be constructed from the
+// direct members of the group which are Patient resources.
+//
+//   - dataStore: Full resource name of DataStore, such as
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}`. If the caller does not have permission to access
+//     the DataStore, regardless of whether or not it exists, a PERMISSION_DENIED
+//     error is returned. If the requested DataStore does not exist, a NOT_FOUND
+//     error is returned. If the requested DataStore already has a patient
+//     filter, an ALREADY_EXISTS error will be returned.
+func (r *ProjectsLocationsCollectionsDataStoresService) ReplacePatientFilter(dataStore string, googleclouddiscoveryenginev1alphareplacepatientfilterrequest *GoogleCloudDiscoveryengineV1alphaReplacePatientFilterRequest) *ProjectsLocationsCollectionsDataStoresReplacePatientFilterCall {
+	c := &ProjectsLocationsCollectionsDataStoresReplacePatientFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dataStore = dataStore
+	c.googleclouddiscoveryenginev1alphareplacepatientfilterrequest = googleclouddiscoveryenginev1alphareplacepatientfilterrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresReplacePatientFilterCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresReplacePatientFilterCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresReplacePatientFilterCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresReplacePatientFilterCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresReplacePatientFilterCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresReplacePatientFilterCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphareplacepatientfilterrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+dataStore}:replacePatientFilter")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dataStore": c.dataStore,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.replacePatientFilter", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.replacePatientFilter" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresReplacePatientFilterCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.replacePatientFilter", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -60035,6 +60916,121 @@ func (c *ProjectsLocationsCollectionsOperationsListCall) Pages(ctx context.Conte
 	}
 }
 
+type ProjectsLocationsDataStoresAddPatientFilterCall struct {
+	s                                                        *Service
+	dataStore                                                string
+	googleclouddiscoveryenginev1alphaaddpatientfilterrequest *GoogleCloudDiscoveryengineV1alphaAddPatientFilterRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// AddPatientFilter: Adds a group of patient IDs as a patient filter for the
+// data store. Patient filters are empty by default when a data store is
+// created, and are stored in a separate table. The data store must first be
+// created, and must be a healthcare data store. The filter group must be a
+// FHIR resource name of type Group, and the filter will be constructed from
+// the direct members of the group which are Patient resources.
+//
+//   - dataStore: Full resource name of DataStore, such as
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}`. If the caller does not have permission to access
+//     the DataStore, regardless of whether or not it exists, a PERMISSION_DENIED
+//     error is returned. If the requested DataStore does not exist, a NOT_FOUND
+//     error is returned. If the requested DataStore already has a patient
+//     filter, an ALREADY_EXISTS error will be returned.
+func (r *ProjectsLocationsDataStoresService) AddPatientFilter(dataStore string, googleclouddiscoveryenginev1alphaaddpatientfilterrequest *GoogleCloudDiscoveryengineV1alphaAddPatientFilterRequest) *ProjectsLocationsDataStoresAddPatientFilterCall {
+	c := &ProjectsLocationsDataStoresAddPatientFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dataStore = dataStore
+	c.googleclouddiscoveryenginev1alphaaddpatientfilterrequest = googleclouddiscoveryenginev1alphaaddpatientfilterrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresAddPatientFilterCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresAddPatientFilterCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresAddPatientFilterCall) Context(ctx context.Context) *ProjectsLocationsDataStoresAddPatientFilterCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresAddPatientFilterCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresAddPatientFilterCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphaaddpatientfilterrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+dataStore}:addPatientFilter")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dataStore": c.dataStore,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.addPatientFilter", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.addPatientFilter" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresAddPatientFilterCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.addPatientFilter", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsDataStoresCompleteQueryCall struct {
 	s            *Service
 	dataStore    string
@@ -60452,6 +61448,120 @@ func (c *ProjectsLocationsDataStoresDeleteCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataStoresDeletePatientFilterCall struct {
+	s                                                            *Service
+	dataStore                                                    string
+	googleclouddiscoveryenginev1alphadeletepatientfiltersrequest *GoogleCloudDiscoveryengineV1alphaDeletePatientFiltersRequest
+	urlParams_                                                   gensupport.URLParams
+	ctx_                                                         context.Context
+	header_                                                      http.Header
+}
+
+// DeletePatientFilter: Deletes the entire patient filter for the data store.
+// Patient filters are empty by default when a data store is created, and are
+// stored in a separate table. The data store must first be created, and must
+// be a healthcare data store. This method will fail if the data store does not
+// have a patient filter.
+//
+//   - dataStore: Full resource name of DataStore, such as
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}`. If the caller does not have permission to access
+//     the DataStore, regardless of whether or not it exists, a PERMISSION_DENIED
+//     error is returned. If the requested DataStore does not exist, a NOT_FOUND
+//     error is returned. If the requested DataStore does not have a patient
+//     filter, a NOT_FOUND error will be returned.
+func (r *ProjectsLocationsDataStoresService) DeletePatientFilter(dataStore string, googleclouddiscoveryenginev1alphadeletepatientfiltersrequest *GoogleCloudDiscoveryengineV1alphaDeletePatientFiltersRequest) *ProjectsLocationsDataStoresDeletePatientFilterCall {
+	c := &ProjectsLocationsDataStoresDeletePatientFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dataStore = dataStore
+	c.googleclouddiscoveryenginev1alphadeletepatientfiltersrequest = googleclouddiscoveryenginev1alphadeletepatientfiltersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresDeletePatientFilterCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresDeletePatientFilterCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresDeletePatientFilterCall) Context(ctx context.Context) *ProjectsLocationsDataStoresDeletePatientFilterCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresDeletePatientFilterCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresDeletePatientFilterCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphadeletepatientfiltersrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+dataStore}:deletePatientFilter")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dataStore": c.dataStore,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.deletePatientFilter", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.deletePatientFilter" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresDeletePatientFilterCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.deletePatientFilter", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -61071,6 +62181,240 @@ func (c *ProjectsLocationsDataStoresPatchCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataStoresRemovePatientFilterCall struct {
+	s                                                           *Service
+	dataStore                                                   string
+	googleclouddiscoveryenginev1alpharemovepatientfilterrequest *GoogleCloudDiscoveryengineV1alphaRemovePatientFilterRequest
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// RemovePatientFilter: Removes a group of patient IDs from the patient filter
+// for the data store. Patient filters are empty by default when a data store
+// is created, and are stored in a separate table. The data store must first be
+// created, and must be a healthcare data store. This method will fail if the
+// data store does not have a patient filter. The filter group must be a FHIR
+// resource name of type Group, and the list of patient IDs to remove will be
+// constructed from the direct members of the group which are Patient
+// resources.
+//
+//   - dataStore: Full resource name of DataStore, such as
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}`. If the caller does not have permission to access
+//     the DataStore, regardless of whether or not it exists, a PERMISSION_DENIED
+//     error is returned. If the requested DataStore does not exist, a NOT_FOUND
+//     error is returned. If the requested DataStore does not have a patient
+//     filter, a NOT_FOUND error will be returned.
+func (r *ProjectsLocationsDataStoresService) RemovePatientFilter(dataStore string, googleclouddiscoveryenginev1alpharemovepatientfilterrequest *GoogleCloudDiscoveryengineV1alphaRemovePatientFilterRequest) *ProjectsLocationsDataStoresRemovePatientFilterCall {
+	c := &ProjectsLocationsDataStoresRemovePatientFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dataStore = dataStore
+	c.googleclouddiscoveryenginev1alpharemovepatientfilterrequest = googleclouddiscoveryenginev1alpharemovepatientfilterrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresRemovePatientFilterCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresRemovePatientFilterCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresRemovePatientFilterCall) Context(ctx context.Context) *ProjectsLocationsDataStoresRemovePatientFilterCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresRemovePatientFilterCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresRemovePatientFilterCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alpharemovepatientfilterrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+dataStore}:removePatientFilter")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dataStore": c.dataStore,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.removePatientFilter", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.removePatientFilter" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresRemovePatientFilterCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.removePatientFilter", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataStoresReplacePatientFilterCall struct {
+	s                                                            *Service
+	dataStore                                                    string
+	googleclouddiscoveryenginev1alphareplacepatientfilterrequest *GoogleCloudDiscoveryengineV1alphaReplacePatientFilterRequest
+	urlParams_                                                   gensupport.URLParams
+	ctx_                                                         context.Context
+	header_                                                      http.Header
+}
+
+// ReplacePatientFilter: Replaces the patient filter for the data store. This
+// method is essentially a combination of DeletePatientFilters and
+// AddPatientFilter. Patient filters are empty by default when a data store is
+// created, and are stored in a separate table. The data store must first be
+// created, and must be a healthcare data store. This method will fail if the
+// data store does not have a patient filter. The filter group must be a FHIR
+// resource name of type Group, and the new filter will be constructed from the
+// direct members of the group which are Patient resources.
+//
+//   - dataStore: Full resource name of DataStore, such as
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}`. If the caller does not have permission to access
+//     the DataStore, regardless of whether or not it exists, a PERMISSION_DENIED
+//     error is returned. If the requested DataStore does not exist, a NOT_FOUND
+//     error is returned. If the requested DataStore already has a patient
+//     filter, an ALREADY_EXISTS error will be returned.
+func (r *ProjectsLocationsDataStoresService) ReplacePatientFilter(dataStore string, googleclouddiscoveryenginev1alphareplacepatientfilterrequest *GoogleCloudDiscoveryengineV1alphaReplacePatientFilterRequest) *ProjectsLocationsDataStoresReplacePatientFilterCall {
+	c := &ProjectsLocationsDataStoresReplacePatientFilterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dataStore = dataStore
+	c.googleclouddiscoveryenginev1alphareplacepatientfilterrequest = googleclouddiscoveryenginev1alphareplacepatientfilterrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresReplacePatientFilterCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresReplacePatientFilterCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresReplacePatientFilterCall) Context(ctx context.Context) *ProjectsLocationsDataStoresReplacePatientFilterCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresReplacePatientFilterCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresReplacePatientFilterCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1alphareplacepatientfilterrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+dataStore}:replacePatientFilter")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dataStore": c.dataStore,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.replacePatientFilter", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.replacePatientFilter" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresReplacePatientFilterCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.replacePatientFilter", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

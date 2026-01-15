@@ -10409,6 +10409,9 @@ func (s BulkInsertDiskResource) MarshalJSON() ([]byte, error) {
 type BulkInsertInstanceResource struct {
 	// Count: The maximum number of instances to create.
 	Count int64 `json:"count,omitempty,string"`
+	// InstanceFlexibilityPolicy: A flexible specification of machine type of
+	// instances to create.
+	InstanceFlexibilityPolicy *InstanceFlexibilityPolicy `json:"instanceFlexibilityPolicy,omitempty"`
 	// InstanceProperties: The instance properties defining the VM instances to be
 	// created. Required
 	// if sourceInstanceTemplate is not provided.
@@ -26908,6 +26911,80 @@ func (s InstanceConsumptionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InstanceFlexibilityPolicy: A flexible specification of machine types for
+// instances to create.
+type InstanceFlexibilityPolicy struct {
+	// InstanceSelections: Specification of alternative, flexible instance
+	// subsets.
+	// One of them will be selected to create the instances
+	// based on various criteria, like:
+	// - ranks,
+	// - location policy,
+	// - current capacity,
+	// - available reservations (you can specify affinity in
+	// InstanceProperties),
+	// - SWAN/GOOSE limitations.
+	// Key is an arbitrary, unique RFC1035 string that identifies the
+	// instance
+	// selection.
+	InstanceSelections map[string]InstanceFlexibilityPolicyInstanceSelection `json:"instanceSelections,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstanceSelections") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstanceSelections") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceFlexibilityPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceFlexibilityPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InstanceFlexibilityPolicyInstanceSelection: Specification of machine type to
+// use. Every position inside this message
+// is an alternative.
+// The count specified in the shape flexibility must not exceed the number
+// of entries in per_instance_properties or the capacity of the
+// name_pattern, if used.
+type InstanceFlexibilityPolicyInstanceSelection struct {
+	// Disks: Disks to be attached to the instances created from in this
+	// selection.
+	// They override the disks specified in the instance properties.
+	Disks []*AttachedDisk `json:"disks,omitempty"`
+	// MachineTypes: Alternative machine types to use for instances that are
+	// created from
+	// these properties. This field only accepts a machine type names, for
+	// example `n2-standard-4` and not URLs or partial URLs.
+	MachineTypes []string `json:"machineTypes,omitempty"`
+	// Rank: Rank when prioritizing the shape flexibilities.
+	// The instance selections with rank are considered
+	// first, in the ascending order of the rank.
+	// If not set, defaults to 0.
+	Rank int64 `json:"rank,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Disks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Disks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceFlexibilityPolicyInstanceSelection) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceFlexibilityPolicyInstanceSelection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InstanceGroup: Represents an Instance Group resource.
 //
 // Instance Groups can be used to configure a target
@@ -32676,7 +32753,7 @@ type InstancesReportHostAsFaultyRequestFaultReason struct {
 	//   "BEHAVIOR_UNSPECIFIED" - Public reportable behaviors
 	//   "PERFORMANCE"
 	//   "SILENT_DATA_CORRUPTION"
-	//   "UNRECOVERABLE_GPU_ERROR"
+	//   "UNRECOVERABLE_GPU_ERROR" - Unrecoverable GPU error identified by an XID
 	Behavior    string `json:"behavior,omitempty"`
 	Description string `json:"description,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Behavior") to
@@ -34261,6 +34338,7 @@ type InterconnectAttachment struct {
 	//    - BPS_20G: 20 Gbit/s
 	//    - BPS_50G: 50 Gbit/s
 	//    - BPS_100G: 100 Gbit/s
+	//    - BPS_400G: 400 Gbit/s
 	//
 	// Possible values:
 	//   "BPS_100G" - 100 Gbit/s

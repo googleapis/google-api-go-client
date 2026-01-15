@@ -472,9 +472,9 @@ type V2Key struct {
 	// DisplayName: Human-readable display name of this key that you can modify.
 	// The maximum length is 63 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// Etag: Output only. A checksum computed by the server based on the current
-	// value of the Key resource. This may be sent on update and delete requests to
-	// ensure the client has an up-to-date value before proceeding. See
+	// Etag: A checksum computed by the server based on the current value of the
+	// Key resource. This may be sent on update and delete requests to ensure the
+	// client has an up-to-date value before proceeding. See
 	// https://google.aip.dev/154.
 	Etag string `json:"etag,omitempty"`
 	// KeyString: Output only. An encrypted and signed value held by this key. This

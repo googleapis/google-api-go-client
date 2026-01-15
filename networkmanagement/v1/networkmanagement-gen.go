@@ -1891,6 +1891,44 @@ func (s GkePodInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleManagedServiceInfo: For display only. Metadata associated with
+// ARRIVE_AT_GOOGLE_MANAGED_SERVICE state.
+type GoogleManagedServiceInfo struct {
+	// IpAddress: IP address of the Google-managed service endpoint.
+	IpAddress string `json:"ipAddress,omitempty"`
+	// NetworkUri: URI of the Google-managed service endpoint network, it is empty
+	// if the IP address is a public IP address.
+	NetworkUri string `json:"networkUri,omitempty"`
+	// ServiceType: Type of a Google-managed service.
+	//
+	// Possible values:
+	//   "SERVICE_TYPE_UNSPECIFIED" - Service type is unspecified.
+	//   "UNSUPPORTED" - Unsupported Google-managed service.
+	//   "CLOUD_SQL" - Cloud SQL Instance.
+	//   "GKE_CLUSTER_CONTROL_PLANE" - GKE Cluster control plane.
+	//   "REDIS_CLUSTER" - Redis Cluster.
+	//   "REDIS_INSTANCE" - Redis Instance.
+	ServiceType string `json:"serviceType,omitempty"`
+	// ServiceUri: URI of the Google-managed service.
+	ServiceUri string `json:"serviceUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IpAddress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IpAddress") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleManagedServiceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleManagedServiceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleServiceInfo: For display only. Details of a Google Service sending
 // packets to a VPC network. Although the source IP might be a publicly
 // routable address, some Google Services use special routes within Google
@@ -3400,6 +3438,8 @@ type Step struct {
 	GkeMaster *GKEMasterInfo `json:"gkeMaster,omitempty"`
 	// GkePod: Display information of a Google Kubernetes Engine Pod.
 	GkePod *GkePodInfo `json:"gkePod,omitempty"`
+	// GoogleManagedService: Display information of a Google-managed service.
+	GoogleManagedService *GoogleManagedServiceInfo `json:"googleManagedService,omitempty"`
 	// GoogleService: Display information of a Google service
 	GoogleService *GoogleServiceInfo `json:"googleService,omitempty"`
 	// HybridSubnet: Display information of a hybrid subnet.
@@ -3515,6 +3555,8 @@ type Step struct {
 	//   "SERVERLESS_EXTERNAL_CONNECTION" - Forwarding state: for packets
 	// originating from a serverless endpoint forwarded through public (external)
 	// connectivity.
+	//   "ARRIVE_AT_GOOGLE_MANAGED_SERVICE" - Forwarding state: arriving at a
+	// Google-managed service endpoint.
 	//   "NAT" - Transition state: packet header translated. The `nat` field is
 	// populated with the translation information.
 	//   "SKIP_GKE_POD_IP_MASQUERADING" - Transition state: GKE Pod IP masquerading

@@ -996,8 +996,8 @@ func (s ContextRule) MarshalJSON() ([]byte, error) {
 // Example: control: environment: servicecontrol.googleapis.com
 type Control struct {
 	// Environment: The service controller environment to use. If empty, no control
-	// plane feature (like quota and billing) will be enabled. The recommended
-	// value for most services is servicecontrol.googleapis.com
+	// plane features (like quota and billing) will be enabled. The recommended
+	// value for most services is servicecontrol.googleapis.com.
 	Environment string `json:"environment,omitempty"`
 	// MethodPolicies: Defines policies applying to the API methods of the service.
 	MethodPolicies []*MethodPolicy `json:"methodPolicies,omitempty"`

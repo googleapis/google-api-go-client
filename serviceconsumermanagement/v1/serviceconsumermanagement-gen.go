@@ -1073,8 +1073,8 @@ func (s ContextRule) MarshalJSON() ([]byte, error) {
 // Example: control: environment: servicecontrol.googleapis.com
 type Control struct {
 	// Environment: The service controller environment to use. If empty, no control
-	// plane feature (like quota and billing) will be enabled. The recommended
-	// value for most services is servicecontrol.googleapis.com
+	// plane features (like quota and billing) will be enabled. The recommended
+	// value for most services is servicecontrol.googleapis.com.
 	Environment string `json:"environment,omitempty"`
 	// MethodPolicies: Defines policies applying to the API methods of the service.
 	MethodPolicies []*MethodPolicy `json:"methodPolicies,omitempty"`
@@ -2053,8 +2053,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3872,6 +3872,12 @@ func (s TenantProjectPolicy) MarshalJSON() ([]byte, error) {
 
 // TenantResource: Resource constituting the TenancyUnit.
 type TenantResource struct {
+	// MigratedTenantProject: Output only. The newly created regional resource name
+	// of the tenant project that has been migrated from a global service. This
+	// field is only set for migrated tenant projects. Format:
+	// `services//{collection_id}/{RESOURCE_ID}/locations/{LOCATION}/tenantProjects/
+	// {TENANT_ID}`.
+	MigratedTenantProject string `json:"migratedTenantProject,omitempty"`
 	// Resource: Output only. @OutputOnly Identifier of the tenant resource. For
 	// cloud projects, it is in the form 'projects/{number}'. For example
 	// 'projects/123456'.
@@ -3888,15 +3894,15 @@ type TenantResource struct {
 	Status string `json:"status,omitempty"`
 	// Tag: Unique per single tenancy unit.
 	Tag string `json:"tag,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Resource") to
+	// ForceSendFields is a list of field names (e.g. "MigratedTenantProject") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Resource") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "MigratedTenantProject") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4874,9 +4880,9 @@ func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *OperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OperationsListCall {

@@ -764,6 +764,11 @@ type Blobstore2Info struct {
 	// ReadToken: The blob read token. Needed to read blobs that have not been
 	// replicated. Might not be available until the final call.
 	ReadToken string `json:"readToken,omitempty"`
+	// UploadFragmentListCreationInfo: A serialized Object Fragment List Creation
+	// Info passed from Bigstore -> Scotty for a GCS upload. This field must never
+	// be consumed outside of Bigstore, and is not applicable to non-GCS media
+	// uploads.
+	UploadFragmentListCreationInfo string `json:"uploadFragmentListCreationInfo,omitempty"`
 	// UploadMetadataContainer: Metadata passed from Blobstore -> Scotty for a new
 	// GCS upload. This is a signed, serialized blobstore2.BlobMetadataContainer
 	// proto which must never be consumed outside of Bigstore, and is not

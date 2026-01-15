@@ -1185,8 +1185,10 @@ func (c *ProjectsLocationsParametersListCall) PageSize(pageSize int64) *Projects
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListParameters` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListParameters` must match the call that provided the page token.
 func (c *ProjectsLocationsParametersListCall) PageToken(pageToken string) *ProjectsLocationsParametersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1706,7 +1708,7 @@ func (r *ProjectsLocationsParametersVersionsService) Get(name string) *ProjectsL
 //
 //	"VIEW_UNSPECIFIED" - The default / unset value. The API will default to
 //
-// the FULL view..
+// the FULL view.
 //
 //	"BASIC" - Include only the metadata for the resource.
 //	"FULL" - Include metadata & other relevant payload data as well. This is
@@ -1849,8 +1851,10 @@ func (c *ProjectsLocationsParametersVersionsListCall) PageSize(pageSize int64) *
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListParameterVersions` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListParameterVersions` must match the call that provided the page token.
 func (c *ProjectsLocationsParametersVersionsListCall) PageToken(pageToken string) *ProjectsLocationsParametersVersionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

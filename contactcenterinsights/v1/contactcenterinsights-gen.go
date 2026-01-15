@@ -6288,6 +6288,9 @@ func (s GoogleCloudContactcenterinsightsV1QueryMetricsResponseSlice) MarshalJSON
 type GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPoint struct {
 	// ConversationMeasure: The measure related to conversations.
 	ConversationMeasure *GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointConversationMeasure `json:"conversationMeasure,omitempty"`
+	// DialogflowInteractionMeasure: The measure related to dialogflow
+	// interactions.
+	DialogflowInteractionMeasure *GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointDialogflowInteractionMeasure `json:"dialogflowInteractionMeasure,omitempty"`
 	// Interval: The interval that this data point represents. * If this is the
 	// total data point, the interval is [starting create time, ending create time)
 	// from the request. * If this a data point from the time series, the interval
@@ -6314,6 +6317,42 @@ func (s GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPoint) Ma
 // GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointConversat
 // ionMeasure: The measure related to conversations.
 type GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointConversationMeasure struct {
+	// AaSupervisorAssignedConversationsCount: The number of conversations that
+	// were assigned to an AA human supervisor.
+	AaSupervisorAssignedConversationsCount int64 `json:"aaSupervisorAssignedConversationsCount,omitempty"`
+	// AaSupervisorDroppedConversationsCount: The number of conversations that were
+	// dropped, i.e. escalated but not assigned to an AA human supervisor.
+	AaSupervisorDroppedConversationsCount int64 `json:"aaSupervisorDroppedConversationsCount,omitempty"`
+	// AaSupervisorEscalatedConversationsCount: The number of conversations that
+	// were escalated to an AA human supervisor for intervention.
+	AaSupervisorEscalatedConversationsCount int64 `json:"aaSupervisorEscalatedConversationsCount,omitempty"`
+	// AaSupervisorMonitoredConversationsCount: The number of conversations scanned
+	// by the AA human supervisor.
+	AaSupervisorMonitoredConversationsCount int64 `json:"aaSupervisorMonitoredConversationsCount,omitempty"`
+	// AaSupervisorTransferredToHumanAgentConvCount: The number of conversations
+	// transferred to a human agent.
+	AaSupervisorTransferredToHumanAgentConvCount int64 `json:"aaSupervisorTransferredToHumanAgentConvCount,omitempty"`
+	// AiCoachSuggestionAgentMessageTriggerCount: Count of agent messages that
+	// triggered an Ai Coach Suggestion.
+	AiCoachSuggestionAgentMessageTriggerCount int64 `json:"aiCoachSuggestionAgentMessageTriggerCount,omitempty"`
+	// AiCoachSuggestionAgentUsageCount: Count of Ai Coach Suggestion that has been
+	// used by agents.
+	AiCoachSuggestionAgentUsageCount int64 `json:"aiCoachSuggestionAgentUsageCount,omitempty"`
+	// AiCoachSuggestionAgentUsageRatio: Proportion of Ai Coach Suggestion that has
+	// been used by agents.
+	AiCoachSuggestionAgentUsageRatio float64 `json:"aiCoachSuggestionAgentUsageRatio,omitempty"`
+	// AiCoachSuggestionCustomerMessageTriggerCount: Count of customer messages
+	// that triggered an Ai Coach Suggestion.
+	AiCoachSuggestionCustomerMessageTriggerCount int64 `json:"aiCoachSuggestionCustomerMessageTriggerCount,omitempty"`
+	// AiCoachSuggestionCustomerMessageTriggerRatio: Proportion of customer
+	// messages that triggered an Ai Coach Suggestion.
+	AiCoachSuggestionCustomerMessageTriggerRatio float64 `json:"aiCoachSuggestionCustomerMessageTriggerRatio,omitempty"`
+	// AiCoachSuggestionMessageTriggerCount: Count of end_of_utterance trigger
+	// event messages that triggered an Ai Coach Suggestion.
+	AiCoachSuggestionMessageTriggerCount int64 `json:"aiCoachSuggestionMessageTriggerCount,omitempty"`
+	// AiCoachSuggestionMessageTriggerRatio: Proportion of end_of_utterance trigger
+	// event messages that triggered an Ai Coach Suggestion.
+	AiCoachSuggestionMessageTriggerRatio float64 `json:"aiCoachSuggestionMessageTriggerRatio,omitempty"`
 	// AverageAgentSentimentScore: The average agent's sentiment score.
 	AverageAgentSentimentScore float64 `json:"averageAgentSentimentScore,omitempty"`
 	// AverageClientSentimentScore: The average client's sentiment score.
@@ -6334,22 +6373,139 @@ type GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointConvers
 	AverageQaQuestionNormalizedScore float64 `json:"averageQaQuestionNormalizedScore,omitempty"`
 	// AverageSilencePercentage: The average silence percentage.
 	AverageSilencePercentage float64 `json:"averageSilencePercentage,omitempty"`
+	// AverageSummarizationSuggestionEditDistance: Average edit distance of the
+	// summarization suggestions. Edit distance (also called as levenshtein
+	// distance) is calculated by summing up number of insertions, deletions and
+	// substitutions required to transform the summization feedback to the original
+	// summary suggestion.
+	AverageSummarizationSuggestionEditDistance float64 `json:"averageSummarizationSuggestionEditDistance,omitempty"`
+	// AverageSummarizationSuggestionNormalizedEditDistance: Normalized Average
+	// edit distance of the summarization suggestions. Edit distance (also called
+	// as levenshtein distance) is calculated by summing up number of insertions,
+	// deletions and substitutions required to transform the summization feedback
+	// to the original summary suggestion. Normalized edit distance is the average
+	// of (edit distance / summary length).
+	AverageSummarizationSuggestionNormalizedEditDistance float64 `json:"averageSummarizationSuggestionNormalizedEditDistance,omitempty"`
 	// AverageTurnCount: The average turn count.
 	AverageTurnCount float64 `json:"averageTurnCount,omitempty"`
+	// AvgConversationClientTurnSentimentEma: The exponential moving average of the
+	// sentiment score of client turns in the conversation.
+	AvgConversationClientTurnSentimentEma float64 `json:"avgConversationClientTurnSentimentEma,omitempty"`
+	// ContainedConversationCount: The number of conversations that were contained.
+	ContainedConversationCount int64 `json:"containedConversationCount,omitempty"`
+	// ContainedConversationRatio: The percentage of conversations that were
+	// contained.
+	ContainedConversationRatio float64 `json:"containedConversationRatio,omitempty"`
+	// ConversationAiCoachSuggestionCount: Count of conversations that has Ai Coach
+	// Suggestions.
+	ConversationAiCoachSuggestionCount int64 `json:"conversationAiCoachSuggestionCount,omitempty"`
+	// ConversationAiCoachSuggestionRatio: Proportion of conversations that has Ai
+	// Coach Suggestions.
+	ConversationAiCoachSuggestionRatio float64 `json:"conversationAiCoachSuggestionRatio,omitempty"`
 	// ConversationCount: The conversation count.
 	ConversationCount int64 `json:"conversationCount,omitempty"`
+	// ConversationSuggestedSummaryRatio: Proportion of conversations that had a
+	// suggested summary.
+	ConversationSuggestedSummaryRatio float64 `json:"conversationSuggestedSummaryRatio,omitempty"`
+	// ConversationTotalAgentMessageCount: The agent message count.
+	ConversationTotalAgentMessageCount int64 `json:"conversationTotalAgentMessageCount,omitempty"`
+	// ConversationTotalCustomerMessageCount: The customer message count.
+	ConversationTotalCustomerMessageCount int64 `json:"conversationTotalCustomerMessageCount,omitempty"`
+	// ConversationalAgentsAverageAudioInAudioOutLatency: The average latency of
+	// conversational agents' audio in audio out latency per interaction. This is
+	// computed as the average of the all the interactions' audio in audio out
+	// latencies in a conversation and averaged across conversations.
+	ConversationalAgentsAverageAudioInAudioOutLatency float64 `json:"conversationalAgentsAverageAudioInAudioOutLatency,omitempty"`
+	// ConversationalAgentsAverageEndToEndLatency: The average latency of
+	// conversational agents' latency per interaction. This is computed as the
+	// average of the all the iteractions' end to end latencies in a conversation
+	// and averaged across conversations. The e2e latency is the time between the
+	// end of the user utterance and the start of the agent utterance on the
+	// interaction level.
+	ConversationalAgentsAverageEndToEndLatency float64 `json:"conversationalAgentsAverageEndToEndLatency,omitempty"`
+	// ConversationalAgentsAverageLlmCallLatency: The average latency of
+	// conversational agents' LLM call latency per interaction. This is computed as
+	// the average of the all the interactions LLM call latencies in a conversation
+	// and averaged across conversations.
+	ConversationalAgentsAverageLlmCallLatency float64 `json:"conversationalAgentsAverageLlmCallLatency,omitempty"`
+	// ConversationalAgentsAverageTtsLatency: The macro average latency of
+	// conversational agents' TTS latency per interaction. This is computed as the
+	// average of the all the interactions' TTS latencies in a conversation and
+	// averaged across conversations.
+	ConversationalAgentsAverageTtsLatency float64 `json:"conversationalAgentsAverageTtsLatency,omitempty"`
+	// DialogflowAverageWebhookLatency: Average latency of dialogflow webhook
+	// calls.
+	DialogflowAverageWebhookLatency float64 `json:"dialogflowAverageWebhookLatency,omitempty"`
+	// DialogflowConversationsEscalationCount: count of conversations that was
+	// handed off from virtual agent to human agent.
+	DialogflowConversationsEscalationCount float64 `json:"dialogflowConversationsEscalationCount,omitempty"`
+	// DialogflowConversationsEscalationRatio: Proportion of conversations that was
+	// handed off from virtual agent to human agent.
+	DialogflowConversationsEscalationRatio float64 `json:"dialogflowConversationsEscalationRatio,omitempty"`
+	// DialogflowInteractionsNoInputRatio: Proportion of dialogflow interactions
+	// that has empty input.
+	DialogflowInteractionsNoInputRatio float64 `json:"dialogflowInteractionsNoInputRatio,omitempty"`
+	// DialogflowInteractionsNoMatchRatio: Proportion of dialogflow interactions
+	// that has no intent match for the input.
+	DialogflowInteractionsNoMatchRatio float64 `json:"dialogflowInteractionsNoMatchRatio,omitempty"`
+	// DialogflowWebhookFailureRatio: Proportion of dialogflow webhook calls that
+	// failed.
+	DialogflowWebhookFailureRatio float64 `json:"dialogflowWebhookFailureRatio,omitempty"`
+	// DialogflowWebhookTimeoutRatio: Proportion of dialogflow webhook calls that
+	// timed out.
+	DialogflowWebhookTimeoutRatio float64 `json:"dialogflowWebhookTimeoutRatio,omitempty"`
+	// KnowledgeAssistNegativeFeedbackRatio: Proportion of knowledge assist
+	// (Proactive Generative Knowledge Assist) queries that had negative feedback.
+	KnowledgeAssistNegativeFeedbackRatio float64 `json:"knowledgeAssistNegativeFeedbackRatio,omitempty"`
+	// KnowledgeAssistPositiveFeedbackRatio: Proportion of knowledge assist
+	// (Proactive Generative Knowledge Assist) queries that had positive feedback.
+	KnowledgeAssistPositiveFeedbackRatio float64 `json:"knowledgeAssistPositiveFeedbackRatio,omitempty"`
+	// KnowledgeAssistResultCount: Count of knowledge assist results (Proactive
+	// Generative Knowledge Assist) shown to the user.
+	KnowledgeAssistResultCount int64 `json:"knowledgeAssistResultCount,omitempty"`
+	// KnowledgeAssistUriClickRatio: Proportion of knowledge assist (Proactive
+	// Generative Knowledge Assist) queries that had a URL clicked.
+	KnowledgeAssistUriClickRatio float64 `json:"knowledgeAssistUriClickRatio,omitempty"`
+	// KnowledgeSearchAgentQuerySourceRatio: Proportion of knowledge search
+	// (Generative Knowledge Assist) queries made by the agent compared to the
+	// total number of knowledge search queries made.
+	KnowledgeSearchAgentQuerySourceRatio float64 `json:"knowledgeSearchAgentQuerySourceRatio,omitempty"`
+	// KnowledgeSearchNegativeFeedbackRatio: Proportion of knowledge search
+	// (Generative Knowledge Assist) queries that had negative feedback.
+	KnowledgeSearchNegativeFeedbackRatio float64 `json:"knowledgeSearchNegativeFeedbackRatio,omitempty"`
+	// KnowledgeSearchPositiveFeedbackRatio: Proportion of knowledge search
+	// (Generative Knowledge Assist) queries that had positive feedback.
+	KnowledgeSearchPositiveFeedbackRatio float64 `json:"knowledgeSearchPositiveFeedbackRatio,omitempty"`
+	// KnowledgeSearchResultCount: Count of knowledge search results (Generative
+	// Knowledge Assist) shown to the user.
+	KnowledgeSearchResultCount int64 `json:"knowledgeSearchResultCount,omitempty"`
+	// KnowledgeSearchSuggestedQuerySourceRatio: Proportion of knowledge search
+	// (Generative Knowledge Assist) queries suggested compared to the total number
+	// of knowledge search queries made.
+	KnowledgeSearchSuggestedQuerySourceRatio float64 `json:"knowledgeSearchSuggestedQuerySourceRatio,omitempty"`
+	// KnowledgeSearchUriClickRatio: Proportion of knowledge search (Generative
+	// Knowledge Assist) queries that had a URL clicked.
+	KnowledgeSearchUriClickRatio float64 `json:"knowledgeSearchUriClickRatio,omitempty"`
 	// QaTagScores: Average QA normalized score for all the tags.
 	QaTagScores []*GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointConversationMeasureQaTagScore `json:"qaTagScores,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AverageAgentSentimentScore")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// SummarizationSuggestionEditRatio: Proportion of summarization suggestions
+	// that were manually edited.
+	SummarizationSuggestionEditRatio float64 `json:"summarizationSuggestionEditRatio,omitempty"`
+	// SummarizationSuggestionResultCount: Count of summarization suggestions
+	// results.
+	SummarizationSuggestionResultCount int64 `json:"summarizationSuggestionResultCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AaSupervisorAssignedConversationsCount") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AverageAgentSentimentScore") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AaSupervisorAssignedConversationsCount") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted from
+	// API requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields
+	// for more details.
 	NullFields []string `json:"-"`
 }
 
@@ -6361,26 +6517,84 @@ func (s GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointConv
 func (s *GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointConversationMeasure) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointConversationMeasure
 	var s1 struct {
-		AverageAgentSentimentScore        gensupport.JSONFloat64 `json:"averageAgentSentimentScore"`
-		AverageClientSentimentScore       gensupport.JSONFloat64 `json:"averageClientSentimentScore"`
-		AverageCustomerSatisfactionRating gensupport.JSONFloat64 `json:"averageCustomerSatisfactionRating"`
-		AverageQaNormalizedScore          gensupport.JSONFloat64 `json:"averageQaNormalizedScore"`
-		AverageQaQuestionNormalizedScore  gensupport.JSONFloat64 `json:"averageQaQuestionNormalizedScore"`
-		AverageSilencePercentage          gensupport.JSONFloat64 `json:"averageSilencePercentage"`
-		AverageTurnCount                  gensupport.JSONFloat64 `json:"averageTurnCount"`
+		AiCoachSuggestionAgentUsageRatio                     gensupport.JSONFloat64 `json:"aiCoachSuggestionAgentUsageRatio"`
+		AiCoachSuggestionCustomerMessageTriggerRatio         gensupport.JSONFloat64 `json:"aiCoachSuggestionCustomerMessageTriggerRatio"`
+		AiCoachSuggestionMessageTriggerRatio                 gensupport.JSONFloat64 `json:"aiCoachSuggestionMessageTriggerRatio"`
+		AverageAgentSentimentScore                           gensupport.JSONFloat64 `json:"averageAgentSentimentScore"`
+		AverageClientSentimentScore                          gensupport.JSONFloat64 `json:"averageClientSentimentScore"`
+		AverageCustomerSatisfactionRating                    gensupport.JSONFloat64 `json:"averageCustomerSatisfactionRating"`
+		AverageQaNormalizedScore                             gensupport.JSONFloat64 `json:"averageQaNormalizedScore"`
+		AverageQaQuestionNormalizedScore                     gensupport.JSONFloat64 `json:"averageQaQuestionNormalizedScore"`
+		AverageSilencePercentage                             gensupport.JSONFloat64 `json:"averageSilencePercentage"`
+		AverageSummarizationSuggestionEditDistance           gensupport.JSONFloat64 `json:"averageSummarizationSuggestionEditDistance"`
+		AverageSummarizationSuggestionNormalizedEditDistance gensupport.JSONFloat64 `json:"averageSummarizationSuggestionNormalizedEditDistance"`
+		AverageTurnCount                                     gensupport.JSONFloat64 `json:"averageTurnCount"`
+		AvgConversationClientTurnSentimentEma                gensupport.JSONFloat64 `json:"avgConversationClientTurnSentimentEma"`
+		ContainedConversationRatio                           gensupport.JSONFloat64 `json:"containedConversationRatio"`
+		ConversationAiCoachSuggestionRatio                   gensupport.JSONFloat64 `json:"conversationAiCoachSuggestionRatio"`
+		ConversationSuggestedSummaryRatio                    gensupport.JSONFloat64 `json:"conversationSuggestedSummaryRatio"`
+		ConversationalAgentsAverageAudioInAudioOutLatency    gensupport.JSONFloat64 `json:"conversationalAgentsAverageAudioInAudioOutLatency"`
+		ConversationalAgentsAverageEndToEndLatency           gensupport.JSONFloat64 `json:"conversationalAgentsAverageEndToEndLatency"`
+		ConversationalAgentsAverageLlmCallLatency            gensupport.JSONFloat64 `json:"conversationalAgentsAverageLlmCallLatency"`
+		ConversationalAgentsAverageTtsLatency                gensupport.JSONFloat64 `json:"conversationalAgentsAverageTtsLatency"`
+		DialogflowAverageWebhookLatency                      gensupport.JSONFloat64 `json:"dialogflowAverageWebhookLatency"`
+		DialogflowConversationsEscalationCount               gensupport.JSONFloat64 `json:"dialogflowConversationsEscalationCount"`
+		DialogflowConversationsEscalationRatio               gensupport.JSONFloat64 `json:"dialogflowConversationsEscalationRatio"`
+		DialogflowInteractionsNoInputRatio                   gensupport.JSONFloat64 `json:"dialogflowInteractionsNoInputRatio"`
+		DialogflowInteractionsNoMatchRatio                   gensupport.JSONFloat64 `json:"dialogflowInteractionsNoMatchRatio"`
+		DialogflowWebhookFailureRatio                        gensupport.JSONFloat64 `json:"dialogflowWebhookFailureRatio"`
+		DialogflowWebhookTimeoutRatio                        gensupport.JSONFloat64 `json:"dialogflowWebhookTimeoutRatio"`
+		KnowledgeAssistNegativeFeedbackRatio                 gensupport.JSONFloat64 `json:"knowledgeAssistNegativeFeedbackRatio"`
+		KnowledgeAssistPositiveFeedbackRatio                 gensupport.JSONFloat64 `json:"knowledgeAssistPositiveFeedbackRatio"`
+		KnowledgeAssistUriClickRatio                         gensupport.JSONFloat64 `json:"knowledgeAssistUriClickRatio"`
+		KnowledgeSearchAgentQuerySourceRatio                 gensupport.JSONFloat64 `json:"knowledgeSearchAgentQuerySourceRatio"`
+		KnowledgeSearchNegativeFeedbackRatio                 gensupport.JSONFloat64 `json:"knowledgeSearchNegativeFeedbackRatio"`
+		KnowledgeSearchPositiveFeedbackRatio                 gensupport.JSONFloat64 `json:"knowledgeSearchPositiveFeedbackRatio"`
+		KnowledgeSearchSuggestedQuerySourceRatio             gensupport.JSONFloat64 `json:"knowledgeSearchSuggestedQuerySourceRatio"`
+		KnowledgeSearchUriClickRatio                         gensupport.JSONFloat64 `json:"knowledgeSearchUriClickRatio"`
+		SummarizationSuggestionEditRatio                     gensupport.JSONFloat64 `json:"summarizationSuggestionEditRatio"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.AiCoachSuggestionAgentUsageRatio = float64(s1.AiCoachSuggestionAgentUsageRatio)
+	s.AiCoachSuggestionCustomerMessageTriggerRatio = float64(s1.AiCoachSuggestionCustomerMessageTriggerRatio)
+	s.AiCoachSuggestionMessageTriggerRatio = float64(s1.AiCoachSuggestionMessageTriggerRatio)
 	s.AverageAgentSentimentScore = float64(s1.AverageAgentSentimentScore)
 	s.AverageClientSentimentScore = float64(s1.AverageClientSentimentScore)
 	s.AverageCustomerSatisfactionRating = float64(s1.AverageCustomerSatisfactionRating)
 	s.AverageQaNormalizedScore = float64(s1.AverageQaNormalizedScore)
 	s.AverageQaQuestionNormalizedScore = float64(s1.AverageQaQuestionNormalizedScore)
 	s.AverageSilencePercentage = float64(s1.AverageSilencePercentage)
+	s.AverageSummarizationSuggestionEditDistance = float64(s1.AverageSummarizationSuggestionEditDistance)
+	s.AverageSummarizationSuggestionNormalizedEditDistance = float64(s1.AverageSummarizationSuggestionNormalizedEditDistance)
 	s.AverageTurnCount = float64(s1.AverageTurnCount)
+	s.AvgConversationClientTurnSentimentEma = float64(s1.AvgConversationClientTurnSentimentEma)
+	s.ContainedConversationRatio = float64(s1.ContainedConversationRatio)
+	s.ConversationAiCoachSuggestionRatio = float64(s1.ConversationAiCoachSuggestionRatio)
+	s.ConversationSuggestedSummaryRatio = float64(s1.ConversationSuggestedSummaryRatio)
+	s.ConversationalAgentsAverageAudioInAudioOutLatency = float64(s1.ConversationalAgentsAverageAudioInAudioOutLatency)
+	s.ConversationalAgentsAverageEndToEndLatency = float64(s1.ConversationalAgentsAverageEndToEndLatency)
+	s.ConversationalAgentsAverageLlmCallLatency = float64(s1.ConversationalAgentsAverageLlmCallLatency)
+	s.ConversationalAgentsAverageTtsLatency = float64(s1.ConversationalAgentsAverageTtsLatency)
+	s.DialogflowAverageWebhookLatency = float64(s1.DialogflowAverageWebhookLatency)
+	s.DialogflowConversationsEscalationCount = float64(s1.DialogflowConversationsEscalationCount)
+	s.DialogflowConversationsEscalationRatio = float64(s1.DialogflowConversationsEscalationRatio)
+	s.DialogflowInteractionsNoInputRatio = float64(s1.DialogflowInteractionsNoInputRatio)
+	s.DialogflowInteractionsNoMatchRatio = float64(s1.DialogflowInteractionsNoMatchRatio)
+	s.DialogflowWebhookFailureRatio = float64(s1.DialogflowWebhookFailureRatio)
+	s.DialogflowWebhookTimeoutRatio = float64(s1.DialogflowWebhookTimeoutRatio)
+	s.KnowledgeAssistNegativeFeedbackRatio = float64(s1.KnowledgeAssistNegativeFeedbackRatio)
+	s.KnowledgeAssistPositiveFeedbackRatio = float64(s1.KnowledgeAssistPositiveFeedbackRatio)
+	s.KnowledgeAssistUriClickRatio = float64(s1.KnowledgeAssistUriClickRatio)
+	s.KnowledgeSearchAgentQuerySourceRatio = float64(s1.KnowledgeSearchAgentQuerySourceRatio)
+	s.KnowledgeSearchNegativeFeedbackRatio = float64(s1.KnowledgeSearchNegativeFeedbackRatio)
+	s.KnowledgeSearchPositiveFeedbackRatio = float64(s1.KnowledgeSearchPositiveFeedbackRatio)
+	s.KnowledgeSearchSuggestedQuerySourceRatio = float64(s1.KnowledgeSearchSuggestedQuerySourceRatio)
+	s.KnowledgeSearchUriClickRatio = float64(s1.KnowledgeSearchUriClickRatio)
+	s.SummarizationSuggestionEditRatio = float64(s1.SummarizationSuggestionEditRatio)
 	return nil
 }
 
@@ -6420,6 +6634,90 @@ func (s *GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointCon
 		return err
 	}
 	s.AverageTagNormalizedScore = float64(s1.AverageTagNormalizedScore)
+	return nil
+}
+
+// GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointDialogflo
+// wInteractionMeasure: The measure related to dialogflow interactions.
+type GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointDialogflowInteractionMeasure struct {
+	// PercentileAudioInAudioOutLatency: The percentile result for audio in audio
+	// out latency in milliseconds per dialogflow interaction level.
+	PercentileAudioInAudioOutLatency *GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointPercentileResult `json:"percentileAudioInAudioOutLatency,omitempty"`
+	// PercentileEndToEndLatency: The percentile result for end to end chat latency
+	// in milliseconds per dialogflow interaction level.
+	PercentileEndToEndLatency *GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointPercentileResult `json:"percentileEndToEndLatency,omitempty"`
+	// PercentileLlmCallLatency: The percentile result for LLM latency in
+	// milliseconds per dialogflow interaction level.
+	PercentileLlmCallLatency *GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointPercentileResult `json:"percentileLlmCallLatency,omitempty"`
+	// PercentileToolUseLatency: The percentile result for tool use latency in
+	// milliseconds per dialogflow interaction level.
+	PercentileToolUseLatency *GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointPercentileResult `json:"percentileToolUseLatency,omitempty"`
+	// PercentileTtsLatency: The percentile result for TTS latency in milliseconds
+	// per dialogflow interaction level.
+	PercentileTtsLatency *GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointPercentileResult `json:"percentileTtsLatency,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "PercentileAudioInAudioOutLatency") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "PercentileAudioInAudioOutLatency") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointDialogflowInteractionMeasure) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointDialogflowInteractionMeasure
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointPercentil
+// eResult: The percentile result. Currently supported percentiles are 50th,
+// 90th, and 99th.
+type GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointPercentileResult struct {
+	// P50: The 50th percentile value.
+	P50 float64 `json:"p50,omitempty"`
+	// P90: The 90th percentile value.
+	P90 float64 `json:"p90,omitempty"`
+	// P99: The 99th percentile value.
+	P99 float64 `json:"p99,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "P50") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "P50") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointPercentileResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointPercentileResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointPercentileResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudContactcenterinsightsV1QueryMetricsResponseSliceDataPointPercentileResult
+	var s1 struct {
+		P50 gensupport.JSONFloat64 `json:"p50"`
+		P90 gensupport.JSONFloat64 `json:"p90"`
+		P99 gensupport.JSONFloat64 `json:"p99"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.P50 = float64(s1.P50)
+	s.P90 = float64(s1.P90)
+	s.P99 = float64(s1.P99)
 	return nil
 }
 
@@ -11258,6 +11556,9 @@ func (s GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSlice) Marsh
 type GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPoint struct {
 	// ConversationMeasure: The measure related to conversations.
 	ConversationMeasure *GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointConversationMeasure `json:"conversationMeasure,omitempty"`
+	// DialogflowInteractionMeasure: The measure related to dialogflow
+	// interactions.
+	DialogflowInteractionMeasure *GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointDialogflowInteractionMeasure `json:"dialogflowInteractionMeasure,omitempty"`
 	// Interval: The interval that this data point represents. * If this is the
 	// total data point, the interval is [starting create time, ending create time)
 	// from the request. * If this a data point from the time series, the interval
@@ -11284,6 +11585,42 @@ func (s GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPoi
 // GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointCon
 // versationMeasure: The measure related to conversations.
 type GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointConversationMeasure struct {
+	// AaSupervisorAssignedConversationsCount: The number of conversations that
+	// were assigned to an AA human supervisor.
+	AaSupervisorAssignedConversationsCount int64 `json:"aaSupervisorAssignedConversationsCount,omitempty"`
+	// AaSupervisorDroppedConversationsCount: The number of conversations that were
+	// dropped, i.e. escalated but not assigned to an AA human supervisor.
+	AaSupervisorDroppedConversationsCount int64 `json:"aaSupervisorDroppedConversationsCount,omitempty"`
+	// AaSupervisorEscalatedConversationsCount: The number of conversations that
+	// were escalated to an AA human supervisor for intervention.
+	AaSupervisorEscalatedConversationsCount int64 `json:"aaSupervisorEscalatedConversationsCount,omitempty"`
+	// AaSupervisorMonitoredConversationsCount: The number of conversations scanned
+	// by the AA human supervisor.
+	AaSupervisorMonitoredConversationsCount int64 `json:"aaSupervisorMonitoredConversationsCount,omitempty"`
+	// AaSupervisorTransferredToHumanAgentConvCount: The number of conversations
+	// transferred to a human agent.
+	AaSupervisorTransferredToHumanAgentConvCount int64 `json:"aaSupervisorTransferredToHumanAgentConvCount,omitempty"`
+	// AiCoachSuggestionAgentMessageTriggerCount: Count of agent messages that
+	// triggered an Ai Coach Suggestion.
+	AiCoachSuggestionAgentMessageTriggerCount int64 `json:"aiCoachSuggestionAgentMessageTriggerCount,omitempty"`
+	// AiCoachSuggestionAgentUsageCount: Count of Ai Coach Suggestion that has been
+	// used by agents.
+	AiCoachSuggestionAgentUsageCount int64 `json:"aiCoachSuggestionAgentUsageCount,omitempty"`
+	// AiCoachSuggestionAgentUsageRatio: Proportion of Ai Coach Suggestion that has
+	// been used by agents.
+	AiCoachSuggestionAgentUsageRatio float64 `json:"aiCoachSuggestionAgentUsageRatio,omitempty"`
+	// AiCoachSuggestionCustomerMessageTriggerCount: Count of customer messages
+	// that triggered an Ai Coach Suggestion.
+	AiCoachSuggestionCustomerMessageTriggerCount int64 `json:"aiCoachSuggestionCustomerMessageTriggerCount,omitempty"`
+	// AiCoachSuggestionCustomerMessageTriggerRatio: Proportion of customer
+	// messages that triggered an Ai Coach Suggestion.
+	AiCoachSuggestionCustomerMessageTriggerRatio float64 `json:"aiCoachSuggestionCustomerMessageTriggerRatio,omitempty"`
+	// AiCoachSuggestionMessageTriggerCount: Count of end_of_utterance trigger
+	// event messages that triggered an Ai Coach Suggestion.
+	AiCoachSuggestionMessageTriggerCount int64 `json:"aiCoachSuggestionMessageTriggerCount,omitempty"`
+	// AiCoachSuggestionMessageTriggerRatio: Proportion of end_of_utterance trigger
+	// event messages that triggered an Ai Coach Suggestion.
+	AiCoachSuggestionMessageTriggerRatio float64 `json:"aiCoachSuggestionMessageTriggerRatio,omitempty"`
 	// AverageAgentSentimentScore: The average agent's sentiment score.
 	AverageAgentSentimentScore float64 `json:"averageAgentSentimentScore,omitempty"`
 	// AverageClientSentimentScore: The average client's sentiment score.
@@ -11304,22 +11641,139 @@ type GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointC
 	AverageQaQuestionNormalizedScore float64 `json:"averageQaQuestionNormalizedScore,omitempty"`
 	// AverageSilencePercentage: The average silence percentage.
 	AverageSilencePercentage float64 `json:"averageSilencePercentage,omitempty"`
+	// AverageSummarizationSuggestionEditDistance: Average edit distance of the
+	// summarization suggestions. Edit distance (also called as levenshtein
+	// distance) is calculated by summing up number of insertions, deletions and
+	// substitutions required to transform the summization feedback to the original
+	// summary suggestion.
+	AverageSummarizationSuggestionEditDistance float64 `json:"averageSummarizationSuggestionEditDistance,omitempty"`
+	// AverageSummarizationSuggestionNormalizedEditDistance: Normalized Average
+	// edit distance of the summarization suggestions. Edit distance (also called
+	// as levenshtein distance) is calculated by summing up number of insertions,
+	// deletions and substitutions required to transform the summization feedback
+	// to the original summary suggestion. Normalized edit distance is the average
+	// of (edit distance / summary length).
+	AverageSummarizationSuggestionNormalizedEditDistance float64 `json:"averageSummarizationSuggestionNormalizedEditDistance,omitempty"`
 	// AverageTurnCount: The average turn count.
 	AverageTurnCount float64 `json:"averageTurnCount,omitempty"`
+	// AvgConversationClientTurnSentimentEma: The exponential moving average of the
+	// sentiment score of client turns in the conversation.
+	AvgConversationClientTurnSentimentEma float64 `json:"avgConversationClientTurnSentimentEma,omitempty"`
+	// ContainedConversationCount: The number of conversations that were contained.
+	ContainedConversationCount int64 `json:"containedConversationCount,omitempty"`
+	// ContainedConversationRatio: The percentage of conversations that were
+	// contained.
+	ContainedConversationRatio float64 `json:"containedConversationRatio,omitempty"`
+	// ConversationAiCoachSuggestionCount: Count of conversations that has Ai Coach
+	// Suggestions.
+	ConversationAiCoachSuggestionCount int64 `json:"conversationAiCoachSuggestionCount,omitempty"`
+	// ConversationAiCoachSuggestionRatio: Proportion of conversations that has Ai
+	// Coach Suggestions.
+	ConversationAiCoachSuggestionRatio float64 `json:"conversationAiCoachSuggestionRatio,omitempty"`
 	// ConversationCount: The conversation count.
 	ConversationCount int64 `json:"conversationCount,omitempty"`
+	// ConversationSuggestedSummaryRatio: Proportion of conversations that had a
+	// suggested summary.
+	ConversationSuggestedSummaryRatio float64 `json:"conversationSuggestedSummaryRatio,omitempty"`
+	// ConversationTotalAgentMessageCount: The agent message count.
+	ConversationTotalAgentMessageCount int64 `json:"conversationTotalAgentMessageCount,omitempty"`
+	// ConversationTotalCustomerMessageCount: The customer message count.
+	ConversationTotalCustomerMessageCount int64 `json:"conversationTotalCustomerMessageCount,omitempty"`
+	// ConversationalAgentsAverageAudioInAudioOutLatency: The average latency of
+	// conversational agents' audio in audio out latency per interaction. This is
+	// computed as the average of the all the interactions' audio in audio out
+	// latencies in a conversation and averaged across conversations.
+	ConversationalAgentsAverageAudioInAudioOutLatency float64 `json:"conversationalAgentsAverageAudioInAudioOutLatency,omitempty"`
+	// ConversationalAgentsAverageEndToEndLatency: The average latency of
+	// conversational agents' latency per interaction. This is computed as the
+	// average of the all the iteractions' end to end latencies in a conversation
+	// and averaged across conversations. The e2e latency is the time between the
+	// end of the user utterance and the start of the agent utterance on the
+	// interaction level.
+	ConversationalAgentsAverageEndToEndLatency float64 `json:"conversationalAgentsAverageEndToEndLatency,omitempty"`
+	// ConversationalAgentsAverageLlmCallLatency: The average latency of
+	// conversational agents' LLM call latency per interaction. This is computed as
+	// the average of the all the interactions LLM call latencies in a conversation
+	// and averaged across conversations.
+	ConversationalAgentsAverageLlmCallLatency float64 `json:"conversationalAgentsAverageLlmCallLatency,omitempty"`
+	// ConversationalAgentsAverageTtsLatency: The macro average latency of
+	// conversational agents' TTS latency per interaction. This is computed as the
+	// average of the all the interactions' TTS latencies in a conversation and
+	// averaged across conversations.
+	ConversationalAgentsAverageTtsLatency float64 `json:"conversationalAgentsAverageTtsLatency,omitempty"`
+	// DialogflowAverageWebhookLatency: Average latency of dialogflow webhook
+	// calls.
+	DialogflowAverageWebhookLatency float64 `json:"dialogflowAverageWebhookLatency,omitempty"`
+	// DialogflowConversationsEscalationCount: count of conversations that was
+	// handed off from virtual agent to human agent.
+	DialogflowConversationsEscalationCount float64 `json:"dialogflowConversationsEscalationCount,omitempty"`
+	// DialogflowConversationsEscalationRatio: Proportion of conversations that was
+	// handed off from virtual agent to human agent.
+	DialogflowConversationsEscalationRatio float64 `json:"dialogflowConversationsEscalationRatio,omitempty"`
+	// DialogflowInteractionsNoInputRatio: Proportion of dialogflow interactions
+	// that has empty input.
+	DialogflowInteractionsNoInputRatio float64 `json:"dialogflowInteractionsNoInputRatio,omitempty"`
+	// DialogflowInteractionsNoMatchRatio: Proportion of dialogflow interactions
+	// that has no intent match for the input.
+	DialogflowInteractionsNoMatchRatio float64 `json:"dialogflowInteractionsNoMatchRatio,omitempty"`
+	// DialogflowWebhookFailureRatio: Proportion of dialogflow webhook calls that
+	// failed.
+	DialogflowWebhookFailureRatio float64 `json:"dialogflowWebhookFailureRatio,omitempty"`
+	// DialogflowWebhookTimeoutRatio: Proportion of dialogflow webhook calls that
+	// timed out.
+	DialogflowWebhookTimeoutRatio float64 `json:"dialogflowWebhookTimeoutRatio,omitempty"`
+	// KnowledgeAssistNegativeFeedbackRatio: Proportion of knowledge assist
+	// (Proactive Generative Knowledge Assist) queries that had negative feedback.
+	KnowledgeAssistNegativeFeedbackRatio float64 `json:"knowledgeAssistNegativeFeedbackRatio,omitempty"`
+	// KnowledgeAssistPositiveFeedbackRatio: Proportion of knowledge assist
+	// (Proactive Generative Knowledge Assist) queries that had positive feedback.
+	KnowledgeAssistPositiveFeedbackRatio float64 `json:"knowledgeAssistPositiveFeedbackRatio,omitempty"`
+	// KnowledgeAssistResultCount: Count of knowledge assist results (Proactive
+	// Generative Knowledge Assist) shown to the user.
+	KnowledgeAssistResultCount int64 `json:"knowledgeAssistResultCount,omitempty"`
+	// KnowledgeAssistUriClickRatio: Proportion of knowledge assist (Proactive
+	// Generative Knowledge Assist) queries that had a URL clicked.
+	KnowledgeAssistUriClickRatio float64 `json:"knowledgeAssistUriClickRatio,omitempty"`
+	// KnowledgeSearchAgentQuerySourceRatio: Proportion of knowledge search
+	// (Generative Knowledge Assist) queries made by the agent compared to the
+	// total number of knowledge search queries made.
+	KnowledgeSearchAgentQuerySourceRatio float64 `json:"knowledgeSearchAgentQuerySourceRatio,omitempty"`
+	// KnowledgeSearchNegativeFeedbackRatio: Proportion of knowledge search
+	// (Generative Knowledge Assist) queries that had negative feedback.
+	KnowledgeSearchNegativeFeedbackRatio float64 `json:"knowledgeSearchNegativeFeedbackRatio,omitempty"`
+	// KnowledgeSearchPositiveFeedbackRatio: Proportion of knowledge search
+	// (Generative Knowledge Assist) queries that had positive feedback.
+	KnowledgeSearchPositiveFeedbackRatio float64 `json:"knowledgeSearchPositiveFeedbackRatio,omitempty"`
+	// KnowledgeSearchResultCount: Count of knowledge search results (Generative
+	// Knowledge Assist) shown to the user.
+	KnowledgeSearchResultCount int64 `json:"knowledgeSearchResultCount,omitempty"`
+	// KnowledgeSearchSuggestedQuerySourceRatio: Proportion of knowledge search
+	// (Generative Knowledge Assist) queries suggested compared to the total number
+	// of knowledge search queries made.
+	KnowledgeSearchSuggestedQuerySourceRatio float64 `json:"knowledgeSearchSuggestedQuerySourceRatio,omitempty"`
+	// KnowledgeSearchUriClickRatio: Proportion of knowledge search (Generative
+	// Knowledge Assist) queries that had a URL clicked.
+	KnowledgeSearchUriClickRatio float64 `json:"knowledgeSearchUriClickRatio,omitempty"`
 	// QaTagScores: Average QA normalized score for all the tags.
 	QaTagScores []*GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointConversationMeasureQaTagScore `json:"qaTagScores,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AverageAgentSentimentScore")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// SummarizationSuggestionEditRatio: Proportion of summarization suggestions
+	// that were manually edited.
+	SummarizationSuggestionEditRatio float64 `json:"summarizationSuggestionEditRatio,omitempty"`
+	// SummarizationSuggestionResultCount: Count of summarization suggestions
+	// results.
+	SummarizationSuggestionResultCount int64 `json:"summarizationSuggestionResultCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AaSupervisorAssignedConversationsCount") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AverageAgentSentimentScore") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AaSupervisorAssignedConversationsCount") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted from
+	// API requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields
+	// for more details.
 	NullFields []string `json:"-"`
 }
 
@@ -11331,26 +11785,84 @@ func (s GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPoi
 func (s *GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointConversationMeasure) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointConversationMeasure
 	var s1 struct {
-		AverageAgentSentimentScore        gensupport.JSONFloat64 `json:"averageAgentSentimentScore"`
-		AverageClientSentimentScore       gensupport.JSONFloat64 `json:"averageClientSentimentScore"`
-		AverageCustomerSatisfactionRating gensupport.JSONFloat64 `json:"averageCustomerSatisfactionRating"`
-		AverageQaNormalizedScore          gensupport.JSONFloat64 `json:"averageQaNormalizedScore"`
-		AverageQaQuestionNormalizedScore  gensupport.JSONFloat64 `json:"averageQaQuestionNormalizedScore"`
-		AverageSilencePercentage          gensupport.JSONFloat64 `json:"averageSilencePercentage"`
-		AverageTurnCount                  gensupport.JSONFloat64 `json:"averageTurnCount"`
+		AiCoachSuggestionAgentUsageRatio                     gensupport.JSONFloat64 `json:"aiCoachSuggestionAgentUsageRatio"`
+		AiCoachSuggestionCustomerMessageTriggerRatio         gensupport.JSONFloat64 `json:"aiCoachSuggestionCustomerMessageTriggerRatio"`
+		AiCoachSuggestionMessageTriggerRatio                 gensupport.JSONFloat64 `json:"aiCoachSuggestionMessageTriggerRatio"`
+		AverageAgentSentimentScore                           gensupport.JSONFloat64 `json:"averageAgentSentimentScore"`
+		AverageClientSentimentScore                          gensupport.JSONFloat64 `json:"averageClientSentimentScore"`
+		AverageCustomerSatisfactionRating                    gensupport.JSONFloat64 `json:"averageCustomerSatisfactionRating"`
+		AverageQaNormalizedScore                             gensupport.JSONFloat64 `json:"averageQaNormalizedScore"`
+		AverageQaQuestionNormalizedScore                     gensupport.JSONFloat64 `json:"averageQaQuestionNormalizedScore"`
+		AverageSilencePercentage                             gensupport.JSONFloat64 `json:"averageSilencePercentage"`
+		AverageSummarizationSuggestionEditDistance           gensupport.JSONFloat64 `json:"averageSummarizationSuggestionEditDistance"`
+		AverageSummarizationSuggestionNormalizedEditDistance gensupport.JSONFloat64 `json:"averageSummarizationSuggestionNormalizedEditDistance"`
+		AverageTurnCount                                     gensupport.JSONFloat64 `json:"averageTurnCount"`
+		AvgConversationClientTurnSentimentEma                gensupport.JSONFloat64 `json:"avgConversationClientTurnSentimentEma"`
+		ContainedConversationRatio                           gensupport.JSONFloat64 `json:"containedConversationRatio"`
+		ConversationAiCoachSuggestionRatio                   gensupport.JSONFloat64 `json:"conversationAiCoachSuggestionRatio"`
+		ConversationSuggestedSummaryRatio                    gensupport.JSONFloat64 `json:"conversationSuggestedSummaryRatio"`
+		ConversationalAgentsAverageAudioInAudioOutLatency    gensupport.JSONFloat64 `json:"conversationalAgentsAverageAudioInAudioOutLatency"`
+		ConversationalAgentsAverageEndToEndLatency           gensupport.JSONFloat64 `json:"conversationalAgentsAverageEndToEndLatency"`
+		ConversationalAgentsAverageLlmCallLatency            gensupport.JSONFloat64 `json:"conversationalAgentsAverageLlmCallLatency"`
+		ConversationalAgentsAverageTtsLatency                gensupport.JSONFloat64 `json:"conversationalAgentsAverageTtsLatency"`
+		DialogflowAverageWebhookLatency                      gensupport.JSONFloat64 `json:"dialogflowAverageWebhookLatency"`
+		DialogflowConversationsEscalationCount               gensupport.JSONFloat64 `json:"dialogflowConversationsEscalationCount"`
+		DialogflowConversationsEscalationRatio               gensupport.JSONFloat64 `json:"dialogflowConversationsEscalationRatio"`
+		DialogflowInteractionsNoInputRatio                   gensupport.JSONFloat64 `json:"dialogflowInteractionsNoInputRatio"`
+		DialogflowInteractionsNoMatchRatio                   gensupport.JSONFloat64 `json:"dialogflowInteractionsNoMatchRatio"`
+		DialogflowWebhookFailureRatio                        gensupport.JSONFloat64 `json:"dialogflowWebhookFailureRatio"`
+		DialogflowWebhookTimeoutRatio                        gensupport.JSONFloat64 `json:"dialogflowWebhookTimeoutRatio"`
+		KnowledgeAssistNegativeFeedbackRatio                 gensupport.JSONFloat64 `json:"knowledgeAssistNegativeFeedbackRatio"`
+		KnowledgeAssistPositiveFeedbackRatio                 gensupport.JSONFloat64 `json:"knowledgeAssistPositiveFeedbackRatio"`
+		KnowledgeAssistUriClickRatio                         gensupport.JSONFloat64 `json:"knowledgeAssistUriClickRatio"`
+		KnowledgeSearchAgentQuerySourceRatio                 gensupport.JSONFloat64 `json:"knowledgeSearchAgentQuerySourceRatio"`
+		KnowledgeSearchNegativeFeedbackRatio                 gensupport.JSONFloat64 `json:"knowledgeSearchNegativeFeedbackRatio"`
+		KnowledgeSearchPositiveFeedbackRatio                 gensupport.JSONFloat64 `json:"knowledgeSearchPositiveFeedbackRatio"`
+		KnowledgeSearchSuggestedQuerySourceRatio             gensupport.JSONFloat64 `json:"knowledgeSearchSuggestedQuerySourceRatio"`
+		KnowledgeSearchUriClickRatio                         gensupport.JSONFloat64 `json:"knowledgeSearchUriClickRatio"`
+		SummarizationSuggestionEditRatio                     gensupport.JSONFloat64 `json:"summarizationSuggestionEditRatio"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.AiCoachSuggestionAgentUsageRatio = float64(s1.AiCoachSuggestionAgentUsageRatio)
+	s.AiCoachSuggestionCustomerMessageTriggerRatio = float64(s1.AiCoachSuggestionCustomerMessageTriggerRatio)
+	s.AiCoachSuggestionMessageTriggerRatio = float64(s1.AiCoachSuggestionMessageTriggerRatio)
 	s.AverageAgentSentimentScore = float64(s1.AverageAgentSentimentScore)
 	s.AverageClientSentimentScore = float64(s1.AverageClientSentimentScore)
 	s.AverageCustomerSatisfactionRating = float64(s1.AverageCustomerSatisfactionRating)
 	s.AverageQaNormalizedScore = float64(s1.AverageQaNormalizedScore)
 	s.AverageQaQuestionNormalizedScore = float64(s1.AverageQaQuestionNormalizedScore)
 	s.AverageSilencePercentage = float64(s1.AverageSilencePercentage)
+	s.AverageSummarizationSuggestionEditDistance = float64(s1.AverageSummarizationSuggestionEditDistance)
+	s.AverageSummarizationSuggestionNormalizedEditDistance = float64(s1.AverageSummarizationSuggestionNormalizedEditDistance)
 	s.AverageTurnCount = float64(s1.AverageTurnCount)
+	s.AvgConversationClientTurnSentimentEma = float64(s1.AvgConversationClientTurnSentimentEma)
+	s.ContainedConversationRatio = float64(s1.ContainedConversationRatio)
+	s.ConversationAiCoachSuggestionRatio = float64(s1.ConversationAiCoachSuggestionRatio)
+	s.ConversationSuggestedSummaryRatio = float64(s1.ConversationSuggestedSummaryRatio)
+	s.ConversationalAgentsAverageAudioInAudioOutLatency = float64(s1.ConversationalAgentsAverageAudioInAudioOutLatency)
+	s.ConversationalAgentsAverageEndToEndLatency = float64(s1.ConversationalAgentsAverageEndToEndLatency)
+	s.ConversationalAgentsAverageLlmCallLatency = float64(s1.ConversationalAgentsAverageLlmCallLatency)
+	s.ConversationalAgentsAverageTtsLatency = float64(s1.ConversationalAgentsAverageTtsLatency)
+	s.DialogflowAverageWebhookLatency = float64(s1.DialogflowAverageWebhookLatency)
+	s.DialogflowConversationsEscalationCount = float64(s1.DialogflowConversationsEscalationCount)
+	s.DialogflowConversationsEscalationRatio = float64(s1.DialogflowConversationsEscalationRatio)
+	s.DialogflowInteractionsNoInputRatio = float64(s1.DialogflowInteractionsNoInputRatio)
+	s.DialogflowInteractionsNoMatchRatio = float64(s1.DialogflowInteractionsNoMatchRatio)
+	s.DialogflowWebhookFailureRatio = float64(s1.DialogflowWebhookFailureRatio)
+	s.DialogflowWebhookTimeoutRatio = float64(s1.DialogflowWebhookTimeoutRatio)
+	s.KnowledgeAssistNegativeFeedbackRatio = float64(s1.KnowledgeAssistNegativeFeedbackRatio)
+	s.KnowledgeAssistPositiveFeedbackRatio = float64(s1.KnowledgeAssistPositiveFeedbackRatio)
+	s.KnowledgeAssistUriClickRatio = float64(s1.KnowledgeAssistUriClickRatio)
+	s.KnowledgeSearchAgentQuerySourceRatio = float64(s1.KnowledgeSearchAgentQuerySourceRatio)
+	s.KnowledgeSearchNegativeFeedbackRatio = float64(s1.KnowledgeSearchNegativeFeedbackRatio)
+	s.KnowledgeSearchPositiveFeedbackRatio = float64(s1.KnowledgeSearchPositiveFeedbackRatio)
+	s.KnowledgeSearchSuggestedQuerySourceRatio = float64(s1.KnowledgeSearchSuggestedQuerySourceRatio)
+	s.KnowledgeSearchUriClickRatio = float64(s1.KnowledgeSearchUriClickRatio)
+	s.SummarizationSuggestionEditRatio = float64(s1.SummarizationSuggestionEditRatio)
 	return nil
 }
 
@@ -11390,6 +11902,90 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPo
 		return err
 	}
 	s.AverageTagNormalizedScore = float64(s1.AverageTagNormalizedScore)
+	return nil
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointDia
+// logflowInteractionMeasure: The measure related to dialogflow interactions.
+type GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointDialogflowInteractionMeasure struct {
+	// PercentileAudioInAudioOutLatency: The percentile result for audio in audio
+	// out latency in milliseconds per dialogflow interaction level.
+	PercentileAudioInAudioOutLatency *GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointPercentileResult `json:"percentileAudioInAudioOutLatency,omitempty"`
+	// PercentileEndToEndLatency: The percentile result for end to end chat latency
+	// in milliseconds per dialogflow interaction level.
+	PercentileEndToEndLatency *GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointPercentileResult `json:"percentileEndToEndLatency,omitempty"`
+	// PercentileLlmCallLatency: The percentile result for LLM latency in
+	// milliseconds per dialogflow interaction level.
+	PercentileLlmCallLatency *GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointPercentileResult `json:"percentileLlmCallLatency,omitempty"`
+	// PercentileToolUseLatency: The percentile result for tool use latency in
+	// milliseconds per dialogflow interaction level.
+	PercentileToolUseLatency *GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointPercentileResult `json:"percentileToolUseLatency,omitempty"`
+	// PercentileTtsLatency: The percentile result for TTS latency in milliseconds
+	// per dialogflow interaction level.
+	PercentileTtsLatency *GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointPercentileResult `json:"percentileTtsLatency,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "PercentileAudioInAudioOutLatency") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "PercentileAudioInAudioOutLatency") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointDialogflowInteractionMeasure) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointDialogflowInteractionMeasure
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointPer
+// centileResult: The percentile result. Currently supported percentiles are
+// 50th, 90th, and 99th.
+type GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointPercentileResult struct {
+	// P50: The 50th percentile value.
+	P50 float64 `json:"p50,omitempty"`
+	// P90: The 90th percentile value.
+	P90 float64 `json:"p90,omitempty"`
+	// P99: The 99th percentile value.
+	P99 float64 `json:"p99,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "P50") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "P50") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointPercentileResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointPercentileResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointPercentileResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1QueryMetricsResponseSliceDataPointPercentileResult
+	var s1 struct {
+		P50 gensupport.JSONFloat64 `json:"p50"`
+		P90 gensupport.JSONFloat64 `json:"p90"`
+		P99 gensupport.JSONFloat64 `json:"p99"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.P50 = float64(s1.P50)
+	s.P90 = float64(s1.P90)
+	s.P99 = float64(s1.P99)
 	return nil
 }
 
@@ -16046,6 +16642,9 @@ func (s GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSlice) Marshal
 type GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPoint struct {
 	// ConversationMeasure: The measure related to conversations.
 	ConversationMeasure *GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointConversationMeasure `json:"conversationMeasure,omitempty"`
+	// DialogflowInteractionMeasure: The measure related to dialogflow
+	// interactions.
+	DialogflowInteractionMeasure *GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointDialogflowInteractionMeasure `json:"dialogflowInteractionMeasure,omitempty"`
 	// Interval: The interval that this data point represents. * If this is the
 	// total data point, the interval is [starting create time, ending create time)
 	// from the request. * If this a data point from the time series, the interval
@@ -16072,6 +16671,42 @@ func (s GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPoint
 // GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointConve
 // rsationMeasure: The measure related to conversations.
 type GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointConversationMeasure struct {
+	// AaSupervisorAssignedConversationsCount: The number of conversations that
+	// were assigned to an AA human supervisor.
+	AaSupervisorAssignedConversationsCount int64 `json:"aaSupervisorAssignedConversationsCount,omitempty"`
+	// AaSupervisorDroppedConversationsCount: The number of conversations that were
+	// dropped, i.e. escalated but not assigned to an AA human supervisor.
+	AaSupervisorDroppedConversationsCount int64 `json:"aaSupervisorDroppedConversationsCount,omitempty"`
+	// AaSupervisorEscalatedConversationsCount: The number of conversations that
+	// were escalated to an AA human supervisor for intervention.
+	AaSupervisorEscalatedConversationsCount int64 `json:"aaSupervisorEscalatedConversationsCount,omitempty"`
+	// AaSupervisorMonitoredConversationsCount: The number of conversations scanned
+	// by the AA human supervisor.
+	AaSupervisorMonitoredConversationsCount int64 `json:"aaSupervisorMonitoredConversationsCount,omitempty"`
+	// AaSupervisorTransferredToHumanAgentConvCount: The number of conversations
+	// transferred to a human agent.
+	AaSupervisorTransferredToHumanAgentConvCount int64 `json:"aaSupervisorTransferredToHumanAgentConvCount,omitempty"`
+	// AiCoachSuggestionAgentMessageTriggerCount: Count of agent messages that
+	// triggered an Ai Coach Suggestion.
+	AiCoachSuggestionAgentMessageTriggerCount int64 `json:"aiCoachSuggestionAgentMessageTriggerCount,omitempty"`
+	// AiCoachSuggestionAgentUsageCount: Count of Ai Coach Suggestion that has been
+	// used by agents.
+	AiCoachSuggestionAgentUsageCount int64 `json:"aiCoachSuggestionAgentUsageCount,omitempty"`
+	// AiCoachSuggestionAgentUsageRatio: Proportion of Ai Coach Suggestion that has
+	// been used by agents.
+	AiCoachSuggestionAgentUsageRatio float64 `json:"aiCoachSuggestionAgentUsageRatio,omitempty"`
+	// AiCoachSuggestionCustomerMessageTriggerCount: Count of customer messages
+	// that triggered an Ai Coach Suggestion.
+	AiCoachSuggestionCustomerMessageTriggerCount int64 `json:"aiCoachSuggestionCustomerMessageTriggerCount,omitempty"`
+	// AiCoachSuggestionCustomerMessageTriggerRatio: Proportion of customer
+	// messages that triggered an Ai Coach Suggestion.
+	AiCoachSuggestionCustomerMessageTriggerRatio float64 `json:"aiCoachSuggestionCustomerMessageTriggerRatio,omitempty"`
+	// AiCoachSuggestionMessageTriggerCount: Count of end_of_utterance trigger
+	// event messages that triggered an Ai Coach Suggestion.
+	AiCoachSuggestionMessageTriggerCount int64 `json:"aiCoachSuggestionMessageTriggerCount,omitempty"`
+	// AiCoachSuggestionMessageTriggerRatio: Proportion of end_of_utterance trigger
+	// event messages that triggered an Ai Coach Suggestion.
+	AiCoachSuggestionMessageTriggerRatio float64 `json:"aiCoachSuggestionMessageTriggerRatio,omitempty"`
 	// AverageAgentSentimentScore: The average agent's sentiment score.
 	AverageAgentSentimentScore float64 `json:"averageAgentSentimentScore,omitempty"`
 	// AverageClientSentimentScore: The average client's sentiment score.
@@ -16092,22 +16727,139 @@ type GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointCon
 	AverageQaQuestionNormalizedScore float64 `json:"averageQaQuestionNormalizedScore,omitempty"`
 	// AverageSilencePercentage: The average silence percentage.
 	AverageSilencePercentage float64 `json:"averageSilencePercentage,omitempty"`
+	// AverageSummarizationSuggestionEditDistance: Average edit distance of the
+	// summarization suggestions. Edit distance (also called as levenshtein
+	// distance) is calculated by summing up number of insertions, deletions and
+	// substitutions required to transform the summization feedback to the original
+	// summary suggestion.
+	AverageSummarizationSuggestionEditDistance float64 `json:"averageSummarizationSuggestionEditDistance,omitempty"`
+	// AverageSummarizationSuggestionNormalizedEditDistance: Normalized Average
+	// edit distance of the summarization suggestions. Edit distance (also called
+	// as levenshtein distance) is calculated by summing up number of insertions,
+	// deletions and substitutions required to transform the summization feedback
+	// to the original summary suggestion. Normalized edit distance is the average
+	// of (edit distance / summary length).
+	AverageSummarizationSuggestionNormalizedEditDistance float64 `json:"averageSummarizationSuggestionNormalizedEditDistance,omitempty"`
 	// AverageTurnCount: The average turn count.
 	AverageTurnCount float64 `json:"averageTurnCount,omitempty"`
+	// AvgConversationClientTurnSentimentEma: The exponential moving average of the
+	// sentiment score of client turns in the conversation.
+	AvgConversationClientTurnSentimentEma float64 `json:"avgConversationClientTurnSentimentEma,omitempty"`
+	// ContainedConversationCount: The number of conversations that were contained.
+	ContainedConversationCount int64 `json:"containedConversationCount,omitempty"`
+	// ContainedConversationRatio: The percentage of conversations that were
+	// contained.
+	ContainedConversationRatio float64 `json:"containedConversationRatio,omitempty"`
+	// ConversationAiCoachSuggestionCount: Count of conversations that has Ai Coach
+	// Suggestions.
+	ConversationAiCoachSuggestionCount int64 `json:"conversationAiCoachSuggestionCount,omitempty"`
+	// ConversationAiCoachSuggestionRatio: Proportion of conversations that has Ai
+	// Coach Suggestions.
+	ConversationAiCoachSuggestionRatio float64 `json:"conversationAiCoachSuggestionRatio,omitempty"`
 	// ConversationCount: The conversation count.
 	ConversationCount int64 `json:"conversationCount,omitempty"`
+	// ConversationSuggestedSummaryRatio: Proportion of conversations that had a
+	// suggested summary.
+	ConversationSuggestedSummaryRatio float64 `json:"conversationSuggestedSummaryRatio,omitempty"`
+	// ConversationTotalAgentMessageCount: The agent message count.
+	ConversationTotalAgentMessageCount int64 `json:"conversationTotalAgentMessageCount,omitempty"`
+	// ConversationTotalCustomerMessageCount: The customer message count.
+	ConversationTotalCustomerMessageCount int64 `json:"conversationTotalCustomerMessageCount,omitempty"`
+	// ConversationalAgentsAverageAudioInAudioOutLatency: The average latency of
+	// conversational agents' audio in audio out latency per interaction. This is
+	// computed as the average of the all the interactions' audio in audio out
+	// latencies in a conversation and averaged across conversations.
+	ConversationalAgentsAverageAudioInAudioOutLatency float64 `json:"conversationalAgentsAverageAudioInAudioOutLatency,omitempty"`
+	// ConversationalAgentsAverageEndToEndLatency: The average latency of
+	// conversational agents' latency per interaction. This is computed as the
+	// average of the all the iteractions' end to end latencies in a conversation
+	// and averaged across conversations. The e2e latency is the time between the
+	// end of the user utterance and the start of the agent utterance on the
+	// interaction level.
+	ConversationalAgentsAverageEndToEndLatency float64 `json:"conversationalAgentsAverageEndToEndLatency,omitempty"`
+	// ConversationalAgentsAverageLlmCallLatency: The average latency of
+	// conversational agents' LLM call latency per interaction. This is computed as
+	// the average of the all the interactions LLM call latencies in a conversation
+	// and averaged across conversations.
+	ConversationalAgentsAverageLlmCallLatency float64 `json:"conversationalAgentsAverageLlmCallLatency,omitempty"`
+	// ConversationalAgentsAverageTtsLatency: The macro average latency of
+	// conversational agents' TTS latency per interaction. This is computed as the
+	// average of the all the interactions' TTS latencies in a conversation and
+	// averaged across conversations.
+	ConversationalAgentsAverageTtsLatency float64 `json:"conversationalAgentsAverageTtsLatency,omitempty"`
+	// DialogflowAverageWebhookLatency: Average latency of dialogflow webhook
+	// calls.
+	DialogflowAverageWebhookLatency float64 `json:"dialogflowAverageWebhookLatency,omitempty"`
+	// DialogflowConversationsEscalationCount: count of conversations that was
+	// handed off from virtual agent to human agent.
+	DialogflowConversationsEscalationCount float64 `json:"dialogflowConversationsEscalationCount,omitempty"`
+	// DialogflowConversationsEscalationRatio: Proportion of conversations that was
+	// handed off from virtual agent to human agent.
+	DialogflowConversationsEscalationRatio float64 `json:"dialogflowConversationsEscalationRatio,omitempty"`
+	// DialogflowInteractionsNoInputRatio: Proportion of dialogflow interactions
+	// that has empty input.
+	DialogflowInteractionsNoInputRatio float64 `json:"dialogflowInteractionsNoInputRatio,omitempty"`
+	// DialogflowInteractionsNoMatchRatio: Proportion of dialogflow interactions
+	// that has no intent match for the input.
+	DialogflowInteractionsNoMatchRatio float64 `json:"dialogflowInteractionsNoMatchRatio,omitempty"`
+	// DialogflowWebhookFailureRatio: Proportion of dialogflow webhook calls that
+	// failed.
+	DialogflowWebhookFailureRatio float64 `json:"dialogflowWebhookFailureRatio,omitempty"`
+	// DialogflowWebhookTimeoutRatio: Proportion of dialogflow webhook calls that
+	// timed out.
+	DialogflowWebhookTimeoutRatio float64 `json:"dialogflowWebhookTimeoutRatio,omitempty"`
+	// KnowledgeAssistNegativeFeedbackRatio: Proportion of knowledge assist
+	// (Proactive Generative Knowledge Assist) queries that had negative feedback.
+	KnowledgeAssistNegativeFeedbackRatio float64 `json:"knowledgeAssistNegativeFeedbackRatio,omitempty"`
+	// KnowledgeAssistPositiveFeedbackRatio: Proportion of knowledge assist
+	// (Proactive Generative Knowledge Assist) queries that had positive feedback.
+	KnowledgeAssistPositiveFeedbackRatio float64 `json:"knowledgeAssistPositiveFeedbackRatio,omitempty"`
+	// KnowledgeAssistResultCount: Count of knowledge assist results (Proactive
+	// Generative Knowledge Assist) shown to the user.
+	KnowledgeAssistResultCount int64 `json:"knowledgeAssistResultCount,omitempty"`
+	// KnowledgeAssistUriClickRatio: Proportion of knowledge assist (Proactive
+	// Generative Knowledge Assist) queries that had a URL clicked.
+	KnowledgeAssistUriClickRatio float64 `json:"knowledgeAssistUriClickRatio,omitempty"`
+	// KnowledgeSearchAgentQuerySourceRatio: Proportion of knowledge search
+	// (Generative Knowledge Assist) queries made by the agent compared to the
+	// total number of knowledge search queries made.
+	KnowledgeSearchAgentQuerySourceRatio float64 `json:"knowledgeSearchAgentQuerySourceRatio,omitempty"`
+	// KnowledgeSearchNegativeFeedbackRatio: Proportion of knowledge search
+	// (Generative Knowledge Assist) queries that had negative feedback.
+	KnowledgeSearchNegativeFeedbackRatio float64 `json:"knowledgeSearchNegativeFeedbackRatio,omitempty"`
+	// KnowledgeSearchPositiveFeedbackRatio: Proportion of knowledge search
+	// (Generative Knowledge Assist) queries that had positive feedback.
+	KnowledgeSearchPositiveFeedbackRatio float64 `json:"knowledgeSearchPositiveFeedbackRatio,omitempty"`
+	// KnowledgeSearchResultCount: Count of knowledge search results (Generative
+	// Knowledge Assist) shown to the user.
+	KnowledgeSearchResultCount int64 `json:"knowledgeSearchResultCount,omitempty"`
+	// KnowledgeSearchSuggestedQuerySourceRatio: Proportion of knowledge search
+	// (Generative Knowledge Assist) queries suggested compared to the total number
+	// of knowledge search queries made.
+	KnowledgeSearchSuggestedQuerySourceRatio float64 `json:"knowledgeSearchSuggestedQuerySourceRatio,omitempty"`
+	// KnowledgeSearchUriClickRatio: Proportion of knowledge search (Generative
+	// Knowledge Assist) queries that had a URL clicked.
+	KnowledgeSearchUriClickRatio float64 `json:"knowledgeSearchUriClickRatio,omitempty"`
 	// QaTagScores: Average QA normalized score for all the tags.
 	QaTagScores []*GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointConversationMeasureQaTagScore `json:"qaTagScores,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AverageAgentSentimentScore")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// SummarizationSuggestionEditRatio: Proportion of summarization suggestions
+	// that were manually edited.
+	SummarizationSuggestionEditRatio float64 `json:"summarizationSuggestionEditRatio,omitempty"`
+	// SummarizationSuggestionResultCount: Count of summarization suggestions
+	// results.
+	SummarizationSuggestionResultCount int64 `json:"summarizationSuggestionResultCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AaSupervisorAssignedConversationsCount") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AverageAgentSentimentScore") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AaSupervisorAssignedConversationsCount") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted from
+	// API requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields
+	// for more details.
 	NullFields []string `json:"-"`
 }
 
@@ -16119,26 +16871,84 @@ func (s GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPoint
 func (s *GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointConversationMeasure) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointConversationMeasure
 	var s1 struct {
-		AverageAgentSentimentScore        gensupport.JSONFloat64 `json:"averageAgentSentimentScore"`
-		AverageClientSentimentScore       gensupport.JSONFloat64 `json:"averageClientSentimentScore"`
-		AverageCustomerSatisfactionRating gensupport.JSONFloat64 `json:"averageCustomerSatisfactionRating"`
-		AverageQaNormalizedScore          gensupport.JSONFloat64 `json:"averageQaNormalizedScore"`
-		AverageQaQuestionNormalizedScore  gensupport.JSONFloat64 `json:"averageQaQuestionNormalizedScore"`
-		AverageSilencePercentage          gensupport.JSONFloat64 `json:"averageSilencePercentage"`
-		AverageTurnCount                  gensupport.JSONFloat64 `json:"averageTurnCount"`
+		AiCoachSuggestionAgentUsageRatio                     gensupport.JSONFloat64 `json:"aiCoachSuggestionAgentUsageRatio"`
+		AiCoachSuggestionCustomerMessageTriggerRatio         gensupport.JSONFloat64 `json:"aiCoachSuggestionCustomerMessageTriggerRatio"`
+		AiCoachSuggestionMessageTriggerRatio                 gensupport.JSONFloat64 `json:"aiCoachSuggestionMessageTriggerRatio"`
+		AverageAgentSentimentScore                           gensupport.JSONFloat64 `json:"averageAgentSentimentScore"`
+		AverageClientSentimentScore                          gensupport.JSONFloat64 `json:"averageClientSentimentScore"`
+		AverageCustomerSatisfactionRating                    gensupport.JSONFloat64 `json:"averageCustomerSatisfactionRating"`
+		AverageQaNormalizedScore                             gensupport.JSONFloat64 `json:"averageQaNormalizedScore"`
+		AverageQaQuestionNormalizedScore                     gensupport.JSONFloat64 `json:"averageQaQuestionNormalizedScore"`
+		AverageSilencePercentage                             gensupport.JSONFloat64 `json:"averageSilencePercentage"`
+		AverageSummarizationSuggestionEditDistance           gensupport.JSONFloat64 `json:"averageSummarizationSuggestionEditDistance"`
+		AverageSummarizationSuggestionNormalizedEditDistance gensupport.JSONFloat64 `json:"averageSummarizationSuggestionNormalizedEditDistance"`
+		AverageTurnCount                                     gensupport.JSONFloat64 `json:"averageTurnCount"`
+		AvgConversationClientTurnSentimentEma                gensupport.JSONFloat64 `json:"avgConversationClientTurnSentimentEma"`
+		ContainedConversationRatio                           gensupport.JSONFloat64 `json:"containedConversationRatio"`
+		ConversationAiCoachSuggestionRatio                   gensupport.JSONFloat64 `json:"conversationAiCoachSuggestionRatio"`
+		ConversationSuggestedSummaryRatio                    gensupport.JSONFloat64 `json:"conversationSuggestedSummaryRatio"`
+		ConversationalAgentsAverageAudioInAudioOutLatency    gensupport.JSONFloat64 `json:"conversationalAgentsAverageAudioInAudioOutLatency"`
+		ConversationalAgentsAverageEndToEndLatency           gensupport.JSONFloat64 `json:"conversationalAgentsAverageEndToEndLatency"`
+		ConversationalAgentsAverageLlmCallLatency            gensupport.JSONFloat64 `json:"conversationalAgentsAverageLlmCallLatency"`
+		ConversationalAgentsAverageTtsLatency                gensupport.JSONFloat64 `json:"conversationalAgentsAverageTtsLatency"`
+		DialogflowAverageWebhookLatency                      gensupport.JSONFloat64 `json:"dialogflowAverageWebhookLatency"`
+		DialogflowConversationsEscalationCount               gensupport.JSONFloat64 `json:"dialogflowConversationsEscalationCount"`
+		DialogflowConversationsEscalationRatio               gensupport.JSONFloat64 `json:"dialogflowConversationsEscalationRatio"`
+		DialogflowInteractionsNoInputRatio                   gensupport.JSONFloat64 `json:"dialogflowInteractionsNoInputRatio"`
+		DialogflowInteractionsNoMatchRatio                   gensupport.JSONFloat64 `json:"dialogflowInteractionsNoMatchRatio"`
+		DialogflowWebhookFailureRatio                        gensupport.JSONFloat64 `json:"dialogflowWebhookFailureRatio"`
+		DialogflowWebhookTimeoutRatio                        gensupport.JSONFloat64 `json:"dialogflowWebhookTimeoutRatio"`
+		KnowledgeAssistNegativeFeedbackRatio                 gensupport.JSONFloat64 `json:"knowledgeAssistNegativeFeedbackRatio"`
+		KnowledgeAssistPositiveFeedbackRatio                 gensupport.JSONFloat64 `json:"knowledgeAssistPositiveFeedbackRatio"`
+		KnowledgeAssistUriClickRatio                         gensupport.JSONFloat64 `json:"knowledgeAssistUriClickRatio"`
+		KnowledgeSearchAgentQuerySourceRatio                 gensupport.JSONFloat64 `json:"knowledgeSearchAgentQuerySourceRatio"`
+		KnowledgeSearchNegativeFeedbackRatio                 gensupport.JSONFloat64 `json:"knowledgeSearchNegativeFeedbackRatio"`
+		KnowledgeSearchPositiveFeedbackRatio                 gensupport.JSONFloat64 `json:"knowledgeSearchPositiveFeedbackRatio"`
+		KnowledgeSearchSuggestedQuerySourceRatio             gensupport.JSONFloat64 `json:"knowledgeSearchSuggestedQuerySourceRatio"`
+		KnowledgeSearchUriClickRatio                         gensupport.JSONFloat64 `json:"knowledgeSearchUriClickRatio"`
+		SummarizationSuggestionEditRatio                     gensupport.JSONFloat64 `json:"summarizationSuggestionEditRatio"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.AiCoachSuggestionAgentUsageRatio = float64(s1.AiCoachSuggestionAgentUsageRatio)
+	s.AiCoachSuggestionCustomerMessageTriggerRatio = float64(s1.AiCoachSuggestionCustomerMessageTriggerRatio)
+	s.AiCoachSuggestionMessageTriggerRatio = float64(s1.AiCoachSuggestionMessageTriggerRatio)
 	s.AverageAgentSentimentScore = float64(s1.AverageAgentSentimentScore)
 	s.AverageClientSentimentScore = float64(s1.AverageClientSentimentScore)
 	s.AverageCustomerSatisfactionRating = float64(s1.AverageCustomerSatisfactionRating)
 	s.AverageQaNormalizedScore = float64(s1.AverageQaNormalizedScore)
 	s.AverageQaQuestionNormalizedScore = float64(s1.AverageQaQuestionNormalizedScore)
 	s.AverageSilencePercentage = float64(s1.AverageSilencePercentage)
+	s.AverageSummarizationSuggestionEditDistance = float64(s1.AverageSummarizationSuggestionEditDistance)
+	s.AverageSummarizationSuggestionNormalizedEditDistance = float64(s1.AverageSummarizationSuggestionNormalizedEditDistance)
 	s.AverageTurnCount = float64(s1.AverageTurnCount)
+	s.AvgConversationClientTurnSentimentEma = float64(s1.AvgConversationClientTurnSentimentEma)
+	s.ContainedConversationRatio = float64(s1.ContainedConversationRatio)
+	s.ConversationAiCoachSuggestionRatio = float64(s1.ConversationAiCoachSuggestionRatio)
+	s.ConversationSuggestedSummaryRatio = float64(s1.ConversationSuggestedSummaryRatio)
+	s.ConversationalAgentsAverageAudioInAudioOutLatency = float64(s1.ConversationalAgentsAverageAudioInAudioOutLatency)
+	s.ConversationalAgentsAverageEndToEndLatency = float64(s1.ConversationalAgentsAverageEndToEndLatency)
+	s.ConversationalAgentsAverageLlmCallLatency = float64(s1.ConversationalAgentsAverageLlmCallLatency)
+	s.ConversationalAgentsAverageTtsLatency = float64(s1.ConversationalAgentsAverageTtsLatency)
+	s.DialogflowAverageWebhookLatency = float64(s1.DialogflowAverageWebhookLatency)
+	s.DialogflowConversationsEscalationCount = float64(s1.DialogflowConversationsEscalationCount)
+	s.DialogflowConversationsEscalationRatio = float64(s1.DialogflowConversationsEscalationRatio)
+	s.DialogflowInteractionsNoInputRatio = float64(s1.DialogflowInteractionsNoInputRatio)
+	s.DialogflowInteractionsNoMatchRatio = float64(s1.DialogflowInteractionsNoMatchRatio)
+	s.DialogflowWebhookFailureRatio = float64(s1.DialogflowWebhookFailureRatio)
+	s.DialogflowWebhookTimeoutRatio = float64(s1.DialogflowWebhookTimeoutRatio)
+	s.KnowledgeAssistNegativeFeedbackRatio = float64(s1.KnowledgeAssistNegativeFeedbackRatio)
+	s.KnowledgeAssistPositiveFeedbackRatio = float64(s1.KnowledgeAssistPositiveFeedbackRatio)
+	s.KnowledgeAssistUriClickRatio = float64(s1.KnowledgeAssistUriClickRatio)
+	s.KnowledgeSearchAgentQuerySourceRatio = float64(s1.KnowledgeSearchAgentQuerySourceRatio)
+	s.KnowledgeSearchNegativeFeedbackRatio = float64(s1.KnowledgeSearchNegativeFeedbackRatio)
+	s.KnowledgeSearchPositiveFeedbackRatio = float64(s1.KnowledgeSearchPositiveFeedbackRatio)
+	s.KnowledgeSearchSuggestedQuerySourceRatio = float64(s1.KnowledgeSearchSuggestedQuerySourceRatio)
+	s.KnowledgeSearchUriClickRatio = float64(s1.KnowledgeSearchUriClickRatio)
+	s.SummarizationSuggestionEditRatio = float64(s1.SummarizationSuggestionEditRatio)
 	return nil
 }
 
@@ -16178,6 +16988,90 @@ func (s *GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPoin
 		return err
 	}
 	s.AverageTagNormalizedScore = float64(s1.AverageTagNormalizedScore)
+	return nil
+}
+
+// GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointDialo
+// gflowInteractionMeasure: The measure related to dialogflow interactions.
+type GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointDialogflowInteractionMeasure struct {
+	// PercentileAudioInAudioOutLatency: The percentile result for audio in audio
+	// out latency in milliseconds per dialogflow interaction level.
+	PercentileAudioInAudioOutLatency *GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointPercentileResult `json:"percentileAudioInAudioOutLatency,omitempty"`
+	// PercentileEndToEndLatency: The percentile result for end to end chat latency
+	// in milliseconds per dialogflow interaction level.
+	PercentileEndToEndLatency *GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointPercentileResult `json:"percentileEndToEndLatency,omitempty"`
+	// PercentileLlmCallLatency: The percentile result for LLM latency in
+	// milliseconds per dialogflow interaction level.
+	PercentileLlmCallLatency *GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointPercentileResult `json:"percentileLlmCallLatency,omitempty"`
+	// PercentileToolUseLatency: The percentile result for tool use latency in
+	// milliseconds per dialogflow interaction level.
+	PercentileToolUseLatency *GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointPercentileResult `json:"percentileToolUseLatency,omitempty"`
+	// PercentileTtsLatency: The percentile result for TTS latency in milliseconds
+	// per dialogflow interaction level.
+	PercentileTtsLatency *GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointPercentileResult `json:"percentileTtsLatency,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "PercentileAudioInAudioOutLatency") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "PercentileAudioInAudioOutLatency") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointDialogflowInteractionMeasure) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointDialogflowInteractionMeasure
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointPerce
+// ntileResult: The percentile result. Currently supported percentiles are
+// 50th, 90th, and 99th.
+type GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointPercentileResult struct {
+	// P50: The 50th percentile value.
+	P50 float64 `json:"p50,omitempty"`
+	// P90: The 90th percentile value.
+	P90 float64 `json:"p90,omitempty"`
+	// P99: The 99th percentile value.
+	P99 float64 `json:"p99,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "P50") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "P50") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointPercentileResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointPercentileResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointPercentileResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainQueryMetricsResponseSliceDataPointPercentileResult
+	var s1 struct {
+		P50 gensupport.JSONFloat64 `json:"p50"`
+		P90 gensupport.JSONFloat64 `json:"p90"`
+		P99 gensupport.JSONFloat64 `json:"p99"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.P50 = float64(s1.P50)
+	s.P90 = float64(s1.P90)
+	s.P99 = float64(s1.P99)
 	return nil
 }
 

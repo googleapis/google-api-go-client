@@ -2641,18 +2641,20 @@ func (s DirectoryChromeosdevicesIssueCommandResponse) MarshalJSON() ([]byte, err
 // DirectoryUsersCreateGuestRequest: Directory users guest creation request
 // message.
 type DirectoryUsersCreateGuestRequest struct {
+	// Customer: Optional. Immutable ID of the Google Workspace account.
+	Customer string `json:"customer,omitempty"`
 	// PrimaryGuestEmail: Immutable. External email of the guest user being
 	// created.
 	PrimaryGuestEmail string `json:"primaryGuestEmail,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PrimaryGuestEmail") to
+	// ForceSendFields is a list of field names (e.g. "Customer") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PrimaryGuestEmail") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Customer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

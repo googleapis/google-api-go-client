@@ -4416,6 +4416,13 @@ func (r *ProjectsLocationsClustersConsumerGroupsService) List(parent string) *Pr
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filter expression for the
+// result. Only supports filtering by topic name as a key in the `topics` map.
+func (c *ProjectsLocationsClustersConsumerGroupsListCall) Filter(filter string) *ProjectsLocationsClustersConsumerGroupsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // consumer groups to return. The service may return fewer than this value. If
 // unset or zero, all consumer groups for the parent is returned.

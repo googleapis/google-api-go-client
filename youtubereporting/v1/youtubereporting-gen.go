@@ -229,6 +229,8 @@ type GdataBlobstore2Info struct {
 	DownloadReadHandle string `json:"downloadReadHandle,omitempty"`
 	// ReadToken: gdata
 	ReadToken string `json:"readToken,omitempty"`
+	// UploadFragmentListCreationInfo: gdata
+	UploadFragmentListCreationInfo string `json:"uploadFragmentListCreationInfo,omitempty"`
 	// UploadMetadataContainer: gdata
 	UploadMetadataContainer string `json:"uploadMetadataContainer,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BlobGeneration") to

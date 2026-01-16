@@ -1614,8 +1614,8 @@ type BackupServiceToggledEvent struct {
 	//
 	// Possible values:
 	//   "BACKUP_SERVICE_STATE_UNSPECIFIED" - No value is set
-	//   "BACKUP_SERVICE_DISABLED" - Backup service is enabled
-	//   "BACKUP_SERVICE_ENABLED" - Backup service is disabled
+	//   "BACKUP_SERVICE_DISABLED" - Backup service is disabled
+	//   "BACKUP_SERVICE_ENABLED" - Backup service is enabled
 	BackupServiceState string `json:"backupServiceState,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminPackageName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3147,6 +3147,18 @@ type DeviceRadioState struct {
 	// allowed to toggle ultra wideband on via settings. A NonComplianceDetail with
 	// API_LEVEL is reported if the Android version is less than 14.
 	UltraWidebandState string `json:"ultraWidebandState,omitempty"`
+	// UserInitiatedAddEsimSettings: Optional. Controls whether the user is allowed
+	// to add eSIM profiles.
+	//
+	// Possible values:
+	//   "USER_INITIATED_ADD_ESIM_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to
+	// USER_INITIATED_ADD_ESIM_ALLOWED.
+	//   "USER_INITIATED_ADD_ESIM_ALLOWED" - The user is allowed to add eSIM
+	// profiles.
+	//   "USER_INITIATED_ADD_ESIM_DISALLOWED" - Supported only on company-owned
+	// devices. A NonComplianceDetail with MANAGEMENT_MODE is reported for
+	// personally-owned devices.
+	UserInitiatedAddEsimSettings string `json:"userInitiatedAddEsimSettings,omitempty"`
 	// WifiState: Controls current state of Wi-Fi and if user can change its state.
 	//
 	// Possible values:

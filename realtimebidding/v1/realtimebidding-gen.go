@@ -4155,7 +4155,7 @@ type BiddersPretargetingConfigsGetCall struct {
 // Get: Gets a pretargeting configuration.
 //
 //   - name: Name of the pretargeting configuration to get. Format:
-//     bidders/{bidderAccountId}/pretargetingConfig/{configId}.
+//     bidders/{bidderAccountId}/pretargetingConfigs/{configId}.
 func (r *BiddersPretargetingConfigsService) Get(name string) *BiddersPretargetingConfigsGetCall {
 	c := &BiddersPretargetingConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

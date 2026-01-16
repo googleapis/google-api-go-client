@@ -1230,7 +1230,7 @@ type GooglePubsubV1Subscription struct {
 	// they are delivered to subscribers. Transforms are applied in the order
 	// specified.
 	MessageTransforms []*MessageTransform `json:"messageTransforms,omitempty"`
-	// Name: Required. Name of the subscription. Format is
+	// Name: Required. Identifier. Name of the subscription. Format is
 	// `projects/{project}/subscriptions/{sub}`.
 	Name string `json:"name,omitempty"`
 	// PushConfig: Optional. If push delivery is used with this subscription, this

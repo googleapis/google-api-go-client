@@ -374,6 +374,9 @@ type AbortInfo struct {
 	// serverless IP ranges.
 	//   "IP_VERSION_PROTOCOL_MISMATCH" - Aborted because the used protocol is not
 	// supported for the used IP version.
+	//   "GKE_POD_UNKNOWN_ENDPOINT_LOCATION" - Aborted because selected GKE Pod
+	// endpoint location is unknown. This is often the case for "Pending" Pods,
+	// which don't have assigned IP addresses yet.
 	Cause string `json:"cause,omitempty"`
 	// IpAddress: IP address that caused the abort.
 	IpAddress string `json:"ipAddress,omitempty"`
@@ -917,6 +920,7 @@ type DeliverInfo struct {
 	// for return traces.
 	//   "REDIS_INSTANCE" - Target is a Redis Instance.
 	//   "REDIS_CLUSTER" - Target is a Redis Cluster.
+	//   "GKE_POD" - Target is a GKE Pod.
 	Target string `json:"target,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GoogleServiceType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1045,6 +1049,8 @@ type DropInfo struct {
 	// instance that is not in a running state.
 	//   "GKE_CLUSTER_NOT_RUNNING" - Packet sent from or to a GKE cluster that is
 	// not in running state.
+	//   "GKE_POD_NOT_RUNNING" - Packet sent from or to a GKE Pod that is not in
+	// running state.
 	//   "CLOUD_SQL_INSTANCE_NOT_RUNNING" - Packet sent from or to a Cloud SQL
 	// instance that is not in running state.
 	//   "REDIS_INSTANCE_NOT_RUNNING" - Packet sent from or to a Redis Instance
@@ -1206,6 +1212,8 @@ type DropInfo struct {
 	//   "NO_MATCHING_NAT64_GATEWAY" - Packet with destination IP address within
 	// the reserved NAT64 range is dropped due to no matching NAT gateway in the
 	// subnet.
+	//   "NO_CONFIGURED_PRIVATE_NAT64_RULE" - Packet is dropped due to matching a
+	// Private NAT64 gateway with no rules for source IPv6 addresses.
 	//   "LOAD_BALANCER_BACKEND_IP_VERSION_MISMATCH" - Packet is dropped due to
 	// being sent to a backend of a passthrough load balancer that doesn't use the
 	// same IP version as the frontend.
@@ -1863,6 +1871,38 @@ func (s GKEMasterInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GkePodInfo: For display only. Metadata associated with a Google Kubernetes
+// Engine (GKE) Pod.
+type GkePodInfo struct {
+	// IpAddress: IP address of a GKE Pod. If the Pod is dual-stack, this is the IP
+	// address relevant to the trace.
+	IpAddress string `json:"ipAddress,omitempty"`
+	// NetworkUri: URI of the network containing the GKE Pod.
+	NetworkUri string `json:"networkUri,omitempty"`
+	// PodUri: URI of a GKE Pod. For Pods in regional Clusters, the URI format is:
+	// `projects/{project}/locations/{location}/clusters/{cluster}/k8s/namespaces/{n
+	// amespace}/pods/{pod}` For Pods in zonal Clusters, the URI format is:
+	// `projects/{project}/zones/{zone}/clusters/{cluster}/k8s/namespaces/{namespace
+	// }/pods/{pod}`
+	PodUri string `json:"podUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IpAddress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IpAddress") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GkePodInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GkePodInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleServiceInfo: For display only. Details of a Google Service sending
 // packets to a VPC network. Although the source IP might be a publicly
 // routable address, some Google Services use special routes within Google
@@ -2030,6 +2070,52 @@ type InterconnectAttachmentInfo struct {
 
 func (s InterconnectAttachmentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod InterconnectAttachmentInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IpMasqueradingSkippedInfo: For display only. Contains information about why
+// IP masquerading was skipped for the packet.
+type IpMasqueradingSkippedInfo struct {
+	// NonMasqueradeRange: The matched non-masquerade IP range. Only set if reason
+	// is DESTINATION_IP_IN_CONFIGURED_NON_MASQUERADE_RANGE or
+	// DESTINATION_IP_IN_DEFAULT_NON_MASQUERADE_RANGE.
+	NonMasqueradeRange string `json:"nonMasqueradeRange,omitempty"`
+	// Reason: Reason why IP masquerading was not applied.
+	//
+	// Possible values:
+	//   "REASON_UNSPECIFIED" - Unused default value.
+	//   "DESTINATION_IP_IN_CONFIGURED_NON_MASQUERADE_RANGE" - Masquerading not
+	// applied because destination IP is in one of configured non-masquerade
+	// ranges.
+	//   "DESTINATION_IP_IN_DEFAULT_NON_MASQUERADE_RANGE" - Masquerading not
+	// applied because destination IP is in one of default non-masquerade ranges.
+	//   "DESTINATION_ON_SAME_NODE" - Masquerading not applied because destination
+	// is on the same Node.
+	//   "DEFAULT_SNAT_DISABLED" - Masquerading not applied because ip-masq-agent
+	// doesn't exist and default SNAT is disabled.
+	//   "NO_MASQUERADING_FOR_IPV6" - Masquerading not applied because the packet's
+	// IP version is IPv6.
+	//   "POD_USES_NODE_NETWORK_NAMESPACE" - Masquerading not applied because the
+	// source Pod uses the host Node's network namespace, including the Node's IP
+	// address.
+	//   "NO_MASQUERADING_FOR_RETURN_PACKET" - Masquerading not applied because the
+	// packet is a return packet.
+	Reason string `json:"reason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NonMasqueradeRange") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NonMasqueradeRange") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IpMasqueradingSkippedInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod IpMasqueradingSkippedInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3324,6 +3410,8 @@ type Step struct {
 	ForwardingRule *ForwardingRuleInfo `json:"forwardingRule,omitempty"`
 	// GkeMaster: Display information of a Google Kubernetes Engine cluster master.
 	GkeMaster *GKEMasterInfo `json:"gkeMaster,omitempty"`
+	// GkePod: Display information of a Google Kubernetes Engine Pod.
+	GkePod *GkePodInfo `json:"gkePod,omitempty"`
 	// GoogleService: Display information of a Google service
 	GoogleService *GoogleServiceInfo `json:"googleService,omitempty"`
 	// HybridSubnet: Display information of a hybrid subnet.
@@ -3332,6 +3420,9 @@ type Step struct {
 	Instance *InstanceInfo `json:"instance,omitempty"`
 	// InterconnectAttachment: Display information of an interconnect attachment.
 	InterconnectAttachment *InterconnectAttachmentInfo `json:"interconnectAttachment,omitempty"`
+	// IpMasqueradingSkipped: Display information of the reason why GKE Pod IP
+	// masquerading was skipped.
+	IpMasqueradingSkipped *IpMasqueradingSkippedInfo `json:"ipMasqueradingSkipped,omitempty"`
 	// LoadBalancer: Display information of the load balancers. Deprecated in favor
 	// of the `load_balancer_backend_info` field, not used in new tests.
 	LoadBalancer *LoadBalancerInfo `json:"loadBalancer,omitempty"`
@@ -3380,6 +3471,9 @@ type Step struct {
 	//   "START_FROM_CLOUD_SQL_INSTANCE" - Initial state: packet originating from a
 	// Cloud SQL instance. A CloudSQLInstanceInfo is populated with starting
 	// instance information.
+	//   "START_FROM_GKE_POD" - Initial state: packet originating from a Google
+	// Kubernetes Engine Pod. A GkePodInfo is populated with starting Pod
+	// information.
 	//   "START_FROM_REDIS_INSTANCE" - Initial state: packet originating from a
 	// Redis instance. A RedisInstanceInfo is populated with starting instance
 	// information.
@@ -3437,6 +3531,9 @@ type Step struct {
 	// connectivity.
 	//   "NAT" - Transition state: packet header translated. The `nat` field is
 	// populated with the translation information.
+	//   "SKIP_GKE_POD_IP_MASQUERADING" - Transition state: GKE Pod IP masquerading
+	// is skipped. The `ip_masquerading_skipped` field is populated with the
+	// reason.
 	//   "PROXY_CONNECTION" - Transition state: original connection is terminated
 	// and a new proxied connection is initiated.
 	//   "DELIVER" - Final state: packet could be delivered.

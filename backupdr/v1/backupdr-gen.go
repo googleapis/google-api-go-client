@@ -534,6 +534,11 @@ func (s AllocationAffinity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AlloyDBClusterBackupPlanAssociationProperties: Properties for an AlloyDB
+// cluster backup plan association.
+type AlloyDBClusterBackupPlanAssociationProperties struct {
+}
+
 // AlloyDBClusterDataSourceProperties: AlloyDBClusterDataSourceProperties
 // represents the properties of a AlloyDB cluster resource that are stored in
 // the DataSource. .
@@ -1011,9 +1016,9 @@ type BackupConfigDetails struct {
 	// BackupConfigSourceDisplayName: Output only. The display name of the backup
 	// config source resource.
 	BackupConfigSourceDisplayName string `json:"backupConfigSourceDisplayName,omitempty"`
-	// BackupDrPlanConfig: Backup and DR's Backup Plan specific data.
+	// BackupDrPlanConfig: Google Cloud Backup and DR's Backup Plan specific data.
 	BackupDrPlanConfig *BackupDrPlanConfig `json:"backupDrPlanConfig,omitempty"`
-	// BackupDrTemplateConfig: Backup and DR's Template specific data.
+	// BackupDrTemplateConfig: Google Cloud Backup and DR's Template specific data.
 	BackupDrTemplateConfig *BackupDrTemplateConfig `json:"backupDrTemplateConfig,omitempty"`
 	// BackupLocations: The locations where the backups are to be stored.
 	BackupLocations []*BackupLocation `json:"backupLocations,omitempty"`
@@ -1050,8 +1055,10 @@ type BackupConfigDetails struct {
 	// automated backup config.
 	//   "COMPUTE_ENGINE_RESOURCE_POLICY" - Backup config is Compute Engine
 	// Resource Policy.
-	//   "BACKUPDR_BACKUP_PLAN" - Backup config is Backup and DR's Backup Plan.
-	//   "BACKUPDR_TEMPLATE" - Backup config is Backup and DR's Template.
+	//   "BACKUPDR_BACKUP_PLAN" - Backup config is Google Cloud Backup and DR's
+	// Backup Plan.
+	//   "BACKUPDR_TEMPLATE" - Backup config is Google Cloud Backup and DR's
+	// Template.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApplicableResource") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1115,7 +1122,7 @@ func (s BackupConfigInfo) MarshalJSON() ([]byte, error) {
 }
 
 // BackupDrPlanConfig: BackupDrPlanConfig has additional information about
-// Backup and DR's Plan backup configuration.
+// Google Cloud Backup and DR's Plan backup configuration.
 type BackupDrPlanConfig struct {
 	// BackupDrPlanRules: Backup rules of the backup plan resource.
 	BackupDrPlanRules []*BackupDrPlanRule `json:"backupDrPlanRules,omitempty"`
@@ -1163,8 +1170,8 @@ func (s BackupDrPlanRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BackupDrTemplateConfig: BackupDrTemplateConfig has additional information
-// about Backup and DR's Template backup configuration.
+// BackupDrTemplateConfig: Provides additional information about Google Cloud
+// Backup and DR's Template backup configuration.
 type BackupDrTemplateConfig struct {
 	// FirstPartyManagementUri: Output only. The URI of the BackupDr template
 	// resource for the first party identity users.
@@ -1291,9 +1298,9 @@ type BackupPlan struct {
 	// storage location for backups. Format:
 	// projects/{project}/locations/{location}/backupVaults/{backupvault}
 	BackupVault string `json:"backupVault,omitempty"`
-	// BackupVaultServiceAccount: Output only. The Google Cloud Platform Service
-	// Account to be used by the BackupVault for taking backups. Specify the email
-	// address of the Backup Vault Service Account.
+	// BackupVaultServiceAccount: Output only. The Google Cloud service account to
+	// be used by the BackupVault for taking backups. Specify the email address of
+	// the Backup Vault Service Account.
 	BackupVaultServiceAccount string `json:"backupVaultServiceAccount,omitempty"`
 	// CreateTime: Output only. When the `BackupPlan` was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1310,7 +1317,7 @@ type BackupPlan struct {
 	// Labels: Optional. This collection of key/value pairs allows for custom
 	// labels to be supplied by the user. Example, {"tag": "Weekly"}.
 	Labels map[string]string `json:"labels,omitempty"`
-	// LogRetentionDays: Optional. Applicable only for CloudSQL resource_type.
+	// LogRetentionDays: Optional. Applicable only for Cloud SQL resource_type.
 	// Configures how long logs will be stored. It is defined in “days”. This
 	// value should be greater than or equal to minimum enforced log retention
 	// duration of the backup vault.
@@ -1374,6 +1381,9 @@ func (s BackupPlan) MarshalJSON() ([]byte, error) {
 // BackupPlanAssociation: A BackupPlanAssociation represents a single
 // BackupPlanAssociation which contains details like workload, backup plan etc
 type BackupPlanAssociation struct {
+	// AlloydbClusterBackupPlanAssociationProperties: Output only. AlloyDB
+	// cluster's backup plan association properties.
+	AlloydbClusterBackupPlanAssociationProperties *AlloyDBClusterBackupPlanAssociationProperties `json:"alloydbClusterBackupPlanAssociationProperties,omitempty"`
 	// BackupPlan: Required. Resource name of backup plan which needs to be applied
 	// on workload. Format:
 	// projects/{project}/locations/{location}/backupPlans/{backupPlanId}
@@ -1396,6 +1406,9 @@ type BackupPlanAssociation struct {
 	// projects/{project}/locations/{location}/backupVaults/{backupvault}/dataSource
 	// s/{datasource}
 	DataSource string `json:"dataSource,omitempty"`
+	// FilestoreInstanceBackupPlanAssociationProperties: Output only. Filestore
+	// instance's backup plan association properties.
+	FilestoreInstanceBackupPlanAssociationProperties *FilestoreInstanceBackupPlanAssociationProperties `json:"filestoreInstanceBackupPlanAssociationProperties,omitempty"`
 	// Name: Output only. Identifier. The resource name of BackupPlanAssociation in
 	// below format Format :
 	// projects/{project}/locations/{location}/backupPlanAssociations/{backupPlanAss
@@ -1428,15 +1441,17 @@ type BackupPlanAssociation struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "BackupPlan") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AlloydbClusterBackupPlanAssociationProperties") to unconditionally include
+	// in API requests. By default, fields with empty or default values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackupPlan") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g.
+	// "AlloydbClusterBackupPlanAssociationProperties") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1646,15 +1661,15 @@ func (s BackupVault) MarshalJSON() ([]byte, error) {
 // BackupWindow: `BackupWindow` defines a window of the day during which backup
 // jobs will run.
 type BackupWindow struct {
-	// EndHourOfDay: Required. The hour of day (1-24) when the window end for e.g.
-	// if value of end hour of day is 10 that mean backup window end time is 10:00.
-	// End hour of day should be greater than start hour of day. 0 <=
+	// EndHourOfDay: Required. The hour of day (1-24) when the window end for
+	// example if value of end hour of day is 10 that mean backup window end time
+	// is 10:00. End hour of day should be greater than start hour of day. 0 <=
 	// start_hour_of_day < end_hour_of_day <= 24 End hour of day is not include in
 	// backup window that mean if end_hour_of_day= 10 jobs should start before
 	// 10:00.
 	EndHourOfDay int64 `json:"endHourOfDay,omitempty"`
 	// StartHourOfDay: Required. The hour of day (0-23) when the window starts for
-	// e.g. if value of start hour of day is 6 that mean backup window start at
+	// example if value of start hour of day is 6 that mean backup window start at
 	// 6:00.
 	StartHourOfDay int64 `json:"startHourOfDay,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndHourOfDay") to
@@ -2450,19 +2465,19 @@ func (s DataSourceGcpResource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DataSourceGcpResourceInfo: The GCP resource that the DataSource is
+// DataSourceGcpResourceInfo: The Google Cloud resource that the DataSource is
 // associated with.
 type DataSourceGcpResourceInfo struct {
 	// CloudSqlInstanceProperties: Output only. The properties of the Cloud SQL
 	// instance.
 	CloudSqlInstanceProperties *CloudSqlInstanceDataSourceReferenceProperties `json:"cloudSqlInstanceProperties,omitempty"`
-	// GcpResourcename: Output only. The resource name of the GCP resource. Ex:
-	// projects/{project}/zones/{zone}/instances/{instance}
+	// GcpResourcename: Output only. The resource name of the Google Cloud
+	// resource. Ex: projects/{project}/zones/{zone}/instances/{instance}
 	GcpResourcename string `json:"gcpResourcename,omitempty"`
-	// Location: Output only. The location of the GCP resource. Ex:
+	// Location: Output only. The location of the Google Cloud resource. Ex:
 	// //"global"/"unspecified"
 	Location string `json:"location,omitempty"`
-	// Type: Output only. The type of the GCP resource. Ex:
+	// Type: Output only. The type of the Google Cloud resource. Ex:
 	// compute.googleapis.com/Instance
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudSqlInstanceProperties")
@@ -2508,8 +2523,8 @@ type DataSourceReference struct {
 	DataSourceBackupConfigState string `json:"dataSourceBackupConfigState,omitempty"`
 	// DataSourceBackupCount: Output only. Number of backups in the DataSource.
 	DataSourceBackupCount int64 `json:"dataSourceBackupCount,omitempty,string"`
-	// DataSourceGcpResourceInfo: Output only. The GCP resource that the DataSource
-	// is associated with.
+	// DataSourceGcpResourceInfo: Output only. The Google Cloud resource that the
+	// DataSource is associated with.
 	DataSourceGcpResourceInfo *DataSourceGcpResourceInfo `json:"dataSourceGcpResourceInfo,omitempty"`
 	// Name: Identifier. The resource name of the DataSourceReference. Format:
 	// projects/{project}/locations/{location}/dataSourceReferences/{data_source_ref
@@ -3077,7 +3092,7 @@ func (s FetchMsComplianceMetadataRequest) MarshalJSON() ([]byte, error) {
 // GetMsComplianceMetadata
 type FetchMsComplianceMetadataResponse struct {
 	// IsAssuredWorkload: The ms compliance metadata of the target project, if the
-	// project is an assured workloads project, values will be true, otherwise
+	// project is an Assured Workloads project, values will be true, otherwise
 	// false.
 	IsAssuredWorkload bool `json:"isAssuredWorkload,omitempty"`
 
@@ -3134,6 +3149,29 @@ type FetchUsableBackupVaultsResponse struct {
 
 func (s FetchUsableBackupVaultsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchUsableBackupVaultsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FilestoreInstanceBackupPlanAssociationProperties: Filestore instance's BPA
+// properties.
+type FilestoreInstanceBackupPlanAssociationProperties struct {
+	// InstanceCreateTime: Output only. The time when the instance was created.
+	InstanceCreateTime string `json:"instanceCreateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstanceCreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstanceCreateTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FilestoreInstanceBackupPlanAssociationProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod FilestoreInstanceBackupPlanAssociationProperties
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3365,12 +3403,12 @@ type InitializeServiceRequest struct {
 	// unique request ID so that if you must retry your request, the server will
 	// know to ignore the request if it has already been completed. The server will
 	// guarantee that for at least 60 minutes since the first request. For example,
-	// consider a situation where you make an initial request and t he request
-	// times out. If you make the request again with the same request ID, the
-	// server can check if original operation with the same request ID was
-	// received, and if so, will ignore the second request. This prevents clients
-	// from accidentally creating duplicate commitments. The request ID must be a
-	// valid UUID with the exception that zero UUID is not supported
+	// consider a situation where you make an initial request and the request times
+	// out. If you make the request again with the same request ID, the server can
+	// check if original operation with the same request ID was received, and if
+	// so, will ignore the second request. This prevents clients from accidentally
+	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// exception that zero UUID is not supported
 	// (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
 	// ResourceType: Required. The resource type to which the default service
@@ -3948,9 +3986,9 @@ type ManagementServer struct {
 	// is optional if MS is created without PSA
 	Networks []*NetworkConfig `json:"networks,omitempty"`
 	// Oauth2ClientId: Output only. The OAuth 2.0 client id is required to make API
-	// calls to the BackupDR instance API of this ManagementServer. This is the
-	// value that should be provided in the 'aud' field of the OIDC ID Token (see
-	// openid specification
+	// calls to the Backup and DR instance API of this ManagementServer. This is
+	// the value that should be provided in the 'aud' field of the OIDC ID Token
+	// (see openid specification
 	// https://openid.net/specs/openid-connect-core-1_0.html#IDToken).
 	Oauth2ClientId string `json:"oauth2ClientId,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
@@ -4067,7 +4105,7 @@ type NetworkConfig struct {
 	//   "PEERING_MODE_UNSPECIFIED" - Peering mode not set.
 	//   "PRIVATE_SERVICE_ACCESS" - Connect using Private Service Access to the
 	// Management Server. Private services access provides an IP address range for
-	// multiple Google Cloud services, including Cloud BackupDR.
+	// multiple Google Cloud services, including Google Cloud Backup and DR.
 	PeeringMode string `json:"peeringMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Network") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4962,7 +5000,7 @@ type StandardSchedule struct {
 	// TimeZone: Required. The time zone to be used when interpreting the schedule.
 	// The value of this field must be a time zone name from the IANA tz database.
 	// See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for the
-	// list of valid timezone names. For e.g., Europe/Paris.
+	// list of valid timezone names. For example, Europe/Paris.
 	TimeZone string `json:"timeZone,omitempty"`
 	// WeekDayOfMonth: Optional. Specifies a week day of the month like, FIRST
 	// SUNDAY or LAST MONDAY, on which jobs will run. This will be specified by two
@@ -5709,8 +5747,8 @@ type ProjectsLocationsBackupPlanAssociationsCreateCall struct {
 // Create: Create a BackupPlanAssociation
 //
 //   - parent: The backup plan association project and location in the format
-//     `projects/{project_id}/locations/{location}`. In Cloud BackupDR locations
-//     map to GCP regions, for example **us-central1**.
+//     `projects/{project_id}/locations/{location}`. In Backup and DR locations
+//     map to Google Cloud regions, for example **us-central1**.
 func (r *ProjectsLocationsBackupPlanAssociationsService) Create(parent string, backupplanassociation *BackupPlanAssociation) *ProjectsLocationsBackupPlanAssociationsCreateCall {
 	c := &ProjectsLocationsBackupPlanAssociationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5998,7 +6036,7 @@ func (c *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall) PageTo
 }
 
 // ResourceType sets the optional parameter "resourceType": Required. The type
-// of the GCP resource. Ex: sql.googleapis.com/Instance
+// of the Google Cloud resource. Ex: sql.googleapis.com/Instance
 func (c *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall) ResourceType(resourceType string) *ProjectsLocationsBackupPlanAssociationsFetchForResourceTypeCall {
 	c.urlParams_.Set("resourceType", resourceType)
 	return c
@@ -6242,9 +6280,10 @@ type ProjectsLocationsBackupPlanAssociationsListCall struct {
 //
 //   - parent: The project and location for which to retrieve backup Plan
 //     Associations information, in the format
-//     `projects/{project_id}/locations/{location}`. In Cloud BackupDR, locations
-//     map to GCP regions, for example **us-central1**. To retrieve backup plan
-//     associations for all locations, use "-" for the `{location}` value.
+//     `projects/{project_id}/locations/{location}`. In Backup and DR, locations
+//     map to Google Cloud regions, for example **us-central1**. To retrieve
+//     backup plan associations for all locations, use "-" for the `{location}`
+//     value.
 func (r *ProjectsLocationsBackupPlanAssociationsService) List(parent string) *ProjectsLocationsBackupPlanAssociationsListCall {
 	c := &ProjectsLocationsBackupPlanAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6636,8 +6675,8 @@ type ProjectsLocationsBackupPlansCreateCall struct {
 // Create: Create a BackupPlan
 //
 //   - parent: The `BackupPlan` project and location in the format
-//     `projects/{project}/locations/{location}`. In Cloud BackupDR locations map
-//     to GCP regions, for example **us-central1**.
+//     `projects/{project}/locations/{location}`. In Google Cloud Backup and DR
+//     locations map to Google Cloud regions, for example **us-central1**.
 func (r *ProjectsLocationsBackupPlansService) Create(parent string, backupplan *BackupPlan) *ProjectsLocationsBackupPlansCreateCall {
 	c := &ProjectsLocationsBackupPlansCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6990,10 +7029,10 @@ type ProjectsLocationsBackupPlansListCall struct {
 // List: Lists BackupPlans in a given project and location.
 //
 //   - parent: The project and location for which to retrieve `BackupPlans`
-//     information. Format: `projects/{project}/locations/{location}`. In Cloud
-//     BackupDR, locations map to GCP regions, for e.g. **us-central1**. To
-//     retrieve backup plans for all locations, use "-" for the `{location}`
-//     value.
+//     information. Format: `projects/{project}/locations/{location}`. In Google
+//     Cloud Backup and DR, locations map to Google Cloud regions, for example
+//     **us-central1**. To retrieve backup plans for all locations, use "-" for
+//     the `{location}` value.
 func (r *ProjectsLocationsBackupPlansService) List(parent string) *ProjectsLocationsBackupPlansListCall {
 	c := &ProjectsLocationsBackupPlansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7406,7 +7445,8 @@ type ProjectsLocationsBackupPlansRevisionsListCall struct {
 //   - parent: The project and location for which to retrieve
 //     `BackupPlanRevisions` information. Format:
 //     `projects/{project}/locations/{location}/backupPlans/{backup_plan}`. In
-//     Cloud BackupDR, locations map to GCP regions, for e.g. **us-central1**.
+//     Google Cloud Backup and DR, locations map to Google Cloud regions, for
+//     example **us-central1**.
 func (r *ProjectsLocationsBackupPlansRevisionsService) List(parent string) *ProjectsLocationsBackupPlansRevisionsListCall {
 	c := &ProjectsLocationsBackupPlansRevisionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9793,7 +9833,7 @@ func (c *ProjectsLocationsBackupVaultsDataSourcesBackupsFetchForResourceTypeCall
 }
 
 // ResourceType sets the optional parameter "resourceType": Required. The type
-// of the GCP resource. Ex: sqladmin.googleapis.com/Instance
+// of the Google Cloud resource. Ex: sqladmin.googleapis.com/Instance
 func (c *ProjectsLocationsBackupVaultsDataSourcesBackupsFetchForResourceTypeCall) ResourceType(resourceType string) *ProjectsLocationsBackupVaultsDataSourcesBackupsFetchForResourceTypeCall {
 	c.urlParams_.Set("resourceType", resourceType)
 	return c
@@ -10551,7 +10591,7 @@ func (c *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall) PageToke
 }
 
 // ResourceType sets the optional parameter "resourceType": Required. The type
-// of the GCP resource. Ex: sql.googleapis.com/Instance
+// of the Google Cloud resource. Ex: sql.googleapis.com/Instance
 func (c *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall) ResourceType(resourceType string) *ProjectsLocationsDataSourceReferencesFetchForResourceTypeCall {
 	c.urlParams_.Set("resourceType", resourceType)
 	return c
@@ -11448,9 +11488,9 @@ type ProjectsLocationsManagementServersListCall struct {
 //
 //   - parent: The project and location for which to retrieve management servers
 //     information, in the format 'projects/{project_id}/locations/{location}'.
-//     In Cloud BackupDR, locations map to Google Cloud regions, for example
-//     **us-central1**. To retrieve management servers for all locations, use "-"
-//     for the '{location}' value.
+//     In Google Cloud Backup and DR, locations map to Google Cloud regions, for
+//     example **us-central1**. To retrieve management servers for all locations,
+//     use "-" for the '{location}' value.
 func (r *ProjectsLocationsManagementServersService) List(parent string) *ProjectsLocationsManagementServersListCall {
 	c := &ProjectsLocationsManagementServersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11612,8 +11652,8 @@ type ProjectsLocationsManagementServersMsComplianceMetadataCall struct {
 //
 //   - parent: The project and location to be used to check CSS metadata for
 //     target project information, in the format
-//     'projects/{project_id}/locations/{location}'. In Cloud BackupDR, locations
-//     map to Google Cloud regions, for example **us-central1**.
+//     'projects/{project_id}/locations/{location}'. In Google Cloud Backup and
+//     DR, locations map to Google Cloud regions, for example **us-central1**.
 func (r *ProjectsLocationsManagementServersService) MsComplianceMetadata(parent string, fetchmscompliancemetadatarequest *FetchMsComplianceMetadataRequest) *ProjectsLocationsManagementServersMsComplianceMetadataCall {
 	c := &ProjectsLocationsManagementServersMsComplianceMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12423,8 +12463,8 @@ type ProjectsLocationsResourceBackupConfigsListCall struct {
 // List: Lists ResourceBackupConfigs.
 //
 //   - parent: The project and location for which to retrieve resource backup
-//     configs. Format: 'projects/{project_id}/locations/{location}'. In Cloud
-//     Backup and DR, locations map to Google Cloud regions, for example
+//     configs. Format: 'projects/{project_id}/locations/{location}'. In Google
+//     Cloud Backup and DR, locations map to Google Cloud regions, for example
 //     **us-central1**.
 func (r *ProjectsLocationsResourceBackupConfigsService) List(parent string) *ProjectsLocationsResourceBackupConfigsListCall {
 	c := &ProjectsLocationsResourceBackupConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}

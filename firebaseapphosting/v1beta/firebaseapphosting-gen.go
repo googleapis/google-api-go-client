@@ -403,10 +403,10 @@ type Build struct {
 	// build was created.
 	Environment string `json:"environment,omitempty"`
 	// Error: Output only. A status and (human readable) error message for the
-	// build, if in a `FAILED` state. Deprecated. Use `errors` instead.
+	// build, if in a `FAILED` state. Deprecated: Use `errors` instead.
 	Error *Status `json:"error,omitempty"`
 	// ErrorSource: Output only. The source of the error for the build, if in a
-	// `FAILED` state. Deprecated. Use `errors` instead.
+	// `FAILED` state. Deprecated: Use `errors` instead.
 	//
 	// Possible values:
 	//   "ERROR_SOURCE_UNSPECIFIED" - Indicates that generic error occurred outside
@@ -581,6 +581,12 @@ func (s CodebaseSource) MarshalJSON() ([]byte, error) {
 
 // Config: Additional configuration of the backend for this build.
 type Config struct {
+	// EffectiveEnv: Output only. [OUTPUT_ONLY] This field represents all
+	// environment variables employed during both the build and runtime. This list
+	// reflects the result of merging variables from all sources
+	// (Backend.override_env, Build.Config.env, YAML, defaults, system). Each
+	// variable includes its `origin`
+	EffectiveEnv []*EnvironmentVariable `json:"effectiveEnv,omitempty"`
 	// Env: Optional. Supplied environment variables for a specific build. Provided
 	// at Build creation time and immutable afterwards. This field is only
 	// applicable for Builds using a build image - (e.g., ContainerSource or
@@ -590,15 +596,15 @@ type Config struct {
 	// RunConfig: Optional. Additional configuration of the Cloud Run `service`
 	// (https://cloud.google.com/run/docs/reference/rest/v2/projects.locations.services#resource:-service).
 	RunConfig *RunConfig `json:"runConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Env") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "EffectiveEnv") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Env") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "EffectiveEnv") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1119,6 +1125,22 @@ type EnvironmentVariable struct {
 	//   "BUILD" - This value is available when creating a Build from source code.
 	//   "RUNTIME" - This value is available at runtime within Cloud Run.
 	Availability []string `json:"availability,omitempty"`
+	// Origin: Output only. The high-level origin category of the environment
+	// variable.
+	//
+	// Possible values:
+	//   "ORIGIN_UNSPECIFIED" - Source is unspecified.
+	//   "BACKEND_OVERRIDES" - Variable was set on the backend resource (e.g. via
+	// API or Console). Represents variables from `Backend.override_env`
+	//   "BUILD_CONFIG" - Variable was provided specifically for the build upon
+	// creation via the `Build.Config.env` field. Only used for pre-built images.
+	//   "APPHOSTING_YAML" - Variable is defined in apphosting.yaml file.
+	//   "FIREBASE_SYSTEM" - Variable is defined provided by the firebase platform.
+	Origin string `json:"origin,omitempty"`
+	// OriginFileName: Output only. Specific detail about the source. For
+	// APPHOSTING_YAML origins, this will contain the exact filename, such as
+	// "apphosting.yaml" or "apphosting.staging.yaml".
+	OriginFileName string `json:"originFileName,omitempty"`
 	// Secret: A fully qualified secret version. The value of the secret will be
 	// accessed once while building the application and once per cold start of the
 	// container at runtime. The service account used by Cloud Build and by Cloud

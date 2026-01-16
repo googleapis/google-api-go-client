@@ -11176,7 +11176,7 @@ func (s IntegrationDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InventorySource: An inventory source.
+// InventorySource: An inventory source. Next ID: 22
 type InventorySource struct {
 	// Commitment: Whether the inventory source has a guaranteed or non-guaranteed
 	// delivery.
@@ -15272,6 +15272,7 @@ type RateDetails struct {
 	//   "INVENTORY_SOURCE_RATE_TYPE_CPM_FIXED" - The rate type is CPM (Fixed).
 	//   "INVENTORY_SOURCE_RATE_TYPE_CPM_FLOOR" - The rate type is CPM (Floor).
 	//   "INVENTORY_SOURCE_RATE_TYPE_CPD" - The rate type is Cost per Day.
+	//   "INVENTORY_SOURCE_RATE_TYPE_CPH" - The rate type is Cost per Hour.
 	//   "INVENTORY_SOURCE_RATE_TYPE_FLAT" - The rate type is Flat.
 	InventorySourceRateType string `json:"inventorySourceRateType,omitempty"`
 	// MinimumSpend: Output only. The amount that the buyer has committed to

@@ -516,6 +516,8 @@ type VerifyChallengeResponseResult struct {
 	// hardware.
 	//   "CHROME_BROWSER_OS_KEY" - Chrome Browser with the key stored at OS level.
 	//   "CHROME_BROWSER_NO_KEY" - Chrome Browser without an attestation key.
+	//   "CHROME_OS_NO_KEY" - ChromeOS device without a signing key (e.g., Flex
+	// without TPM). Applies to both device and user contexts on ChromeOS.
 	KeyTrustLevel string `json:"keyTrustLevel,omitempty"`
 	// ProfileCustomerId: Output only. Unique customer id that this profile belongs
 	// to, as defined by the Google Admin SDK at
@@ -531,6 +533,8 @@ type VerifyChallengeResponseResult struct {
 	// hardware.
 	//   "CHROME_BROWSER_OS_KEY" - Chrome Browser with the key stored at OS level.
 	//   "CHROME_BROWSER_NO_KEY" - Chrome Browser without an attestation key.
+	//   "CHROME_OS_NO_KEY" - ChromeOS device without a signing key (e.g., Flex
+	// without TPM). Applies to both device and user contexts on ChromeOS.
 	ProfileKeyTrustLevel string `json:"profileKeyTrustLevel,omitempty"`
 	// ProfilePermanentId: Output only. The unique server-side ID of a profile on
 	// the device.

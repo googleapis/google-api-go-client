@@ -1307,6 +1307,9 @@ type ConnectorInfraConfig struct {
 	// ConnectionRatelimitWindowSeconds: The window used for ratelimiting runtime
 	// requests to connections.
 	ConnectionRatelimitWindowSeconds int64 `json:"connectionRatelimitWindowSeconds,omitempty,string"`
+	// ConnectionServiceAccountEnabled: Indicate whether connection service account
+	// is enabled. If false, the common runtime service agent is used.
+	ConnectionServiceAccountEnabled bool `json:"connectionServiceAccountEnabled,omitempty"`
 	// ConnectorVersioningEnabled: Indicate whether connector versioning is
 	// enabled.
 	ConnectorVersioningEnabled bool `json:"connectorVersioningEnabled,omitempty"`
@@ -1338,6 +1341,9 @@ type ConnectorInfraConfig struct {
 	ProvisionCloudSpanner bool `json:"provisionCloudSpanner,omitempty"`
 	// ProvisionMemstore: Indicate whether memstore is required for connector job.
 	ProvisionMemstore bool `json:"provisionMemstore,omitempty"`
+	// PublicNetworkIngressEnabled: Indicate whether public network ingress should
+	// be enabled.
+	PublicNetworkIngressEnabled bool `json:"publicNetworkIngressEnabled,omitempty"`
 	// RatelimitThreshold: Max QPS supported by the connector version before
 	// throttling of requests.
 	RatelimitThreshold int64 `json:"ratelimitThreshold,omitempty,string"`
@@ -1970,6 +1976,25 @@ func (s EUASecret) MarshalJSON() ([]byte, error) {
 // connector version or it is derived from the configurations provided by the
 // customer in Connection resource.
 type EgressControlConfig struct {
+	// AccessMode: Optional. Access mode for egress control.
+	//
+	// Possible values:
+	//   "ACCESS_MODE_UNSPECIFIED" - The default value. Per best practices
+	// (go/protodosdonts#unspecified-enum), the first value should be UNSPECIFIED
+	// and have a tag of 0. Application logic should treat this the same as
+	// RESTRICTED.
+	//   "RESTRICTED" - Enforce the allowlist. Only projects in
+	// 'allowlisted_project_numbers' are permitted.
+	//   "ALLOW_ALL" - Allow all projects. 'allowlisted_project_numbers' is
+	// ignored.
+	AccessMode string `json:"accessMode,omitempty"`
+	// AdditionalExtractionRules: Additional extraction rules to identity the
+	// backends from customer provided configuration in Connection resource. These
+	// rules are applied in addition to the ones specified in `oneof_backends`.
+	AdditionalExtractionRules *ExtractionRules `json:"additionalExtractionRules,omitempty"`
+	// AllowlistedProjectNumbers: Optional. Used when access_mode is RESTRICTED or
+	// ACCESS_MODE_UNSPECIFIED.
+	AllowlistedProjectNumbers []string `json:"allowlistedProjectNumbers,omitempty"`
 	// Backends: Static Comma separated backends which are common for all
 	// Connection resources. Supported formats for each backend are host:port or
 	// just host (host can be ip address or domain name).
@@ -1977,13 +2002,22 @@ type EgressControlConfig struct {
 	// ExtractionRules: Extractions Rules to extract the backends from customer
 	// provided configuration.
 	ExtractionRules *ExtractionRules `json:"extractionRules,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Backends") to
+	// LaunchEnvironment: Launch environment for egress control.
+	//
+	// Possible values:
+	//   "LAUNCH_ENVIRONMENT_UNSPECIFIED" - Default value. If not specified, the
+	// launch environment will default to AUTOPUSH.
+	//   "AUTOPUSH" - Autopush environment.
+	//   "STAGING" - Staging environment.
+	//   "PROD" - Prod environment.
+	LaunchEnvironment string `json:"launchEnvironment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessMode") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Backends") to include in API
+	// NullFields is a list of field names (e.g. "AccessMode") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3109,6 +3143,9 @@ type ExtractionRule struct {
 	// ExtractionRegex: Regex used to extract backend details from source. If
 	// empty, whole source value will be used.
 	ExtractionRegex string `json:"extractionRegex,omitempty"`
+	// FormatString: Format string used to format the extracted backend details. If
+	// empty, extracted backend details will be returned as it is.
+	FormatString string `json:"formatString,omitempty"`
 	// Source: Source on which the rule is applied.
 	Source *Source `json:"source,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExtractionRegex") to
@@ -4129,8 +4166,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -6058,6 +6095,7 @@ type Source struct {
 	// Possible values:
 	//   "SOURCE_TYPE_UNSPECIFIED" - Default SOURCE.
 	//   "CONFIG_VARIABLE" - Config Variable source type.
+	//   "AUTH_CONFIG_VARIABLE" - Auth Config Variable source type.
 	SourceType string `json:"sourceType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FieldId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7040,9 +7078,9 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Unless
-// explicitly documented otherwise, don't use this unsupported field which is
-// primarily intended for internal usage.
+// ExtraLocationTypes sets the optional parameter "extraLocationTypes": Do not
+// use this field. It is unsupported and is ignored unless explicitly
+// documented otherwise. This is primarily for internal usage.
 func (c *ProjectsLocationsListCall) ExtraLocationTypes(extraLocationTypes ...string) *ProjectsLocationsListCall {
 	c.urlParams_.SetMulti("extraLocationTypes", append([]string{}, extraLocationTypes...))
 	return c
@@ -14328,9 +14366,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

@@ -535,6 +535,9 @@ type BigQueryConfig struct {
 	//   "IN_TRANSIT_LOCATION_RESTRICTION" - Cannot write to the destination
 	// because enforce_in_transit is set to true and the destination locations are
 	// not in the allowed regions.
+	//   "VERTEX_AI_LOCATION_RESTRICTION" - Cannot write to the BigQuery table
+	// because the table is not in the same location as where Vertex AI models used
+	// in `message_transform`s are deployed.
 	State string `json:"state,omitempty"`
 	// Table: Optional. The name of the table to which to write data, of the form
 	// {projectId}.{datasetId}.{tableId}
@@ -788,6 +791,9 @@ type CloudStorageConfig struct {
 	// not in the allowed regions.
 	//   "SCHEMA_MISMATCH" - Cannot write to the Cloud Storage bucket due to an
 	// incompatibility between the topic schema and subscription settings.
+	//   "VERTEX_AI_LOCATION_RESTRICTION" - Cannot write to the Cloud Storage
+	// bucket because the bucket is not in the same location as where Vertex AI
+	// models used in `message_transform`s are deployed.
 	State string `json:"state,omitempty"`
 	// TextConfig: Optional. If set, message data will be written to Cloud Storage
 	// in text format.
@@ -2163,7 +2169,7 @@ type Subscription struct {
 	// Pub/Sub system will eventually redeliver the message.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 	// AnalyticsHubSubscriptionInfo: Output only. Information about the associated
-	// Analytics Hub subscription. Only set if the subscritpion is created by
+	// Analytics Hub subscription. Only set if the subscription is created by
 	// Analytics Hub.
 	AnalyticsHubSubscriptionInfo *AnalyticsHubSubscriptionInfo `json:"analyticsHubSubscriptionInfo,omitempty"`
 	// BigqueryConfig: Optional. If delivery to BigQuery is used with this

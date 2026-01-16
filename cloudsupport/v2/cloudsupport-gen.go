@@ -306,6 +306,9 @@ type Blobstore2Info struct {
 	DownloadReadHandle string `json:"downloadReadHandle,omitempty"`
 	// ReadToken: # gdata.* are outside protos with mising documentation
 	ReadToken string `json:"readToken,omitempty"`
+	// UploadFragmentListCreationInfo: # gdata.* are outside protos with mising
+	// documentation
+	UploadFragmentListCreationInfo string `json:"uploadFragmentListCreationInfo,omitempty"`
 	// UploadMetadataContainer: # gdata.* are outside protos with mising
 	// documentation
 	UploadMetadataContainer string `json:"uploadMetadataContainer,omitempty"`

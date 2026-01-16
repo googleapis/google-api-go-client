@@ -572,7 +572,6 @@ type YoutubeService struct {
 func NewYoutubeV3Service(s *Service) *YoutubeV3Service {
 	rs := &YoutubeV3Service{s: s}
 	rs.LiveChat = NewYoutubeV3LiveChatService(s)
-	rs.Videos = NewYoutubeV3VideosService(s)
 	return rs
 }
 
@@ -580,8 +579,6 @@ type YoutubeV3Service struct {
 	s *Service
 
 	LiveChat *YoutubeV3LiveChatService
-
-	Videos *YoutubeV3VideosService
 }
 
 func NewYoutubeV3LiveChatService(s *Service) *YoutubeV3LiveChatService {
@@ -602,15 +599,6 @@ func NewYoutubeV3LiveChatMessagesService(s *Service) *YoutubeV3LiveChatMessagesS
 }
 
 type YoutubeV3LiveChatMessagesService struct {
-	s *Service
-}
-
-func NewYoutubeV3VideosService(s *Service) *YoutubeV3VideosService {
-	rs := &YoutubeV3VideosService{s: s}
-	return rs
-}
-
-type YoutubeV3VideosService struct {
 	s *Service
 }
 
@@ -1205,38 +1193,6 @@ type ActivitySnippet struct {
 
 func (s ActivitySnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivitySnippet
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// BatchGetStatsResponse: Response for the Videos.stats API. Returns VideoStat
-// information about a batch of videos. VideoStat contains a subset of the
-// information in Video that is relevant to statistics and content details.
-type BatchGetStatsResponse struct {
-	// Etag: Output only. Etag of this resource.
-	Etag string `json:"etag,omitempty"`
-	// Items: Output only. The videos' stats information.
-	Items []*VideoStat `json:"items,omitempty"`
-	// Kind: Output only. Identifies what kind of resource this is. Value: the
-	// fixed string "youtube#batchGetStatsResponse".
-	Kind string `json:"kind,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Etag") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s BatchGetStatsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod BatchGetStatsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8405,42 +8361,6 @@ func (s VideoSnippet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// VideoStat: A *VideoStat* resource represents a YouTube video's stats.
-type VideoStat struct {
-	// ContentDetails: Output only. The VideoStatsContentDetails object contains
-	// information about the video content, including the length of the video.
-	ContentDetails *VideoStatsContentDetails `json:"contentDetails,omitempty"`
-	// Etag: Output only. Etag of this resource.
-	Etag string `json:"etag,omitempty"`
-	// Id: Output only. The ID that YouTube uses to uniquely identify the video.
-	Id string `json:"id,omitempty"`
-	// Kind: Output only. Identifies what kind of resource this is. Value: the
-	// fixed string "youtube#videoStats".
-	Kind string `json:"kind,omitempty"`
-	// Snippet: Output only. The VideoStatsSnippet object contains basic details
-	// about the video, such publish time.
-	Snippet *VideoStatsSnippet `json:"snippet,omitempty"`
-	// Statistics: Output only. The VideoStatsStatistics object contains statistics
-	// about the video.
-	Statistics *VideoStatsStatistics `json:"statistics,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ContentDetails") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ContentDetails") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s VideoStat) MarshalJSON() ([]byte, error) {
-	type NoMethod VideoStat
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // VideoStatistics: Statistics about the video, such as the number of times the
 // video was viewed or liked.
 type VideoStatistics struct {
@@ -8472,87 +8392,6 @@ type VideoStatistics struct {
 
 func (s VideoStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoStatistics
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// VideoStatsContentDetails: Details about the content of a YouTube Video. This
-// is a subset of the information in VideoContentDetails specifically for the
-// Videos.stats API.
-type VideoStatsContentDetails struct {
-	// Duration: Output only. The length of the video. The property value is a
-	// `google.protobuf.Duration`
-	// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration)
-	// object.
-	Duration string `json:"duration,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Duration") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Duration") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s VideoStatsContentDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod VideoStatsContentDetails
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// VideoStatsSnippet: Basic details about a video. This is a subset of the
-// information in VideoSnippet specifically for the Videos.stats API.
-type VideoStatsSnippet struct {
-	// PublishTime: Output only. The date and time that the video was uploaded. The
-	// property value is a `google.protobuf.Timestamp`
-	// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#timestamp)
-	// object.
-	PublishTime string `json:"publishTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PublishTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PublishTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s VideoStatsSnippet) MarshalJSON() ([]byte, error) {
-	type NoMethod VideoStatsSnippet
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// VideoStatsStatistics: Statistics about the video, such as the number of
-// times the video was viewed or liked.
-type VideoStatsStatistics struct {
-	// CommentCount: Output only. The number of comments for the video.
-	CommentCount int64 `json:"commentCount,omitempty,string"`
-	// LikeCount: Output only. The number of users who have indicated that they
-	// liked the video by giving it a positive rating.
-	LikeCount int64 `json:"likeCount,omitempty,string"`
-	// ViewCount: Output only. The number of times the video has been viewed.
-	ViewCount int64 `json:"viewCount,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "CommentCount") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CommentCount") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s VideoStatsStatistics) MarshalJSON() ([]byte, error) {
-	type NoMethod VideoStatsStatistics
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -20326,143 +20165,4 @@ func (c *YoutubeV3LiveChatMessagesStreamCall) Pages(ctx context.Context, f func(
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-type YoutubeV3VideosBatchGetStatsCall struct {
-	s            *Service
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// BatchGetStats: Retrieves a batch of VideoStat resources, possibly filtered.
-func (r *YoutubeV3VideosService) BatchGetStats() *YoutubeV3VideosBatchGetStatsCall {
-	c := &YoutubeV3VideosBatchGetStatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// Id sets the optional parameter "id": Required. Return videos with the given
-// ids.
-func (c *YoutubeV3VideosBatchGetStatsCall) Id(id ...string) *YoutubeV3VideosBatchGetStatsCall {
-	c.urlParams_.SetMulti("id", append([]string{}, id...))
-	return c
-}
-
-// OnBehalfOfContentOwner sets the optional parameter "onBehalfOfContentOwner":
-// **Note:** This parameter is intended exclusively for YouTube content
-// partners. The `onBehalfOfContentOwner` parameter indicates that the
-// request's authorization credentials identify a YouTube CMS user who is
-// acting on behalf of the content owner specified in the parameter value. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and get access to all their video and channel data, without having to
-// provide authentication credentials for each individual channel. The CMS
-// account that the user authenticates with must be linked to the specified
-// YouTube content owner.
-func (c *YoutubeV3VideosBatchGetStatsCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *YoutubeV3VideosBatchGetStatsCall {
-	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
-	return c
-}
-
-// Part sets the optional parameter "part": Required. The `**part**` parameter
-// specifies a comma-separated list of one or more `videoStat` resource
-// properties that the API response will include. If the parameter identifies a
-// property that contains child properties, the child properties will be
-// included in the response. For example, in a `videoStat` resource, the
-// `statistics` property contains `view_count` and `like_count`. As such, if
-// you set `**part=snippet**`, the API response will contain all of those
-// properties.
-func (c *YoutubeV3VideosBatchGetStatsCall) Part(part ...string) *YoutubeV3VideosBatchGetStatsCall {
-	c.urlParams_.SetMulti("part", append([]string{}, part...))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *YoutubeV3VideosBatchGetStatsCall) Fields(s ...googleapi.Field) *YoutubeV3VideosBatchGetStatsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *YoutubeV3VideosBatchGetStatsCall) IfNoneMatch(entityTag string) *YoutubeV3VideosBatchGetStatsCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *YoutubeV3VideosBatchGetStatsCall) Context(ctx context.Context) *YoutubeV3VideosBatchGetStatsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *YoutubeV3VideosBatchGetStatsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *YoutubeV3VideosBatchGetStatsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "youtube/v3/videos:batchGetStats")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "youtube.youtube.v3.videos.batchGetStats", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "youtube.youtube.v3.videos.batchGetStats" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *BatchGetStatsResponse.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *YoutubeV3VideosBatchGetStatsCall) Do(opts ...googleapi.CallOption) (*BatchGetStatsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &BatchGetStatsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "youtube.youtube.v3.videos.batchGetStats", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
 }

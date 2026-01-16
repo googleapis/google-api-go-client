@@ -2088,6 +2088,16 @@ func (s *GoogleCloudDiscoveryengineV1AnswerGenerationSpecUserDefinedClassifierSp
 type GoogleCloudDiscoveryengineV1Assistant struct {
 	// CustomerPolicy: Optional. Customer policy for the assistant.
 	CustomerPolicy *GoogleCloudDiscoveryengineV1AssistantCustomerPolicy `json:"customerPolicy,omitempty"`
+	// DefaultWebGroundingToggleOff: Optional. This field controls the default web
+	// grounding toggle for end users if `web_grounding_type` is set to
+	// `WEB_GROUNDING_TYPE_GOOGLE_SEARCH` or
+	// `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`. By default, this field is set to
+	// false. If `web_grounding_type` is `WEB_GROUNDING_TYPE_GOOGLE_SEARCH` or
+	// `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`, end users will have web
+	// grounding enabled by default on UI. If true, grounding toggle will be
+	// disabled by default on UI. End users can still enable web grounding in the
+	// UI if web grounding is enabled.
+	DefaultWebGroundingToggleOff bool `json:"defaultWebGroundingToggleOff,omitempty"`
 	// Description: Optional. Description for additional information. Expected to
 	// be shown on the configuration UI, not to the users of the assistant.
 	Description string `json:"description,omitempty"`
@@ -4407,6 +4417,9 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// KnowledgeGraphConfig: Optional. Configurations for the Knowledge Graph. Only
+	// applicable if solution_type is SOLUTION_TYPE_SEARCH.
+	KnowledgeGraphConfig *GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfig `json:"knowledgeGraphConfig,omitempty"`
 	// MediaRecommendationEngineConfig: Configurations for the Media Engine. Only
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
@@ -4592,6 +4605,72 @@ type GoogleCloudDiscoveryengineV1EngineCommonConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1EngineCommonConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1EngineCommonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfig: Configuration
+// message for the Knowledge Graph.
+type GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfig struct {
+	// CloudKnowledgeGraphTypes: Specify entity types to support.
+	CloudKnowledgeGraphTypes []string `json:"cloudKnowledgeGraphTypes,omitempty"`
+	// EnableCloudKnowledgeGraph: Whether to enable the Cloud Knowledge Graph for
+	// the engine. Defaults to false if not specified.
+	EnableCloudKnowledgeGraph bool `json:"enableCloudKnowledgeGraph,omitempty"`
+	// EnablePrivateKnowledgeGraph: Whether to enable the Private Knowledge Graph
+	// for the engine. Defaults to false if not specified.
+	EnablePrivateKnowledgeGraph bool `json:"enablePrivateKnowledgeGraph,omitempty"`
+	// FeatureConfig: Optional. Feature config for the Knowledge Graph.
+	FeatureConfig *GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfigFeatureConfig `json:"featureConfig,omitempty"`
+	// PrivateKnowledgeGraphTypes: Specify entity types to support.
+	PrivateKnowledgeGraphTypes []string `json:"privateKnowledgeGraphTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudKnowledgeGraphTypes")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudKnowledgeGraphTypes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfigFeatureConfig: Feature
+// config for the Knowledge Graph.
+type GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfigFeatureConfig struct {
+	// DisablePrivateKgAutoComplete: Whether to disable the private KG auto
+	// complete for the engine. Defaults to false if not specified.
+	DisablePrivateKgAutoComplete bool `json:"disablePrivateKgAutoComplete,omitempty"`
+	// DisablePrivateKgEnrichment: Whether to disable the private KG enrichment for
+	// the engine. Defaults to false if not specified.
+	DisablePrivateKgEnrichment bool `json:"disablePrivateKgEnrichment,omitempty"`
+	// DisablePrivateKgQueryUiChips: Whether to disable the private KG for query UI
+	// chips. Defaults to false if not specified.
+	DisablePrivateKgQueryUiChips bool `json:"disablePrivateKgQueryUiChips,omitempty"`
+	// DisablePrivateKgQueryUnderstanding: Whether to disable the private KG query
+	// understanding for the engine. Defaults to false if not specified.
+	DisablePrivateKgQueryUnderstanding bool `json:"disablePrivateKgQueryUnderstanding,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DisablePrivateKgAutoComplete") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisablePrivateKgAutoComplete") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfigFeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1EngineKnowledgeGraphConfigFeatureConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4847,6 +4926,13 @@ type GoogleCloudDiscoveryengineV1HealthcareFhirConfig struct {
 	// will be processed in a static indexing mode which is slower but more capable
 	// of handling larger volume.
 	EnableStaticIndexingForBatchIngestion bool `json:"enableStaticIndexingForBatchIngestion,omitempty"`
+	// InitialFilterGroups: Optional. Names of the Group resources to use as a
+	// basis for the initial patient filter, in format
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
+	// es/{fhir_store_id}/fhir/Group/{group_id}`. The filter group must be a FHIR
+	// resource name of type Group, and the filter will be constructed from the
+	// direct members of the group which are Patient resources.
+	InitialFilterGroups []string `json:"initialFilterGroups,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableConfigurableSchema")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6933,6 +7019,48 @@ type GoogleCloudDiscoveryengineV1alphaActionConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaActionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaActionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAddPatientFilterRequest: Request for
+// DataStoreService.AddPatientFilter method.
+type GoogleCloudDiscoveryengineV1alphaAddPatientFilterRequest struct {
+	// DataStore: Required. Full resource name of DataStore, such as
+	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
+	// es/{data_store_id}`. If the caller does not have permission to access the
+	// DataStore, regardless of whether or not it exists, a PERMISSION_DENIED error
+	// is returned. If the requested DataStore does not exist, a NOT_FOUND error is
+	// returned. If the requested DataStore already has a patient filter, an
+	// ALREADY_EXISTS error will be returned.
+	DataStore string `json:"dataStore,omitempty"`
+	// FilterGroups: Required. Names of the Group resources to use as a basis for
+	// the patient filter, in format
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
+	// es/{fhir_store_id}/fhir/Group/{group_id}`. if the caller does not have
+	// permission to access the FHIR store, regardless of whether it exists,
+	// PERMISSION_DENIED error is returned. If the discovery engine service account
+	// does not have permission to access the FHIR store, regardless of whether or
+	// not it exists, a PERMISSION_DENIED error is returned. If the group is not
+	// found at the location, a RESOURCE_NOT_FOUND error will be returned. The
+	// filter group must be a FHIR resource name of type Group, and the filter will
+	// be constructed from the direct members of the group which are Patient
+	// resources.
+	FilterGroups []string `json:"filterGroups,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAddPatientFilterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAddPatientFilterRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10314,6 +10442,35 @@ func (s GoogleCloudDiscoveryengineV1alphaDeleteIdentityMappingStoreMetadata) Mar
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaDeletePatientFiltersRequest: Request for
+// DataStoreService.DeletePatientFilters method.
+type GoogleCloudDiscoveryengineV1alphaDeletePatientFiltersRequest struct {
+	// DataStore: Required. Full resource name of DataStore, such as
+	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
+	// es/{data_store_id}`. If the caller does not have permission to access the
+	// DataStore, regardless of whether or not it exists, a PERMISSION_DENIED error
+	// is returned. If the requested DataStore does not exist, a NOT_FOUND error is
+	// returned. If the requested DataStore does not have a patient filter, a
+	// NOT_FOUND error will be returned.
+	DataStore string `json:"dataStore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDeletePatientFiltersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDeletePatientFiltersRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaDeleteSchemaMetadata: Metadata for
 // DeleteSchema LRO.
 type GoogleCloudDiscoveryengineV1alphaDeleteSchemaMetadata struct {
@@ -10843,6 +11000,9 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// KnowledgeGraphConfig: Optional. Configurations for the Knowledge Graph. Only
+	// applicable if solution_type is SOLUTION_TYPE_SEARCH.
+	KnowledgeGraphConfig *GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfig `json:"knowledgeGraphConfig,omitempty"`
 	// MediaRecommendationEngineConfig: Configurations for the Media Engine. Only
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
@@ -11035,6 +11195,72 @@ type GoogleCloudDiscoveryengineV1alphaEngineCommonConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaEngineCommonConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineCommonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfig: Configuration
+// message for the Knowledge Graph.
+type GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfig struct {
+	// CloudKnowledgeGraphTypes: Specify entity types to support.
+	CloudKnowledgeGraphTypes []string `json:"cloudKnowledgeGraphTypes,omitempty"`
+	// EnableCloudKnowledgeGraph: Whether to enable the Cloud Knowledge Graph for
+	// the engine. Defaults to false if not specified.
+	EnableCloudKnowledgeGraph bool `json:"enableCloudKnowledgeGraph,omitempty"`
+	// EnablePrivateKnowledgeGraph: Whether to enable the Private Knowledge Graph
+	// for the engine. Defaults to false if not specified.
+	EnablePrivateKnowledgeGraph bool `json:"enablePrivateKnowledgeGraph,omitempty"`
+	// FeatureConfig: Optional. Feature config for the Knowledge Graph.
+	FeatureConfig *GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfigFeatureConfig `json:"featureConfig,omitempty"`
+	// PrivateKnowledgeGraphTypes: Specify entity types to support.
+	PrivateKnowledgeGraphTypes []string `json:"privateKnowledgeGraphTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudKnowledgeGraphTypes")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudKnowledgeGraphTypes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfigFeatureConfig:
+// Feature config for the Knowledge Graph.
+type GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfigFeatureConfig struct {
+	// DisablePrivateKgAutoComplete: Whether to disable the private KG auto
+	// complete for the engine. Defaults to false if not specified.
+	DisablePrivateKgAutoComplete bool `json:"disablePrivateKgAutoComplete,omitempty"`
+	// DisablePrivateKgEnrichment: Whether to disable the private KG enrichment for
+	// the engine. Defaults to false if not specified.
+	DisablePrivateKgEnrichment bool `json:"disablePrivateKgEnrichment,omitempty"`
+	// DisablePrivateKgQueryUiChips: Whether to disable the private KG for query UI
+	// chips. Defaults to false if not specified.
+	DisablePrivateKgQueryUiChips bool `json:"disablePrivateKgQueryUiChips,omitempty"`
+	// DisablePrivateKgQueryUnderstanding: Whether to disable the private KG query
+	// understanding for the engine. Defaults to false if not specified.
+	DisablePrivateKgQueryUnderstanding bool `json:"disablePrivateKgQueryUnderstanding,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DisablePrivateKgAutoComplete") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisablePrivateKgAutoComplete") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfigFeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineKnowledgeGraphConfigFeatureConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11771,6 +11997,13 @@ type GoogleCloudDiscoveryengineV1alphaHealthcareFhirConfig struct {
 	// will be processed in a static indexing mode which is slower but more capable
 	// of handling larger volume.
 	EnableStaticIndexingForBatchIngestion bool `json:"enableStaticIndexingForBatchIngestion,omitempty"`
+	// InitialFilterGroups: Optional. Names of the Group resources to use as a
+	// basis for the initial patient filter, in format
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
+	// es/{fhir_store_id}/fhir/Group/{group_id}`. The filter group must be a FHIR
+	// resource name of type Group, and the filter will be constructed from the
+	// direct members of the group which are Patient resources.
+	InitialFilterGroups []string `json:"initialFilterGroups,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableConfigurableSchema")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12587,6 +12820,38 @@ func (s GoogleCloudDiscoveryengineV1alphaOrganicCrawlRateTimeSeries) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaPatientFilterOperationMetadata: Metadata
+// related to the progress of the various patient filter operations. This will
+// be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaPatientFilterOperationMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// FiltersAddedCount: The number of patient IDs added to the patient filter.
+	FiltersAddedCount int64 `json:"filtersAddedCount,omitempty,string"`
+	// FiltersRemovedCount: The number of patient IDs removed from the patient
+	// filter.
+	FiltersRemovedCount int64 `json:"filtersRemovedCount,omitempty,string"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaPatientFilterOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaPatientFilterOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaProject: Metadata and configurations for a
 // Google Cloud project in the service.
 type GoogleCloudDiscoveryengineV1alphaProject struct {
@@ -13348,6 +13613,90 @@ type GoogleCloudDiscoveryengineV1alphaRemoveDedicatedCrawlRateResponse struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaRemoveDedicatedCrawlRateResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaRemoveDedicatedCrawlRateResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaRemovePatientFilterRequest: Request for
+// DataStoreService.RemovePatientFilter method.
+type GoogleCloudDiscoveryengineV1alphaRemovePatientFilterRequest struct {
+	// DataStore: Required. Full resource name of DataStore, such as
+	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
+	// es/{data_store_id}`. If the caller does not have permission to access the
+	// DataStore, regardless of whether or not it exists, a PERMISSION_DENIED error
+	// is returned. If the requested DataStore does not exist, a NOT_FOUND error is
+	// returned. If the requested DataStore does not have a patient filter, a
+	// NOT_FOUND error will be returned
+	DataStore string `json:"dataStore,omitempty"`
+	// FilterGroups: Required. Names of the Group resources to use as a basis for
+	// the list of patients to remove from the patient filter, in format
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
+	// es/{fhir_store_id}/fhir/Group/{group_id}`. if the caller does not have
+	// permission to access the FHIR store, regardless of whether it exists,
+	// PERMISSION_DENIED error is returned. If the discovery engine service account
+	// does not have permission to access the FHIR store, regardless of whether or
+	// not it exists, a PERMISSION_DENIED error is returned. If the group is not
+	// found at the location, a RESOURCE_NOT_FOUND error will be returned. The
+	// filter group must be a FHIR resource name of type Group, and the list of IDs
+	// to remove will be constructed from the direct members of the group which are
+	// Patient resources.
+	FilterGroups []string `json:"filterGroups,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaRemovePatientFilterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRemovePatientFilterRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaReplacePatientFilterRequest: Request for
+// DataStoreService.ReplacePatientFilter method.
+type GoogleCloudDiscoveryengineV1alphaReplacePatientFilterRequest struct {
+	// DataStore: Required. Full resource name of DataStore, such as
+	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
+	// es/{data_store_id}`. If the caller does not have permission to access the
+	// DataStore, regardless of whether or not it exists, a PERMISSION_DENIED error
+	// is returned. If the requested DataStore does not exist, a NOT_FOUND error is
+	// returned. If the requested DataStore already has a patient filter, an
+	// ALREADY_EXISTS error will be returned.
+	DataStore string `json:"dataStore,omitempty"`
+	// FilterGroups: Required. Names of the Group resources to use as a basis for
+	// the list of patients for the new patient filter, in format
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
+	// es/{fhir_store_id}/fhir/Group/{group_id}`. if the caller does not have
+	// permission to access the FHIR store, regardless of whether it exists,
+	// PERMISSION_DENIED error is returned. If the discovery engine service account
+	// does not have permission to access the FHIR store, regardless of whether or
+	// not it exists, a PERMISSION_DENIED error is returned. If the group is not
+	// found at the location, a RESOURCE_NOT_FOUND error will be returned. The
+	// filter group must be a FHIR resource name of type Group, and the new filter
+	// will be constructed from the direct members of the group which are Patient
+	// resources.
+	FilterGroups []string `json:"filterGroups,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaReplacePatientFilterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaReplacePatientFilterRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -18329,6 +18678,16 @@ func (s GoogleCloudDiscoveryengineV1betaAssistUserMetadata) MarshalJSON() ([]byt
 type GoogleCloudDiscoveryengineV1betaAssistant struct {
 	// CustomerPolicy: Optional. Customer policy for the assistant.
 	CustomerPolicy *GoogleCloudDiscoveryengineV1betaAssistantCustomerPolicy `json:"customerPolicy,omitempty"`
+	// DefaultWebGroundingToggleOff: Optional. This field controls the default web
+	// grounding toggle for end users if `web_grounding_type` is set to
+	// `WEB_GROUNDING_TYPE_GOOGLE_SEARCH` or
+	// `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`. By default, this field is set to
+	// false. If `web_grounding_type` is `WEB_GROUNDING_TYPE_GOOGLE_SEARCH` or
+	// `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`, end users will have web
+	// grounding enabled by default on UI. If true, grounding toggle will be
+	// disabled by default on UI. End users can still enable web grounding in the
+	// UI if web grounding is enabled.
+	DefaultWebGroundingToggleOff bool `json:"defaultWebGroundingToggleOff,omitempty"`
 	// Description: Optional. Description for additional information. Expected to
 	// be shown on the configuration UI, not to the users of the assistant.
 	Description string `json:"description,omitempty"`
@@ -22144,6 +22503,9 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// KnowledgeGraphConfig: Optional. Configurations for the Knowledge Graph. Only
+	// applicable if solution_type is SOLUTION_TYPE_SEARCH.
+	KnowledgeGraphConfig *GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfig `json:"knowledgeGraphConfig,omitempty"`
 	// MediaRecommendationEngineConfig: Configurations for the Media Engine. Only
 	// applicable on the data stores with solution_type
 	// SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
@@ -22332,6 +22694,72 @@ type GoogleCloudDiscoveryengineV1betaEngineCommonConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1betaEngineCommonConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaEngineCommonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfig: Configuration
+// message for the Knowledge Graph.
+type GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfig struct {
+	// CloudKnowledgeGraphTypes: Specify entity types to support.
+	CloudKnowledgeGraphTypes []string `json:"cloudKnowledgeGraphTypes,omitempty"`
+	// EnableCloudKnowledgeGraph: Whether to enable the Cloud Knowledge Graph for
+	// the engine. Defaults to false if not specified.
+	EnableCloudKnowledgeGraph bool `json:"enableCloudKnowledgeGraph,omitempty"`
+	// EnablePrivateKnowledgeGraph: Whether to enable the Private Knowledge Graph
+	// for the engine. Defaults to false if not specified.
+	EnablePrivateKnowledgeGraph bool `json:"enablePrivateKnowledgeGraph,omitempty"`
+	// FeatureConfig: Optional. Feature config for the Knowledge Graph.
+	FeatureConfig *GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfigFeatureConfig `json:"featureConfig,omitempty"`
+	// PrivateKnowledgeGraphTypes: Specify entity types to support.
+	PrivateKnowledgeGraphTypes []string `json:"privateKnowledgeGraphTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudKnowledgeGraphTypes")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudKnowledgeGraphTypes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfigFeatureConfig:
+// Feature config for the Knowledge Graph.
+type GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfigFeatureConfig struct {
+	// DisablePrivateKgAutoComplete: Whether to disable the private KG auto
+	// complete for the engine. Defaults to false if not specified.
+	DisablePrivateKgAutoComplete bool `json:"disablePrivateKgAutoComplete,omitempty"`
+	// DisablePrivateKgEnrichment: Whether to disable the private KG enrichment for
+	// the engine. Defaults to false if not specified.
+	DisablePrivateKgEnrichment bool `json:"disablePrivateKgEnrichment,omitempty"`
+	// DisablePrivateKgQueryUiChips: Whether to disable the private KG for query UI
+	// chips. Defaults to false if not specified.
+	DisablePrivateKgQueryUiChips bool `json:"disablePrivateKgQueryUiChips,omitempty"`
+	// DisablePrivateKgQueryUnderstanding: Whether to disable the private KG query
+	// understanding for the engine. Defaults to false if not specified.
+	DisablePrivateKgQueryUnderstanding bool `json:"disablePrivateKgQueryUnderstanding,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DisablePrivateKgAutoComplete") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisablePrivateKgAutoComplete") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfigFeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaEngineKnowledgeGraphConfigFeatureConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -22962,6 +23390,13 @@ type GoogleCloudDiscoveryengineV1betaHealthcareFhirConfig struct {
 	// will be processed in a static indexing mode which is slower but more capable
 	// of handling larger volume.
 	EnableStaticIndexingForBatchIngestion bool `json:"enableStaticIndexingForBatchIngestion,omitempty"`
+	// InitialFilterGroups: Optional. Names of the Group resources to use as a
+	// basis for the initial patient filter, in format
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
+	// es/{fhir_store_id}/fhir/Group/{group_id}`. The filter group must be a FHIR
+	// resource name of type Group, and the filter will be constructed from the
+	// direct members of the group which are Patient resources.
+	InitialFilterGroups []string `json:"initialFilterGroups,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableConfigurableSchema")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

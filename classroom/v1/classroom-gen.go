@@ -271,6 +271,7 @@ func NewCoursesService(s *Service) *CoursesService {
 	rs.CourseWork = NewCoursesCourseWorkService(s)
 	rs.CourseWorkMaterials = NewCoursesCourseWorkMaterialsService(s)
 	rs.Posts = NewCoursesPostsService(s)
+	rs.StudentGroups = NewCoursesStudentGroupsService(s)
 	rs.Students = NewCoursesStudentsService(s)
 	rs.Teachers = NewCoursesTeachersService(s)
 	rs.Topics = NewCoursesTopicsService(s)
@@ -289,6 +290,8 @@ type CoursesService struct {
 	CourseWorkMaterials *CoursesCourseWorkMaterialsService
 
 	Posts *CoursesPostsService
+
+	StudentGroups *CoursesStudentGroupsService
 
 	Students *CoursesStudentsService
 
@@ -435,6 +438,27 @@ func NewCoursesPostsAddOnAttachmentsStudentSubmissionsService(s *Service) *Cours
 }
 
 type CoursesPostsAddOnAttachmentsStudentSubmissionsService struct {
+	s *Service
+}
+
+func NewCoursesStudentGroupsService(s *Service) *CoursesStudentGroupsService {
+	rs := &CoursesStudentGroupsService{s: s}
+	rs.StudentGroupMembers = NewCoursesStudentGroupsStudentGroupMembersService(s)
+	return rs
+}
+
+type CoursesStudentGroupsService struct {
+	s *Service
+
+	StudentGroupMembers *CoursesStudentGroupsStudentGroupMembersService
+}
+
+func NewCoursesStudentGroupsStudentGroupMembersService(s *Service) *CoursesStudentGroupsStudentGroupMembersService {
+	rs := &CoursesStudentGroupsStudentGroupMembersService{s: s}
+	return rs
+}
+
+type CoursesStudentGroupsStudentGroupMembersService struct {
 	s *Service
 }
 
@@ -992,6 +1016,8 @@ type Course struct {
 	// Section: Section of the course. For example, "Period 2". If set, this field
 	// must be a valid UTF-8 string and no longer than 2800 characters.
 	Section string `json:"section,omitempty"`
+	// Subject: Optional. The subject of the course.
+	Subject string `json:"subject,omitempty"`
 	// TeacherFolder: Information about a Drive Folder that is shared with all
 	// teachers of the course. This field will only be set for teachers of the
 	// course and domain administrators. Read-only.
@@ -2384,6 +2410,62 @@ func (s ListRubricsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListStudentGroupMembersResponse: Response when listing students in a group.
+type ListStudentGroupMembersResponse struct {
+	// NextPageToken: Token identifying the next page of results to return. If
+	// empty, no further results are available.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// StudentGroupMembers: The student group members.
+	StudentGroupMembers []*StudentGroupMember `json:"studentGroupMembers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListStudentGroupMembersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListStudentGroupMembersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListStudentGroupsResponse: Response when listing student groups.
+type ListStudentGroupsResponse struct {
+	// NextPageToken: Token identifying the next page of results to return. If
+	// empty, no further results are available.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// StudentGroups: The student groups.
+	StudentGroups []*StudentGroup `json:"studentGroups,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListStudentGroupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListStudentGroupsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListStudentSubmissionsResponse: Response when listing student submissions.
 type ListStudentSubmissionsResponse struct {
 	// NextPageToken: Token identifying the next page of results to return. If
@@ -3031,6 +3113,64 @@ type StudentContext struct {
 
 func (s StudentContext) MarshalJSON() ([]byte, error) {
 	type NoMethod StudentContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StudentGroup: A student group in a course.
+type StudentGroup struct {
+	// CourseId: The identifier of the course.
+	CourseId string `json:"courseId,omitempty"`
+	// Id: The identifier of the student group.
+	Id string `json:"id,omitempty"`
+	// Title: The title of the student group.
+	Title string `json:"title,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CourseId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CourseId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StudentGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod StudentGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StudentGroupMember: A student member in a student group.
+type StudentGroupMember struct {
+	// CourseId: The identifier of the course.
+	CourseId string `json:"courseId,omitempty"`
+	// StudentGroupId: The identifier of the student group.
+	StudentGroupId string `json:"studentGroupId,omitempty"`
+	// UserId: Identifier of the student.
+	UserId string `json:"userId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CourseId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CourseId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StudentGroupMember) MarshalJSON() ([]byte, error) {
+	type NoMethod StudentGroupMember
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9168,14 +9308,14 @@ type CoursesCourseWorkStudentSubmissionsListCall struct {
 }
 
 // List: Returns a list of student submissions that the requester is permitted
-// to view, factoring in the OAuth scopes of the request. `-` may be specified
-// as the `course_work_id` to include student submissions for multiple course
-// work items. Course students may only view their own work. Course teachers
-// and domain administrators may view all student submissions. This method
-// returns the following error codes: * `PERMISSION_DENIED` if the requesting
-// user is not permitted to access the requested course or course work, or for
-// access errors. * `INVALID_ARGUMENT` if the request is malformed. *
-// `NOT_FOUND` if the requested course does not exist.
+// to view, factoring in the OAuth scopes of the request. A hyphen (`-`) may be
+// specified as the `course_work_id` to include student submissions for
+// multiple course work items. Course students may only view their own work.
+// Course teachers and domain administrators may view all student submissions.
+// This method returns the following error codes: * `PERMISSION_DENIED` if the
+// requesting user is not permitted to access the requested course or course
+// work, or for access errors. * `INVALID_ARGUMENT` if the request is
+// malformed. * `NOT_FOUND` if the requested course does not exist.
 //
 //   - courseId: Identifier of the course. This identifier can be either the
 //     Classroom-assigned identifier or an alias.
@@ -12624,6 +12764,870 @@ func (c *CoursesPostsAddOnAttachmentsStudentSubmissionsPatchCall) Do(opts ...goo
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.posts.addOnAttachments.studentSubmissions.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type CoursesStudentGroupsCreateCall struct {
+	s            *Service
+	courseId     string
+	studentgroup *StudentGroup
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Create: Creates a student group for a course. This method returns the
+// following error codes: * `PERMISSION_DENIED` if the requesting user is not
+// permitted to create the student group or for access errors. * `NOT_FOUND` if
+// the course does not exist or the requesting user doesn't have access to the
+// course. * `FAILED_PRECONDITION` if creating the student group would exceed
+// the maximum number of student groups per course.
+//
+// - courseId: The identifier of the course.
+func (r *CoursesStudentGroupsService) Create(courseId string, studentgroup *StudentGroup) *CoursesStudentGroupsCreateCall {
+	c := &CoursesStudentGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.studentgroup = studentgroup
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesStudentGroupsCreateCall) Fields(s ...googleapi.Field) *CoursesStudentGroupsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesStudentGroupsCreateCall) Context(ctx context.Context) *CoursesStudentGroupsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesStudentGroupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesStudentGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.studentgroup)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/studentGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId": c.courseId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.studentGroups.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.studentGroups.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *StudentGroup.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CoursesStudentGroupsCreateCall) Do(opts ...googleapi.CallOption) (*StudentGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &StudentGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.studentGroups.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CoursesStudentGroupsDeleteCall struct {
+	s          *Service
+	courseId   string
+	id         string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a student group. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting user is not permitted to
+// delete the requested student group or for access errors. * `NOT_FOUND` if
+// the student group does not exist or the user does not have access to the
+// student group.
+//
+//   - courseId: The identifier of the course containing the student group to
+//     delete.
+//   - id: The identifier of the student group to delete.
+func (r *CoursesStudentGroupsService) Delete(courseId string, id string) *CoursesStudentGroupsDeleteCall {
+	c := &CoursesStudentGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesStudentGroupsDeleteCall) Fields(s ...googleapi.Field) *CoursesStudentGroupsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesStudentGroupsDeleteCall) Context(ctx context.Context) *CoursesStudentGroupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesStudentGroupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesStudentGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/studentGroups/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId": c.courseId,
+		"id":       c.id,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.studentGroups.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.studentGroups.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CoursesStudentGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.studentGroups.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CoursesStudentGroupsListCall struct {
+	s            *Service
+	courseId     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of groups in a course. This method returns the
+// following error codes: * `NOT_FOUND` if the course does not exist.
+//
+// - courseId: The identifier of the course.
+func (r *CoursesStudentGroupsService) List(courseId string) *CoursesStudentGroupsListCall {
+	c := &CoursesStudentGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return. Zero or unspecified indicates that the server may assign a maximum,
+// which is currently set to 75 items. The server may return fewer than the
+// specified number of results.
+func (c *CoursesStudentGroupsListCall) PageSize(pageSize int64) *CoursesStudentGroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": nextPageToken value
+// returned from a previous list call, indicating that the subsequent page of
+// results should be returned. The list request must be otherwise identical to
+// the one that resulted in this token.
+func (c *CoursesStudentGroupsListCall) PageToken(pageToken string) *CoursesStudentGroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesStudentGroupsListCall) Fields(s ...googleapi.Field) *CoursesStudentGroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesStudentGroupsListCall) IfNoneMatch(entityTag string) *CoursesStudentGroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesStudentGroupsListCall) Context(ctx context.Context) *CoursesStudentGroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesStudentGroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesStudentGroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/studentGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId": c.courseId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.studentGroups.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.studentGroups.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListStudentGroupsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CoursesStudentGroupsListCall) Do(opts ...googleapi.CallOption) (*ListStudentGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListStudentGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.studentGroups.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CoursesStudentGroupsListCall) Pages(ctx context.Context, f func(*ListStudentGroupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type CoursesStudentGroupsPatchCall struct {
+	s            *Service
+	courseId     string
+	id           string
+	studentgroup *StudentGroup
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates one or more fields in a student group. This method returns
+// the following error codes: * `PERMISSION_DENIED` if the requesting user is
+// not permitted to modify the requested student group or for access errors. *
+// `NOT_FOUND` if the student group does not exist or the user does not have
+// access to the student group. * `INVALID_ARGUMENT` if invalid fields are
+// specified in the update mask or if no update mask is supplied.
+//
+// - courseId: Identifier of the course.
+// - id: Identifier of the student group.
+func (r *CoursesStudentGroupsService) Patch(courseId string, id string, studentgroup *StudentGroup) *CoursesStudentGroupsPatchCall {
+	c := &CoursesStudentGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.id = id
+	c.studentgroup = studentgroup
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Mask that
+// identifies which fields on the student group to update. This field is
+// required to do an update. The update fails if invalid fields are specified.
+// The following fields can be specified by teachers: * `title`
+func (c *CoursesStudentGroupsPatchCall) UpdateMask(updateMask string) *CoursesStudentGroupsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesStudentGroupsPatchCall) Fields(s ...googleapi.Field) *CoursesStudentGroupsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesStudentGroupsPatchCall) Context(ctx context.Context) *CoursesStudentGroupsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesStudentGroupsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesStudentGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.studentgroup)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/studentGroups/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId": c.courseId,
+		"id":       c.id,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.studentGroups.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.studentGroups.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *StudentGroup.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CoursesStudentGroupsPatchCall) Do(opts ...googleapi.CallOption) (*StudentGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &StudentGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.studentGroups.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CoursesStudentGroupsStudentGroupMembersCreateCall struct {
+	s                  *Service
+	courseId           string
+	studentGroupId     string
+	studentgroupmember *StudentGroupMember
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a student group member for a student group. This method
+// returns the following error codes: * `PERMISSION_DENIED` if the requesting
+// user is not permitted to create the student group or member for access
+// errors. * `NOT_FOUND` if the student group does not exist or the user does
+// not have access to the student group. * `ALREADY_EXISTS` if the student
+// group member already exists. * `FAILED_PRECONDITION` if attempting to add a
+// member to a student group that has reached its member limit.
+//
+// - courseId: The identifier of the course.
+// - studentGroupId: The identifier of the student group.
+func (r *CoursesStudentGroupsStudentGroupMembersService) Create(courseId string, studentGroupId string, studentgroupmember *StudentGroupMember) *CoursesStudentGroupsStudentGroupMembersCreateCall {
+	c := &CoursesStudentGroupsStudentGroupMembersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.studentGroupId = studentGroupId
+	c.studentgroupmember = studentgroupmember
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesStudentGroupsStudentGroupMembersCreateCall) Fields(s ...googleapi.Field) *CoursesStudentGroupsStudentGroupMembersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesStudentGroupsStudentGroupMembersCreateCall) Context(ctx context.Context) *CoursesStudentGroupsStudentGroupMembersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesStudentGroupsStudentGroupMembersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesStudentGroupsStudentGroupMembersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.studentgroupmember)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/studentGroups/{studentGroupId}/studentGroupMembers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":       c.courseId,
+		"studentGroupId": c.studentGroupId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.studentGroups.studentGroupMembers.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.studentGroups.studentGroupMembers.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *StudentGroupMember.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CoursesStudentGroupsStudentGroupMembersCreateCall) Do(opts ...googleapi.CallOption) (*StudentGroupMember, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &StudentGroupMember{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.studentGroups.studentGroupMembers.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CoursesStudentGroupsStudentGroupMembersDeleteCall struct {
+	s              *Service
+	courseId       string
+	studentGroupId string
+	userId         string
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Delete: Deletes a student group member. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting user is not permitted
+// to delete the requested student group member or for access errors. *
+// `NOT_FOUND` if the student group member does not exist or the user does not
+// have access to the student group.
+//
+//   - courseId: The identifier of the course containing the relevant student
+//     group.
+//   - studentGroupId: The identifier of the student group containing the student
+//     group member to delete.
+//   - userId: The identifier of the student group member to delete.
+func (r *CoursesStudentGroupsStudentGroupMembersService) Delete(courseId string, studentGroupId string, userId string) *CoursesStudentGroupsStudentGroupMembersDeleteCall {
+	c := &CoursesStudentGroupsStudentGroupMembersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.studentGroupId = studentGroupId
+	c.userId = userId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesStudentGroupsStudentGroupMembersDeleteCall) Fields(s ...googleapi.Field) *CoursesStudentGroupsStudentGroupMembersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesStudentGroupsStudentGroupMembersDeleteCall) Context(ctx context.Context) *CoursesStudentGroupsStudentGroupMembersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesStudentGroupsStudentGroupMembersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesStudentGroupsStudentGroupMembersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/studentGroups/{studentGroupId}/studentGroupMembers/{userId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":       c.courseId,
+		"studentGroupId": c.studentGroupId,
+		"userId":         c.userId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.studentGroups.studentGroupMembers.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.studentGroups.studentGroupMembers.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CoursesStudentGroupsStudentGroupMembersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.studentGroups.studentGroupMembers.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CoursesStudentGroupsStudentGroupMembersListCall struct {
+	s              *Service
+	courseId       string
+	studentGroupId string
+	urlParams_     gensupport.URLParams
+	ifNoneMatch_   string
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// List: Returns a list of students in a group. This method returns the
+// following error codes: * `NOT_FOUND` if the course or student group does not
+// exist.
+//
+// - courseId: The identifier of the course.
+// - studentGroupId: The identifier of the student group.
+func (r *CoursesStudentGroupsStudentGroupMembersService) List(courseId string, studentGroupId string) *CoursesStudentGroupsStudentGroupMembersListCall {
+	c := &CoursesStudentGroupsStudentGroupMembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.studentGroupId = studentGroupId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return. Zero or unspecified indicates that the server may assign a maximum.
+// The server may return fewer than the specified number of results.
+func (c *CoursesStudentGroupsStudentGroupMembersListCall) PageSize(pageSize int64) *CoursesStudentGroupsStudentGroupMembersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": nextPageToken value
+// returned from a previous list call, indicating that the subsequent page of
+// results should be returned. The list request must be otherwise identical to
+// the one that resulted in this token.
+func (c *CoursesStudentGroupsStudentGroupMembersListCall) PageToken(pageToken string) *CoursesStudentGroupsStudentGroupMembersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesStudentGroupsStudentGroupMembersListCall) Fields(s ...googleapi.Field) *CoursesStudentGroupsStudentGroupMembersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesStudentGroupsStudentGroupMembersListCall) IfNoneMatch(entityTag string) *CoursesStudentGroupsStudentGroupMembersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesStudentGroupsStudentGroupMembersListCall) Context(ctx context.Context) *CoursesStudentGroupsStudentGroupMembersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesStudentGroupsStudentGroupMembersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesStudentGroupsStudentGroupMembersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/studentGroups/{studentGroupId}/studentGroupMembers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":       c.courseId,
+		"studentGroupId": c.studentGroupId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.studentGroups.studentGroupMembers.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.studentGroups.studentGroupMembers.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListStudentGroupMembersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CoursesStudentGroupsStudentGroupMembersListCall) Do(opts ...googleapi.CallOption) (*ListStudentGroupMembersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListStudentGroupMembersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.studentGroups.studentGroupMembers.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CoursesStudentGroupsStudentGroupMembersListCall) Pages(ctx context.Context, f func(*ListStudentGroupMembersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type CoursesStudentsCreateCall struct {

@@ -1383,6 +1383,29 @@ func (s Field) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FilterControl: A widget that displays an input field to change the value of
+// a template variable.
+type FilterControl struct {
+	// TemplateVariable: Name of the template variable the widget affects.
+	TemplateVariable string `json:"templateVariable,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TemplateVariable") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TemplateVariable") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FilterControl) MarshalJSON() ([]byte, error) {
+	type NoMethod FilterControl
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GaugeView: A gauge chart shows where the current value sits within a
 // pre-defined range. The upper and lower bounds should define the possible
 // range of values for the scorecard's query (inclusive).
@@ -3263,6 +3286,9 @@ type Widget struct {
 	CollapsibleGroup *CollapsibleGroup `json:"collapsibleGroup,omitempty"`
 	// ErrorReportingPanel: A widget that displays a list of error groups.
 	ErrorReportingPanel *ErrorReportingPanel `json:"errorReportingPanel,omitempty"`
+	// FilterControl: A widget that displays an input field to change the value of
+	// a template variable.
+	FilterControl *FilterControl `json:"filterControl,omitempty"`
 	// Id: Optional. The widget id. Ids may be made up of alphanumerics, dashes and
 	// underscores. Widget ids are optional.
 	Id string `json:"id,omitempty"`

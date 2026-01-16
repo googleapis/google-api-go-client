@@ -6656,10 +6656,10 @@ type DevicesDeviceUsersLookupCall struct {
 // properties are provided, only DeviceUsers having all of these properties are
 // considered as matches - i.e. the query behaves like an AND. Different
 // platforms require different amounts of information from the caller to ensure
-// that the DeviceUser is uniquely identified. - iOS: Specifying the 'partner'
-// and 'ios_device_id' fields is required. - Android: Specifying the
-// 'android_id' field is required. - Desktop: Specifying the 'raw_resource_id'
-// field is required.
+// that the DeviceUser is uniquely identified. - iOS: If either the `partner`
+// or `ios_device_id` field is provided, then both fields are required. -
+// Android: Specifying the `android_id` field is required. - Desktop:
+// Specifying the `raw_resource_id` field is required.
 //
 //   - parent: Must be set to "devices/-/deviceUsers" to search across all
 //     DeviceUser belonging to the user.

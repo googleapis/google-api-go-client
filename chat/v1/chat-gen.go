@@ -2738,9 +2738,8 @@ func (s GoogleAppsCardV1Condition) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1DataSourceConfig: A configuration object that helps
-// configure the data sources for a widget. Available for Google Workspace
-// add-ons that extend Google Workspace Studio. Unavailable for Google Chat
-// apps.
+// configure the data sources for a widget. Available for Google Chat apps and
+// Google Workspace add-ons that extend Google Workspace Studio.
 type GoogleAppsCardV1DataSourceConfig struct {
 	// PlatformDataSource: The data is from a Google Workspace application.
 	PlatformDataSource *GoogleAppsCardV1PlatformDataSource `json:"platformDataSource,omitempty"`
@@ -3607,7 +3606,7 @@ type GoogleAppsCardV1SelectionInput struct {
 	// `multi_select_min_query_length` field, `external_data_source` field and
 	// `platform_data_source` field are ignored. Available for Google Workspace
 	// add-ons that extend Google Workspace Studio. Available for the `Dropdown
-	// widget` widget in Google Chat apps as part of the Developer Preview Program
+	// widget` in Google Chat apps as part of the Developer Preview Program
 	// (https://developers.google.com/workspace/preview). For the `Dropdown` widget
 	// in Google Chat apps, only one `DataSourceConfig` is supported. If multiple
 	// `DataSourceConfig`s are set, only the first one is used.
@@ -5184,8 +5183,6 @@ type Message struct {
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 	// and omit the following: * Attachments
 	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages.attachments)
-	// * Accessory widgets
-	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages#Message.AccessoryWidget)
 	// For details, see Send a message privately
 	// (https://developers.google.com/workspace/chat/create-messages#private).
 	PrivateMessageViewer *User `json:"privateMessageViewer,omitempty"`

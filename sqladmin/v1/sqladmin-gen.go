@@ -524,6 +524,7 @@ type Backup struct {
 	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
 	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
+	//   "MYSQL_9_7" - The database version is MySQL 9.7.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
 	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server 2017
@@ -867,6 +868,7 @@ type BackupRun struct {
 	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
 	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
+	//   "MYSQL_9_7" - The database version is MySQL 9.7.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
 	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server 2017
@@ -1235,6 +1237,7 @@ type ConnectSettings struct {
 	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
 	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
+	//   "MYSQL_9_7" - The database version is MySQL 9.7.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
 	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server 2017
@@ -1565,6 +1568,7 @@ type DatabaseInstance struct {
 	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
 	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
+	//   "MYSQL_9_7" - The database version is MySQL 9.7.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
 	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server 2017
@@ -2068,11 +2072,24 @@ type DnsNameMapping struct {
 	// DnsScope: Output only. The scope that the DNS name applies to.
 	//
 	// Possible values:
-	//   "DNS_SCOPE_UNSPECIFIED" - Unknown DNS scope.
-	//   "INSTANCE" - Indicates a instance-level DNS name.
+	//   "DNS_SCOPE_UNSPECIFIED" - DNS scope not set. This value should not be
+	// used.
+	//   "INSTANCE" - Indicates an instance-level DNS name.
+	//   "CLUSTER" - Indicates a cluster-level DNS name.
 	DnsScope string `json:"dnsScope,omitempty"`
-	// Name: The DNS name.
+	// Name: Output only. The DNS name.
 	Name string `json:"name,omitempty"`
+	// RecordManager: Output only. The manager for this DNS record.
+	//
+	// Possible values:
+	//   "RECORD_MANAGER_UNSPECIFIED" - Record manager not set. This value should
+	// not be used.
+	//   "CUSTOMER" - The record may be managed by the customer. It is not
+	// automatically managed by Cloud SQL automation.
+	//   "CLOUD_SQL_AUTOMATION" - The record is managed by Cloud SQL, which will
+	// create, update, and delete the DNS records for the zone automatically when
+	// the Cloud SQL database instance is created or updated.
+	RecordManager string `json:"recordManager,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConnectionType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2102,6 +2119,10 @@ type Empty struct {
 
 // ExecuteSqlPayload: The request payload used to execute SQL statements.
 type ExecuteSqlPayload struct {
+	// Application: Optional. Specifies the name of the application that is making
+	// the request. This field is used for telemetry. Only alphanumeric characters,
+	// dashes, and underscores are allowed. The maximum length is 32 characters.
+	Application string `json:"application,omitempty"`
 	// AutoIamAuthn: Optional. When set to true, the API caller identity associated
 	// with the request is used for database authentication. The API caller must be
 	// an IAM user in the database.
@@ -2131,13 +2152,13 @@ type ExecuteSqlPayload struct {
 	// database. When `auto_iam_authn` is set to true, this field is ignored and
 	// the API caller's IAM user is used.
 	User string `json:"user,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AutoIamAuthn") to
+	// ForceSendFields is a list of field names (e.g. "Application") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AutoIamAuthn") to include in API
+	// NullFields is a list of field names (e.g. "Application") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2564,6 +2585,7 @@ type Flag struct {
 	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
 	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
+	//   "MYSQL_9_7" - The database version is MySQL 9.7.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
 	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server 2017
@@ -3037,6 +3059,9 @@ func (s ImportContextTdeImportOptions) MarshalJSON() ([]byte, error) {
 // InsightsConfig: Insights configuration. This specifies when Cloud SQL
 // Insights feature is enabled and optional configuration.
 type InsightsConfig struct {
+	// EnhancedQueryInsightsEnabled: Optional. Whether enhanced query insights
+	// feature is enabled.
+	EnhancedQueryInsightsEnabled bool `json:"enhancedQueryInsightsEnabled,omitempty"`
 	// QueryInsightsEnabled: Whether Query Insights feature is enabled.
 	QueryInsightsEnabled bool `json:"queryInsightsEnabled,omitempty"`
 	// QueryPlansPerMinute: Number of query execution plans captured by Insights
@@ -3053,15 +3078,15 @@ type InsightsConfig struct {
 	// RecordClientAddress: Whether Query Insights will record client address when
 	// enabled.
 	RecordClientAddress bool `json:"recordClientAddress,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "QueryInsightsEnabled") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "EnhancedQueryInsightsEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "QueryInsightsEnabled") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EnhancedQueryInsightsEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4121,7 +4146,8 @@ type Operation struct {
 	//   "CREATE_REPLICA" - Creates a Cloud SQL replica instance.
 	//   "CREATE_USER" - Creates a new user in a Cloud SQL instance.
 	//   "DELETE_USER" - Deletes a user from a Cloud SQL instance.
-	//   "UPDATE_USER" - Updates an existing user in a Cloud SQL instance.
+	//   "UPDATE_USER" - Updates an existing user in a Cloud SQL instance. If a
+	// user with the specified username doesn't exist, a new user is created.
 	//   "CREATE_DATABASE" - Creates a database in the Cloud SQL instance.
 	//   "DELETE_DATABASE" - Deletes a database in the Cloud SQL instance.
 	//   "UPDATE_DATABASE" - Updates a database in the Cloud SQL instance.
@@ -4645,6 +4671,7 @@ type PreCheckMajorVersionUpgradeContext struct {
 	//   "MYSQL_8_0_46" - The database major version is MySQL 8.0 and the minor
 	// version is 46.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
+	//   "MYSQL_9_7" - The database version is MySQL 9.7.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
 	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server 2017

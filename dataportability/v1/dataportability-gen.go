@@ -190,6 +190,21 @@ const (
 	// Move a copy of the maps you created in My Maps
 	DataportabilityMymapsMapsScope = "https://www.googleapis.com/auth/dataportability.mymaps.maps"
 
+	// Copy Nest camera event data
+	DataportabilityNestCameraEventScope = "https://www.googleapis.com/auth/dataportability.nest.camera_event"
+
+	// Copy Nest camera feature data
+	DataportabilityNestCameraFeatureScope = "https://www.googleapis.com/auth/dataportability.nest.camera_feature"
+
+	// Copy Nest camera footage
+	DataportabilityNestCameraVideoScope = "https://www.googleapis.com/auth/dataportability.nest.camera_video"
+
+	// Copy your Nest Store and Nest Renew billing and payment information
+	DataportabilityNestStoreScope = "https://www.googleapis.com/auth/dataportability.nest.store"
+
+	// Copy your Nest user information
+	DataportabilityNestUserScope = "https://www.googleapis.com/auth/dataportability.nest.user"
+
 	// Move a copy of your food purchase and reservation activity
 	DataportabilityOrderReservePurchasesReservationsScope = "https://www.googleapis.com/auth/dataportability.order_reserve.purchases_reservations"
 
@@ -346,6 +361,11 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 		"https://www.googleapis.com/auth/dataportability.myactivity.youtube",
 		"https://www.googleapis.com/auth/dataportability.mymaps.maps",
+		"https://www.googleapis.com/auth/dataportability.nest.camera_event",
+		"https://www.googleapis.com/auth/dataportability.nest.camera_feature",
+		"https://www.googleapis.com/auth/dataportability.nest.camera_video",
+		"https://www.googleapis.com/auth/dataportability.nest.store",
+		"https://www.googleapis.com/auth/dataportability.nest.user",
 		"https://www.googleapis.com/auth/dataportability.order_reserve.purchases_reservations",
 		"https://www.googleapis.com/auth/dataportability.play.devices",
 		"https://www.googleapis.com/auth/dataportability.play.grouping",

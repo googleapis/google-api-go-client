@@ -1804,10 +1804,10 @@ type GoogleCloudAssetV1Constraint struct {
 	// Possible values:
 	//   "CONSTRAINT_DEFAULT_UNSPECIFIED" - This is only used for distinguishing
 	// unset values and should never be used.
-	//   "ALLOW" - Indicate that all values are allowed for list constraints.
-	// Indicate that enforcement is off for boolean constraints.
-	//   "DENY" - Indicate that all values are denied for list constraints.
-	// Indicate that enforcement is on for boolean constraints.
+	//   "ALLOW" - Indicates that all values are allowed for list constraints.
+	// Indicates that enforcement is off for boolean constraints.
+	//   "DENY" - Indicates that all values are denied for list constraints.
+	// Indicates that enforcement is on for boolean constraints.
 	ConstraintDefault string `json:"constraintDefault,omitempty"`
 	// Description: Detailed description of what this `Constraint` controls as well
 	// as how and where it is enforced.

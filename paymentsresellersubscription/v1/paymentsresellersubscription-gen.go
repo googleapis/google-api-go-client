@@ -2532,9 +2532,8 @@ func (r *PartnersSubscriptionsService) Create(parentid string, subscription *Sub
 
 // SubscriptionId sets the optional parameter "subscriptionId": Required.
 // Identifies the subscription resource on the Partner side. The value is
-// restricted to 63 ASCII characters at the maximum. If a subscription was
-// previously created with the same subscription_id, we will directly return
-// that one.
+// restricted to 63 ASCII characters at the maximum. If a subscription with the
+// same ID already exists, the creation fails with an `ALREADY_EXISTS` error.
 func (c *PartnersSubscriptionsCreateCall) SubscriptionId(subscriptionId string) *PartnersSubscriptionsCreateCall {
 	c.urlParams_.Set("subscriptionId", subscriptionId)
 	return c
@@ -3002,9 +3001,8 @@ func (c *PartnersSubscriptionsProvisionCall) CycleOptionsInitialCycleDurationUni
 
 // SubscriptionId sets the optional parameter "subscriptionId": Required.
 // Identifies the subscription resource on the Partner side. The value is
-// restricted to 63 ASCII characters at the maximum. If a subscription was
-// previously created with the same subscription_id, we will directly return
-// that one.
+// restricted to 63 ASCII characters at the maximum. If a subscription with the
+// same ID already exists, the creation fails with an `ALREADY_EXISTS` error.
 func (c *PartnersSubscriptionsProvisionCall) SubscriptionId(subscriptionId string) *PartnersSubscriptionsProvisionCall {
 	c.urlParams_.Set("subscriptionId", subscriptionId)
 	return c

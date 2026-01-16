@@ -271,6 +271,8 @@ type BackfillAllStrategy struct {
 	// SalesforceExcludedObjects: Salesforce data source objects to avoid
 	// backfilling
 	SalesforceExcludedObjects *SalesforceOrg `json:"salesforceExcludedObjects,omitempty"`
+	// SpannerExcludedObjects: Spanner data source objects to avoid backfilling.
+	SpannerExcludedObjects *SpannerDatabase `json:"spannerExcludedObjects,omitempty"`
 	// SqlServerExcludedObjects: SQLServer data source objects to avoid backfilling
 	SqlServerExcludedObjects *SqlServerRdbms `json:"sqlServerExcludedObjects,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MongodbExcludedObjects") to
@@ -576,6 +578,8 @@ type ConnectionProfile struct {
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+	// SpannerProfile: Spanner Connection Profile configuration.
+	SpannerProfile *SpannerProfile `json:"spannerProfile,omitempty"`
 	// SqlServerProfile: SQLServer Connection Profile configuration.
 	SqlServerProfile *SqlServerProfile `json:"sqlServerProfile,omitempty"`
 	// StaticServiceIpConnectivity: Static Service IP connectivity.
@@ -721,6 +725,9 @@ type DiscoverConnectionProfileRequest struct {
 	// SalesforceOrg: Optional. Salesforce organization to enrich with child data
 	// objects and metadata.
 	SalesforceOrg *SalesforceOrg `json:"salesforceOrg,omitempty"`
+	// SpannerDatabase: Optional. Spanner database to enrich with child data
+	// objects and metadata.
+	SpannerDatabase *SpannerDatabase `json:"spannerDatabase,omitempty"`
 	// SqlServerRdbms: Optional. SQLServer RDBMS to enrich with child data objects
 	// and metadata.
 	SqlServerRdbms *SqlServerRdbms `json:"sqlServerRdbms,omitempty"`
@@ -754,6 +761,8 @@ type DiscoverConnectionProfileResponse struct {
 	PostgresqlRdbms *PostgresqlRdbms `json:"postgresqlRdbms,omitempty"`
 	// SalesforceOrg: Enriched Salesforce organization.
 	SalesforceOrg *SalesforceOrg `json:"salesforceOrg,omitempty"`
+	// SpannerDatabase: Enriched Spanner database.
+	SpannerDatabase *SpannerDatabase `json:"spannerDatabase,omitempty"`
 	// SqlServerRdbms: Enriched SQLServer RDBMS object.
 	SqlServerRdbms *SqlServerRdbms `json:"sqlServerRdbms,omitempty"`
 
@@ -3138,6 +3147,8 @@ type SourceConfig struct {
 	// SourceConnectionProfile: Required. Source connection profile resource.
 	// Format: `projects/{project}/locations/{location}/connectionProfiles/{name}`
 	SourceConnectionProfile string `json:"sourceConnectionProfile,omitempty"`
+	// SpannerSourceConfig: Spanner data source configuration.
+	SpannerSourceConfig *SpannerSourceConfig `json:"spannerSourceConfig,omitempty"`
 	// SqlServerSourceConfig: SQLServer data source configuration.
 	SqlServerSourceConfig *SqlServerSourceConfig `json:"sqlServerSourceConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MongodbSourceConfig") to
@@ -3197,6 +3208,8 @@ type SourceObjectIdentifier struct {
 	PostgresqlIdentifier *PostgresqlObjectIdentifier `json:"postgresqlIdentifier,omitempty"`
 	// SalesforceIdentifier: Salesforce data source object identifier.
 	SalesforceIdentifier *SalesforceObjectIdentifier `json:"salesforceIdentifier,omitempty"`
+	// SpannerIdentifier: Spanner data source object identifier.
+	SpannerIdentifier *SpannerObjectIdentifier `json:"spannerIdentifier,omitempty"`
 	// SqlServerIdentifier: SQLServer data source object identifier.
 	SqlServerIdentifier *SqlServerObjectIdentifier `json:"sqlServerIdentifier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MongodbIdentifier") to
@@ -3214,6 +3227,203 @@ type SourceObjectIdentifier struct {
 
 func (s SourceObjectIdentifier) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceObjectIdentifier
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SpannerColumn: Spanner column.
+type SpannerColumn struct {
+	// Column: Required. Column name.
+	Column string `json:"column,omitempty"`
+	// DataType: Optional. Spanner data type.
+	DataType string `json:"dataType,omitempty"`
+	// IsPrimaryKey: Optional. Whether or not the column is a primary key.
+	IsPrimaryKey bool `json:"isPrimaryKey,omitempty"`
+	// OrdinalPosition: Optional. The ordinal position of the column in the table.
+	OrdinalPosition int64 `json:"ordinalPosition,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SpannerColumn) MarshalJSON() ([]byte, error) {
+	type NoMethod SpannerColumn
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SpannerDatabase: Spanner database structure.
+type SpannerDatabase struct {
+	// Schemas: Optional. Spanner schemas in the database.
+	Schemas []*SpannerSchema `json:"schemas,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Schemas") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Schemas") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SpannerDatabase) MarshalJSON() ([]byte, error) {
+	type NoMethod SpannerDatabase
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SpannerObjectIdentifier: Spanner data source object identifier.
+type SpannerObjectIdentifier struct {
+	// Schema: Optional. The schema name.
+	Schema string `json:"schema,omitempty"`
+	// Table: Required. The table name.
+	Table string `json:"table,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Schema") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Schema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SpannerObjectIdentifier) MarshalJSON() ([]byte, error) {
+	type NoMethod SpannerObjectIdentifier
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SpannerProfile: Spanner profile.
+type SpannerProfile struct {
+	// Database: Required. Immutable. Cloud Spanner database resource. This field
+	// is immutable. Must be in the format:
+	// projects/{project}/instances/{instance}/databases/{database_id}.
+	Database string `json:"database,omitempty"`
+	// Host: Optional. The Spanner endpoint to connect to. Defaults to the global
+	// endpoint (https://spanner.googleapis.com). Must be in the format:
+	// https://spanner.{region}.rep.googleapis.com.
+	Host string `json:"host,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Database") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SpannerProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod SpannerProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SpannerSchema: Spanner schema.
+type SpannerSchema struct {
+	// Schema: Required. Schema name.
+	Schema string `json:"schema,omitempty"`
+	// Tables: Optional. Spanner tables in the schema.
+	Tables []*SpannerTable `json:"tables,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Schema") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Schema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SpannerSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod SpannerSchema
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SpannerSourceConfig: Spanner source configuration.
+type SpannerSourceConfig struct {
+	// BackfillDataBoostEnabled: Optional. Whether to use Data Boost for Spanner
+	// backfills. Defaults to false if not set.
+	BackfillDataBoostEnabled bool `json:"backfillDataBoostEnabled,omitempty"`
+	// ChangeStreamName: Required. Immutable. The change stream name to use for the
+	// stream.
+	ChangeStreamName string `json:"changeStreamName,omitempty"`
+	// ExcludeObjects: Optional. Spanner objects to avoid retrieving. If some
+	// objects are both included and excluded, an error will be thrown.
+	ExcludeObjects *SpannerDatabase `json:"excludeObjects,omitempty"`
+	// FgacRole: Optional. The FGAC role to use for the stream.
+	FgacRole string `json:"fgacRole,omitempty"`
+	// IncludeObjects: Optional. Spanner objects to retrieve from the data source.
+	// If some objects are both included and excluded, an error will be thrown.
+	IncludeObjects *SpannerDatabase `json:"includeObjects,omitempty"`
+	// MaxConcurrentBackfillTasks: Optional. Maximum number of concurrent backfill
+	// tasks.
+	MaxConcurrentBackfillTasks int64 `json:"maxConcurrentBackfillTasks,omitempty"`
+	// MaxConcurrentCdcTasks: Optional. Maximum number of concurrent CDC tasks.
+	MaxConcurrentCdcTasks int64 `json:"maxConcurrentCdcTasks,omitempty"`
+	// SpannerRpcPriority: Optional. The RPC priority to use for the stream.
+	//
+	// Possible values:
+	//   "SPANNER_RPC_PRIORITY_UNSPECIFIED" - Unspecified RPC priority.
+	//   "LOW" - Low RPC priority.
+	//   "MEDIUM" - Medium RPC priority.
+	//   "HIGH" - High RPC priority.
+	SpannerRpcPriority string `json:"spannerRpcPriority,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackfillDataBoostEnabled")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackfillDataBoostEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SpannerSourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SpannerSourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SpannerTable: Spanner table.
+type SpannerTable struct {
+	// Columns: Optional. Spanner columns in the table.
+	Columns []*SpannerColumn `json:"columns,omitempty"`
+	// Table: Required. Table name.
+	Table string `json:"table,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Columns") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Columns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SpannerTable) MarshalJSON() ([]byte, error) {
+	type NoMethod SpannerTable
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

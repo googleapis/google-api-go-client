@@ -5931,9 +5931,9 @@ func (c *ResourceRecordSetsListCall) MaxResults(maxResults int64) *ResourceRecor
 	return c
 }
 
-// Name sets the optional parameter "name": Restricts the list to return only
-// records with this fully qualified domain name. Mutually exclusive with the
-// {@code filter} field.
+// Name sets the optional parameter "name": Specify a fully qualified domain
+// name to view only those records. The name parameter is not supported and
+// must be omitted when you use filter.
 func (c *ResourceRecordSetsListCall) Name(name string) *ResourceRecordSetsListCall {
 	c.urlParams_.Set("name", name)
 	return c
@@ -5947,9 +5947,9 @@ func (c *ResourceRecordSetsListCall) PageToken(pageToken string) *ResourceRecord
 	return c
 }
 
-// Type sets the optional parameter "type": Restricts the list to return only
-// records of this type. If present, the "name" parameter must also be present.
-// Mutually exclusive with the {@code filter} field.
+// Type sets the optional parameter "type": Specify a record type to view only
+// those records. You must also specify the name parameter. The type parameter
+// is not supported and must be omitted when you use filter.
 func (c *ResourceRecordSetsListCall) Type(type_ string) *ResourceRecordSetsListCall {
 	c.urlParams_.Set("type", type_)
 	return c

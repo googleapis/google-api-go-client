@@ -303,15 +303,17 @@ func (s Connector) MarshalJSON() ([]byte, error) {
 
 // Datasource: A data source that backs Firebase Data Connect services.
 type Datasource struct {
+	// HttpGraphql: HTTP GraphQL server webhook configurations.
+	HttpGraphql *HttpGraphql `json:"httpGraphql,omitempty"`
 	// Postgresql: PostgreSQL configurations.
 	Postgresql *PostgreSql `json:"postgresql,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Postgresql") to
+	// ForceSendFields is a list of field names (e.g. "HttpGraphql") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Postgresql") to include in API
+	// NullFields is a list of field names (e.g. "HttpGraphql") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -739,6 +741,30 @@ func (s GraphqlResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// HttpGraphql: Settings for HTTP GraphQL server webhook.
+type HttpGraphql struct {
+	// Timeout: Optional. Timeout duration for the HTTP request.
+	Timeout string `json:"timeout,omitempty"`
+	// Uri: Required. The endpoint of the HTTP GraphQL server.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Timeout") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Timeout") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HttpGraphql) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpGraphql
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ImpersonateRequest: The Impersonate request to Firebase Data Connect.
 type ImpersonateRequest struct {
 	// Extensions: Optional. Additional GraphQL request information.
@@ -870,8 +896,8 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 	// Unreachable: Unordered list. Unreachable resources. Populated when the
 	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections e.g. when attempting to list all resources across all supported
-	// locations.
+	// collections. For example, when attempting to list all resources across all
+	// supported locations.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2000,9 +2026,9 @@ func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Proje
 // ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
 // When set to `true`, operations that are reachable are returned as normal,
 // and those that are unreachable are returned in the
-// [ListOperationsResponse.unreachable] field. This can only be `true` when
-// reading across collections e.g. when `parent` is set to
-// "projects/example/locations/-". This field is not by default supported and
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
 func (c *ProjectsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsOperationsListCall {

@@ -229,6 +229,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.RegionZones = NewRegionZonesService(s)
 	s.Regions = NewRegionsService(s)
 	s.ReservationBlocks = NewReservationBlocksService(s)
+	s.ReservationSlots = NewReservationSlotsService(s)
 	s.ReservationSubBlocks = NewReservationSubBlocksService(s)
 	s.Reservations = NewReservationsService(s)
 	s.ResourcePolicies = NewResourcePoliciesService(s)
@@ -446,6 +447,8 @@ type Service struct {
 	Regions *RegionsService
 
 	ReservationBlocks *ReservationBlocksService
+
+	ReservationSlots *ReservationSlotsService
 
 	ReservationSubBlocks *ReservationSubBlocksService
 
@@ -1255,6 +1258,15 @@ func NewReservationBlocksService(s *Service) *ReservationBlocksService {
 }
 
 type ReservationBlocksService struct {
+	s *Service
+}
+
+func NewReservationSlotsService(s *Service) *ReservationSlotsService {
+	rs := &ReservationSlotsService{s: s}
+	return rs
+}
+
+type ReservationSlotsService struct {
 	s *Service
 }
 
@@ -51661,6 +51673,327 @@ type ReservationListWarningData struct {
 
 func (s ReservationListWarningData) MarshalJSON() ([]byte, error) {
 	type NoMethod ReservationListWarningData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReservationSlot: Represents a reservation slot resource.
+type ReservationSlot struct {
+	// CreationTimestamp: Output only. [Output Only] The creation timestamp,
+	// formatted asRFC3339 text.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+	// Id: Output only. [Output Only] The unique identifier for this resource. This
+	// identifier is
+	// defined by the server.
+	Id uint64 `json:"id,omitempty,string"`
+	// Kind: Output only. [Output Only] The type of resource.
+	// Alwayscompute#reservationSlot for reservation slots.
+	Kind string `json:"kind,omitempty"`
+	// Name: Output only. [Output Only] The name of the reservation slot.
+	Name string `json:"name,omitempty"`
+	// PhysicalTopology: Output only. [Output Only] The physical topology of the
+	// reservation slot.
+	PhysicalTopology *ReservationSlotPhysicalTopology `json:"physicalTopology,omitempty"`
+	// SelfLink: Output only. [Output Only] A server-defined fully-qualified URL
+	// for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+	// SelfLinkWithId: Output only. [Output Only] A server-defined URL for this
+	// resource with the resource ID.
+	SelfLinkWithId string `json:"selfLinkWithId,omitempty"`
+	// ShareSettings: Specify share settings to create a shared slot. Set to
+	// empty
+	// to inherit the share settings from a parent resource.
+	ShareSettings *ShareSettings `json:"shareSettings,omitempty"`
+	// State: Output only. [Output Only] The state of the reservation slot.
+	//
+	// Possible values:
+	//   "ACTIVE" - The reservation slot has allocated all its resources.
+	//   "CREATING" - The resources are being allocated for the reservation slot.
+	//   "DELETING" - The reservation slot is currently being deleted.
+	//   "STATE_UNSPECIFIED"
+	State string `json:"state,omitempty"`
+	// Status: Output only. [Output Only] The status of the reservation slot.
+	Status *ReservationSlotStatus `json:"status,omitempty"`
+	// Zone: Output only. [Output Only] The zone in which the reservation slot
+	// resides.
+	Zone string `json:"zone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreationTimestamp") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreationTimestamp") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReservationSlot) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservationSlot
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ReservationSlotPhysicalTopology struct {
+	// Block: The unique identifier of the capacity block within the cluster.
+	Block string `json:"block,omitempty"`
+	// Cluster: The cluster name of the reservation sub-block.
+	Cluster string `json:"cluster,omitempty"`
+	// Host: The unique identifier of the capacity host within the capacity
+	// sub-block.
+	Host string `json:"host,omitempty"`
+	// SubBlock: The unique identifier of the capacity sub-block within the
+	// capacity
+	// block.
+	SubBlock string `json:"subBlock,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Block") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Block") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReservationSlotPhysicalTopology) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservationSlotPhysicalTopology
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ReservationSlotStatus struct {
+	// PhysicalTopology: Output only. [Output Only] The physical topology of the
+	// reservation sub-block.
+	PhysicalTopology *ReservationSlotPhysicalTopology `json:"physicalTopology,omitempty"`
+	// RdmaIpAddresses: Output only. The RDMA IP address of the physical host.
+	RdmaIpAddresses []string `json:"rdmaIpAddresses,omitempty"`
+	// RunningInstances: Output only. The URIs of the instances currently running
+	// on this slot.
+	RunningInstances []string `json:"runningInstances,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PhysicalTopology") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PhysicalTopology") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReservationSlotStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservationSlotStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ReservationSlotsGetResponse struct {
+	Resource *ReservationSlot `json:"resource,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Resource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Resource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReservationSlotsGetResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservationSlotsGetResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReservationSlotsListResponse: A list of reservation slots within a single
+// reservation.
+type ReservationSlotsListResponse struct {
+	// Id: The unique identifier for the resource; defined by the server.
+	Id string `json:"id,omitempty"`
+	// Items: A list of reservation slot resources.
+	Items []*ReservationSlot `json:"items,omitempty"`
+	// Kind: The type of resource. Alwayscompute#reservationSlot for a list of
+	// reservation
+	// slots.
+	Kind string `json:"kind,omitempty"`
+	// NextPageToken: This token allows you to get the next page of results
+	// for
+	// list requests. If the number of results is larger thanmaxResults, use the
+	// nextPageToken as a value for
+	// the query parameter pageToken in the next list request.
+	// Subsequent list requests will have their own nextPageToken to
+	// continue paging through the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SelfLink: The server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+	// Warning: An informational warning message.
+	Warning *ReservationSlotsListResponseWarning `json:"warning,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReservationSlotsListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservationSlotsListResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReservationSlotsListResponseWarning: An informational warning message.
+type ReservationSlotsListResponseWarning struct {
+	// Code: [Output Only] A warning code, if applicable. For example,
+	// Compute
+	// Engine returns NO_RESULTS_ON_PAGE if there
+	// are no results in the response.
+	//
+	// Possible values:
+	//   "CLEANUP_FAILED" - Warning about failed cleanup of transient changes made
+	// by a failed
+	// operation.
+	//   "DEPRECATED_RESOURCE_USED" - A link to a deprecated resource was created.
+	//   "DEPRECATED_TYPE_USED" - When deploying and at least one of the resources
+	// has a type marked as
+	// deprecated
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE" - The user created a boot disk that is
+	// larger than image size.
+	//   "EXPERIMENTAL_TYPE_USED" - When deploying and at least one of the
+	// resources has a type marked as
+	// experimental
+	//   "EXTERNAL_API_WARNING" - Warning that is present in an external api call
+	//   "FIELD_VALUE_OVERRIDEN" - Warning that value of a field has been
+	// overridden.
+	// Deprecated unused field.
+	//   "INJECTED_KERNELS_DEPRECATED" - The operation involved use of an injected
+	// kernel, which is deprecated.
+	//   "INVALID_HEALTH_CHECK_FOR_DYNAMIC_WIEGHTED_LB" - A WEIGHTED_MAGLEV backend
+	// service is associated with a health check that is
+	// not of type HTTP/HTTPS/HTTP2.
+	//   "LARGE_DEPLOYMENT_WARNING" - When deploying a deployment with a
+	// exceedingly large number of resources
+	//   "LIST_OVERHEAD_QUOTA_EXCEED" - Resource can't be retrieved due to list
+	// overhead quota exceed
+	// which captures the amount of resources filtered out by
+	// user-defined list filter.
+	//   "MISSING_TYPE_DEPENDENCY" - A resource depends on a missing type
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED" - The route's nextHopIp address is not
+	// assigned to an instance on the
+	// network.
+	//   "NEXT_HOP_CANNOT_IP_FORWARD" - The route's next hop instance cannot ip
+	// forward.
+	//   "NEXT_HOP_INSTANCE_HAS_NO_IPV6_INTERFACE" - The route's nextHopInstance
+	// URL refers to an instance that does not have an
+	// ipv6 interface on the same network as the route.
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND" - The route's nextHopInstance URL refers to
+	// an instance that does not exist.
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK" - The route's nextHopInstance URL
+	// refers to an instance that is not on the
+	// same network as the route.
+	//   "NEXT_HOP_NOT_RUNNING" - The route's next hop instance does not have a
+	// status of RUNNING.
+	//   "NOT_CRITICAL_ERROR" - Error which is not critical. We decided to continue
+	// the process despite
+	// the mentioned error.
+	//   "NO_RESULTS_ON_PAGE" - No results are present on a particular list page.
+	//   "PARTIAL_SUCCESS" - Success is reported, but some results may be missing
+	// due to errors
+	//   "QUOTA_INFO_UNAVAILABLE" - Quota information is not available to client
+	// requests (e.g:
+	// regions.list).
+	//   "REQUIRED_TOS_AGREEMENT" - The user attempted to use a resource that
+	// requires a TOS they have not
+	// accepted.
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING" - Warning that a resource is
+	// in use.
+	//   "RESOURCE_NOT_DELETED" - One or more of the resources set to auto-delete
+	// could not be deleted
+	// because they were in use.
+	//   "SCHEMA_VALIDATION_IGNORED" - When a resource schema validation is
+	// ignored.
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE" - Instance template used in instance
+	// group manager is valid as such, but
+	// its application does not make a lot of sense, because it allows only
+	// single instance in instance group.
+	//   "UNDECLARED_PROPERTIES" - When undeclared properties in the schema are
+	// present
+	//   "UNREACHABLE" - A given scope cannot be reached.
+	Code string `json:"code,omitempty"`
+	// Data: [Output Only] Metadata about this warning in key:
+	// value format. For example:
+	//
+	// "data": [
+	//   {
+	//    "key": "scope",
+	//    "value": "zones/us-east1-d"
+	//   }
+	Data []*ReservationSlotsListResponseWarningData `json:"data,omitempty"`
+	// Message: [Output Only] A human-readable description of the warning code.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReservationSlotsListResponseWarning) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservationSlotsListResponseWarning
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ReservationSlotsListResponseWarningData struct {
+	// Key: [Output Only] A key that provides more detail on the warning
+	// being
+	// returned. For example, for warnings where there are no results in a
+	// list
+	// request for a particular zone, this key might be scope and
+	// the key value might be the zone name. Other examples might be a
+	// key
+	// indicating a deprecated resource and a suggested replacement, or a
+	// warning about invalid network settings (for example, if an instance
+	// attempts to perform IP forwarding but is not enabled for IP forwarding).
+	Key string `json:"key,omitempty"`
+	// Value: [Output Only] A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReservationSlotsListResponseWarningData) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservationSlotsListResponseWarningData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

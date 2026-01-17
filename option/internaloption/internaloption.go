@@ -154,10 +154,10 @@ func (w withDefaultScopes) Apply(o *internal.DialSettings) {
 }
 
 // WithTelemetryAttributes returns a ClientOption that specifies a map of
-// telemetry attributes to be added to all OpenTelemetry signals (spans and
-// metrics). These attributes represent the static identity of the client
-// (e.g., service name, version) and are expected to be consistent across all
-// signals to enable cross-signal correlation.
+// telemetry attributes to be added to all telemetry signals, such as tracing
+// and metrics, for purposes including representing the static identity of the
+// client (e.g., service name, version). These attributes are expected to be
+// consistent across all signals to enable cross-signal correlation.
 //
 // It should only be used internally by generated clients.
 func WithTelemetryAttributes(attrs map[string]string) option.ClientOption {

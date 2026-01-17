@@ -730,6 +730,123 @@ func (s GooRepository) MarshalJSON() ([]byte, error) {
 type GooSettings struct {
 }
 
+// GoogleCloudOsconfigCommonV1__OperationMetadata: Represents the metadata of a
+// generic long-running operation.
+type GoogleCloudOsconfigCommonV1__OperationMetadata struct {
+	// ApiVersion: Output only. API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have successfully
+	// been cancelled have Operation.error value with a google.rpc.Status.code of
+	// 1, corresponding to `Code.CANCELLED`.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+	// StatusMessage: Output only. Human-readable status of the operation, if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
+	// Target: Output only. Server-defined resource path for the target of the
+	// operation.
+	Target string `json:"target,omitempty"`
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOsconfigCommonV1__OperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOsconfigCommonV1__OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOsconfigCommonV1alpha__OperationMetadata: Represents the metadata
+// of a generic long-running operation.
+type GoogleCloudOsconfigCommonV1alpha__OperationMetadata struct {
+	// ApiVersion: Output only. API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have successfully
+	// been cancelled have Operation.error value with a google.rpc.Status.code of
+	// 1, corresponding to `Code.CANCELLED`.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+	// StatusMessage: Output only. Human-readable status of the operation, if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
+	// Target: Output only. Server-defined resource path for the target of the
+	// operation.
+	Target string `json:"target,omitempty"`
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOsconfigCommonV1alpha__OperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOsconfigCommonV1alpha__OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOsconfigCommonV1main__OperationMetadata: Represents the metadata
+// of a generic long-running operation.
+type GoogleCloudOsconfigCommonV1main__OperationMetadata struct {
+	// ApiVersion: Output only. API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have successfully
+	// been cancelled have Operation.error value with a google.rpc.Status.code of
+	// 1, corresponding to `Code.CANCELLED`.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+	// StatusMessage: Output only. Human-readable status of the operation, if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
+	// Target: Output only. Server-defined resource path for the target of the
+	// operation.
+	Target string `json:"target,omitempty"`
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOsconfigCommonV1main__OperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOsconfigCommonV1main__OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata: OS policy
 // assignment operation metadata provided by OS policy assignment API methods
 // that return long running operations.

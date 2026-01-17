@@ -1693,6 +1693,13 @@ type TransferCounters struct {
 	// ObjectsFromSourceSkippedBySync: Objects in the data source that are not
 	// transferred because they already exist in the data sink.
 	ObjectsFromSourceSkippedBySync int64 `json:"objectsFromSourceSkippedBySync,omitempty,string"`
+	// UnrestoredDeepArchiveObjectsSkippedCount: Number of unrestored deep archive
+	// objects skipped.
+	UnrestoredDeepArchiveObjectsSkippedCount int64 `json:"unrestoredDeepArchiveObjectsSkippedCount,omitempty,string"`
+	// UnsupportedS3GlacierObjectsSkippedCount: Number of glacier objects skipped,
+	// glacier objects are unsupported by default regardless of the restore status.
+	// Allowlist the project to copy glacier objects if needed.
+	UnsupportedS3GlacierObjectsSkippedCount int64 `json:"unsupportedS3GlacierObjectsSkippedCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "BytesCopiedToSink") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

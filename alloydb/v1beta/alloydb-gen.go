@@ -1992,6 +1992,8 @@ type Instance struct {
 	//   "PROMOTING" - The instance is being promoted.
 	//   "SWITCHOVER" - The instance has entered switchover state. All updates on
 	// instance are restricted while the instance is in this state.
+	//   "STOPPING" - The instance is being stopped.
+	//   "STARTING" - The instance is being started.
 	State string `json:"state,omitempty"`
 	// Uid: Output only. The system-generated UID of the resource. The UID is
 	// assigned when the resource is created, and it is retained until it is
@@ -3641,49 +3643,6 @@ func (s StorageDatabasecenterPartnerapiV1mainBackupRun) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainBigQueryResourceMetadata:
-// BigQueryResourceMetadata contains information about the BigQuery resource.
-// Next ID: 9
-type StorageDatabasecenterPartnerapiV1mainBigQueryResourceMetadata struct {
-	// CreateTime: The creation time of the resource, i.e. the time when resource
-	// is created and recorded in partner service.
-	CreateTime string `json:"createTime,omitempty"`
-	// FullResourceName: Required. Full resource name of this instance.
-	FullResourceName string `json:"fullResourceName,omitempty"`
-	// Location: Required. location of the resource
-	Location string `json:"location,omitempty"`
-	// Product: The product this resource represents.
-	Product *StorageDatabasecenterProtoCommonProduct `json:"product,omitempty"`
-	// ResourceContainer: Closest parent Cloud Resource Manager container of this
-	// resource. It must be resource name of a Cloud Resource Manager project with
-	// the format of "/", such as "projects/123". For GCP provided resources,
-	// number should be project number.
-	ResourceContainer string `json:"resourceContainer,omitempty"`
-	// ResourceId: Required. Database resource id.
-	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
-	// UpdateTime: The time at which the resource was updated and recorded at
-	// partner service.
-	UpdateTime string `json:"updateTime,omitempty"`
-	// UserLabelSet: User-provided labels associated with the resource
-	UserLabelSet *StorageDatabasecenterPartnerapiV1mainUserLabels `json:"userLabelSet,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s StorageDatabasecenterPartnerapiV1mainBigQueryResourceMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod StorageDatabasecenterPartnerapiV1mainBigQueryResourceMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // StorageDatabasecenterPartnerapiV1mainCompliance: Contains compliance
 // information about a security standard indicating unmet recommendations.
 type StorageDatabasecenterPartnerapiV1mainCompliance struct {
@@ -3793,8 +3752,6 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	// BackupdrMetadata: BackupDR metadata is used to ingest metadata from
 	// BackupDR.
 	BackupdrMetadata *StorageDatabasecenterPartnerapiV1mainBackupDRMetadata `json:"backupdrMetadata,omitempty"`
-	// BigqueryResourceMetadata: For BigQuery resource metadata.
-	BigqueryResourceMetadata *StorageDatabasecenterPartnerapiV1mainBigQueryResourceMetadata `json:"bigqueryResourceMetadata,omitempty"`
 	// ConfigBasedSignalData: Config based signal data is used to ingest signals
 	// that are generated based on the configuration of the database resource.
 	ConfigBasedSignalData *StorageDatabasecenterPartnerapiV1mainConfigBasedSignalData `json:"configBasedSignalData,omitempty"`
@@ -3815,7 +3772,6 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	//   "CONFIG_BASED_SIGNAL_DATA" - Database config based signal data
 	//   "BACKUPDR_METADATA" - Database resource metadata from BackupDR
 	//   "DATABASE_RESOURCE_SIGNAL_DATA" - Database resource signal data
-	//   "BIGQUERY_RESOURCE_METADATA" - BigQuery resource metadata
 	FeedType                 string                                                                         `json:"feedType,omitempty"`
 	ObservabilityMetricData  *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData                  `json:"observabilityMetricData,omitempty"`
 	RecommendationSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData `json:"recommendationSignalData,omitempty"`
@@ -4163,6 +4119,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
 	// policy.
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
+	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Change in performance KPIs.
 	SignalType string `json:"signalType,omitempty"`
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -4214,10 +4171,10 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceId struct {
 	ProviderDescription string `json:"providerDescription,omitempty"`
 	// ResourceType: Required. The type of resource this ID is identifying. Ex
 	// go/keep-sorted start alloydb.googleapis.com/Cluster,
-	// alloydb.googleapis.com/Instance, bigquery.googleapis.com/Dataset,
-	// bigtableadmin.googleapis.com/Cluster, bigtableadmin.googleapis.com/Instance
-	// compute.googleapis.com/Instance firestore.googleapis.com/Database,
-	// redis.googleapis.com/Instance, redis.googleapis.com/Cluster,
+	// alloydb.googleapis.com/Instance, bigtableadmin.googleapis.com/Cluster,
+	// bigtableadmin.googleapis.com/Instance compute.googleapis.com/Instance
+	// firestore.googleapis.com/Database, redis.googleapis.com/Instance,
+	// redis.googleapis.com/Cluster,
 	// oracledatabase.googleapis.com/CloudExadataInfrastructure
 	// oracledatabase.googleapis.com/CloudVmCluster
 	// oracledatabase.googleapis.com/AutonomousDatabase
@@ -4668,6 +4625,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
 	// policy.
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
+	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Change in performance KPIs.
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4850,9 +4808,15 @@ func (s StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata) MarshalJS
 // MachineConfiguration describes the configuration of a machine specific to
 // Database Resource.
 type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
+	// BaselineSlots: Optional. Baseline slots for BigQuery Reservations. Baseline
+	// slots are in increments of 50.
+	BaselineSlots int64 `json:"baselineSlots,omitempty,string"`
 	// CpuCount: The number of CPUs. Deprecated. Use vcpu_count instead.
 	// TODO(b/342344482) add proto validations again after bug fix.
 	CpuCount int64 `json:"cpuCount,omitempty"`
+	// MaxReservationSlots: Optional. Max slots for BigQuery Reservations. Max
+	// slots are in increments of 50.
+	MaxReservationSlots int64 `json:"maxReservationSlots,omitempty,string"`
 	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482) add proto
 	// validations again after bug fix.
 	MemorySizeInBytes int64 `json:"memorySizeInBytes,omitempty,string"`
@@ -4861,13 +4825,13 @@ type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
 	// VcpuCount: Optional. The number of vCPUs. TODO(b/342344482) add proto
 	// validations again after bug fix.
 	VcpuCount float64 `json:"vcpuCount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CpuCount") to
+	// ForceSendFields is a list of field names (e.g. "BaselineSlots") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CpuCount") to include in API
+	// NullFields is a list of field names (e.g. "BaselineSlots") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

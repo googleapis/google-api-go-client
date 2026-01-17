@@ -389,10 +389,22 @@ type ProjectsLocationsApplicationsServicesService struct {
 
 func NewProjectsLocationsApplicationsServicesVersionsService(s *APIService) *ProjectsLocationsApplicationsServicesVersionsService {
 	rs := &ProjectsLocationsApplicationsServicesVersionsService{s: s}
+	rs.Instances = NewProjectsLocationsApplicationsServicesVersionsInstancesService(s)
 	return rs
 }
 
 type ProjectsLocationsApplicationsServicesVersionsService struct {
+	s *APIService
+
+	Instances *ProjectsLocationsApplicationsServicesVersionsInstancesService
+}
+
+func NewProjectsLocationsApplicationsServicesVersionsInstancesService(s *APIService) *ProjectsLocationsApplicationsServicesVersionsInstancesService {
+	rs := &ProjectsLocationsApplicationsServicesVersionsInstancesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsApplicationsServicesVersionsInstancesService struct {
 	s *APIService
 }
 
@@ -1442,37 +1454,6 @@ type ErrorHandler struct {
 
 func (s ErrorHandler) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorHandler
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ExportAppImageRequest: Request message for Versions.ExportAppImage.
-type ExportAppImageRequest struct {
-	// DestinationRepository: Optional. The full resource name of the AR repository
-	// to export to. Format:
-	// projects/{project}/locations/{location}/repositories/{repository} If not
-	// specified, defaults to
-	// projects/{project}/locations/{location}/repositories/gae-standard in the
-	// same region as the app. The default repository will be created if it does
-	// not exist.
-	DestinationRepository string `json:"destinationRepository,omitempty"`
-	// ServiceAccount: Optional. Optional: A service account to use for
-	// authenticating to Artifact Registry.
-	ServiceAccount string `json:"serviceAccount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DestinationRepository") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DestinationRepository") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ExportAppImageRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod ExportAppImageRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3693,9 +3674,12 @@ type Version struct {
 	VersionUrl string `json:"versionUrl,omitempty"`
 	// Vm: Whether to deploy this version in a container on a virtual machine.
 	Vm bool `json:"vm,omitempty"`
+	// VpcAccess: Enables VPC access connectivity for standard apps.
+	VpcAccess *VpcAccess `json:"vpcAccess,omitempty"`
 	// VpcAccessConnector: Enables VPC connectivity for standard apps.
 	VpcAccessConnector *VpcAccessConnector `json:"vpcAccessConnector,omitempty"`
-	// VpcEgress: Enables VPC egress connectivity for standard apps.
+	// VpcEgress: Deprecated: Use vpc_access instead. Enables VPC egress
+	// connectivity for standard apps.
 	VpcEgress *VpcEgress `json:"vpcEgress,omitempty"`
 	// Zones: The Google Compute Engine zones that are supported by this version in
 	// the App Engine flexible environment. Deprecated.
@@ -3762,6 +3746,39 @@ func (s *Volume) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// VpcAccess: VPC Access settings
+type VpcAccess struct {
+	// NetworkInterfaces: The Direct VPC configuration. Currently only single
+	// network interface is supported.
+	NetworkInterfaces []*VpcNetworkInterface `json:"networkInterfaces,omitempty"`
+	// VpcEgress: The traffic egress setting for the VPC network interface,
+	// controlling what traffic is diverted through it.
+	//
+	// Possible values:
+	//   "VPC_EGRESS_UNSPECIFIED" - No value set; apply default behavior
+	//   "ALL_TRAFFIC" - Force all traffic to egress through the NetworkInterface
+	// (and configured VPC Network)
+	//   "PRIVATE_IP_RANGES" - Force all Private IP Space traffic to egress through
+	// NetworkInterface (and configured VPC Network)
+	VpcEgress string `json:"vpcEgress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NetworkInterfaces") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NetworkInterfaces") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VpcAccess) MarshalJSON() ([]byte, error) {
+	type NoMethod VpcAccess
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // VpcAccessConnector: VPC access connector specification.
 type VpcAccessConnector struct {
 	// EgressSetting: The egress setting for the connector, controlling what
@@ -3795,7 +3812,7 @@ func (s VpcAccessConnector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// VpcEgress: Vpc Egress configuration.
+// VpcEgress: Deprecated: Use VpcAccess instead. Vpc Egress configuration.
 type VpcEgress struct {
 	// EgressSetting: The egress setting for the subnetwork, controlling what
 	// traffic is diverted through it.
@@ -3826,6 +3843,45 @@ type VpcEgress struct {
 
 func (s VpcEgress) MarshalJSON() ([]byte, error) {
 	type NoMethod VpcEgress
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VpcNetworkInterface: Network interface key message.
+type VpcNetworkInterface struct {
+	// Network: Optional. The VPC network that the App Engine resource will be able
+	// to send traffic to. At least one of network or subnetwork must be specified.
+	// If both network and subnetwork are specified, the given VPC subnetwork must
+	// belong to the given VPC network. If network is not specified, it will be
+	// looked up from the subnetwork. Could be either a short name or a full path.
+	// e.g. {VPC_NETWORK} or
+	// projects/{HOST_PROJECT_ID}/global/networks/{VPC_NETWORK}
+	Network string `json:"network,omitempty"`
+	// Subnet: Optional. The VPC subnetwork that the App Engine resource will get
+	// IPs from. At least one of network or subnetwork must be specified. If both
+	// network and subnetwork are specified, the given VPC subnetwork must belong
+	// to the given VPC network. If subnetwork is not specified, the subnetwork
+	// with the same name with the network will be used. Could be either a short
+	// name or a full path. e.g. {SUBNET_NAME} or
+	// projects/{HOST_PROJECT_ID}/regions/{REGION}/subnetworks/{SUBNET_NAME}
+	Subnet string `json:"subnet,omitempty"`
+	// Tags: Optional. The network tags that will be applied to this App Engine
+	// resource.
+	Tags []string `json:"tags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Network") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Network") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VpcNetworkInterface) MarshalJSON() ([]byte, error) {
+	type NoMethod VpcNetworkInterface
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7823,118 +7879,6 @@ func (c *AppsServicesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Oper
 	return ret, nil
 }
 
-type AppsServicesVersionsExportAppImageCall struct {
-	s                     *APIService
-	appsId                string
-	servicesId            string
-	versionsId            string
-	exportappimagerequest *ExportAppImageRequest
-	urlParams_            gensupport.URLParams
-	ctx_                  context.Context
-	header_               http.Header
-}
-
-// ExportAppImage: Exports a user image to Artifact Registry.
-//
-//   - appsId: Part of `name`.  Name of the App Engine version resource. Format:
-//     apps/{app}/services/{service}/versions/{version}.
-//   - servicesId: Part of `name`. See documentation of `appsId`.
-//   - versionsId: Part of `name`. See documentation of `appsId`.
-func (r *AppsServicesVersionsService) ExportAppImage(appsId string, servicesId string, versionsId string, exportappimagerequest *ExportAppImageRequest) *AppsServicesVersionsExportAppImageCall {
-	c := &AppsServicesVersionsExportAppImageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.appsId = appsId
-	c.servicesId = servicesId
-	c.versionsId = versionsId
-	c.exportappimagerequest = exportappimagerequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *AppsServicesVersionsExportAppImageCall) Fields(s ...googleapi.Field) *AppsServicesVersionsExportAppImageCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *AppsServicesVersionsExportAppImageCall) Context(ctx context.Context) *AppsServicesVersionsExportAppImageCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *AppsServicesVersionsExportAppImageCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AppsServicesVersionsExportAppImageCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.exportappimagerequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/apps/{appsId}/services/{servicesId}/versions/{versionsId}:exportAppImage")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"appsId":     c.appsId,
-		"servicesId": c.servicesId,
-		"versionsId": c.versionsId,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "appengine.apps.services.versions.exportAppImage", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "appengine.apps.services.versions.exportAppImage" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *AppsServicesVersionsExportAppImageCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.apps.services.versions.exportAppImage", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
 type AppsServicesVersionsGetCall struct {
 	s            *APIService
 	appsId       string
@@ -11165,126 +11109,6 @@ func (c *ProjectsLocationsApplicationsServicesVersionsDeleteCall) Do(opts ...goo
 	return ret, nil
 }
 
-type ProjectsLocationsApplicationsServicesVersionsExportAppImageCall struct {
-	s                     *APIService
-	projectsId            string
-	locationsId           string
-	applicationsId        string
-	servicesId            string
-	versionsId            string
-	exportappimagerequest *ExportAppImageRequest
-	urlParams_            gensupport.URLParams
-	ctx_                  context.Context
-	header_               http.Header
-}
-
-// ExportAppImage: Exports a user image to Artifact Registry.
-//
-//   - applicationsId: Part of `name`. See documentation of `projectsId`.
-//   - locationsId: Part of `name`. See documentation of `projectsId`.
-//   - projectsId: Part of `name`.  Name of the App Engine version resource.
-//     Format: apps/{app}/services/{service}/versions/{version}.
-//   - servicesId: Part of `name`. See documentation of `projectsId`.
-//   - versionsId: Part of `name`. See documentation of `projectsId`.
-func (r *ProjectsLocationsApplicationsServicesVersionsService) ExportAppImage(projectsId string, locationsId string, applicationsId string, servicesId string, versionsId string, exportappimagerequest *ExportAppImageRequest) *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall {
-	c := &ProjectsLocationsApplicationsServicesVersionsExportAppImageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectsId = projectsId
-	c.locationsId = locationsId
-	c.applicationsId = applicationsId
-	c.servicesId = servicesId
-	c.versionsId = versionsId
-	c.exportappimagerequest = exportappimagerequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall) Context(ctx context.Context) *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.exportappimagerequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/services/{servicesId}/versions/{versionsId}:exportAppImage")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectsId":     c.projectsId,
-		"locationsId":    c.locationsId,
-		"applicationsId": c.applicationsId,
-		"servicesId":     c.servicesId,
-		"versionsId":     c.versionsId,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.services.versions.exportAppImage", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "appengine.projects.locations.applications.services.versions.exportAppImage" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsApplicationsServicesVersionsExportAppImageCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.services.versions.exportAppImage", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
 type ProjectsLocationsApplicationsServicesVersionsPatchCall struct {
 	s              *APIService
 	projectsId     string
@@ -11440,6 +11264,135 @@ func (c *ProjectsLocationsApplicationsServicesVersionsPatchCall) Do(opts ...goog
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.services.versions.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsApplicationsServicesVersionsInstancesDebugCall struct {
+	s                    *APIService
+	projectsId           string
+	locationsId          string
+	applicationsId       string
+	servicesId           string
+	versionsId           string
+	instancesId          string
+	debuginstancerequest *DebugInstanceRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Debug: Enables debugging on a VM instance. This allows you to use the SSH
+// command to connect to the virtual machine where the instance lives. While in
+// "debug mode", the instance continues to serve live traffic. You should
+// delete the instance when you are done debugging and then allow the system to
+// take over and determine if another instance should be started.Only
+// applicable for instances in App Engine flexible environment.
+//
+//   - applicationsId: Part of `name`. See documentation of `projectsId`.
+//   - instancesId: Part of `name`. See documentation of `projectsId`.
+//   - locationsId: Part of `name`. See documentation of `projectsId`.
+//   - projectsId: Part of `name`.  Name of the resource requested. Example:
+//     apps/myapp/services/default/versions/v1/instances/instance-1.
+//   - servicesId: Part of `name`. See documentation of `projectsId`.
+//   - versionsId: Part of `name`. See documentation of `projectsId`.
+func (r *ProjectsLocationsApplicationsServicesVersionsInstancesService) Debug(projectsId string, locationsId string, applicationsId string, servicesId string, versionsId string, instancesId string, debuginstancerequest *DebugInstanceRequest) *ProjectsLocationsApplicationsServicesVersionsInstancesDebugCall {
+	c := &ProjectsLocationsApplicationsServicesVersionsInstancesDebugCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.applicationsId = applicationsId
+	c.servicesId = servicesId
+	c.versionsId = versionsId
+	c.instancesId = instancesId
+	c.debuginstancerequest = debuginstancerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsApplicationsServicesVersionsInstancesDebugCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsServicesVersionsInstancesDebugCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsApplicationsServicesVersionsInstancesDebugCall) Context(ctx context.Context) *ProjectsLocationsApplicationsServicesVersionsInstancesDebugCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsApplicationsServicesVersionsInstancesDebugCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsServicesVersionsInstancesDebugCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.debuginstancerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/services/{servicesId}/versions/{versionsId}/instances/{instancesId}:debug")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":     c.projectsId,
+		"locationsId":    c.locationsId,
+		"applicationsId": c.applicationsId,
+		"servicesId":     c.servicesId,
+		"versionsId":     c.versionsId,
+		"instancesId":    c.instancesId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.services.versions.instances.debug", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.projects.locations.applications.services.versions.instances.debug" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsApplicationsServicesVersionsInstancesDebugCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "appengine.projects.locations.applications.services.versions.instances.debug", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

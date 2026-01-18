@@ -1762,6 +1762,17 @@ type QuotaInfo struct {
 	// quota usage) and 'quota_metrics' for SuperQuota (that doesn't scale quota
 	// usage).
 	QuotaConsumed map[string]int64 `json:"quotaConsumed,omitempty"`
+	// QuotaExtractionState: Output only. Indicates the state of the quota
+	// extraction.
+	//
+	// Possible values:
+	//   "QUOTA_EXTRACTION_STATE_UNSPECIFIED" - Indicates the quota extraction has
+	// not started.
+	//   "QUOTA_EXTRACTION_STATE_DARK_LAUNCH" - Indicates the quota extraction is
+	// in dark launch and verifying quota enforcement.
+	//   "QUOTA_EXTRACTION_STATE_TRAFFIC_MIGRATION" - Indicates the quota
+	// extraction traffic migration is in progress.
+	QuotaExtractionState string `json:"quotaExtractionState,omitempty"`
 	// QuotaMetrics: Quota metrics to indicate the usage. Depending on the check
 	// request, one or more of the following metrics will be included: 1. For rate
 	// quota, per quota group or per quota metric incremental usage will be

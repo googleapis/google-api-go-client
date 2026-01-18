@@ -239,14 +239,11 @@ type Assignment struct {
 	// Assignee: Optional. The resource which will use the reservation. E.g.
 	// `projects/myproject`, `folders/123`, or `organizations/456`.
 	Assignee string `json:"assignee,omitempty"`
-	// EnableGeminiInBigquery: Optional. This field controls if "Gemini in
-	// BigQuery" (https://cloud.google.com/gemini/docs/bigquery/overview) features
-	// should be enabled for this reservation assignment, which is not on by
-	// default. "Gemini in BigQuery" has a distinct compliance posture from
-	// BigQuery. If this field is set to true, the assignment job type is QUERY,
-	// and the parent reservation edition is ENTERPRISE_PLUS, then the assignment
-	// will give the grantee project/organization access to "Gemini in BigQuery"
-	// features.
+	// EnableGeminiInBigquery: Optional. Deprecated: "Gemini in BigQuery" is now
+	// available by default for all BigQuery editions and should not be explicitly
+	// set. Controls if "Gemini in BigQuery"
+	// (https://cloud.google.com/gemini/docs/bigquery/overview) features should be
+	// enabled for this reservation assignment.
 	EnableGeminiInBigquery bool `json:"enableGeminiInBigquery,omitempty"`
 	// JobType: Optional. Which type of jobs will use the reservation.
 	//

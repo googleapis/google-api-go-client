@@ -811,6 +811,9 @@ type GceInstance struct {
 	// nested virtualization can only be enabled on workstation configurations that
 	// specify a machine_type in the N1 or N2 machine series.
 	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
+	// InstanceMetadata: Optional. Custom metadata to apply to Compute Engine
+	// instances.
+	InstanceMetadata map[string]string `json:"instanceMetadata,omitempty"`
 	// MachineType: Optional. The type of machine to use for VM instances—for
 	// example, "e2-standard-4". For more information about machine types that
 	// Cloud Workstations supports, see the list of available machine types
@@ -852,8 +855,9 @@ type GceInstance struct {
 	// access the bucket and script file in Cloud Storage
 	// (https://cloud.google.com/storage/docs/access-control/iam-permissions).
 	// Otherwise, the script must be publicly accessible. Note that the service
-	// regularly updates the OS version used, and it is the responsibility of the
-	// user to ensure the script stays compatible with the OS version.
+	// regularly updates the OS version of the host VM, and it is the
+	// responsibility of the user to ensure the script stays compatible with the OS
+	// version.
 	StartupScriptUri string `json:"startupScriptUri,omitempty"`
 	// Tags: Optional. Network tags to add to the Compute Engine VMs backing the
 	// workstations. This option applies network tags

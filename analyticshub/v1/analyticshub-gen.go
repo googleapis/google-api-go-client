@@ -269,6 +269,42 @@ type ProjectsLocationsSubscriptionsService struct {
 	s *Service
 }
 
+// AIInference: Configuration for making inference requests against Vertex AI
+// models.
+type AIInference struct {
+	// Endpoint: Required. An endpoint to a Vertex AI model of the form
+	// `projects/{project}/locations/{location}/endpoints/{endpoint}` or
+	// `projects/{project}/locations/{location}/publishers/{publisher}/models/{model
+	// }`. Vertex AI API requests will be sent to this endpoint.
+	Endpoint string `json:"endpoint,omitempty"`
+	// ServiceAccountEmail: Optional. The service account to use to make prediction
+	// requests against endpoints. The resource creator or updater that specifies
+	// this field must have `iam.serviceAccounts.actAs` permission on the service
+	// account. If not specified, the Pub/Sub service agent
+	// ({$universe.dns_names.final_documentation_domain}/iam/docs/service-agents),
+	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+	// UnstructuredInference: Optional. Requests and responses can be any arbitrary
+	// JSON object.
+	UnstructuredInference *UnstructuredInference `json:"unstructuredInference,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Endpoint") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Endpoint") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AIInference) MarshalJSON() ([]byte, error) {
+	type NoMethod AIInference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ApproveQueryTemplateRequest: Message for approving a QueryTemplate.
 type ApproveQueryTemplateRequest struct {
 }
@@ -1635,6 +1671,8 @@ func (s Listing) MarshalJSON() ([]byte, error) {
 
 // MessageTransform: All supported message transforms types.
 type MessageTransform struct {
+	// AiInference: Optional. AI Inference.
+	AiInference *AIInference `json:"aiInference,omitempty"`
 	// Disabled: Optional. If true, the transform is disabled and will not be
 	// applied to messages. Defaults to `false`.
 	Disabled bool `json:"disabled,omitempty"`
@@ -1645,13 +1683,13 @@ type MessageTransform struct {
 	// JavaScriptUDF's are specified on a resource, each must have a unique
 	// `function_name`.
 	JavascriptUdf *JavaScriptUDF `json:"javascriptUdf,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Disabled") to
+	// ForceSendFields is a list of field names (e.g. "AiInference") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Disabled") to include in API
+	// NullFields is a list of field names (e.g. "AiInference") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2687,6 +2725,31 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // TextConfig: Configuration for writing message data in text format. Message
 // payloads will be written to files as raw text, separated by a newline.
 type TextConfig struct {
+}
+
+// UnstructuredInference: Configuration for making inferences using arbitrary
+// JSON payloads.
+type UnstructuredInference struct {
+	// Parameters: Optional. A parameters object to be included in each inference
+	// request. The parameters object is combined with the data field of the
+	// Pub/Sub message to form the inference request.
+	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Parameters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Parameters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UnstructuredInference) MarshalJSON() ([]byte, error) {
+	type NoMethod UnstructuredInference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OrganizationsLocationsDataExchangesListCall struct {

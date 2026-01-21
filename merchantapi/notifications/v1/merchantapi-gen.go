@@ -214,7 +214,10 @@ func (s ListNotificationSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // NotificationSubscription: Represents a notification subscription owned by a
-// Merchant account.
+// Merchant account. See Decode notifications
+// (/merchant/api/guides/accounts/notifications#decode_notifications) for
+// information on how to decode the notification payload and how to interpret
+// its contents.
 type NotificationSubscription struct {
 	// AllManagedAccounts: If this value is true, the requesting account is
 	// notified of the specified event for all managed accounts (can be subaccounts
@@ -403,7 +406,10 @@ type AccountsNotificationsubscriptionsCreateCall struct {
 // Create: Creates a notification subscription for a business. For standalone
 // or subaccounts accounts, the business can create a subscription for self.
 // For MCAs, the business can create a subscription for all managed accounts or
-// for a specific subaccount. We will allow the following types of notification
+// for a specific subaccount. See Decode notifications
+// (/merchant/api/guides/accounts/notifications#decode_notifications) for
+// information on how to decode the notification payload and how to interpret
+// its contents. We will allow the following types of notification
 // subscriptions to exist together (per business as a subscriber per event
 // type): 1. Subscription for all managed accounts + subscription for self. 2.
 // Multiple "partial" subscriptions for managed accounts + subscription for

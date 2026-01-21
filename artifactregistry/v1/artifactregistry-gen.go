@@ -3533,6 +3533,10 @@ type Version struct {
 	// Description: Optional. Description of the version, as specified in its
 	// metadata.
 	Description string `json:"description,omitempty"`
+	// Fingerprints: Output only. Immutable reference for the version, calculated
+	// based on the version's content. Currently we only support dirsum_sha256 hash
+	// algorithm. Additional hash algorithms may be added in the future.
+	Fingerprints []*Hash `json:"fingerprints,omitempty"`
 	// Metadata: Output only. Repository-specific Metadata stored against this
 	// version. The fields returned are defined by the underlying
 	// repository-specific resource. Currently, the resources could be: DockerImage

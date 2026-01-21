@@ -883,8 +883,9 @@ type GceInstance struct {
 	// access the bucket and script file in Cloud Storage
 	// (https://cloud.google.com/storage/docs/access-control/iam-permissions).
 	// Otherwise, the script must be publicly accessible. Note that the service
-	// regularly updates the OS version used, and it is the responsibility of the
-	// user to ensure the script stays compatible with the OS version.
+	// regularly updates the OS version of the host VM, and it is the
+	// responsibility of the user to ensure the script stays compatible with the OS
+	// version.
 	StartupScriptUri string `json:"startupScriptUri,omitempty"`
 	// Tags: Optional. Network tags to add to the Compute Engine VMs backing the
 	// workstations. This option applies network tags
@@ -995,6 +996,13 @@ func (s GcePersistentDisk) MarshalJSON() ([]byte, error) {
 // the session ends. If this field is empty, workstations created with this
 // configuration do not have a persistent home directory.
 type GceRegionalPersistentDisk struct {
+	// ArchiveTimeout: Optional. Number of seconds to wait after initially creating
+	// or subsequently shutting down the workstation before converting its disk
+	// into a snapshot. This generally saves costs at the expense of greater
+	// startup time on next workstation start, as the service will need to create a
+	// disk from the archival snapshot. A value of "0s" indicates that the disk
+	// will never be archived.
+	ArchiveTimeout string `json:"archiveTimeout,omitempty"`
 	// DiskType: Optional. The type of the persistent disk
 	// (https://cloud.google.com/compute/docs/disks#disk-types) for the home
 	// directory. Defaults to "pd-standard".
@@ -1023,15 +1031,15 @@ type GceRegionalPersistentDisk struct {
 	// disk. If set, size_gb and fs_type must be empty. Must be formatted as ext4
 	// file system with no partitions.
 	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DiskType") to
+	// ForceSendFields is a list of field names (e.g. "ArchiveTimeout") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DiskType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ArchiveTimeout") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

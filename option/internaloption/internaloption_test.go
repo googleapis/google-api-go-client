@@ -72,4 +72,10 @@ func TestWithTelemetryAttributes(t *testing.T) {
 	if diff := cmp.Diff(attrs, ds.TelemetryAttributes); diff != "" {
 		t.Errorf("TelemetryAttributes mismatch (-want +got):\n%s", diff)
 	}
+
+	// Verify cloning
+	attrs["foo"] = "baz"
+	if ds.TelemetryAttributes["foo"] != "bar" {
+		t.Errorf("TelemetryAttributes was not cloned: got %q, want %q", ds.TelemetryAttributes["foo"], "bar")
+	}
 }

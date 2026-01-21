@@ -8,6 +8,7 @@ package internaloption
 import (
 	"context"
 	"log/slog"
+	"maps"
 
 	"cloud.google.com/go/auth"
 	"github.com/googleapis/gax-go/v2/internallog"
@@ -167,10 +168,7 @@ func WithTelemetryAttributes(attrs map[string]string) option.ClientOption {
 type withTelemetryAttributes map[string]string
 
 func (w withTelemetryAttributes) Apply(o *internal.DialSettings) {
-	o.TelemetryAttributes = make(map[string]string, len(w))
-	for k, v := range w {
-		o.TelemetryAttributes[k] = v
-	}
+	o.TelemetryAttributes = maps.Clone(w)
 }
 
 // WithDefaultUniverseDomain returns a ClientOption that sets the default universe domain.

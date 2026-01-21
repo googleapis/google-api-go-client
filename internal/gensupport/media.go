@@ -198,6 +198,17 @@ func (mi *MediaInfo) UploadType() string {
 	return "resumable"
 }
 
+// GetAutoChecksum returns the computed auto checksum (if enabled)
+// for single-chunk resumable uploads.
+func (mi *MediaInfo) GetAutoChecksum() string {
+	if mi.buffer.enableAutoChecksum &&
+		mi.buffer != nil &&
+		mi.singleChunk {
+		return encodeUint32(mi.buffer.fullObjectChecksum + 1)
+	}
+	return ""
+}
+
 // UploadRequest sets up an HTTP request for media upload. It adds headers
 // as necessary, and returns a replacement for the body and a function for http.Request.GetBody.
 func (mi *MediaInfo) UploadRequest(reqHeaders http.Header, body io.Reader) (newBody io.Reader, getBody func() (io.ReadCloser, error), cleanup func()) {

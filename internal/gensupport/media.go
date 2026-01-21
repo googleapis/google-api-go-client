@@ -161,6 +161,12 @@ func NewInfoFromMedia(r io.Reader, options []googleapi.MediaOption) *MediaInfo {
 	mi.chunkRetryDeadline = opts.ChunkRetryDeadline
 	mi.chunkTransferTimeout = opts.ChunkTransferTimeout
 	mi.media, mi.buffer, mi.singleChunk = PrepareUpload(r, opts.ChunkSize, opts.EnableAutoChecksum)
+	if opts.EnableAutoChecksum &&
+		opts.ChecksumCallback != nil &&
+		mi.buffer != nil &&
+		mi.singleChunk {
+		opts.ChecksumCallback(mi.buffer.fullObjectChecksum)
+	}
 	return mi
 }
 

@@ -341,6 +341,15 @@ type AdditionalIPRangesConfig struct {
 	// that can be used for pod IPs. Example1: gke-pod-range1 Example2:
 	// gke-pod-range1,gke-pod-range2
 	PodIpv4RangeNames []string `json:"podIpv4RangeNames,omitempty"`
+	// Status: Draining status of the additional subnet.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Not set, same as ACTIVE.
+	//   "ACTIVE" - ACTIVE status indicates that the subnet is available for new
+	// node pool creation.
+	//   "DRAINING" - DRAINING status indicates that the subnet is not used for new
+	// node pool creation.
+	Status string `json:"status,omitempty"`
 	// Subnetwork: Name of the subnetwork. This can be the full path of the
 	// subnetwork or just the name. Example1: my-subnet Example2:
 	// projects/gke-project/regions/us-central1/subnetworks/my-subnet
@@ -1456,7 +1465,7 @@ type Cluster struct {
 	// BinaryAuthorization: Configuration for Binary Authorization.
 	BinaryAuthorization *BinaryAuthorization `json:"binaryAuthorization,omitempty"`
 	// ClusterIpv4Cidr: The IP address range of the container pods in this cluster,
-	// in CIDR (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
+	// in CIDR (https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
 	// notation (e.g. `10.96.0.0/14`). Leave blank to have one automatically chosen
 	// or specify a `/14` block in `10.0.0.0/8`.
 	ClusterIpv4Cidr string `json:"clusterIpv4Cidr,omitempty"`
@@ -1725,9 +1734,9 @@ type Cluster struct {
 	SelfLink string `json:"selfLink,omitempty"`
 	// ServicesIpv4Cidr: Output only. The IP address range of the Kubernetes
 	// services in this cluster, in CIDR
-	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g.
-	// `1.2.3.4/29`). Service addresses are typically put in the last `/16` from
-	// the container CIDR.
+	// (https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation
+	// (e.g. `1.2.3.4/29`). Service addresses are typically put in the last `/16`
+	// from the container CIDR.
 	ServicesIpv4Cidr string `json:"servicesIpv4Cidr,omitempty"`
 	// ShieldedNodes: Shielded Nodes configuration.
 	ShieldedNodes *ShieldedNodes `json:"shieldedNodes,omitempty"`
@@ -1762,9 +1771,9 @@ type Cluster struct {
 	TpuConfig *TpuConfig `json:"tpuConfig,omitempty"`
 	// TpuIpv4CidrBlock: Output only. The IP address range of the Cloud TPUs in
 	// this cluster, in CIDR
-	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g.
-	// `1.2.3.4/29`). This field is deprecated due to the deprecation of 2VM TPU.
-	// The end of life date for 2VM TPU is 2025-04-25.
+	// (https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation
+	// (e.g. `1.2.3.4/29`). This field is deprecated due to the deprecation of 2VM
+	// TPU. The end of life date for 2VM TPU is 2025-04-25.
 	TpuIpv4CidrBlock string `json:"tpuIpv4CidrBlock,omitempty"`
 	// UserManagedKeysConfig: The Custom keys configuration for the cluster.
 	UserManagedKeysConfig *UserManagedKeysConfig `json:"userManagedKeysConfig,omitempty"`
@@ -1810,6 +1819,13 @@ func (s Cluster) MarshalJSON() ([]byte, error) {
 // information required by Cluster Autoscaler to automatically adjust the size
 // of the cluster and create/delete node pools based on the current needs.
 type ClusterAutoscaling struct {
+	// AutopilotGeneralProfile: Autopilot general profile for the cluster, which
+	// defines the configuration for the cluster.
+	//
+	// Possible values:
+	//   "AUTOPILOT_GENERAL_PROFILE_UNSPECIFIED" - Use default configuration.
+	//   "NO_PERFORMANCE" - Avoid extra IP consumption.
+	AutopilotGeneralProfile string `json:"autopilotGeneralProfile,omitempty"`
 	// AutoprovisioningLocations: The list of Google Compute Engine zones
 	// (https://cloud.google.com/compute/docs/zones#available) in which the
 	// NodePool's nodes can be created by NAP.
@@ -1833,13 +1849,13 @@ type ClusterAutoscaling struct {
 	// ResourceLimits: Contains global constraints regarding minimum and maximum
 	// amount of resources in the cluster.
 	ResourceLimits []*ResourceLimit `json:"resourceLimits,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AutoprovisioningLocations")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AutopilotGeneralProfile") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AutoprovisioningLocations") to
+	// NullFields is a list of field names (e.g. "AutopilotGeneralProfile") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4117,8 +4133,8 @@ type IPAllocationPolicy struct {
 	// field is only applicable when `use_ip_aliases` is true. Set to blank to have
 	// a range chosen with the default size. Set to /netmask (e.g. `/14`) to have a
 	// range chosen with a specific netmask. Set to a CIDR
-	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g.
-	// `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`,
+	// (https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation
+	// (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`,
 	// `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range to use.
 	ClusterIpv4CidrBlock string `json:"clusterIpv4CidrBlock,omitempty"`
 	// ClusterSecondaryRangeName: The name of the secondary range to be used for
@@ -4153,8 +4169,8 @@ type IPAllocationPolicy struct {
 	// This is applicable only if `create_subnetwork` is true. Set to blank to have
 	// a range chosen with the default size. Set to /netmask (e.g. `/14`) to have a
 	// range chosen with a specific netmask. Set to a CIDR
-	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g.
-	// `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`,
+	// (https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation
+	// (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`,
 	// `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range to use.
 	NodeIpv4CidrBlock string `json:"nodeIpv4CidrBlock,omitempty"`
 	// PodCidrOverprovisionConfig: [PRIVATE FIELD] Pod CIDR size overprovisioning
@@ -4173,8 +4189,8 @@ type IPAllocationPolicy struct {
 	// size. This field is only applicable when `use_ip_aliases` is true. Set to
 	// blank to have a range chosen with the default size. Set to /netmask (e.g.
 	// `/14`) to have a range chosen with a specific netmask. Set to a CIDR
-	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g.
-	// `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`,
+	// (https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation
+	// (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`,
 	// `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range to use.
 	ServicesIpv4CidrBlock string `json:"servicesIpv4CidrBlock,omitempty"`
 	// ServicesIpv6CidrBlock: Output only. The services IPv6 CIDR block for the
@@ -4205,8 +4221,8 @@ type IPAllocationPolicy struct {
 	// This field is only applicable when `use_ip_aliases` is true. If unspecified,
 	// the range will use the default size. Set to /netmask (e.g. `/14`) to have a
 	// range chosen with a specific netmask. Set to a CIDR
-	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g.
-	// `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`,
+	// (https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation
+	// (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`,
 	// `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range to use. This
 	// field is deprecated, use cluster.tpu_config.ipv4_cidr_block instead.
 	TpuIpv4CidrBlock string `json:"tpuIpv4CidrBlock,omitempty"`
@@ -5706,6 +5722,11 @@ type NodeConfig struct {
 	// ConfidentialNodes: Confidential nodes config. All the nodes in the node pool
 	// will be Confidential VM once enabled.
 	ConfidentialNodes *ConfidentialNodes `json:"confidentialNodes,omitempty"`
+	// ConsolidationDelay: Consolidation delay defines duration after which the
+	// Cluster Autoscaler can scale down underutilized nodes. If not set, nodes are
+	// scaled down by default behavior, i.e. according to the chosen autoscaling
+	// profile.
+	ConsolidationDelay string `json:"consolidationDelay,omitempty"`
 	// ContainerdConfig: Parameters for containerd customization.
 	ContainerdConfig *ContainerdConfig `json:"containerdConfig,omitempty"`
 	// DiskSizeGb: Size of the disk attached to each node, specified in GB. The
@@ -6251,11 +6272,14 @@ type NodeNetworkConfig struct {
 	// `ip_allocation_policy.use_ip_aliases` is true. This field cannot be changed
 	// after the node pool has been created.
 	PodRange string `json:"podRange,omitempty"`
-	// Subnetwork: The subnetwork path for the node pool. Format:
+	// Subnetwork: Optional. The subnetwork name/path for the node pool. Format:
 	// projects/{project}/regions/{region}/subnetworks/{subnetwork} If the cluster
-	// is associated with multiple subnetworks, the subnetwork for the node pool is
-	// picked based on the IP utilization during node pool creation and is
-	// immutable.
+	// is associated with multiple subnetworks, the subnetwork can be either: 1. A
+	// user supplied subnetwork name/full path during node pool creation. Example1:
+	// my-subnet Example2:
+	// projects/gke-project/regions/us-central1/subnetworks/my-subnet 2. A
+	// subnetwork path picked based on the IP utilization during node pool creation
+	// and is immutable.
 	Subnetwork string `json:"subnetwork,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AcceleratorNetworkProfile")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -9413,6 +9437,11 @@ type UpdateNodePoolRequest struct {
 	// ConfidentialNodes: Confidential nodes config. All the nodes in the node pool
 	// will be Confidential VM once enabled.
 	ConfidentialNodes *ConfidentialNodes `json:"confidentialNodes,omitempty"`
+	// ConsolidationDelay: Consolidation delay defines duration after which the
+	// Cluster Autoscaler can scale down underutilized nodes. If not set, nodes are
+	// scaled down by default behavior, i.e. according to the chosen autoscaling
+	// profile.
+	ConsolidationDelay string `json:"consolidationDelay,omitempty"`
 	// ContainerdConfig: The desired containerd config for nodes in the node pool.
 	// Initiates an upgrade operation that recreates the nodes with the new config.
 	ContainerdConfig *ContainerdConfig `json:"containerdConfig,omitempty"`

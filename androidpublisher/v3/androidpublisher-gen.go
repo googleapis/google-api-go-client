@@ -4890,7 +4890,7 @@ func (s LanguageTargeting) MarshalJSON() ([]byte, error) {
 // LineItem: Details of a line item.
 type LineItem struct {
 	// ListingPrice: Item's listed price on Play Store, this may or may not include
-	// tax. Excludes any discounts or promotions.
+	// tax. Excludes Google-funded discounts only.
 	ListingPrice *Money `json:"listingPrice,omitempty"`
 	// OneTimePurchaseDetails: Details of a one-time purchase.
 	OneTimePurchaseDetails *OneTimePurchaseDetails `json:"oneTimePurchaseDetails,omitempty"`

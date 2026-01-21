@@ -6779,9 +6779,12 @@ type Policy struct {
 	//   "WIPE_ESIMS" - For company-owned devices, setting this in wipeDataFlags
 	// will remove all eSIMs on the device when wipe is triggered due to any
 	// reason. On personally-owned devices, this will remove only managed eSIMs on
-	// the device. (eSIMs which are added via the ADD_ESIM command). This is
+	// the device (eSIMs which are added via the ADD_ESIM command). This is
 	// supported on devices running Android 15 and above. A NonComplianceDetail
-	// with API_LEVEL is reported if the Android version is less than 15.
+	// with API_LEVEL is reported if the Android version is less than 15. For
+	// devices running on Android 16 or higher, managed eSIMs are always wiped when
+	// work profile is removed for personally-owned devices, whether this flag is
+	// provided or not.
 	WipeDataFlags []string `json:"wipeDataFlags,omitempty"`
 	// WorkAccountSetupConfig: Optional. Controls the work account setup
 	// configuration, such as details of whether a Google authenticated account is
@@ -8746,7 +8749,9 @@ type WipeParams struct {
 	//   "WIPE_ESIMS" - For company-owned devices, this removes all eSIMs from the
 	// device when the device is wiped. In personally-owned devices, this will
 	// remove managed eSIMs (eSIMs which are added via the ADD_ESIM command) on the
-	// devices and no personally owned eSIMs will be removed.
+	// devices and no personally owned eSIMs will be removed. For devices running
+	// on Android 16 or higher, managed eSIMs are always wiped when work profile is
+	// removed for personally-owned devices, whether this flag is provided or not.
 	WipeDataFlags []string `json:"wipeDataFlags,omitempty"`
 	// WipeReason: Optional. A short message displayed to the user before wiping
 	// the work profile on personal devices. This has no effect on company owned
@@ -9694,7 +9699,9 @@ func (r *EnterprisesDevicesService) Delete(name string) *EnterprisesDevicesDelet
 //
 // device when the device is wiped. In personally-owned devices, this will
 // remove managed eSIMs (eSIMs which are added via the ADD_ESIM command) on the
-// devices and no personally owned eSIMs will be removed.
+// devices and no personally owned eSIMs will be removed. For devices running
+// on Android 16 or higher, managed eSIMs are always wiped when work profile is
+// removed for personally-owned devices, whether this flag is provided or not.
 func (c *EnterprisesDevicesDeleteCall) WipeDataFlags(wipeDataFlags ...string) *EnterprisesDevicesDeleteCall {
 	c.urlParams_.SetMulti("wipeDataFlags", append([]string{}, wipeDataFlags...))
 	return c

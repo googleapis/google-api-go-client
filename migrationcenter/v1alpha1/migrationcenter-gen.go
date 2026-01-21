@@ -7171,7 +7171,7 @@ func (s RuntimeNetworkInfo) MarshalJSON() ([]byte, error) {
 type Selinux struct {
 	// Enabled: Is SELinux enabled.
 	Enabled bool `json:"enabled,omitempty"`
-	// Mode: SELinux mode enforcing / permissive.
+	// Mode: SELinux mode disabled / enforcing / permissive.
 	Mode string `json:"mode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

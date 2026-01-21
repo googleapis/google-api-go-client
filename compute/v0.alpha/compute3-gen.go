@@ -36631,16 +36631,16 @@ type ReservationSlotsGetCall struct {
 
 // Get: Retrieves information about the specified reservation slot.
 //
-//   - parentName: The name of the parent reservation and parent block. In the
-//     format
-//     of
+//   - parentName: The name of the parent reservation and parent block, formatted
+//     as
 //     reservations/{reservation_name}/reservationBlocks/{reservation_block_name}/
 //     reservationSubBlocks/{reservation_sub_block_name}.
-//   - project: Project ID for this request.
-//   - reservationSlot: The name of the reservation slot.
-//     Name should conform to RFC1035 or be a resource ID.
-//   - zone: Name of the zone for this request. Zone name should conform to
-//     RFC1035.
+//   - project: The project ID for this request.
+//   - reservationSlot: The name of the reservation slot, formatted as RFC1035 or
+//     a resource ID
+//
+// number.
+// - zone: The name of the zone for this request, formatted as RFC1035.
 func (r *ReservationSlotsService) Get(project string, zone string, parentName string, reservationSlot string) *ReservationSlotsGetCall {
 	c := &ReservationSlotsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -36758,14 +36758,12 @@ type ReservationSlotsListCall struct {
 
 // List: Retrieves a list of reservation slots under a single reservation.
 //
-//   - parentName: The name of the parent reservation and parent block. In the
-//     format
-//     of
+//   - parentName: The name of the parent reservation and parent block, formatted
+//     as
 //     reservations/{reservation_name}/reservationBlocks/{reservation_block_name}/
 //     reservationSubBlocks/{reservation_sub_block_name}.
-//   - project: Project ID for this request.
-//   - zone: Name of the zone for this request. Zone name should conform to
-//     RFC1035.
+//   - project: The project ID for this request.
+//   - zone: The name of the zone for this request, formatted as RFC1035.
 func (r *ReservationSlotsService) List(project string, zone string, parentName string) *ReservationSlotsListCall {
 	c := &ReservationSlotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project

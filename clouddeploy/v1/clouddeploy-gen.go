@@ -890,6 +890,8 @@ type AutomationRun struct {
 	// TimedPromoteReleaseOperation: Output only. Promotes a release to a specified
 	// 'Target' as defined in a Timed Promote Release rule.
 	TimedPromoteReleaseOperation *TimedPromoteReleaseOperation `json:"timedPromoteReleaseOperation,omitempty"`
+	// Uid: Output only. Unique identifier of the `AutomationRun`.
+	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. Time at which the automationRun was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// WaitUntilTime: Output only. Earliest time the `AutomationRun` will attempt

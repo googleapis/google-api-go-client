@@ -1,5 +1,18 @@
 # Changes
 
+## [0.262.0](https://github.com/googleapis/google-api-go-client/compare/v0.261.0...v0.262.0) (2026-01-22)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#3446](https://github.com/googleapis/google-api-go-client/issues/3446)) ([e7cf469](https://github.com/googleapis/google-api-go-client/commit/e7cf4692f3966b1a05b15d278e3ded70c230dc31))
+* **all:** Auto-regenerate discovery clients ([#3450](https://github.com/googleapis/google-api-go-client/issues/3450)) ([b32ced9](https://github.com/googleapis/google-api-go-client/commit/b32ced9c87cd59e284bcfa65b0d9205b57e54a16))
+
+
+### Bug Fixes
+
+* **internaloption:** Add WithTelemetryAttributes ([#3442](https://github.com/googleapis/google-api-go-client/issues/3442)) ([2a5c807](https://github.com/googleapis/google-api-go-client/commit/2a5c807a86d2712d685e06f59cd5d25740b46c71))
+
 ## [0.261.0](https://github.com/googleapis/google-api-go-client/compare/v0.260.0...v0.261.0) (2026-01-20)
 
 

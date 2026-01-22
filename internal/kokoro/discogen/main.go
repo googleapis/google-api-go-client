@@ -8,7 +8,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -87,7 +86,7 @@ func setGitCreds(githubName, githubEmail, githubUsername, accessToken string) er
 		return err
 	}
 	gitCredentials := []byte(fmt.Sprintf("https://%s:%s@github.com", githubUsername, accessToken))
-	if err := ioutil.WriteFile(path.Join(u.HomeDir, ".git-credentials"), gitCredentials, 0644); err != nil {
+	if err := os.WriteFile(path.Join(u.HomeDir, ".git-credentials"), gitCredentials, 0644); err != nil {
 		return err
 	}
 	c := exec.Command("git", "config", "--global", "user.name", githubName)

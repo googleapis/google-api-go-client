@@ -1773,9 +1773,9 @@ type SubscriptionUpgradeDowngradeDetails struct {
 	// subscription will be prorated.
 	//   "BILLING_CYCLE_SPEC_START_IMMEDIATELY" - The billing cycle of the new
 	// subscription starts immediately.
-	//   "BILLING_CYCLE_SPEC_DEFERRED_TO_NEXT_RECURRENCE" - The billing cycle
-	// starts at the end of the previous subscription's billing cycle and aligns
-	// with the previous subscription's billing cycle.
+	//   "BILLING_CYCLE_SPEC_DEFERRED_TO_NEXT_RECURRENCE" - The new subscription
+	// will have the same `renewalTime` as the previous subscription, while the
+	// previous subscription is scheduled for cancellation at that same time.
 	BillingCycleSpec string `json:"billingCycleSpec,omitempty"`
 	// PreviousSubscriptionId: Required. The previous subscription id to be
 	// replaced. The format can be one of the following: 1. `subscription_id`: the

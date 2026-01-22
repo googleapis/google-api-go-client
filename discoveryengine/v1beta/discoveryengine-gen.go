@@ -3189,7 +3189,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -3352,7 +3352,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -3385,7 +3385,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -4400,10 +4400,11 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
-	// `personalization-memory` * `disable-agent-sharing` *
-	// `disable-image-generation` * `disable-video-generation` *
-	// `disable-onedrive-upload` * `disable-talk-to-content` *
-	// `disable-google-drive-upload`
+	// `personalization-memory` * `personalization-suggested-highlights` *
+	// `disable-agent-sharing` * `disable-image-generation` *
+	// `disable-video-generation` * `disable-onedrive-upload` *
+	// `disable-talk-to-content` * `disable-google-drive-upload` *
+	// `disable-welcome-emails`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -8143,9 +8144,8 @@ type GoogleCloudDiscoveryengineV1alphaAssistAnswerReply struct {
 	// ReplyId: Output only. When set, uniquely identifies a reply within the
 	// `AssistAnswer` resource. During an AssistantService.StreamAssist call,
 	// multiple `Reply` messages with the same ID can occur within the response
-	// stream (across multiple AssistantService.StreamAssistResponse messages).
-	// These represent parts of a single `Reply` message in the final
-	// `AssistAnswer` resource.
+	// stream (across multiple StreamAssistResponse messages). These represent
+	// parts of a single `Reply` message in the final `AssistAnswer` resource.
 	ReplyId string `json:"replyId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GroundedContent") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9617,7 +9617,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -9780,7 +9780,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -9813,7 +9813,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -10983,10 +10983,11 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
-	// `personalization-memory` * `disable-agent-sharing` *
-	// `disable-image-generation` * `disable-video-generation` *
-	// `disable-onedrive-upload` * `disable-talk-to-content` *
-	// `disable-google-drive-upload`
+	// `personalization-memory` * `personalization-suggested-highlights` *
+	// `disable-agent-sharing` * `disable-image-generation` *
+	// `disable-video-generation` * `disable-onedrive-upload` *
+	// `disable-talk-to-content` * `disable-google-drive-upload` *
+	// `disable-welcome-emails`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -13948,16 +13949,15 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	OrderBy string `json:"orderBy,omitempty"`
 	// PageCategories: Optional. The categories associated with a category page.
 	// Must be set for category navigation queries to achieve good search quality.
-	// The format should be the same as UserEvent.PageInfo.page_category. This
-	// field is the equivalent of the query for browse (navigation) queries. It's
-	// used by the browse model when the query is empty. If the field is empty, it
-	// will not be used by the browse model. If the field contains more than one
-	// element, only the first element will be used. To represent full path of a
-	// category, use '>' character to separate different hierarchies. If '>' is
-	// part of the category name, replace it with other character(s). For example,
-	// `Graphics Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents
-	// one level, can be rewritten as `Graphics Cards > RTX_4090 > Founders
-	// Edition`
+	// The format should be the same as PageInfo.page_category. This field is the
+	// equivalent of the query for browse (navigation) queries. It's used by the
+	// browse model when the query is empty. If the field is empty, it will not be
+	// used by the browse model. If the field contains more than one element, only
+	// the first element will be used. To represent full path of a category, use
+	// '>' character to separate different hierarchies. If '>' is part of the
+	// category name, replace it with other character(s). For example, `Graphics
+	// Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents one
+	// level, can be rewritten as `Graphics Cards > RTX_4090 > Founders Edition`
 	PageCategories []string `json:"pageCategories,omitempty"`
 	// PageSize: Maximum number of Documents to return. The maximum allowed value
 	// depends on the data type. Values above the maximum value are coerced to the
@@ -15052,8 +15052,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestNaturalLanguageQueryUnderstan
 	// `HARD_FILTER`. For multi-datastore search, the default behavior is
 	// `SOFT_BOOST`. Location-based filters are always applied as hard filters, and
 	// the `SOFT_BOOST` setting will not affect them. This field is only used if
-	// SearchRequest.natural_language_query_understanding_spec.filter_extraction_con
-	// dition is set to FilterExtractionCondition.ENABLED.
+	// SearchRequest.NaturalLanguageQueryUnderstandingSpec.FilterExtractionCondition
+	//  is set to FilterExtractionCondition.ENABLED.
 	//
 	// Possible values:
 	//   "EXTRACTED_FILTER_BEHAVIOR_UNSPECIFIED" -
@@ -22486,10 +22486,11 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
-	// `personalization-memory` * `disable-agent-sharing` *
-	// `disable-image-generation` * `disable-video-generation` *
-	// `disable-onedrive-upload` * `disable-talk-to-content` *
-	// `disable-google-drive-upload`
+	// `personalization-memory` * `personalization-suggested-highlights` *
+	// `disable-agent-sharing` * `disable-image-generation` *
+	// `disable-video-generation` * `disable-onedrive-upload` *
+	// `disable-talk-to-content` * `disable-google-drive-upload` *
+	// `disable-welcome-emails`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -24857,7 +24858,7 @@ func (s GoogleCloudDiscoveryengineV1betaListIdentityMappingsResponse) MarshalJSO
 }
 
 // GoogleCloudDiscoveryengineV1betaListLicenseConfigsUsageStatsResponse:
-// Response message for UserLicenseService.ListLicenseConfigUsageStats method.
+// Response message for UserLicenseService.ListLicenseConfigsUsageStats method.
 type GoogleCloudDiscoveryengineV1betaListLicenseConfigsUsageStatsResponse struct {
 	// LicenseConfigUsageStats: All the customer's LicenseConfigUsageStats.
 	LicenseConfigUsageStats []*GoogleCloudDiscoveryengineV1betaLicenseConfigUsageStats `json:"licenseConfigUsageStats,omitempty"`
@@ -27029,16 +27030,15 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	OrderBy string `json:"orderBy,omitempty"`
 	// PageCategories: Optional. The categories associated with a category page.
 	// Must be set for category navigation queries to achieve good search quality.
-	// The format should be the same as UserEvent.PageInfo.page_category. This
-	// field is the equivalent of the query for browse (navigation) queries. It's
-	// used by the browse model when the query is empty. If the field is empty, it
-	// will not be used by the browse model. If the field contains more than one
-	// element, only the first element will be used. To represent full path of a
-	// category, use '>' character to separate different hierarchies. If '>' is
-	// part of the category name, replace it with other character(s). For example,
-	// `Graphics Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents
-	// one level, can be rewritten as `Graphics Cards > RTX_4090 > Founders
-	// Edition`
+	// The format should be the same as PageInfo.page_category. This field is the
+	// equivalent of the query for browse (navigation) queries. It's used by the
+	// browse model when the query is empty. If the field is empty, it will not be
+	// used by the browse model. If the field contains more than one element, only
+	// the first element will be used. To represent full path of a category, use
+	// '>' character to separate different hierarchies. If '>' is part of the
+	// category name, replace it with other character(s). For example, `Graphics
+	// Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents one
+	// level, can be rewritten as `Graphics Cards > RTX_4090 > Founders Edition`
 	PageCategories []string `json:"pageCategories,omitempty"`
 	// PageSize: Maximum number of Documents to return. The maximum allowed value
 	// depends on the data type. Values above the maximum value are coerced to the
@@ -28128,8 +28128,8 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestNaturalLanguageQueryUnderstand
 	// `HARD_FILTER`. For multi-datastore search, the default behavior is
 	// `SOFT_BOOST`. Location-based filters are always applied as hard filters, and
 	// the `SOFT_BOOST` setting will not affect them. This field is only used if
-	// SearchRequest.natural_language_query_understanding_spec.filter_extraction_con
-	// dition is set to FilterExtractionCondition.ENABLED.
+	// SearchRequest.NaturalLanguageQueryUnderstandingSpec.FilterExtractionCondition
+	//  is set to FilterExtractionCondition.ENABLED.
 	//
 	// Possible values:
 	//   "EXTRACTED_FILTER_BEHAVIOR_UNSPECIFIED" -
@@ -28497,8 +28497,8 @@ type GoogleCloudDiscoveryengineV1betaSearchResponse struct {
 	GeoSearchDebugInfo []*GoogleCloudDiscoveryengineV1betaSearchResponseGeoSearchDebugInfo `json:"geoSearchDebugInfo,omitempty"`
 	// GuidedSearchResult: Guided search result.
 	GuidedSearchResult *GoogleCloudDiscoveryengineV1betaSearchResponseGuidedSearchResult `json:"guidedSearchResult,omitempty"`
-	// NaturalLanguageQueryUnderstandingInfo: Natural language query understanding
-	// information for the returned results.
+	// NaturalLanguageQueryUnderstandingInfo: Output only. Natural language query
+	// understanding information for the returned results.
 	NaturalLanguageQueryUnderstandingInfo *GoogleCloudDiscoveryengineV1betaSearchResponseNaturalLanguageQueryUnderstandingInfo `json:"naturalLanguageQueryUnderstandingInfo,omitempty"`
 	// NextPageToken: A token that can be sent as SearchRequest.page_token to
 	// retrieve the next page. If this field is omitted, there are no subsequent

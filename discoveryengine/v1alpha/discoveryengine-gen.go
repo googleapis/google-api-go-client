@@ -3441,7 +3441,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -3604,7 +3604,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -3637,7 +3637,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -4652,10 +4652,11 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
-	// `personalization-memory` * `disable-agent-sharing` *
-	// `disable-image-generation` * `disable-video-generation` *
-	// `disable-onedrive-upload` * `disable-talk-to-content` *
-	// `disable-google-drive-upload`
+	// `personalization-memory` * `personalization-suggested-highlights` *
+	// `disable-agent-sharing` * `disable-image-generation` *
+	// `disable-video-generation` * `disable-onedrive-upload` *
+	// `disable-talk-to-content` * `disable-google-drive-upload` *
+	// `disable-welcome-emails`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -8159,6 +8160,8 @@ type GoogleCloudDiscoveryengineV1alphaAgentView struct {
 	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
 	// gine}/assistants/{assistant}/agents/{agent}`
 	Name string `json:"name,omitempty"`
+	// OwnerDisplayName: Output only. The display name of the agent owner.
+	OwnerDisplayName string `json:"ownerDisplayName,omitempty"`
 	// RejectionReason: The reason why the agent was rejected. Only set if the
 	// state is PRIVATE, and got there via rejection.
 	RejectionReason string `json:"rejectionReason,omitempty"`
@@ -8181,6 +8184,8 @@ type GoogleCloudDiscoveryengineV1alphaAgentView struct {
 	// SuspensionReason: The reason why the agent was suspended. Only set if the
 	// state is SUSPENDED.
 	SuspensionReason string `json:"suspensionReason,omitempty"`
+	// UpdateTime: Output only. The timestamp when the agent was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 	// UserAnnotations: Optional. Per-user annotations of the current caller for
 	// the agent.
 	UserAnnotations *GoogleCloudDiscoveryengineV1alphaUserAnnotations `json:"userAnnotations,omitempty"`
@@ -10347,9 +10352,8 @@ type GoogleCloudDiscoveryengineV1alphaAssistAnswerReply struct {
 	// ReplyId: Output only. When set, uniquely identifies a reply within the
 	// `AssistAnswer` resource. During an AssistantService.StreamAssist call,
 	// multiple `Reply` messages with the same ID can occur within the response
-	// stream (across multiple AssistantService.StreamAssistResponse messages).
-	// These represent parts of a single `Reply` message in the final
-	// `AssistAnswer` resource.
+	// stream (across multiple StreamAssistResponse messages). These represent
+	// parts of a single `Reply` message in the final `AssistAnswer` resource.
 	ReplyId string `json:"replyId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GroundedContent") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11756,8 +11760,8 @@ func (s GoogleCloudDiscoveryengineV1alphaBillingAccountLicenseConfig) MarshalJSO
 // GoogleCloudDiscoveryengineV1alphaBranch: A data branch that stores
 // Documents.
 type GoogleCloudDiscoveryengineV1alphaBranch struct {
-	// BranchStats: Output only. Stistics describing a branch. This field is not
-	// populated in BranchView.BASIC view.
+	// BranchStats: Output only. Statistics describing a branch. This field is not
+	// populated in BranchView.BRANCH_VIEW_BASIC view.
 	BranchStats *GoogleCloudDiscoveryengineV1alphaBranchBranchStats `json:"branchStats,omitempty"`
 	// DisplayName: Output only. Human readable name of the branch to display in
 	// the UI.
@@ -14051,7 +14055,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -14214,7 +14218,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -14247,7 +14251,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -15839,10 +15843,11 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
-	// `personalization-memory` * `disable-agent-sharing` *
-	// `disable-image-generation` * `disable-video-generation` *
-	// `disable-onedrive-upload` * `disable-talk-to-content` *
-	// `disable-google-drive-upload`
+	// `personalization-memory` * `personalization-suggested-highlights` *
+	// `disable-agent-sharing` * `disable-image-generation` *
+	// `disable-video-generation` * `disable-onedrive-upload` *
+	// `disable-talk-to-content` * `disable-google-drive-upload` *
+	// `disable-welcome-emails`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -19385,7 +19390,7 @@ func (s GoogleCloudDiscoveryengineV1alphaListIdentityMappingsResponse) MarshalJS
 }
 
 // GoogleCloudDiscoveryengineV1alphaListLicenseConfigsUsageStatsResponse:
-// Response message for UserLicenseService.ListLicenseConfigUsageStats method.
+// Response message for UserLicenseService.ListLicenseConfigsUsageStats method.
 type GoogleCloudDiscoveryengineV1alphaListLicenseConfigsUsageStatsResponse struct {
 	// LicenseConfigUsageStats: All the customer's LicenseConfigUsageStats.
 	LicenseConfigUsageStats []*GoogleCloudDiscoveryengineV1alphaLicenseConfigUsageStats `json:"licenseConfigUsageStats,omitempty"`
@@ -22455,16 +22460,15 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	OrderBy string `json:"orderBy,omitempty"`
 	// PageCategories: Optional. The categories associated with a category page.
 	// Must be set for category navigation queries to achieve good search quality.
-	// The format should be the same as UserEvent.PageInfo.page_category. This
-	// field is the equivalent of the query for browse (navigation) queries. It's
-	// used by the browse model when the query is empty. If the field is empty, it
-	// will not be used by the browse model. If the field contains more than one
-	// element, only the first element will be used. To represent full path of a
-	// category, use '>' character to separate different hierarchies. If '>' is
-	// part of the category name, replace it with other character(s). For example,
-	// `Graphics Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents
-	// one level, can be rewritten as `Graphics Cards > RTX_4090 > Founders
-	// Edition`
+	// The format should be the same as PageInfo.page_category. This field is the
+	// equivalent of the query for browse (navigation) queries. It's used by the
+	// browse model when the query is empty. If the field is empty, it will not be
+	// used by the browse model. If the field contains more than one element, only
+	// the first element will be used. To represent full path of a category, use
+	// '>' character to separate different hierarchies. If '>' is part of the
+	// category name, replace it with other character(s). For example, `Graphics
+	// Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents one
+	// level, can be rewritten as `Graphics Cards > RTX_4090 > Founders Edition`
 	PageCategories []string `json:"pageCategories,omitempty"`
 	// PageSize: Maximum number of Documents to return. The maximum allowed value
 	// depends on the data type. Values above the maximum value are coerced to the
@@ -23559,8 +23563,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestNaturalLanguageQueryUnderstan
 	// `HARD_FILTER`. For multi-datastore search, the default behavior is
 	// `SOFT_BOOST`. Location-based filters are always applied as hard filters, and
 	// the `SOFT_BOOST` setting will not affect them. This field is only used if
-	// SearchRequest.natural_language_query_understanding_spec.filter_extraction_con
-	// dition is set to FilterExtractionCondition.ENABLED.
+	// SearchRequest.NaturalLanguageQueryUnderstandingSpec.FilterExtractionCondition
+	//  is set to FilterExtractionCondition.ENABLED.
 	//
 	// Possible values:
 	//   "EXTRACTED_FILTER_BEHAVIOR_UNSPECIFIED" -
@@ -23928,8 +23932,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchResponse struct {
 	GeoSearchDebugInfo []*GoogleCloudDiscoveryengineV1alphaSearchResponseGeoSearchDebugInfo `json:"geoSearchDebugInfo,omitempty"`
 	// GuidedSearchResult: Guided search result.
 	GuidedSearchResult *GoogleCloudDiscoveryengineV1alphaSearchResponseGuidedSearchResult `json:"guidedSearchResult,omitempty"`
-	// NaturalLanguageQueryUnderstandingInfo: Natural language query understanding
-	// information for the returned results.
+	// NaturalLanguageQueryUnderstandingInfo: Output only. Natural language query
+	// understanding information for the returned results.
 	NaturalLanguageQueryUnderstandingInfo *GoogleCloudDiscoveryengineV1alphaSearchResponseNaturalLanguageQueryUnderstandingInfo `json:"naturalLanguageQueryUnderstandingInfo,omitempty"`
 	// NextPageToken: A token that can be sent as SearchRequest.page_token to
 	// retrieve the next page. If this field is omitted, there are no subsequent
@@ -27166,7 +27170,7 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfigCollectionComponent struct {
 	// Name: The name of the collection. It should be collection resource name.
 	// Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}`. For
-	// APIs under WidgetService, such as WidgetService.LookUpWidgetConfig, the
+	// APIs under WidgetService, such as WidgetService.LookupWidgetConfig, the
 	// project number and location part is erased in this field.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConnectorIconLink") to
@@ -27253,7 +27257,7 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfigDataStoreComponent struct {
 	// Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. For APIs under WidgetService, such as
-	// WidgetService.LookUpWidgetConfig, the project number and location part is
+	// WidgetService.LookupWidgetConfig, the project number and location part is
 	// erased in this field.
 	Name string `json:"name,omitempty"`
 	// WorkspaceType: Output only. Workspace Source Types for workspace data,
@@ -27308,7 +27312,7 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfigDataStoreUiConfig struct {
 	// Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. For APIs under WidgetService, such as
-	// WidgetService.LookUpWidgetConfig, the project number and location part is
+	// WidgetService.LookupWidgetConfig, the project number and location part is
 	// erased in this field.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FacetField") to
@@ -27525,10 +27529,11 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfigUiSettings struct {
 	// features. Supported keys: * `agent-gallery` * `no-code-agent-builder` *
 	// `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` *
 	// `people-search-org-chart` * `bi-directional-audio` * `feedback` *
-	// `session-sharing` * `personalization-memory` * `disable-agent-sharing` *
+	// `session-sharing` * `personalization-memory` *
+	// `personalization-suggested-highlights` * `disable-agent-sharing` *
 	// `disable-image-generation` * `disable-video-generation` *
 	// `disable-onedrive-upload` * `disable-talk-to-content` *
-	// `disable-google-drive-upload`
+	// `disable-google-drive-upload` * `disable-welcome-emails`
 	Features map[string]string `json:"features,omitempty"`
 	// GenerativeAnswerConfig: Describes generative answer configuration.
 	GenerativeAnswerConfig *GoogleCloudDiscoveryengineV1alphaWidgetConfigUiSettingsGenerativeAnswerConfig `json:"generativeAnswerConfig,omitempty"`
@@ -29274,10 +29279,11 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
-	// `personalization-memory` * `disable-agent-sharing` *
-	// `disable-image-generation` * `disable-video-generation` *
-	// `disable-onedrive-upload` * `disable-talk-to-content` *
-	// `disable-google-drive-upload`
+	// `personalization-memory` * `personalization-suggested-highlights` *
+	// `disable-agent-sharing` * `disable-image-generation` *
+	// `disable-video-generation` * `disable-onedrive-upload` *
+	// `disable-talk-to-content` * `disable-google-drive-upload` *
+	// `disable-welcome-emails`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -31286,16 +31292,15 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	OrderBy string `json:"orderBy,omitempty"`
 	// PageCategories: Optional. The categories associated with a category page.
 	// Must be set for category navigation queries to achieve good search quality.
-	// The format should be the same as UserEvent.PageInfo.page_category. This
-	// field is the equivalent of the query for browse (navigation) queries. It's
-	// used by the browse model when the query is empty. If the field is empty, it
-	// will not be used by the browse model. If the field contains more than one
-	// element, only the first element will be used. To represent full path of a
-	// category, use '>' character to separate different hierarchies. If '>' is
-	// part of the category name, replace it with other character(s). For example,
-	// `Graphics Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents
-	// one level, can be rewritten as `Graphics Cards > RTX_4090 > Founders
-	// Edition`
+	// The format should be the same as PageInfo.page_category. This field is the
+	// equivalent of the query for browse (navigation) queries. It's used by the
+	// browse model when the query is empty. If the field is empty, it will not be
+	// used by the browse model. If the field contains more than one element, only
+	// the first element will be used. To represent full path of a category, use
+	// '>' character to separate different hierarchies. If '>' is part of the
+	// category name, replace it with other character(s). For example, `Graphics
+	// Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents one
+	// level, can be rewritten as `Graphics Cards > RTX_4090 > Founders Edition`
 	PageCategories []string `json:"pageCategories,omitempty"`
 	// PageSize: Maximum number of Documents to return. The maximum allowed value
 	// depends on the data type. Values above the maximum value are coerced to the
@@ -32385,8 +32390,8 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestNaturalLanguageQueryUnderstand
 	// `HARD_FILTER`. For multi-datastore search, the default behavior is
 	// `SOFT_BOOST`. Location-based filters are always applied as hard filters, and
 	// the `SOFT_BOOST` setting will not affect them. This field is only used if
-	// SearchRequest.natural_language_query_understanding_spec.filter_extraction_con
-	// dition is set to FilterExtractionCondition.ENABLED.
+	// SearchRequest.NaturalLanguageQueryUnderstandingSpec.FilterExtractionCondition
+	//  is set to FilterExtractionCondition.ENABLED.
 	//
 	// Possible values:
 	//   "EXTRACTED_FILTER_BEHAVIOR_UNSPECIFIED" -
@@ -33542,7 +33547,7 @@ func (s GoogleCloudNotebooklmV1alphaBatchDeleteNotebooksRequest) MarshalJSON() (
 }
 
 // GoogleCloudNotebooklmV1alphaBatchDeleteSourcesRequest: Request for
-// SourceService.BatchDeleteSourcesRequest method.
+// BatchDeleteSourcesRequest method.
 type GoogleCloudNotebooklmV1alphaBatchDeleteSourcesRequest struct {
 	// Names: Required. Names of sources to be deleted. Format:
 	// projects/{project}/locations/{location}/notebooks/{notebook}/sources/{source}
@@ -35679,7 +35684,8 @@ func (r *ProjectsService) Patch(name string, googleclouddiscoveryenginev1alphapr
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of fields to
-// update. Supported fields: * `customer_provided_config`
+// update. Supported fields: * `customer_provided_config` *
+// `customer_provided_config.notebooklm_config.observability_config`
 func (c *ProjectsPatchCall) UpdateMask(updateMask string) *ProjectsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -41791,7 +41797,7 @@ func (r *ProjectsLocationsCollectionsDataStoresBranchesService) Get(name string)
 }
 
 // View sets the optional parameter "view": The view to apply to the returned
-// Branch. Defaults to Branch.BranchView.BASIC if unspecified.
+// Branch. Defaults to BranchView.BRANCH_VIEW_BASIC if unspecified.
 //
 // Possible values:
 //
@@ -41921,7 +41927,7 @@ func (r *ProjectsLocationsCollectionsDataStoresBranchesService) List(parent stri
 }
 
 // View sets the optional parameter "view": The view to apply to the returned
-// Branch. Defaults to Branch.BranchView.BASIC if unspecified.
+// Branch. Defaults to BranchView.BRANCH_VIEW_BASIC if unspecified.
 //
 // Possible values:
 //
@@ -53788,7 +53794,7 @@ func (c *ProjectsLocationsCollectionsEnginesAssistantsListAvailableAgentViewsCal
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// AgentViewss to return. If unspecified, defaults to 100. The maximum allowed
+// AgentViews to return. If unspecified, defaults to 100. The maximum allowed
 // value is 1000; anything above that will be coerced down to 1000.
 func (c *ProjectsLocationsCollectionsEnginesAssistantsListAvailableAgentViewsCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsEnginesAssistantsListAvailableAgentViewsCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -54366,6 +54372,13 @@ func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsService) DisableAgen
 	return c
 }
 
+// RevisionId sets the optional parameter "revisionId": The Revision ID of the
+// Agent to disable. If not specified, the latest revision will be disabled.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsDisableAgentCall) RevisionId(revisionId string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsDisableAgentCall {
+	c.urlParams_.Set("revisionId", revisionId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -54465,6 +54478,13 @@ type ProjectsLocationsCollectionsEnginesAssistantsAgentsEnableAgentCall struct {
 func (r *ProjectsLocationsCollectionsEnginesAssistantsAgentsService) EnableAgent(name string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsEnableAgentCall {
 	c := &ProjectsLocationsCollectionsEnginesAssistantsAgentsEnableAgentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// RevisionId sets the optional parameter "revisionId": The Revision ID of the
+// Agent to enable. If not specified, the latest revision will be enabled.
+func (c *ProjectsLocationsCollectionsEnginesAssistantsAgentsEnableAgentCall) RevisionId(revisionId string) *ProjectsLocationsCollectionsEnginesAssistantsAgentsEnableAgentCall {
+	c.urlParams_.Set("revisionId", revisionId)
 	return c
 }
 
@@ -62688,7 +62708,7 @@ func (r *ProjectsLocationsDataStoresBranchesService) Get(name string) *ProjectsL
 }
 
 // View sets the optional parameter "view": The view to apply to the returned
-// Branch. Defaults to Branch.BranchView.BASIC if unspecified.
+// Branch. Defaults to BranchView.BRANCH_VIEW_BASIC if unspecified.
 //
 // Possible values:
 //
@@ -62818,7 +62838,7 @@ func (r *ProjectsLocationsDataStoresBranchesService) List(parent string) *Projec
 }
 
 // View sets the optional parameter "view": The view to apply to the returned
-// Branch. Defaults to Branch.BranchView.BASIC if unspecified.
+// Branch. Defaults to BranchView.BRANCH_VIEW_BASIC if unspecified.
 //
 // Possible values:
 //

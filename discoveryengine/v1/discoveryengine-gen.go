@@ -7115,7 +7115,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -7278,7 +7278,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -7311,7 +7311,7 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -8638,10 +8638,11 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
-	// `personalization-memory` * `disable-agent-sharing` *
-	// `disable-image-generation` * `disable-video-generation` *
-	// `disable-onedrive-upload` * `disable-talk-to-content` *
-	// `disable-google-drive-upload`
+	// `personalization-memory` * `personalization-suggested-highlights` *
+	// `disable-agent-sharing` * `disable-image-generation` *
+	// `disable-video-generation` * `disable-onedrive-upload` *
+	// `disable-talk-to-content` * `disable-google-drive-upload` *
+	// `disable-welcome-emails`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -10697,7 +10698,7 @@ func (s GoogleCloudDiscoveryengineV1ListIdentityMappingsResponse) MarshalJSON() 
 }
 
 // GoogleCloudDiscoveryengineV1ListLicenseConfigsUsageStatsResponse: Response
-// message for UserLicenseService.ListLicenseConfigUsageStats method.
+// message for UserLicenseService.ListLicenseConfigsUsageStats method.
 type GoogleCloudDiscoveryengineV1ListLicenseConfigsUsageStatsResponse struct {
 	// LicenseConfigUsageStats: All the customer's LicenseConfigUsageStats.
 	LicenseConfigUsageStats []*GoogleCloudDiscoveryengineV1LicenseConfigUsageStats `json:"licenseConfigUsageStats,omitempty"`
@@ -12323,16 +12324,15 @@ type GoogleCloudDiscoveryengineV1SearchRequest struct {
 	OrderBy string `json:"orderBy,omitempty"`
 	// PageCategories: Optional. The categories associated with a category page.
 	// Must be set for category navigation queries to achieve good search quality.
-	// The format should be the same as UserEvent.PageInfo.page_category. This
-	// field is the equivalent of the query for browse (navigation) queries. It's
-	// used by the browse model when the query is empty. If the field is empty, it
-	// will not be used by the browse model. If the field contains more than one
-	// element, only the first element will be used. To represent full path of a
-	// category, use '>' character to separate different hierarchies. If '>' is
-	// part of the category name, replace it with other character(s). For example,
-	// `Graphics Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents
-	// one level, can be rewritten as `Graphics Cards > RTX_4090 > Founders
-	// Edition`
+	// The format should be the same as PageInfo.page_category. This field is the
+	// equivalent of the query for browse (navigation) queries. It's used by the
+	// browse model when the query is empty. If the field is empty, it will not be
+	// used by the browse model. If the field contains more than one element, only
+	// the first element will be used. To represent full path of a category, use
+	// '>' character to separate different hierarchies. If '>' is part of the
+	// category name, replace it with other character(s). For example, `Graphics
+	// Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents one
+	// level, can be rewritten as `Graphics Cards > RTX_4090 > Founders Edition`
 	PageCategories []string `json:"pageCategories,omitempty"`
 	// PageSize: Maximum number of Documents to return. The maximum allowed value
 	// depends on the data type. Values above the maximum value are coerced to the
@@ -13291,8 +13291,8 @@ type GoogleCloudDiscoveryengineV1SearchRequestNaturalLanguageQueryUnderstandingS
 	// `HARD_FILTER`. For multi-datastore search, the default behavior is
 	// `SOFT_BOOST`. Location-based filters are always applied as hard filters, and
 	// the `SOFT_BOOST` setting will not affect them. This field is only used if
-	// SearchRequest.natural_language_query_understanding_spec.filter_extraction_con
-	// dition is set to FilterExtractionCondition.ENABLED.
+	// SearchRequest.NaturalLanguageQueryUnderstandingSpec.FilterExtractionCondition
+	//  is set to FilterExtractionCondition.ENABLED.
 	//
 	// Possible values:
 	//   "EXTRACTED_FILTER_BEHAVIOR_UNSPECIFIED" -
@@ -13517,6 +13517,9 @@ type GoogleCloudDiscoveryengineV1SearchResponse struct {
 	CorrectedQuery string `json:"correctedQuery,omitempty"`
 	// Facets: Results of facets requested by user.
 	Facets []*GoogleCloudDiscoveryengineV1SearchResponseFacet `json:"facets,omitempty"`
+	// NaturalLanguageQueryUnderstandingInfo: Output only. Natural language query
+	// understanding information for the returned results.
+	NaturalLanguageQueryUnderstandingInfo *GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfo `json:"naturalLanguageQueryUnderstandingInfo,omitempty"`
 	// NextPageToken: A token that can be sent as SearchRequest.page_token to
 	// retrieve the next page. If this field is omitted, there are no subsequent
 	// pages.
@@ -13622,6 +13625,280 @@ type GoogleCloudDiscoveryengineV1SearchResponseFacetFacetValue struct {
 
 func (s GoogleCloudDiscoveryengineV1SearchResponseFacetFacetValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1SearchResponseFacetFacetValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingIn
+// fo: Information describing what natural language understanding was done on
+// the input query.
+type GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfo struct {
+	// ClassifiedIntents: The classified intents from the input query.
+	ClassifiedIntents []string `json:"classifiedIntents,omitempty"`
+	// ExtractedFilters: The filters that were extracted from the input query.
+	ExtractedFilters string `json:"extractedFilters,omitempty"`
+	// RewrittenQuery: Rewritten input query minus the extracted filters.
+	RewrittenQuery string `json:"rewrittenQuery,omitempty"`
+	// StructuredExtractedFilter: The filters that were extracted from the input
+	// query represented in a structured form.
+	StructuredExtractedFilter *GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilter `json:"structuredExtractedFilter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClassifiedIntents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClassifiedIntents") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingIn
+// foStructuredExtractedFilter: The filters that were extracted from the input
+// query represented in a structured form.
+type GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilter struct {
+	// Expression: The expression denoting the filter that was extracted from the
+	// input query in a structured form. It can be a simple expression denoting a
+	// single string, numerical or geolocation constraint or a compound expression
+	// which is a combination of multiple expressions connected using logical (OR
+	// and AND) operators.
+	Expression *GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterExpression `json:"expression,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Expression") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Expression") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingIn
+// foStructuredExtractedFilterAndExpression: Logical `And` operator.
+type GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterAndExpression struct {
+	// Expressions: The expressions that were ANDed together.
+	Expressions []*GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterExpression `json:"expressions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Expressions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Expressions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterAndExpression) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterAndExpression
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingIn
+// foStructuredExtractedFilterExpression: The expression denoting the filter
+// that was extracted from the input query.
+type GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterExpression struct {
+	// AndExpr: Logical "And" compound operator connecting multiple expressions.
+	AndExpr *GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterAndExpression `json:"andExpr,omitempty"`
+	// GeolocationConstraint: Geolocation constraint expression.
+	GeolocationConstraint *GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterGeolocationConstraint `json:"geolocationConstraint,omitempty"`
+	// NumberConstraint: Numerical constraint expression.
+	NumberConstraint *GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterNumberConstraint `json:"numberConstraint,omitempty"`
+	// OrExpr: Logical "Or" compound operator connecting multiple expressions.
+	OrExpr *GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterOrExpression `json:"orExpr,omitempty"`
+	// StringConstraint: String constraint expression.
+	StringConstraint *GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterStringConstraint `json:"stringConstraint,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AndExpr") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AndExpr") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterExpression) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterExpression
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingIn
+// foStructuredExtractedFilterGeolocationConstraint: Constraint of a
+// geolocation field. Name of the geolocation field as defined in the schema.
+type GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterGeolocationConstraint struct {
+	// Address: The reference address that was inferred from the input query. The
+	// proximity of the reference address to the geolocation field will be used to
+	// filter the results.
+	Address string `json:"address,omitempty"`
+	// FieldName: The name of the geolocation field as defined in the schema.
+	FieldName string `json:"fieldName,omitempty"`
+	// Latitude: The latitude of the geolocation inferred from the input query.
+	Latitude float64 `json:"latitude,omitempty"`
+	// Longitude: The longitude of the geolocation inferred from the input query.
+	Longitude float64 `json:"longitude,omitempty"`
+	// RadiusInMeters: The radius in meters around the address. The record is
+	// returned if the location of the geolocation field is within the radius.
+	RadiusInMeters float64 `json:"radiusInMeters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Address") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterGeolocationConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterGeolocationConstraint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterGeolocationConstraint) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterGeolocationConstraint
+	var s1 struct {
+		Latitude       gensupport.JSONFloat64 `json:"latitude"`
+		Longitude      gensupport.JSONFloat64 `json:"longitude"`
+		RadiusInMeters gensupport.JSONFloat64 `json:"radiusInMeters"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	s.RadiusInMeters = float64(s1.RadiusInMeters)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingIn
+// foStructuredExtractedFilterNumberConstraint: Constraint expression of a
+// number field. Example: price < 100.
+type GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterNumberConstraint struct {
+	// Comparison: The comparison operation performed between the field value and
+	// the value specified in the constraint.
+	//
+	// Possible values:
+	//   "COMPARISON_UNSPECIFIED" - Undefined comparison operator.
+	//   "EQUALS" - Denotes equality `=` operator.
+	//   "LESS_THAN_EQUALS" - Denotes less than or equal to `<=` operator.
+	//   "LESS_THAN" - Denotes less than `<` operator.
+	//   "GREATER_THAN_EQUALS" - Denotes greater than or equal to `>=` operator.
+	//   "GREATER_THAN" - Denotes greater than `>` operator.
+	Comparison string `json:"comparison,omitempty"`
+	// FieldName: Name of the numerical field as defined in the schema.
+	FieldName string `json:"fieldName,omitempty"`
+	// QuerySegment: Identifies the keywords within the search query that match a
+	// filter.
+	QuerySegment string `json:"querySegment,omitempty"`
+	// Value: The value specified in the numerical constraint.
+	Value float64 `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Comparison") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Comparison") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterNumberConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterNumberConstraint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterNumberConstraint) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterNumberConstraint
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingIn
+// foStructuredExtractedFilterOrExpression: Logical `Or` operator.
+type GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterOrExpression struct {
+	// Expressions: The expressions that were ORed together.
+	Expressions []*GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterExpression `json:"expressions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Expressions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Expressions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterOrExpression) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterOrExpression
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingIn
+// foStructuredExtractedFilterStringConstraint: Constraint expression of a
+// string field.
+type GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterStringConstraint struct {
+	// FieldName: Name of the string field as defined in the schema.
+	FieldName string `json:"fieldName,omitempty"`
+	// QuerySegment: Identifies the keywords within the search query that match a
+	// filter.
+	QuerySegment string `json:"querySegment,omitempty"`
+	// Values: Values of the string field. The record will only be returned if the
+	// field value matches one of the values specified here.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterStringConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchResponseNaturalLanguageQueryUnderstandingInfoStructuredExtractedFilterStringConstraint
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15882,7 +16159,7 @@ type GoogleCloudDiscoveryengineV1WidgetConfigCollectionComponent struct {
 	// Name: The name of the collection. It should be collection resource name.
 	// Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}`. For
-	// APIs under WidgetService, such as WidgetService.LookUpWidgetConfig, the
+	// APIs under WidgetService, such as WidgetService.LookupWidgetConfig, the
 	// project number and location part is erased in this field.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConnectorIconLink") to
@@ -15959,7 +16236,7 @@ type GoogleCloudDiscoveryengineV1WidgetConfigDataStoreComponent struct {
 	// Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. For APIs under WidgetService, such as
-	// WidgetService.LookUpWidgetConfig, the project number and location part is
+	// WidgetService.LookupWidgetConfig, the project number and location part is
 	// erased in this field.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataStoreConfigType") to
@@ -16000,7 +16277,7 @@ type GoogleCloudDiscoveryengineV1WidgetConfigDataStoreUiConfig struct {
 	// Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. For APIs under WidgetService, such as
-	// WidgetService.LookUpWidgetConfig, the project number and location part is
+	// WidgetService.LookupWidgetConfig, the project number and location part is
 	// erased in this field.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FacetField") to
@@ -16215,10 +16492,11 @@ type GoogleCloudDiscoveryengineV1WidgetConfigUiSettings struct {
 	// features. Supported keys: * `agent-gallery` * `no-code-agent-builder` *
 	// `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` *
 	// `people-search-org-chart` * `bi-directional-audio` * `feedback` *
-	// `session-sharing` * `personalization-memory` * `disable-agent-sharing` *
+	// `session-sharing` * `personalization-memory` *
+	// `personalization-suggested-highlights` * `disable-agent-sharing` *
 	// `disable-image-generation` * `disable-video-generation` *
 	// `disable-onedrive-upload` * `disable-talk-to-content` *
-	// `disable-google-drive-upload`
+	// `disable-google-drive-upload` * `disable-welcome-emails`
 	Features map[string]string `json:"features,omitempty"`
 	// GenerativeAnswerConfig: Describes generative answer configuration.
 	GenerativeAnswerConfig *GoogleCloudDiscoveryengineV1WidgetConfigUiSettingsGenerativeAnswerConfig `json:"generativeAnswerConfig,omitempty"`
@@ -17554,9 +17832,8 @@ type GoogleCloudDiscoveryengineV1alphaAssistAnswerReply struct {
 	// ReplyId: Output only. When set, uniquely identifies a reply within the
 	// `AssistAnswer` resource. During an AssistantService.StreamAssist call,
 	// multiple `Reply` messages with the same ID can occur within the response
-	// stream (across multiple AssistantService.StreamAssistResponse messages).
-	// These represent parts of a single `Reply` message in the final
-	// `AssistAnswer` resource.
+	// stream (across multiple StreamAssistResponse messages). These represent
+	// parts of a single `Reply` message in the final `AssistAnswer` resource.
 	ReplyId string `json:"replyId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GroundedContent") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -19028,7 +19305,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -19191,7 +19468,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -19224,7 +19501,7 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// run.
 	//   "FAILED" - The connector is in error. The error details can be found in
 	// DataConnector.errors. If the error is unfixable, the DataConnector can be
-	// deleted by [CollectionService.DeleteCollection] API.
+	// deleted by CollectionService.DeleteCollection API.
 	//   "RUNNING" - The connector is actively syncing records from the data
 	// source.
 	//   "WARNING" - The connector has completed a sync run, but encountered
@@ -20394,10 +20671,11 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
-	// `personalization-memory` * `disable-agent-sharing` *
-	// `disable-image-generation` * `disable-video-generation` *
-	// `disable-onedrive-upload` * `disable-talk-to-content` *
-	// `disable-google-drive-upload`
+	// `personalization-memory` * `personalization-suggested-highlights` *
+	// `disable-agent-sharing` * `disable-image-generation` *
+	// `disable-video-generation` * `disable-onedrive-upload` *
+	// `disable-talk-to-content` * `disable-google-drive-upload` *
+	// `disable-welcome-emails`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -23359,16 +23637,15 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	OrderBy string `json:"orderBy,omitempty"`
 	// PageCategories: Optional. The categories associated with a category page.
 	// Must be set for category navigation queries to achieve good search quality.
-	// The format should be the same as UserEvent.PageInfo.page_category. This
-	// field is the equivalent of the query for browse (navigation) queries. It's
-	// used by the browse model when the query is empty. If the field is empty, it
-	// will not be used by the browse model. If the field contains more than one
-	// element, only the first element will be used. To represent full path of a
-	// category, use '>' character to separate different hierarchies. If '>' is
-	// part of the category name, replace it with other character(s). For example,
-	// `Graphics Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents
-	// one level, can be rewritten as `Graphics Cards > RTX_4090 > Founders
-	// Edition`
+	// The format should be the same as PageInfo.page_category. This field is the
+	// equivalent of the query for browse (navigation) queries. It's used by the
+	// browse model when the query is empty. If the field is empty, it will not be
+	// used by the browse model. If the field contains more than one element, only
+	// the first element will be used. To represent full path of a category, use
+	// '>' character to separate different hierarchies. If '>' is part of the
+	// category name, replace it with other character(s). For example, `Graphics
+	// Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents one
+	// level, can be rewritten as `Graphics Cards > RTX_4090 > Founders Edition`
 	PageCategories []string `json:"pageCategories,omitempty"`
 	// PageSize: Maximum number of Documents to return. The maximum allowed value
 	// depends on the data type. Values above the maximum value are coerced to the
@@ -24463,8 +24740,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestNaturalLanguageQueryUnderstan
 	// `HARD_FILTER`. For multi-datastore search, the default behavior is
 	// `SOFT_BOOST`. Location-based filters are always applied as hard filters, and
 	// the `SOFT_BOOST` setting will not affect them. This field is only used if
-	// SearchRequest.natural_language_query_understanding_spec.filter_extraction_con
-	// dition is set to FilterExtractionCondition.ENABLED.
+	// SearchRequest.NaturalLanguageQueryUnderstandingSpec.FilterExtractionCondition
+	//  is set to FilterExtractionCondition.ENABLED.
 	//
 	// Possible values:
 	//   "EXTRACTED_FILTER_BEHAVIOR_UNSPECIFIED" -
@@ -27138,10 +27415,11 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
 	// `bi-directional-audio` * `feedback` * `session-sharing` *
-	// `personalization-memory` * `disable-agent-sharing` *
-	// `disable-image-generation` * `disable-video-generation` *
-	// `disable-onedrive-upload` * `disable-talk-to-content` *
-	// `disable-google-drive-upload`
+	// `personalization-memory` * `personalization-suggested-highlights` *
+	// `disable-agent-sharing` * `disable-image-generation` *
+	// `disable-video-generation` * `disable-onedrive-upload` *
+	// `disable-talk-to-content` * `disable-google-drive-upload` *
+	// `disable-welcome-emails`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -29150,16 +29428,15 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	OrderBy string `json:"orderBy,omitempty"`
 	// PageCategories: Optional. The categories associated with a category page.
 	// Must be set for category navigation queries to achieve good search quality.
-	// The format should be the same as UserEvent.PageInfo.page_category. This
-	// field is the equivalent of the query for browse (navigation) queries. It's
-	// used by the browse model when the query is empty. If the field is empty, it
-	// will not be used by the browse model. If the field contains more than one
-	// element, only the first element will be used. To represent full path of a
-	// category, use '>' character to separate different hierarchies. If '>' is
-	// part of the category name, replace it with other character(s). For example,
-	// `Graphics Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents
-	// one level, can be rewritten as `Graphics Cards > RTX_4090 > Founders
-	// Edition`
+	// The format should be the same as PageInfo.page_category. This field is the
+	// equivalent of the query for browse (navigation) queries. It's used by the
+	// browse model when the query is empty. If the field is empty, it will not be
+	// used by the browse model. If the field contains more than one element, only
+	// the first element will be used. To represent full path of a category, use
+	// '>' character to separate different hierarchies. If '>' is part of the
+	// category name, replace it with other character(s). For example, `Graphics
+	// Cards > RTX>4090 > Founders Edition` where "RTX > 4090" represents one
+	// level, can be rewritten as `Graphics Cards > RTX_4090 > Founders Edition`
 	PageCategories []string `json:"pageCategories,omitempty"`
 	// PageSize: Maximum number of Documents to return. The maximum allowed value
 	// depends on the data type. Values above the maximum value are coerced to the
@@ -30249,8 +30526,8 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestNaturalLanguageQueryUnderstand
 	// `HARD_FILTER`. For multi-datastore search, the default behavior is
 	// `SOFT_BOOST`. Location-based filters are always applied as hard filters, and
 	// the `SOFT_BOOST` setting will not affect them. This field is only used if
-	// SearchRequest.natural_language_query_understanding_spec.filter_extraction_con
-	// dition is set to FilterExtractionCondition.ENABLED.
+	// SearchRequest.NaturalLanguageQueryUnderstandingSpec.FilterExtractionCondition
+	//  is set to FilterExtractionCondition.ENABLED.
 	//
 	// Possible values:
 	//   "EXTRACTED_FILTER_BEHAVIOR_UNSPECIFIED" -

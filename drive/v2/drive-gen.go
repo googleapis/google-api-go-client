@@ -6698,16 +6698,20 @@ func (c *FilesCopyCall) TimedTextTrackName(timedTextTrackName string) *FilesCopy
 }
 
 // Visibility sets the optional parameter "visibility": The visibility of the
-// new file. This parameter is only relevant when the source is not a native
-// Google Doc and convert=false.
+// new file. Permissions are still inherited from parent folders. This
+// parameter is only relevant when the source is not a Google Doc file and when
+// `convert=false`.
 //
 // Possible values:
 //
 //	"DEFAULT" (default) - The visibility of the new file is determined by the
 //
-// user's default visibility/sharing policies.
+// user's default visibility or sharing policies.
 //
-//	"PRIVATE" - The new file will be visible to only the owner.
+//	"PRIVATE" - The user's default visibility or sharing policies are ignored,
+//
+// and the new file is only visible to the owner and any users with permissions
+// inherited from the parent folder.
 func (c *FilesCopyCall) Visibility(visibility string) *FilesCopyCall {
 	c.urlParams_.Set("visibility", visibility)
 	return c
@@ -7526,15 +7530,19 @@ func (c *FilesInsertCall) UseContentAsIndexableText(useContentAsIndexableText bo
 }
 
 // Visibility sets the optional parameter "visibility": The visibility of the
-// new file. This parameter is only relevant when convert=false.
+// new file. Permissions are still inherited from parent folders. This
+// parameter is only relevant when `convert=false`.
 //
 // Possible values:
 //
 //	"DEFAULT" (default) - The visibility of the new file is determined by the
 //
-// user's default visibility/sharing policies.
+// user's default visibility or sharing policies.
 //
-//	"PRIVATE" - The new file will be visible to only the owner.
+//	"PRIVATE" - The user's default visibility or sharing policies are ignored,
+//
+// and the new file is only visible to the owner and any users with permissions
+// inherited from the parent folder.
 func (c *FilesInsertCall) Visibility(visibility string) *FilesInsertCall {
 	c.urlParams_.Set("visibility", visibility)
 	return c

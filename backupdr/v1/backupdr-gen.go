@@ -537,13 +537,62 @@ func (s AllocationAffinity) MarshalJSON() ([]byte, error) {
 // AlloyDBClusterBackupPlanAssociationProperties: Properties for an AlloyDB
 // cluster backup plan association.
 type AlloyDBClusterBackupPlanAssociationProperties struct {
+	// ClusterUid: Output only. The cluster UID of the AlloyDB cluster.
+	ClusterUid string `json:"clusterUid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClusterUid") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClusterUid") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AlloyDBClusterBackupPlanAssociationProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod AlloyDBClusterBackupPlanAssociationProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AlloyDBClusterDataSourceProperties: AlloyDBClusterDataSourceProperties
 // represents the properties of a AlloyDB cluster resource that are stored in
 // the DataSource. .
 type AlloyDBClusterDataSourceProperties struct {
+	// ClusterUid: Output only. The cluster UID of the AlloyDB cluster backed up by
+	// the datasource.
+	ClusterUid string `json:"clusterUid,omitempty"`
 	// Name: Output only. Name of the AlloyDB cluster backed up by the datasource.
+	Name string `json:"name,omitempty"`
+	// PitrWindows: Output only. Point in time recovery windows. The order is
+	// guaranteed to be ascending by start time.
+	PitrWindows []*AlloyDbPitrWindow `json:"pitrWindows,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClusterUid") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClusterUid") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AlloyDBClusterDataSourceProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod AlloyDBClusterDataSourceProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AlloyDBClusterDataSourceReferenceProperties:
+// AlloyDBClusterDataSourceReferenceProperties represents the properties of an
+// AlloyDB cluster that are stored in the DataSourceReference.
+type AlloyDBClusterDataSourceReferenceProperties struct {
+	// Name: Output only. Name of the AlloyDB cluster backed up by the datasource.
+	// Format: projects/{project}/locations/{location}/clusters/{cluster}
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -558,8 +607,8 @@ type AlloyDBClusterDataSourceProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s AlloyDBClusterDataSourceProperties) MarshalJSON() ([]byte, error) {
-	type NoMethod AlloyDBClusterDataSourceProperties
+func (s AlloyDBClusterDataSourceReferenceProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod AlloyDBClusterDataSourceReferenceProperties
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -592,6 +641,33 @@ type AlloyDbClusterBackupProperties struct {
 
 func (s AlloyDbClusterBackupProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod AlloyDbClusterBackupProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AlloyDbPitrWindow: Point in time recovery window for an AlloyDB cluster.
+type AlloyDbPitrWindow struct {
+	// EndTime: Output only. The end time of the PITR window. It is not set if the
+	// corresponding Backup Plan Association is active.
+	EndTime string `json:"endTime,omitempty"`
+	// LogRetentionDays: Output only. Log retention days for the PITR window.
+	LogRetentionDays int64 `json:"logRetentionDays,omitempty,string"`
+	// StartTime: Output only. The start time of the PITR window.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AlloyDbPitrWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod AlloyDbPitrWindow
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2468,6 +2544,9 @@ func (s DataSourceGcpResource) MarshalJSON() ([]byte, error) {
 // DataSourceGcpResourceInfo: The Google Cloud resource that the DataSource is
 // associated with.
 type DataSourceGcpResourceInfo struct {
+	// AlloyDbClusterProperties: Output only. The properties of the AlloyDB
+	// cluster.
+	AlloyDbClusterProperties *AlloyDBClusterDataSourceReferenceProperties `json:"alloyDbClusterProperties,omitempty"`
 	// CloudSqlInstanceProperties: Output only. The properties of the Cloud SQL
 	// instance.
 	CloudSqlInstanceProperties *CloudSqlInstanceDataSourceReferenceProperties `json:"cloudSqlInstanceProperties,omitempty"`
@@ -2480,13 +2559,13 @@ type DataSourceGcpResourceInfo struct {
 	// Type: Output only. The type of the Google Cloud resource. Ex:
 	// compute.googleapis.com/Instance
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CloudSqlInstanceProperties")
+	// ForceSendFields is a list of field names (e.g. "AlloyDbClusterProperties")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CloudSqlInstanceProperties") to
+	// NullFields is a list of field names (e.g. "AlloyDbClusterProperties") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

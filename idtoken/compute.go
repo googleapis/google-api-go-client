@@ -5,6 +5,7 @@
 package idtoken
 
 import (
+	"context"
 	"fmt"
 	"net/url"
 	"time"
@@ -40,7 +41,7 @@ func (c computeIDTokenSource) Token() (*oauth2.Token, error) {
 	v.Set("audience", c.audience)
 	v.Set("format", "full")
 	urlSuffix := "instance/service-accounts/default/identity?" + v.Encode()
-	res, err := metadata.Get(urlSuffix)
+	res, err := metadata.GetWithContext(context.Background(), urlSuffix)
 	if err != nil {
 		return nil, err
 	}

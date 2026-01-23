@@ -2582,8 +2582,8 @@ type InsertPersonRequest struct {
 	// Location: Inserts the person mention at a specific index in the document.
 	// The person mention must be inserted inside the bounds of an existing
 	// Paragraph. For instance, it cannot be inserted at a table's start index
-	// (i.e. between the table and its preceding paragraph). People cannot be
-	// inserted inside an equation.
+	// (i.e. between the table and its preceding paragraph). Person mentions cannot
+	// be inserted inside an equation.
 	Location *Location `json:"location,omitempty"`
 	// PersonProperties: The properties of the person mention to insert.
 	PersonProperties *PersonProperties `json:"personProperties,omitempty"`

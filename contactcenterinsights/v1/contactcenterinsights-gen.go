@@ -171,6 +171,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.AnalysisRules = NewProjectsLocationsAnalysisRulesService(s)
 	rs.AssessmentRules = NewProjectsLocationsAssessmentRulesService(s)
 	rs.AuthorizedViewSets = NewProjectsLocationsAuthorizedViewSetsService(s)
+	rs.AutoLabelingRules = NewProjectsLocationsAutoLabelingRulesService(s)
 	rs.Conversations = NewProjectsLocationsConversationsService(s)
 	rs.Datasets = NewProjectsLocationsDatasetsService(s)
 	rs.EncryptionSpec = NewProjectsLocationsEncryptionSpecService(s)
@@ -192,6 +193,8 @@ type ProjectsLocationsService struct {
 	AssessmentRules *ProjectsLocationsAssessmentRulesService
 
 	AuthorizedViewSets *ProjectsLocationsAuthorizedViewSetsService
+
+	AutoLabelingRules *ProjectsLocationsAutoLabelingRulesService
 
 	Conversations *ProjectsLocationsConversationsService
 
@@ -310,6 +313,15 @@ func NewProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsService(s *S
 }
 
 type ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsAutoLabelingRulesService(s *Service) *ProjectsLocationsAutoLabelingRulesService {
+	rs := &ProjectsLocationsAutoLabelingRulesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAutoLabelingRulesService struct {
 	s *Service
 }
 
@@ -1132,6 +1144,84 @@ func (s GoogleCloudContactcenterinsightsV1AuthorizedViewSet) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1AutoLabelingRule: Rule for auto-labeling
+// conversations.
+type GoogleCloudContactcenterinsightsV1AutoLabelingRule struct {
+	// Active: Whether the rule is active.
+	Active bool `json:"active,omitempty"`
+	// Conditions: Conditions to apply for auto-labeling the label_key.
+	// Representing sequential block of if .. else if .. else statements. The value
+	// of the first matching condition will be used.
+	Conditions []*GoogleCloudContactcenterinsightsV1AutoLabelingRuleLabelingCondition `json:"conditions,omitempty"`
+	// CreateTime: Output only. The time at which this rule was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: The description of the rule.
+	Description string `json:"description,omitempty"`
+	// DisplayName: The user-provided display name of the rule.
+	DisplayName string `json:"displayName,omitempty"`
+	// LabelKey: The label key. This is also the {auto_labeling_rule} in the
+	// resource name. Only settable if label_key_type is LABEL_KEY_TYPE_CUSTOM.
+	LabelKey string `json:"labelKey,omitempty"`
+	// LabelKeyType: The type of the label key.
+	//
+	// Possible values:
+	//   "LABEL_KEY_TYPE_UNSPECIFIED" - Unspecified label key type.
+	//   "LABEL_KEY_TYPE_CUSTOM" - The label key is custom defined by the user.
+	LabelKeyType string `json:"labelKeyType,omitempty"`
+	// Name: Identifier. The resource name of the auto-labeling rule. Format:
+	// projects/{project}/locations/{location}/autoLabelingRules/{auto_labeling_rule
+	// }
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. The most recent time at which the rule was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Active") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Active") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1AutoLabelingRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1AutoLabelingRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1AutoLabelingRuleLabelingCondition:
+// Condition for auto-labeling conversations.
+type GoogleCloudContactcenterinsightsV1AutoLabelingRuleLabelingCondition struct {
+	// Condition: A optional CEL expression to be evaluated as a boolean value.
+	// Once evaluated as true, then we will proceed with the value evaluation. An
+	// empty condition will be auto evaluated as true.
+	Condition string `json:"condition,omitempty"`
+	// Value: CEL expression to be evaluated as the value.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Condition") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1AutoLabelingRuleLabelingCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1AutoLabelingRuleLabelingCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsMetadata: The
 // metadata for a bulk analyze conversations operation.
 type GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsMetadata struct {
@@ -1857,6 +1947,61 @@ func (s GoogleCloudContactcenterinsightsV1CallAnnotation) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1ConstraintEvaluationResult: The result of
+// testing a constraint expression on a pair of conversations.
+type GoogleCloudContactcenterinsightsV1ConstraintEvaluationResult struct {
+	// ConversationA: The first conversation resource name.
+	ConversationA string `json:"conversationA,omitempty"`
+	// ConversationB: The second conversation resource name.
+	ConversationB string `json:"conversationB,omitempty"`
+	// RuleConstraintResults: The results for each applicable constraint rule.
+	RuleConstraintResults []*GoogleCloudContactcenterinsightsV1ConstraintEvaluationResultRuleConstraintResult `json:"ruleConstraintResults,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConversationA") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversationA") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConstraintEvaluationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConstraintEvaluationResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConstraintEvaluationResultRuleConstraintRes
+// ult: The result of a single constraint rule on the pair of conversations.
+type GoogleCloudContactcenterinsightsV1ConstraintEvaluationResultRuleConstraintResult struct {
+	// ConstraintMet: Whether the constraint expression evaluated to true for (A,
+	// B) or (B, A).
+	ConstraintMet bool `json:"constraintMet,omitempty"`
+	// Error: The error status if the constraint expression failed to evaluate.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// RuleId: The rule ID.
+	RuleId string `json:"ruleId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConstraintMet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConstraintMet") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConstraintEvaluationResultRuleConstraintResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConstraintEvaluationResultRuleConstraintResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1Conversation: The conversation resource.
 type GoogleCloudContactcenterinsightsV1Conversation struct {
 	// AgentId: An opaque, user-specified string representing the human agent who
@@ -1864,6 +2009,8 @@ type GoogleCloudContactcenterinsightsV1Conversation struct {
 	AgentId string `json:"agentId,omitempty"`
 	// CallMetadata: Call-specific metadata.
 	CallMetadata *GoogleCloudContactcenterinsightsV1ConversationCallMetadata `json:"callMetadata,omitempty"`
+	// CorrelationInfo: Output only. Info for correlating across conversations.
+	CorrelationInfo *GoogleCloudContactcenterinsightsV1ConversationCorrelationInfo `json:"correlationInfo,omitempty"`
 	// CreateTime: Output only. The time at which the conversation was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DataSource: The source of the audio and transcription for the conversation.
@@ -1888,12 +2035,10 @@ type GoogleCloudContactcenterinsightsV1Conversation struct {
 	LatestAnalysis *GoogleCloudContactcenterinsightsV1Analysis `json:"latestAnalysis,omitempty"`
 	// LatestSummary: Output only. Latest summary of the conversation.
 	LatestSummary *GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData `json:"latestSummary,omitempty"`
-	// Medium: Immutable. The conversation medium, if unspecified will default to
-	// PHONE_CALL.
+	// Medium: Immutable. The conversation medium.
 	//
 	// Possible values:
-	//   "MEDIUM_UNSPECIFIED" - Default value, if unspecified will default to
-	// PHONE_CALL.
+	//   "MEDIUM_UNSPECIFIED" - Default value for unspecified.
 	//   "PHONE_CALL" - The format for conversations that took place over the
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
@@ -1967,6 +2112,127 @@ type GoogleCloudContactcenterinsightsV1ConversationCallMetadata struct {
 
 func (s GoogleCloudContactcenterinsightsV1ConversationCallMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ConversationCallMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationCorrelationInfo: Info for
+// correlating across conversations.
+type GoogleCloudContactcenterinsightsV1ConversationCorrelationInfo struct {
+	// CorrelationTypes: Output only. The correlation types of this conversation. A
+	// single conversation can have multiple correlation types. For example a
+	// conversation that only has a single segment is both a SEGMENT and a
+	// FULL_CONVERSATION.
+	//
+	// Possible values:
+	//   "CORRELATION_TYPE_UNSPECIFIED" - Default value for unspecified.
+	//   "SEGMENT" - This conversation represents a segment of a full conversation.
+	// The lowest level of granularity.
+	//   "PARTIAL" - This conversation represents a partial conversation of
+	// potentially multiple segments but is not a full conversation.
+	//   "FULL" - This conversation represents a full conversation of potentially
+	// multiple segments.
+	//   "SYNTHETIC" - This conversation represents a synthetic conversation.
+	CorrelationTypes []string `json:"correlationTypes,omitempty"`
+	// FullConversationCorrelationId: Output only. The full conversation
+	// correlation id this conversation is a segment of.
+	FullConversationCorrelationId string `json:"fullConversationCorrelationId,omitempty"`
+	// MergedFullConversationCorrelationId: Output only. The full conversation
+	// correlation id this conversation is a merged conversation of.
+	MergedFullConversationCorrelationId string `json:"mergedFullConversationCorrelationId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CorrelationTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CorrelationTypes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationCorrelationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationCorrelationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationCorrelationResult: The result
+// of testing correlation config on a single conversation.
+type GoogleCloudContactcenterinsightsV1ConversationCorrelationResult struct {
+	// Conversation: The conversation resource name.
+	Conversation string `json:"conversation,omitempty"`
+	// RuleResults: The results for each correlation rule.
+	RuleResults []*GoogleCloudContactcenterinsightsV1ConversationCorrelationResultRuleCorrelationResult `json:"ruleResults,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conversation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conversation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationCorrelationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationCorrelationResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationCorrelationResultRuleCorrelatio
+// nResult: The result of a single correlation rule.
+type GoogleCloudContactcenterinsightsV1ConversationCorrelationResultRuleCorrelationResult struct {
+	// CorrelationId: The correlation ID generated by the join key expression.
+	CorrelationId string `json:"correlationId,omitempty"`
+	// Error: The error status if the join key expression failed to evaluate.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// RuleId: The rule ID.
+	RuleId string `json:"ruleId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CorrelationId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CorrelationId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationCorrelationResultRuleCorrelationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationCorrelationResultRuleCorrelationResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationDataOptions: Options for
+// configuring what metadata is included in the conversation data used in QAI
+// and Discovery Engine.
+type GoogleCloudContactcenterinsightsV1ConversationDataOptions struct {
+	// IncludeDialogflowInteractionData: Whether to include the per turn Dialogflow
+	// interaction data in conversation transcript.
+	IncludeDialogflowInteractionData bool `json:"includeDialogflowInteractionData,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "IncludeDialogflowInteractionData") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "IncludeDialogflowInteractionData") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationDataOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationDataOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2433,6 +2699,103 @@ func (s *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegme
 	}
 	s.Confidence = float64(s1.Confidence)
 	return nil
+}
+
+// GoogleCloudContactcenterinsightsV1CorrelationConfig: A configuration that
+// defines how to correlate conversations for a given a given project.
+type GoogleCloudContactcenterinsightsV1CorrelationConfig struct {
+	// CreateTime: Output only. The time at which the correlation config was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// FullConversationConfig: The correlation type config for full conversations.
+	FullConversationConfig *GoogleCloudContactcenterinsightsV1CorrelationTypeConfig `json:"fullConversationConfig,omitempty"`
+	// Name: Immutable. Identifier. The resource name of the correlation config.
+	// Format: projects/{project}/locations/{location}/correlationConfig
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. The time at which the correlation config was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1CorrelationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1CorrelationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1CorrelationRule: A correlation rule that
+// defines how to join conversations for a given correlation type.
+type GoogleCloudContactcenterinsightsV1CorrelationRule struct {
+	// Active: Optional. Whether the config is active to be evaluated.
+	Active bool `json:"active,omitempty"`
+	// ConstraintExpression: Optional. A cel expression (go/cel) to be evaluated as
+	// a boolean value. Two variables conversation_a and conversation_b will be
+	// available for evaluation. This expression should evaluate to true if
+	// conversation_a and conversation_b should be joined. This is used as an extra
+	// constraint on top of the join_key_expression to further refine the group of
+	// conversations that are joined together and will be evaluated in both
+	// directions. for two conversations c1 and c2 and the result will be OR'd. We
+	// will evaluate: f(c1, c2) OR f(c2, c1)
+	ConstraintExpression string `json:"constraintExpression,omitempty"`
+	// JoinKeyExpression: Optional. A cel expression (go/cel) to be evaluated as a
+	// string value. This string value will be used as the join key for the
+	// correlation.
+	JoinKeyExpression string `json:"joinKeyExpression,omitempty"`
+	// RuleId: Required. The unique identifier of the rule.
+	RuleId string `json:"ruleId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Active") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Active") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1CorrelationRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1CorrelationRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1CorrelationTypeConfig: A list of
+// correlation rules for a given correlation type.
+type GoogleCloudContactcenterinsightsV1CorrelationTypeConfig struct {
+	// CorrelationRules: A list of correlation rules to be evaluated for
+	// correlation.
+	CorrelationRules []*GoogleCloudContactcenterinsightsV1CorrelationRule `json:"correlationRules,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CorrelationRules") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CorrelationRules") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1CorrelationTypeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1CorrelationTypeConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudContactcenterinsightsV1CreateAnalysisOperationMetadata: Metadata
@@ -4139,8 +4502,7 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequestTranscriptObjec
 	// Medium: Required. The medium transcript objects represent.
 	//
 	// Possible values:
-	//   "MEDIUM_UNSPECIFIED" - Default value, if unspecified will default to
-	// PHONE_CALL.
+	//   "MEDIUM_UNSPECIFIED" - Default value for unspecified.
 	//   "PHONE_CALL" - The format for conversations that took place over the
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
@@ -4462,8 +4824,7 @@ type GoogleCloudContactcenterinsightsV1IssueModelInputDataConfig struct {
 	// set the `medium` field on `filter`.
 	//
 	// Possible values:
-	//   "MEDIUM_UNSPECIFIED" - Default value, if unspecified will default to
-	// PHONE_CALL.
+	//   "MEDIUM_UNSPECIFIED" - Default value for unspecified.
 	//   "PHONE_CALL" - The format for conversations that took place over the
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
@@ -4774,6 +5135,35 @@ type GoogleCloudContactcenterinsightsV1ListAuthorizedViewsResponse struct {
 
 func (s GoogleCloudContactcenterinsightsV1ListAuthorizedViewsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ListAuthorizedViewsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ListAutoLabelingRulesResponse: The
+// response message for listing auto labeling rules.
+type GoogleCloudContactcenterinsightsV1ListAutoLabelingRulesResponse struct {
+	// AutoLabelingRules: The auto labeling rules.
+	AutoLabelingRules []*GoogleCloudContactcenterinsightsV1AutoLabelingRule `json:"autoLabelingRules,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AutoLabelingRules") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoLabelingRules") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ListAutoLabelingRulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ListAutoLabelingRulesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5570,6 +5960,9 @@ type GoogleCloudContactcenterinsightsV1QaQuestion struct {
 	// PredefinedQuestionConfig: The configuration of the predefined question. This
 	// field will only be set if the Question Type is predefined.
 	PredefinedQuestionConfig *GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig `json:"predefinedQuestionConfig,omitempty"`
+	// QaQuestionDataOptions: Options for configuring the data used to generate the
+	// QA question.
+	QaQuestionDataOptions *GoogleCloudContactcenterinsightsV1QaQuestionQaQuestionDataOptions `json:"qaQuestionDataOptions,omitempty"`
 	// QuestionBody: Question text. E.g., "Did the agent greet the customer?"
 	QuestionBody string `json:"questionBody,omitempty"`
 	// QuestionType: The type of question.
@@ -5742,6 +6135,30 @@ type GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig struct
 
 func (s GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1QaQuestionQaQuestionDataOptions: Options
+// for configuring the data used to generate the QA question.
+type GoogleCloudContactcenterinsightsV1QaQuestionQaQuestionDataOptions struct {
+	// ConversationDataOptions: Options for configuring the conversation data used
+	// to generate the QA question.
+	ConversationDataOptions *GoogleCloudContactcenterinsightsV1ConversationDataOptions `json:"conversationDataOptions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConversationDataOptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversationDataOptions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1QaQuestionQaQuestionDataOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1QaQuestionQaQuestionDataOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7496,6 +7913,256 @@ func (s GoogleCloudContactcenterinsightsV1SpeechConfig) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1TestAutoLabelingRuleRequest: The request
+// message for testing auto labeling rules.
+type GoogleCloudContactcenterinsightsV1TestAutoLabelingRuleRequest struct {
+	// AutoLabelingRule: Required. The auto labeling rule to test.
+	AutoLabelingRule *GoogleCloudContactcenterinsightsV1AutoLabelingRule `json:"autoLabelingRule,omitempty"`
+	// Conversation: Required. Conversation data to test rules against.
+	Conversation *GoogleCloudContactcenterinsightsV1Conversation `json:"conversation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AutoLabelingRule") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoLabelingRule") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1TestAutoLabelingRuleRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1TestAutoLabelingRuleRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1TestAutoLabelingRuleResponse: The response
+// message for testing auto labeling rules.
+type GoogleCloudContactcenterinsightsV1TestAutoLabelingRuleResponse struct {
+	// LabelResult: The result of the test auto labeling rule.
+	LabelResult string `json:"labelResult,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "LabelResult") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LabelResult") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1TestAutoLabelingRuleResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1TestAutoLabelingRuleResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1TestCorrelationConfigMetadata: Metadata
+// for testing correlation config.
+type GoogleCloudContactcenterinsightsV1TestCorrelationConfigMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Dataset: The dataset used for sampling conversations.
+	Dataset string `json:"dataset,omitempty"`
+	// Stats: The statistics for the operation.
+	Stats *GoogleCloudContactcenterinsightsV1TestCorrelationConfigMetadataFullConversationCorrelationStats `json:"stats,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1TestCorrelationConfigMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1TestCorrelationConfigMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1TestCorrelationConfigMetadataFullConversati
+// onCorrelationStats: Statistics for TestCorrelationConfig operation.
+type GoogleCloudContactcenterinsightsV1TestCorrelationConfigMetadataFullConversationCorrelationStats struct {
+	// ConversationCorrelationErrors: A list of errors that occurred during
+	// correlation, one for each conversation that failed.
+	ConversationCorrelationErrors []*GoogleCloudContactcenterinsightsV1TestCorrelationConfigMetadataFullConversationCorrelationStatsConversationCorrelationError `json:"conversationCorrelationErrors,omitempty"`
+	// CorrelatedConversationsCount: The number of conversations correlated.
+	CorrelatedConversationsCount int64 `json:"correlatedConversationsCount,omitempty"`
+	// FailedConversationsCount: The number of conversations that failed
+	// correlation.
+	FailedConversationsCount int64 `json:"failedConversationsCount,omitempty"`
+	// PartialErrors: Partial errors during test correlation config operation that
+	// might cause the operation output to be incomplete.
+	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+	// SampledConversationsCount: The number of conversations sampled.
+	SampledConversationsCount int64 `json:"sampledConversationsCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ConversationCorrelationErrors") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversationCorrelationErrors")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1TestCorrelationConfigMetadataFullConversationCorrelationStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1TestCorrelationConfigMetadataFullConversationCorrelationStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1TestCorrelationConfigMetadataFullConversati
+// onCorrelationStatsConversationCorrelationError: An error that occurred
+// during correlation for a specific conversation.
+type GoogleCloudContactcenterinsightsV1TestCorrelationConfigMetadataFullConversationCorrelationStatsConversationCorrelationError struct {
+	// Conversation: The conversation resource name that had an error during
+	// correlation.
+	Conversation string `json:"conversation,omitempty"`
+	// Status: The error status.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conversation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conversation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1TestCorrelationConfigMetadataFullConversationCorrelationStatsConversationCorrelationError) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1TestCorrelationConfigMetadataFullConversationCorrelationStatsConversationCorrelationError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1TestCorrelationConfigRequest: The request
+// to test correlation config.
+type GoogleCloudContactcenterinsightsV1TestCorrelationConfigRequest struct {
+	// Conversations: Optional. A list of conversations to test against.
+	Conversations *GoogleCloudContactcenterinsightsV1TestCorrelationConfigRequestConversations `json:"conversations,omitempty"`
+	// CorrelationConfig: Required. The correlation config to test.
+	CorrelationConfig *GoogleCloudContactcenterinsightsV1CorrelationConfig `json:"correlationConfig,omitempty"`
+	// Filter: Optional. Filter to select conversations to test correlation
+	// against. Conversations matching this filter will be sampled based on start
+	// time. The most recent `max_sample_count` conversations will be selected. If
+	// no conversations match the filter, the request will fail with an
+	// `INVALID_ARGUMENT` error.
+	Filter string `json:"filter,omitempty"`
+	// MaxSampleCount: Optional. The maximum number of conversations to sample when
+	// using the `filter`. If not set, defaults to 1000. Values greater than 1000
+	// are coerced to 1000. This field is ignored if `conversations` is provided.
+	MaxSampleCount int64 `json:"maxSampleCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conversations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conversations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1TestCorrelationConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1TestCorrelationConfigRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1TestCorrelationConfigRequestConversations:
+// Wrapper for a list of conversations.
+type GoogleCloudContactcenterinsightsV1TestCorrelationConfigRequestConversations struct {
+	// Conversations: Optional. The conversations.
+	Conversations []*GoogleCloudContactcenterinsightsV1Conversation `json:"conversations,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conversations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conversations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1TestCorrelationConfigRequestConversations) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1TestCorrelationConfigRequestConversations
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1TestCorrelationConfigResponse: The
+// response of testing correlation config.
+type GoogleCloudContactcenterinsightsV1TestCorrelationConfigResponse struct {
+	// DetailedResults: Results for the DETAILED_SYNC execution mode.
+	DetailedResults *GoogleCloudContactcenterinsightsV1TestCorrelationConfigResponseDetailedCorrelationResults `json:"detailedResults,omitempty"`
+	// PartialErrors: Partial errors during test correlation config operation that
+	// might cause the operation output to be incomplete.
+	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DetailedResults") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DetailedResults") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1TestCorrelationConfigResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1TestCorrelationConfigResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1TestCorrelationConfigResponseDetailedCorrel
+// ationResults: Wrapper for detailed, step-by-step results.
+type GoogleCloudContactcenterinsightsV1TestCorrelationConfigResponseDetailedCorrelationResults struct {
+	// ConstraintResults: A list of constraint evaluation results for each pair of
+	// conversations.
+	ConstraintResults []*GoogleCloudContactcenterinsightsV1ConstraintEvaluationResult `json:"constraintResults,omitempty"`
+	// JoinKeyResults: A list of join key correlation results for each conversation
+	// tested.
+	JoinKeyResults []*GoogleCloudContactcenterinsightsV1ConversationCorrelationResult `json:"joinKeyResults,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConstraintResults") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConstraintResults") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1TestCorrelationConfigResponseDetailedCorrelationResults) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1TestCorrelationConfigResponseDetailedCorrelationResults
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1TuneQaScorecardRevisionRequest: Request
 // for TuneQaScorecardRevision endpoint.
 type GoogleCloudContactcenterinsightsV1TuneQaScorecardRevisionRequest struct {
@@ -8409,6 +9076,62 @@ func (s GoogleCloudContactcenterinsightsV1alpha1CallAnnotation) MarshalJSON() ([
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1alpha1ConstraintEvaluationResult: The
+// result of testing a constraint expression on a pair of conversations.
+type GoogleCloudContactcenterinsightsV1alpha1ConstraintEvaluationResult struct {
+	// ConversationA: The first conversation resource name.
+	ConversationA string `json:"conversationA,omitempty"`
+	// ConversationB: The second conversation resource name.
+	ConversationB string `json:"conversationB,omitempty"`
+	// RuleConstraintResults: The results for each applicable constraint rule.
+	RuleConstraintResults []*GoogleCloudContactcenterinsightsV1alpha1ConstraintEvaluationResultRuleConstraintResult `json:"ruleConstraintResults,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConversationA") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversationA") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConstraintEvaluationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConstraintEvaluationResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConstraintEvaluationResultRuleConstra
+// intResult: The result of a single constraint rule on the pair of
+// conversations.
+type GoogleCloudContactcenterinsightsV1alpha1ConstraintEvaluationResultRuleConstraintResult struct {
+	// ConstraintMet: Whether the constraint expression evaluated to true for (A,
+	// B) or (B, A).
+	ConstraintMet bool `json:"constraintMet,omitempty"`
+	// Error: The error status if the constraint expression failed to evaluate.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// RuleId: The rule ID.
+	RuleId string `json:"ruleId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConstraintMet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConstraintMet") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConstraintEvaluationResultRuleConstraintResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConstraintEvaluationResultRuleConstraintResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1alpha1Conversation: The conversation
 // resource.
 type GoogleCloudContactcenterinsightsV1alpha1Conversation struct {
@@ -8417,6 +9140,8 @@ type GoogleCloudContactcenterinsightsV1alpha1Conversation struct {
 	AgentId string `json:"agentId,omitempty"`
 	// CallMetadata: Call-specific metadata.
 	CallMetadata *GoogleCloudContactcenterinsightsV1alpha1ConversationCallMetadata `json:"callMetadata,omitempty"`
+	// CorrelationInfo: Output only. Info for correlating across conversations.
+	CorrelationInfo *GoogleCloudContactcenterinsightsV1alpha1ConversationCorrelationInfo `json:"correlationInfo,omitempty"`
 	// CreateTime: Output only. The time at which the conversation was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DataSource: The source of the audio and transcription for the conversation.
@@ -8441,12 +9166,10 @@ type GoogleCloudContactcenterinsightsV1alpha1Conversation struct {
 	LatestAnalysis *GoogleCloudContactcenterinsightsV1alpha1Analysis `json:"latestAnalysis,omitempty"`
 	// LatestSummary: Output only. Latest summary of the conversation.
 	LatestSummary *GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSuggestionData `json:"latestSummary,omitempty"`
-	// Medium: Immutable. The conversation medium, if unspecified will default to
-	// PHONE_CALL.
+	// Medium: Immutable. The conversation medium.
 	//
 	// Possible values:
-	//   "MEDIUM_UNSPECIFIED" - Default value, if unspecified will default to
-	// PHONE_CALL.
+	//   "MEDIUM_UNSPECIFIED" - Default value for unspecified.
 	//   "PHONE_CALL" - The format for conversations that took place over the
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
@@ -8517,6 +9240,100 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationCallMetadata struct {
 
 func (s GoogleCloudContactcenterinsightsV1alpha1ConversationCallMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationCallMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationCorrelationInfo: Info
+// for correlating across conversations.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationCorrelationInfo struct {
+	// CorrelationTypes: Output only. The correlation types of this conversation. A
+	// single conversation can have multiple correlation types. For example a
+	// conversation that only has a single segment is both a SEGMENT and a
+	// FULL_CONVERSATION.
+	//
+	// Possible values:
+	//   "CORRELATION_TYPE_UNSPECIFIED" - Default value for unspecified.
+	//   "SEGMENT" - This conversation represents a segment of a full conversation.
+	// The lowest level of granularity.
+	//   "PARTIAL" - This conversation represents a partial conversation of
+	// potentially multiple segments but is not a full conversation.
+	//   "FULL" - This conversation represents a full conversation of potentially
+	// multiple segments.
+	//   "SYNTHETIC" - This conversation represents a synthetic conversation.
+	CorrelationTypes []string `json:"correlationTypes,omitempty"`
+	// FullConversationCorrelationId: Output only. The full conversation
+	// correlation id this conversation is a segment of.
+	FullConversationCorrelationId string `json:"fullConversationCorrelationId,omitempty"`
+	// MergedFullConversationCorrelationId: Output only. The full conversation
+	// correlation id this conversation is a merged conversation of.
+	MergedFullConversationCorrelationId string `json:"mergedFullConversationCorrelationId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CorrelationTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CorrelationTypes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationCorrelationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationCorrelationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationCorrelationResult: The
+// result of testing correlation config on a single conversation.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationCorrelationResult struct {
+	// Conversation: The conversation resource name.
+	Conversation string `json:"conversation,omitempty"`
+	// RuleResults: The results for each correlation rule.
+	RuleResults []*GoogleCloudContactcenterinsightsV1alpha1ConversationCorrelationResultRuleCorrelationResult `json:"ruleResults,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conversation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conversation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationCorrelationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationCorrelationResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationCorrelationResultRuleCorr
+// elationResult: The result of a single correlation rule.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationCorrelationResultRuleCorrelationResult struct {
+	// CorrelationId: The correlation ID generated by the join key expression.
+	CorrelationId string `json:"correlationId,omitempty"`
+	// Error: The error status if the join key expression failed to evaluate.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// RuleId: The rule ID.
+	RuleId string `json:"ruleId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CorrelationId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CorrelationId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationCorrelationResultRuleCorrelationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationCorrelationResultRuleCorrelationResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10596,8 +11413,7 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestTranscrip
 	// Medium: Required. The medium transcript objects represent.
 	//
 	// Possible values:
-	//   "MEDIUM_UNSPECIFIED" - Default value, if unspecified will default to
-	// PHONE_CALL.
+	//   "MEDIUM_UNSPECIFIED" - Default value for unspecified.
 	//   "PHONE_CALL" - The format for conversations that took place over the
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
@@ -10914,8 +11730,7 @@ type GoogleCloudContactcenterinsightsV1alpha1IssueModelInputDataConfig struct {
 	// set the `medium` field on `filter`.
 	//
 	// Possible values:
-	//   "MEDIUM_UNSPECIFIED" - Default value, if unspecified will default to
-	// PHONE_CALL.
+	//   "MEDIUM_UNSPECIFIED" - Default value for unspecified.
 	//   "PHONE_CALL" - The format for conversations that took place over the
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
@@ -12476,6 +13291,147 @@ func (s GoogleCloudContactcenterinsightsV1alpha1SpeechConfig) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigMetadata:
+// Metadata for testing correlation config.
+type GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Dataset: The dataset used for sampling conversations.
+	Dataset string `json:"dataset,omitempty"`
+	// Stats: The statistics for the operation.
+	Stats *GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigMetadataFullConversationCorrelationStats `json:"stats,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigMetadataFullConv
+// ersationCorrelationStats: Statistics for TestCorrelationConfig operation.
+type GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigMetadataFullConversationCorrelationStats struct {
+	// ConversationCorrelationErrors: A list of errors that occurred during
+	// correlation, one for each conversation that failed.
+	ConversationCorrelationErrors []*GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigMetadataFullConversationCorrelationStatsConversationCorrelationError `json:"conversationCorrelationErrors,omitempty"`
+	// CorrelatedConversationsCount: The number of conversations correlated.
+	CorrelatedConversationsCount int64 `json:"correlatedConversationsCount,omitempty"`
+	// FailedConversationsCount: The number of conversations that failed
+	// correlation.
+	FailedConversationsCount int64 `json:"failedConversationsCount,omitempty"`
+	// PartialErrors: Partial errors during test correlation config operation that
+	// might cause the operation output to be incomplete.
+	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+	// SampledConversationsCount: The number of conversations sampled.
+	SampledConversationsCount int64 `json:"sampledConversationsCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ConversationCorrelationErrors") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversationCorrelationErrors")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigMetadataFullConversationCorrelationStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigMetadataFullConversationCorrelationStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigMetadataFullConv
+// ersationCorrelationStatsConversationCorrelationError: An error that occurred
+// during correlation for a specific conversation.
+type GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigMetadataFullConversationCorrelationStatsConversationCorrelationError struct {
+	// Conversation: The conversation resource name that had an error during
+	// correlation.
+	Conversation string `json:"conversation,omitempty"`
+	// Status: The error status.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conversation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conversation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigMetadataFullConversationCorrelationStatsConversationCorrelationError) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigMetadataFullConversationCorrelationStatsConversationCorrelationError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigResponse: The
+// response of testing correlation config.
+type GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigResponse struct {
+	// DetailedResults: Results for the DETAILED_SYNC execution mode.
+	DetailedResults *GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigResponseDetailedCorrelationResults `json:"detailedResults,omitempty"`
+	// PartialErrors: Partial errors during test correlation config operation that
+	// might cause the operation output to be incomplete.
+	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DetailedResults") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DetailedResults") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigResponseDetailed
+// CorrelationResults: Wrapper for detailed, step-by-step results.
+type GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigResponseDetailedCorrelationResults struct {
+	// ConstraintResults: A list of constraint evaluation results for each pair of
+	// conversations.
+	ConstraintResults []*GoogleCloudContactcenterinsightsV1alpha1ConstraintEvaluationResult `json:"constraintResults,omitempty"`
+	// JoinKeyResults: A list of join key correlation results for each conversation
+	// tested.
+	JoinKeyResults []*GoogleCloudContactcenterinsightsV1alpha1ConversationCorrelationResult `json:"joinKeyResults,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConstraintResults") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConstraintResults") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigResponseDetailedCorrelationResults) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1TestCorrelationConfigResponseDetailedCorrelationResults
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelMetadata: Metadata
 // for undeploying an issue model.
 type GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelMetadata struct {
@@ -13498,6 +14454,62 @@ func (s GoogleCloudContactcenterinsightsV1mainCallAnnotation) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1mainConstraintEvaluationResult: The result
+// of testing a constraint expression on a pair of conversations.
+type GoogleCloudContactcenterinsightsV1mainConstraintEvaluationResult struct {
+	// ConversationA: The first conversation resource name.
+	ConversationA string `json:"conversationA,omitempty"`
+	// ConversationB: The second conversation resource name.
+	ConversationB string `json:"conversationB,omitempty"`
+	// RuleConstraintResults: The results for each applicable constraint rule.
+	RuleConstraintResults []*GoogleCloudContactcenterinsightsV1mainConstraintEvaluationResultRuleConstraintResult `json:"ruleConstraintResults,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConversationA") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversationA") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConstraintEvaluationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConstraintEvaluationResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConstraintEvaluationResultRuleConstrain
+// tResult: The result of a single constraint rule on the pair of
+// conversations.
+type GoogleCloudContactcenterinsightsV1mainConstraintEvaluationResultRuleConstraintResult struct {
+	// ConstraintMet: Whether the constraint expression evaluated to true for (A,
+	// B) or (B, A).
+	ConstraintMet bool `json:"constraintMet,omitempty"`
+	// Error: The error status if the constraint expression failed to evaluate.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// RuleId: The rule ID.
+	RuleId string `json:"ruleId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConstraintMet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConstraintMet") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConstraintEvaluationResultRuleConstraintResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConstraintEvaluationResultRuleConstraintResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1mainConversation: The conversation
 // resource.
 type GoogleCloudContactcenterinsightsV1mainConversation struct {
@@ -13506,6 +14518,8 @@ type GoogleCloudContactcenterinsightsV1mainConversation struct {
 	AgentId string `json:"agentId,omitempty"`
 	// CallMetadata: Call-specific metadata.
 	CallMetadata *GoogleCloudContactcenterinsightsV1mainConversationCallMetadata `json:"callMetadata,omitempty"`
+	// CorrelationInfo: Output only. Info for correlating across conversations.
+	CorrelationInfo *GoogleCloudContactcenterinsightsV1mainConversationCorrelationInfo `json:"correlationInfo,omitempty"`
 	// CreateTime: Output only. The time at which the conversation was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DataSource: The source of the audio and transcription for the conversation.
@@ -13530,12 +14544,10 @@ type GoogleCloudContactcenterinsightsV1mainConversation struct {
 	LatestAnalysis *GoogleCloudContactcenterinsightsV1mainAnalysis `json:"latestAnalysis,omitempty"`
 	// LatestSummary: Output only. Latest summary of the conversation.
 	LatestSummary *GoogleCloudContactcenterinsightsV1mainConversationSummarizationSuggestionData `json:"latestSummary,omitempty"`
-	// Medium: Immutable. The conversation medium, if unspecified will default to
-	// PHONE_CALL.
+	// Medium: Immutable. The conversation medium.
 	//
 	// Possible values:
-	//   "MEDIUM_UNSPECIFIED" - Default value, if unspecified will default to
-	// PHONE_CALL.
+	//   "MEDIUM_UNSPECIFIED" - Default value for unspecified.
 	//   "PHONE_CALL" - The format for conversations that took place over the
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
@@ -13606,6 +14618,100 @@ type GoogleCloudContactcenterinsightsV1mainConversationCallMetadata struct {
 
 func (s GoogleCloudContactcenterinsightsV1mainConversationCallMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationCallMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationCorrelationInfo: Info for
+// correlating across conversations.
+type GoogleCloudContactcenterinsightsV1mainConversationCorrelationInfo struct {
+	// CorrelationTypes: Output only. The correlation types of this conversation. A
+	// single conversation can have multiple correlation types. For example a
+	// conversation that only has a single segment is both a SEGMENT and a
+	// FULL_CONVERSATION.
+	//
+	// Possible values:
+	//   "CORRELATION_TYPE_UNSPECIFIED" - Default value for unspecified.
+	//   "SEGMENT" - This conversation represents a segment of a full conversation.
+	// The lowest level of granularity.
+	//   "PARTIAL" - This conversation represents a partial conversation of
+	// potentially multiple segments but is not a full conversation.
+	//   "FULL" - This conversation represents a full conversation of potentially
+	// multiple segments.
+	//   "SYNTHETIC" - This conversation represents a synthetic conversation.
+	CorrelationTypes []string `json:"correlationTypes,omitempty"`
+	// FullConversationCorrelationId: Output only. The full conversation
+	// correlation id this conversation is a segment of.
+	FullConversationCorrelationId string `json:"fullConversationCorrelationId,omitempty"`
+	// MergedFullConversationCorrelationId: Output only. The full conversation
+	// correlation id this conversation is a merged conversation of.
+	MergedFullConversationCorrelationId string `json:"mergedFullConversationCorrelationId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CorrelationTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CorrelationTypes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationCorrelationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationCorrelationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationCorrelationResult: The
+// result of testing correlation config on a single conversation.
+type GoogleCloudContactcenterinsightsV1mainConversationCorrelationResult struct {
+	// Conversation: The conversation resource name.
+	Conversation string `json:"conversation,omitempty"`
+	// RuleResults: The results for each correlation rule.
+	RuleResults []*GoogleCloudContactcenterinsightsV1mainConversationCorrelationResultRuleCorrelationResult `json:"ruleResults,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conversation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conversation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationCorrelationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationCorrelationResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationCorrelationResultRuleCorrel
+// ationResult: The result of a single correlation rule.
+type GoogleCloudContactcenterinsightsV1mainConversationCorrelationResultRuleCorrelationResult struct {
+	// CorrelationId: The correlation ID generated by the join key expression.
+	CorrelationId string `json:"correlationId,omitempty"`
+	// Error: The error status if the join key expression failed to evaluate.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// RuleId: The rule ID.
+	RuleId string `json:"ruleId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CorrelationId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CorrelationId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationCorrelationResultRuleCorrelationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationCorrelationResultRuleCorrelationResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15683,8 +16789,7 @@ type GoogleCloudContactcenterinsightsV1mainIngestConversationsRequestTranscriptO
 	// Medium: Required. The medium transcript objects represent.
 	//
 	// Possible values:
-	//   "MEDIUM_UNSPECIFIED" - Default value, if unspecified will default to
-	// PHONE_CALL.
+	//   "MEDIUM_UNSPECIFIED" - Default value for unspecified.
 	//   "PHONE_CALL" - The format for conversations that took place over the
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
@@ -16000,8 +17105,7 @@ type GoogleCloudContactcenterinsightsV1mainIssueModelInputDataConfig struct {
 	// set the `medium` field on `filter`.
 	//
 	// Possible values:
-	//   "MEDIUM_UNSPECIFIED" - Default value, if unspecified will default to
-	// PHONE_CALL.
+	//   "MEDIUM_UNSPECIFIED" - Default value for unspecified.
 	//   "PHONE_CALL" - The format for conversations that took place over the
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
@@ -17562,6 +18666,147 @@ func (s GoogleCloudContactcenterinsightsV1mainSpeechConfig) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigMetadata:
+// Metadata for testing correlation config.
+type GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Dataset: The dataset used for sampling conversations.
+	Dataset string `json:"dataset,omitempty"`
+	// Stats: The statistics for the operation.
+	Stats *GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigMetadataFullConversationCorrelationStats `json:"stats,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigMetadataFullConver
+// sationCorrelationStats: Statistics for TestCorrelationConfig operation.
+type GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigMetadataFullConversationCorrelationStats struct {
+	// ConversationCorrelationErrors: A list of errors that occurred during
+	// correlation, one for each conversation that failed.
+	ConversationCorrelationErrors []*GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigMetadataFullConversationCorrelationStatsConversationCorrelationError `json:"conversationCorrelationErrors,omitempty"`
+	// CorrelatedConversationsCount: The number of conversations correlated.
+	CorrelatedConversationsCount int64 `json:"correlatedConversationsCount,omitempty"`
+	// FailedConversationsCount: The number of conversations that failed
+	// correlation.
+	FailedConversationsCount int64 `json:"failedConversationsCount,omitempty"`
+	// PartialErrors: Partial errors during test correlation config operation that
+	// might cause the operation output to be incomplete.
+	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+	// SampledConversationsCount: The number of conversations sampled.
+	SampledConversationsCount int64 `json:"sampledConversationsCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ConversationCorrelationErrors") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversationCorrelationErrors")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigMetadataFullConversationCorrelationStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigMetadataFullConversationCorrelationStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigMetadataFullConver
+// sationCorrelationStatsConversationCorrelationError: An error that occurred
+// during correlation for a specific conversation.
+type GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigMetadataFullConversationCorrelationStatsConversationCorrelationError struct {
+	// Conversation: The conversation resource name that had an error during
+	// correlation.
+	Conversation string `json:"conversation,omitempty"`
+	// Status: The error status.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conversation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conversation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigMetadataFullConversationCorrelationStatsConversationCorrelationError) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigMetadataFullConversationCorrelationStatsConversationCorrelationError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigResponse: The
+// response of testing correlation config.
+type GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigResponse struct {
+	// DetailedResults: Results for the DETAILED_SYNC execution mode.
+	DetailedResults *GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigResponseDetailedCorrelationResults `json:"detailedResults,omitempty"`
+	// PartialErrors: Partial errors during test correlation config operation that
+	// might cause the operation output to be incomplete.
+	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DetailedResults") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DetailedResults") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigResponseDetailedCo
+// rrelationResults: Wrapper for detailed, step-by-step results.
+type GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigResponseDetailedCorrelationResults struct {
+	// ConstraintResults: A list of constraint evaluation results for each pair of
+	// conversations.
+	ConstraintResults []*GoogleCloudContactcenterinsightsV1mainConstraintEvaluationResult `json:"constraintResults,omitempty"`
+	// JoinKeyResults: A list of join key correlation results for each conversation
+	// tested.
+	JoinKeyResults []*GoogleCloudContactcenterinsightsV1mainConversationCorrelationResult `json:"joinKeyResults,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConstraintResults") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConstraintResults") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigResponseDetailedCorrelationResults) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainTestCorrelationConfigResponseDetailedCorrelationResults
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1mainUndeployIssueModelMetadata: Metadata
 // for undeploying an issue model.
 type GoogleCloudContactcenterinsightsV1mainUndeployIssueModelMetadata struct {
@@ -18610,6 +19855,117 @@ func (c *ProjectsLocationsBulkUploadFeedbackLabelsCall) Do(opts ...googleapi.Cal
 	return ret, nil
 }
 
+type ProjectsLocationsGetCorrelationConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetCorrelationConfig: Gets correlation config.
+//
+//   - name: The name of the correlation config resource to get. Format:
+//     projects/{project}/locations/{location}/correlationConfig.
+func (r *ProjectsLocationsService) GetCorrelationConfig(name string) *ProjectsLocationsGetCorrelationConfigCall {
+	c := &ProjectsLocationsGetCorrelationConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGetCorrelationConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetCorrelationConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGetCorrelationConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetCorrelationConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGetCorrelationConfigCall) Context(ctx context.Context) *ProjectsLocationsGetCorrelationConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGetCorrelationConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetCorrelationConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.getCorrelationConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.getCorrelationConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1CorrelationConfig.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetCorrelationConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1CorrelationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1CorrelationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.getCorrelationConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsGetEncryptionSpecCall struct {
 	s            *Service
 	name         string
@@ -19201,6 +20557,223 @@ func (c *ProjectsLocationsQueryPerformanceOverviewCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.queryPerformanceOverview", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsTestCorrelationConfigCall struct {
+	s                                                              *Service
+	location                                                       string
+	googlecloudcontactcenterinsightsv1testcorrelationconfigrequest *GoogleCloudContactcenterinsightsV1TestCorrelationConfigRequest
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// TestCorrelationConfig: Tests correlation config on a conversation.
+//
+//   - location: The location to test correlation config. Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsService) TestCorrelationConfig(location string, googlecloudcontactcenterinsightsv1testcorrelationconfigrequest *GoogleCloudContactcenterinsightsV1TestCorrelationConfigRequest) *ProjectsLocationsTestCorrelationConfigCall {
+	c := &ProjectsLocationsTestCorrelationConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.location = location
+	c.googlecloudcontactcenterinsightsv1testcorrelationconfigrequest = googlecloudcontactcenterinsightsv1testcorrelationconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsTestCorrelationConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsTestCorrelationConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsTestCorrelationConfigCall) Context(ctx context.Context) *ProjectsLocationsTestCorrelationConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsTestCorrelationConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTestCorrelationConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1testcorrelationconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+location}:testCorrelationConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"location": c.location,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.testCorrelationConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.testCorrelationConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsTestCorrelationConfigCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.testCorrelationConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsUpdateCorrelationConfigCall struct {
+	s                                                   *Service
+	name                                                string
+	googlecloudcontactcenterinsightsv1correlationconfig *GoogleCloudContactcenterinsightsV1CorrelationConfig
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// UpdateCorrelationConfig: Updates correlation config.
+//
+//   - name: Immutable. Identifier. The resource name of the correlation config.
+//     Format: projects/{project}/locations/{location}/correlationConfig.
+func (r *ProjectsLocationsService) UpdateCorrelationConfig(name string, googlecloudcontactcenterinsightsv1correlationconfig *GoogleCloudContactcenterinsightsV1CorrelationConfig) *ProjectsLocationsUpdateCorrelationConfigCall {
+	c := &ProjectsLocationsUpdateCorrelationConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudcontactcenterinsightsv1correlationconfig = googlecloudcontactcenterinsightsv1correlationconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// be updated.
+func (c *ProjectsLocationsUpdateCorrelationConfigCall) UpdateMask(updateMask string) *ProjectsLocationsUpdateCorrelationConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsUpdateCorrelationConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateCorrelationConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsUpdateCorrelationConfigCall) Context(ctx context.Context) *ProjectsLocationsUpdateCorrelationConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsUpdateCorrelationConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUpdateCorrelationConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1correlationconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.updateCorrelationConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.updateCorrelationConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1CorrelationConfig.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsUpdateCorrelationConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1CorrelationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1CorrelationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.updateCorrelationConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -25300,6 +26873,697 @@ func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsOperationsListCall) P
 	}
 }
 
+type ProjectsLocationsAutoLabelingRulesCreateCall struct {
+	s                                                  *Service
+	parent                                             string
+	googlecloudcontactcenterinsightsv1autolabelingrule *GoogleCloudContactcenterinsightsV1AutoLabelingRule
+	urlParams_                                         gensupport.URLParams
+	ctx_                                               context.Context
+	header_                                            http.Header
+}
+
+// Create: Creates an auto labeling rule.
+//
+//   - parent: The project and location to create the auto labeling rule in.
+//     Format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsAutoLabelingRulesService) Create(parent string, googlecloudcontactcenterinsightsv1autolabelingrule *GoogleCloudContactcenterinsightsV1AutoLabelingRule) *ProjectsLocationsAutoLabelingRulesCreateCall {
+	c := &ProjectsLocationsAutoLabelingRulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudcontactcenterinsightsv1autolabelingrule = googlecloudcontactcenterinsightsv1autolabelingrule
+	return c
+}
+
+// AutoLabelingRuleId sets the optional parameter "autoLabelingRuleId":
+// Required. The ID to use for the auto labeling rule, which will become the
+// final component of the auto labeling rule's resource name.
+func (c *ProjectsLocationsAutoLabelingRulesCreateCall) AutoLabelingRuleId(autoLabelingRuleId string) *ProjectsLocationsAutoLabelingRulesCreateCall {
+	c.urlParams_.Set("autoLabelingRuleId", autoLabelingRuleId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoLabelingRulesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoLabelingRulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoLabelingRulesCreateCall) Context(ctx context.Context) *ProjectsLocationsAutoLabelingRulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoLabelingRulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoLabelingRulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1autolabelingrule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/autoLabelingRules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.autoLabelingRules.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.autoLabelingRules.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1AutoLabelingRule.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutoLabelingRulesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1AutoLabelingRule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1AutoLabelingRule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.autoLabelingRules.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutoLabelingRulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an auto labeling rule.
+//
+//   - name: The name of the auto labeling rule to delete. Format:
+//     projects/{project}/locations/{location}/autoLabelingRules/{auto_labeling_ru
+//     le}.
+func (r *ProjectsLocationsAutoLabelingRulesService) Delete(name string) *ProjectsLocationsAutoLabelingRulesDeleteCall {
+	c := &ProjectsLocationsAutoLabelingRulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoLabelingRulesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoLabelingRulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoLabelingRulesDeleteCall) Context(ctx context.Context) *ProjectsLocationsAutoLabelingRulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoLabelingRulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoLabelingRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.autoLabelingRules.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.autoLabelingRules.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAutoLabelingRulesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.autoLabelingRules.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutoLabelingRulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an auto labeling rule.
+//
+//   - name: The name of the auto labeling rule to get. Format:
+//     projects/{project}/locations/{location}/autoLabelingRules/{auto_labeling_ru
+//     le}.
+func (r *ProjectsLocationsAutoLabelingRulesService) Get(name string) *ProjectsLocationsAutoLabelingRulesGetCall {
+	c := &ProjectsLocationsAutoLabelingRulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoLabelingRulesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoLabelingRulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAutoLabelingRulesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAutoLabelingRulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoLabelingRulesGetCall) Context(ctx context.Context) *ProjectsLocationsAutoLabelingRulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoLabelingRulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoLabelingRulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.autoLabelingRules.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.autoLabelingRules.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1AutoLabelingRule.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutoLabelingRulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1AutoLabelingRule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1AutoLabelingRule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.autoLabelingRules.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutoLabelingRulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists auto labeling rules.
+//
+//   - parent: The project and location to list auto labeling rules from. Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsAutoLabelingRulesService) List(parent string) *ProjectsLocationsAutoLabelingRulesListCall {
+	c := &ProjectsLocationsAutoLabelingRulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of auto
+// labeling rules to return in a single response. If unspecified, at most 100
+// rules will be returned. The maximum value is 1000; values above 1000 will be
+// coerced to 1000.
+func (c *ProjectsLocationsAutoLabelingRulesListCall) PageSize(pageSize int64) *ProjectsLocationsAutoLabelingRulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous List request, if any.
+func (c *ProjectsLocationsAutoLabelingRulesListCall) PageToken(pageToken string) *ProjectsLocationsAutoLabelingRulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoLabelingRulesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoLabelingRulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAutoLabelingRulesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAutoLabelingRulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoLabelingRulesListCall) Context(ctx context.Context) *ProjectsLocationsAutoLabelingRulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoLabelingRulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoLabelingRulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/autoLabelingRules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.autoLabelingRules.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.autoLabelingRules.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1ListAutoLabelingRulesResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutoLabelingRulesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1ListAutoLabelingRulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1ListAutoLabelingRulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.autoLabelingRules.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAutoLabelingRulesListCall) Pages(ctx context.Context, f func(*GoogleCloudContactcenterinsightsV1ListAutoLabelingRulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAutoLabelingRulesPatchCall struct {
+	s                                                  *Service
+	name                                               string
+	googlecloudcontactcenterinsightsv1autolabelingrule *GoogleCloudContactcenterinsightsV1AutoLabelingRule
+	urlParams_                                         gensupport.URLParams
+	ctx_                                               context.Context
+	header_                                            http.Header
+}
+
+// Patch: Updates an auto labeling rule.
+//
+//   - name: Identifier. The resource name of the auto-labeling rule. Format:
+//     projects/{project}/locations/{location}/autoLabelingRules/{auto_labeling_ru
+//     le}.
+func (r *ProjectsLocationsAutoLabelingRulesService) Patch(name string, googlecloudcontactcenterinsightsv1autolabelingrule *GoogleCloudContactcenterinsightsV1AutoLabelingRule) *ProjectsLocationsAutoLabelingRulesPatchCall {
+	c := &ProjectsLocationsAutoLabelingRulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudcontactcenterinsightsv1autolabelingrule = googlecloudcontactcenterinsightsv1autolabelingrule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// be updated.
+func (c *ProjectsLocationsAutoLabelingRulesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAutoLabelingRulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoLabelingRulesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoLabelingRulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoLabelingRulesPatchCall) Context(ctx context.Context) *ProjectsLocationsAutoLabelingRulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoLabelingRulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoLabelingRulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1autolabelingrule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.autoLabelingRules.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.autoLabelingRules.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1AutoLabelingRule.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutoLabelingRulesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1AutoLabelingRule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1AutoLabelingRule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.autoLabelingRules.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutoLabelingRulesTestCall struct {
+	s                                                             *Service
+	parent                                                        string
+	googlecloudcontactcenterinsightsv1testautolabelingrulerequest *GoogleCloudContactcenterinsightsV1TestAutoLabelingRuleRequest
+	urlParams_                                                    gensupport.URLParams
+	ctx_                                                          context.Context
+	header_                                                       http.Header
+}
+
+// Test: Tests auto labeling rules against a conversation.
+//
+//   - parent: The parent project and location. Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsAutoLabelingRulesService) Test(parent string, googlecloudcontactcenterinsightsv1testautolabelingrulerequest *GoogleCloudContactcenterinsightsV1TestAutoLabelingRuleRequest) *ProjectsLocationsAutoLabelingRulesTestCall {
+	c := &ProjectsLocationsAutoLabelingRulesTestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudcontactcenterinsightsv1testautolabelingrulerequest = googlecloudcontactcenterinsightsv1testautolabelingrulerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoLabelingRulesTestCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoLabelingRulesTestCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoLabelingRulesTestCall) Context(ctx context.Context) *ProjectsLocationsAutoLabelingRulesTestCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoLabelingRulesTestCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoLabelingRulesTestCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1testautolabelingrulerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/autoLabelingRules:test")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.autoLabelingRules.test", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.autoLabelingRules.test" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1TestAutoLabelingRuleResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutoLabelingRulesTestCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1TestAutoLabelingRuleResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1TestAutoLabelingRuleResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.autoLabelingRules.test", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsConversationsBulkAnalyzeCall struct {
 	s                                                                 *Service
 	parent                                                            string
@@ -26402,6 +28666,15 @@ func (r *ProjectsLocationsConversationsService) Patch(name string, googlecloudco
 // be created. In this situation, `update_mask` is ignored.
 func (c *ProjectsLocationsConversationsPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsConversationsPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// ConversationAutoLabelingUpdateConfigAllowAutoLabelingUpdate sets the
+// optional parameter
+// "conversationAutoLabelingUpdateConfig.allowAutoLabelingUpdate": If set to
+// true, the conversation will be updated with auto labeling results.
+func (c *ProjectsLocationsConversationsPatchCall) ConversationAutoLabelingUpdateConfigAllowAutoLabelingUpdate(conversationAutoLabelingUpdateConfigAllowAutoLabelingUpdate bool) *ProjectsLocationsConversationsPatchCall {
+	c.urlParams_.Set("conversationAutoLabelingUpdateConfig.allowAutoLabelingUpdate", fmt.Sprint(conversationAutoLabelingUpdateConfigAllowAutoLabelingUpdate))
 	return c
 }
 

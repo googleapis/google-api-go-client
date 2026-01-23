@@ -171,7 +171,7 @@ type OrganizationsService struct {
 
 func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
 	rs := &OrganizationsLocationsService{s: s}
-	rs.Operations = NewOrganizationsLocationsOperationsService(s)
+	rs.Global = NewOrganizationsLocationsGlobalService(s)
 	rs.VpcFlowLogsConfigs = NewOrganizationsLocationsVpcFlowLogsConfigsService(s)
 	return rs
 }
@@ -179,17 +179,29 @@ func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService
 type OrganizationsLocationsService struct {
 	s *Service
 
-	Operations *OrganizationsLocationsOperationsService
+	Global *OrganizationsLocationsGlobalService
 
 	VpcFlowLogsConfigs *OrganizationsLocationsVpcFlowLogsConfigsService
 }
 
-func NewOrganizationsLocationsOperationsService(s *Service) *OrganizationsLocationsOperationsService {
-	rs := &OrganizationsLocationsOperationsService{s: s}
+func NewOrganizationsLocationsGlobalService(s *Service) *OrganizationsLocationsGlobalService {
+	rs := &OrganizationsLocationsGlobalService{s: s}
+	rs.Operations = NewOrganizationsLocationsGlobalOperationsService(s)
 	return rs
 }
 
-type OrganizationsLocationsOperationsService struct {
+type OrganizationsLocationsGlobalService struct {
+	s *Service
+
+	Operations *OrganizationsLocationsGlobalOperationsService
+}
+
+func NewOrganizationsLocationsGlobalOperationsService(s *Service) *OrganizationsLocationsGlobalOperationsService {
+	rs := &OrganizationsLocationsGlobalOperationsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsGlobalOperationsService struct {
 	s *Service
 }
 
@@ -311,7 +323,14 @@ type AbortInfo struct {
 	//   "PERMISSION_DENIED_NO_CLOUD_ROUTER_CONFIGS" - Aborted because user lacks
 	// permission to access Cloud Router configs required to run the test.
 	//   "NO_SOURCE_LOCATION" - Aborted because no valid source or destination
-	// endpoint is derived from the input test request.
+	// endpoint can be derived from the test request.
+	//   "NO_SOURCE_GCP_NETWORK_LOCATION" - Aborted because the source IP address
+	// is not contained within the subnet ranges of the provided VPC network.
+	//   "NO_SOURCE_NON_GCP_NETWORK_LOCATION" - Aborted because the source IP
+	// address is not contained within the destination ranges of the routes towards
+	// non-GCP networks in the provided VPC network.
+	//   "NO_SOURCE_INTERNET_LOCATION" - Aborted because the source IP address
+	// can't be resolved as an Internet IP address.
 	//   "INVALID_ARGUMENT" - Aborted because the source or destination endpoint
 	// specified in the request is invalid. Some examples: - The request might
 	// contain malformed resource URI, project ID, or IP address. - The request
@@ -345,6 +364,9 @@ type AbortInfo struct {
 	// satisfy test input).
 	//   "SOURCE_PSC_CLOUD_SQL_UNSUPPORTED" - Aborted because tests with a
 	// PSC-based Cloud SQL instance as a source are not supported.
+	//   "SOURCE_EXTERNAL_CLOUD_SQL_UNSUPPORTED" - Aborted because tests with the
+	// external database as a source are not supported. In such replication
+	// scenarios, the connection is initiated by the Cloud SQL replica instance.
 	//   "SOURCE_REDIS_CLUSTER_UNSUPPORTED" - Aborted because tests with a Redis
 	// Cluster as a source are not supported.
 	//   "SOURCE_REDIS_INSTANCE_UNSUPPORTED" - Aborted because tests with a Redis
@@ -1494,30 +1516,34 @@ type Endpoint struct {
 	// Network load balancer.
 	//   "TCP_UDP_INTERNAL_LOAD_BALANCER" - Internal TCP/UDP load balancer.
 	LoadBalancerType string `json:"loadBalancerType,omitempty"`
-	// Network: A VPC network URI.
+	// Network: A VPC network URI. Used according to the `network_type`. Relevant
+	// only for the source endpoints.
 	Network string `json:"network,omitempty"`
-	// NetworkType: Type of the network where the endpoint is located. Applicable
-	// only to source endpoint, as destination network type can be inferred from
-	// the source.
+	// NetworkType: Type of the network where the endpoint is located. Relevant
+	// only for the source endpoints.
 	//
 	// Possible values:
-	//   "NETWORK_TYPE_UNSPECIFIED" - Default type if unspecified.
-	//   "GCP_NETWORK" - A network hosted within Google Cloud. To receive more
-	// detailed output, specify the URI for the source or destination network.
-	//   "NON_GCP_NETWORK" - A network hosted outside of Google Cloud. This can be
-	// an on-premises network, an internet resource or a network hosted by another
-	// cloud provider.
+	//   "NETWORK_TYPE_UNSPECIFIED" - Unspecified. The `project_id` field should be
+	// set to the project where the GCP endpoint is located, or where the non-GCP
+	// endpoint should be reachable from (via routes to non-GCP networks). The test
+	// will analyze all possible IP address locations. This might take longer and
+	// produce inaccurate or ambiguous results, so prefer specifying an explicit
+	// network type.
+	//   "GCP_NETWORK" - A VPC network. The `network` field should be set to the
+	// URI of this network. Only endpoints within this network will be considered.
+	//   "NON_GCP_NETWORK" - A non-GCP network (for example, an on-premises network
+	// or network in another Cloud). The `network` field should be set to the URI
+	// of the VPC network containing a corresponding VPN tunnel, Interconnect
+	// attachment, or router appliance instance. Only endpoints reachable from the
+	// provided VPC network via the routes to non-GCP networks will be considered.
+	//   "INTERNET" - Internet. Only endpoints reachable over public Internet and
+	// endpoints within Google API and service ranges will be considered.
 	NetworkType string `json:"networkType,omitempty"`
 	// Port: The IP protocol port of the endpoint. Only applicable when protocol is
 	// TCP or UDP.
 	Port int64 `json:"port,omitempty"`
-	// ProjectId: Project ID where the endpoint is located. The project ID can be
-	// derived from the URI if you provide a endpoint or network URI. The following
-	// are two cases where you may need to provide the project ID: 1. Only the IP
-	// address is specified, and the IP address is within a Google Cloud project.
-	// 2. When you are using Shared VPC and the IP address that you provide is from
-	// the service project. In this case, the network that the IP address resides
-	// in is defined in the host project.
+	// ProjectId: Endpoint project ID. Used according to the `network_type`.
+	// Relevant only for the source endpoints.
 	ProjectId string `json:"projectId,omitempty"`
 	// RedisCluster: A Redis Cluster
 	// (https://cloud.google.com/memorystore/docs/cluster) URI. Applicable only to
@@ -4232,7 +4258,7 @@ func (c *OrganizationsLocationsListCall) Pages(ctx context.Context, f func(*List
 	}
 }
 
-type OrganizationsLocationsOperationsCancelCall struct {
+type OrganizationsLocationsGlobalOperationsCancelCall struct {
 	s                      *Service
 	name                   string
 	canceloperationrequest *CancelOperationRequest
@@ -4252,8 +4278,8 @@ type OrganizationsLocationsOperationsCancelCall struct {
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
-func (r *OrganizationsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OrganizationsLocationsOperationsCancelCall {
-	c := &OrganizationsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsLocationsGlobalOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OrganizationsLocationsGlobalOperationsCancelCall {
+	c := &OrganizationsLocationsGlobalOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.canceloperationrequest = canceloperationrequest
 	return c
@@ -4262,27 +4288,27 @@ func (r *OrganizationsLocationsOperationsService) Cancel(name string, canceloper
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *OrganizationsLocationsOperationsCancelCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOperationsCancelCall {
+func (c *OrganizationsLocationsGlobalOperationsCancelCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalOperationsCancelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *OrganizationsLocationsOperationsCancelCall) Context(ctx context.Context) *OrganizationsLocationsOperationsCancelCall {
+func (c *OrganizationsLocationsGlobalOperationsCancelCall) Context(ctx context.Context) *OrganizationsLocationsGlobalOperationsCancelCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *OrganizationsLocationsOperationsCancelCall) Header() http.Header {
+func (c *OrganizationsLocationsGlobalOperationsCancelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OrganizationsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsLocationsGlobalOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.canceloperationrequest)
 	if err != nil {
@@ -4300,16 +4326,16 @@ func (c *OrganizationsLocationsOperationsCancelCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.operations.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.global.operations.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "networkmanagement.organizations.locations.operations.cancel" call.
+// Do executes the "networkmanagement.organizations.locations.global.operations.cancel" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *Empty.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+func (c *OrganizationsLocationsGlobalOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4339,11 +4365,11 @@ func (c *OrganizationsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOp
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.operations.cancel", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.global.operations.cancel", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
-type OrganizationsLocationsOperationsDeleteCall struct {
+type OrganizationsLocationsGlobalOperationsDeleteCall struct {
 	s          *Service
 	name       string
 	urlParams_ gensupport.URLParams
@@ -4357,8 +4383,8 @@ type OrganizationsLocationsOperationsDeleteCall struct {
 // `google.rpc.Code.UNIMPLEMENTED`.
 //
 // - name: The name of the operation resource to be deleted.
-func (r *OrganizationsLocationsOperationsService) Delete(name string) *OrganizationsLocationsOperationsDeleteCall {
-	c := &OrganizationsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsLocationsGlobalOperationsService) Delete(name string) *OrganizationsLocationsGlobalOperationsDeleteCall {
+	c := &OrganizationsLocationsGlobalOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -4366,27 +4392,27 @@ func (r *OrganizationsLocationsOperationsService) Delete(name string) *Organizat
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *OrganizationsLocationsOperationsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOperationsDeleteCall {
+func (c *OrganizationsLocationsGlobalOperationsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalOperationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *OrganizationsLocationsOperationsDeleteCall) Context(ctx context.Context) *OrganizationsLocationsOperationsDeleteCall {
+func (c *OrganizationsLocationsGlobalOperationsDeleteCall) Context(ctx context.Context) *OrganizationsLocationsGlobalOperationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *OrganizationsLocationsOperationsDeleteCall) Header() http.Header {
+func (c *OrganizationsLocationsGlobalOperationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OrganizationsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsLocationsGlobalOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -4400,16 +4426,16 @@ func (c *OrganizationsLocationsOperationsDeleteCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.operations.delete", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.global.operations.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "networkmanagement.organizations.locations.operations.delete" call.
+// Do executes the "networkmanagement.organizations.locations.global.operations.delete" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *Empty.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+func (c *OrganizationsLocationsGlobalOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4439,11 +4465,11 @@ func (c *OrganizationsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOp
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.operations.delete", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.global.operations.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
-type OrganizationsLocationsOperationsGetCall struct {
+type OrganizationsLocationsGlobalOperationsGetCall struct {
 	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
@@ -4457,8 +4483,8 @@ type OrganizationsLocationsOperationsGetCall struct {
 // service.
 //
 // - name: The name of the operation resource.
-func (r *OrganizationsLocationsOperationsService) Get(name string) *OrganizationsLocationsOperationsGetCall {
-	c := &OrganizationsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsLocationsGlobalOperationsService) Get(name string) *OrganizationsLocationsGlobalOperationsGetCall {
+	c := &OrganizationsLocationsGlobalOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -4466,7 +4492,7 @@ func (r *OrganizationsLocationsOperationsService) Get(name string) *Organization
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *OrganizationsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOperationsGetCall {
+func (c *OrganizationsLocationsGlobalOperationsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4474,27 +4500,27 @@ func (c *OrganizationsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *
 // IfNoneMatch sets an optional parameter which makes the operation fail if the
 // object's ETag matches the given value. This is useful for getting updates
 // only after the object has changed since the last request.
-func (c *OrganizationsLocationsOperationsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsOperationsGetCall {
+func (c *OrganizationsLocationsGlobalOperationsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsGlobalOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *OrganizationsLocationsOperationsGetCall) Context(ctx context.Context) *OrganizationsLocationsOperationsGetCall {
+func (c *OrganizationsLocationsGlobalOperationsGetCall) Context(ctx context.Context) *OrganizationsLocationsGlobalOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *OrganizationsLocationsOperationsGetCall) Header() http.Header {
+func (c *OrganizationsLocationsGlobalOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OrganizationsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsLocationsGlobalOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4511,16 +4537,16 @@ func (c *OrganizationsLocationsOperationsGetCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.operations.get", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.global.operations.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "networkmanagement.organizations.locations.operations.get" call.
+// Do executes the "networkmanagement.organizations.locations.global.operations.get" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *Operation.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+func (c *OrganizationsLocationsGlobalOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4550,11 +4576,11 @@ func (c *OrganizationsLocationsOperationsGetCall) Do(opts ...googleapi.CallOptio
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.operations.get", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.global.operations.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
-type OrganizationsLocationsOperationsListCall struct {
+type OrganizationsLocationsGlobalOperationsListCall struct {
 	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
@@ -4567,28 +4593,28 @@ type OrganizationsLocationsOperationsListCall struct {
 // the server doesn't support this method, it returns `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
-func (r *OrganizationsLocationsOperationsService) List(name string) *OrganizationsLocationsOperationsListCall {
-	c := &OrganizationsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsLocationsGlobalOperationsService) List(name string) *OrganizationsLocationsGlobalOperationsListCall {
+	c := &OrganizationsLocationsGlobalOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
 // Filter sets the optional parameter "filter": The standard list filter.
-func (c *OrganizationsLocationsOperationsListCall) Filter(filter string) *OrganizationsLocationsOperationsListCall {
+func (c *OrganizationsLocationsGlobalOperationsListCall) Filter(filter string) *OrganizationsLocationsGlobalOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The standard list page
 // size.
-func (c *OrganizationsLocationsOperationsListCall) PageSize(pageSize int64) *OrganizationsLocationsOperationsListCall {
+func (c *OrganizationsLocationsGlobalOperationsListCall) PageSize(pageSize int64) *OrganizationsLocationsGlobalOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The standard list page
 // token.
-func (c *OrganizationsLocationsOperationsListCall) PageToken(pageToken string) *OrganizationsLocationsOperationsListCall {
+func (c *OrganizationsLocationsGlobalOperationsListCall) PageToken(pageToken string) *OrganizationsLocationsGlobalOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
@@ -4601,7 +4627,7 @@ func (c *OrganizationsLocationsOperationsListCall) PageToken(pageToken string) *
 // "projects/example/locations/-". This field is not supported by default and
 // will result in an `UNIMPLEMENTED` error if set unless explicitly documented
 // otherwise in service or product specific documentation.
-func (c *OrganizationsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OrganizationsLocationsOperationsListCall {
+func (c *OrganizationsLocationsGlobalOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OrganizationsLocationsGlobalOperationsListCall {
 	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
@@ -4609,7 +4635,7 @@ func (c *OrganizationsLocationsOperationsListCall) ReturnPartialSuccess(returnPa
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *OrganizationsLocationsOperationsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOperationsListCall {
+func (c *OrganizationsLocationsGlobalOperationsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGlobalOperationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4617,27 +4643,27 @@ func (c *OrganizationsLocationsOperationsListCall) Fields(s ...googleapi.Field) 
 // IfNoneMatch sets an optional parameter which makes the operation fail if the
 // object's ETag matches the given value. This is useful for getting updates
 // only after the object has changed since the last request.
-func (c *OrganizationsLocationsOperationsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsOperationsListCall {
+func (c *OrganizationsLocationsGlobalOperationsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsGlobalOperationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *OrganizationsLocationsOperationsListCall) Context(ctx context.Context) *OrganizationsLocationsOperationsListCall {
+func (c *OrganizationsLocationsGlobalOperationsListCall) Context(ctx context.Context) *OrganizationsLocationsGlobalOperationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *OrganizationsLocationsOperationsListCall) Header() http.Header {
+func (c *OrganizationsLocationsGlobalOperationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OrganizationsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsLocationsGlobalOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4654,17 +4680,17 @@ func (c *OrganizationsLocationsOperationsListCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.operations.list", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.global.operations.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "networkmanagement.organizations.locations.operations.list" call.
+// Do executes the "networkmanagement.organizations.locations.global.operations.list" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *ListOperationsResponse.ServerResponse.Header or (if a response was returned
 // at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *OrganizationsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsResponse, error) {
+func (c *OrganizationsLocationsGlobalOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4694,14 +4720,14 @@ func (c *OrganizationsLocationsOperationsListCall) Do(opts ...googleapi.CallOpti
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.operations.list", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkmanagement.organizations.locations.global.operations.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *OrganizationsLocationsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+func (c *OrganizationsLocationsGlobalOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

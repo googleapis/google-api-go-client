@@ -1978,8 +1978,8 @@ type GoogleCloudApihubV1Deployment struct {
 	// sources of the deployment.
 	SourceMetadata []*GoogleCloudApihubV1SourceMetadata `json:"sourceMetadata,omitempty"`
 	// SourceProject: Optional. The project to which the deployment belongs. For
-	// GCP gateways, this will refer to the project identifier. For others like
-	// Edge/OPDK, this will refer to the org identifier.
+	// Google Cloud gateways, this will refer to the project identifier. For others
+	// like Edge/OPDK, this will refer to the org identifier.
 	SourceProject string `json:"sourceProject,omitempty"`
 	// SourceUri: Optional. The uri where additional source specific information
 	// for this deployment can be found. This maps to the following system defined
@@ -2090,8 +2090,8 @@ type GoogleCloudApihubV1DiscoveredApiObservation struct {
 	// `projects/{project}/locations/{location}/discoveredApiObservations/{discovere
 	// d_api_observation}`
 	Name string `json:"name,omitempty"`
-	// Origin: Optional. For an observation pushed from a gcp resource, this would
-	// be the gcp project id.
+	// Origin: Optional. For an observation pushed from a Google Cloud resource,
+	// this would be the Google Cloud project id.
 	Origin string `json:"origin,omitempty"`
 	// ServerIps: Optional. The IP address (IPv4 or IPv6) of the origin server that
 	// the request was sent to. This field can include port information. Examples:
@@ -2107,8 +2107,8 @@ type GoogleCloudApihubV1DiscoveredApiObservation struct {
 	//
 	// Possible values:
 	//   "SOURCE_TYPE_UNSPECIFIED" - Source type not specified.
-	//   "GCP_XLB" - GCP external load balancer.
-	//   "GCP_ILB" - GCP internal load balancer.
+	//   "GCP_XLB" - Google Cloud external load balancer.
+	//   "GCP_ILB" - Google Cloud internal load balancer.
 	SourceTypes []string `json:"sourceTypes,omitempty"`
 	// Style: Optional. Style of ApiObservation
 	//
@@ -4100,9 +4100,9 @@ type GoogleCloudApihubV1PluginInstance struct {
 	// `source_environment` name from the SourceEnvironment message.
 	SourceEnvironmentsConfig map[string]GoogleCloudApihubV1SourceEnvironment `json:"sourceEnvironmentsConfig,omitempty"`
 	// SourceProjectId: Optional. The source project id of the plugin instance.
-	// This will be the id of runtime project in case of gcp based plugins and org
-	// id in case of non gcp based plugins. This field will be a required field for
-	// Google provided on-ramp plugins.
+	// This will be the id of runtime project in case of Google Cloud based plugins
+	// and org id in case of non-Google Cloud based plugins. This field will be a
+	// required field for Google provided on-ramp plugins.
 	SourceProjectId string `json:"sourceProjectId,omitempty"`
 	// State: Output only. The current state of the plugin instance (e.g., enabled,
 	// disabled, provisioning).
@@ -4165,7 +4165,7 @@ type GoogleCloudApihubV1PluginInstanceAction struct {
 	HubInstanceAction *GoogleCloudApihubV1ExecutionStatus `json:"hubInstanceAction,omitempty"`
 	// ResourceConfig: Output only. The configuration of resources created for a
 	// given plugin instance action. Note these will be returned only in case of
-	// Non-GCP plugins like OPDK.
+	// non-Google Cloud plugins like OPDK.
 	ResourceConfig *GoogleCloudApihubV1ResourceConfig `json:"resourceConfig,omitempty"`
 	// ScheduleCronExpression: Optional. The schedule for this plugin instance
 	// action. This can only be set if the plugin supports API_HUB_SCHEDULE_TRIGGER
@@ -4175,7 +4175,8 @@ type GoogleCloudApihubV1PluginInstanceAction struct {
 	// If not provided, UTC will be used.
 	ScheduleTimeZone string `json:"scheduleTimeZone,omitempty"`
 	// ServiceAccount: Optional. The service account used to publish data. Note,
-	// the service account will only be accepted for non GCP plugins like OPDK.
+	// the service account will only be accepted for non-Google Cloud plugins like
+	// OPDK.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// State: Output only. The current state of the plugin action in the plugin
 	// instance.
@@ -6888,11 +6889,12 @@ type ProjectsLocationsApiHubInstancesLookupCall struct {
 	header_      http.Header
 }
 
-// Lookup: Looks up an Api Hub instance in a given GCP project. There will
-// always be only one Api Hub instance for a GCP project across all locations.
+// Lookup: Looks up an Api Hub instance in a given Google Cloud project. There
+// will always be only one Api Hub instance for a Google Cloud project across
+// all locations.
 //
-//   - parent: There will always be only one Api Hub instance for a GCP project
-//     across all locations. The parent resource for the Api Hub instance
+//   - parent: There will always be only one Api Hub instance for a Google Cloud
+//     project across all locations. The parent resource for the Api Hub instance
 //     resource. Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsApiHubInstancesService) Lookup(parent string) *ProjectsLocationsApiHubInstancesLookupCall {
 	c := &ProjectsLocationsApiHubInstancesLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}

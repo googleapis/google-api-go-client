@@ -441,7 +441,7 @@ func (s BigQueryPartitioning) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BigQueryProfile: BigQuery warehouse profile.
+// BigQueryProfile: Profile for connecting to a BigQuery destination.
 type BigQueryProfile struct {
 }
 
@@ -548,7 +548,7 @@ func (s CdcStrategy) MarshalJSON() ([]byte, error) {
 // ConnectionProfile: A set of reusable connection configurations to be used as
 // a source or destination for a stream.
 type ConnectionProfile struct {
-	// BigqueryProfile: BigQuery Connection Profile configuration.
+	// BigqueryProfile: Profile for connecting to a BigQuery destination.
 	BigqueryProfile *BigQueryProfile `json:"bigqueryProfile,omitempty"`
 	// CreateTime: Output only. The create time of the resource.
 	CreateTime string `json:"createTime,omitempty"`
@@ -556,31 +556,31 @@ type ConnectionProfile struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// ForwardSshConnectivity: Forward SSH tunnel connectivity.
 	ForwardSshConnectivity *ForwardSshTunnelConnectivity `json:"forwardSshConnectivity,omitempty"`
-	// GcsProfile: Cloud Storage ConnectionProfile configuration.
+	// GcsProfile: Profile for connecting to a Cloud Storage destination.
 	GcsProfile *GcsProfile `json:"gcsProfile,omitempty"`
 	// Labels: Labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// MongodbProfile: MongoDB Connection Profile configuration.
+	// MongodbProfile: Profile for connecting to a MongoDB source.
 	MongodbProfile *MongodbProfile `json:"mongodbProfile,omitempty"`
-	// MysqlProfile: MySQL ConnectionProfile configuration.
+	// MysqlProfile: Profile for connecting to a MySQL source.
 	MysqlProfile *MysqlProfile `json:"mysqlProfile,omitempty"`
 	// Name: Output only. Identifier. The resource's name.
 	Name string `json:"name,omitempty"`
-	// OracleProfile: Oracle ConnectionProfile configuration.
+	// OracleProfile: Profile for connecting to an Oracle source.
 	OracleProfile *OracleProfile `json:"oracleProfile,omitempty"`
-	// PostgresqlProfile: PostgreSQL Connection Profile configuration.
+	// PostgresqlProfile: Profile for connecting to a PostgreSQL source.
 	PostgresqlProfile *PostgresqlProfile `json:"postgresqlProfile,omitempty"`
 	// PrivateConnectivity: Private connectivity.
 	PrivateConnectivity *PrivateConnectivity `json:"privateConnectivity,omitempty"`
-	// SalesforceProfile: Salesforce Connection Profile configuration.
+	// SalesforceProfile: Profile for connecting to a Salesforce source.
 	SalesforceProfile *SalesforceProfile `json:"salesforceProfile,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
-	// SpannerProfile: Spanner Connection Profile configuration.
+	// SpannerProfile: Profile for connecting to a Spanner source.
 	SpannerProfile *SpannerProfile `json:"spannerProfile,omitempty"`
-	// SqlServerProfile: SQLServer Connection Profile configuration.
+	// SqlServerProfile: Profile for connecting to a SQLServer source.
 	SqlServerProfile *SqlServerProfile `json:"sqlServerProfile,omitempty"`
 	// StaticServiceIpConnectivity: Static Service IP connectivity.
 	StaticServiceIpConnectivity *StaticServiceIpConnectivity `json:"staticServiceIpConnectivity,omitempty"`
@@ -872,8 +872,8 @@ func (s Error) MarshalJSON() ([]byte, error) {
 // EventFilter: Represents a filter for included data on a stream object.
 type EventFilter struct {
 	// SqlWhereClause: An SQL-query Where clause selecting which data should be
-	// included, not including the "WHERE" keyword. E.g., "t.key1 = 'value1' AND
-	// t.key2 = 'value2'".
+	// included, not including the "WHERE" keyword. e.g., `t.key1 = 'value1' AND
+	// t.key2 = 'value2'`
 	SqlWhereClause string `json:"sqlWhereClause,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SqlWhereClause") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -983,11 +983,11 @@ func (s GcsDestinationConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GcsProfile: Cloud Storage bucket profile.
+// GcsProfile: Profile for connecting to a Cloud Storage destination.
 type GcsProfile struct {
 	// Bucket: Required. The Cloud Storage bucket name.
 	Bucket string `json:"bucket,omitempty"`
-	// RootPath: The root path inside the Cloud Storage bucket.
+	// RootPath: Optional. The root path inside the Cloud Storage bucket.
 	RootPath string `json:"rootPath,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1483,7 +1483,7 @@ func (s MongodbCluster) MarshalJSON() ([]byte, error) {
 
 // MongodbCollection: MongoDB Collection.
 type MongodbCollection struct {
-	// Collection: Collection name.
+	// Collection: The collection name.
 	Collection string `json:"collection,omitempty"`
 	// Fields: Fields in the collection.
 	Fields []*MongodbField `json:"fields,omitempty"`
@@ -1509,7 +1509,7 @@ func (s MongodbCollection) MarshalJSON() ([]byte, error) {
 type MongodbDatabase struct {
 	// Collections: Collections in the database.
 	Collections []*MongodbCollection `json:"collections,omitempty"`
-	// Database: Database name.
+	// Database: The database name.
 	Database string `json:"database,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Collections") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1531,7 +1531,7 @@ func (s MongodbDatabase) MarshalJSON() ([]byte, error) {
 
 // MongodbField: MongoDB Field.
 type MongodbField struct {
-	// Field: Field name.
+	// Field: The field name.
 	Field string `json:"field,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Field") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1575,7 +1575,7 @@ func (s MongodbObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MongodbProfile: MongoDB profile.
+// MongodbProfile: Profile for connecting to a MongoDB source.
 type MongodbProfile struct {
 	// AdditionalOptions: Optional. Specifies additional options for the MongoDB
 	// connection. The options should be sent as key-value pairs, for example:
@@ -1627,11 +1627,11 @@ func (s MongodbProfile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MongodbSourceConfig: MongoDB source configuration.
+// MongodbSourceConfig: Configuration for syncing data from a MongoDB source.
 type MongodbSourceConfig struct {
-	// ExcludeObjects: MongoDB collections to exclude from the stream.
+	// ExcludeObjects: The MongoDB collections to exclude from the stream.
 	ExcludeObjects *MongodbCluster `json:"excludeObjects,omitempty"`
-	// IncludeObjects: MongoDB collections to include in the stream.
+	// IncludeObjects: The MongoDB collections to include in the stream.
 	IncludeObjects *MongodbCluster `json:"includeObjects,omitempty"`
 	// JsonMode: Optional. MongoDB JSON mode to use for the stream.
 	//
@@ -1717,7 +1717,7 @@ type MostRecentStartPosition struct {
 type MysqlColumn struct {
 	// Collation: Column collation.
 	Collation string `json:"collation,omitempty"`
-	// Column: Column name.
+	// Column: The column name.
 	Column string `json:"column,omitempty"`
 	// DataType: The MySQL data type. Full data types list can be found here:
 	// https://dev.mysql.com/doc/refman/8.0/en/data-types.html
@@ -1754,7 +1754,7 @@ func (s MysqlColumn) MarshalJSON() ([]byte, error) {
 
 // MysqlDatabase: MySQL database.
 type MysqlDatabase struct {
-	// Database: Database name.
+	// Database: The database name.
 	Database string `json:"database,omitempty"`
 	// MysqlTables: Tables in the database.
 	MysqlTables []*MysqlTable `json:"mysqlTables,omitempty"`
@@ -1847,7 +1847,7 @@ func (s MysqlObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MysqlProfile: MySQL database profile.
+// MysqlProfile: Profile for connecting to a MySQL source.
 type MysqlProfile struct {
 	// Hostname: Required. Hostname for the MySQL connection.
 	Hostname string `json:"hostname,omitempty"`
@@ -1904,15 +1904,15 @@ func (s MysqlRdbms) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MysqlSourceConfig: MySQL source configuration
+// MysqlSourceConfig: Configuration for syncing data from a MySQL source.
 type MysqlSourceConfig struct {
 	// BinaryLogPosition: Use Binary log position based replication.
 	BinaryLogPosition *BinaryLogPosition `json:"binaryLogPosition,omitempty"`
-	// ExcludeObjects: MySQL objects to exclude from the stream.
+	// ExcludeObjects: The MySQL objects to exclude from the stream.
 	ExcludeObjects *MysqlRdbms `json:"excludeObjects,omitempty"`
 	// Gtid: Use GTID based replication.
 	Gtid *Gtid `json:"gtid,omitempty"`
-	// IncludeObjects: MySQL objects to retrieve from the source.
+	// IncludeObjects: The MySQL objects to retrieve from the source.
 	IncludeObjects *MysqlRdbms `json:"includeObjects,omitempty"`
 	// MaxConcurrentBackfillTasks: Maximum number of concurrent backfill tasks. The
 	// number should be non negative. If not set (or set to 0), the system's
@@ -1985,7 +1985,7 @@ type MysqlTable struct {
 	// MysqlColumns: MySQL columns in the database. When unspecified as part of
 	// include/exclude objects, includes/excludes everything.
 	MysqlColumns []*MysqlColumn `json:"mysqlColumns,omitempty"`
-	// Table: Table name.
+	// Table: The table name.
 	Table string `json:"table,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MysqlColumns") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2197,7 +2197,7 @@ type OracleAsmLogFileAccess struct {
 
 // OracleColumn: Oracle Column.
 type OracleColumn struct {
-	// Column: Column name.
+	// Column: The column name.
 	Column string `json:"column,omitempty"`
 	// DataType: The Oracle data type.
 	DataType string `json:"dataType,omitempty"`
@@ -2257,7 +2257,7 @@ func (s OracleObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// OracleProfile: Oracle database profile.
+// OracleProfile: Profile for connecting to an Oracle source.
 type OracleProfile struct {
 	// ConnectionAttributes: Connection string attributes
 	ConnectionAttributes map[string]string `json:"connectionAttributes,omitempty"`
@@ -2324,7 +2324,7 @@ func (s OracleRdbms) MarshalJSON() ([]byte, error) {
 type OracleSchema struct {
 	// OracleTables: Tables in the schema.
 	OracleTables []*OracleTable `json:"oracleTables,omitempty"`
-	// Schema: Schema name.
+	// Schema: The schema name.
 	Schema string `json:"schema,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "OracleTables") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2366,15 +2366,15 @@ func (s OracleScnPosition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// OracleSourceConfig: Oracle data source configuration
+// OracleSourceConfig: Configuration for syncing data from an Oracle source.
 type OracleSourceConfig struct {
 	// BinaryLogParser: Use Binary Log Parser.
 	BinaryLogParser *BinaryLogParser `json:"binaryLogParser,omitempty"`
 	// DropLargeObjects: Drop large object values.
 	DropLargeObjects *DropLargeObjects `json:"dropLargeObjects,omitempty"`
-	// ExcludeObjects: Oracle objects to exclude from the stream.
+	// ExcludeObjects: The Oracle objects to exclude from the stream.
 	ExcludeObjects *OracleRdbms `json:"excludeObjects,omitempty"`
-	// IncludeObjects: Oracle objects to include in the stream.
+	// IncludeObjects: The Oracle objects to include in the stream.
 	IncludeObjects *OracleRdbms `json:"includeObjects,omitempty"`
 	// LogMiner: Use LogMiner.
 	LogMiner *LogMiner `json:"logMiner,omitempty"`
@@ -2443,7 +2443,7 @@ type OracleTable struct {
 	// OracleColumns: Oracle columns in the schema. When unspecified as part of
 	// include/exclude objects, includes/excludes everything.
 	OracleColumns []*OracleColumn `json:"oracleColumns,omitempty"`
-	// Table: Table name.
+	// Table: The table name.
 	Table string `json:"table,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "OracleColumns") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2465,7 +2465,7 @@ func (s OracleTable) MarshalJSON() ([]byte, error) {
 
 // PostgresqlColumn: PostgreSQL Column.
 type PostgresqlColumn struct {
-	// Column: Column name.
+	// Column: The column name.
 	Column string `json:"column,omitempty"`
 	// DataType: The PostgreSQL data type.
 	DataType string `json:"dataType,omitempty"`
@@ -2523,7 +2523,7 @@ func (s PostgresqlObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PostgresqlProfile: PostgreSQL database profile.
+// PostgresqlProfile: Profile for connecting to a PostgreSQL source.
 type PostgresqlProfile struct {
 	// Database: Required. Database for the PostgreSQL connection.
 	Database string `json:"database,omitempty"`
@@ -2589,7 +2589,7 @@ func (s PostgresqlRdbms) MarshalJSON() ([]byte, error) {
 type PostgresqlSchema struct {
 	// PostgresqlTables: Tables in the schema.
 	PostgresqlTables []*PostgresqlTable `json:"postgresqlTables,omitempty"`
-	// Schema: Schema name.
+	// Schema: The schema name.
 	Schema string `json:"schema,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PostgresqlTables") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2609,11 +2609,12 @@ func (s PostgresqlSchema) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PostgresqlSourceConfig: PostgreSQL data source configuration
+// PostgresqlSourceConfig: Configuration for syncing data from a PostgreSQL
+// source.
 type PostgresqlSourceConfig struct {
-	// ExcludeObjects: PostgreSQL objects to exclude from the stream.
+	// ExcludeObjects: The PostgreSQL objects to exclude from the stream.
 	ExcludeObjects *PostgresqlRdbms `json:"excludeObjects,omitempty"`
-	// IncludeObjects: PostgreSQL objects to include in the stream.
+	// IncludeObjects: The PostgreSQL objects to include in the stream.
 	IncludeObjects *PostgresqlRdbms `json:"includeObjects,omitempty"`
 	// MaxConcurrentBackfillTasks: Maximum number of concurrent backfill tasks. The
 	// number should be non negative. If not set (or set to 0), the system's
@@ -2675,7 +2676,7 @@ type PostgresqlTable struct {
 	// PostgresqlColumns: PostgreSQL columns in the schema. When unspecified as
 	// part of include/exclude objects, includes/excludes everything.
 	PostgresqlColumns []*PostgresqlColumn `json:"postgresqlColumns,omitempty"`
-	// Table: Table name.
+	// Table: The table name.
 	Table string `json:"table,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PostgresqlColumns") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2892,7 +2893,7 @@ func (s RunStreamRequest) MarshalJSON() ([]byte, error) {
 type SalesforceField struct {
 	// DataType: The data type.
 	DataType string `json:"dataType,omitempty"`
-	// Name: Field name.
+	// Name: The field name.
 	Name string `json:"name,omitempty"`
 	// Nillable: Indicates whether the field can accept nil values.
 	Nillable bool `json:"nillable,omitempty"`
@@ -2920,7 +2921,7 @@ type SalesforceObject struct {
 	// includes everything, when unspecified as part of exclude objects, excludes
 	// nothing.
 	Fields []*SalesforceField `json:"fields,omitempty"`
-	// ObjectName: Object name.
+	// ObjectName: The object name.
 	ObjectName string `json:"objectName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2984,7 +2985,7 @@ func (s SalesforceOrg) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SalesforceProfile: Salesforce profile
+// SalesforceProfile: Profile for connecting to a Salesforce source.
 type SalesforceProfile struct {
 	// Domain: Required. Domain endpoint for the Salesforce connection.
 	Domain string `json:"domain,omitempty"`
@@ -3010,15 +3011,16 @@ func (s SalesforceProfile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SalesforceSourceConfig: Salesforce source configuration
+// SalesforceSourceConfig: Configuration for syncing data from a Salesforce
+// source.
 type SalesforceSourceConfig struct {
-	// ExcludeObjects: Salesforce objects to exclude from the stream.
+	// ExcludeObjects: The Salesforce objects to exclude from the stream.
 	ExcludeObjects *SalesforceOrg `json:"excludeObjects,omitempty"`
-	// IncludeObjects: Salesforce objects to retrieve from the source.
+	// IncludeObjects: The Salesforce objects to retrieve from the source.
 	IncludeObjects *SalesforceOrg `json:"includeObjects,omitempty"`
 	// PollingInterval: Required. Salesforce objects polling interval. The interval
 	// at which new changes will be polled for each object. The duration must be
-	// between 5 minutes and 24 hours.
+	// from `5 minutes` to `24 hours`, inclusive.
 	PollingInterval string `json:"pollingInterval,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3232,7 +3234,7 @@ func (s SourceObjectIdentifier) MarshalJSON() ([]byte, error) {
 
 // SpannerColumn: Spanner column.
 type SpannerColumn struct {
-	// Column: Required. Column name.
+	// Column: Required. The column name.
 	Column string `json:"column,omitempty"`
 	// DataType: Optional. Spanner data type.
 	DataType string `json:"dataType,omitempty"`
@@ -3304,7 +3306,7 @@ func (s SpannerObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SpannerProfile: Spanner profile.
+// SpannerProfile: Profile for connecting to a Spanner source.
 type SpannerProfile struct {
 	// Database: Required. Immutable. Cloud Spanner database resource. This field
 	// is immutable. Must be in the format:
@@ -3334,7 +3336,7 @@ func (s SpannerProfile) MarshalJSON() ([]byte, error) {
 
 // SpannerSchema: Spanner schema.
 type SpannerSchema struct {
-	// Schema: Required. Schema name.
+	// Schema: Required. The schema name.
 	Schema string `json:"schema,omitempty"`
 	// Tables: Optional. Spanner tables in the schema.
 	Tables []*SpannerTable `json:"tables,omitempty"`
@@ -3356,7 +3358,7 @@ func (s SpannerSchema) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SpannerSourceConfig: Spanner source configuration.
+// SpannerSourceConfig: Configuration for syncing data from a Spanner source.
 type SpannerSourceConfig struct {
 	// BackfillDataBoostEnabled: Optional. Whether to use Data Boost for Spanner
 	// backfills. Defaults to false if not set.
@@ -3364,13 +3366,14 @@ type SpannerSourceConfig struct {
 	// ChangeStreamName: Required. Immutable. The change stream name to use for the
 	// stream.
 	ChangeStreamName string `json:"changeStreamName,omitempty"`
-	// ExcludeObjects: Optional. Spanner objects to avoid retrieving. If some
+	// ExcludeObjects: Optional. The Spanner objects to avoid retrieving. If some
 	// objects are both included and excluded, an error will be thrown.
 	ExcludeObjects *SpannerDatabase `json:"excludeObjects,omitempty"`
 	// FgacRole: Optional. The FGAC role to use for the stream.
 	FgacRole string `json:"fgacRole,omitempty"`
-	// IncludeObjects: Optional. Spanner objects to retrieve from the data source.
-	// If some objects are both included and excluded, an error will be thrown.
+	// IncludeObjects: Optional. The Spanner objects to retrieve from the data
+	// source. If some objects are both included and excluded, an error will be
+	// thrown.
 	IncludeObjects *SpannerDatabase `json:"includeObjects,omitempty"`
 	// MaxConcurrentBackfillTasks: Optional. Maximum number of concurrent backfill
 	// tasks.
@@ -3407,7 +3410,7 @@ func (s SpannerSourceConfig) MarshalJSON() ([]byte, error) {
 type SpannerTable struct {
 	// Columns: Optional. Spanner columns in the table.
 	Columns []*SpannerColumn `json:"columns,omitempty"`
-	// Table: Required. Table name.
+	// Table: Required. The table name.
 	Table string `json:"table,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Columns") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3465,7 +3468,7 @@ type SqlServerChangeTables struct {
 
 // SqlServerColumn: SQLServer Column.
 type SqlServerColumn struct {
-	// Column: Column name.
+	// Column: The column name.
 	Column string `json:"column,omitempty"`
 	// DataType: The SQLServer data type.
 	DataType string `json:"dataType,omitempty"`
@@ -3545,7 +3548,7 @@ func (s SqlServerObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SqlServerProfile: SQLServer database profile.
+// SqlServerProfile: Profile for connecting to a SQLServer source.
 type SqlServerProfile struct {
 	// Database: Required. Database for the SQLServer connection.
 	Database string `json:"database,omitempty"`
@@ -3606,7 +3609,7 @@ func (s SqlServerRdbms) MarshalJSON() ([]byte, error) {
 
 // SqlServerSchema: SQLServer schema.
 type SqlServerSchema struct {
-	// Schema: Schema name.
+	// Schema: The schema name.
 	Schema string `json:"schema,omitempty"`
 	// Tables: Tables in the schema.
 	Tables []*SqlServerTable `json:"tables,omitempty"`
@@ -3628,13 +3631,14 @@ func (s SqlServerSchema) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SqlServerSourceConfig: SQLServer data source configuration
+// SqlServerSourceConfig: Configuration for syncing data from a SQLServer
+// source.
 type SqlServerSourceConfig struct {
 	// ChangeTables: CDC reader reads from change tables.
 	ChangeTables *SqlServerChangeTables `json:"changeTables,omitempty"`
-	// ExcludeObjects: SQLServer objects to exclude from the stream.
+	// ExcludeObjects: The SQLServer objects to exclude from the stream.
 	ExcludeObjects *SqlServerRdbms `json:"excludeObjects,omitempty"`
-	// IncludeObjects: SQLServer objects to include in the stream.
+	// IncludeObjects: The SQLServer objects to include in the stream.
 	IncludeObjects *SqlServerRdbms `json:"includeObjects,omitempty"`
 	// MaxConcurrentBackfillTasks: Max concurrent backfill tasks.
 	MaxConcurrentBackfillTasks int64 `json:"maxConcurrentBackfillTasks,omitempty"`
@@ -3696,7 +3700,7 @@ type SqlServerTable struct {
 	// Columns: SQLServer columns in the schema. When unspecified as part of
 	// include/exclude objects, includes/excludes everything.
 	Columns []*SqlServerColumn `json:"columns,omitempty"`
-	// Table: Table name.
+	// Table: The table name.
 	Table string `json:"table,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Columns") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
